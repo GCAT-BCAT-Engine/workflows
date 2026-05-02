@@ -35,10 +35,10 @@ jobs:
         ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       run: echo 'API key loaded from secrets'
     - name: Run Phase 1 - Preprocessing
+      working-directory: ./math_solver/validation
       env:
         ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      run: python3 validation_runner.py --phase 1 --model haiku --budget ${{ github.event.inputs.budget_ceiling
-        }}
+      run: python3 validation_runner.py --phase 1 --model haiku --budget ${{ github.event.inputs.budget_ceiling }}
     - name: Run Phase 2 - Quick Probe
       env:
         ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
