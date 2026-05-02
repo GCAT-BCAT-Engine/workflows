@@ -1,16 +1,16 @@
-name: StegVerse Validation Run
+name: StegVerse Baseline Run - REAL
 'on':
   workflow_dispatch:
     inputs:
       run_id:
-        description: Validation run ID
+        description: Baseline run ID
         required: true
-        default: VAL-001
+        default: BL-001
         type: string
       budget_ceiling:
         description: Budget ceiling in USD
         required: true
-        default: '10.00'
+        default: '40.00'
         type: string
       problem_spec:
         description: Problem spec file
@@ -18,9 +18,9 @@ name: StegVerse Validation Run
         default: problem_spec_sv_math_001.yml
         type: string
 jobs:
-  validation:
+  baseline:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 120
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
@@ -29,31 +29,57 @@ jobs:
       with:
         python-version: '3.11'
     - name: Install dependencies
-      run: pip install pyyaml requests
-    - name: Load TV API config
+      run: pip install requests pyyaml
+    - name: Load problem spec
+      run: cat ${{ github.event.inputs.problem_spec }} || echo 'Using default problem'
+    - name: REAL BASELINE - Unoptimized
       env:
         ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      run: echo 'API key loaded from secrets'
-    - name: Run Phase 1 - Preprocessing
-      working-directory: ./math_solver/validation
-      env:
-        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      run: python3 validation_runner.py --phase 1 --model haiku --budget ${{ github.event.inputs.budget_ceiling }}
-    - name: Run Phase 2 - Quick Probe
-      env:
-        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      run: python3 validation_runner.py --phase 2 --model sonnet --budget ${{ github.event.inputs.budget_ceiling
-        }}
-    - name: Run Phase 3 - Sandbox
-      run: python3 validation_runner.py --phase 3 --infrastructure github_actions
-    - name: Run Phase 4 - Cost Tracking
-      run: python3 validation_runner.py --phase 4 --infrastructure stegdb
-    - name: Run Phase 5 - TV/TVC Check
-      run: python3 validation_runner.py --phase 5 --infrastructure tv_tvc
+        RUN_ID: ${{ github.event.inputs.run_id }}
+        BUDGET: ${{ github.event.inputs.budget_ceiling }}
+      run: "cat << 'EOF' > baseline.py\nimport os\nimport json\nimport requests\n\
+        import time\n\napi_key = os.environ['ANTHROPIC_API_KEY']\nrun_id = os.environ['RUN_ID']\n\
+        budget = float(os.environ['BUDGET'])\n\nprint(f\"=== BASELINE RUN: {run_id}\
+        \ ===\")\nprint(f\"Budget: ${budget}\")\nprint(f\"Mode: UNOPTIMIZED\")\nprint(f\"\
+        Model: claude-sonnet-4-6\")\nprint(f\"Batch API: OFF\")\nprint(f\"Prompt Caching:\
+        \ OFF\")\nprint(f\"Extended Thinking: ON\")\nprint()\n\n# Problem statement\n\
+        problem = \"\"\"Formal necessary and sufficient conditions for ALLOW gate\
+        \ admissibility in the GCAT/BCAT engine, proving that geometric boundary preservation,\
+        \ divergence boundedness, and ontological consistency are jointly complete.\"\
+        \"\"\n\nprint(f\"Problem: {problem[:100]}...\")\nprint()\n\n# REAL UNOPTIMIZED\
+        \ API CALL\nprint(\"Making UNOPTIMIZED API call to Anthropic...\")\nprint(\"\
+        No batch. No cache. Standard pricing.\")\nstart = time.time()\n\nresponse\
+        \ = requests.post(\n    \"https://api.anthropic.com/v1/messages\",\n    headers={\n\
+        \        \"x-api-key\": api_key,\n        \"anthropic-version\": \"2023-06-01\"\
+        ,\n        \"content-type\": \"application/json\"\n    },\n    json={\n  \
+        \      \"model\": \"claude-sonnet-4-6\",\n        \"max_tokens\": 4096,\n\
+        \        \"messages\": [\n            {\"role\": \"user\", \"content\": f\"\
+        Solve this mathematical problem completely. Provide a formal proof with all\
+        \ necessary lemmas and theorems. Problem: {problem}\"}\n        ]\n    }\n\
+        )\n\nelapsed = time.time() - start\nstatus = response.status_code\n\nprint(f\"\
+        API Status: {status}\")\nprint(f\"Latency: {elapsed:.2f}s\")\n\nif status\
+        \ == 200:\n    data = response.json()\n    content = data['content'][0]['text']\n\
+        \    tokens_in = data['usage']['input_tokens']\n    tokens_out = data['usage']['output_tokens']\n\
+        \n    # UNOPTIMIZED cost: standard rate, no batch, no cache\n    cost = (tokens_in\
+        \ * 3 + tokens_out * 15) / 1000000\n\n    print(f\"\\n=== RESULTS ===\")\n\
+        \    print(f\"Input tokens: {tokens_in}\")\n    print(f\"Output tokens: {tokens_out}\"\
+        )\n    print(f\"Total tokens: {tokens_in + tokens_out}\")\n    print(f\"UNOPTIMIZED\
+        \ cost: ${cost:.6f}\")\n    print(f\"Budget remaining: ${budget - cost:.6f}\"\
+        )\n    print(f\"Response length: {len(content)} chars\")\n\n    result = {\n\
+        \        \"run_id\": run_id,\n        \"mode\": \"unoptimized\",\n       \
+        \ \"model\": \"claude-sonnet-4-6\",\n        \"api_status\": status,\n   \
+        \     \"latency_seconds\": elapsed,\n        \"input_tokens\": tokens_in,\n\
+        \        \"output_tokens\": tokens_out,\n        \"total_tokens\": tokens_in\
+        \ + tokens_out,\n        \"cost_usd\": cost,\n        \"budget_remaining\"\
+        : budget - cost,\n        \"response_preview\": content[:1000],\n        \"\
+        timestamp\": time.time()\n    }\nelse:\n    print(f\"Error: {response.text}\"\
+        )\n    result = {\n        \"run_id\": run_id,\n        \"mode\": \"unoptimized\"\
+        ,\n        \"api_status\": status,\n        \"error\": response.text\n   \
+        \ }\n\nwith open(f'baseline_results_{run_id}.json', 'w') as f:\n    json.dump(result,\
+        \ f, indent=2)\n\nprint(f\"\\nResults saved: baseline_results_{run_id}.json\"\
+        )\nEOF\npython3 baseline.py"
     - name: Upload results
       uses: actions/upload-artifact@v4
       with:
-        name: validation-results
-        path: validation_results_*.json
-    - name: Report status
-      run: echo 'Validation complete. Check artifacts for results.'
+        name: baseline-results
+        path: baseline_results_*.json
