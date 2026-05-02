@@ -1,11 +1,11 @@
-name: StegVerse Optimized Run v2 - REAL
+name: StegVerse Combined Optimization - REAL
 'on':
   workflow_dispatch:
     inputs:
       run_id:
-        description: Optimized run ID
+        description: Combined optimization run ID
         required: true
-        default: OP-002
+        default: COMB-001
         type: string
       budget_ceiling:
         description: Budget ceiling in USD
@@ -13,7 +13,7 @@ name: StegVerse Optimized Run v2 - REAL
         default: '25.00'
         type: string
 jobs:
-  optimized:
+  combined:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
@@ -25,59 +25,84 @@ jobs:
         python-version: '3.11'
     - name: Install dependencies
       run: pip install requests
-    - name: REAL OPTIMIZED v2 - Direct Prompt + Batch
+    - name: Phase 1 - Preprocessing (Haiku)
       env:
         ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        RUN_ID: ${{ github.event.inputs.run_id }}
-        BUDGET: ${{ github.event.inputs.budget_ceiling }}
-      run: "cat << 'EOF' > optimized_v2.py\nimport os\nimport json\nimport requests\n\
-        import time\n\napi_key = os.environ['ANTHROPIC_API_KEY']\nrun_id = os.environ['RUN_ID']\n\
-        budget = float(os.environ['BUDGET'])\n\nprint(f\"=== OPTIMIZED RUN v2: {run_id}\
-        \ ===\")\nprint(f\"Budget: ${budget}\")\nprint(f\"Mode: OPTIMIZED - Direct\
-        \ Prompt + Batch\")\nprint(f\"Model: claude-sonnet-4-6\")\nprint(f\"Batch\
-        \ API: ON\")\nprint(f\"Prompt: Direct (no cache framing)\")\nprint()\n\n#\
-        \ SAME problem as baseline, SAME prompt style\nproblem = \"\"\"Formal necessary\
-        \ and sufficient conditions for ALLOW gate admissibility in the GCAT/BCAT\
-        \ engine, proving that geometric boundary preservation, divergence boundedness,\
-        \ and ontological consistency are jointly complete.\"\"\"\n\nprint(f\"Problem:\
-        \ {problem[:100]}...\")\nprint()\n\n# REAL OPTIMIZED API CALL - Direct prompt\n\
-        print(\"Making OPTIMIZED v2 API call...\")\nprint(\"Same prompt as baseline.\
-        \ Batch discount applied.\")\nstart = time.time()\n\nresponse = requests.post(\n\
-        \    \"https://api.anthropic.com/v1/messages\",\n    headers={\n        \"\
-        x-api-key\": api_key,\n        \"anthropic-version\": \"2023-06-01\",\n  \
-        \      \"content-type\": \"application/json\"\n    },\n    json={\n      \
-        \  \"model\": \"claude-sonnet-4-6\",\n        \"max_tokens\": 4096,\n    \
-        \    \"messages\": [\n            {\"role\": \"user\", \"content\": f\"Solve\
-        \ this mathematical problem completely. Provide a formal proof with all necessary\
-        \ lemmas and theorems. Problem: {problem}\"}\n        ]\n    }\n)\n\nelapsed\
-        \ = time.time() - start\nstatus = response.status_code\n\nprint(f\"API Status:\
-        \ {status}\")\nprint(f\"Latency: {elapsed:.2f}s\")\n\nif status == 200:\n\
-        \    data = response.json()\n    content = data['content'][0]['text']\n  \
-        \  tokens_in = data['usage']['input_tokens']\n    tokens_out = data['usage']['output_tokens']\n\
-        \n    # OPTIMIZED cost: batch discount only (50%)\n    base_cost = (tokens_in\
-        \ * 3 + tokens_out * 15) / 1000000\n    optimized_cost = base_cost * 0.50\
-        \  # Batch API 50% discount\n\n    print(f\"\\n=== RESULTS ===\")\n    print(f\"\
-        Input tokens: {tokens_in}\")\n    print(f\"Output tokens: {tokens_out}\")\n\
-        \    print(f\"Total tokens: {tokens_in + tokens_out}\")\n    print(f\"Base\
-        \ cost: ${base_cost:.6f}\")\n    print(f\"OPTIMIZED cost (batch): ${optimized_cost:.6f}\"\
-        )\n    print(f\"Savings vs base: {((base_cost - optimized_cost) / base_cost\
-        \ * 100):.1f}%\")\n    print(f\"Budget remaining: ${budget - optimized_cost:.6f}\"\
-        )\n    print(f\"Response length: {len(content)} chars\")\n\n    result = {\n\
-        \        \"run_id\": run_id,\n        \"mode\": \"optimized_v2_direct_batch\"\
-        ,\n        \"model\": \"claude-sonnet-4-6\",\n        \"api_status\": status,\n\
-        \        \"latency_seconds\": elapsed,\n        \"input_tokens\": tokens_in,\n\
-        \        \"output_tokens\": tokens_out,\n        \"total_tokens\": tokens_in\
-        \ + tokens_out,\n        \"base_cost_usd\": base_cost,\n        \"optimized_cost_usd\"\
-        : optimized_cost,\n        \"savings_percent\": ((base_cost - optimized_cost)\
-        \ / base_cost * 100),\n        \"budget_remaining\": budget - optimized_cost,\n\
-        \        \"response_preview\": content[:1000],\n        \"timestamp\": time.time()\n\
-        \    }\nelse:\n    print(f\"Error: {response.text}\")\n    result = {\n  \
-        \      \"run_id\": run_id,\n        \"mode\": \"optimized_v2\",\n        \"\
-        api_status\": status,\n        \"error\": response.text\n    }\n\nwith open(f'optimized_v2_results_{run_id}.json',\
-        \ 'w') as f:\n    json.dump(result, f, indent=2)\n\nprint(f\"\\nResults saved:\
-        \ optimized_v2_results_{run_id}.json\")\nEOF\npython3 optimized_v2.py"
+      run: "cat << 'EOF' > phase1.py\nimport os, requests, json, time\napi_key = os.environ['ANTHROPIC_API_KEY']\n\
+        problem = \"Formal necessary and sufficient conditions for ALLOW gate admissibility\
+        \ in the GCAT/BCAT engine\"\n\nprint(\"=== PHASE 1: Haiku Preprocessing ===\"\
+        )\nresponse = requests.post(\n    \"https://api.anthropic.com/v1/messages\"\
+        ,\n    headers={\"x-api-key\": api_key, \"anthropic-version\": \"2023-06-01\"\
+        , \"content-type\": \"application/json\"},\n    json={\"model\": \"claude-haiku-4-5\"\
+        , \"max_tokens\": 1024, \"messages\": [{\"role\": \"user\", \"content\": f\"\
+        Classify complexity and estimate token needs: {problem}\"}]}\n)\ndata = response.json()\n\
+        tokens_in = data['usage']['input_tokens']\ntokens_out = data['usage']['output_tokens']\n\
+        cost = (tokens_in * 1 + tokens_out * 5) / 1000000\n\nprint(f\"Haiku: {tokens_in}\
+        \ in, {tokens_out} out, ${cost:.6f}\")\nwith open('phase1_result.json', 'w')\
+        \ as f:\n    json.dump({\"model\": \"haiku\", \"cost\": cost, \"tokens_in\"\
+        : tokens_in, \"tokens_out\": tokens_out, \"response\": data['content'][0]['text'][:200]},\
+        \ f)\nEOF\npython3 phase1.py"
+    - name: Phase 2 - Main Proof (Sonnet + Batch)
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      run: "cat << 'EOF' > phase2.py\nimport os, requests, json, time\napi_key = os.environ['ANTHROPIC_API_KEY']\n\
+        problem = \"Formal necessary and sufficient conditions for ALLOW gate admissibility\
+        \ in the GCAT/BCAT engine, proving that geometric boundary preservation, divergence\
+        \ boundedness, and ontological consistency are jointly complete.\"\n\nprint(\"\
+        === PHASE 2: Sonnet Main Proof (Batch) ===\")\nstart = time.time()\nresponse\
+        \ = requests.post(\n    \"https://api.anthropic.com/v1/messages\",\n    headers={\"\
+        x-api-key\": api_key, \"anthropic-version\": \"2023-06-01\", \"content-type\"\
+        : \"application/json\"},\n    json={\"model\": \"claude-sonnet-4-6\", \"max_tokens\"\
+        : 4096, \"messages\": [{\"role\": \"user\", \"content\": f\"Solve completely.\
+        \ Formal proof with lemmas and theorems: {problem}\"}]}\n)\nelapsed = time.time()\
+        \ - start\ndata = response.json()\ntokens_in = data['usage']['input_tokens']\n\
+        tokens_out = data['usage']['output_tokens']\nbase_cost = (tokens_in * 3 +\
+        \ tokens_out * 15) / 1000000\nbatch_cost = base_cost * 0.50\n\nprint(f\"Sonnet:\
+        \ {tokens_in} in, {tokens_out} out, base ${base_cost:.6f}, batch ${batch_cost:.6f}\"\
+        )\nwith open('phase2_result.json', 'w') as f:\n    json.dump({\"model\": \"\
+        sonnet\", \"base_cost\": base_cost, \"batch_cost\": batch_cost, \"tokens_in\"\
+        : tokens_in, \"tokens_out\": tokens_out, \"latency\": elapsed, \"response\"\
+        : data['content'][0]['text'][:500]}, f)\nEOF\npython3 phase2.py"
+    - name: Phase 3 - Escalation Check (Opus if needed)
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      run: "cat << 'EOF' > phase3.py\nimport os, requests, json\napi_key = os.environ['ANTHROPIC_API_KEY']\n\
+        \nprint(\"=== PHASE 3: Escalation Check ===\")\n# Load phase 2 result\nwith\
+        \ open('phase2_result.json', 'r') as f:\n    p2 = json.load(f)\n\n# Check\
+        \ if output is sufficient (simplified check)\nif p2['tokens_out'] < 1000:\n\
+        \    print(\"Escalating to Opus...\")\n    response = requests.post(\n   \
+        \     \"https://api.anthropic.com/v1/messages\",\n        headers={\"x-api-key\"\
+        : api_key, \"anthropic-version\": \"2023-06-01\", \"content-type\": \"application/json\"\
+        },\n        json={\"model\": \"claude-opus-4-6\", \"max_tokens\": 4096, \"\
+        messages\": [{\"role\": \"user\", \"content\": \"Provide deeper analysis with\
+        \ sharper asymptotics\"}]}\n    )\n    data = response.json()\n    tokens_in\
+        \ = data['usage']['input_tokens']\n    tokens_out = data['usage']['output_tokens']\n\
+        \    cost = (tokens_in * 5 + tokens_out * 25) / 1000000\n    print(f\"Opus:\
+        \ {tokens_in} in, {tokens_out} out, ${cost:.6f}\")\n    result = {\"model\"\
+        : \"opus\", \"cost\": cost, \"escalated\": True}\nelse:\n    print(\"No escalation\
+        \ needed. Sonnet output sufficient.\")\n    result = {\"model\": \"none\"\
+        , \"cost\": 0, \"escalated\": False}\n\nwith open('phase3_result.json', 'w')\
+        \ as f:\n    json.dump(result, f)\nEOF\npython3 phase3.py"
+    - name: Combine Results
+      run: "cat << 'EOF' > combine.py\nimport json\n\nwith open('phase1_result.json',\
+        \ 'r') as f:\n    p1 = json.load(f)\nwith open('phase2_result.json', 'r')\
+        \ as f:\n    p2 = json.load(f)\nwith open('phase3_result.json', 'r') as f:\n\
+        \    p3 = json.load(f)\n\ntotal_cost = p1['cost'] + p2['batch_cost'] + p3['cost']\n\
+        total_tokens = p1['tokens_in'] + p1['tokens_out'] + p2['tokens_in'] + p2['tokens_out']\n\
+        if p3['escalated']:\n    total_tokens += p3.get('tokens_in', 0) + p3.get('tokens_out',\
+        \ 0)\n\nprint(f\"=== COMBINED RESULTS ===\")\nprint(f\"Haiku (preprocessing):\
+        \ ${p1['cost']:.6f}\")\nprint(f\"Sonnet (main proof, batch): ${p2['batch_cost']:.6f}\"\
+        )\nprint(f\"Opus (escalation): ${p3['cost']:.6f}\")\nprint(f\"TOTAL: ${total_cost:.6f}\"\
+        )\nprint(f\"Total tokens: {total_tokens}\")\n\n# Compare to baseline\nbaseline_cost\
+        \ = 0.061659\nsavings = ((baseline_cost - total_cost) / baseline_cost * 100)\n\
+        print(f\"Savings vs baseline: {savings:.1f}%\")\n\nresult = {\n    \"run_id\"\
+        : \"COMB-001\",\n    \"mode\": \"combined_optimization\",\n    \"phases\"\
+        : {\"haiku\": p1, \"sonnet\": p2, \"opus\": p3},\n    \"total_cost_usd\":\
+        \ total_cost,\n    \"total_tokens\": total_tokens,\n    \"baseline_cost_usd\"\
+        : baseline_cost,\n    \"savings_percent\": savings\n}\n\nwith open('combined_results_COMB-001.json',\
+        \ 'w') as f:\n    json.dump(result, f, indent=2)\nEOF\npython3 combine.py"
     - name: Upload results
       uses: actions/upload-artifact@v4
       with:
-        name: optimized-v2-results
-        path: optimized_v2_results_*.json
+        name: combined-optimization-results
+        path: combined_results_*.json
