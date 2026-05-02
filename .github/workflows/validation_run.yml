@@ -1,26 +1,21 @@
-name: StegVerse Full Solve - SV-MATH-001
+name: "StegVerse External Problem - Erd\u0151s Class"
 'on':
   workflow_dispatch:
     inputs:
       run_id:
-        description: Full solve run ID
+        description: External run ID
         required: true
-        default: SOLVE-001
+        default: EXT-001
         type: string
       budget_ceiling:
         description: Budget ceiling in USD
         required: true
-        default: '500.00'
-        type: string
-      problem_id:
-        description: Problem ID
-        required: true
-        default: SV-MATH-001
+        default: '50.00'
         type: string
 jobs:
-  full_solve:
+  external_solve:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 120
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
@@ -29,112 +24,67 @@ jobs:
       with:
         python-version: '3.11'
     - name: Install dependencies
-      run: pip install requests pyyaml
-    - name: Phase 1 - Haiku Complexity Map
+      run: pip install requests
+    - name: Phase 1 - Haiku Classification
       env:
         ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        PROBLEM_ID: ${{ github.event.inputs.problem_id }}
-      run: "cat << 'EOF' > phase1_haiku.py\nimport os, requests, json, time\napi_key\
-        \ = os.environ['ANTHROPIC_API_KEY']\nproblem_id = os.environ['PROBLEM_ID']\n\
-        \nproblem = \"Formal necessary and sufficient conditions for ALLOW gate admissibility\
-        \ in the GCAT/BCAT engine, proving that geometric boundary preservation, divergence\
-        \ boundedness, and ontological consistency are jointly complete.\"\n\nprint(f\"\
-        === PHASE 1: Haiku Complexity Map ({problem_id}) ===\")\nstart = time.time()\n\
+      run: "cat << 'EOF' > ext_phase1.py\nimport os, requests, json, time\napi_key\
+        \ = os.environ['ANTHROPIC_API_KEY']\n\nproblem = \"A primitive set is a set\
+        \ of integers greater than 1 where no element divides another. Erd\u0151s\
+        \ conjectured that the sum of 1/(n log n) over all n in a primitive set is\
+        \ maximized by the set of prime numbers. Prove or disprove this conjecture.\"\
+        \n\nprint(\"=== EXTERNAL PHASE 1: Haiku Classification ===\")\nstart = time.time()\n\
         \nresponse = requests.post(\n    \"https://api.anthropic.com/v1/messages\"\
         ,\n    headers={\"x-api-key\": api_key, \"anthropic-version\": \"2023-06-01\"\
         , \"content-type\": \"application/json\"},\n    json={\"model\": \"claude-haiku-4-5\"\
-        , \"max_tokens\": 2048, \"messages\": [{\"role\": \"user\", \"content\": f\"\
-        Analyze complexity and provide proof strategy outline: {problem}\"}]}\n)\n\
-        \nelapsed = time.time() - start\ndata = response.json()\ntokens_in = data['usage']['input_tokens']\n\
-        tokens_out = data['usage']['output_tokens']\ncost = (tokens_in * 1 + tokens_out\
-        \ * 5) / 1000000\n\nprint(f\"Haiku: {tokens_in} in, {tokens_out} out, ${cost:.6f},\
-        \ {elapsed:.2f}s\")\n\nresult = {\"phase\": 1, \"model\": \"haiku\", \"cost\"\
-        : cost, \"tokens_in\": tokens_in, \"tokens_out\": tokens_out, \"latency\"\
-        : elapsed, \"strategy\": data['content'][0]['text'][:500]}\nwith open(f'phase1_{problem_id}.json',\
-        \ 'w') as f:\n    json.dump(result, f, indent=2)\nEOF\npython3 phase1_haiku.py"
-    - name: Phase 2 - Sonnet Extended Reasoning (120 min)
+        , \"max_tokens\": 1024, \"messages\": [{\"role\": \"user\", \"content\": f\"\
+        Classify this mathematical problem by domain, difficulty, and known results:\
+        \ {problem}\"}]}\n)\n\nelapsed = time.time() - start\ndata = response.json()\n\
+        tokens_in = data['usage']['input_tokens']\ntokens_out = data['usage']['output_tokens']\n\
+        cost = (tokens_in * 1 + tokens_out * 5) / 1000000\n\nprint(f\"Haiku: {tokens_in}\
+        \ in, {tokens_out} out, ${cost:.6f}\")\n\nresult = {\"phase\": 1, \"model\"\
+        : \"haiku\", \"cost\": cost, \"tokens_in\": tokens_in, \"tokens_out\": tokens_out,\
+        \ \"classification\": data['content'][0]['text'][:500]}\nwith open('ext_phase1.json',\
+        \ 'w') as f:\n    json.dump(result, f, indent=2)\nEOF\npython3 ext_phase1.py"
+    - name: Phase 2 - Sonnet Proof Attempt
       env:
         ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        PROBLEM_ID: ${{ github.event.inputs.problem_id }}
-        BUDGET: ${{ github.event.inputs.budget_ceiling }}
-      run: "cat << 'EOF' > phase2_sonnet.py\nimport os, requests, json, time\napi_key\
-        \ = os.environ['ANTHROPIC_API_KEY']\nproblem_id = os.environ['PROBLEM_ID']\n\
-        budget = float(os.environ['BUDGET'])\n\nproblem = \"Formal necessary and sufficient\
-        \ conditions for ALLOW gate admissibility in the GCAT/BCAT engine, proving\
-        \ that geometric boundary preservation, divergence boundedness, and ontological\
-        \ consistency are jointly complete.\"\n\nprint(f\"=== PHASE 2: Sonnet Extended\
-        \ Reasoning ({problem_id}) ===\")\nprint(f\"Budget: ${budget}\")\nprint(\"\
-        Extended thinking: 120 minutes max\")\nstart = time.time()\n\nresponse = requests.post(\n\
-        \    \"https://api.anthropic.com/v1/messages\",\n    headers={\"x-api-key\"\
-        : api_key, \"anthropic-version\": \"2023-06-01\", \"content-type\": \"application/json\"\
+      run: "cat << 'EOF' > ext_phase2.py\nimport os, requests, json, time\napi_key\
+        \ = os.environ['ANTHROPIC_API_KEY']\n\nproblem = \"A primitive set is a set\
+        \ of integers greater than 1 where no element divides another. Erd\u0151s\
+        \ conjectured that the sum of 1/(n log n) over all n in a primitive set is\
+        \ maximized by the set of prime numbers. Provide a proof strategy or identify\
+        \ why this remains unsolved.\"\n\nprint(\"=== EXTERNAL PHASE 2: Sonnet Proof\
+        \ Attempt ===\")\nstart = time.time()\n\nresponse = requests.post(\n    \"\
+        https://api.anthropic.com/v1/messages\",\n    headers={\"x-api-key\": api_key,\
+        \ \"anthropic-version\": \"2023-06-01\", \"content-type\": \"application/json\"\
         },\n    json={\"model\": \"claude-sonnet-4-6\", \"max_tokens\": 4096, \"messages\"\
-        : [{\"role\": \"user\", \"content\": f\"Provide a complete formal mathematical\
-        \ proof. Include all definitions, lemmas, theorems, and rigorous derivations.\
-        \ This is for academic publication. Problem: {problem}\"}]}\n)\n\nelapsed\
-        \ = time.time() - start\ndata = response.json()\ntokens_in = data['usage']['input_tokens']\n\
-        tokens_out = data['usage']['output_tokens']\nbase_cost = (tokens_in * 3 +\
-        \ tokens_out * 15) / 1000000\nbatch_cost = base_cost * 0.50\n\nprint(f\"Sonnet:\
-        \ {tokens_in} in, {tokens_out} out, batch ${batch_cost:.6f}, {elapsed:.2f}s\"\
+        : [{\"role\": \"user\", \"content\": f\"Analyze this problem deeply. Provide\
+        \ proof strategy, known partial results, and identify barriers to full solution:\
+        \ {problem}\"}]}\n)\n\nelapsed = time.time() - start\ndata = response.json()\n\
+        tokens_in = data['usage']['input_tokens']\ntokens_out = data['usage']['output_tokens']\n\
+        base_cost = (tokens_in * 3 + tokens_out * 15) / 1000000\nbatch_cost = base_cost\
+        \ * 0.50\n\nprint(f\"Sonnet: {tokens_in} in, {tokens_out} out, batch ${batch_cost:.6f}\"\
         )\n\nresult = {\"phase\": 2, \"model\": \"sonnet\", \"base_cost\": base_cost,\
         \ \"batch_cost\": batch_cost, \"tokens_in\": tokens_in, \"tokens_out\": tokens_out,\
-        \ \"latency\": elapsed, \"proof\": data['content'][0]['text'][:2000]}\nwith\
-        \ open(f'phase2_{problem_id}.json', 'w') as f:\n    json.dump(result, f, indent=2)\n\
-        EOF\npython3 phase2_sonnet.py"
-    - name: Phase 3 - Lean Formalization
-      env:
-        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        PROBLEM_ID: ${{ github.event.inputs.problem_id }}
-      run: "cat << 'EOF' > phase3_lean.py\nimport os, requests, json, time\napi_key\
-        \ = os.environ['ANTHROPIC_API_KEY']\nproblem_id = os.environ['PROBLEM_ID']\n\
-        \n# Load proof from phase 2\nwith open(f'phase2_{problem_id}.json', 'r') as\
-        \ f:\n    proof_data = json.load(f)\nproof = proof_data['proof']\n\nprint(f\"\
-        === PHASE 3: Lean Formalization ({problem_id}) ===\")\nstart = time.time()\n\
-        \nresponse = requests.post(\n    \"https://api.anthropic.com/v1/messages\"\
-        ,\n    headers={\"x-api-key\": api_key, \"anthropic-version\": \"2023-06-01\"\
-        , \"content-type\": \"application/json\"},\n    json={\"model\": \"claude-sonnet-4-6\"\
-        , \"max_tokens\": 4096, \"messages\": [{\"role\": \"user\", \"content\": f\"\
-        Convert this proof to Lean 4 formal verification code. Include theorem statements,\
-        \ proofs, and type correctness. Proof: {proof[:3000]}\"}]}\n)\n\nelapsed =\
-        \ time.time() - start\ndata = response.json()\ntokens_in = data['usage']['input_tokens']\n\
-        tokens_out = data['usage']['output_tokens']\ncost = (tokens_in * 3 + tokens_out\
-        \ * 15) / 1000000 * 0.50  # Batch\n\nprint(f\"Lean: {tokens_in} in, {tokens_out}\
-        \ out, batch ${cost:.6f}, {elapsed:.2f}s\")\n\nresult = {\"phase\": 3, \"\
-        model\": \"sonnet\", \"cost\": cost, \"tokens_in\": tokens_in, \"tokens_out\"\
-        : tokens_out, \"latency\": elapsed, \"lean_code\": data['content'][0]['text'][:2000]}\n\
-        with open(f'phase3_{problem_id}.json', 'w') as f:\n    json.dump(result, f,\
-        \ indent=2)\nEOF\npython3 phase3_lean.py"
-    - name: Phase 4 - Determinism Check
-      run: "cat << 'EOF' > phase4_check.py\nimport json, time\n\nproblem_id = \"SV-MATH-001\"\
-        \nseed = 42\n\nprint(f\"=== PHASE 4: Determinism Check ({problem_id}) ===\"\
-        )\nprint(f\"Seed: {seed}\")\n\n# Load all phases\nwith open(f'phase1_{problem_id}.json',\
-        \ 'r') as f:\n    p1 = json.load(f)\nwith open(f'phase2_{problem_id}.json',\
-        \ 'r') as f:\n    p2 = json.load(f)\nwith open(f'phase3_{problem_id}.json',\
-        \ 'r') as f:\n    p3 = json.load(f)\n\ntotal_cost = p1['cost'] + p2['batch_cost']\
-        \ + p3['cost']\ntotal_tokens = p1['tokens_in'] + p1['tokens_out'] + p2['tokens_in']\
-        \ + p2['tokens_out'] + p3['tokens_in'] + p3['tokens_out']\n\nprint(f\"Total\
-        \ cost: ${total_cost:.6f}\")\nprint(f\"Total tokens: {total_tokens}\")\nprint(f\"\
-        Determinism: Seed-based reproducibility framework validated\")\n\nresult =\
-        \ {\n    \"phase\": 4,\n    \"determinism_check\": True,\n    \"seed\": seed,\n\
-        \    \"total_cost\": total_cost,\n    \"total_tokens\": total_tokens,\n  \
-        \  \"phases\": [p1, p2, p3]\n}\n\nwith open(f'phase4_{problem_id}.json', 'w')\
-        \ as f:\n    json.dump(result, f, indent=2)\nEOF\npython3 phase4_check.py"
-    - name: Combine and Report
-      run: "cat << 'EOF' > final_report.py\nimport json, time\n\nproblem_id = \"SV-MATH-001\"\
-        \n\nwith open(f'phase4_{problem_id}.json', 'r') as f:\n    data = json.load(f)\n\
-        \nbaseline_cost = 0.061659\nactual_cost = data['total_cost']\nsavings = ((baseline_cost\
-        \ - actual_cost) / baseline_cost * 100)\n\nprint(f\"=== FINAL REPORT: {problem_id}\
-        \ ===\")\nprint(f\"Total cost: ${actual_cost:.6f}\")\nprint(f\"Baseline cost:\
-        \ ${baseline_cost:.6f}\")\nprint(f\"Savings: {savings:.1f}%\")\nprint(f\"\
-        Total tokens: {data['total_tokens']}\")\nprint(f\"Determinism: Validated\"\
-        )\n\nreport = {\n    \"run_id\": \"SOLVE-001\",\n    \"problem_id\": problem_id,\n\
-        \    \"status\": \"complete\",\n    \"total_cost_usd\": actual_cost,\n   \
-        \ \"baseline_cost_usd\": baseline_cost,\n    \"savings_percent\": savings,\n\
-        \    \"total_tokens\": data['total_tokens'],\n    \"phases\": data['phases'],\n\
-        \    \"timestamp\": time.time()\n}\n\nwith open(f'final_report_{problem_id}.json',\
-        \ 'w') as f:\n    json.dump(report, f, indent=2)\n\nprint(f\"Report saved:\
-        \ final_report_{problem_id}.json\")\nEOF\npython3 final_report.py"
-    - name: Upload all results
+        \ \"latency\": elapsed, \"analysis\": data['content'][0]['text'][:2000]}\n\
+        with open('ext_phase2.json', 'w') as f:\n    json.dump(result, f, indent=2)\n\
+        EOF\npython3 ext_phase2.py"
+    - name: Combine Results
+      run: "cat << 'EOF' > ext_combine.py\nimport json\n\nwith open('ext_phase1.json',\
+        \ 'r') as f:\n    p1 = json.load(f)\nwith open('ext_phase2.json', 'r') as\
+        \ f:\n    p2 = json.load(f)\n\ntotal_cost = p1['cost'] + p2['batch_cost']\n\
+        total_tokens = p1['tokens_in'] + p1['tokens_out'] + p2['tokens_in'] + p2['tokens_out']\n\
+        \nprint(f\"=== EXTERNAL RESULTS ===\")\nprint(f\"Total cost: ${total_cost:.6f}\"\
+        )\nprint(f\"Total tokens: {total_tokens}\")\nprint(f\"Haiku classification:\
+        \ {p1['classification'][:100]}...\")\nprint(f\"Sonnet analysis: {p2['analysis'][:100]}...\"\
+        )\n\nreport = {\n    \"run_id\": \"EXT-001\",\n    \"problem\": \"Erd\u0151\
+        s primitive sets conjecture\",\n    \"total_cost\": total_cost,\n    \"total_tokens\"\
+        : total_tokens,\n    \"phases\": [p1, p2],\n    \"cross_domain\": True,\n\
+        \    \"domain\": \"number_theory\"\n}\n\nwith open('ext_report.json', 'w')\
+        \ as f:\n    json.dump(report, f, indent=2)\nEOF\npython3 ext_combine.py"
+    - name: Upload results
       uses: actions/upload-artifact@v4
       with:
-        name: full-solve-results
-        path: '*.json'
+        name: external-results
+        path: ext_*.json
