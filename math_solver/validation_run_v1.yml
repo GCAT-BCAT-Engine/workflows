@@ -1,0 +1,68 @@
+validation_run_v1:
+  version: 1.0.0
+  timestamp: '2026-05-02T08:47:00Z'
+  run_id: VAL-001
+  status: ready
+  purpose: Prove StegVerse pipeline works end-to-end for $10
+  phases:
+  - phase_id: 1
+    name: Preprocessing
+    model: claude-haiku-4-5
+    estimated_cost_usd: 2.0
+    estimated_tokens: 4000
+    input: problem_spec_sv_math_001.yml
+    output: complexity_estimate.json
+    success_criteria: Complexity score generated, cache hit rate logged
+  - phase_id: 2
+    name: Quick Probe
+    model: claude-sonnet-4-6
+    estimated_cost_usd: 6.0
+    estimated_tokens: 12000
+    max_reasoning_time_minutes: 30
+    input: complexity_estimate + invariant_library_seed
+    output: proof_sketch.yml
+    success_criteria: Proof sketch generated with confidence > 0.60
+  - phase_id: 3
+    name: Sandbox Verification
+    infrastructure: github_actions
+    runner: ubuntu-latest
+    estimated_cost_usd: 0.1
+    timeout_minutes: 10
+    agents:
+    - lean_syntax_validator
+    - determinism_checker
+    success_criteria: Lean syntax valid, seed reproducibility confirmed
+  - phase_id: 4
+    name: Cost Tracking Validation
+    infrastructure: stegdb
+    estimated_cost_usd: 0.0
+    metrics:
+    - cumulative_spend
+    - tokens_consumed
+    - cache_hit_rate
+    - model_used
+    success_criteria: Dashboard displays real-time cost data
+  - phase_id: 5
+    name: TV/TVC Status Check
+    infrastructure: tv_tvc
+    estimated_cost_usd: 0.0
+    checks:
+    - api_key_valid
+    - rotation_interval_set
+    - budget_ceiling_active
+    success_criteria: All TV/TVC systems green
+  total_estimated_cost_usd: 8.1
+  budget_ceiling_usd: 10.0
+  halt_on_ceiling: true
+  expected_outputs:
+  - complexity_estimate.json
+  - proof_sketch.yml
+  - sandbox_report.yml
+  - cost_tracking_snapshot.yml
+  - tv_tvc_status.yml
+  next_steps_on_success:
+    baseline_run: Load $40 additional, run unoptimized comparison
+    optimized_run: Load $90 additional, run full StegVerse pipeline
+  next_steps_on_failure:
+    analyze: Review logs, identify failure point
+    adjust: Modify parameters, retry with $5
