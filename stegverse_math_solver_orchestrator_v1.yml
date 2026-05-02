@@ -1,0 +1,197 @@
+stegverse_math_solver_v1:
+  version: 1.0.0
+  timestamp: '2026-04-30T21:36:00Z'
+  description: Autonomous mathematical problem solver with cost optimization
+  priority_queue:
+    tier_1:
+      name: StegVerse-native mathematics
+      corpus:
+      - GCAT/BCAT admissibility invariants
+      - GOD compression irreducibility
+      - ECAT/ICAT boundary conditions
+      - TV/TVC trustlessness proof
+      - StegDB audit completeness
+      - Deterministic testing coverage
+      - Entity sandbox formal model
+      budget_ceiling_usd: 500.0
+      max_iterations: 50
+      human_review_threshold: 0.95
+    tier_2:
+      name: External unsolved with StegVerse applicability
+      corpus:
+      - "Erd\u0151s collection"
+      - Clay Millennium Problems
+      - Open conjecture databases
+      budget_ceiling_usd: 150.0
+      max_iterations: 30
+      human_review_threshold: 0.95
+    tier_3:
+      name: General mathematical corpus
+      corpus:
+      - Opportunistic scan
+      budget_ceiling_usd: 50.0
+      max_iterations: 15
+      human_review_threshold: 0.95
+  llm_adapter:
+    provider: anthropic
+    primary_model: claude-sonnet-4-6
+    backup_model: claude-opus-4-6
+    preprocessing_model: claude-haiku-4-5
+    cost_optimization:
+      batch_api: true
+      prompt_caching: true
+      cache_ttl_seconds: 3600
+      extended_thinking: true
+    pricing:
+      sonnet_4_6:
+        input_per_mtok: 3.0
+        output_per_mtok: 15.0
+        batch_discount: 0.5
+      opus_4_6:
+        input_per_mtok: 5.0
+        output_per_mtok: 25.0
+        batch_discount: 0.5
+      haiku_4_5:
+        input_per_mtok: 1.0
+        output_per_mtok: 5.0
+        batch_discount: 0.5
+    rate_limits:
+      requests_per_minute: 50
+      tokens_per_minute: 40000
+      tokens_per_day: 1000000
+    reasoning_config:
+      max_reasoning_time_minutes: 120
+      default_timeout_minutes: 80
+      ensemble_paths: 3
+      seed_determinism: true
+  ecat_icat_gates:
+    allow_conditions:
+      confidence_min: 0.85
+      novelty_min: 0.7
+      invariant_violations_max: 0
+      lean_verification: passed
+    deny_conditions:
+      logical_contradiction: true
+      known_result_duplicate: true
+      invariant_violation_count: '>= 3'
+    halt_conditions:
+      novelty_spike: '>= 0.95'
+      confidence_edge: 0.70-0.85
+      god_boundary_mutation: true
+      risk_score: '>= 0.70'
+      max_iterations_reached: true
+      budget_ceiling_reached: true
+      stagnation_window_exceeded: true
+    human_review:
+      review_novelty_threshold: 0.95
+      auto_allow_below_threshold: true
+      review_mode: delegated
+      batch_cycle_hours: 24
+  implication_harvester:
+    enabled: true
+    extraction_types:
+    - theorem_extraction
+    - boundary_mutation
+    - algorithm_derivation
+    - security_surface
+    routing_rules:
+      theorem_extraction:
+        target_repo: ECAT-ICAT-Formal
+        path: reference-library/
+        auto_route: true
+      boundary_mutation:
+        target_repo: GCAT-BCAT-Engine
+        path: invariants/
+        requires_human_review: true
+      algorithm_derivation:
+        target_repo: StegVerse-SDK
+        path: modules/
+        risk_threshold: 0.3
+      security_surface:
+        target_repo: master-records
+        path: security-audit/
+        severity_threshold: medium
+    orphan_timeout_hours: 72
+  sandbox:
+    infrastructure: github_actions
+    runner: ubuntu-latest
+    timeout_minutes: 30
+    resource_limits:
+      cpu: 2
+      memory: 4GB
+      disk: 10GB
+    max_concurrent: 5
+    auto_terminate_on_timeout: true
+    cleanup_after_completion: true
+    cost_tracking:
+      github_actions_minute_rate: 0.008
+      estimated_per_assessment: 0.1
+      monthly_assessment_budget: 50.0
+    paths:
+      incoming_bundles: incoming_bundles/
+      outgoing_bundles: outgoing_bundles/
+      assessment_reports: assessment/
+      no_leading_dots: true
+      extension_policy: yml_and_yaml_allowed_in_non_dot_paths
+  publisher:
+    output_formats:
+    - pdf
+    - lean
+    - yaml
+    auto_documentation: true
+    latex_template: stegverse_academic
+    lean_version: 4.6.0
+    bundle_structure:
+      formal:
+      - paper_pdf
+      - proof_lean
+      - metadata_yml
+      implementation:
+      - algorithm_sketch_py
+      - complexity_analysis_md
+      - api_surface_md
+      assessment:
+      - applicability_report_md
+      - integration_candidates_yml
+      - risk_flags_yml
+  stegdb_monitoring:
+    log_level: debug
+    retention_days: 30
+    cross_org_sync: async
+    audit_completeness: true
+    cost_accounting: true
+  tv_tvc:
+    artifact_management: ephemeral
+    platform_agnostic: true
+    no_hardcoded_secrets: true
+    token_rotation_hours: 1
+    budget_alerts:
+      daily_spend: 100.0
+      per_problem_spend: 200.0
+      novelty_spike_cost: 50.0
+  multi_agent_coordination:
+    enabled: true
+    llm_generates_plan: true
+    orchestrator_executes: true
+    agent_types:
+    - lean-verifier
+    - test-harness
+    - security-scan
+    - impl-extractor
+    execution_mode: parallel
+    dependency_resolution: true
+    aggregation_strategy: confidence_composite
+  stop_gap_parameters:
+    max_iterations: 50
+    max_reasoning_time_minutes: 120
+    confidence_threshold: 0.85
+    novelty_floor: 0.7
+    invariant_violation_limit: 3
+    human_review_trigger: novelty >= 0.95 OR confidence in (0.70, 0.85)
+    stagnation_window: 10
+    cost_ceiling_usd: 500.0
+    sandbox_timeout_minutes: 30
+    resource_limit_cpu: 2
+    resource_limit_memory_gb: 4
+    max_concurrent_sandboxes: 5
+    orphan_timeout_hours: 72
