@@ -1,0 +1,32 @@
+problem_spec_v1:
+  problem_id: SV-MATH-001
+  timestamp: '2026-05-02T00:30:00Z'
+  tier: 1
+  status: queued
+  title: GCAT/BCAT Admissibility Complete Invariant Characterization
+  statement: Formal necessary and sufficient conditions for ALLOW gate admissibility
+    in the GCAT/BCAT engine, proving that geometric boundary preservation, divergence
+    boundedness, and ontological consistency are jointly complete.
+  domain: GCAT/BCAT
+  subdomain: admissibility
+  known_partial_results:
+  - Geometric boundary preservation is necessary (GCAT lemma 3.2)
+  - Divergence boundedness is necessary (BCAT lemma 4.1)
+  - Ontological consistency is necessary (GOD theorem 1)
+  open_question: Are these three conditions jointly sufficient? That is, does boundary
+    preservation + bounded divergence + ontological consistency imply ALLOW admissibility
+    for all state transitions in the GCAT/BCAT engine?
+  expected_formalization: LaTeX proof + Lean 4 verification
+  budget_allocation:
+    tier_1_ceiling: 500.0
+    max_iterations: 50
+    max_reasoning_time_minutes: 120
+  success_criteria:
+    confidence_threshold: 0.85
+    novelty_floor: 0.7
+    lean_verification: required
+    implications_expected: 3
+  routing:
+    target_repo: GCAT-BCAT-Engine
+    target_path: invariants/admissibility/
+    publisher_path: papers/gcat_bcat_admissibility/
