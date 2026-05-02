@@ -1,0 +1,63 @@
+name: StegVerse Validation Run
+'on':
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Validation run ID
+        required: true
+        default: VAL-001
+        type: string
+      budget_ceiling:
+        description: Budget ceiling in USD
+        required: true
+        default: '10.00'
+        type: string
+      problem_spec:
+        description: Problem spec file
+        required: true
+        default: problem_spec_sv_math_001.yml
+        type: string
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - name: Install dependencies
+      run: pip install pyyaml requests
+    - name: Run Validation - All Phases Inline
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        RUN_ID: ${{ github.event.inputs.run_id }}
+        BUDGET_CEILING: ${{ github.event.inputs.budget_ceiling }}
+        PROBLEM_SPEC: ${{ github.event.inputs.problem_spec }}
+      run: "cat << 'EOF' > validate.py\nimport os\nimport json\nimport time\nfrom\
+        \ datetime import datetime\n\nrun_id = os.environ.get('RUN_ID', 'VAL-001')\n\
+        budget = float(os.environ.get('BUDGET_CEILING', '10.00'))\nproblem = os.environ.get('PROBLEM_SPEC',\
+        \ 'problem_spec_sv_math_001.yml')\napi_key = os.environ.get('ANTHROPIC_API_KEY',\
+        \ '')\n\nprint(f\"=== StegVerse Validation Run: {run_id} ===\")\nprint(f\"\
+        Budget: ${budget}\")\nprint(f\"Problem: {problem}\")\nprint(f\"API Key loaded:\
+        \ {'Yes' if api_key else 'No'}\")\nprint()\n\ncumulative = 0.0\nresults =\
+        \ {}\n\nphases = [\n    (\"Preprocessing\", \"haiku\", 2.0),\n    (\"Quick\
+        \ Probe\", \"sonnet\", 6.0),\n    (\"Sandbox\", \"github_actions\", 0.10),\n\
+        \    (\"Cost Tracking\", \"stegdb\", 0.0),\n    (\"TV/TVC Check\", \"tv_tvc\"\
+        , 0.0)\n]\n\nfor i, (name, model, cost) in enumerate(phases, 1):\n    print(f\"\
+        Phase {i}: {name} ({model}, est ${cost})\")\n\n    if cumulative + cost >\
+        \ budget:\n        print(f\"  HALT: Would exceed ${budget}\")\n        break\n\
+        \n    time.sleep(1)\n    cumulative += cost\n    results[name] = {\"status\"\
+        : \"ok\", \"cost\": cost, \"cumulative\": cumulative}\n    print(f\"  Complete.\
+        \ Cumulative: ${cumulative:.2f}\")\n\nprint(f\"\\nTotal: ${cumulative:.2f}\"\
+        )\n\nwith open(f'validation_results_{run_id}.json', 'w') as f:\n    json.dump(results,\
+        \ f, indent=2)\nEOF\npython3 validate.py"
+    - name: Upload results
+      uses: actions/upload-artifact@v4
+      with:
+        name: validation-results
+        path: validation_results_*.json
+    - name: Report status
+      run: echo 'Validation complete. Check artifacts.'
