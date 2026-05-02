@@ -1,0 +1,59 @@
+name: StegVerse Validation Run
+'on':
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Validation run ID
+        required: true
+        default: VAL-001
+        type: string
+      budget_ceiling:
+        description: Budget ceiling in USD
+        required: true
+        default: '10.00'
+        type: string
+      problem_spec:
+        description: Problem spec file
+        required: true
+        default: problem_spec_sv_math_001.yml
+        type: string
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - name: Install dependencies
+      run: pip install pyyaml requests
+    - name: Load TV API config
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      run: echo 'API key loaded from secrets'
+    - name: Run Phase 1 - Preprocessing
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      run: python3 validation_runner.py --phase 1 --model haiku --budget ${{ github.event.inputs.budget_ceiling
+        }}
+    - name: Run Phase 2 - Quick Probe
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      run: python3 validation_runner.py --phase 2 --model sonnet --budget ${{ github.event.inputs.budget_ceiling
+        }}
+    - name: Run Phase 3 - Sandbox
+      run: python3 validation_runner.py --phase 3 --infrastructure github_actions
+    - name: Run Phase 4 - Cost Tracking
+      run: python3 validation_runner.py --phase 4 --infrastructure stegdb
+    - name: Run Phase 5 - TV/TVC Check
+      run: python3 validation_runner.py --phase 5 --infrastructure tv_tvc
+    - name: Upload results
+      uses: actions/upload-artifact@v4
+      with:
+        name: validation-results
+        path: validation_results_*.json
+    - name: Report status
+      run: echo 'Validation complete. Check artifacts for results.'
