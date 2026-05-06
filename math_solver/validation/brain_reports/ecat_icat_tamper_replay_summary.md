@@ -1,12 +1,12 @@
 # ECAT/ICAT Replay Summary
 
 - Receipts replayed: **38**
-- Chain valid: **True**
-- Mismatches found: **0**
+- Chain valid: **False**
+- Mismatches found: **1**
 
 | ID | Layer | Original Outcome | Replay Outcome | Original Reason | Replay Reason | Match? |
 |---|---|---|---|---|---|---|
-| ECAT_001 | ECAT | ALLOW | ALLOW | ecat_admissible | ecat_admissible | ✅ |
+| ECAT_001 | ECAT | DENY | ALLOW | tampered | ecat_admissible | ❌ |
 | ECAT_002 | ECAT | DENY | DENY | low_reputation | low_reputation | ✅ |
 | ECAT_003 | ECAT | FAIL_CLOSED | FAIL_CLOSED | missing_reputation | missing_reputation | ✅ |
 | ECAT_004 | ECAT | DENY | DENY | history_divergence_high | history_divergence_high | ✅ |

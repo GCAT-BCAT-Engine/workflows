@@ -1,19 +1,28 @@
 {
   "schema": "stegverse.sandbox.ecat_icat.replay_report.v1",
   "total": 38,
-  "matches": 38,
-  "mismatches": 0,
-  "chain_valid": true,
-  "mismatch_details": [],
+  "matches": 37,
+  "mismatches": 1,
+  "chain_valid": false,
+  "mismatch_details": [
+    {
+      "candidate_id": "ECAT_001",
+      "layer": "ECAT",
+      "original_outcome": "DENY",
+      "replay_outcome": "ALLOW",
+      "original_reason": "tampered",
+      "replay_reason": "ecat_admissible"
+    }
+  ],
   "replay": [
     {
       "candidate_id": "ECAT_001",
       "layer": "ECAT",
-      "original_outcome": "ALLOW",
+      "original_outcome": "DENY",
       "replay_outcome": "ALLOW",
-      "original_reason": "ecat_admissible",
+      "original_reason": "tampered",
       "replay_reason": "ecat_admissible",
-      "match": true
+      "match": false
     },
     {
       "candidate_id": "ECAT_002",

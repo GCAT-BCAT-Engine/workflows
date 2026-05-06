@@ -1,0 +1,178 @@
+{
+  "schema": "stegverse.sandbox.pe.replay_report.v1",
+  "total": 20,
+  "matches": 19,
+  "mismatches": 1,
+  "chain_valid": false,
+  "mismatch_details": [
+    {
+      "candidate_id": "PE_001",
+      "original_outcome": "DENY",
+      "replay_outcome": "ALLOW",
+      "original_reason": "tampered",
+      "replay_reason": "pe_admissible"
+    }
+  ],
+  "replay": [
+    {
+      "candidate_id": "PE_001",
+      "original_outcome": "DENY",
+      "replay_outcome": "ALLOW",
+      "original_reason": "tampered",
+      "replay_reason": "pe_admissible",
+      "match": false
+    },
+    {
+      "candidate_id": "PE_002",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "probability_below_threshold",
+      "replay_reason": "probability_below_threshold",
+      "match": true
+    },
+    {
+      "candidate_id": "PE_003",
+      "original_outcome": "FAIL_CLOSED",
+      "replay_outcome": "FAIL_CLOSED",
+      "original_reason": "probability_unavailable",
+      "replay_reason": "probability_unavailable",
+      "match": true
+    },
+    {
+      "candidate_id": "PE_004",
+      "original_outcome": "FAIL_CLOSED",
+      "replay_outcome": "FAIL_CLOSED",
+      "original_reason": "probability_invalid",
+      "replay_reason": "probability_invalid",
+      "match": true
+    },
+    {
+      "candidate_id": "PE_005",
+      "original_outcome": "ALLOW",
+      "replay_outcome": "ALLOW",
+      "original_reason": "pe_admissible",
+      "replay_reason": "pe_admissible",
+      "match": true
+    },
+    {
+      "candidate_id": "PE_006",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "budget_exceeded",
+      "replay_reason": "budget_exceeded",
+      "match": true
+    },
+    {
+      "candidate_id": "PE_007",
+      "original_outcome": "FAIL_CLOSED",
+      "replay_outcome": "FAIL_CLOSED",
+      "original_reason": "probability_invalid",
+      "replay_reason": "probability_invalid",
+      "match": true
+    },
+    {
+      "candidate_id": "PE_008",
+      "original_outcome": "ALLOW",
+      "replay_outcome": "ALLOW",
+      "original_reason": "pe_admissible",
+      "replay_reason": "pe_admissible",
+      "match": true
+    },
+    {
+      "candidate_id": "PE_ADV_001",
+      "original_outcome": "ALLOW",
+      "replay_outcome": "ALLOW",
+      "original_reason": "pe_admissible",
+      "replay_reason": "pe_admissible",
+      "match": true
+    },
+    {
+      "candidate_id": "PE_ADV_002",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "probability_below_threshold",
+      "replay_reason": "probability_below_threshold",
+      "match": true
+    },
+    {
+      "candidate_id": "PE_ADV_003",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "budget_exceeded",
+      "replay_reason": "budget_exceeded",
+      "match": true
+    },
+    {
+      "candidate_id": "PE_ADV_004",
+      "original_outcome": "FAIL_CLOSED",
+      "replay_outcome": "FAIL_CLOSED",
+      "original_reason": "probability_unavailable",
+      "replay_reason": "probability_unavailable",
+      "match": true
+    },
+    {
+      "candidate_id": "PE_ADV_005",
+      "original_outcome": "FAIL_CLOSED",
+      "replay_outcome": "FAIL_CLOSED",
+      "original_reason": "probability_invalid",
+      "replay_reason": "probability_invalid",
+      "match": true
+    },
+    {
+      "candidate_id": "PE_ADV_006",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "budget_exceeded",
+      "replay_reason": "budget_exceeded",
+      "match": true
+    },
+    {
+      "candidate_id": "PE_ADV_007",
+      "original_outcome": "ALLOW",
+      "replay_outcome": "ALLOW",
+      "original_reason": "pe_admissible",
+      "replay_reason": "pe_admissible",
+      "match": true
+    },
+    {
+      "candidate_id": "PE_ADV_008",
+      "original_outcome": "ALLOW",
+      "replay_outcome": "ALLOW",
+      "original_reason": "pe_admissible",
+      "replay_reason": "pe_admissible",
+      "match": true
+    },
+    {
+      "candidate_id": "PE_ADV_009",
+      "original_outcome": "ALLOW",
+      "replay_outcome": "ALLOW",
+      "original_reason": "pe_admissible",
+      "replay_reason": "pe_admissible",
+      "match": true
+    },
+    {
+      "candidate_id": "PE_ADV_010",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "budget_exceeded",
+      "replay_reason": "budget_exceeded",
+      "match": true
+    },
+    {
+      "candidate_id": "PE_ADV_011",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "budget_exceeded",
+      "replay_reason": "budget_exceeded",
+      "match": true
+    },
+    {
+      "candidate_id": "PE_ADV_012",
+      "original_outcome": "FAIL_CLOSED",
+      "replay_outcome": "FAIL_CLOSED",
+      "original_reason": "probability_invalid",
+      "replay_reason": "probability_invalid",
+      "match": true
+    }
+  ]
+}

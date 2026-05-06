@@ -1,9 +1,9 @@
 {
   "schema": "stegverse.sandbox.ecat_icat.sandbox_report.v1",
-  "total": 14,
-  "allow": 2,
-  "deny": 10,
-  "fail_closed": 2,
+  "total": 38,
+  "allow": 6,
+  "deny": 24,
+  "fail_closed": 8,
   "chain_valid": true,
   "receipts": [
     {
@@ -89,13 +89,151 @@
       }
     },
     {
+      "candidate_id": "ECAT_ADV_001",
+      "layer": "ECAT",
+      "outcome": "ALLOW",
+      "reason": "ecat_admissible",
+      "basis_hash": "f836f3c438dbcb80f2889f4610e27972765da62e8e6f6a71267a730d6711cc25",
+      "prev_receipt_hash": "6ede278e51804c3d177a1f9110f1c0805ceee6aa8b9453da8689d33cc49d0582",
+      "receipt_hash": "031432b56c68482a7f2008724174937bce652a839bdaa4a5c668badcfa73fe9b",
+      "cost": {
+        "cost_R": 0.5,
+        "cost_S": 0.0,
+        "cost_H": 0.3,
+        "total_cost": 0.8,
+        "budget": 2.0
+      }
+    },
+    {
+      "candidate_id": "ECAT_ADV_002",
+      "layer": "ECAT",
+      "outcome": "DENY",
+      "reason": "low_reputation",
+      "basis_hash": "6f89bf6e58a9a73f9566a67594dcc3d031c732172107b724466ae60326535928",
+      "prev_receipt_hash": "031432b56c68482a7f2008724174937bce652a839bdaa4a5c668badcfa73fe9b",
+      "receipt_hash": "98136397b96c63086aad622c0aba53911288b3d4f41499f7f3180056a3b6526f",
+      "cost": {}
+    },
+    {
+      "candidate_id": "ECAT_ADV_003",
+      "layer": "ECAT",
+      "outcome": "ALLOW",
+      "reason": "ecat_admissible",
+      "basis_hash": "450d62078f8ab18f22f5ab0cae9917525248c5faf6ec9cbcae9527a332e5fae1",
+      "prev_receipt_hash": "98136397b96c63086aad622c0aba53911288b3d4f41499f7f3180056a3b6526f",
+      "receipt_hash": "448bf1ce3daec733d906c805909b09ef07c8dc679e1e508b40c661c42d25e4d9",
+      "cost": {
+        "cost_R": 0.19999999999999996,
+        "cost_S": 0.0,
+        "cost_H": 0.2,
+        "total_cost": 0.39999999999999997,
+        "budget": 2.0
+      }
+    },
+    {
+      "candidate_id": "ECAT_ADV_004",
+      "layer": "ECAT",
+      "outcome": "DENY",
+      "reason": "insufficient_stake",
+      "basis_hash": "fde984e4f3bb157d060d037c8269b872f0adfcfe0896c7d67c543ebf030cde0c",
+      "prev_receipt_hash": "448bf1ce3daec733d906c805909b09ef07c8dc679e1e508b40c661c42d25e4d9",
+      "receipt_hash": "6af42afd3ac5aa94c6deaffcec2feedb6505dcc75d49394195f635d84ec5eb54",
+      "cost": {}
+    },
+    {
+      "candidate_id": "ECAT_ADV_005",
+      "layer": "ECAT",
+      "outcome": "ALLOW",
+      "reason": "ecat_admissible",
+      "basis_hash": "0c69c5e2556fefbbff9beb8f914bd004d8b029060c6c0c05d9fca7ebd9d2f232",
+      "prev_receipt_hash": "6af42afd3ac5aa94c6deaffcec2feedb6505dcc75d49394195f635d84ec5eb54",
+      "receipt_hash": "90b0daa7fc86c160d10db3ccb93c2e84d7cf7f885298909010467c3951a03da8",
+      "cost": {
+        "cost_R": 0.19999999999999996,
+        "cost_S": 0.0,
+        "cost_H": 0.5,
+        "total_cost": 0.7,
+        "budget": 2.0
+      }
+    },
+    {
+      "candidate_id": "ECAT_ADV_006",
+      "layer": "ECAT",
+      "outcome": "DENY",
+      "reason": "history_divergence_high",
+      "basis_hash": "647a15967b0f63cb71bd7bee215f7b4a474b677191ba0b4a0dc0aa28dbed92d8",
+      "prev_receipt_hash": "90b0daa7fc86c160d10db3ccb93c2e84d7cf7f885298909010467c3951a03da8",
+      "receipt_hash": "bb239dd50d7559eb412a4ad9370042da271e86f945499ca22c78a1e9f4427f71",
+      "cost": {}
+    },
+    {
+      "candidate_id": "ECAT_ADV_007",
+      "layer": "ECAT",
+      "outcome": "DENY",
+      "reason": "low_reputation",
+      "basis_hash": "7d05fff42325538479a252e2833d20f0bb67aee767552e0b154a7e63ef56c4b9",
+      "prev_receipt_hash": "bb239dd50d7559eb412a4ad9370042da271e86f945499ca22c78a1e9f4427f71",
+      "receipt_hash": "20cb8584d468d7238d93ce605aa435eea6cd9469608d1d652648f8899d7cd260",
+      "cost": {}
+    },
+    {
+      "candidate_id": "ECAT_ADV_008",
+      "layer": "ECAT",
+      "outcome": "FAIL_CLOSED",
+      "reason": "missing_stake",
+      "basis_hash": "0d117d46fd551057677a7f9e4ff526791a34df6e654eee1970e0b819c3cad876",
+      "prev_receipt_hash": "20cb8584d468d7238d93ce605aa435eea6cd9469608d1d652648f8899d7cd260",
+      "receipt_hash": "6b8cc8bcc02d3c0a9c556891da2ccad2f01cf78d3a39e1a51294b16d6e087102",
+      "cost": {}
+    },
+    {
+      "candidate_id": "ECAT_ADV_009",
+      "layer": "ECAT",
+      "outcome": "FAIL_CLOSED",
+      "reason": "missing_history",
+      "basis_hash": "54f899619267093c1769fbc7531b5caf01c3e607d4a36785be1e00227dfdb80b",
+      "prev_receipt_hash": "6b8cc8bcc02d3c0a9c556891da2ccad2f01cf78d3a39e1a51294b16d6e087102",
+      "receipt_hash": "593ef2007ac51f9c317bd107e40ce26ffda508afae12cf3b776575ecebdc94f2",
+      "cost": {}
+    },
+    {
+      "candidate_id": "ECAT_ADV_010",
+      "layer": "ECAT",
+      "outcome": "DENY",
+      "reason": "insufficient_stake",
+      "basis_hash": "858d645ffe3d73282016944822ba5e1488bbd460cffdbd98afe7583fbb5d0857",
+      "prev_receipt_hash": "593ef2007ac51f9c317bd107e40ce26ffda508afae12cf3b776575ecebdc94f2",
+      "receipt_hash": "81e10259c02bfed266ad12a3a31ab37e87eaf2fef03e797961882f9d42515280",
+      "cost": {}
+    },
+    {
+      "candidate_id": "ECAT_ADV_011",
+      "layer": "ECAT",
+      "outcome": "DENY",
+      "reason": "insufficient_stake",
+      "basis_hash": "900f6bd8e7c9d368fac1cb4663db3da6356b30ed40b70c2fad478742b7c88e77",
+      "prev_receipt_hash": "81e10259c02bfed266ad12a3a31ab37e87eaf2fef03e797961882f9d42515280",
+      "receipt_hash": "cd0fe3f11b197a73a91a154538e91e16a480091421d5560937fc783af59e789d",
+      "cost": {}
+    },
+    {
+      "candidate_id": "ECAT_ADV_012",
+      "layer": "ECAT",
+      "outcome": "DENY",
+      "reason": "co_owner_rejection",
+      "basis_hash": "d4116ce2c347923bb8bed93cfb8e1b5c61bcb78f3d57e3ae4985fdcb93e2a322",
+      "prev_receipt_hash": "cd0fe3f11b197a73a91a154538e91e16a480091421d5560937fc783af59e789d",
+      "receipt_hash": "9ad77656fd92aeabe3399965a680461e070aabecd4eb4a7c4e126a8e3fbee8dc",
+      "cost": {}
+    },
+    {
       "candidate_id": "ICAT_001",
       "layer": "ICAT",
       "outcome": "ALLOW",
       "reason": "icat_admissible",
       "basis_hash": "7720aa038381a8b1829e588128b10fee81c120b8ee51541732525d46ec038372",
-      "prev_receipt_hash": "6ede278e51804c3d177a1f9110f1c0805ceee6aa8b9453da8689d33cc49d0582",
-      "receipt_hash": "1b5f4f13ecd422498f9b02c112b9de675083ce5b684552022cc80339f1fa791a",
+      "prev_receipt_hash": "9ad77656fd92aeabe3399965a680461e070aabecd4eb4a7c4e126a8e3fbee8dc",
+      "receipt_hash": "9a715464f6724bb6ef15436b047b2fb28ad957c68d10a937dc2311abbeabfc44",
       "cost": {
         "cost_P": 1.0,
         "cost_A": 3.0,
@@ -111,8 +249,8 @@
       "outcome": "DENY",
       "reason": "proof_invalid",
       "basis_hash": "e4547de0022c170adbf31684d5adfdc26f2c7543e4ac78d6f019c2fba72e9a36",
-      "prev_receipt_hash": "1b5f4f13ecd422498f9b02c112b9de675083ce5b684552022cc80339f1fa791a",
-      "receipt_hash": "1ceabf25daafd668754b37fb353091a53670e1a995c00643a8a63ec4347565a8",
+      "prev_receipt_hash": "9a715464f6724bb6ef15436b047b2fb28ad957c68d10a937dc2311abbeabfc44",
+      "receipt_hash": "27c9267323fc10da0bdcda9a7fb692a18c92e9f79afa3a32281d0dfeb872a3af",
       "cost": {}
     },
     {
@@ -121,8 +259,8 @@
       "outcome": "FAIL_CLOSED",
       "reason": "proof_unavailable",
       "basis_hash": "ffa6a0869473fb1e94c6d859163c0108e0f89e44ed8e28d74358b6fd94a6cb2a",
-      "prev_receipt_hash": "1ceabf25daafd668754b37fb353091a53670e1a995c00643a8a63ec4347565a8",
-      "receipt_hash": "4ae4ae8447cee05ab9f17e61da2f37f5c1dc2e96efbb410b609ffdfef6052042",
+      "prev_receipt_hash": "27c9267323fc10da0bdcda9a7fb692a18c92e9f79afa3a32281d0dfeb872a3af",
+      "receipt_hash": "2743d1f87e2806faf352eb7e1d85533d4f9a6663ae4de017f281ba7236cd08b1",
       "cost": {}
     },
     {
@@ -131,8 +269,8 @@
       "outcome": "DENY",
       "reason": "attestation_quorum_failed",
       "basis_hash": "e2b42f208d87f0d5b9132a66417a8f849e80783140978567e217ae344653cba1",
-      "prev_receipt_hash": "4ae4ae8447cee05ab9f17e61da2f37f5c1dc2e96efbb410b609ffdfef6052042",
-      "receipt_hash": "5840f60011cf07ca2a1a3dd5630a5156e110b1bd62964aac5ee4a612fd74b01e",
+      "prev_receipt_hash": "2743d1f87e2806faf352eb7e1d85533d4f9a6663ae4de017f281ba7236cd08b1",
+      "receipt_hash": "ce8353225f22bda1d4a82b0b65bc5560d51c498af083c62f61ca8e2f5309345b",
       "cost": {}
     },
     {
@@ -141,8 +279,8 @@
       "outcome": "DENY",
       "reason": "conservation_failed",
       "basis_hash": "6ecda890f3b6801a20ffc148c8a4454cca773a408e87e7cb1a70ae7f5d38e7d5",
-      "prev_receipt_hash": "5840f60011cf07ca2a1a3dd5630a5156e110b1bd62964aac5ee4a612fd74b01e",
-      "receipt_hash": "b0002b612914a5a534e0cc6933bbe69c842de241657b4ad9e14beff56cea073f",
+      "prev_receipt_hash": "ce8353225f22bda1d4a82b0b65bc5560d51c498af083c62f61ca8e2f5309345b",
+      "receipt_hash": "5126767e93d1b0932c53059b2eb523dea30486d0a6579367f85f35d666a4302f",
       "cost": {}
     },
     {
@@ -151,8 +289,8 @@
       "outcome": "DENY",
       "reason": "inverse_failed",
       "basis_hash": "65f3c95edd01947b7298a3e6e2cee6628eca06d295a585e25050e8f1e77e47b9",
-      "prev_receipt_hash": "b0002b612914a5a534e0cc6933bbe69c842de241657b4ad9e14beff56cea073f",
-      "receipt_hash": "7263204a38f7b2f98bc62721fb456e227b6b1e44f785c6cb73fa8d682a9ab455",
+      "prev_receipt_hash": "5126767e93d1b0932c53059b2eb523dea30486d0a6579367f85f35d666a4302f",
+      "receipt_hash": "9ba1487566aadeaca931b2519392436ed1d1a57031903bd5af7b74ee5e0f2892",
       "cost": {}
     },
     {
@@ -161,8 +299,8 @@
       "outcome": "DENY",
       "reason": "budget_exceeded",
       "basis_hash": "78f548ef4062212c0eec8ed518415548b67147b90834f0dfd9a40370153a95a5",
-      "prev_receipt_hash": "7263204a38f7b2f98bc62721fb456e227b6b1e44f785c6cb73fa8d682a9ab455",
-      "receipt_hash": "ad3f5fe76a74c7b6e2d9391afb92b97069deef735be9b50dfb8f01d4c42b5822",
+      "prev_receipt_hash": "9ba1487566aadeaca931b2519392436ed1d1a57031903bd5af7b74ee5e0f2892",
+      "receipt_hash": "de4bdf4c11ff040c6e8be6c9cc8e4e9a9a7d3b1a067986ef3ef20fc6c14765ee",
       "cost": {
         "cost_P": 1.0,
         "cost_A": 3.0,
@@ -171,6 +309,140 @@
         "total_cost": 6.0,
         "budget": 5.0
       }
+    },
+    {
+      "candidate_id": "ICAT_ADV_001",
+      "layer": "ICAT",
+      "outcome": "ALLOW",
+      "reason": "icat_admissible",
+      "basis_hash": "88add1730596c2664d67f0378647e92dfc03ee48d3728cdf66c2aac34d4a2d1f",
+      "prev_receipt_hash": "de4bdf4c11ff040c6e8be6c9cc8e4e9a9a7d3b1a067986ef3ef20fc6c14765ee",
+      "receipt_hash": "74d1526db476dd063f300abbbf574714ca38600225363fd9da4f52ce322fe978",
+      "cost": {
+        "cost_P": 0.5,
+        "cost_A": 1.0,
+        "cost_K": 0.5,
+        "cost_X": 0.5,
+        "total_cost": 2.5,
+        "budget": 5.0
+      }
+    },
+    {
+      "candidate_id": "ICAT_ADV_002",
+      "layer": "ICAT",
+      "outcome": "DENY",
+      "reason": "proof_invalid",
+      "basis_hash": "439a37a4143fca91edd7d51cacec68580f33101c20b1144ebb191d86c8add265",
+      "prev_receipt_hash": "74d1526db476dd063f300abbbf574714ca38600225363fd9da4f52ce322fe978",
+      "receipt_hash": "b4c9eaf2c85546d3eb9100ac7cae19ee21a8da96ed1b009faec63d6b152c9d0d",
+      "cost": {}
+    },
+    {
+      "candidate_id": "ICAT_ADV_003",
+      "layer": "ICAT",
+      "outcome": "FAIL_CLOSED",
+      "reason": "proof_unavailable",
+      "basis_hash": "a8c1a9cf662d51b222da044e1285154f9a33a37048196bfde80c69195a1e2c54",
+      "prev_receipt_hash": "b4c9eaf2c85546d3eb9100ac7cae19ee21a8da96ed1b009faec63d6b152c9d0d",
+      "receipt_hash": "69d5bbd6aae8e95873e57d2605ea414de7f95a6d37f2dad64b0b7f8dc9fc0a21",
+      "cost": {}
+    },
+    {
+      "candidate_id": "ICAT_ADV_004",
+      "layer": "ICAT",
+      "outcome": "DENY",
+      "reason": "attestation_quorum_failed",
+      "basis_hash": "595aaca65734fced6ed68b686a7ed4ecdf7d0a2fd921d714fee5fa0c1ee29f3e",
+      "prev_receipt_hash": "69d5bbd6aae8e95873e57d2605ea414de7f95a6d37f2dad64b0b7f8dc9fc0a21",
+      "receipt_hash": "09caf8205bbfb2e9ce885ee2bd1101b98f976cd076a92de6f00d5426ba27fa26",
+      "cost": {}
+    },
+    {
+      "candidate_id": "ICAT_ADV_005",
+      "layer": "ICAT",
+      "outcome": "FAIL_CLOSED",
+      "reason": "attestation_unavailable",
+      "basis_hash": "f121c7be0d8e1944c33771763351b500262e2e77cf902e67c4d8cefef1709aff",
+      "prev_receipt_hash": "09caf8205bbfb2e9ce885ee2bd1101b98f976cd076a92de6f00d5426ba27fa26",
+      "receipt_hash": "8a2401617893880137dbdd477ca05fe63feecfc44774b483a2a5071bf34c01a0",
+      "cost": {}
+    },
+    {
+      "candidate_id": "ICAT_ADV_006",
+      "layer": "ICAT",
+      "outcome": "DENY",
+      "reason": "conservation_failed",
+      "basis_hash": "9e5abb5a0e52499659399566676df6bf267f49919dc6a715a1d97b81f6e57ed3",
+      "prev_receipt_hash": "8a2401617893880137dbdd477ca05fe63feecfc44774b483a2a5071bf34c01a0",
+      "receipt_hash": "32d8f3468a0fdc2f09b40f4dfd3903dd3eb4b6ce594f26e2e1bb57cd86d79de1",
+      "cost": {}
+    },
+    {
+      "candidate_id": "ICAT_ADV_007",
+      "layer": "ICAT",
+      "outcome": "DENY",
+      "reason": "inverse_failed",
+      "basis_hash": "9e5532af0531bc7a4b765460b2064f22e9665f85f737028f74449f80c86d7966",
+      "prev_receipt_hash": "32d8f3468a0fdc2f09b40f4dfd3903dd3eb4b6ce594f26e2e1bb57cd86d79de1",
+      "receipt_hash": "ee860f23f155ca045bb05bd1a412da9ef81263438a75827c4e8a9250230a7124",
+      "cost": {}
+    },
+    {
+      "candidate_id": "ICAT_ADV_008",
+      "layer": "ICAT",
+      "outcome": "DENY",
+      "reason": "budget_exceeded",
+      "basis_hash": "73ed148b4d26ce4e482e3aa6cb80a8beccf0904d24076208f9596d9529e6df88",
+      "prev_receipt_hash": "ee860f23f155ca045bb05bd1a412da9ef81263438a75827c4e8a9250230a7124",
+      "receipt_hash": "2de8618611252880db2c6ba5592e6062ec4b477cd47d6e732fc1156b6f25f566",
+      "cost": {
+        "cost_P": 10.0,
+        "cost_A": 30.0,
+        "cost_K": 10.0,
+        "cost_X": 10.0,
+        "total_cost": 60.0,
+        "budget": 30.0
+      }
+    },
+    {
+      "candidate_id": "ICAT_ADV_009",
+      "layer": "ICAT",
+      "outcome": "FAIL_CLOSED",
+      "reason": "inverse_unavailable",
+      "basis_hash": "6473cefda0ecbcc521f63c06026260aa792a3c18af1f3dd968b59d49e92e1c6a",
+      "prev_receipt_hash": "2de8618611252880db2c6ba5592e6062ec4b477cd47d6e732fc1156b6f25f566",
+      "receipt_hash": "2e06b0817cb81a170a3986fe39fe89cc68c0b4d25f11127d97dd93ffea6c52fc",
+      "cost": {}
+    },
+    {
+      "candidate_id": "ICAT_ADV_010",
+      "layer": "ICAT",
+      "outcome": "FAIL_CLOSED",
+      "reason": "conservation_unavailable",
+      "basis_hash": "64c5f8ad59f2d8221df154c6d9646ef716dd6c1dfa837452fc850e1b720839c5",
+      "prev_receipt_hash": "2e06b0817cb81a170a3986fe39fe89cc68c0b4d25f11127d97dd93ffea6c52fc",
+      "receipt_hash": "39e53f516fa3916ed7ad99319e0aa011315fa73ce692d40c537409b5169dbcce",
+      "cost": {}
+    },
+    {
+      "candidate_id": "ICAT_ADV_011",
+      "layer": "ICAT",
+      "outcome": "DENY",
+      "reason": "attestation_quorum_failed",
+      "basis_hash": "ff48da4df7389963e043b2502e578e5e27512f689836177f13935b6c68ff8927",
+      "prev_receipt_hash": "39e53f516fa3916ed7ad99319e0aa011315fa73ce692d40c537409b5169dbcce",
+      "receipt_hash": "c72f36208c17ae17af504da35053e202ce24fd06abc6a5e7205639d378da1bce",
+      "cost": {}
+    },
+    {
+      "candidate_id": "ICAT_ADV_012",
+      "layer": "ICAT",
+      "outcome": "DENY",
+      "reason": "attestation_quorum_failed",
+      "basis_hash": "e494fe308ec6b5204ab40cf0842be7950f3c919eb6e0538fac85db43af100a51",
+      "prev_receipt_hash": "c72f36208c17ae17af504da35053e202ce24fd06abc6a5e7205639d378da1bce",
+      "receipt_hash": "dc30d3267659dad808280b43c2746f3ea72987ea3f3467b982c90eadd3cb7ead",
+      "cost": {}
     }
   ]
 }

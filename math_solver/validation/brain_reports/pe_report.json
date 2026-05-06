@@ -1,0 +1,177 @@
+{
+  "schema": "stegverse.sandbox.pe.validation_report.v1",
+  "total": 20,
+  "allow": 7,
+  "deny": 7,
+  "fail_closed": 6,
+  "results": [
+    {
+      "candidate_id": "PE_001",
+      "outcome": "ALLOW",
+      "reason": "pe_admissible",
+      "cost": {
+        "cost_P": 0.0,
+        "total_cost": 0.0,
+        "budget": 1.0
+      }
+    },
+    {
+      "candidate_id": "PE_002",
+      "outcome": "DENY",
+      "reason": "probability_below_threshold",
+      "cost": {}
+    },
+    {
+      "candidate_id": "PE_003",
+      "outcome": "FAIL_CLOSED",
+      "reason": "probability_unavailable",
+      "cost": {}
+    },
+    {
+      "candidate_id": "PE_004",
+      "outcome": "FAIL_CLOSED",
+      "reason": "probability_invalid",
+      "cost": {}
+    },
+    {
+      "candidate_id": "PE_005",
+      "outcome": "ALLOW",
+      "reason": "pe_admissible",
+      "cost": {
+        "cost_P": 0.19999999999999996,
+        "total_cost": 0.19999999999999996,
+        "budget": 0.2
+      }
+    },
+    {
+      "candidate_id": "PE_006",
+      "outcome": "DENY",
+      "reason": "budget_exceeded",
+      "cost": {
+        "cost_P": 1.9999999999999996,
+        "total_cost": 1.9999999999999996,
+        "budget": 1.0
+      }
+    },
+    {
+      "candidate_id": "PE_007",
+      "outcome": "FAIL_CLOSED",
+      "reason": "probability_invalid",
+      "cost": {}
+    },
+    {
+      "candidate_id": "PE_008",
+      "outcome": "ALLOW",
+      "reason": "pe_admissible",
+      "cost": {
+        "cost_P": 2.5,
+        "total_cost": 2.5,
+        "budget": null
+      }
+    },
+    {
+      "candidate_id": "PE_ADV_001",
+      "outcome": "ALLOW",
+      "reason": "pe_admissible",
+      "cost": {
+        "cost_P": 0.19999999999999996,
+        "total_cost": 0.19999999999999996,
+        "budget": 1.0
+      }
+    },
+    {
+      "candidate_id": "PE_ADV_002",
+      "outcome": "DENY",
+      "reason": "probability_below_threshold",
+      "cost": {}
+    },
+    {
+      "candidate_id": "PE_ADV_003",
+      "outcome": "DENY",
+      "reason": "budget_exceeded",
+      "cost": {
+        "cost_P": 2.0,
+        "total_cost": 2.0,
+        "budget": 1.0
+      }
+    },
+    {
+      "candidate_id": "PE_ADV_004",
+      "outcome": "FAIL_CLOSED",
+      "reason": "probability_unavailable",
+      "cost": {}
+    },
+    {
+      "candidate_id": "PE_ADV_005",
+      "outcome": "FAIL_CLOSED",
+      "reason": "probability_invalid",
+      "cost": {}
+    },
+    {
+      "candidate_id": "PE_ADV_006",
+      "outcome": "DENY",
+      "reason": "budget_exceeded",
+      "cost": {
+        "cost_P": 2.500000000000002,
+        "total_cost": 2.500000000000002,
+        "budget": 2.0
+      }
+    },
+    {
+      "candidate_id": "PE_ADV_007",
+      "outcome": "ALLOW",
+      "reason": "pe_admissible",
+      "cost": {
+        "cost_P": 2.500000000000002,
+        "total_cost": 2.500000000000002,
+        "budget": 5.0
+      }
+    },
+    {
+      "candidate_id": "PE_ADV_008",
+      "outcome": "ALLOW",
+      "reason": "pe_admissible",
+      "cost": {
+        "cost_P": 9.999999999999998,
+        "total_cost": 9.999999999999998,
+        "budget": null
+      }
+    },
+    {
+      "candidate_id": "PE_ADV_009",
+      "outcome": "ALLOW",
+      "reason": "pe_admissible",
+      "cost": {
+        "cost_P": -0.0,
+        "total_cost": -0.0,
+        "budget": 1.0
+      }
+    },
+    {
+      "candidate_id": "PE_ADV_010",
+      "outcome": "DENY",
+      "reason": "budget_exceeded",
+      "cost": {
+        "cost_P": 0.09999999999999998,
+        "total_cost": 0.09999999999999998,
+        "budget": 0.05
+      }
+    },
+    {
+      "candidate_id": "PE_ADV_011",
+      "outcome": "DENY",
+      "reason": "budget_exceeded",
+      "cost": {
+        "cost_P": 10.0,
+        "total_cost": 10.0,
+        "budget": 5.0
+      }
+    },
+    {
+      "candidate_id": "PE_ADV_012",
+      "outcome": "FAIL_CLOSED",
+      "reason": "probability_invalid",
+      "cost": {}
+    }
+  ]
+}
