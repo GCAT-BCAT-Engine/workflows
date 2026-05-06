@@ -1,0 +1,136 @@
+{
+  "schema": "stegverse.sandbox.ecat_icat.replay_report.v1",
+  "total": 14,
+  "matches": 14,
+  "mismatches": 0,
+  "chain_valid": true,
+  "mismatch_details": [],
+  "replay": [
+    {
+      "candidate_id": "ECAT_001",
+      "layer": "ECAT",
+      "original_outcome": "ALLOW",
+      "replay_outcome": "ALLOW",
+      "original_reason": "ecat_admissible",
+      "replay_reason": "ecat_admissible",
+      "match": true
+    },
+    {
+      "candidate_id": "ECAT_002",
+      "layer": "ECAT",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "low_reputation",
+      "replay_reason": "low_reputation",
+      "match": true
+    },
+    {
+      "candidate_id": "ECAT_003",
+      "layer": "ECAT",
+      "original_outcome": "FAIL_CLOSED",
+      "replay_outcome": "FAIL_CLOSED",
+      "original_reason": "missing_reputation",
+      "replay_reason": "missing_reputation",
+      "match": true
+    },
+    {
+      "candidate_id": "ECAT_004",
+      "layer": "ECAT",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "history_divergence_high",
+      "replay_reason": "history_divergence_high",
+      "match": true
+    },
+    {
+      "candidate_id": "ECAT_005",
+      "layer": "ECAT",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "low_reputation",
+      "replay_reason": "low_reputation",
+      "match": true
+    },
+    {
+      "candidate_id": "ECAT_006",
+      "layer": "ECAT",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "co_owner_rejection",
+      "replay_reason": "co_owner_rejection",
+      "match": true
+    },
+    {
+      "candidate_id": "ECAT_007",
+      "layer": "ECAT",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "budget_exceeded",
+      "replay_reason": "budget_exceeded",
+      "match": true
+    },
+    {
+      "candidate_id": "ICAT_001",
+      "layer": "ICAT",
+      "original_outcome": "ALLOW",
+      "replay_outcome": "ALLOW",
+      "original_reason": "icat_admissible",
+      "replay_reason": "icat_admissible",
+      "match": true
+    },
+    {
+      "candidate_id": "ICAT_002",
+      "layer": "ICAT",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "proof_invalid",
+      "replay_reason": "proof_invalid",
+      "match": true
+    },
+    {
+      "candidate_id": "ICAT_003",
+      "layer": "ICAT",
+      "original_outcome": "FAIL_CLOSED",
+      "replay_outcome": "FAIL_CLOSED",
+      "original_reason": "proof_unavailable",
+      "replay_reason": "proof_unavailable",
+      "match": true
+    },
+    {
+      "candidate_id": "ICAT_004",
+      "layer": "ICAT",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "attestation_quorum_failed",
+      "replay_reason": "attestation_quorum_failed",
+      "match": true
+    },
+    {
+      "candidate_id": "ICAT_005",
+      "layer": "ICAT",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "conservation_failed",
+      "replay_reason": "conservation_failed",
+      "match": true
+    },
+    {
+      "candidate_id": "ICAT_006",
+      "layer": "ICAT",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "inverse_failed",
+      "replay_reason": "inverse_failed",
+      "match": true
+    },
+    {
+      "candidate_id": "ICAT_007",
+      "layer": "ICAT",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "budget_exceeded",
+      "replay_reason": "budget_exceeded",
+      "match": true
+    }
+  ]
+}
