@@ -2,15 +2,14 @@
   "cost": {
     "bcat": 1.0,
     "budget": 5.0,
-    "gcat": 1.0
+    "gcat": "bad"
   },
   "expected": {
-    "outcome": "ALLOW",
-    "reason": "gcat_bcat_admissible",
-    "total_cost": 2.0
+    "outcome": "FAIL_CLOSED",
+    "reason": "cost_non_numeric_gcat"
   },
-  "id": "CT_GB_001",
-  "name": "allow equilibrium",
+  "id": "CT_GB_005",
+  "name": "fail closed non numeric cost",
   "params": {
     "K": 16.0,
     "alpha": 1.0,

@@ -1,7 +1,13 @@
 {
+  "cost": {
+    "bcat": 1.0,
+    "budget": 5.0,
+    "gcat": 1.0
+  },
   "expected": {
     "outcome": "FAIL_CLOSED",
-    "reason": "state_missing_t"
+    "reason": "state_missing_t",
+    "total_cost": 2.0
   },
   "id": "CT_GB_003",
   "name": "fail closed missing component",

@@ -1,16 +1,16 @@
 {
   "cost": {
-    "bcat": 1.0,
+    "bcat": 3.0,
     "budget": 5.0,
-    "gcat": 1.0
+    "gcat": 3.0
   },
   "expected": {
-    "outcome": "ALLOW",
-    "reason": "gcat_bcat_admissible",
-    "total_cost": 2.0
+    "outcome": "DENY",
+    "reason": "budget_exceeded",
+    "total_cost": 6.0
   },
-  "id": "CT_GB_001",
-  "name": "allow equilibrium",
+  "id": "CT_GB_004",
+  "name": "deny budget exceeded",
   "params": {
     "K": 16.0,
     "alpha": 1.0,
