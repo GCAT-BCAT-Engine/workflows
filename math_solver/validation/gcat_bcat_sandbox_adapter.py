@@ -8,7 +8,6 @@ from typing import Any, Dict, List
 
 from gcat_bcat_candidate_validator import validate_file, build_cost_summary
 
-
 def canonical_json(value: Any) -> str:
     return json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False)
 
@@ -22,31 +21,21 @@ def load_vector(path: Path) -> Dict[str, Any]:
         return {"id": path.stem, "name": path.stem, "malformed": True, "raw_hash": hashlib.sha256(path.read_bytes()).hexdigest()}
 
 def receipt_basis(vector: Dict[str, Any]) -> Dict[str, Any]:
-    return {
-        "state": vector.get("state"),
-        "params": vector.get("params"),
-        "cost": vector.get("cost"),
-        "expected": vector.get("expected"),
-    }
+    return {"state": vector.get("state"), "params": vector.get("params"), "cost": vector.get("cost"), "expected": vector.get("expected")}
 
 def build_receipt(vector_path: Path, result: Dict[str, Any], vector: Dict[str, Any], prev_hash: str) -> Dict[str, Any]:
     basis = receipt_basis(vector)
     payload = {
         "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
-        "receipt_kind": "gcat_bcat_candidate_validation",
+        "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
         "candidate_id": result.get("id"),
         "candidate_file": str(vector_path),
         "candidate_hash": stable_hash(vector),
         "basis": basis,
         "basis_hash": stable_hash(basis),
-        "decision": {
-            "outcome": result.get("actual"),
-            "reason": result.get("reason_actual"),
-            "passed": result.get("passed"),
-            "errors": result.get("errors", []),
-        },
+        "decision": {"outcome": result.get("actual"), "reason": result.get("reason_actual"), "passed": result.get("passed"), "errors": result.get("errors", [])},
         "metrics": result.get("metrics", {}),
-        "validator": {"name": "gcat_bcat_candidate_validator.py", "version": "0.3.0"},
+        "validator": {"name": "gcat_bcat_candidate_validator.py", "version": "0.4.0-adversarial"},
         "prev_receipt_hash": prev_hash,
         "emitted_at": datetime.now(timezone.utc).isoformat(),
     }
@@ -67,20 +56,14 @@ def verify_chain(receipts: List[Dict[str, Any]]) -> Dict[str, Any]:
         if stable_hash(receipt.get("basis", {})) != receipt.get("basis_hash"):
             failures.append({"index": index, "candidate_id": receipt.get("candidate_id"), "reason": "basis_hash_mismatch"})
         expected_prev = receipt.get("receipt_hash")
-    return {
-        "schema": "stegverse.sandbox.receipt_chain_verification.v2",
-        "receipt_count": len(receipts),
-        "chain_valid": len(failures) == 0,
-        "failures": failures,
-        "head_receipt_hash": receipts[-1]["receipt_hash"] if receipts else None,
-    }
+    return {"schema": "stegverse.sandbox.receipt_chain_verification.v2", "receipt_count": len(receipts), "chain_valid": len(failures) == 0, "failures": failures, "head_receipt_hash": receipts[-1]["receipt_hash"] if receipts else None}
 
 def build_summary(report: Dict[str, Any], chain_report: Dict[str, Any]) -> str:
     summary = report["summary"]
     cost = report["cost_summary"]
     outcome_counts = Counter(r["actual"] for r in report["results"])
     lines = [
-        "# GCAT/BCAT StegVerse Sandbox Summary", "",
+        "# GCAT/BCAT Adversarial Sandbox Summary", "",
         "## Sandbox Status", "",
         f"- Receipts emitted: **{chain_report['receipt_count']}**",
         f"- Receipt chain valid: **{chain_report['chain_valid']}**",
@@ -123,14 +106,7 @@ def run_sandbox(vectors: Path, out_dir: Path) -> Dict[str, Any]:
         results.append(result)
         receipts.append(receipt)
     chain_report = verify_chain(receipts)
-    report = {
-        "schema": "stegverse.sandbox.gcat_bcat.report.v2",
-        "summary": {"total": len(results), "passed": sum(1 for r in results if r["passed"]), "failed": sum(1 for r in results if not r["passed"])},
-        "cost_summary": build_cost_summary(results),
-        "chain": chain_report,
-        "results": results,
-        "receipts": receipts,
-    }
+    report = {"schema": "stegverse.sandbox.gcat_bcat.adversarial_report.v1", "summary": {"total": len(results), "passed": sum(1 for r in results if r["passed"]), "failed": sum(1 for r in results if not r["passed"])}, "cost_summary": build_cost_summary(results), "chain": chain_report, "results": results, "receipts": receipts}
     (out_dir / "gcat_bcat_sandbox_report.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     with (out_dir / "gcat_bcat_sandbox_receipts.jsonl").open("w", encoding="utf-8") as f:
         for receipt in receipts:
