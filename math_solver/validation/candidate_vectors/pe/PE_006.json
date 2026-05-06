@@ -1,0 +1,17 @@
+{
+  "candidate_id": "PE_006",
+  "existence": {
+    "probability": 0.9
+  },
+  "params": {
+    "prob_min": 0.5,
+    "lambda_p": 2.0,
+    "base_cost": 10.0
+  },
+  "budget": {
+    "existence_cost": 1.0
+  },
+  "expected": {
+    "outcome": "DENY"
+  }
+}
