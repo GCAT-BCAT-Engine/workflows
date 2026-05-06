@@ -1,0 +1,598 @@
+{
+  "schema": "stegverse.sandbox.triad.sandbox_report.v1",
+  "total": 10,
+  "allow": 1,
+  "deny": 5,
+  "fail_closed": 4,
+  "chain_valid": true,
+  "receipts": [
+    {
+      "candidate_id": "TRIAD_001",
+      "layer": "TRIAD",
+      "outcome": "ALLOW",
+      "reason": "triad_admissible",
+      "basis_hash": "39e32e89726ad90db2803d8e0191ef8a649c1fd31176ac7e91a0ce815233e292",
+      "prev_receipt_hash": null,
+      "receipt_hash": "16284a849e0123dc0b68ff1b8643cee4be5f35c6fca96f147efb222bb8da4886",
+      "cost": {
+        "layer_results": {
+          "gcat": {
+            "outcome": "ALLOW",
+            "reason": "gcat_admissible",
+            "cost": {
+              "invariant": 0.0
+            }
+          },
+          "bcat": {
+            "outcome": "ALLOW",
+            "reason": "bcat_admissible",
+            "cost": {
+              "sum": 1.0
+            }
+          },
+          "ecat": {
+            "outcome": "ALLOW",
+            "reason": "ecat_admissible",
+            "cost": {
+              "cost_R": 0.09999999999999998,
+              "cost_S": 0.0,
+              "cost_H": 0.1,
+              "total_cost": 0.19999999999999998,
+              "budget": 3.0
+            }
+          },
+          "icat": {
+            "outcome": "ALLOW",
+            "reason": "icat_admissible",
+            "cost": {
+              "cost_P": 1.0,
+              "cost_A": 2.0,
+              "cost_K": 1.0,
+              "cost_X": 1.0,
+              "total_cost": 5.0,
+              "budget": 10.0
+            }
+          },
+          "pe": {
+            "outcome": "ALLOW",
+            "reason": "pe_admissible",
+            "cost": {
+              "cost_P": 0.050000000000000044,
+              "total_cost": 0.050000000000000044,
+              "budget": 1.0
+            }
+          }
+        },
+        "total_cost": 5.25,
+        "budgets": {
+          "ecat": 3.0,
+          "icat": 10.0,
+          "pe": 1.0
+        },
+        "scalar_constant_exists": true,
+        "scalar_constant": 1.0
+      }
+    },
+    {
+      "candidate_id": "TRIAD_002",
+      "layer": "TRIAD",
+      "outcome": "DENY",
+      "reason": "gcat_invariant_violation",
+      "basis_hash": "91b7f94b2dc19a1641e474783aa7b7cac4a0dc9ba7e38f1e3e4e8b6bf8689f13",
+      "prev_receipt_hash": "16284a849e0123dc0b68ff1b8643cee4be5f35c6fca96f147efb222bb8da4886",
+      "receipt_hash": "176d1d9d7ad2081db6853c990ce54c959c3653092173e498c1bde0e7924af52d",
+      "cost": {
+        "layer_results": {
+          "gcat": {
+            "outcome": "DENY",
+            "reason": "gcat_invariant_violation",
+            "cost": {
+              "invariant": 0.4
+            }
+          },
+          "bcat": {
+            "outcome": "DENY",
+            "reason": "bcat_simplex_violation",
+            "cost": {
+              "sum": 1.2000000000000002
+            }
+          },
+          "ecat": {
+            "outcome": "ALLOW",
+            "reason": "ecat_admissible",
+            "cost": {
+              "cost_R": 0.09999999999999998,
+              "cost_S": 0.0,
+              "cost_H": 0.1,
+              "total_cost": 0.19999999999999998,
+              "budget": 3.0
+            }
+          },
+          "icat": {
+            "outcome": "ALLOW",
+            "reason": "icat_admissible",
+            "cost": {
+              "cost_P": 1.0,
+              "cost_A": 2.0,
+              "cost_K": 1.0,
+              "cost_X": 1.0,
+              "total_cost": 5.0,
+              "budget": 10.0
+            }
+          },
+          "pe": {
+            "outcome": "ALLOW",
+            "reason": "pe_admissible",
+            "cost": {
+              "cost_P": 0.050000000000000044,
+              "total_cost": 0.050000000000000044,
+              "budget": 1.0
+            }
+          }
+        },
+        "total_cost": 5.25,
+        "budgets": {
+          "ecat": 3.0,
+          "icat": 10.0,
+          "pe": 1.0
+        },
+        "scalar_constant_exists": true,
+        "scalar_constant": 1.0
+      }
+    },
+    {
+      "candidate_id": "TRIAD_003",
+      "layer": "TRIAD",
+      "outcome": "DENY",
+      "reason": "low_reputation",
+      "basis_hash": "7df1c34d673d073d23fef0fb0887e8b02328747ab679cd3aa277fdedd0440b40",
+      "prev_receipt_hash": "176d1d9d7ad2081db6853c990ce54c959c3653092173e498c1bde0e7924af52d",
+      "receipt_hash": "297646852fbba62c63cbd5f37a4bb62790c290d07e3a9d4da7dbe9a59968c191",
+      "cost": {
+        "layer_results": {
+          "gcat": {
+            "outcome": "ALLOW",
+            "reason": "gcat_admissible",
+            "cost": {
+              "invariant": 0.0
+            }
+          },
+          "bcat": {
+            "outcome": "ALLOW",
+            "reason": "bcat_admissible",
+            "cost": {
+              "sum": 1.0
+            }
+          },
+          "ecat": {
+            "outcome": "DENY",
+            "reason": "low_reputation",
+            "cost": {}
+          },
+          "icat": {
+            "outcome": "ALLOW",
+            "reason": "icat_admissible",
+            "cost": {
+              "cost_P": 1.0,
+              "cost_A": 2.0,
+              "cost_K": 1.0,
+              "cost_X": 1.0,
+              "total_cost": 5.0,
+              "budget": 10.0
+            }
+          },
+          "pe": {
+            "outcome": "ALLOW",
+            "reason": "pe_admissible",
+            "cost": {
+              "cost_P": 0.050000000000000044,
+              "total_cost": 0.050000000000000044,
+              "budget": 1.0
+            }
+          }
+        },
+        "total_cost": 5.05,
+        "budgets": {
+          "icat": 10.0,
+          "pe": 1.0
+        },
+        "scalar_constant_exists": true,
+        "scalar_constant": 1.0
+      }
+    },
+    {
+      "candidate_id": "TRIAD_004",
+      "layer": "TRIAD",
+      "outcome": "FAIL_CLOSED",
+      "reason": "proof_unavailable",
+      "basis_hash": "96cd817f5338aa6564233c8fa2b6bb4a9be22b1ba9f28c39544a96fe2c11a7df",
+      "prev_receipt_hash": "297646852fbba62c63cbd5f37a4bb62790c290d07e3a9d4da7dbe9a59968c191",
+      "receipt_hash": "230221e154c902ece021552624c61e87ffb1c37cc78355460c9a25093b2be9de",
+      "cost": {
+        "layer_results": {
+          "gcat": {
+            "outcome": "ALLOW",
+            "reason": "gcat_admissible",
+            "cost": {
+              "invariant": 0.0
+            }
+          },
+          "bcat": {
+            "outcome": "ALLOW",
+            "reason": "bcat_admissible",
+            "cost": {
+              "sum": 1.0
+            }
+          },
+          "ecat": {
+            "outcome": "ALLOW",
+            "reason": "ecat_admissible",
+            "cost": {
+              "cost_R": 0.09999999999999998,
+              "cost_S": 0.0,
+              "cost_H": 0.1,
+              "total_cost": 0.19999999999999998,
+              "budget": 3.0
+            }
+          },
+          "icat": {
+            "outcome": "FAIL_CLOSED",
+            "reason": "proof_unavailable",
+            "cost": {}
+          },
+          "pe": {
+            "outcome": "FAIL_CLOSED",
+            "reason": "upstream_fail_closed",
+            "cost": {}
+          }
+        },
+        "total_cost": 0.19999999999999998,
+        "budgets": {
+          "ecat": 3.0
+        },
+        "scalar_constant_exists": true,
+        "scalar_constant": 1.0
+      }
+    },
+    {
+      "candidate_id": "TRIAD_005",
+      "layer": "TRIAD",
+      "outcome": "DENY",
+      "reason": "probability_below_threshold",
+      "basis_hash": "72de93bb00036b7e4d3609456074cad4d562b7896b246c772d829019a1edf6b1",
+      "prev_receipt_hash": "230221e154c902ece021552624c61e87ffb1c37cc78355460c9a25093b2be9de",
+      "receipt_hash": "7cb93b9faff9b05b02d7568507bd600d93c0aa05f10a678788378ffff5efb229",
+      "cost": {
+        "layer_results": {
+          "gcat": {
+            "outcome": "ALLOW",
+            "reason": "gcat_admissible",
+            "cost": {
+              "invariant": 0.0
+            }
+          },
+          "bcat": {
+            "outcome": "ALLOW",
+            "reason": "bcat_admissible",
+            "cost": {
+              "sum": 1.0
+            }
+          },
+          "ecat": {
+            "outcome": "ALLOW",
+            "reason": "ecat_admissible",
+            "cost": {
+              "cost_R": 0.09999999999999998,
+              "cost_S": 0.0,
+              "cost_H": 0.1,
+              "total_cost": 0.19999999999999998,
+              "budget": 3.0
+            }
+          },
+          "icat": {
+            "outcome": "ALLOW",
+            "reason": "icat_admissible",
+            "cost": {
+              "cost_P": 1.0,
+              "cost_A": 2.0,
+              "cost_K": 1.0,
+              "cost_X": 1.0,
+              "total_cost": 5.0,
+              "budget": 10.0
+            }
+          },
+          "pe": {
+            "outcome": "DENY",
+            "reason": "probability_below_threshold",
+            "cost": {}
+          }
+        },
+        "total_cost": 5.2,
+        "budgets": {
+          "ecat": 3.0,
+          "icat": 10.0
+        },
+        "scalar_constant_exists": true,
+        "scalar_constant": 1.0
+      }
+    },
+    {
+      "candidate_id": "TRIAD_006",
+      "layer": "TRIAD",
+      "outcome": "DENY",
+      "reason": "insufficient_stake",
+      "basis_hash": "7522a50b3fe984432ef70a98c1babb096a57d9c6185b8edce3d37b92db570e93",
+      "prev_receipt_hash": "7cb93b9faff9b05b02d7568507bd600d93c0aa05f10a678788378ffff5efb229",
+      "receipt_hash": "873e135b89284987157d98bfb451f045343998ebf5ad477ec3027eb9e440f182",
+      "cost": {
+        "layer_results": {
+          "gcat": {
+            "outcome": "ALLOW",
+            "reason": "gcat_admissible",
+            "cost": {
+              "invariant": 0.0
+            }
+          },
+          "bcat": {
+            "outcome": "ALLOW",
+            "reason": "bcat_admissible",
+            "cost": {
+              "sum": 1.0
+            }
+          },
+          "ecat": {
+            "outcome": "DENY",
+            "reason": "insufficient_stake",
+            "cost": {}
+          },
+          "icat": {
+            "outcome": "ALLOW",
+            "reason": "icat_admissible",
+            "cost": {
+              "cost_P": 1.0,
+              "cost_A": 5.0,
+              "cost_K": 1.0,
+              "cost_X": 1.0,
+              "total_cost": 8.0,
+              "budget": 10.0
+            }
+          },
+          "pe": {
+            "outcome": "ALLOW",
+            "reason": "pe_admissible",
+            "cost": {
+              "cost_P": 0.050000000000000044,
+              "total_cost": 0.050000000000000044,
+              "budget": 1.0
+            }
+          }
+        },
+        "total_cost": 8.05,
+        "budgets": {
+          "icat": 10.0,
+          "pe": 1.0
+        },
+        "scalar_constant_exists": true,
+        "scalar_constant": 1.0
+      }
+    },
+    {
+      "candidate_id": "TRIAD_007",
+      "layer": "TRIAD",
+      "outcome": "FAIL_CLOSED",
+      "reason": "gcat_missing_c",
+      "basis_hash": "7c7912a9619703d5eb776de70cd61422eaaca43415c8735cc6d0eae111675e1c",
+      "prev_receipt_hash": "873e135b89284987157d98bfb451f045343998ebf5ad477ec3027eb9e440f182",
+      "receipt_hash": "057b6c34a234d06e6f69e663afe0566bb45e1b9b703fa3f988268bf7cface00a",
+      "cost": {
+        "layer_results": {
+          "gcat": {
+            "outcome": "FAIL_CLOSED",
+            "reason": "gcat_missing_c",
+            "cost": {}
+          },
+          "bcat": {
+            "outcome": "FAIL_CLOSED",
+            "reason": "bcat_missing_c",
+            "cost": {}
+          },
+          "ecat": {
+            "outcome": "FAIL_CLOSED",
+            "reason": "upstream_fail_closed",
+            "cost": {}
+          },
+          "icat": {
+            "outcome": "FAIL_CLOSED",
+            "reason": "upstream_fail_closed",
+            "cost": {}
+          },
+          "pe": {
+            "outcome": "FAIL_CLOSED",
+            "reason": "upstream_fail_closed",
+            "cost": {}
+          }
+        },
+        "total_cost": 0.0,
+        "budgets": {},
+        "scalar_constant_exists": true,
+        "scalar_constant": 1.0
+      }
+    },
+    {
+      "candidate_id": "TRIAD_008",
+      "layer": "TRIAD",
+      "outcome": "FAIL_CLOSED",
+      "reason": "proof_unavailable",
+      "basis_hash": "9d80687dbdb4e437b38bfc893864ae37105acd6eeafd85fb484498901edaba50",
+      "prev_receipt_hash": "057b6c34a234d06e6f69e663afe0566bb45e1b9b703fa3f988268bf7cface00a",
+      "receipt_hash": "e97aa8a4175da86bb16d2f2bb3a2974158c9d32ca771dee5eef9ddf2d0b17213",
+      "cost": {
+        "layer_results": {
+          "gcat": {
+            "outcome": "ALLOW",
+            "reason": "gcat_admissible",
+            "cost": {
+              "invariant": 0.0
+            }
+          },
+          "bcat": {
+            "outcome": "ALLOW",
+            "reason": "bcat_admissible",
+            "cost": {
+              "sum": 1.0
+            }
+          },
+          "ecat": {
+            "outcome": "ALLOW",
+            "reason": "ecat_admissible",
+            "cost": {
+              "cost_R": 0.19999999999999996,
+              "cost_S": 0.0,
+              "cost_H": 0.1,
+              "total_cost": 0.29999999999999993,
+              "budget": 10.0
+            }
+          },
+          "icat": {
+            "outcome": "FAIL_CLOSED",
+            "reason": "proof_unavailable",
+            "cost": {}
+          },
+          "pe": {
+            "outcome": "FAIL_CLOSED",
+            "reason": "upstream_fail_closed",
+            "cost": {}
+          }
+        },
+        "total_cost": 0.29999999999999993,
+        "budgets": {
+          "ecat": 10.0
+        },
+        "scalar_constant_exists": true,
+        "scalar_constant": 1.0
+      }
+    },
+    {
+      "candidate_id": "TRIAD_009",
+      "layer": "TRIAD",
+      "outcome": "FAIL_CLOSED",
+      "reason": "probability_unavailable",
+      "basis_hash": "56a9bca803450f1158b1e7dd8e419e77bfcf41a8c913e98097aa2100ca8b61ae",
+      "prev_receipt_hash": "e97aa8a4175da86bb16d2f2bb3a2974158c9d32ca771dee5eef9ddf2d0b17213",
+      "receipt_hash": "595cfd98d20d6aced8b7b73b6708f8de46d25cd468c654ab705abbd0c020e413",
+      "cost": {
+        "layer_results": {
+          "gcat": {
+            "outcome": "ALLOW",
+            "reason": "gcat_admissible",
+            "cost": {
+              "invariant": 0.0
+            }
+          },
+          "bcat": {
+            "outcome": "ALLOW",
+            "reason": "bcat_admissible",
+            "cost": {
+              "sum": 1.0
+            }
+          },
+          "ecat": {
+            "outcome": "ALLOW",
+            "reason": "ecat_admissible",
+            "cost": {
+              "cost_R": 0.19999999999999996,
+              "cost_S": 0.0,
+              "cost_H": 0.1,
+              "total_cost": 0.29999999999999993,
+              "budget": 10.0
+            }
+          },
+          "icat": {
+            "outcome": "ALLOW",
+            "reason": "icat_admissible",
+            "cost": {
+              "cost_P": 1.0,
+              "cost_A": 1.0,
+              "cost_K": 1.0,
+              "cost_X": 1.0,
+              "total_cost": 4.0,
+              "budget": 10.0
+            }
+          },
+          "pe": {
+            "outcome": "FAIL_CLOSED",
+            "reason": "probability_unavailable",
+            "cost": {}
+          }
+        },
+        "total_cost": 4.3,
+        "budgets": {
+          "ecat": 10.0,
+          "icat": 10.0
+        },
+        "scalar_constant_exists": true,
+        "scalar_constant": 1.0
+      }
+    },
+    {
+      "candidate_id": "TRIAD_010",
+      "layer": "TRIAD",
+      "outcome": "DENY",
+      "reason": "insufficient_stake",
+      "basis_hash": "b781237035f8a9eabe20959662887cf2c1db50ae09d0735d61f2a013267d7669",
+      "prev_receipt_hash": "595cfd98d20d6aced8b7b73b6708f8de46d25cd468c654ab705abbd0c020e413",
+      "receipt_hash": "f5138a41ae7ed0c0298349ba66c5d2f5189502dd5ac39c6df5b6a067309f306e",
+      "cost": {
+        "layer_results": {
+          "gcat": {
+            "outcome": "ALLOW",
+            "reason": "gcat_admissible",
+            "cost": {
+              "invariant": 0.0
+            }
+          },
+          "bcat": {
+            "outcome": "ALLOW",
+            "reason": "bcat_admissible",
+            "cost": {
+              "sum": 1.0
+            }
+          },
+          "ecat": {
+            "outcome": "DENY",
+            "reason": "insufficient_stake",
+            "cost": {}
+          },
+          "icat": {
+            "outcome": "DENY",
+            "reason": "budget_exceeded",
+            "cost": {
+              "cost_P": 5.0,
+              "cost_A": 5.0,
+              "cost_K": 5.0,
+              "cost_X": 5.0,
+              "total_cost": 20.0,
+              "budget": 10.0
+            }
+          },
+          "pe": {
+            "outcome": "ALLOW",
+            "reason": "pe_admissible",
+            "cost": {
+              "cost_P": 0.4999999999999999,
+              "total_cost": 0.4999999999999999,
+              "budget": 10.0
+            }
+          }
+        },
+        "total_cost": 20.5,
+        "budgets": {
+          "icat": 10.0,
+          "pe": 10.0
+        },
+        "scalar_constant_exists": true,
+        "scalar_constant": 5.0
+      }
+    }
+  ]
+}

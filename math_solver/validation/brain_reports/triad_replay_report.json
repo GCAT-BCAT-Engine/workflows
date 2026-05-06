@@ -1,0 +1,90 @@
+{
+  "schema": "stegverse.sandbox.triad.replay_report.v1",
+  "total": 10,
+  "matches": 10,
+  "mismatches": 0,
+  "chain_valid": true,
+  "mismatch_details": [],
+  "replay": [
+    {
+      "candidate_id": "TRIAD_001",
+      "original_outcome": "ALLOW",
+      "replay_outcome": "ALLOW",
+      "original_reason": "triad_admissible",
+      "replay_reason": "triad_admissible",
+      "match": true
+    },
+    {
+      "candidate_id": "TRIAD_002",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "gcat_invariant_violation",
+      "replay_reason": "gcat_invariant_violation",
+      "match": true
+    },
+    {
+      "candidate_id": "TRIAD_003",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "low_reputation",
+      "replay_reason": "low_reputation",
+      "match": true
+    },
+    {
+      "candidate_id": "TRIAD_004",
+      "original_outcome": "FAIL_CLOSED",
+      "replay_outcome": "FAIL_CLOSED",
+      "original_reason": "proof_unavailable",
+      "replay_reason": "proof_unavailable",
+      "match": true
+    },
+    {
+      "candidate_id": "TRIAD_005",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "probability_below_threshold",
+      "replay_reason": "probability_below_threshold",
+      "match": true
+    },
+    {
+      "candidate_id": "TRIAD_006",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "insufficient_stake",
+      "replay_reason": "insufficient_stake",
+      "match": true
+    },
+    {
+      "candidate_id": "TRIAD_007",
+      "original_outcome": "FAIL_CLOSED",
+      "replay_outcome": "FAIL_CLOSED",
+      "original_reason": "gcat_missing_c",
+      "replay_reason": "gcat_missing_c",
+      "match": true
+    },
+    {
+      "candidate_id": "TRIAD_008",
+      "original_outcome": "FAIL_CLOSED",
+      "replay_outcome": "FAIL_CLOSED",
+      "original_reason": "proof_unavailable",
+      "replay_reason": "proof_unavailable",
+      "match": true
+    },
+    {
+      "candidate_id": "TRIAD_009",
+      "original_outcome": "FAIL_CLOSED",
+      "replay_outcome": "FAIL_CLOSED",
+      "original_reason": "probability_unavailable",
+      "replay_reason": "probability_unavailable",
+      "match": true
+    },
+    {
+      "candidate_id": "TRIAD_010",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "insufficient_stake",
+      "replay_reason": "insufficient_stake",
+      "match": true
+    }
+  ]
+}
