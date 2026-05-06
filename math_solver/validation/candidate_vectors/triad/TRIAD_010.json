@@ -1,0 +1,51 @@
+{
+  "candidate_id": "TRIAD_010",
+  "gcat": {
+    "state": {"g": 0.25, "c": 0.25, "a": 0.25, "t": 0.25},
+    "params": {"K": 16.0, "alpha": 1.0, "beta": 1.0, "gamma": 1.0}
+  },
+  "bcat": {
+    "state": {"g": 0.25, "c": 0.25, "a": 0.25, "t": 0.25}
+  },
+  "ecat": {
+    "candidate_id": "ECAT_FOR_TRIAD_010",
+    "entity": {"reputation": 0.8, "stake": 0.5, "history": 0.4},
+    "params": {
+      "reputation_min": 0.5,
+      "stake_min": 1.0,
+      "history_max": 0.5,
+      "lambda_r": 2.0,
+      "lambda_s": 2.0,
+      "lambda_h": 2.0,
+      "base_cost": 5.0
+    },
+    "budget": {"entity_cost": 10.0}
+  },
+  "icat": {
+    "candidate_id": "ICAT_FOR_TRIAD_010",
+    "integrity": {
+      "proof_sufficient": true,
+      "attestation_witnesses": 2,
+      "conservation": true,
+      "inverse": true
+    },
+    "params": {
+      "proof_required": true,
+      "witness_quorum": 1,
+      "conservation_required": true,
+      "inverse_required": true,
+      "lambda_p": 1.0,
+      "lambda_a": 0.5,
+      "lambda_k": 1.0,
+      "lambda_x": 1.0,
+      "base_cost": 5.0
+    },
+    "budget": {"integrity_cost": 10.0}
+  },
+  "pe": {
+    "candidate_id": "PE_FOR_TRIAD_010",
+    "existence": {"probability": 0.9},
+    "params": {"prob_min": 0.8, "lambda_p": 1.0, "base_cost": 5.0},
+    "budget": {"existence_cost": 10.0}
+  }
+}
