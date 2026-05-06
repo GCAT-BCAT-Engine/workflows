@@ -67,6 +67,7 @@ from typing import Dict, Any, Tuple, Optional
 from ecat_icat.ecat_validator import validate_ecat_candidate
 from ecat_icat.icat_validator import validate_icat_candidate
 from ecat_icat.pe_validator import validate_pe_candidate
+from inference_window.iw_validator import validate_iw_candidate
 
 # ---------------------------------------------------------------------------
 # Helper function
@@ -181,37 +182,44 @@ def validate_bcat_layer(section: Dict[str, Any]) -> Tuple[str, str, Dict[str, An
     return "ALLOW", "bcat_admissible", {"sum": total}
 
 
-def extract_base_costs(ecat_section: Dict[str, Any],
-                       icat_section: Dict[str, Any],
-                       pe_section: Dict[str, Any]) -> Tuple[bool, Optional[float]]:
-    """Check whether ECAT, ICAT and PE share a common base_cost.
-
-    Returns (exists, value).  ``exists`` is True if all three base
-    costs are present and equal within a small tolerance; ``value``
-    provides the common cost or None.
+def extract_base_costs(*sections: Optional[Dict[str, Any]]) -> Tuple[bool, Optional[float]]:
     """
-    costs = []
-    # ECAT base_cost
-    if ecat_section is not None:
-        params = ecat_section.get("params", {}) or {}
-        bc = params.get("base_cost")
-        if bc is not None:
-            costs.append(float(bc))
-    # ICAT base_cost
-    if icat_section is not None:
-        params = icat_section.get("params", {}) or {}
-        bc = params.get("base_cost")
-        if bc is not None:
-            costs.append(float(bc))
-    # PE base_cost
-    if pe_section is not None:
-        params = pe_section.get("params", {}) or {}
-        bc = params.get("base_cost")
-        if bc is not None:
-            costs.append(float(bc))
-    if len(costs) != 3:
+    Determine whether all provided sections share a common base_cost.
+
+    Parameters
+    ----------
+    *sections: Optional[Dict[str, Any]]
+        An arbitrary number of candidate section dictionaries.  Each
+        section may contain a ``params`` mapping with a ``base_cost``
+        entry.
+
+    Returns
+    -------
+    exists : bool
+        True if all provided sections include a base_cost value and
+        those values are equal within a small tolerance.
+    value : Optional[float]
+        The common base_cost value if it exists, otherwise None.
+
+    Notes
+    -----
+    GCAT and BCAT sections are not passed to this helper because they
+    do not define base_cost parameters.  This function is an
+    extension of the earlier two‑ or three‑section version, supporting
+    an arbitrary number of layers such as ECAT, ICAT, PE and IW.
+    """
+    costs: list[float] = []
+    for section in sections:
+        if section is not None:
+            params = section.get("params", {}) or {}
+            bc = params.get("base_cost")
+            if bc is not None:
+                costs.append(float(bc))
+    # All sections must supply a base_cost
+    if len(costs) != len(sections):
         return False, None
-    # Check all equal within tolerance
+    if not costs:
+        return False, None
     first = costs[0]
     for c in costs[1:]:
         if abs(c - first) > 1e-6:
@@ -239,6 +247,9 @@ def validate_triad_candidate(candidate: Dict[str, Any]) -> Tuple[str, str, Dict[
     ecat_section = candidate.get("ecat")
     icat_section = candidate.get("icat")
     pe_section = candidate.get("pe")
+    # Inference Window (IW) section: optional.  Accept ``iw`` key
+    # or ``inference_window_layer`` for backward compatibility.
+    iw_section = candidate.get("iw") or candidate.get("inference_window_layer")
     # Validate each layer
     gcat_outcome, gcat_reason, gcat_cost = validate_gcat_layer(gcat_section)
     bcat_outcome, bcat_reason, bcat_cost = validate_bcat_layer(bcat_section)
@@ -268,6 +279,36 @@ def validate_triad_candidate(candidate: Dict[str, Any]) -> Tuple[str, str, Dict[
         pe_reason = "upstream_fail_closed"
     else:
         pe_outcome, pe_reason, pe_cost = validate_pe_candidate(pe_section)
+
+    # Inference Window (IW) layer validation.  IW runs only if all
+    # preceding layers (GCAT, BCAT, ECAT, ICAT, PE) have not
+    # returned FAIL_CLOSED.  A DENY in any upstream layer will still
+    # allow IW to run so that cost can be computed, but will not
+    # influence the final outcome precedence because DENY is
+    # determined earlier.
+    iw_outcome = iw_reason = None
+    iw_cost = {}
+    if (
+        gcat_outcome == "FAIL_CLOSED" or bcat_outcome == "FAIL_CLOSED" or
+        ecat_outcome == "FAIL_CLOSED" or icat_outcome == "FAIL_CLOSED" or
+        pe_outcome == "FAIL_CLOSED"
+    ):
+        iw_outcome = "FAIL_CLOSED"
+        iw_reason = "upstream_fail_closed"
+    else:
+        # If no IW section provided, treat as admissible with zero cost
+        if iw_section is None:
+            iw_outcome = "ALLOW"
+            iw_reason = "iw_not_provided"
+            iw_cost = {"cost_W": 0.0, "total_cost": 0.0, "budget": None}
+        else:
+            # Build a flat candidate dict expected by the IW validator
+            # The IW section may already contain the expected keys;
+            # we simply pass it to the validator.
+            try:
+                iw_outcome, iw_reason, iw_cost = validate_iw_candidate(iw_section)
+            except Exception:
+                iw_outcome, iw_reason, iw_cost = "FAIL_CLOSED", "iw_validation_error", {}
     # Determine overall outcome
     layer_results = {
         "gcat": {"outcome": gcat_outcome, "reason": gcat_reason, "cost": gcat_cost},
@@ -275,25 +316,26 @@ def validate_triad_candidate(candidate: Dict[str, Any]) -> Tuple[str, str, Dict[
         "ecat": {"outcome": ecat_outcome, "reason": ecat_reason, "cost": ecat_cost},
         "icat": {"outcome": icat_outcome, "reason": icat_reason, "cost": icat_cost},
         "pe":   {"outcome": pe_outcome, "reason": pe_reason, "cost": pe_cost},
+        "iw":   {"outcome": iw_outcome, "reason": iw_reason, "cost": iw_cost},
     }
     # Evaluate precedence: any FAIL_CLOSED → overall FAIL_CLOSED; else any DENY → DENY; else ALLOW
     if any(layer_results[layer]["outcome"] == "FAIL_CLOSED" for layer in layer_results):
         overall_outcome = "FAIL_CLOSED"
         # Use the first FAIL_CLOSED reason encountered in GCAT→PE order
-        for name in ["gcat", "bcat", "ecat", "icat", "pe"]:
+        for name in ["gcat", "bcat", "ecat", "icat", "pe", "iw"]:
             if layer_results[name]["outcome"] == "FAIL_CLOSED":
                 overall_reason = layer_results[name]["reason"]
                 break
     elif any(layer_results[layer]["outcome"] == "DENY" for layer in layer_results):
         overall_outcome = "DENY"
-        for name in ["gcat", "bcat", "ecat", "icat", "pe"]:
+        for name in ["gcat", "bcat", "ecat", "icat", "pe", "iw"]:
             if layer_results[name]["outcome"] == "DENY":
                 overall_reason = layer_results[name]["reason"]
                 break
     else:
         overall_outcome = "ALLOW"
         overall_reason = "triad_admissible"
-    # Aggregate cost across ECAT/ICAT/PE
+    # Aggregate cost across ECAT/ICAT/PE/IW
     total_cost = 0.0
     budgets = {}
     for layer, res in layer_results.items():
@@ -303,8 +345,8 @@ def validate_triad_candidate(candidate: Dict[str, Any]) -> Tuple[str, str, Dict[
         # collect budgets keyed by layer
         if "budget" in cost and cost["budget"] is not None:
             budgets[layer] = cost["budget"]
-    # Determine scalar constant
-    constant_exists, constant_value = extract_base_costs(ecat_section, icat_section, pe_section)
+    # Determine scalar constant across ECAT, ICAT, PE and IW
+    constant_exists, constant_value = extract_base_costs(ecat_section, icat_section, pe_section, iw_section)
     # Build details
     details = {
         "layer_results": layer_results,

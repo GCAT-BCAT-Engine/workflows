@@ -1,52 +1,40 @@
 """
-inference_window/receipt_replay.py
----------------------------------
+triad/receipt_replay.py
+-----------------------
 
-Replay inference window receipts and verify their integrity.  This
-script re-evaluates each candidate referenced by a receipt using
-``validate_iw_candidate`` from ``iw_validator.py`` and checks that the
-stored outcome and reason still hold.  It also validates the receipt
-chain by recomputing each ``receipt_hash`` and ensuring the
-``prev_receipt_hash`` links are consistent.  Any discrepancy between
-the stored outcome/reason and the replayed outcome/reason is flagged
-as a mismatch.  A report summarising the replay and a Markdown
-summary are generated.
+This script replays Triad sandbox receipts and verifies that the original
+outcomes and reasons still hold.  It also validates the receipt chain by
+recomputing each receipt hash and ensuring the ``prev_receipt_hash`` links
+are consistent.  Any discrepancy between the stored outcome/reason and the
+replayed outcome/reason will be flagged as a mismatch.
 
-Usage::
+Usage example:
 
-    python -m inference_window.receipt_replay \
-      --receipts inference_window/brain_reports/iw_receipts.jsonl \
-      --vectors  inference_window/candidate_vectors \
-      --report   inference_window/brain_reports/iw_replay_report.json \
-      --summary  inference_window/brain_reports/iw_replay_summary.md
-
-The JSON report includes the number of matches/mismatches and
-details for any mismatched receipts.  The Markdown summary provides
-a table for quick visual inspection.
+```
+python triad/receipt_replay.py \
+  --receipts triad/brain_reports/triad_receipts.jsonl \
+  --vectors triad/candidate_vectors \
+  --report triad/brain_reports/triad_replay_report.json \
+  --summary triad/brain_reports/triad_replay_summary.md
+```
 """
 
-from __future__ import annotations
-
+import json
 import argparse
 import hashlib
-import json
 import os
-from typing import List, Dict
+from typing import List, Dict, Tuple
 
-from inference_window.iw_validator import validate_iw_candidate, load_candidate as load_iw
+from triad_validator import validate_triad_candidate, load_candidate as load_triad
 
 
 def compute_hash(data: str) -> str:
-    """Return SHA256 hex digest of the provided string."""
     return hashlib.sha256(data.encode('utf-8')).hexdigest()
 
 
-def verify_chain(receipts: List[Dict]) -> bool:
-    """
-    Verify the receipt chain by recomputing each ``receipt_hash`` and
-    comparing with stored values.  Returns True if the chain is valid.
-    """
-    prev_hash: str | None = None
+def verify_chain(receipts: List[Dict[str, any]]) -> bool:
+    """Recompute receipt hashes and verify the chain."""
+    prev_hash = None
     for rec in receipts:
         cid = rec['candidate_id']
         outcome = rec['outcome']
@@ -60,39 +48,36 @@ def verify_chain(receipts: List[Dict]) -> bool:
     return True
 
 
-def replay_receipts(receipts_path: str, vectors_dir: str):
+def replay_receipts(receipts_path: str, vectors_dir: str) -> Tuple[List[Dict[str, any]], bool, List[Dict[str, any]]]:
     """
-    Replay receipts by re-running the IW validator for each candidate.
-    Returns a tuple (results, chain_valid, mismatches).
+    Replay Triad receipts by re-running the validator on the original candidates.
+
+    Returns (replay_results, chain_valid, mismatches).
     """
-    # Load receipts
-    receipts: List[Dict] = []
-    with open(receipts_path, 'r', encoding='utf-8') as f:
+    receipts: List[Dict[str, any]] = []
+    with open(receipts_path, 'r') as f:
         for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            receipts.append(json.loads(line))
+            if line.strip():
+                receipts.append(json.loads(line))
     chain_valid = verify_chain(receipts)
-    # Build a lookup for candidate paths
+    # Build lookup: candidate_id -> file path
     candidate_paths: Dict[str, str] = {}
     for fname in os.listdir(vectors_dir):
         if fname.lower().endswith('.json'):
-            cid = os.path.splitext(fname)[0]
+            cid = json.load(open(os.path.join(vectors_dir, fname))).get('candidate_id', os.path.splitext(fname)[0])
             candidate_paths[cid] = os.path.join(vectors_dir, fname)
-    replay_results: List[Dict] = []
-    mismatches: List[Dict] = []
+    replay_results: List[Dict[str, any]] = []
+    mismatches: List[Dict[str, any]] = []
     for rec in receipts:
         cid = rec['candidate_id']
         original_outcome = rec['outcome']
         original_reason = rec['reason']
-        # Load candidate
         path = candidate_paths.get(cid)
         if not path:
             replay_outcome, replay_reason = 'FAIL_CLOSED', 'candidate_missing'
         else:
-            cand = load_iw(path)
-            replay_outcome, replay_reason, _ = validate_iw_candidate(cand)
+            cand = load_triad(path)
+            replay_outcome, replay_reason, _ = validate_triad_candidate(cand)
         match = (replay_outcome == original_outcome) and (replay_reason == original_reason)
         if not match:
             mismatches.append({
@@ -113,17 +98,11 @@ def replay_receipts(receipts_path: str, vectors_dir: str):
     return replay_results, chain_valid, mismatches
 
 
-def save_report_and_summary(replay_results: List[Dict], chain_valid: bool, mismatches: List[Dict], report_path: str, summary_path: str) -> None:
-    """
-    Save the replay results and mismatches to a JSON report and a
-    Markdown summary table.  The report records the total number of
-    receipts replayed, the number of matches/mismatches, chain
-    validity, and details of mismatches.
-    """
+def save_report_and_summary(replay_results: List[Dict[str, any]], chain_valid: bool, mismatches: List[Dict[str, any]], report_path: str, summary_path: str) -> None:
     total = len(replay_results)
     mismatches_count = len(mismatches)
     report = {
-        'schema': 'stegverse.sandbox.iw.replay_report.v1',
+        'schema': 'stegverse.sandbox.triad.replay_report.v1',
         'total': total,
         'matches': total - mismatches_count,
         'mismatches': mismatches_count,
@@ -131,11 +110,11 @@ def save_report_and_summary(replay_results: List[Dict], chain_valid: bool, misma
         'mismatch_details': mismatches,
         'replay': replay_results
     }
-    with open(report_path, 'w', encoding='utf-8') as f:
+    with open(report_path, 'w') as f:
         json.dump(report, f, indent=2)
     # Markdown summary
-    with open(summary_path, 'w', encoding='utf-8') as f:
-        f.write('# Inference Window Replay Summary\n\n')
+    with open(summary_path, 'w') as f:
+        f.write('# Triad Replay Summary\n\n')
         f.write(f'- Receipts replayed: **{total}**\n')
         f.write(f'- Chain valid: **{chain_valid}**\n')
         f.write(f'- Mismatches found: **{mismatches_count}**\n\n')
@@ -147,14 +126,14 @@ def save_report_and_summary(replay_results: List[Dict], chain_valid: bool, misma
             ro = item['replay_outcome']
             orr = item['original_reason']
             rr = item['replay_reason']
-            match_indicator = '✅' if item['match'] else '❌'
-            f.write(f'| {cid} | {oo} | {ro} | {orr} | {rr} | {match_indicator} |\n')
+            match = '✅' if item['match'] else '❌'
+            f.write(f'| {cid} | {oo} | {ro} | {orr} | {rr} | {match} |\n')
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description='Replay IW receipts and verify outcomes.')
+def main():
+    parser = argparse.ArgumentParser(description='Replay Triad receipts and verify outcomes.')
     parser.add_argument('--receipts', required=True, help='Path to receipts JSONL file')
-    parser.add_argument('--vectors', required=True, help='Path to IW candidate directory')
+    parser.add_argument('--vectors', required=True, help='Path to Triad candidate directory')
     parser.add_argument('--report', required=True, help='Path to write replay report JSON')
     parser.add_argument('--summary', required=True, help='Path to write replay summary Markdown')
     args = parser.parse_args()

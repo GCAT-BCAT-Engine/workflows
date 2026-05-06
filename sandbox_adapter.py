@@ -1,44 +1,10 @@
-"""
-inference_window/sandbox_adapter.py
----------------------------------
-
-This script generates sandbox receipts for **Inference Window (IW)**
-candidates.  It mirrors the functionality of the ECAT/ICAT/PE
-sandbox adapters but operates solely on inference window candidate
-vectors.  Each candidate is validated using
-``validate_iw_candidate`` from ``iw_validator.py``.  A receipt is
-produced containing the candidate ID, outcome, reason, cost breakdown,
-and a cryptographic chain linking each receipt via a ``prev_receipt_hash``.
-
-Usage (from repository root)::
-
-    python -m inference_window.sandbox_adapter \
-      --vectors inference_window/candidate_vectors \
-      --receipts inference_window/brain_reports/iw_receipts.jsonl \
-      --report   inference_window/brain_reports/iw_sandbox_report.json \
-      --summary  inference_window/brain_reports/iw_sandbox_summary.md
-
-The script emits three files:
-
-* A ``JSONL`` file with one receipt per line.
-* A ``JSON`` report summarising counts of outcomes and chain validity.
-* A Markdown summary table for quick review.
-
-Receipts are chained by computing a SHA256 hash over the candidate ID,
-outcome, reason, basis hash (hash of the sorted JSON candidate), and
-the previous receipt hash.  This ensures tampering with any receipt
-breaks the chain.
-"""
-
-from __future__ import annotations
-
-import argparse
-import hashlib
 import json
 import os
-from typing import Dict, Any, List
+import argparse
+import hashlib
+from typing import Dict, List
 
-from inference_window.iw_validator import validate_iw_candidate, load_candidate as load_iw
+from triad_validator import validate_triad_candidate, load_candidate as load_triad
 
 
 def compute_hash(data: str) -> str:
@@ -46,37 +12,43 @@ def compute_hash(data: str) -> str:
     return hashlib.sha256(data.encode('utf-8')).hexdigest()
 
 
-def generate_receipts(vector_dir: str) -> List[Dict[str, Any]]:
+def load_candidates_from_dir(directory: str) -> List[Dict[str, any]]:
     """
-    Generate receipts for all IW candidate vectors in ``vector_dir``.
-
-    Returns a list of receipt dictionaries.  Each receipt contains a
-    cryptographic hash linking to the previous receipt, so that any
-    alteration of a receipt can be detected when the chain is verified.
+    Load all JSON candidate files from a directory. Returns a list of candidate dicts.
     """
-    receipts: List[Dict[str, Any]] = []
-    prev_hash: str | None = None
-    # Load candidates in sorted order for reproducible chain
-    for fname in sorted(os.listdir(vector_dir)):
+    candidates = []
+    for fname in sorted(os.listdir(directory)):
         if not fname.lower().endswith('.json'):
             continue
-        fpath = os.path.join(vector_dir, fname)
+        fpath = os.path.join(directory, fname)
         try:
-            candidate = load_iw(fpath)
+            candidate = load_triad(fpath)
+            candidates.append(candidate)
         except Exception:
-            # Skip files that cannot be parsed
             continue
-        cid = candidate.get('candidate_id', os.path.splitext(fname)[0])
-        # Validate candidate
-        outcome, reason, cost = validate_iw_candidate(candidate)
-        # Compute basis hash as hash of sorted JSON candidate
-        basis_str = json.dumps(candidate, sort_keys=True)
+    return candidates
+
+
+def generate_receipts(directory: str) -> List[Dict[str, any]]:
+    """
+    Generate a list of receipts for all Triad candidates in the given directory.
+    Receipts are chained via prev_receipt_hash.
+    """
+    receipts: List[Dict[str, any]] = []
+    prev_hash = None
+    candidates = load_candidates_from_dir(directory)
+    for cand in candidates:
+        cid = cand.get('candidate_id', 'unknown')
+        outcome, reason, cost = validate_triad_candidate(cand)
+        # Basis hash is hash of sorted JSON candidate
+        basis_str = json.dumps(cand, sort_keys=True)
         basis_hash = compute_hash(basis_str)
-        # Compute receipt hash linking previous receipt
+        # Compute receipt hash
         receipt_str = cid + outcome + reason + basis_hash + (prev_hash or '')
         receipt_hash = compute_hash(receipt_str)
         receipt = {
             'candidate_id': cid,
+            'layer': 'TRIAD',
             'outcome': outcome,
             'reason': reason,
             'basis_hash': basis_hash,
@@ -89,19 +61,19 @@ def generate_receipts(vector_dir: str) -> List[Dict[str, Any]]:
     return receipts
 
 
-def verify_chain(receipts: List[Dict[str, Any]]) -> bool:
+def verify_chain(receipts: List[Dict[str, any]]) -> bool:
     """
-    Verify the receipt chain by recomputing each ``receipt_hash`` and
-    comparing with stored values.  Returns True if the chain is valid
-    and False otherwise.
+    Verify the receipt chain by recomputing each receipt_hash and comparing with stored values.
+    Returns True if chain is valid, False otherwise.
     """
-    prev_hash: str | None = None
+    prev_hash = None
     for rec in receipts:
         cid = rec['candidate_id']
         outcome = rec['outcome']
         reason = rec['reason']
         basis_hash = rec['basis_hash']
         expected_prev = rec['prev_receipt_hash']
+        # Recompute
         recomputed = compute_hash(cid + outcome + reason + basis_hash + (prev_hash or ''))
         if recomputed != rec['receipt_hash'] or expected_prev != prev_hash:
             return False
@@ -109,63 +81,57 @@ def verify_chain(receipts: List[Dict[str, Any]]) -> bool:
     return True
 
 
-def save_receipts(receipts: List[Dict[str, Any]], path: str) -> None:
-    """Write receipts to ``path`` in JSONL format."""
-    with open(path, 'w', encoding='utf-8') as f:
+def save_receipts(receipts: List[Dict[str, any]], path: str) -> None:
+    with open(path, 'w') as f:
         for rec in receipts:
             f.write(json.dumps(rec) + '\n')
 
 
-def save_summary(receipts: List[Dict[str, Any]], report_path: str, summary_path: str) -> None:
-    """
-    Save a JSON report and Markdown summary summarising the receipts.
-    The report includes counts of outcomes and whether the chain is valid.
-    """
+def save_summary(receipts: List[Dict[str, any]], report_path: str, summary_path: str) -> None:
     total = len(receipts)
     counts = {'ALLOW': 0, 'DENY': 0, 'FAIL_CLOSED': 0}
     for rec in receipts:
-        outcome = rec['outcome']
-        counts[outcome] = counts.get(outcome, 0) + 1
+        counts[rec['outcome']] += 1
     chain_valid = verify_chain(receipts)
-    # JSON report
     report = {
-        'schema': 'stegverse.sandbox.iw.sandbox_report.v1',
+        'schema': 'stegverse.sandbox.triad.sandbox_report.v1',
         'total': total,
-        'allow': counts.get('ALLOW', 0),
-        'deny': counts.get('DENY', 0),
-        'fail_closed': counts.get('FAIL_CLOSED', 0),
+        'allow': counts['ALLOW'],
+        'deny': counts['DENY'],
+        'fail_closed': counts['FAIL_CLOSED'],
         'chain_valid': chain_valid,
         'receipts': receipts
     }
-    with open(report_path, 'w', encoding='utf-8') as f:
+    with open(report_path, 'w') as f:
         json.dump(report, f, indent=2)
     # Markdown summary
-    with open(summary_path, 'w', encoding='utf-8') as f:
-        f.write('# Inference Window Sandbox Summary\n\n')
+    with open(summary_path, 'w') as f:
+        f.write('# Triad Sandbox Summary\n\n')
         f.write(f'- Receipts emitted: **{total}**\n')
         f.write(f'- Chain valid: **{chain_valid}**\n')
-        f.write(f'- Allowed: **{counts.get("ALLOW", 0)}**\n')
-        f.write(f'- Denied: **{counts.get("DENY", 0)}**\n')
-        f.write(f'- Fail Closed: **{counts.get("FAIL_CLOSED", 0)}**\n\n')
-        f.write('| ID | Outcome | Reason | Total Cost | Budget | Pass? |\n')
+        f.write(f'- Allowed: **{counts["ALLOW"]}**\n')
+        f.write(f'- Denied: **{counts["DENY"]}**\n')
+        f.write(f'- Fail Closed: **{counts["FAIL_CLOSED"]}**\n\n')
+        # Table
+        f.write('| ID | Outcome | Reason | Aggregated Cost | Budget | Pass? |\n')
         f.write('|---|---|---|---|---|---|\n')
         for rec in receipts:
             cid = rec['candidate_id']
             outcome = rec['outcome']
             reason = rec['reason']
-            cost_dict = rec.get('cost', {}) or {}
-            total_cost = cost_dict.get('total_cost', '')
+            cost_dict = rec.get('cost', {})
+            agg_cost = cost_dict.get('aggregated_cost', '')
             budget = cost_dict.get('budget', '')
             pass_indicator = '✅' if outcome == 'ALLOW' else '❌'
-            f.write(f'| {cid} | {outcome} | {reason} | {total_cost} | {budget} | {pass_indicator} |\n')
+            f.write(f'| {cid} | {outcome} | {reason} | {agg_cost} | {budget} | {pass_indicator} |\n')
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description='Generate IW sandbox receipts and summary.')
-    parser.add_argument('--vectors', required=True, help='Directory containing IW candidate JSON files')
-    parser.add_argument('--receipts', required=True, help='Path to write receipts JSONL')
+def main():
+    parser = argparse.ArgumentParser(description='Generate receipts and summary for Triad candidates.')
+    parser.add_argument('--vectors', required=True, help='Path to Triad candidate directory')
+    parser.add_argument('--receipts', required=True, help='Path to write receipts JSONL file')
     parser.add_argument('--report', required=True, help='Path to write summary report JSON')
-    parser.add_argument('--summary', required=True, help='Path to write summary Markdown')
+    parser.add_argument('--summary', required=True, help='Path to write summary markdown')
     args = parser.parse_args()
     receipts = generate_receipts(args.vectors)
     save_receipts(receipts, args.receipts)
