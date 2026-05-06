@@ -1,0 +1,35 @@
+name: GCAT/BCAT Candidate Validation
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "math_solver/validation/gcat_bcat_candidate_validator.py"
+      - "math_solver/validation/candidate_vectors/gcat_bcat/**"
+      - "math_solver/validation/problem_spec_gcat_bcat_edge_cases_001.yml"
+      - ".github/workflows/gcat_bcat_candidate_validation.yml"
+
+jobs:
+  validate-gcat-bcat-candidates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate GCAT/BCAT candidate vectors
+        run: >
+          python math_solver/validation/gcat_bcat_candidate_validator.py
+          --vectors math_solver/validation/candidate_vectors/gcat_bcat
+          --out math_solver/validation/brain_reports/gcat_bcat_candidate_report.json
+
+      - name: Upload validation report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gcat-bcat-candidate-validation-report
+          path: math_solver/validation/brain_reports/
