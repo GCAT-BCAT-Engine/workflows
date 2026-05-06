@@ -1,5 +1,6 @@
 name: StegVerse Validation Run - REAL
-'on':
+
+on:
   workflow_dispatch:
     inputs:
       run_id:
@@ -8,61 +9,174 @@ name: StegVerse Validation Run - REAL
         default: VAL-001
         type: string
       budget_ceiling:
-        description: Budget ceiling in USD
+        description: API budget ceiling in USD
         required: true
         default: '10.00'
         type: string
+
 jobs:
   validation:
     runs-on: ubuntu-latest
     timeout-minutes: 45
+
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-    - name: Install dependencies
-      run: pip install requests
-    - name: REAL API CALL - Phase 1
-      env:
-        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        RUN_ID: ${{ github.event.inputs.run_id }}
-        BUDGET: ${{ github.event.inputs.budget_ceiling }}
-      run: "cat << 'EOF' > real_test.py\nimport os\nimport json\nimport requests\n\
-        import time\n\napi_key = os.environ['ANTHROPIC_API_KEY']\nrun_id = os.environ['RUN_ID']\n\
-        budget = float(os.environ['BUDGET'])\n\nprint(f\"=== REAL Validation Run:\
-        \ {run_id} ===\")\nprint(f\"Budget: ${budget}\")\nprint(f\"API Key present:\
-        \ {len(api_key) > 20}\")\nprint()\n\n# REAL API CALL to Anthropic\nprint(\"\
-        Making real API call to Anthropic...\")\nstart = time.time()\n\nresponse =\
-        \ requests.post(\n    \"https://api.anthropic.com/v1/messages\",\n    headers={\n\
-        \        \"x-api-key\": api_key,\n        \"anthropic-version\": \"2023-06-01\"\
-        ,\n        \"content-type\": \"application/json\"\n    },\n    json={\n  \
-        \      \"model\": \"claude-sonnet-4-6\",\n        \"max_tokens\": 1024,\n\
-        \        \"messages\": [\n            {\"role\": \"user\", \"content\": \"\
-        Analyze this mathematical problem: Formal necessary and sufficient conditions\
-        \ for ALLOW gate admissibility in GCAT/BCAT engine. Provide a brief proof\
-        \ strategy.\"}\n        ]\n    }\n)\n\nelapsed = time.time() - start\nstatus\
-        \ = response.status_code\n\nprint(f\"API Status: {status}\")\nprint(f\"Latency:\
-        \ {elapsed:.2f}s\")\n\nif status == 200:\n    data = response.json()\n   \
-        \ content = data['content'][0]['text']\n    tokens_in = data['usage']['input_tokens']\n\
-        \    tokens_out = data['usage']['output_tokens']\n\n    # Cost calculation:\
-        \ Sonnet 4-6 = $3/$15 per MTok\n    cost = (tokens_in * 3 + tokens_out * 15)\
-        \ / 1000000\n\n    print(f\"Input tokens: {tokens_in}\")\n    print(f\"Output\
-        \ tokens: {tokens_out}\")\n    print(f\"Estimated cost: ${cost:.4f}\")\n \
-        \   print(f\"Response preview: {content[:200]}...\")\n\n    result = {\n \
-        \       \"status\": \"success\",\n        \"api_status\": status,\n      \
-        \  \"latency_seconds\": elapsed,\n        \"input_tokens\": tokens_in,\n \
-        \       \"output_tokens\": tokens_out,\n        \"estimated_cost_usd\": cost,\n\
-        \        \"budget_remaining\": budget - cost,\n        \"response_preview\"\
-        : content[:500]\n    }\nelse:\n    print(f\"Error: {response.text}\")\n  \
-        \  result = {\n        \"status\": \"error\",\n        \"api_status\": status,\n\
-        \        \"error\": response.text\n    }\n\nwith open(f'real_results_{run_id}.json',\
-        \ 'w') as f:\n    json.dump(result, f, indent=2)\n\nprint(f\"\\nResults saved:\
-        \ real_results_{run_id}.json\")\nEOF\npython3 real_test.py"
-    - name: Upload results
-      uses: actions/upload-artifact@v4
-      with:
-        name: real-validation-results
-        path: real_results_*.json
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests pyyaml
+
+      - name: Phase 1 - Real Anthropic API call
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          RUN_ID: ${{ github.event.inputs.run_id }}
+          API_BUDGET: ${{ github.event.inputs.budget_ceiling }}
+        run: |
+          cat > real_test.py << 'PY'
+          import json
+          import os
+          import time
+          import requests
+          from pathlib import Path
+
+          api_key = os.environ["ANTHROPIC_API_KEY"]
+          run_id = os.environ["RUN_ID"]
+          api_budget = float(os.environ["API_BUDGET"])
+
+          print(f"=== REAL Validation Run: {run_id} ===")
+          print(f"API budget ceiling: ${api_budget:.4f}")
+          print(f"API key present: {len(api_key) > 20}")
+          print()
+
+          prompt = '''
+          Analyze this mathematical problem:
+
+          Formal necessary and sufficient conditions for ALLOW gate admissibility
+          in a GCAT/BCAT engine.
+
+          Formalism:
+          - state x = (g,c,a,t)
+          - simplex constraint g+c+a+t = 1
+          - g,c,a,t >= 0
+          - legitimacy capacity Lambda = K*g^alpha*c^beta*t^gamma
+          - invariant I(x)=a-Lambda <= 0
+
+          Provide:
+          1. a brief proof strategy;
+          2. three adversarial candidate vector categories;
+          3. one caution about confusing DENY with FAIL_CLOSED.
+
+          Keep the answer concise.
+          '''
+
+          start = time.time()
+          response = requests.post(
+              "https://api.anthropic.com/v1/messages",
+              headers={
+                  "x-api-key": api_key,
+                  "anthropic-version": "2023-06-01",
+                  "content-type": "application/json",
+              },
+              json={
+                  "model": "claude-sonnet-4-6",
+                  "max_tokens": 1024,
+                  "messages": [{"role": "user", "content": prompt}],
+              },
+              timeout=120,
+          )
+          elapsed = time.time() - start
+          status = response.status_code
+
+          result = {
+              "run_id": run_id,
+              "status": "error",
+              "api_status": status,
+              "latency_seconds": elapsed,
+          }
+
+          if status == 200:
+              data = response.json()
+              content = data["content"][0]["text"]
+              tokens_in = data["usage"]["input_tokens"]
+              tokens_out = data["usage"]["output_tokens"]
+              estimated_cost = (tokens_in * 3 + tokens_out * 15) / 1_000_000
+
+              result.update({
+                  "status": "success",
+                  "input_tokens": tokens_in,
+                  "output_tokens": tokens_out,
+                  "estimated_api_cost_usd": estimated_cost,
+                  "api_budget_remaining": api_budget - estimated_cost,
+                  "response_preview": content[:1000],
+              })
+
+              if estimated_cost > api_budget:
+                  result["budget_status"] = "over_budget"
+              else:
+                  result["budget_status"] = "within_budget"
+          else:
+              result["error"] = response.text
+
+          Path("math_solver/validation/brain_reports").mkdir(parents=True, exist_ok=True)
+          out = Path(f"math_solver/validation/brain_reports/real_results_{run_id}.json")
+          out.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+          print(json.dumps(result, indent=2, sort_keys=True))
+          PY
+
+          python3 real_test.py
+
+      - name: Phase 2 - Deterministic GCAT/BCAT validation
+        run: |
+          python math_solver/validation/gcat_bcat_candidate_validator.py \
+            --vectors math_solver/validation/candidate_vectors/gcat_bcat \
+            --out math_solver/validation/brain_reports/gcat_bcat_candidate_report.json \
+            --summary-md math_solver/validation/brain_reports/gcat_bcat_candidate_summary.md
+
+      - name: Phase 3 - Write workflow summary
+        if: always()
+        run: |
+          echo "# StegVerse Validation Run" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+
+          if [ -f "math_solver/validation/brain_reports/real_results_${{ github.event.inputs.run_id }}.json" ]; then
+            echo "## Anthropic API Cost" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            python - << 'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          import os
+          from pathlib import Path
+
+          run_id = os.environ["RUN_ID"]
+          p = Path(f"math_solver/validation/brain_reports/real_results_{run_id}.json")
+          data = json.loads(p.read_text())
+          print(f"- Status: **{data.get('status')}**")
+          print(f"- API status: **{data.get('api_status')}**")
+          print(f"- Latency seconds: **{data.get('latency_seconds', 0):.3f}**")
+          if data.get("status") == "success":
+              print(f"- Input tokens: **{data.get('input_tokens')}**")
+              print(f"- Output tokens: **{data.get('output_tokens')}**")
+              print(f"- Estimated API cost: **${data.get('estimated_api_cost_usd', 0):.6f}**")
+              print(f"- API budget remaining: **${data.get('api_budget_remaining', 0):.6f}**")
+          PY
+          fi
+
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f math_solver/validation/brain_reports/gcat_bcat_candidate_summary.md ]; then
+            cat math_solver/validation/brain_reports/gcat_bcat_candidate_summary.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "GCAT/BCAT validation summary was not generated." >> "$GITHUB_STEP_SUMMARY"
+          fi
+        env:
+          RUN_ID: ${{ github.event.inputs.run_id }}
+
+      - name: Upload validation reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stegverse-validation-results
+          path: math_solver/validation/brain_reports/
