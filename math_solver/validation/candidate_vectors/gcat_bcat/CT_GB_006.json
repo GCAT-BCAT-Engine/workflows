@@ -1,8 +1,8 @@
 {
   "cost": {
-    "bcat": 1.0,
-    "budget": 5.0,
-    "gcat": -1.0
+    "bcat": 1,
+    "budget": 5,
+    "gcat": -1
   },
   "expected": {
     "outcome": "FAIL_CLOSED",
@@ -11,10 +11,10 @@
   "id": "CT_GB_006",
   "name": "fail closed negative cost",
   "params": {
-    "K": 16.0,
-    "alpha": 1.0,
-    "beta": 1.0,
-    "gamma": 1.0,
+    "K": 16,
+    "alpha": 1,
+    "beta": 1,
+    "gamma": 1,
     "simplex_tolerance": 1e-09
   },
   "state": {

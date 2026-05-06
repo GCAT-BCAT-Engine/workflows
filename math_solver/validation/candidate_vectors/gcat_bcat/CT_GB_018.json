@@ -1,18 +1,17 @@
 {
   "cost": {
-    "bcat": 2,
-    "budget": 5,
+    "bcat": 1,
+    "budget": "bad",
     "gcat": 1
   },
   "expected": {
-    "outcome": "DENY",
-    "reason": "invariant_violation",
-    "total_cost": 3
+    "outcome": "FAIL_CLOSED",
+    "reason": "cost_non_numeric_budget"
   },
-  "id": "CT_GB_002",
-  "name": "deny invariant violation",
+  "id": "CT_GB_018",
+  "name": "fail closed non numeric budget",
   "params": {
-    "K": 1,
+    "K": 16,
     "alpha": 1,
     "beta": 1,
     "gamma": 1,

@@ -1,21 +1,21 @@
 {
   "cost": {
-    "bcat": 3.0,
-    "budget": 5.0,
-    "gcat": 3.0
+    "bcat": 3,
+    "budget": 5,
+    "gcat": 3
   },
   "expected": {
     "outcome": "DENY",
     "reason": "budget_exceeded",
-    "total_cost": 6.0
+    "total_cost": 6
   },
   "id": "CT_GB_004",
   "name": "deny budget exceeded",
   "params": {
-    "K": 16.0,
-    "alpha": 1.0,
-    "beta": 1.0,
-    "gamma": 1.0,
+    "K": 16,
+    "alpha": 1,
+    "beta": 1,
+    "gamma": 1,
     "simplex_tolerance": 1e-09
   },
   "state": {

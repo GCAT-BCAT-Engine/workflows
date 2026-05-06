@@ -1,18 +1,18 @@
 {
   "cost": {
-    "bcat": 2,
+    "bcat": 1,
     "budget": 5,
     "gcat": 1
   },
   "expected": {
     "outcome": "DENY",
-    "reason": "invariant_violation",
-    "total_cost": 3
+    "reason": "simplex_violation",
+    "total_cost": 2
   },
-  "id": "CT_GB_002",
-  "name": "deny invariant violation",
+  "id": "CT_GB_008",
+  "name": "deny simplex low",
   "params": {
-    "K": 1,
+    "K": 16,
     "alpha": 1,
     "beta": 1,
     "gamma": 1,
@@ -21,7 +21,7 @@
   "state": {
     "a": 0.25,
     "c": 0.25,
-    "g": 0.25,
+    "g": 0.2,
     "t": 0.25
   }
 }

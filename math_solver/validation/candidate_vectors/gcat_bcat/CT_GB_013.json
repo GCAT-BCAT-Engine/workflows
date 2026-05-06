@@ -5,12 +5,12 @@
     "gcat": 1
   },
   "expected": {
-    "outcome": "FAIL_CLOSED",
-    "reason": "state_missing_t",
+    "outcome": "ALLOW",
+    "reason": "gcat_bcat_admissible",
     "total_cost": 2
   },
-  "id": "CT_GB_003",
-  "name": "fail closed missing t",
+  "id": "CT_GB_013",
+  "name": "allow exact invariant boundary",
   "params": {
     "K": 16,
     "alpha": 1,
@@ -19,8 +19,9 @@
     "simplex_tolerance": 1e-09
   },
   "state": {
-    "a": 0.25,
+    "a": 0.16666666666666666,
     "c": 0.25,
-    "g": 0.25
+    "g": 0.5,
+    "t": 0.08333333333333333
   }
 }

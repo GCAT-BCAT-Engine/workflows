@@ -1,27 +1,27 @@
 {
   "cost": {
-    "bcat": 2,
+    "bcat": 1,
     "budget": 5,
     "gcat": 1
   },
   "expected": {
     "outcome": "DENY",
     "reason": "invariant_violation",
-    "total_cost": 3
+    "total_cost": 2
   },
-  "id": "CT_GB_002",
-  "name": "deny invariant violation",
+  "id": "CT_GB_015",
+  "name": "deny near boundary over tolerance",
   "params": {
-    "K": 1,
+    "K": 16,
     "alpha": 1,
     "beta": 1,
     "gamma": 1,
     "simplex_tolerance": 1e-09
   },
   "state": {
-    "a": 0.25,
+    "a": 0.16667666666666667,
     "c": 0.25,
-    "g": 0.25,
-    "t": 0.25
+    "g": 0.5,
+    "t": 0.08332333333333333
   }
 }

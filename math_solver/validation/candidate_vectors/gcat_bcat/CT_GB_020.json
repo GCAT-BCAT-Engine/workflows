@@ -1,27 +1,27 @@
 {
   "cost": {
-    "bcat": 2,
+    "bcat": 1,
     "budget": 5,
     "gcat": 1
   },
   "expected": {
     "outcome": "DENY",
     "reason": "invariant_violation",
-    "total_cost": 3
+    "total_cost": 2
   },
-  "id": "CT_GB_002",
-  "name": "deny invariant violation",
+  "id": "CT_GB_020",
+  "name": "deny high autonomy with valid simplex",
   "params": {
-    "K": 1,
+    "K": 4,
     "alpha": 1,
     "beta": 1,
     "gamma": 1,
     "simplex_tolerance": 1e-09
   },
   "state": {
-    "a": 0.25,
-    "c": 0.25,
-    "g": 0.25,
-    "t": 0.25
+    "a": 0.5,
+    "c": 0.2,
+    "g": 0.2,
+    "t": 0.1
   }
 }

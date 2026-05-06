@@ -1,18 +1,18 @@
 {
   "cost": {
-    "bcat": 2,
+    "bcat": 2.5,
     "budget": 5,
-    "gcat": 1
+    "gcat": 2.5
   },
   "expected": {
-    "outcome": "DENY",
-    "reason": "invariant_violation",
-    "total_cost": 3
+    "outcome": "ALLOW",
+    "reason": "gcat_bcat_admissible",
+    "total_cost": 5
   },
-  "id": "CT_GB_002",
-  "name": "deny invariant violation",
+  "id": "CT_GB_019",
+  "name": "allow exact budget boundary",
   "params": {
-    "K": 1,
+    "K": 16,
     "alpha": 1,
     "beta": 1,
     "gamma": 1,

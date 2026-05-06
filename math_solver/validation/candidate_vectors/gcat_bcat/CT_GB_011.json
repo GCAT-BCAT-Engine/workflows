@@ -1,18 +1,17 @@
 {
   "cost": {
-    "bcat": 2,
+    "bcat": 1,
     "budget": 5,
     "gcat": 1
   },
   "expected": {
-    "outcome": "DENY",
-    "reason": "invariant_violation",
-    "total_cost": 3
+    "outcome": "FAIL_CLOSED",
+    "reason": "param_missing_K",
+    "total_cost": 2
   },
-  "id": "CT_GB_002",
-  "name": "deny invariant violation",
+  "id": "CT_GB_011",
+  "name": "fail closed missing K",
   "params": {
-    "K": 1,
     "alpha": 1,
     "beta": 1,
     "gamma": 1,
