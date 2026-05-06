@@ -2,35 +2,35 @@
   "chain": {
     "chain_valid": true,
     "failures": [],
-    "head_receipt_hash": "31acee7747bac0f204bb4bc1fcaab6c85c8b06c5c03596705d1fa55be3700654",
-    "receipt_count": 6,
+    "head_receipt_hash": "3253bfacfadaed27398691cb667f67e3ea2005a7d2cfd33a1f15781d373db173",
+    "receipt_count": 20,
     "schema": "stegverse.sandbox.receipt_chain_verification.v2"
   },
   "cost_summary": {
-    "bcat_cost": 7.0,
-    "budget": 20.0,
-    "budget_margin": 7.0,
-    "gcat_cost": 6.0,
-    "total_cost": 13.0
+    "bcat_cost": 21.5,
+    "budget": 85.0,
+    "budget_margin": 43.0,
+    "gcat_cost": 20.5,
+    "total_cost": 42.0
   },
   "receipts": [
     {
       "basis": {
         "cost": {
-          "bcat": 1.0,
-          "budget": 5.0,
-          "gcat": 1.0
+          "bcat": 1,
+          "budget": 5,
+          "gcat": 1
         },
         "expected": {
           "outcome": "ALLOW",
           "reason": "gcat_bcat_admissible",
-          "total_cost": 2.0
+          "total_cost": 2
         },
         "params": {
-          "K": 16.0,
-          "alpha": 1.0,
-          "beta": 1.0,
-          "gamma": 1.0,
+          "K": 16,
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
           "simplex_tolerance": 1e-09
         },
         "state": {
@@ -40,9 +40,9 @@
           "t": 0.25
         }
       },
-      "basis_hash": "ef118592eb82c87844c7b7e4913c3ea43e4ba1e1de1d4bf40a1b1fa2ec4c013d",
-      "candidate_file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_001.json",
-      "candidate_hash": "f331d5584df5b179c62c517daefd13e08675c4a2af1c2d51f7521c8494b1cbe1",
+      "basis_hash": "b81b00c20b6e2c28926125f9755231a65b4b96ada5360869179179d028259161",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_001.json",
+      "candidate_hash": "853a716b42e561583dca5e33ea24c4f74b6fbd1d17d7ee9b7dcea5cd5b3bd56e",
       "candidate_id": "CT_GB_001",
       "decision": {
         "errors": [],
@@ -50,7 +50,7 @@
         "passed": true,
         "reason": "gcat_bcat_admissible"
       },
-      "emitted_at": "2026-05-06T15:02:01.181713+00:00",
+      "emitted_at": "2026-05-06T15:35:58.135542+00:00",
       "metrics": {
         "a": 0.25,
         "c": 0.25,
@@ -70,31 +70,31 @@
         "t": 0.25
       },
       "prev_receipt_hash": "GENESIS",
-      "receipt_hash": "5f5c38a211a2108fd3665ad10a4d0244f6da06b7d9f80d828a9259523a293869",
-      "receipt_kind": "gcat_bcat_candidate_validation",
+      "receipt_hash": "20966a9de0d53680074a33c7cbc892993a88116abc24cc90df9a50127fa923a6",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
       "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
       "validator": {
         "name": "gcat_bcat_candidate_validator.py",
-        "version": "0.3.0"
+        "version": "0.4.0-adversarial"
       }
     },
     {
       "basis": {
         "cost": {
-          "bcat": 2.0,
-          "budget": 5.0,
-          "gcat": 1.0
+          "bcat": 2,
+          "budget": 5,
+          "gcat": 1
         },
         "expected": {
           "outcome": "DENY",
           "reason": "invariant_violation",
-          "total_cost": 3.0
+          "total_cost": 3
         },
         "params": {
-          "K": 1.0,
-          "alpha": 1.0,
-          "beta": 1.0,
-          "gamma": 1.0,
+          "K": 1,
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
           "simplex_tolerance": 1e-09
         },
         "state": {
@@ -104,9 +104,9 @@
           "t": 0.25
         }
       },
-      "basis_hash": "de51bebe6d1c96ab6cad1745035e650d2bcf596338ab6e31f9fcbaef21a8af8f",
-      "candidate_file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_002.json",
-      "candidate_hash": "9efc14d486fb3ca6c8910e09bc02aba1efcb1aebe370e6da70e269d725000147",
+      "basis_hash": "019c72c78795004fef16911146ac6adcc76417e09e28e3ce6198643aced06912",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_002.json",
+      "candidate_hash": "285d4555abee9e8143121a5fc78d85622935c4962201bb984829289fa5199817",
       "candidate_id": "CT_GB_002",
       "decision": {
         "errors": [],
@@ -114,7 +114,7 @@
         "passed": true,
         "reason": "invariant_violation"
       },
-      "emitted_at": "2026-05-06T15:02:01.182371+00:00",
+      "emitted_at": "2026-05-06T15:35:58.135975+00:00",
       "metrics": {
         "a": 0.25,
         "c": 0.25,
@@ -133,32 +133,32 @@
         "simplex_sum": 1.0,
         "t": 0.25
       },
-      "prev_receipt_hash": "5f5c38a211a2108fd3665ad10a4d0244f6da06b7d9f80d828a9259523a293869",
-      "receipt_hash": "6b432bfe7e94ee24284172bb3c313b968bcfeb937b4be5cff4ba61502a67cc08",
-      "receipt_kind": "gcat_bcat_candidate_validation",
+      "prev_receipt_hash": "20966a9de0d53680074a33c7cbc892993a88116abc24cc90df9a50127fa923a6",
+      "receipt_hash": "1aa35ce6ea558adde80b89121e77cf9a72618d155b01bfec778f5a77c994096a",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
       "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
       "validator": {
         "name": "gcat_bcat_candidate_validator.py",
-        "version": "0.3.0"
+        "version": "0.4.0-adversarial"
       }
     },
     {
       "basis": {
         "cost": {
-          "bcat": 1.0,
-          "budget": 5.0,
-          "gcat": 1.0
+          "bcat": 1,
+          "budget": 5,
+          "gcat": 1
         },
         "expected": {
           "outcome": "FAIL_CLOSED",
           "reason": "state_missing_t",
-          "total_cost": 2.0
+          "total_cost": 2
         },
         "params": {
-          "K": 16.0,
-          "alpha": 1.0,
-          "beta": 1.0,
-          "gamma": 1.0,
+          "K": 16,
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
           "simplex_tolerance": 1e-09
         },
         "state": {
@@ -167,9 +167,9 @@
           "g": 0.25
         }
       },
-      "basis_hash": "bc021fe166dc2343b67c5a4a5f097deed951dc2e52b814a3ea076906f8a86913",
-      "candidate_file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_003.json",
-      "candidate_hash": "efb143ef5eb91d26ba75784bb3a1cd60da7d5ec2713f85603d51dff53cb13a75",
+      "basis_hash": "d5bbe095628ef78bfe8b7eecffefeeccfd9d14f21b460f2c423bfc4ffcac9fe3",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_003.json",
+      "candidate_hash": "a4f277dee3ed3709a8c2706f528189b0515c0e2059823bac3127ba79ce4833e4",
       "candidate_id": "CT_GB_003",
       "decision": {
         "errors": [],
@@ -177,7 +177,7 @@
         "passed": true,
         "reason": "state_missing_t"
       },
-      "emitted_at": "2026-05-06T15:02:01.183532+00:00",
+      "emitted_at": "2026-05-06T15:35:58.136718+00:00",
       "metrics": {
         "cost": {
           "bcat_cost": 1.0,
@@ -188,32 +188,32 @@
           "total_cost": 2.0
         }
       },
-      "prev_receipt_hash": "6b432bfe7e94ee24284172bb3c313b968bcfeb937b4be5cff4ba61502a67cc08",
-      "receipt_hash": "dfb5699e3a651834d1a2bb3f0f5289962c9aba659986c66cabb10c0211f4fbe3",
-      "receipt_kind": "gcat_bcat_candidate_validation",
+      "prev_receipt_hash": "1aa35ce6ea558adde80b89121e77cf9a72618d155b01bfec778f5a77c994096a",
+      "receipt_hash": "bc4a7f090be8e054036941bf3d3d45b5c231adec9a01de38e76910233587d653",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
       "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
       "validator": {
         "name": "gcat_bcat_candidate_validator.py",
-        "version": "0.3.0"
+        "version": "0.4.0-adversarial"
       }
     },
     {
       "basis": {
         "cost": {
-          "bcat": 3.0,
-          "budget": 5.0,
-          "gcat": 3.0
+          "bcat": 3,
+          "budget": 5,
+          "gcat": 3
         },
         "expected": {
           "outcome": "DENY",
           "reason": "budget_exceeded",
-          "total_cost": 6.0
+          "total_cost": 6
         },
         "params": {
-          "K": 16.0,
-          "alpha": 1.0,
-          "beta": 1.0,
-          "gamma": 1.0,
+          "K": 16,
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
           "simplex_tolerance": 1e-09
         },
         "state": {
@@ -223,9 +223,9 @@
           "t": 0.25
         }
       },
-      "basis_hash": "b4615212f6358b7ff59748f9aa6d015759469cec1c0f1a48f0c76ff8317f4b5f",
-      "candidate_file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_004.json",
-      "candidate_hash": "2594f42f5452651bebf79dcf7678fb51b690b6602e420366b5bcc457c0ae6158",
+      "basis_hash": "7dbab41ce0d261a4bebf7965943637317692b7d98704e97252e8bbe2c14ef823",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_004.json",
+      "candidate_hash": "bb4f6c2e375feddd62b6dfc90d43b29187f3067c0af77680de265f1b6eb659ce",
       "candidate_id": "CT_GB_004",
       "decision": {
         "errors": [],
@@ -233,7 +233,7 @@
         "passed": true,
         "reason": "budget_exceeded"
       },
-      "emitted_at": "2026-05-06T15:02:01.184666+00:00",
+      "emitted_at": "2026-05-06T15:35:58.137287+00:00",
       "metrics": {
         "a": 0.25,
         "c": 0.25,
@@ -252,20 +252,20 @@
         "simplex_sum": 1.0,
         "t": 0.25
       },
-      "prev_receipt_hash": "dfb5699e3a651834d1a2bb3f0f5289962c9aba659986c66cabb10c0211f4fbe3",
-      "receipt_hash": "0d6d49fdc97ab1fab67b55dffa0086e263bada46be03d0c9391db2b09d06e4e8",
-      "receipt_kind": "gcat_bcat_candidate_validation",
+      "prev_receipt_hash": "bc4a7f090be8e054036941bf3d3d45b5c231adec9a01de38e76910233587d653",
+      "receipt_hash": "c49a0ee5e0a96a131a15261b709517d6c42562d582cfe0a68c081955c45df43b",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
       "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
       "validator": {
         "name": "gcat_bcat_candidate_validator.py",
-        "version": "0.3.0"
+        "version": "0.4.0-adversarial"
       }
     },
     {
       "basis": {
         "cost": {
-          "bcat": 1.0,
-          "budget": 5.0,
+          "bcat": 1,
+          "budget": 5,
           "gcat": "bad"
         },
         "expected": {
@@ -273,10 +273,10 @@
           "reason": "cost_non_numeric_gcat"
         },
         "params": {
-          "K": 16.0,
-          "alpha": 1.0,
-          "beta": 1.0,
-          "gamma": 1.0,
+          "K": 16,
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
           "simplex_tolerance": 1e-09
         },
         "state": {
@@ -286,9 +286,9 @@
           "t": 0.25
         }
       },
-      "basis_hash": "25c405f8d9d9c9409ef296f49c2202909714cba82ce73e178f9f227cfc23a928",
-      "candidate_file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_005.json",
-      "candidate_hash": "7112d74e35df81f11bb2653c87764d79746925905803b3bea3d8164ee2802468",
+      "basis_hash": "9714bed44600a5b5effe8236ca003543658aa12c813c664fe61a90e4e37fc995",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_005.json",
+      "candidate_hash": "9d362c9323432a8b7987945996d77e35894a0980a359c526d0b559b57b2f45df",
       "candidate_id": "CT_GB_005",
       "decision": {
         "errors": [],
@@ -296,35 +296,35 @@
         "passed": true,
         "reason": "cost_non_numeric_gcat"
       },
-      "emitted_at": "2026-05-06T15:02:01.185594+00:00",
+      "emitted_at": "2026-05-06T15:35:58.137924+00:00",
       "metrics": {
         "cost": {}
       },
-      "prev_receipt_hash": "0d6d49fdc97ab1fab67b55dffa0086e263bada46be03d0c9391db2b09d06e4e8",
-      "receipt_hash": "016887958ecfe91044ffb48da56bc0338ccabdd918ebbf7d6bbbc2e586b2af4c",
-      "receipt_kind": "gcat_bcat_candidate_validation",
+      "prev_receipt_hash": "c49a0ee5e0a96a131a15261b709517d6c42562d582cfe0a68c081955c45df43b",
+      "receipt_hash": "843126ae199c4913b524163026c0d33476d1fed4d0d7a3966b020b70e7c2a4ff",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
       "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
       "validator": {
         "name": "gcat_bcat_candidate_validator.py",
-        "version": "0.3.0"
+        "version": "0.4.0-adversarial"
       }
     },
     {
       "basis": {
         "cost": {
-          "bcat": 1.0,
-          "budget": 5.0,
-          "gcat": -1.0
+          "bcat": 1,
+          "budget": 5,
+          "gcat": -1
         },
         "expected": {
           "outcome": "FAIL_CLOSED",
           "reason": "cost_negative_gcat"
         },
         "params": {
-          "K": 16.0,
-          "alpha": 1.0,
-          "beta": 1.0,
-          "gamma": 1.0,
+          "K": 16,
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
           "simplex_tolerance": 1e-09
         },
         "state": {
@@ -334,9 +334,9 @@
           "t": 0.25
         }
       },
-      "basis_hash": "bfec902aa72103fe9e318eb20d2676284a5ab3faf6b83be219c312604768c08a",
-      "candidate_file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_006.json",
-      "candidate_hash": "3afd39c11d09b40fc39849946d5e522ce2ae1ec1849b463ee81ea695fadc3aba",
+      "basis_hash": "c8bbc70eaa103174c4f8662b14595557789143877c7b9c6f063051772f6319c5",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_006.json",
+      "candidate_hash": "46c95bb1da1ef3da7d90ea30c6e2b3e62714495c9d01073e58cc8a6ec977038e",
       "candidate_id": "CT_GB_006",
       "decision": {
         "errors": [],
@@ -344,17 +344,864 @@
         "passed": true,
         "reason": "cost_negative_gcat"
       },
-      "emitted_at": "2026-05-06T15:02:01.186383+00:00",
+      "emitted_at": "2026-05-06T15:35:58.138518+00:00",
       "metrics": {
         "cost": {}
       },
-      "prev_receipt_hash": "016887958ecfe91044ffb48da56bc0338ccabdd918ebbf7d6bbbc2e586b2af4c",
-      "receipt_hash": "31acee7747bac0f204bb4bc1fcaab6c85c8b06c5c03596705d1fa55be3700654",
-      "receipt_kind": "gcat_bcat_candidate_validation",
+      "prev_receipt_hash": "843126ae199c4913b524163026c0d33476d1fed4d0d7a3966b020b70e7c2a4ff",
+      "receipt_hash": "6fb79e8d66058bfaee8f2b6fbe4d9bb54027ebdcc78791a2d4c8d2e47e13289a",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
       "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
       "validator": {
         "name": "gcat_bcat_candidate_validator.py",
-        "version": "0.3.0"
+        "version": "0.4.0-adversarial"
+      }
+    },
+    {
+      "basis": {
+        "cost": {
+          "bcat": 1,
+          "budget": 5,
+          "gcat": 1
+        },
+        "expected": {
+          "outcome": "DENY",
+          "reason": "simplex_violation",
+          "total_cost": 2
+        },
+        "params": {
+          "K": 16,
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": 0.25,
+          "c": 0.25,
+          "g": 0.25,
+          "t": 0.3
+        }
+      },
+      "basis_hash": "a300ea160f83fd630ecbece4c58607e6191de02f021804283b67003b6e3cabd9",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_007.json",
+      "candidate_hash": "c9c0b1a5d1944af15df780c6d409761ecff94efc192a253b53a2dae810414657",
+      "candidate_id": "CT_GB_007",
+      "decision": {
+        "errors": [],
+        "outcome": "DENY",
+        "passed": true,
+        "reason": "simplex_violation"
+      },
+      "emitted_at": "2026-05-06T15:35:58.139042+00:00",
+      "metrics": {
+        "a": 0.25,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.25,
+        "simplex_error": 0.050000000000000044,
+        "simplex_sum": 1.05,
+        "t": 0.3
+      },
+      "prev_receipt_hash": "6fb79e8d66058bfaee8f2b6fbe4d9bb54027ebdcc78791a2d4c8d2e47e13289a",
+      "receipt_hash": "653026cc39101780d39c608781dc478d620cbcd8edfd70a5d280b068b2ab9e75",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
+      "validator": {
+        "name": "gcat_bcat_candidate_validator.py",
+        "version": "0.4.0-adversarial"
+      }
+    },
+    {
+      "basis": {
+        "cost": {
+          "bcat": 1,
+          "budget": 5,
+          "gcat": 1
+        },
+        "expected": {
+          "outcome": "DENY",
+          "reason": "simplex_violation",
+          "total_cost": 2
+        },
+        "params": {
+          "K": 16,
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": 0.25,
+          "c": 0.25,
+          "g": 0.2,
+          "t": 0.25
+        }
+      },
+      "basis_hash": "40eac9b944a963c9b45596b120f123e01468c438ac8726abbca3728d74f53ee4",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_008.json",
+      "candidate_hash": "806789483298d85eecd830f56ebf17beba90087dae195eabab9b65d99bd33ea2",
+      "candidate_id": "CT_GB_008",
+      "decision": {
+        "errors": [],
+        "outcome": "DENY",
+        "passed": true,
+        "reason": "simplex_violation"
+      },
+      "emitted_at": "2026-05-06T15:35:58.139387+00:00",
+      "metrics": {
+        "a": 0.25,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.2,
+        "simplex_error": -0.050000000000000044,
+        "simplex_sum": 0.95,
+        "t": 0.25
+      },
+      "prev_receipt_hash": "653026cc39101780d39c608781dc478d620cbcd8edfd70a5d280b068b2ab9e75",
+      "receipt_hash": "b4cb2373cb0d55f772cf4d64cdaa05e3e81b8a7a75c8758a868bccc3ff050f22",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
+      "validator": {
+        "name": "gcat_bcat_candidate_validator.py",
+        "version": "0.4.0-adversarial"
+      }
+    },
+    {
+      "basis": {
+        "cost": {
+          "bcat": 1,
+          "budget": 5,
+          "gcat": 1
+        },
+        "expected": {
+          "outcome": "DENY",
+          "reason": "negative_component",
+          "total_cost": 2
+        },
+        "params": {
+          "K": 16,
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": 0.3,
+          "c": 0.4,
+          "g": -0.1,
+          "t": 0.4
+        }
+      },
+      "basis_hash": "bea3aed394d3aac4e2f34f4e96e93ae96a18c3a2ad9c166371b56aec4364ff72",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_009.json",
+      "candidate_hash": "3c180bc1433342fd1746878f6f2acf2c4ac58c86bff9cf91cffcbb95763b9e43",
+      "candidate_id": "CT_GB_009",
+      "decision": {
+        "errors": [],
+        "outcome": "DENY",
+        "passed": true,
+        "reason": "negative_component"
+      },
+      "emitted_at": "2026-05-06T15:35:58.139859+00:00",
+      "metrics": {
+        "a": 0.3,
+        "c": 0.4,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": -0.1,
+        "t": 0.4
+      },
+      "prev_receipt_hash": "b4cb2373cb0d55f772cf4d64cdaa05e3e81b8a7a75c8758a868bccc3ff050f22",
+      "receipt_hash": "248a4c10d9dbbfea0b26f2a57f2242d7b820ffb9c9207d892f810fbeb9830a6c",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
+      "validator": {
+        "name": "gcat_bcat_candidate_validator.py",
+        "version": "0.4.0-adversarial"
+      }
+    },
+    {
+      "basis": {
+        "cost": {
+          "bcat": 1,
+          "budget": 5,
+          "gcat": 1
+        },
+        "expected": {
+          "outcome": "FAIL_CLOSED",
+          "reason": "state_non_numeric_a",
+          "total_cost": 2
+        },
+        "params": {
+          "K": 16,
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": "bad",
+          "c": 0.25,
+          "g": 0.25,
+          "t": 0.25
+        }
+      },
+      "basis_hash": "50ff0f488380828fc98a5fd0a869c773e64de7d0e22f034ef8b18622866c26a6",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_010.json",
+      "candidate_hash": "8a9ef724fada9cb106d6ccea7be8af9eb0234d56a524d646a3fcfbbc6c743193",
+      "candidate_id": "CT_GB_010",
+      "decision": {
+        "errors": [],
+        "outcome": "FAIL_CLOSED",
+        "passed": true,
+        "reason": "state_non_numeric_a"
+      },
+      "emitted_at": "2026-05-06T15:35:58.140394+00:00",
+      "metrics": {
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        }
+      },
+      "prev_receipt_hash": "248a4c10d9dbbfea0b26f2a57f2242d7b820ffb9c9207d892f810fbeb9830a6c",
+      "receipt_hash": "2c054c5a6f30092578c6b7ba9e7483474af02139bf6e18018d16ab428d466534",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
+      "validator": {
+        "name": "gcat_bcat_candidate_validator.py",
+        "version": "0.4.0-adversarial"
+      }
+    },
+    {
+      "basis": {
+        "cost": {
+          "bcat": 1,
+          "budget": 5,
+          "gcat": 1
+        },
+        "expected": {
+          "outcome": "FAIL_CLOSED",
+          "reason": "param_missing_K",
+          "total_cost": 2
+        },
+        "params": {
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": 0.25,
+          "c": 0.25,
+          "g": 0.25,
+          "t": 0.25
+        }
+      },
+      "basis_hash": "b9c45038aa530f058d8ba7e6be66a11b04d712ca654d2981fb477ee50bf24f8f",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_011.json",
+      "candidate_hash": "2d5caa4c70160b5de1840b2c2de94fff8ee6366e5238a569f5a4ce4c753ef44e",
+      "candidate_id": "CT_GB_011",
+      "decision": {
+        "errors": [],
+        "outcome": "FAIL_CLOSED",
+        "passed": true,
+        "reason": "param_missing_K"
+      },
+      "emitted_at": "2026-05-06T15:35:58.141090+00:00",
+      "metrics": {
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        }
+      },
+      "prev_receipt_hash": "2c054c5a6f30092578c6b7ba9e7483474af02139bf6e18018d16ab428d466534",
+      "receipt_hash": "2c0e7c5f970b89a60f2b6462e2f9ef4ffff4f03d43f6dfb11bf56cda1152ce41",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
+      "validator": {
+        "name": "gcat_bcat_candidate_validator.py",
+        "version": "0.4.0-adversarial"
+      }
+    },
+    {
+      "basis": {
+        "cost": {
+          "bcat": 1,
+          "budget": 5,
+          "gcat": 1
+        },
+        "expected": {
+          "outcome": "FAIL_CLOSED",
+          "reason": "param_non_numeric_alpha",
+          "total_cost": 2
+        },
+        "params": {
+          "K": 16,
+          "alpha": "bad",
+          "beta": 1,
+          "gamma": 1,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": 0.25,
+          "c": 0.25,
+          "g": 0.25,
+          "t": 0.25
+        }
+      },
+      "basis_hash": "1b22ad109cddf631f0cd7743478b0b2754d6e0363dcbc9c5c8c77a2b12d54b32",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_012.json",
+      "candidate_hash": "2517703ed25342631325877883436c58fd0c3ab5c981fd9d52fd9c020be0282c",
+      "candidate_id": "CT_GB_012",
+      "decision": {
+        "errors": [],
+        "outcome": "FAIL_CLOSED",
+        "passed": true,
+        "reason": "param_non_numeric_alpha"
+      },
+      "emitted_at": "2026-05-06T15:35:58.141640+00:00",
+      "metrics": {
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        }
+      },
+      "prev_receipt_hash": "2c0e7c5f970b89a60f2b6462e2f9ef4ffff4f03d43f6dfb11bf56cda1152ce41",
+      "receipt_hash": "ca9c0b7b18c5bbc24aed28ad45cec0ed8a0b6032ab55b79eca94a10b6c6471d4",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
+      "validator": {
+        "name": "gcat_bcat_candidate_validator.py",
+        "version": "0.4.0-adversarial"
+      }
+    },
+    {
+      "basis": {
+        "cost": {
+          "bcat": 1,
+          "budget": 5,
+          "gcat": 1
+        },
+        "expected": {
+          "outcome": "ALLOW",
+          "reason": "gcat_bcat_admissible",
+          "total_cost": 2
+        },
+        "params": {
+          "K": 16,
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": 0.16666666666666666,
+          "c": 0.25,
+          "g": 0.5,
+          "t": 0.08333333333333333
+        }
+      },
+      "basis_hash": "03c38306a7138ca651a0f2275d248ace60477c2596239b29897b4b4f42050909",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_013.json",
+      "candidate_hash": "3eb69a93d3e118522c0f55b19d9ee9a1c218e8161cabe3547546b2ae7c5e6e83",
+      "candidate_id": "CT_GB_013",
+      "decision": {
+        "errors": [],
+        "outcome": "ALLOW",
+        "passed": true,
+        "reason": "gcat_bcat_admissible"
+      },
+      "emitted_at": "2026-05-06T15:35:58.142082+00:00",
+      "metrics": {
+        "a": 0.16666666666666666,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.5,
+        "invariant": 0.0,
+        "legitimacy": 0.16666666666666666,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.08333333333333333
+      },
+      "prev_receipt_hash": "ca9c0b7b18c5bbc24aed28ad45cec0ed8a0b6032ab55b79eca94a10b6c6471d4",
+      "receipt_hash": "bd9006ebcf43964e6da64c0b9e5749385d0d3d9c851c42ba7b4863f4de28ead9",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
+      "validator": {
+        "name": "gcat_bcat_candidate_validator.py",
+        "version": "0.4.0-adversarial"
+      }
+    },
+    {
+      "basis": {
+        "cost": {
+          "bcat": 1,
+          "budget": 5,
+          "gcat": 1
+        },
+        "expected": {
+          "outcome": "ALLOW",
+          "reason": "gcat_bcat_admissible",
+          "total_cost": 2
+        },
+        "params": {
+          "K": 16,
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
+          "simplex_tolerance": 1e-06
+        },
+        "state": {
+          "a": 0.16666667666666665,
+          "c": 0.25,
+          "g": 0.5,
+          "t": 0.08333332333333333
+        }
+      },
+      "basis_hash": "7bafa4f556f5a3edb3c74561253634ccd2552e714e554f1715a4a49ebeedf338",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_014.json",
+      "candidate_hash": "64971879872dccad1e15246f4fbf651c9984353b4c532e0adf8d58a8b5110019",
+      "candidate_id": "CT_GB_014",
+      "decision": {
+        "errors": [],
+        "outcome": "ALLOW",
+        "passed": true,
+        "reason": "gcat_bcat_admissible"
+      },
+      "emitted_at": "2026-05-06T15:35:58.142684+00:00",
+      "metrics": {
+        "a": 0.16666667666666665,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.5,
+        "invariant": 2.9999999984209325e-08,
+        "legitimacy": 0.16666664666666667,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.08333332333333333
+      },
+      "prev_receipt_hash": "bd9006ebcf43964e6da64c0b9e5749385d0d3d9c851c42ba7b4863f4de28ead9",
+      "receipt_hash": "f5bffbb72a3ea622444f02eeb8a4c212515f273f4ce6af3c93f24277ab8a7485",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
+      "validator": {
+        "name": "gcat_bcat_candidate_validator.py",
+        "version": "0.4.0-adversarial"
+      }
+    },
+    {
+      "basis": {
+        "cost": {
+          "bcat": 1,
+          "budget": 5,
+          "gcat": 1
+        },
+        "expected": {
+          "outcome": "DENY",
+          "reason": "invariant_violation",
+          "total_cost": 2
+        },
+        "params": {
+          "K": 16,
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": 0.16667666666666667,
+          "c": 0.25,
+          "g": 0.5,
+          "t": 0.08332333333333333
+        }
+      },
+      "basis_hash": "b246da88c7e8e8651a21443fed822bd820c0a7929cf9b10c621310c637c4a40b",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_015.json",
+      "candidate_hash": "95315bdf0f5439cf84a2c38db4f8179f096b289fa05435d1664b78065d027956",
+      "candidate_id": "CT_GB_015",
+      "decision": {
+        "errors": [],
+        "outcome": "DENY",
+        "passed": true,
+        "reason": "invariant_violation"
+      },
+      "emitted_at": "2026-05-06T15:35:58.143327+00:00",
+      "metrics": {
+        "a": 0.16667666666666667,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.5,
+        "invariant": 3.0000000000002247e-05,
+        "legitimacy": 0.16664666666666667,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.08332333333333333
+      },
+      "prev_receipt_hash": "f5bffbb72a3ea622444f02eeb8a4c212515f273f4ce6af3c93f24277ab8a7485",
+      "receipt_hash": "ccd5a575af5aac8f1b48076a4f71c3fde97d37cd8cff457b9b08aea73803af80",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
+      "validator": {
+        "name": "gcat_bcat_candidate_validator.py",
+        "version": "0.4.0-adversarial"
+      }
+    },
+    {
+      "basis": {
+        "cost": {
+          "bcat": 1,
+          "budget": 5,
+          "gcat": 1
+        },
+        "expected": {
+          "outcome": "DENY",
+          "reason": "invariant_violation",
+          "total_cost": 2
+        },
+        "params": {
+          "K": 16,
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": 0.39,
+          "c": 0.3,
+          "g": 0.3,
+          "t": 0.01
+        }
+      },
+      "basis_hash": "02405f8bc9ce6539b0f37c8937fc45a356d2173f4b5905aaa5c7fed10c5b4643",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_016.json",
+      "candidate_hash": "e653cf635fdf0ede4aa64700d3fbb5e0fd41474dc91636045347009af22e4db0",
+      "candidate_id": "CT_GB_016",
+      "decision": {
+        "errors": [],
+        "outcome": "DENY",
+        "passed": true,
+        "reason": "invariant_violation"
+      },
+      "emitted_at": "2026-05-06T15:35:58.143741+00:00",
+      "metrics": {
+        "a": 0.39,
+        "c": 0.3,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.3,
+        "invariant": 0.3756,
+        "legitimacy": 0.0144,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.01
+      },
+      "prev_receipt_hash": "ccd5a575af5aac8f1b48076a4f71c3fde97d37cd8cff457b9b08aea73803af80",
+      "receipt_hash": "cecb1287383ac976fd9f957e9410a17efae343a9c24f8f16ec3e5150a7f87df2",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
+      "validator": {
+        "name": "gcat_bcat_candidate_validator.py",
+        "version": "0.4.0-adversarial"
+      }
+    },
+    {
+      "basis": {
+        "cost": {
+          "bcat": 1,
+          "budget": 5,
+          "gcat": 1
+        },
+        "expected": {
+          "outcome": "ALLOW",
+          "reason": "gcat_bcat_admissible",
+          "total_cost": 2
+        },
+        "params": {
+          "K": 16,
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": 0,
+          "c": 0.3,
+          "g": 0.3,
+          "t": 0.4
+        }
+      },
+      "basis_hash": "d1b65b9aa71f61d7090e7a4e1df9bf53a9095697698455dfa082105e1c7f4112",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_017.json",
+      "candidate_hash": "a5f7e1570ec209b6c10a0032a12669a301d7c28d3dda7cb8d82d5b59b86aa72b",
+      "candidate_id": "CT_GB_017",
+      "decision": {
+        "errors": [],
+        "outcome": "ALLOW",
+        "passed": true,
+        "reason": "gcat_bcat_admissible"
+      },
+      "emitted_at": "2026-05-06T15:35:58.144501+00:00",
+      "metrics": {
+        "a": 0.0,
+        "c": 0.3,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.3,
+        "invariant": -0.576,
+        "legitimacy": 0.576,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.4
+      },
+      "prev_receipt_hash": "cecb1287383ac976fd9f957e9410a17efae343a9c24f8f16ec3e5150a7f87df2",
+      "receipt_hash": "389c0de458c7ec7b3a15f40afeb895f08eae232204bdff33d2859cc63bae387a",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
+      "validator": {
+        "name": "gcat_bcat_candidate_validator.py",
+        "version": "0.4.0-adversarial"
+      }
+    },
+    {
+      "basis": {
+        "cost": {
+          "bcat": 1,
+          "budget": "bad",
+          "gcat": 1
+        },
+        "expected": {
+          "outcome": "FAIL_CLOSED",
+          "reason": "cost_non_numeric_budget"
+        },
+        "params": {
+          "K": 16,
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": 0.25,
+          "c": 0.25,
+          "g": 0.25,
+          "t": 0.25
+        }
+      },
+      "basis_hash": "495d579a519eb03d9ed382152bccadf0dbbc3f3ae3673e417a2d03978326d23d",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_018.json",
+      "candidate_hash": "87697ae3caf1713862aee301039cd5f86630438f686678440e435cb48a21d122",
+      "candidate_id": "CT_GB_018",
+      "decision": {
+        "errors": [],
+        "outcome": "FAIL_CLOSED",
+        "passed": true,
+        "reason": "cost_non_numeric_budget"
+      },
+      "emitted_at": "2026-05-06T15:35:58.145134+00:00",
+      "metrics": {
+        "cost": {}
+      },
+      "prev_receipt_hash": "389c0de458c7ec7b3a15f40afeb895f08eae232204bdff33d2859cc63bae387a",
+      "receipt_hash": "0f81894e1513cf991fa304cee2f5285a3e7bce4b6cc68b4f98f8ce10831a7dac",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
+      "validator": {
+        "name": "gcat_bcat_candidate_validator.py",
+        "version": "0.4.0-adversarial"
+      }
+    },
+    {
+      "basis": {
+        "cost": {
+          "bcat": 2.5,
+          "budget": 5,
+          "gcat": 2.5
+        },
+        "expected": {
+          "outcome": "ALLOW",
+          "reason": "gcat_bcat_admissible",
+          "total_cost": 5
+        },
+        "params": {
+          "K": 16,
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": 0.25,
+          "c": 0.25,
+          "g": 0.25,
+          "t": 0.25
+        }
+      },
+      "basis_hash": "ada75700dd9c79542f98813fad1c8e0bd4960b9b33dd10cb596041ae75b661c2",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_019.json",
+      "candidate_hash": "4a50c5fee5152cd5a686aff753788e6a5964918ce4f0fa46d913ddf7d0267cb5",
+      "candidate_id": "CT_GB_019",
+      "decision": {
+        "errors": [],
+        "outcome": "ALLOW",
+        "passed": true,
+        "reason": "gcat_bcat_admissible"
+      },
+      "emitted_at": "2026-05-06T15:35:58.145730+00:00",
+      "metrics": {
+        "a": 0.25,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 2.5,
+          "budget": 5.0,
+          "budget_margin": 0.0,
+          "budget_pass": true,
+          "gcat_cost": 2.5,
+          "total_cost": 5.0
+        },
+        "g": 0.25,
+        "invariant": 0.0,
+        "legitimacy": 0.25,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.25
+      },
+      "prev_receipt_hash": "0f81894e1513cf991fa304cee2f5285a3e7bce4b6cc68b4f98f8ce10831a7dac",
+      "receipt_hash": "d585459e118da28832bf44d30876217d88af3a947862b0537834e06127251958",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
+      "validator": {
+        "name": "gcat_bcat_candidate_validator.py",
+        "version": "0.4.0-adversarial"
+      }
+    },
+    {
+      "basis": {
+        "cost": {
+          "bcat": 1,
+          "budget": 5,
+          "gcat": 1
+        },
+        "expected": {
+          "outcome": "DENY",
+          "reason": "invariant_violation",
+          "total_cost": 2
+        },
+        "params": {
+          "K": 4,
+          "alpha": 1,
+          "beta": 1,
+          "gamma": 1,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": 0.5,
+          "c": 0.2,
+          "g": 0.2,
+          "t": 0.1
+        }
+      },
+      "basis_hash": "f358bdc6899ef8e01347cd308891efd663e0ca5d4bc426cddfb0a5d763fe18b9",
+      "candidate_file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_020.json",
+      "candidate_hash": "8724fa7a882f7a6d0973fd2b22f7d538dd7ea221e225d2b58522fbf65c28a43c",
+      "candidate_id": "CT_GB_020",
+      "decision": {
+        "errors": [],
+        "outcome": "DENY",
+        "passed": true,
+        "reason": "invariant_violation"
+      },
+      "emitted_at": "2026-05-06T15:35:58.146677+00:00",
+      "metrics": {
+        "a": 0.5,
+        "c": 0.2,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.2,
+        "invariant": 0.484,
+        "legitimacy": 0.016000000000000004,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.1
+      },
+      "prev_receipt_hash": "d585459e118da28832bf44d30876217d88af3a947862b0537834e06127251958",
+      "receipt_hash": "3253bfacfadaed27398691cb667f67e3ea2005a7d2cfd33a1f15781d373db173",
+      "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
+      "validator": {
+        "name": "gcat_bcat_candidate_validator.py",
+        "version": "0.4.0-adversarial"
       }
     }
   ],
@@ -363,7 +1210,7 @@
       "actual": "ALLOW",
       "errors": [],
       "expected": "ALLOW",
-      "file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_001.json",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_001.json",
       "id": "CT_GB_001",
       "metrics": {
         "a": 0.25,
@@ -392,7 +1239,7 @@
       "actual": "DENY",
       "errors": [],
       "expected": "DENY",
-      "file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_002.json",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_002.json",
       "id": "CT_GB_002",
       "metrics": {
         "a": 0.25,
@@ -421,7 +1268,7 @@
       "actual": "FAIL_CLOSED",
       "errors": [],
       "expected": "FAIL_CLOSED",
-      "file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_003.json",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_003.json",
       "id": "CT_GB_003",
       "metrics": {
         "cost": {
@@ -433,7 +1280,7 @@
           "total_cost": 2.0
         }
       },
-      "name": "fail closed missing component",
+      "name": "fail closed missing t",
       "passed": true,
       "reason_actual": "state_missing_t",
       "reason_expected": "state_missing_t"
@@ -442,7 +1289,7 @@
       "actual": "DENY",
       "errors": [],
       "expected": "DENY",
-      "file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_004.json",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_004.json",
       "id": "CT_GB_004",
       "metrics": {
         "a": 0.25,
@@ -471,7 +1318,7 @@
       "actual": "FAIL_CLOSED",
       "errors": [],
       "expected": "FAIL_CLOSED",
-      "file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_005.json",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_005.json",
       "id": "CT_GB_005",
       "metrics": {
         "cost": {}
@@ -485,7 +1332,7 @@
       "actual": "FAIL_CLOSED",
       "errors": [],
       "expected": "FAIL_CLOSED",
-      "file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_006.json",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_006.json",
       "id": "CT_GB_006",
       "metrics": {
         "cost": {}
@@ -494,12 +1341,371 @@
       "passed": true,
       "reason_actual": "cost_negative_gcat",
       "reason_expected": "cost_negative_gcat"
+    },
+    {
+      "actual": "DENY",
+      "errors": [],
+      "expected": "DENY",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_007.json",
+      "id": "CT_GB_007",
+      "metrics": {
+        "a": 0.25,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.25,
+        "simplex_error": 0.050000000000000044,
+        "simplex_sum": 1.05,
+        "t": 0.3
+      },
+      "name": "deny simplex high",
+      "passed": true,
+      "reason_actual": "simplex_violation",
+      "reason_expected": "simplex_violation"
+    },
+    {
+      "actual": "DENY",
+      "errors": [],
+      "expected": "DENY",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_008.json",
+      "id": "CT_GB_008",
+      "metrics": {
+        "a": 0.25,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.2,
+        "simplex_error": -0.050000000000000044,
+        "simplex_sum": 0.95,
+        "t": 0.25
+      },
+      "name": "deny simplex low",
+      "passed": true,
+      "reason_actual": "simplex_violation",
+      "reason_expected": "simplex_violation"
+    },
+    {
+      "actual": "DENY",
+      "errors": [],
+      "expected": "DENY",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_009.json",
+      "id": "CT_GB_009",
+      "metrics": {
+        "a": 0.3,
+        "c": 0.4,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": -0.1,
+        "t": 0.4
+      },
+      "name": "deny negative component",
+      "passed": true,
+      "reason_actual": "negative_component",
+      "reason_expected": "negative_component"
+    },
+    {
+      "actual": "FAIL_CLOSED",
+      "errors": [],
+      "expected": "FAIL_CLOSED",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_010.json",
+      "id": "CT_GB_010",
+      "metrics": {
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        }
+      },
+      "name": "fail closed non numeric state",
+      "passed": true,
+      "reason_actual": "state_non_numeric_a",
+      "reason_expected": "state_non_numeric_a"
+    },
+    {
+      "actual": "FAIL_CLOSED",
+      "errors": [],
+      "expected": "FAIL_CLOSED",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_011.json",
+      "id": "CT_GB_011",
+      "metrics": {
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        }
+      },
+      "name": "fail closed missing K",
+      "passed": true,
+      "reason_actual": "param_missing_K",
+      "reason_expected": "param_missing_K"
+    },
+    {
+      "actual": "FAIL_CLOSED",
+      "errors": [],
+      "expected": "FAIL_CLOSED",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_012.json",
+      "id": "CT_GB_012",
+      "metrics": {
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        }
+      },
+      "name": "fail closed non numeric param",
+      "passed": true,
+      "reason_actual": "param_non_numeric_alpha",
+      "reason_expected": "param_non_numeric_alpha"
+    },
+    {
+      "actual": "ALLOW",
+      "errors": [],
+      "expected": "ALLOW",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_013.json",
+      "id": "CT_GB_013",
+      "metrics": {
+        "a": 0.16666666666666666,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.5,
+        "invariant": 0.0,
+        "legitimacy": 0.16666666666666666,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.08333333333333333
+      },
+      "name": "allow exact invariant boundary",
+      "passed": true,
+      "reason_actual": "gcat_bcat_admissible",
+      "reason_expected": "gcat_bcat_admissible"
+    },
+    {
+      "actual": "ALLOW",
+      "errors": [],
+      "expected": "ALLOW",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_014.json",
+      "id": "CT_GB_014",
+      "metrics": {
+        "a": 0.16666667666666665,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.5,
+        "invariant": 2.9999999984209325e-08,
+        "legitimacy": 0.16666664666666667,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.08333332333333333
+      },
+      "name": "allow tiny invariant within tolerance",
+      "passed": true,
+      "reason_actual": "gcat_bcat_admissible",
+      "reason_expected": "gcat_bcat_admissible"
+    },
+    {
+      "actual": "DENY",
+      "errors": [],
+      "expected": "DENY",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_015.json",
+      "id": "CT_GB_015",
+      "metrics": {
+        "a": 0.16667666666666667,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.5,
+        "invariant": 3.0000000000002247e-05,
+        "legitimacy": 0.16664666666666667,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.08332333333333333
+      },
+      "name": "deny near boundary over tolerance",
+      "passed": true,
+      "reason_actual": "invariant_violation",
+      "reason_expected": "invariant_violation"
+    },
+    {
+      "actual": "DENY",
+      "errors": [],
+      "expected": "DENY",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_016.json",
+      "id": "CT_GB_016",
+      "metrics": {
+        "a": 0.39,
+        "c": 0.3,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.3,
+        "invariant": 0.3756,
+        "legitimacy": 0.0144,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.01
+      },
+      "name": "deny low trust invariant",
+      "passed": true,
+      "reason_actual": "invariant_violation",
+      "reason_expected": "invariant_violation"
+    },
+    {
+      "actual": "ALLOW",
+      "errors": [],
+      "expected": "ALLOW",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_017.json",
+      "id": "CT_GB_017",
+      "metrics": {
+        "a": 0.0,
+        "c": 0.3,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.3,
+        "invariant": -0.576,
+        "legitimacy": 0.576,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.4
+      },
+      "name": "allow zero autonomy",
+      "passed": true,
+      "reason_actual": "gcat_bcat_admissible",
+      "reason_expected": "gcat_bcat_admissible"
+    },
+    {
+      "actual": "FAIL_CLOSED",
+      "errors": [],
+      "expected": "FAIL_CLOSED",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_018.json",
+      "id": "CT_GB_018",
+      "metrics": {
+        "cost": {}
+      },
+      "name": "fail closed non numeric budget",
+      "passed": true,
+      "reason_actual": "cost_non_numeric_budget",
+      "reason_expected": "cost_non_numeric_budget"
+    },
+    {
+      "actual": "ALLOW",
+      "errors": [],
+      "expected": "ALLOW",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_019.json",
+      "id": "CT_GB_019",
+      "metrics": {
+        "a": 0.25,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 2.5,
+          "budget": 5.0,
+          "budget_margin": 0.0,
+          "budget_pass": true,
+          "gcat_cost": 2.5,
+          "total_cost": 5.0
+        },
+        "g": 0.25,
+        "invariant": 0.0,
+        "legitimacy": 0.25,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.25
+      },
+      "name": "allow exact budget boundary",
+      "passed": true,
+      "reason_actual": "gcat_bcat_admissible",
+      "reason_expected": "gcat_bcat_admissible"
+    },
+    {
+      "actual": "DENY",
+      "errors": [],
+      "expected": "DENY",
+      "file": "/mnt/data/GCAT_BCAT_ADVERSARIAL_BASELINE_TEST/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_020.json",
+      "id": "CT_GB_020",
+      "metrics": {
+        "a": 0.5,
+        "c": 0.2,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.2,
+        "invariant": 0.484,
+        "legitimacy": 0.016000000000000004,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.1
+      },
+      "name": "deny high autonomy with valid simplex",
+      "passed": true,
+      "reason_actual": "invariant_violation",
+      "reason_expected": "invariant_violation"
     }
   ],
-  "schema": "stegverse.sandbox.gcat_bcat.report.v2",
+  "schema": "stegverse.sandbox.gcat_bcat.adversarial_report.v1",
   "summary": {
     "failed": 0,
-    "passed": 6,
-    "total": 6
+    "passed": 20,
+    "total": 20
   }
 }
