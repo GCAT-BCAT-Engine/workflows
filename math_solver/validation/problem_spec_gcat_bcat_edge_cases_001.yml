@@ -1,0 +1,49 @@
+problem_id: gcat-bcat-edge-cases-001
+domain: gcat_bcat_admissibility
+status: draft
+version: 0.1.0
+
+objective: >
+  Generate adversarial GCAT/BCAT candidate test vectors that distinguish
+  ALLOW, DENY, and FAIL_CLOSED behavior for the legitimacy invariant,
+  simplex constraint, boundary behavior, missing basis, malformed values,
+  and near-collapse or near-equilibrium states.
+
+formalism:
+  state: "x = (g, c, a, t)"
+  domain: "g, c, a, t >= 0"
+  simplex: "g + c + a + t = 1"
+  legitimacy_capacity: "Lambda(g,c,t) = K * g^alpha * c^beta * t^gamma"
+  invariant: "I(x) = a - Lambda(g,c,t) <= 0"
+
+candidate_requirements:
+  output_format: json
+  required_fields:
+    - id
+    - name
+    - params
+    - state
+    - expected
+  allowed_outcomes:
+    - ALLOW
+    - DENY
+    - FAIL_CLOSED
+  required_categories:
+    - valid_equilibrium_allow
+    - invariant_violation_deny
+    - simplex_violation_deny
+    - negative_component_deny
+    - missing_component_fail_closed
+    - non_numeric_component_fail_closed
+    - missing_parameter_fail_closed
+    - near_boundary_sensitivity
+
+deterministic_validator:
+  command: >
+    python math_solver/validation/gcat_bcat_candidate_validator.py
+    --vectors math_solver/validation/candidate_vectors/gcat_bcat
+    --out math_solver/validation/brain_reports/gcat_bcat_candidate_report.json
+
+acceptance_rule: >
+  Candidate_ACCEPT iff JSON schema is valid, expected outcome is present,
+  deterministic outcome matches expected outcome, and the validator exits zero.

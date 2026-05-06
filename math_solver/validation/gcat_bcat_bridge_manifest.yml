@@ -1,0 +1,22 @@
+schema: stegverse.gcat_bcat.engine_bridge_manifest.v1
+version: 0.1.0
+purpose: >
+  Bridge GCAT/BCAT candidate generation from the math solver engine into
+  deterministic admissibility validation.
+
+paths:
+  candidate_vectors: math_solver/validation/candidate_vectors/gcat_bcat
+  report: math_solver/validation/brain_reports/gcat_bcat_candidate_report.json
+  validator: math_solver/validation/gcat_bcat_candidate_validator.py
+  problem_spec: math_solver/validation/problem_spec_gcat_bcat_edge_cases_001.yml
+
+outcomes:
+  - ALLOW
+  - DENY
+  - FAIL_CLOSED
+
+acceptance:
+  deterministic_validation_required: true
+  fail_on_mismatch: true
+  fail_on_malformed_json: true
+  fail_on_missing_expected: true
