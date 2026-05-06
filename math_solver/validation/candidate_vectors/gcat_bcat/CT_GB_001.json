@@ -1,0 +1,21 @@
+{
+  "expected": {
+    "outcome": "ALLOW",
+    "reason": "gcat_bcat_admissible"
+  },
+  "id": "CT_GB_001",
+  "name": "allow equilibrium",
+  "params": {
+    "K": 16.0,
+    "alpha": 1.0,
+    "beta": 1.0,
+    "gamma": 1.0,
+    "simplex_tolerance": 1e-09
+  },
+  "state": {
+    "a": 0.25,
+    "c": 0.25,
+    "g": 0.25,
+    "t": 0.25
+  }
+}

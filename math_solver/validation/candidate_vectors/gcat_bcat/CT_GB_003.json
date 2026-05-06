@@ -1,0 +1,20 @@
+{
+  "expected": {
+    "outcome": "FAIL_CLOSED",
+    "reason": "state_missing_t"
+  },
+  "id": "CT_GB_003",
+  "name": "fail closed missing component",
+  "params": {
+    "K": 16.0,
+    "alpha": 1.0,
+    "beta": 1.0,
+    "gamma": 1.0,
+    "simplex_tolerance": 1e-09
+  },
+  "state": {
+    "a": 0.25,
+    "c": 0.25,
+    "g": 0.25
+  }
+}
