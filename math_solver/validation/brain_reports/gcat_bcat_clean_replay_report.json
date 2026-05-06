@@ -1,0 +1,566 @@
+{
+  "chain_valid": true,
+  "results": [
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_001",
+      "hash_valid": true,
+      "original_outcome": "ALLOW",
+      "original_reason": "gcat_bcat_admissible",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "bf7048ec156853296c6cb628ac546b1225b04696b805a8e17b2aee0a36ac60d4",
+      "replay_metrics": {
+        "a": 0.25,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.25,
+        "invariant": 0.0,
+        "legitimacy": 0.25,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.25
+      },
+      "replay_outcome": "ALLOW",
+      "replay_passed": true,
+      "replay_reason": "gcat_bcat_admissible"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_002",
+      "hash_valid": true,
+      "original_outcome": "DENY",
+      "original_reason": "invariant_violation",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "d7b97ae6234b5b50d6579db898a93ca423b6c249cc4bc78266d0deb7e710e9f9",
+      "replay_metrics": {
+        "a": 0.25,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 2.0,
+          "budget": 5.0,
+          "budget_margin": 2.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 3.0
+        },
+        "g": 0.25,
+        "invariant": 0.234375,
+        "legitimacy": 0.015625,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.25
+      },
+      "replay_outcome": "DENY",
+      "replay_passed": true,
+      "replay_reason": "invariant_violation"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_003",
+      "hash_valid": true,
+      "original_outcome": "FAIL_CLOSED",
+      "original_reason": "state_missing_t",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "5c3e001d6772aecac5964fcd12596167eb931fd96fb056e64d24aa83167cb378",
+      "replay_metrics": {
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        }
+      },
+      "replay_outcome": "FAIL_CLOSED",
+      "replay_passed": true,
+      "replay_reason": "state_missing_t"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_004",
+      "hash_valid": true,
+      "original_outcome": "DENY",
+      "original_reason": "budget_exceeded",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "49eca391e589282e338b60b7f809f987d07ad86b56f82776421c29a3b6b396db",
+      "replay_metrics": {
+        "a": 0.25,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 3.0,
+          "budget": 5.0,
+          "budget_margin": -1.0,
+          "budget_pass": false,
+          "gcat_cost": 3.0,
+          "total_cost": 6.0
+        },
+        "g": 0.25,
+        "invariant": 0.0,
+        "legitimacy": 0.25,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.25
+      },
+      "replay_outcome": "DENY",
+      "replay_passed": true,
+      "replay_reason": "budget_exceeded"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_005",
+      "hash_valid": true,
+      "original_outcome": "FAIL_CLOSED",
+      "original_reason": "cost_non_numeric_gcat",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "fc2b4f5d975e26ae2a597ccc308835c1cd83a3ae56e13f9fe1d7f8bc8f7b7a32",
+      "replay_metrics": {
+        "cost": {}
+      },
+      "replay_outcome": "FAIL_CLOSED",
+      "replay_passed": true,
+      "replay_reason": "cost_non_numeric_gcat"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_006",
+      "hash_valid": true,
+      "original_outcome": "FAIL_CLOSED",
+      "original_reason": "cost_negative_gcat",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "39b3e6f3ba9ef2d7936701073482acd08f8f7ccb0f87fa1b5caa0a7a7a09048b",
+      "replay_metrics": {
+        "cost": {}
+      },
+      "replay_outcome": "FAIL_CLOSED",
+      "replay_passed": true,
+      "replay_reason": "cost_negative_gcat"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_007",
+      "hash_valid": true,
+      "original_outcome": "DENY",
+      "original_reason": "simplex_violation",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "f7cb2afc600a10d801cdab38b281fc3627ce5674ce5bb8dc60a8bdb26d7b3634",
+      "replay_metrics": {
+        "a": 0.25,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.25,
+        "simplex_error": 0.050000000000000044,
+        "simplex_sum": 1.05,
+        "t": 0.3
+      },
+      "replay_outcome": "DENY",
+      "replay_passed": true,
+      "replay_reason": "simplex_violation"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_008",
+      "hash_valid": true,
+      "original_outcome": "DENY",
+      "original_reason": "simplex_violation",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "713e036b4db928e08512d833e77a053a8236cfb5b433bcced949cd19b0b99959",
+      "replay_metrics": {
+        "a": 0.25,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.2,
+        "simplex_error": -0.050000000000000044,
+        "simplex_sum": 0.95,
+        "t": 0.25
+      },
+      "replay_outcome": "DENY",
+      "replay_passed": true,
+      "replay_reason": "simplex_violation"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_009",
+      "hash_valid": true,
+      "original_outcome": "DENY",
+      "original_reason": "negative_component",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "10782f549ca5727b1407a1a642fb6ea2dbc5807f0e456a7154921d77042362ea",
+      "replay_metrics": {
+        "a": 0.3,
+        "c": 0.4,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": -0.1,
+        "t": 0.4
+      },
+      "replay_outcome": "DENY",
+      "replay_passed": true,
+      "replay_reason": "negative_component"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_010",
+      "hash_valid": true,
+      "original_outcome": "FAIL_CLOSED",
+      "original_reason": "state_non_numeric_a",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "5b92d45c812ac62be71ad5d81d0f001a79869b844f89ab3ebe7c019a68b0b2c3",
+      "replay_metrics": {
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        }
+      },
+      "replay_outcome": "FAIL_CLOSED",
+      "replay_passed": true,
+      "replay_reason": "state_non_numeric_a"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_011",
+      "hash_valid": true,
+      "original_outcome": "FAIL_CLOSED",
+      "original_reason": "param_missing_K",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "45f1710ac04ce48a0a1567222ac9c74985afa2b7a89b5238604cf0a08f2d56db",
+      "replay_metrics": {
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        }
+      },
+      "replay_outcome": "FAIL_CLOSED",
+      "replay_passed": true,
+      "replay_reason": "param_missing_K"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_012",
+      "hash_valid": true,
+      "original_outcome": "FAIL_CLOSED",
+      "original_reason": "param_non_numeric_alpha",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "a7d56eeee3a82b162abb840facbd081a00e468ed0e3f932f223276ab1af8ee3d",
+      "replay_metrics": {
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        }
+      },
+      "replay_outcome": "FAIL_CLOSED",
+      "replay_passed": true,
+      "replay_reason": "param_non_numeric_alpha"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_013",
+      "hash_valid": true,
+      "original_outcome": "ALLOW",
+      "original_reason": "gcat_bcat_admissible",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "6b4f953be44bbedf168115ada7635c26e9159adf4961f3224947b3be1454efa2",
+      "replay_metrics": {
+        "a": 0.16666666666666666,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.5,
+        "invariant": 0.0,
+        "legitimacy": 0.16666666666666666,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.08333333333333333
+      },
+      "replay_outcome": "ALLOW",
+      "replay_passed": true,
+      "replay_reason": "gcat_bcat_admissible"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_014",
+      "hash_valid": true,
+      "original_outcome": "ALLOW",
+      "original_reason": "gcat_bcat_admissible",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "5363b52402340a5a7d8b432f4715c291b1511c5c8f3e92abebb47aa9e821641f",
+      "replay_metrics": {
+        "a": 0.16666667666666665,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.5,
+        "invariant": 2.9999999984209325e-08,
+        "legitimacy": 0.16666664666666667,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.08333332333333333
+      },
+      "replay_outcome": "ALLOW",
+      "replay_passed": true,
+      "replay_reason": "gcat_bcat_admissible"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_015",
+      "hash_valid": true,
+      "original_outcome": "DENY",
+      "original_reason": "invariant_violation",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "15ea4aeeae7d2a55a6d3fa2db5c422531c693357cc29e62110e8c5f44334ae32",
+      "replay_metrics": {
+        "a": 0.16667666666666667,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.5,
+        "invariant": 3.0000000000002247e-05,
+        "legitimacy": 0.16664666666666667,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.08332333333333333
+      },
+      "replay_outcome": "DENY",
+      "replay_passed": true,
+      "replay_reason": "invariant_violation"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_016",
+      "hash_valid": true,
+      "original_outcome": "DENY",
+      "original_reason": "invariant_violation",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "db7d716d63c9b2279072c29f63f53179dd06f55e2b2d21fe8116a58132eee8db",
+      "replay_metrics": {
+        "a": 0.39,
+        "c": 0.3,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.3,
+        "invariant": 0.3756,
+        "legitimacy": 0.0144,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.01
+      },
+      "replay_outcome": "DENY",
+      "replay_passed": true,
+      "replay_reason": "invariant_violation"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_017",
+      "hash_valid": true,
+      "original_outcome": "ALLOW",
+      "original_reason": "gcat_bcat_admissible",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "40ddd5bdac75d8c0ef48bcf6287d6c29cb551d76f743900462b8059d78974d73",
+      "replay_metrics": {
+        "a": 0.0,
+        "c": 0.3,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.3,
+        "invariant": -0.576,
+        "legitimacy": 0.576,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.4
+      },
+      "replay_outcome": "ALLOW",
+      "replay_passed": true,
+      "replay_reason": "gcat_bcat_admissible"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_018",
+      "hash_valid": true,
+      "original_outcome": "FAIL_CLOSED",
+      "original_reason": "cost_non_numeric_budget",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "2a9ecb428faf55ef0b3ab126790a80c013f9b2146db8278e57128ec109560f59",
+      "replay_metrics": {
+        "cost": {}
+      },
+      "replay_outcome": "FAIL_CLOSED",
+      "replay_passed": true,
+      "replay_reason": "cost_non_numeric_budget"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_019",
+      "hash_valid": true,
+      "original_outcome": "ALLOW",
+      "original_reason": "gcat_bcat_admissible",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "ab7e30fb568e75fbb5eb42526a4c1ae1927c77433045dba296c68eb0a5316208",
+      "replay_metrics": {
+        "a": 0.25,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 2.5,
+          "budget": 5.0,
+          "budget_margin": 0.0,
+          "budget_pass": true,
+          "gcat_cost": 2.5,
+          "total_cost": 5.0
+        },
+        "g": 0.25,
+        "invariant": 0.0,
+        "legitimacy": 0.25,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.25
+      },
+      "replay_outcome": "ALLOW",
+      "replay_passed": true,
+      "replay_reason": "gcat_bcat_admissible"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_020",
+      "hash_valid": true,
+      "original_outcome": "DENY",
+      "original_reason": "invariant_violation",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "ac89c0bd202f0e746a754c3455429ada8e0f8000af916d9b9f9668728989e643",
+      "replay_metrics": {
+        "a": 0.5,
+        "c": 0.2,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.2,
+        "invariant": 0.484,
+        "legitimacy": 0.016000000000000004,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.1
+      },
+      "replay_outcome": "DENY",
+      "replay_passed": true,
+      "replay_reason": "invariant_violation"
+    }
+  ],
+  "schema": "stegverse.sandbox.gcat_bcat.replay_report.v2",
+  "summary": {
+    "failed": 0,
+    "passed": 20,
+    "total": 20
+  }
+}

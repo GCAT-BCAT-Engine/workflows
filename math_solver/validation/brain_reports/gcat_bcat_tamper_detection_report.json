@@ -1,0 +1,16 @@
+{
+  "chain_valid_after_tamper": false,
+  "replay_summary": {
+    "failed": 1,
+    "passed": 19,
+    "total": 20
+  },
+  "schema": "stegverse.sandbox.gcat_bcat.tamper_detection_report.v1",
+  "tamper": {
+    "original_outcome": "ALLOW",
+    "tampered_candidate_id": "CT_GB_001",
+    "tampered_file": "/mnt/data/GCAT_BCAT_TAMPER_DETECTION_TEST/math_solver/validation/brain_reports/gcat_bcat_sandbox_receipts_tampered.jsonl",
+    "tampered_outcome": "DENY"
+  },
+  "tamper_detected": true
+}

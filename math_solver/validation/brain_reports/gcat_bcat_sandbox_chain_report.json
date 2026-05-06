@@ -1,7 +1,7 @@
 {
   "chain_valid": true,
   "failures": [],
-  "head_receipt_hash": "3253bfacfadaed27398691cb667f67e3ea2005a7d2cfd33a1f15781d373db173",
+  "head_receipt_hash": "ac89c0bd202f0e746a754c3455429ada8e0f8000af916d9b9f9668728989e643",
   "receipt_count": 20,
   "schema": "stegverse.sandbox.receipt_chain_verification.v2"
 }
