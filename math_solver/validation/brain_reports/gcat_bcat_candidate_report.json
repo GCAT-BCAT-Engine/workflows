@@ -1,17 +1,33 @@
 {
+  "cost_summary": {
+    "bcat_cost": 7.0,
+    "budget": 20.0,
+    "budget_margin": 7.0,
+    "gcat_cost": 6.0,
+    "total_cost": 13.0
+  },
   "results": [
     {
       "actual": "ALLOW",
       "errors": [],
       "expected": "ALLOW",
-      "file": "/mnt/data/GCAT_BCAT_ENGINE_BRIDGE_BOOTSTRAP/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_001.json",
+      "file": "/mnt/data/GCAT_BCAT_ENGINE_BRIDGE_COST_TRACKING_SUMMARY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_001.json",
       "id": "CT_GB_001",
       "metrics": {
         "a": 0.25,
         "c": 0.25,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
         "g": 0.25,
         "invariant": 0.0,
         "legitimacy": 0.25,
+        "simplex_error": 0.0,
         "simplex_sum": 1.0,
         "t": 0.25
       },
@@ -24,14 +40,23 @@
       "actual": "DENY",
       "errors": [],
       "expected": "DENY",
-      "file": "/mnt/data/GCAT_BCAT_ENGINE_BRIDGE_BOOTSTRAP/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_002.json",
+      "file": "/mnt/data/GCAT_BCAT_ENGINE_BRIDGE_COST_TRACKING_SUMMARY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_002.json",
       "id": "CT_GB_002",
       "metrics": {
         "a": 0.25,
         "c": 0.25,
+        "cost": {
+          "bcat_cost": 2.0,
+          "budget": 5.0,
+          "budget_margin": 2.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 3.0
+        },
         "g": 0.25,
         "invariant": 0.234375,
         "legitimacy": 0.015625,
+        "simplex_error": 0.0,
         "simplex_sum": 1.0,
         "t": 0.25
       },
@@ -44,19 +69,85 @@
       "actual": "FAIL_CLOSED",
       "errors": [],
       "expected": "FAIL_CLOSED",
-      "file": "/mnt/data/GCAT_BCAT_ENGINE_BRIDGE_BOOTSTRAP/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_003.json",
+      "file": "/mnt/data/GCAT_BCAT_ENGINE_BRIDGE_COST_TRACKING_SUMMARY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_003.json",
       "id": "CT_GB_003",
-      "metrics": {},
+      "metrics": {
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        }
+      },
       "name": "fail closed missing component",
       "passed": true,
       "reason_actual": "state_missing_t",
       "reason_expected": "state_missing_t"
+    },
+    {
+      "actual": "DENY",
+      "errors": [],
+      "expected": "DENY",
+      "file": "/mnt/data/GCAT_BCAT_ENGINE_BRIDGE_COST_TRACKING_SUMMARY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_004.json",
+      "id": "CT_GB_004",
+      "metrics": {
+        "a": 0.25,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 3.0,
+          "budget": 5.0,
+          "budget_margin": -1.0,
+          "budget_pass": false,
+          "gcat_cost": 3.0,
+          "total_cost": 6.0
+        },
+        "g": 0.25,
+        "invariant": 0.0,
+        "legitimacy": 0.25,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.25
+      },
+      "name": "deny budget exceeded",
+      "passed": true,
+      "reason_actual": "budget_exceeded",
+      "reason_expected": "budget_exceeded"
+    },
+    {
+      "actual": "FAIL_CLOSED",
+      "errors": [],
+      "expected": "FAIL_CLOSED",
+      "file": "/mnt/data/GCAT_BCAT_ENGINE_BRIDGE_COST_TRACKING_SUMMARY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_005.json",
+      "id": "CT_GB_005",
+      "metrics": {
+        "cost": {}
+      },
+      "name": "fail closed non numeric cost",
+      "passed": true,
+      "reason_actual": "cost_non_numeric_gcat",
+      "reason_expected": "cost_non_numeric_gcat"
+    },
+    {
+      "actual": "FAIL_CLOSED",
+      "errors": [],
+      "expected": "FAIL_CLOSED",
+      "file": "/mnt/data/GCAT_BCAT_ENGINE_BRIDGE_COST_TRACKING_SUMMARY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_006.json",
+      "id": "CT_GB_006",
+      "metrics": {
+        "cost": {}
+      },
+      "name": "fail closed negative cost",
+      "passed": true,
+      "reason_actual": "cost_negative_gcat",
+      "reason_expected": "cost_negative_gcat"
     }
   ],
-  "schema": "stegverse.gcat_bcat.candidate_validation_report.v1",
+  "schema": "stegverse.gcat_bcat.candidate_validation_report.v3",
   "summary": {
     "failed": 0,
-    "passed": 3,
-    "total": 3
+    "passed": 6,
+    "total": 6
   }
 }
