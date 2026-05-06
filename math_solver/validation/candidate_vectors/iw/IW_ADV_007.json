@@ -1,0 +1,14 @@
+{
+  "candidate_id": "IW_ADV_007",
+  "inference_window": {
+    "size": 0.5
+  },
+  "params": {
+    "window_min": 0.3,
+    "lambda_w": -1.0,
+    "base_cost": 1.0
+  },
+  "budget": {
+    "window_cost": 1.0
+  }
+}
