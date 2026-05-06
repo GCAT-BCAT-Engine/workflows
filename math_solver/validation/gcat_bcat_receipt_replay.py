@@ -43,15 +43,15 @@ def replay_receipt(receipt: Dict[str, Any], expected_prev: str) -> Dict[str, Any
     reason_matches = replay_reason == original_reason
     return {"candidate_id": receipt.get("candidate_id"), "receipt_hash": receipt.get("receipt_hash"), "hash_valid": hash_valid, "prev_hash_valid": prev_valid, "basis_hash_valid": basis_hash_valid, "original_outcome": original_outcome, "replay_outcome": replay_outcome, "original_reason": original_reason, "replay_reason": replay_reason, "outcome_matches": outcome_matches, "reason_matches": reason_matches, "replay_passed": hash_valid and prev_valid and basis_hash_valid and outcome_matches and reason_matches, "replay_metrics": replay_metrics}
 
-def build_summary(report: Dict[str, Any]) -> str:
+def build_summary(report: Dict[str, Any], title: str = "GCAT/BCAT Receipt Replay Summary") -> str:
     summary = report["summary"]
-    lines = ["# GCAT/BCAT Adversarial Receipt Replay Summary", "", f"- Receipts replayed: **{summary['total']}**", f"- Replay passed: **{summary['passed']}**", f"- Replay failed: **{summary['failed']}**", f"- Chain valid: **{report['chain_valid']}**", "", "## Replay Results", "", "| ID | Original | Replay | Reason Match | Hash Valid | Basis Hash | Prev Valid | Passed |", "|---|---:|---:|---:|---:|---:|---:|---:|"]
+    lines = [f"# {title}", "", f"- Receipts replayed: **{summary['total']}**", f"- Replay passed: **{summary['passed']}**", f"- Replay failed: **{summary['failed']}**", f"- Chain valid: **{report['chain_valid']}**", "", "## Replay Results", "", "| ID | Original | Replay | Reason Match | Hash Valid | Basis Hash | Prev Valid | Passed |", "|---|---:|---:|---:|---:|---:|---:|---:|"]
     for r in report["results"]:
         lines.append(f"| {r['candidate_id']} | {r['original_outcome']} | {r['replay_outcome']} | {'✅' if r['reason_matches'] else '❌'} | {'✅' if r['hash_valid'] else '❌'} | {'✅' if r['basis_hash_valid'] else '❌'} | {'✅' if r['prev_hash_valid'] else '❌'} | {'✅' if r['replay_passed'] else '❌'} |")
     lines.append("")
     return "\n".join(lines)
 
-def run_replay(receipts_path: Path, out_dir: Path) -> Dict[str, Any]:
+def run_replay(receipts_path: Path, out_dir: Path, report_prefix: str = "gcat_bcat_replay", title: str = "GCAT/BCAT Receipt Replay Summary") -> Dict[str, Any]:
     out_dir.mkdir(parents=True, exist_ok=True)
     receipts = read_jsonl(receipts_path)
     expected_prev = "GENESIS"
@@ -61,19 +61,25 @@ def run_replay(receipts_path: Path, out_dir: Path) -> Dict[str, Any]:
         results.append(result)
         expected_prev = receipt.get("receipt_hash")
     failed = [r for r in results if not r["replay_passed"]]
-    report = {"schema": "stegverse.sandbox.gcat_bcat.adversarial_replay_report.v1", "summary": {"total": len(results), "passed": len(results) - len(failed), "failed": len(failed)}, "chain_valid": len(failed) == 0, "results": results}
-    (out_dir / "gcat_bcat_replay_report.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    (out_dir / "gcat_bcat_replay_summary.md").write_text(build_summary(report), encoding="utf-8")
+    report = {"schema": "stegverse.sandbox.gcat_bcat.replay_report.v2", "summary": {"total": len(results), "passed": len(results) - len(failed), "failed": len(failed)}, "chain_valid": len(failed) == 0, "results": results}
+    (out_dir / f"{report_prefix}_report.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    (out_dir / f"{report_prefix}_summary.md").write_text(build_summary(report, title), encoding="utf-8")
     return report
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--receipts", required=True)
     parser.add_argument("--out-dir", required=True)
+    parser.add_argument("--report-prefix", default="gcat_bcat_replay")
+    parser.add_argument("--summary-title", default="GCAT/BCAT Receipt Replay Summary")
+    parser.add_argument("--expect-failure", action="store_true")
     args = parser.parse_args()
-    report = run_replay(Path(args.receipts), Path(args.out_dir))
+    report = run_replay(Path(args.receipts), Path(args.out_dir), args.report_prefix, args.summary_title)
     print(json.dumps(report["summary"], indent=2, sort_keys=True))
-    return 0 if report["summary"]["failed"] == 0 else 1
+    failed = report["summary"]["failed"]
+    if args.expect_failure:
+        return 0 if failed > 0 else 1
+    return 0 if failed == 0 else 1
 
 if __name__ == "__main__":
     raise SystemExit(main())

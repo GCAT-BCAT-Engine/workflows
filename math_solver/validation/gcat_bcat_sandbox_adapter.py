@@ -27,7 +27,7 @@ def build_receipt(vector_path: Path, result: Dict[str, Any], vector: Dict[str, A
     basis = receipt_basis(vector)
     payload = {
         "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
-        "receipt_kind": "gcat_bcat_adversarial_candidate_validation",
+        "receipt_kind": "gcat_bcat_candidate_validation",
         "candidate_id": result.get("id"),
         "candidate_file": str(vector_path),
         "candidate_hash": stable_hash(vector),
@@ -35,7 +35,7 @@ def build_receipt(vector_path: Path, result: Dict[str, Any], vector: Dict[str, A
         "basis_hash": stable_hash(basis),
         "decision": {"outcome": result.get("actual"), "reason": result.get("reason_actual"), "passed": result.get("passed"), "errors": result.get("errors", [])},
         "metrics": result.get("metrics", {}),
-        "validator": {"name": "gcat_bcat_candidate_validator.py", "version": "0.4.0-adversarial"},
+        "validator": {"name": "gcat_bcat_candidate_validator.py", "version": "0.5.0-tamper"},
         "prev_receipt_hash": prev_hash,
         "emitted_at": datetime.now(timezone.utc).isoformat(),
     }
@@ -63,7 +63,7 @@ def build_summary(report: Dict[str, Any], chain_report: Dict[str, Any]) -> str:
     cost = report["cost_summary"]
     outcome_counts = Counter(r["actual"] for r in report["results"])
     lines = [
-        "# GCAT/BCAT Adversarial Sandbox Summary", "",
+        "# GCAT/BCAT Sandbox Summary", "",
         "## Sandbox Status", "",
         f"- Receipts emitted: **{chain_report['receipt_count']}**",
         f"- Receipt chain valid: **{chain_report['chain_valid']}**",
@@ -82,15 +82,7 @@ def build_summary(report: Dict[str, Any], chain_report: Dict[str, Any]) -> str:
         f"- Total governance cost: **{cost['total_cost']:.6f}**",
         f"- Candidate budget: **{cost['budget']:.6f}**",
         f"- Budget margin: **{cost['budget_margin']:.6f}**", "",
-        "## Candidate Receipts", "",
-        "| ID | Outcome | Reason | Passed | Receipt Hash |",
-        "|---|---:|---|---:|---|",
     ]
-    receipt_by_id = {r["candidate_id"]: r for r in report["receipts"]}
-    for result in report["results"]:
-        receipt = receipt_by_id.get(result.get("id"), {})
-        lines.append(f"| {result.get('id')} | {result.get('actual')} | {result.get('reason_actual')} | {'✅' if result.get('passed') else '❌'} | `{receipt.get('receipt_hash', '')[:16]}` |")
-    lines.append("")
     return "\n".join(lines)
 
 def run_sandbox(vectors: Path, out_dir: Path) -> Dict[str, Any]:
@@ -106,7 +98,7 @@ def run_sandbox(vectors: Path, out_dir: Path) -> Dict[str, Any]:
         results.append(result)
         receipts.append(receipt)
     chain_report = verify_chain(receipts)
-    report = {"schema": "stegverse.sandbox.gcat_bcat.adversarial_report.v1", "summary": {"total": len(results), "passed": sum(1 for r in results if r["passed"]), "failed": sum(1 for r in results if not r["passed"])}, "cost_summary": build_cost_summary(results), "chain": chain_report, "results": results, "receipts": receipts}
+    report = {"schema": "stegverse.sandbox.gcat_bcat.report.v2", "summary": {"total": len(results), "passed": sum(1 for r in results if r["passed"]), "failed": sum(1 for r in results if not r["passed"])}, "cost_summary": build_cost_summary(results), "chain": chain_report, "results": results, "receipts": receipts}
     (out_dir / "gcat_bcat_sandbox_report.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     with (out_dir / "gcat_bcat_sandbox_receipts.jsonl").open("w", encoding="utf-8") as f:
         for receipt in receipts:
