@@ -1,0 +1,225 @@
+{
+  "schema": "stegverse.sandbox.iw.sandbox_report.v1",
+  "total": 19,
+  "allow": 6,
+  "deny": 8,
+  "fail_closed": 5,
+  "chain_valid": true,
+  "receipts": [
+    {
+      "candidate_id": "IW_001",
+      "outcome": "ALLOW",
+      "reason": "iw_admissible",
+      "basis_hash": "429dc8d730d647cec72be76ce520f73a3824b228b968d6078c8eeb915035cf27",
+      "prev_receipt_hash": null,
+      "receipt_hash": "6eafdc55af3b2fa838993260b2376c777591f031f7b5b3dde3b6da8c2b7c327e",
+      "cost": {
+        "cost_W": 0.0,
+        "total_cost": 0.0,
+        "budget": 1.0
+      }
+    },
+    {
+      "candidate_id": "IW_002",
+      "outcome": "DENY",
+      "reason": "budget_exceeded",
+      "basis_hash": "c0b6c7327153408ca8dbe780a12371210642670035d5835ee4c40072c75caf8b",
+      "prev_receipt_hash": "6eafdc55af3b2fa838993260b2376c777591f031f7b5b3dde3b6da8c2b7c327e",
+      "receipt_hash": "6678d16eb57e14194c48f85e9162118064639dc57b7c50de6292ce27ab4f661e",
+      "cost": {
+        "cost_W": 0.4,
+        "total_cost": 0.4,
+        "budget": 0.3
+      }
+    },
+    {
+      "candidate_id": "IW_003",
+      "outcome": "DENY",
+      "reason": "window_size_below_threshold",
+      "basis_hash": "21ee8036ee7a22432b82adc6e92af28437aa666bc25e3a8e3c0e441176b90c0e",
+      "prev_receipt_hash": "6678d16eb57e14194c48f85e9162118064639dc57b7c50de6292ce27ab4f661e",
+      "receipt_hash": "b82bcb4a0fbc71ae74c21f7f972f65af10f25ebf934c8c4c6db87a03ef2ca055",
+      "cost": {}
+    },
+    {
+      "candidate_id": "IW_004",
+      "outcome": "FAIL_CLOSED",
+      "reason": "missing_size",
+      "basis_hash": "ce91a9bae270e0604ebea6e77ce20d18e916352f9bf416b5e4a3cbce4319714a",
+      "prev_receipt_hash": "b82bcb4a0fbc71ae74c21f7f972f65af10f25ebf934c8c4c6db87a03ef2ca055",
+      "receipt_hash": "e245798ef1ea101206305046b142c976ddbcf3b8ab572e4c46f17f3182c9bae4",
+      "cost": {}
+    },
+    {
+      "candidate_id": "IW_005",
+      "outcome": "FAIL_CLOSED",
+      "reason": "invalid_size",
+      "basis_hash": "fded8ad571db8628b7cb07d0267e11936df876b1c070ea613e841a497fc73e75",
+      "prev_receipt_hash": "e245798ef1ea101206305046b142c976ddbcf3b8ab572e4c46f17f3182c9bae4",
+      "receipt_hash": "f106aa4bf43865472c9323e5cde976bed047ee9f459cf3e962387668fec418a7",
+      "cost": {}
+    },
+    {
+      "candidate_id": "IW_006",
+      "outcome": "ALLOW",
+      "reason": "iw_admissible",
+      "basis_hash": "becf5c8291dbfcdcd0df986aa91032a86795903f7f78ac183a1c482b446032fe",
+      "prev_receipt_hash": "f106aa4bf43865472c9323e5cde976bed047ee9f459cf3e962387668fec418a7",
+      "receipt_hash": "f733b6e6b47a0938113de1eeea21ab12b4550c8327258f98f143f058da0ab694",
+      "cost": {
+        "cost_W": 0.3999999999999999,
+        "total_cost": 0.3999999999999999,
+        "budget": 1.0
+      }
+    },
+    {
+      "candidate_id": "IW_007",
+      "outcome": "DENY",
+      "reason": "budget_exceeded",
+      "basis_hash": "1fadabcbad7ce65990b1d23510b7cd9bb5619a0ef14664c2e204acfb055e0a9c",
+      "prev_receipt_hash": "f733b6e6b47a0938113de1eeea21ab12b4550c8327258f98f143f058da0ab694",
+      "receipt_hash": "b47a81d3d0be31745c903dd7cc2d52d466524931ded241e442e9b895f90f6c11",
+      "cost": {
+        "cost_W": 0.3999999999999999,
+        "total_cost": 0.3999999999999999,
+        "budget": 0.2
+      }
+    },
+    {
+      "candidate_id": "IW_ADV_001",
+      "outcome": "ALLOW",
+      "reason": "iw_admissible",
+      "basis_hash": "d794071da4fcb1722ff4e3e4108a1114f7550f42e7b7b5d9096c451918c354c7",
+      "prev_receipt_hash": "b47a81d3d0be31745c903dd7cc2d52d466524931ded241e442e9b895f90f6c11",
+      "receipt_hash": "c3bc8fe03fdfb49deaedc6c77717150b357cdb32db8ee9b21c0018c5dd33306c",
+      "cost": {
+        "cost_W": 0.5,
+        "total_cost": 0.5,
+        "budget": 1.0
+      }
+    },
+    {
+      "candidate_id": "IW_ADV_002",
+      "outcome": "DENY",
+      "reason": "window_size_below_threshold",
+      "basis_hash": "aca3116290223ddbe861f375052cc3a44f780173feb21dad3ba2c12181740e71",
+      "prev_receipt_hash": "c3bc8fe03fdfb49deaedc6c77717150b357cdb32db8ee9b21c0018c5dd33306c",
+      "receipt_hash": "3f75fab987379501a49a0dea462ff218d23adeb4f27648ecd10f41645f6bf593",
+      "cost": {}
+    },
+    {
+      "candidate_id": "IW_ADV_003",
+      "outcome": "DENY",
+      "reason": "budget_exceeded",
+      "basis_hash": "8ed6d33348d67ab23fdae3d1b028dcf6b5f9a5f0e89bb9d7c8063ccb34c4471e",
+      "prev_receipt_hash": "3f75fab987379501a49a0dea462ff218d23adeb4f27648ecd10f41645f6bf593",
+      "receipt_hash": "14c384741842ae9b94f9e7327db22d0d7f91a2b67e0e6785cf4a3d2cc161c0d3",
+      "cost": {
+        "cost_W": 1.0,
+        "total_cost": 1.0,
+        "budget": 0.5
+      }
+    },
+    {
+      "candidate_id": "IW_ADV_004",
+      "outcome": "FAIL_CLOSED",
+      "reason": "invalid_size",
+      "basis_hash": "27b448ecd606a6732570b8b2de6a90932148cefd91793cf2ff076a5fb8055b07",
+      "prev_receipt_hash": "14c384741842ae9b94f9e7327db22d0d7f91a2b67e0e6785cf4a3d2cc161c0d3",
+      "receipt_hash": "86269d7b562cee23dc1445b4bed2f624ba74e837c7c1d53b90988cc12f32ed70",
+      "cost": {}
+    },
+    {
+      "candidate_id": "IW_ADV_005",
+      "outcome": "FAIL_CLOSED",
+      "reason": "invalid_size",
+      "basis_hash": "1ff371b87b841474fad6fbad5d62013234b58de3319e7d5253aff9344c857725",
+      "prev_receipt_hash": "86269d7b562cee23dc1445b4bed2f624ba74e837c7c1d53b90988cc12f32ed70",
+      "receipt_hash": "e03aa334cdc5c74062270ceac823d4c985390711956067ed164b81f7b3d70052",
+      "cost": {}
+    },
+    {
+      "candidate_id": "IW_ADV_006",
+      "outcome": "FAIL_CLOSED",
+      "reason": "missing_size",
+      "basis_hash": "a1399c17f4df543d6837a435afe5c1a2d69b269bfd8eb08bf3f197bc5088c7d0",
+      "prev_receipt_hash": "e03aa334cdc5c74062270ceac823d4c985390711956067ed164b81f7b3d70052",
+      "receipt_hash": "37b52bc734ed094b66fe0822835d2659aa4fb0e917bdf635a96d1ac927974bb8",
+      "cost": {}
+    },
+    {
+      "candidate_id": "IW_ADV_007",
+      "outcome": "ALLOW",
+      "reason": "iw_admissible",
+      "basis_hash": "0f012f382107e843b1ccedf3f313d90ddc5d3f06f60943d573aeb753d83188ea",
+      "prev_receipt_hash": "37b52bc734ed094b66fe0822835d2659aa4fb0e917bdf635a96d1ac927974bb8",
+      "receipt_hash": "4837cc40ac96ac31fc64e679169558be65ce9cd054711747355b7b0e453658f3",
+      "cost": {
+        "cost_W": -0.5,
+        "total_cost": -0.5,
+        "budget": 1.0
+      }
+    },
+    {
+      "candidate_id": "IW_ADV_008",
+      "outcome": "DENY",
+      "reason": "window_size_below_threshold",
+      "basis_hash": "a620387bad4710523a6f3f1314e2e8dcf82cbdb862b846b34b3e812ef52525d1",
+      "prev_receipt_hash": "4837cc40ac96ac31fc64e679169558be65ce9cd054711747355b7b0e453658f3",
+      "receipt_hash": "be231fea5338fdfbdf92422e59010aa77bf3e2db59b0189ad052714f29a6e662",
+      "cost": {}
+    },
+    {
+      "candidate_id": "IW_ADV_009",
+      "outcome": "DENY",
+      "reason": "budget_exceeded",
+      "basis_hash": "7a2b3a427c473f9f4fedcfbe8da5c8894ceaaa786b7f38e668709b714fda5bce",
+      "prev_receipt_hash": "be231fea5338fdfbdf92422e59010aa77bf3e2db59b0189ad052714f29a6e662",
+      "receipt_hash": "98d23ed80c2237de80107cb398459242f555fd6f6c2a454d3c23d496aa3508d6",
+      "cost": {
+        "cost_W": 1.6,
+        "total_cost": 1.6,
+        "budget": 1.5
+      }
+    },
+    {
+      "candidate_id": "IW_ADV_010",
+      "outcome": "ALLOW",
+      "reason": "iw_admissible",
+      "basis_hash": "20302e61cabb6c643e113bc4972b1a742eb7e26249a6980b83289608d597a34c",
+      "prev_receipt_hash": "98d23ed80c2237de80107cb398459242f555fd6f6c2a454d3c23d496aa3508d6",
+      "receipt_hash": "ca9fca813235c1f48c565420ee999218330cf98b6cf14762621e48a3b2f9cba1",
+      "cost": {
+        "cost_W": 1.6,
+        "total_cost": 1.6,
+        "budget": 2.0
+      }
+    },
+    {
+      "candidate_id": "IW_ADV_011",
+      "outcome": "DENY",
+      "reason": "budget_exceeded",
+      "basis_hash": "872e46fab8cafda67f584b644b6623bd0c040b898ac2cc618d5c7cce43a5089f",
+      "prev_receipt_hash": "ca9fca813235c1f48c565420ee999218330cf98b6cf14762621e48a3b2f9cba1",
+      "receipt_hash": "b1f175957ee74b18e0ed10b79f7bdef78e8975d55b119bc831d2ffbdba33d7fc",
+      "cost": {
+        "cost_W": 0.4,
+        "total_cost": 0.4,
+        "budget": 0.3
+      }
+    },
+    {
+      "candidate_id": "IW_ADV_012",
+      "outcome": "ALLOW",
+      "reason": "iw_admissible",
+      "basis_hash": "310c6d0d805e9517faa9fa1234a0a712b4bd8abb7f8bccdb679c3defef81a8f0",
+      "prev_receipt_hash": "b1f175957ee74b18e0ed10b79f7bdef78e8975d55b119bc831d2ffbdba33d7fc",
+      "receipt_hash": "1d501e9f12edb87b8da0fc2595dfb8a0c689481d69b3943d06e657d4526e4b07",
+      "cost": {
+        "cost_W": 0.4,
+        "total_cost": 0.4,
+        "budget": null
+      }
+    }
+  ]
+}

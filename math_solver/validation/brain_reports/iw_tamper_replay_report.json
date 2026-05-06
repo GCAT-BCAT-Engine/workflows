@@ -1,0 +1,170 @@
+{
+  "schema": "stegverse.sandbox.iw.replay_report.v1",
+  "total": 19,
+  "matches": 18,
+  "mismatches": 1,
+  "chain_valid": false,
+  "mismatch_details": [
+    {
+      "candidate_id": "IW_001",
+      "original_outcome": "DENY",
+      "replay_outcome": "ALLOW",
+      "original_reason": "tampered",
+      "replay_reason": "iw_admissible"
+    }
+  ],
+  "replay": [
+    {
+      "candidate_id": "IW_001",
+      "original_outcome": "DENY",
+      "replay_outcome": "ALLOW",
+      "original_reason": "tampered",
+      "replay_reason": "iw_admissible",
+      "match": false
+    },
+    {
+      "candidate_id": "IW_002",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "budget_exceeded",
+      "replay_reason": "budget_exceeded",
+      "match": true
+    },
+    {
+      "candidate_id": "IW_003",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "window_size_below_threshold",
+      "replay_reason": "window_size_below_threshold",
+      "match": true
+    },
+    {
+      "candidate_id": "IW_004",
+      "original_outcome": "FAIL_CLOSED",
+      "replay_outcome": "FAIL_CLOSED",
+      "original_reason": "missing_size",
+      "replay_reason": "missing_size",
+      "match": true
+    },
+    {
+      "candidate_id": "IW_005",
+      "original_outcome": "FAIL_CLOSED",
+      "replay_outcome": "FAIL_CLOSED",
+      "original_reason": "invalid_size",
+      "replay_reason": "invalid_size",
+      "match": true
+    },
+    {
+      "candidate_id": "IW_006",
+      "original_outcome": "ALLOW",
+      "replay_outcome": "ALLOW",
+      "original_reason": "iw_admissible",
+      "replay_reason": "iw_admissible",
+      "match": true
+    },
+    {
+      "candidate_id": "IW_007",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "budget_exceeded",
+      "replay_reason": "budget_exceeded",
+      "match": true
+    },
+    {
+      "candidate_id": "IW_ADV_001",
+      "original_outcome": "ALLOW",
+      "replay_outcome": "ALLOW",
+      "original_reason": "iw_admissible",
+      "replay_reason": "iw_admissible",
+      "match": true
+    },
+    {
+      "candidate_id": "IW_ADV_002",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "window_size_below_threshold",
+      "replay_reason": "window_size_below_threshold",
+      "match": true
+    },
+    {
+      "candidate_id": "IW_ADV_003",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "budget_exceeded",
+      "replay_reason": "budget_exceeded",
+      "match": true
+    },
+    {
+      "candidate_id": "IW_ADV_004",
+      "original_outcome": "FAIL_CLOSED",
+      "replay_outcome": "FAIL_CLOSED",
+      "original_reason": "invalid_size",
+      "replay_reason": "invalid_size",
+      "match": true
+    },
+    {
+      "candidate_id": "IW_ADV_005",
+      "original_outcome": "FAIL_CLOSED",
+      "replay_outcome": "FAIL_CLOSED",
+      "original_reason": "invalid_size",
+      "replay_reason": "invalid_size",
+      "match": true
+    },
+    {
+      "candidate_id": "IW_ADV_006",
+      "original_outcome": "FAIL_CLOSED",
+      "replay_outcome": "FAIL_CLOSED",
+      "original_reason": "missing_size",
+      "replay_reason": "missing_size",
+      "match": true
+    },
+    {
+      "candidate_id": "IW_ADV_007",
+      "original_outcome": "ALLOW",
+      "replay_outcome": "ALLOW",
+      "original_reason": "iw_admissible",
+      "replay_reason": "iw_admissible",
+      "match": true
+    },
+    {
+      "candidate_id": "IW_ADV_008",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "window_size_below_threshold",
+      "replay_reason": "window_size_below_threshold",
+      "match": true
+    },
+    {
+      "candidate_id": "IW_ADV_009",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "budget_exceeded",
+      "replay_reason": "budget_exceeded",
+      "match": true
+    },
+    {
+      "candidate_id": "IW_ADV_010",
+      "original_outcome": "ALLOW",
+      "replay_outcome": "ALLOW",
+      "original_reason": "iw_admissible",
+      "replay_reason": "iw_admissible",
+      "match": true
+    },
+    {
+      "candidate_id": "IW_ADV_011",
+      "original_outcome": "DENY",
+      "replay_outcome": "DENY",
+      "original_reason": "budget_exceeded",
+      "replay_reason": "budget_exceeded",
+      "match": true
+    },
+    {
+      "candidate_id": "IW_ADV_012",
+      "original_outcome": "ALLOW",
+      "replay_outcome": "ALLOW",
+      "original_reason": "iw_admissible",
+      "replay_reason": "iw_admissible",
+      "match": true
+    }
+  ]
+}
