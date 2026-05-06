@@ -1,13 +1,14 @@
 problem_id: gcat-bcat-edge-cases-001
 domain: gcat_bcat_admissibility
 status: draft
-version: 0.1.0
+version: 0.3.0
 
 objective: >
   Generate adversarial GCAT/BCAT candidate test vectors that distinguish
   ALLOW, DENY, and FAIL_CLOSED behavior for the legitimacy invariant,
   simplex constraint, boundary behavior, missing basis, malformed values,
-  and near-collapse or near-equilibrium states.
+  near-collapse or near-equilibrium states, budget/cost accounting, and
+  workflow-summary reporting.
 
 formalism:
   state: "x = (g, c, a, t)"
@@ -15,6 +16,17 @@ formalism:
   simplex: "g + c + a + t = 1"
   legitimacy_capacity: "Lambda(g,c,t) = K * g^alpha * c^beta * t^gamma"
   invariant: "I(x) = a - Lambda(g,c,t) <= 0"
+
+cost_model:
+  scalar_cost: "total_cost = gcat_cost + bcat_cost"
+  budget_condition: "budget_pass iff total_cost <= budget"
+  note: >
+    Cost values are deterministic test/governance costs. API billing cost must be tracked separately.
+
+reporting:
+  json_report: math_solver/validation/brain_reports/gcat_bcat_candidate_report.json
+  markdown_summary: math_solver/validation/brain_reports/gcat_bcat_candidate_summary.md
+  github_summary: "$GITHUB_STEP_SUMMARY"
 
 candidate_requirements:
   output_format: json
@@ -24,26 +36,21 @@ candidate_requirements:
     - params
     - state
     - expected
+  optional_fields:
+    - cost
   allowed_outcomes:
     - ALLOW
     - DENY
     - FAIL_CLOSED
-  required_categories:
-    - valid_equilibrium_allow
-    - invariant_violation_deny
-    - simplex_violation_deny
-    - negative_component_deny
-    - missing_component_fail_closed
-    - non_numeric_component_fail_closed
-    - missing_parameter_fail_closed
-    - near_boundary_sensitivity
 
 deterministic_validator:
   command: >
     python math_solver/validation/gcat_bcat_candidate_validator.py
     --vectors math_solver/validation/candidate_vectors/gcat_bcat
     --out math_solver/validation/brain_reports/gcat_bcat_candidate_report.json
+    --summary-md math_solver/validation/brain_reports/gcat_bcat_candidate_summary.md
 
 acceptance_rule: >
   Candidate_ACCEPT iff JSON schema is valid, expected outcome is present,
-  deterministic outcome matches expected outcome, and the validator exits zero.
+  deterministic outcome matches expected outcome, cost accounting is valid,
+  workflow summary is emitted, and the validator exits zero.

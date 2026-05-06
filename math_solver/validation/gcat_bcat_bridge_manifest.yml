@@ -1,12 +1,14 @@
 schema: stegverse.gcat_bcat.engine_bridge_manifest.v1
-version: 0.1.0
+version: 0.3.0
 purpose: >
   Bridge GCAT/BCAT candidate generation from the math solver engine into
-  deterministic admissibility validation.
+  deterministic admissibility validation with per-step cost tracking and
+  GitHub Actions workflow summary reporting.
 
 paths:
   candidate_vectors: math_solver/validation/candidate_vectors/gcat_bcat
   report: math_solver/validation/brain_reports/gcat_bcat_candidate_report.json
+  markdown_summary: math_solver/validation/brain_reports/gcat_bcat_candidate_summary.md
   validator: math_solver/validation/gcat_bcat_candidate_validator.py
   problem_spec: math_solver/validation/problem_spec_gcat_bcat_edge_cases_001.yml
 
@@ -15,8 +17,26 @@ outcomes:
   - DENY
   - FAIL_CLOSED
 
+cost_tracking:
+  enabled: true
+  required_for_allow: true
+  fields:
+    - gcat_cost
+    - bcat_cost
+    - total_cost
+    - budget
+    - budget_margin
+    - budget_pass
+
+workflow_summary:
+  enabled: true
+  file: math_solver/validation/brain_reports/gcat_bcat_candidate_summary.md
+  github_step_summary: true
+
 acceptance:
   deterministic_validation_required: true
   fail_on_mismatch: true
   fail_on_malformed_json: true
   fail_on_missing_expected: true
+  fail_on_invalid_cost: true
+  fail_on_missing_summary: true
