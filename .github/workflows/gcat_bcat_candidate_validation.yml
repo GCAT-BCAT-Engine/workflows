@@ -26,6 +26,18 @@ jobs:
           python math_solver/validation/gcat_bcat_candidate_validator.py
           --vectors math_solver/validation/candidate_vectors/gcat_bcat
           --out math_solver/validation/brain_reports/gcat_bcat_candidate_report.json
+          --summary-md math_solver/validation/brain_reports/gcat_bcat_candidate_summary.md
+
+      - name: Add validation summary to workflow page
+        if: always()
+        run: |
+          if [ -f math_solver/validation/brain_reports/gcat_bcat_candidate_summary.md ]; then
+            cat math_solver/validation/brain_reports/gcat_bcat_candidate_summary.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "# GCAT/BCAT Candidate Validation Summary" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "Summary file was not generated." >> "$GITHUB_STEP_SUMMARY"
+          fi
 
       - name: Upload validation report
         uses: actions/upload-artifact@v4
