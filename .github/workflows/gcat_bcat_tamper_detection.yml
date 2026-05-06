@@ -1,0 +1,66 @@
+name: GCAT/BCAT Tamper Detection Test
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "math_solver/validation/gcat_bcat_candidate_validator.py"
+      - "math_solver/validation/gcat_bcat_sandbox_adapter.py"
+      - "math_solver/validation/gcat_bcat_receipt_replay.py"
+      - "math_solver/validation/gcat_bcat_tamper_test.py"
+      - "math_solver/validation/candidate_vectors/gcat_bcat/**"
+      - ".github/workflows/gcat_bcat_tamper_detection.yml"
+
+jobs:
+  tamper-detection-gcat-bcat:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run GCAT/BCAT sandbox adapter
+        run: >
+          python math_solver/validation/gcat_bcat_sandbox_adapter.py
+          --vectors math_solver/validation/candidate_vectors/gcat_bcat
+          --out-dir math_solver/validation/brain_reports
+
+      - name: Replay clean receipts
+        run: >
+          python math_solver/validation/gcat_bcat_receipt_replay.py
+          --receipts math_solver/validation/brain_reports/gcat_bcat_sandbox_receipts.jsonl
+          --out-dir math_solver/validation/brain_reports
+          --report-prefix gcat_bcat_clean_replay
+          --summary-title "GCAT/BCAT Clean Receipt Replay Summary"
+
+      - name: Run tamper detection
+        run: >
+          python math_solver/validation/gcat_bcat_tamper_test.py
+          --receipts math_solver/validation/brain_reports/gcat_bcat_sandbox_receipts.jsonl
+          --out-dir math_solver/validation/brain_reports
+
+      - name: Add summaries to workflow page
+        if: always()
+        run: |
+          if [ -f math_solver/validation/brain_reports/gcat_bcat_sandbox_summary.md ]; then
+            cat math_solver/validation/brain_reports/gcat_bcat_sandbox_summary.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f math_solver/validation/brain_reports/gcat_bcat_clean_replay_summary.md ]; then
+            cat math_solver/validation/brain_reports/gcat_bcat_clean_replay_summary.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f math_solver/validation/brain_reports/gcat_bcat_tamper_detection_summary.md ]; then
+            cat math_solver/validation/brain_reports/gcat_bcat_tamper_detection_summary.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload tamper detection reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gcat-bcat-tamper-detection-brain-reports
+          path: math_solver/validation/brain_reports/
