@@ -1,0 +1,20 @@
+validation_run_v1:
+  run_id: VAL-001
+  budget_ceiling_usd: 10.0
+  total_estimated_cost_usd: 8.1
+  phases:
+    - phase_id: 1
+      name: preprocessing
+      model: claude-haiku-4-5
+      estimated_cost_usd: 2.0
+      max_reasoning_time_minutes: 10
+    - phase_id: 2
+      name: quick_probe
+      model: claude-sonnet-4-6
+      estimated_cost_usd: 6.0
+      max_reasoning_time_minutes: 30
+    - phase_id: 3
+      name: deterministic_gcat_bcat_validation
+      model: local-python
+      estimated_cost_usd: 0.1
+      max_reasoning_time_minutes: 2

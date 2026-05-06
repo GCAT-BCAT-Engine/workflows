@@ -1,0 +1,23 @@
+{
+  "deterministic_gcat_bcat_validation": {
+    "actual_cost": 0.1,
+    "cumulative_cost": 8.1,
+    "estimated_cost": 0.1,
+    "status": "completed",
+    "timestamp": "2026-05-06T14:42:48.696762+00:00"
+  },
+  "preprocessing": {
+    "actual_cost": 2.0,
+    "cumulative_cost": 2.0,
+    "estimated_cost": 2.0,
+    "status": "completed",
+    "timestamp": "2026-05-06T14:42:48.295053+00:00"
+  },
+  "quick_probe": {
+    "actual_cost": 6.0,
+    "cumulative_cost": 8.0,
+    "estimated_cost": 6.0,
+    "status": "completed",
+    "timestamp": "2026-05-06T14:42:48.495635+00:00"
+  }
+}
