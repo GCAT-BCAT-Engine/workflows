@@ -1,0 +1,24 @@
+{
+  "candidate_id": "ECAT_ADV_002",
+  "entity": {
+    "reputation": 0.49,
+    "stake": 5.0,
+    "history": 0.3,
+    "co_owner_rejection": false
+  },
+  "params": {
+    "reputation_min": 0.5,
+    "stake_min": 2.0,
+    "history_max": 0.5,
+    "lambda_r": 1.0,
+    "lambda_s": 1.0,
+    "lambda_h": 1.0,
+    "base_cost": 1.0
+  },
+  "budget": {
+    "entity_cost": 2.0
+  },
+  "expected": {
+    "outcome": "DENY"
+  }
+}
