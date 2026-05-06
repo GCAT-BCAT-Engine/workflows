@@ -1,0 +1,165 @@
+{
+  "chain_valid": true,
+  "results": [
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_001",
+      "hash_valid": true,
+      "original_outcome": "ALLOW",
+      "original_reason": "gcat_bcat_admissible",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "5f5c38a211a2108fd3665ad10a4d0244f6da06b7d9f80d828a9259523a293869",
+      "replay_metrics": {
+        "a": 0.25,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        },
+        "g": 0.25,
+        "invariant": 0.0,
+        "legitimacy": 0.25,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.25
+      },
+      "replay_outcome": "ALLOW",
+      "replay_passed": true,
+      "replay_reason": "gcat_bcat_admissible"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_002",
+      "hash_valid": true,
+      "original_outcome": "DENY",
+      "original_reason": "invariant_violation",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "6b432bfe7e94ee24284172bb3c313b968bcfeb937b4be5cff4ba61502a67cc08",
+      "replay_metrics": {
+        "a": 0.25,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 2.0,
+          "budget": 5.0,
+          "budget_margin": 2.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 3.0
+        },
+        "g": 0.25,
+        "invariant": 0.234375,
+        "legitimacy": 0.015625,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.25
+      },
+      "replay_outcome": "DENY",
+      "replay_passed": true,
+      "replay_reason": "invariant_violation"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_003",
+      "hash_valid": true,
+      "original_outcome": "FAIL_CLOSED",
+      "original_reason": "state_missing_t",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "dfb5699e3a651834d1a2bb3f0f5289962c9aba659986c66cabb10c0211f4fbe3",
+      "replay_metrics": {
+        "cost": {
+          "bcat_cost": 1.0,
+          "budget": 5.0,
+          "budget_margin": 3.0,
+          "budget_pass": true,
+          "gcat_cost": 1.0,
+          "total_cost": 2.0
+        }
+      },
+      "replay_outcome": "FAIL_CLOSED",
+      "replay_passed": true,
+      "replay_reason": "state_missing_t"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_004",
+      "hash_valid": true,
+      "original_outcome": "DENY",
+      "original_reason": "budget_exceeded",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "0d6d49fdc97ab1fab67b55dffa0086e263bada46be03d0c9391db2b09d06e4e8",
+      "replay_metrics": {
+        "a": 0.25,
+        "c": 0.25,
+        "cost": {
+          "bcat_cost": 3.0,
+          "budget": 5.0,
+          "budget_margin": -1.0,
+          "budget_pass": false,
+          "gcat_cost": 3.0,
+          "total_cost": 6.0
+        },
+        "g": 0.25,
+        "invariant": 0.0,
+        "legitimacy": 0.25,
+        "simplex_error": 0.0,
+        "simplex_sum": 1.0,
+        "t": 0.25
+      },
+      "replay_outcome": "DENY",
+      "replay_passed": true,
+      "replay_reason": "budget_exceeded"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_005",
+      "hash_valid": true,
+      "original_outcome": "FAIL_CLOSED",
+      "original_reason": "cost_non_numeric_gcat",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "016887958ecfe91044ffb48da56bc0338ccabdd918ebbf7d6bbbc2e586b2af4c",
+      "replay_metrics": {
+        "cost": {}
+      },
+      "replay_outcome": "FAIL_CLOSED",
+      "replay_passed": true,
+      "replay_reason": "cost_non_numeric_gcat"
+    },
+    {
+      "basis_hash_valid": true,
+      "candidate_id": "CT_GB_006",
+      "hash_valid": true,
+      "original_outcome": "FAIL_CLOSED",
+      "original_reason": "cost_negative_gcat",
+      "outcome_matches": true,
+      "prev_hash_valid": true,
+      "reason_matches": true,
+      "receipt_hash": "31acee7747bac0f204bb4bc1fcaab6c85c8b06c5c03596705d1fa55be3700654",
+      "replay_metrics": {
+        "cost": {}
+      },
+      "replay_outcome": "FAIL_CLOSED",
+      "replay_passed": true,
+      "replay_reason": "cost_negative_gcat"
+    }
+  ],
+  "schema": "stegverse.sandbox.gcat_bcat.replay_report.v2",
+  "summary": {
+    "failed": 0,
+    "passed": 6,
+    "total": 6
+  }
+}

@@ -2,9 +2,9 @@
   "chain": {
     "chain_valid": true,
     "failures": [],
-    "head_receipt_hash": "d4cf52791f0a7091fdf7e2ff141254b779a7dc1a41c69b8b4e8e7bae7376c68c",
-    "receipt_count": 4,
-    "schema": "stegverse.sandbox.receipt_chain_verification.v1"
+    "head_receipt_hash": "31acee7747bac0f204bb4bc1fcaab6c85c8b06c5c03596705d1fa55be3700654",
+    "receipt_count": 6,
+    "schema": "stegverse.sandbox.receipt_chain_verification.v2"
   },
   "cost_summary": {
     "bcat_cost": 7.0,
@@ -15,8 +15,33 @@
   },
   "receipts": [
     {
+      "basis": {
+        "cost": {
+          "bcat": 1.0,
+          "budget": 5.0,
+          "gcat": 1.0
+        },
+        "expected": {
+          "outcome": "ALLOW",
+          "reason": "gcat_bcat_admissible",
+          "total_cost": 2.0
+        },
+        "params": {
+          "K": 16.0,
+          "alpha": 1.0,
+          "beta": 1.0,
+          "gamma": 1.0,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": 0.25,
+          "c": 0.25,
+          "g": 0.25,
+          "t": 0.25
+        }
+      },
       "basis_hash": "ef118592eb82c87844c7b7e4913c3ea43e4ba1e1de1d4bf40a1b1fa2ec4c013d",
-      "candidate_file": "/mnt/data/GCAT_BCAT_STEGVERSE_SANDBOX_ADAPTER/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_001.json",
+      "candidate_file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_001.json",
       "candidate_hash": "f331d5584df5b179c62c517daefd13e08675c4a2af1c2d51f7521c8494b1cbe1",
       "candidate_id": "CT_GB_001",
       "decision": {
@@ -25,7 +50,7 @@
         "passed": true,
         "reason": "gcat_bcat_admissible"
       },
-      "emitted_at": "2026-05-06T14:48:15.723082+00:00",
+      "emitted_at": "2026-05-06T15:02:01.181713+00:00",
       "metrics": {
         "a": 0.25,
         "c": 0.25,
@@ -45,17 +70,42 @@
         "t": 0.25
       },
       "prev_receipt_hash": "GENESIS",
-      "receipt_hash": "7c689a4352da6ea7c9bf04132b5e2ed29626fdbc4ef92322fd78a9f5e4dcbe19",
+      "receipt_hash": "5f5c38a211a2108fd3665ad10a4d0244f6da06b7d9f80d828a9259523a293869",
       "receipt_kind": "gcat_bcat_candidate_validation",
-      "schema": "stegverse.sandbox.gcat_bcat.receipt.v1",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
       "validator": {
         "name": "gcat_bcat_candidate_validator.py",
         "version": "0.3.0"
       }
     },
     {
+      "basis": {
+        "cost": {
+          "bcat": 2.0,
+          "budget": 5.0,
+          "gcat": 1.0
+        },
+        "expected": {
+          "outcome": "DENY",
+          "reason": "invariant_violation",
+          "total_cost": 3.0
+        },
+        "params": {
+          "K": 1.0,
+          "alpha": 1.0,
+          "beta": 1.0,
+          "gamma": 1.0,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": 0.25,
+          "c": 0.25,
+          "g": 0.25,
+          "t": 0.25
+        }
+      },
       "basis_hash": "de51bebe6d1c96ab6cad1745035e650d2bcf596338ab6e31f9fcbaef21a8af8f",
-      "candidate_file": "/mnt/data/GCAT_BCAT_STEGVERSE_SANDBOX_ADAPTER/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_002.json",
+      "candidate_file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_002.json",
       "candidate_hash": "9efc14d486fb3ca6c8910e09bc02aba1efcb1aebe370e6da70e269d725000147",
       "candidate_id": "CT_GB_002",
       "decision": {
@@ -64,7 +114,7 @@
         "passed": true,
         "reason": "invariant_violation"
       },
-      "emitted_at": "2026-05-06T14:48:15.723999+00:00",
+      "emitted_at": "2026-05-06T15:02:01.182371+00:00",
       "metrics": {
         "a": 0.25,
         "c": 0.25,
@@ -83,18 +133,42 @@
         "simplex_sum": 1.0,
         "t": 0.25
       },
-      "prev_receipt_hash": "7c689a4352da6ea7c9bf04132b5e2ed29626fdbc4ef92322fd78a9f5e4dcbe19",
-      "receipt_hash": "6677052bee9b4a8634f0b17a9edb483f0927379a91cc3f77f0e0f7cd91cde2e0",
+      "prev_receipt_hash": "5f5c38a211a2108fd3665ad10a4d0244f6da06b7d9f80d828a9259523a293869",
+      "receipt_hash": "6b432bfe7e94ee24284172bb3c313b968bcfeb937b4be5cff4ba61502a67cc08",
       "receipt_kind": "gcat_bcat_candidate_validation",
-      "schema": "stegverse.sandbox.gcat_bcat.receipt.v1",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
       "validator": {
         "name": "gcat_bcat_candidate_validator.py",
         "version": "0.3.0"
       }
     },
     {
+      "basis": {
+        "cost": {
+          "bcat": 1.0,
+          "budget": 5.0,
+          "gcat": 1.0
+        },
+        "expected": {
+          "outcome": "FAIL_CLOSED",
+          "reason": "state_missing_t",
+          "total_cost": 2.0
+        },
+        "params": {
+          "K": 16.0,
+          "alpha": 1.0,
+          "beta": 1.0,
+          "gamma": 1.0,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": 0.25,
+          "c": 0.25,
+          "g": 0.25
+        }
+      },
       "basis_hash": "bc021fe166dc2343b67c5a4a5f097deed951dc2e52b814a3ea076906f8a86913",
-      "candidate_file": "/mnt/data/GCAT_BCAT_STEGVERSE_SANDBOX_ADAPTER/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_003.json",
+      "candidate_file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_003.json",
       "candidate_hash": "efb143ef5eb91d26ba75784bb3a1cd60da7d5ec2713f85603d51dff53cb13a75",
       "candidate_id": "CT_GB_003",
       "decision": {
@@ -103,7 +177,7 @@
         "passed": true,
         "reason": "state_missing_t"
       },
-      "emitted_at": "2026-05-06T14:48:15.724644+00:00",
+      "emitted_at": "2026-05-06T15:02:01.183532+00:00",
       "metrics": {
         "cost": {
           "bcat_cost": 1.0,
@@ -114,18 +188,43 @@
           "total_cost": 2.0
         }
       },
-      "prev_receipt_hash": "6677052bee9b4a8634f0b17a9edb483f0927379a91cc3f77f0e0f7cd91cde2e0",
-      "receipt_hash": "190d1a5aab00cdddf3c8764ad7ebe9af2bee90694495d4c8cde493f46ac67bb1",
+      "prev_receipt_hash": "6b432bfe7e94ee24284172bb3c313b968bcfeb937b4be5cff4ba61502a67cc08",
+      "receipt_hash": "dfb5699e3a651834d1a2bb3f0f5289962c9aba659986c66cabb10c0211f4fbe3",
       "receipt_kind": "gcat_bcat_candidate_validation",
-      "schema": "stegverse.sandbox.gcat_bcat.receipt.v1",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
       "validator": {
         "name": "gcat_bcat_candidate_validator.py",
         "version": "0.3.0"
       }
     },
     {
+      "basis": {
+        "cost": {
+          "bcat": 3.0,
+          "budget": 5.0,
+          "gcat": 3.0
+        },
+        "expected": {
+          "outcome": "DENY",
+          "reason": "budget_exceeded",
+          "total_cost": 6.0
+        },
+        "params": {
+          "K": 16.0,
+          "alpha": 1.0,
+          "beta": 1.0,
+          "gamma": 1.0,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": 0.25,
+          "c": 0.25,
+          "g": 0.25,
+          "t": 0.25
+        }
+      },
       "basis_hash": "b4615212f6358b7ff59748f9aa6d015759469cec1c0f1a48f0c76ff8317f4b5f",
-      "candidate_file": "/mnt/data/GCAT_BCAT_STEGVERSE_SANDBOX_ADAPTER/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_004.json",
+      "candidate_file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_004.json",
       "candidate_hash": "2594f42f5452651bebf79dcf7678fb51b690b6602e420366b5bcc457c0ae6158",
       "candidate_id": "CT_GB_004",
       "decision": {
@@ -134,7 +233,7 @@
         "passed": true,
         "reason": "budget_exceeded"
       },
-      "emitted_at": "2026-05-06T14:48:15.725314+00:00",
+      "emitted_at": "2026-05-06T15:02:01.184666+00:00",
       "metrics": {
         "a": 0.25,
         "c": 0.25,
@@ -153,10 +252,106 @@
         "simplex_sum": 1.0,
         "t": 0.25
       },
-      "prev_receipt_hash": "190d1a5aab00cdddf3c8764ad7ebe9af2bee90694495d4c8cde493f46ac67bb1",
-      "receipt_hash": "d4cf52791f0a7091fdf7e2ff141254b779a7dc1a41c69b8b4e8e7bae7376c68c",
+      "prev_receipt_hash": "dfb5699e3a651834d1a2bb3f0f5289962c9aba659986c66cabb10c0211f4fbe3",
+      "receipt_hash": "0d6d49fdc97ab1fab67b55dffa0086e263bada46be03d0c9391db2b09d06e4e8",
       "receipt_kind": "gcat_bcat_candidate_validation",
-      "schema": "stegverse.sandbox.gcat_bcat.receipt.v1",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
+      "validator": {
+        "name": "gcat_bcat_candidate_validator.py",
+        "version": "0.3.0"
+      }
+    },
+    {
+      "basis": {
+        "cost": {
+          "bcat": 1.0,
+          "budget": 5.0,
+          "gcat": "bad"
+        },
+        "expected": {
+          "outcome": "FAIL_CLOSED",
+          "reason": "cost_non_numeric_gcat"
+        },
+        "params": {
+          "K": 16.0,
+          "alpha": 1.0,
+          "beta": 1.0,
+          "gamma": 1.0,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": 0.25,
+          "c": 0.25,
+          "g": 0.25,
+          "t": 0.25
+        }
+      },
+      "basis_hash": "25c405f8d9d9c9409ef296f49c2202909714cba82ce73e178f9f227cfc23a928",
+      "candidate_file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_005.json",
+      "candidate_hash": "7112d74e35df81f11bb2653c87764d79746925905803b3bea3d8164ee2802468",
+      "candidate_id": "CT_GB_005",
+      "decision": {
+        "errors": [],
+        "outcome": "FAIL_CLOSED",
+        "passed": true,
+        "reason": "cost_non_numeric_gcat"
+      },
+      "emitted_at": "2026-05-06T15:02:01.185594+00:00",
+      "metrics": {
+        "cost": {}
+      },
+      "prev_receipt_hash": "0d6d49fdc97ab1fab67b55dffa0086e263bada46be03d0c9391db2b09d06e4e8",
+      "receipt_hash": "016887958ecfe91044ffb48da56bc0338ccabdd918ebbf7d6bbbc2e586b2af4c",
+      "receipt_kind": "gcat_bcat_candidate_validation",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
+      "validator": {
+        "name": "gcat_bcat_candidate_validator.py",
+        "version": "0.3.0"
+      }
+    },
+    {
+      "basis": {
+        "cost": {
+          "bcat": 1.0,
+          "budget": 5.0,
+          "gcat": -1.0
+        },
+        "expected": {
+          "outcome": "FAIL_CLOSED",
+          "reason": "cost_negative_gcat"
+        },
+        "params": {
+          "K": 16.0,
+          "alpha": 1.0,
+          "beta": 1.0,
+          "gamma": 1.0,
+          "simplex_tolerance": 1e-09
+        },
+        "state": {
+          "a": 0.25,
+          "c": 0.25,
+          "g": 0.25,
+          "t": 0.25
+        }
+      },
+      "basis_hash": "bfec902aa72103fe9e318eb20d2676284a5ab3faf6b83be219c312604768c08a",
+      "candidate_file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_006.json",
+      "candidate_hash": "3afd39c11d09b40fc39849946d5e522ce2ae1ec1849b463ee81ea695fadc3aba",
+      "candidate_id": "CT_GB_006",
+      "decision": {
+        "errors": [],
+        "outcome": "FAIL_CLOSED",
+        "passed": true,
+        "reason": "cost_negative_gcat"
+      },
+      "emitted_at": "2026-05-06T15:02:01.186383+00:00",
+      "metrics": {
+        "cost": {}
+      },
+      "prev_receipt_hash": "016887958ecfe91044ffb48da56bc0338ccabdd918ebbf7d6bbbc2e586b2af4c",
+      "receipt_hash": "31acee7747bac0f204bb4bc1fcaab6c85c8b06c5c03596705d1fa55be3700654",
+      "receipt_kind": "gcat_bcat_candidate_validation",
+      "schema": "stegverse.sandbox.gcat_bcat.receipt.v2",
       "validator": {
         "name": "gcat_bcat_candidate_validator.py",
         "version": "0.3.0"
@@ -168,7 +363,7 @@
       "actual": "ALLOW",
       "errors": [],
       "expected": "ALLOW",
-      "file": "/mnt/data/GCAT_BCAT_STEGVERSE_SANDBOX_ADAPTER/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_001.json",
+      "file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_001.json",
       "id": "CT_GB_001",
       "metrics": {
         "a": 0.25,
@@ -197,7 +392,7 @@
       "actual": "DENY",
       "errors": [],
       "expected": "DENY",
-      "file": "/mnt/data/GCAT_BCAT_STEGVERSE_SANDBOX_ADAPTER/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_002.json",
+      "file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_002.json",
       "id": "CT_GB_002",
       "metrics": {
         "a": 0.25,
@@ -226,7 +421,7 @@
       "actual": "FAIL_CLOSED",
       "errors": [],
       "expected": "FAIL_CLOSED",
-      "file": "/mnt/data/GCAT_BCAT_STEGVERSE_SANDBOX_ADAPTER/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_003.json",
+      "file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_003.json",
       "id": "CT_GB_003",
       "metrics": {
         "cost": {
@@ -247,7 +442,7 @@
       "actual": "DENY",
       "errors": [],
       "expected": "DENY",
-      "file": "/mnt/data/GCAT_BCAT_STEGVERSE_SANDBOX_ADAPTER/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_004.json",
+      "file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_004.json",
       "id": "CT_GB_004",
       "metrics": {
         "a": 0.25,
@@ -271,12 +466,40 @@
       "passed": true,
       "reason_actual": "budget_exceeded",
       "reason_expected": "budget_exceeded"
+    },
+    {
+      "actual": "FAIL_CLOSED",
+      "errors": [],
+      "expected": "FAIL_CLOSED",
+      "file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_005.json",
+      "id": "CT_GB_005",
+      "metrics": {
+        "cost": {}
+      },
+      "name": "fail closed non numeric cost",
+      "passed": true,
+      "reason_actual": "cost_non_numeric_gcat",
+      "reason_expected": "cost_non_numeric_gcat"
+    },
+    {
+      "actual": "FAIL_CLOSED",
+      "errors": [],
+      "expected": "FAIL_CLOSED",
+      "file": "/mnt/data/GCAT_BCAT_SANDBOX_RECEIPT_REPLAY/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_006.json",
+      "id": "CT_GB_006",
+      "metrics": {
+        "cost": {}
+      },
+      "name": "fail closed negative cost",
+      "passed": true,
+      "reason_actual": "cost_negative_gcat",
+      "reason_expected": "cost_negative_gcat"
     }
   ],
-  "schema": "stegverse.sandbox.gcat_bcat.report.v1",
+  "schema": "stegverse.sandbox.gcat_bcat.report.v2",
   "summary": {
     "failed": 0,
-    "passed": 4,
-    "total": 4
+    "passed": 6,
+    "total": 6
   }
 }
