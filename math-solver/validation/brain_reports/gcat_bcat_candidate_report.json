@@ -1,0 +1,62 @@
+{
+  "results": [
+    {
+      "actual": "ALLOW",
+      "errors": [],
+      "expected": "ALLOW",
+      "file": "/mnt/data/GCAT_BCAT_ENGINE_BRIDGE_BOOTSTRAP/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_001.json",
+      "id": "CT_GB_001",
+      "metrics": {
+        "a": 0.25,
+        "c": 0.25,
+        "g": 0.25,
+        "invariant": 0.0,
+        "legitimacy": 0.25,
+        "simplex_sum": 1.0,
+        "t": 0.25
+      },
+      "name": "allow equilibrium",
+      "passed": true,
+      "reason_actual": "gcat_bcat_admissible",
+      "reason_expected": "gcat_bcat_admissible"
+    },
+    {
+      "actual": "DENY",
+      "errors": [],
+      "expected": "DENY",
+      "file": "/mnt/data/GCAT_BCAT_ENGINE_BRIDGE_BOOTSTRAP/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_002.json",
+      "id": "CT_GB_002",
+      "metrics": {
+        "a": 0.25,
+        "c": 0.25,
+        "g": 0.25,
+        "invariant": 0.234375,
+        "legitimacy": 0.015625,
+        "simplex_sum": 1.0,
+        "t": 0.25
+      },
+      "name": "deny invariant violation",
+      "passed": true,
+      "reason_actual": "invariant_violation",
+      "reason_expected": "invariant_violation"
+    },
+    {
+      "actual": "FAIL_CLOSED",
+      "errors": [],
+      "expected": "FAIL_CLOSED",
+      "file": "/mnt/data/GCAT_BCAT_ENGINE_BRIDGE_BOOTSTRAP/math_solver/validation/candidate_vectors/gcat_bcat/CT_GB_003.json",
+      "id": "CT_GB_003",
+      "metrics": {},
+      "name": "fail closed missing component",
+      "passed": true,
+      "reason_actual": "state_missing_t",
+      "reason_expected": "state_missing_t"
+    }
+  ],
+  "schema": "stegverse.gcat_bcat.candidate_validation_report.v1",
+  "summary": {
+    "failed": 0,
+    "passed": 3,
+    "total": 3
+  }
+}
