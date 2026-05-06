@@ -1,0 +1,26 @@
+{
+  "candidate_id": "ICAT_ADV_001",
+  "integrity": {
+    "proof_sufficient": true,
+    "attestation_witnesses": 2,
+    "conservation": true,
+    "inverse": true
+  },
+  "params": {
+    "proof_required": true,
+    "witness_quorum": 2,
+    "conservation_required": true,
+    "inverse_required": true,
+    "lambda_p": 0.5,
+    "lambda_a": 0.5,
+    "lambda_k": 0.5,
+    "lambda_x": 0.5,
+    "base_cost": 1.0
+  },
+  "budget": {
+    "integrity_cost": 5.0
+  },
+  "expected": {
+    "outcome": "ALLOW"
+  }
+}

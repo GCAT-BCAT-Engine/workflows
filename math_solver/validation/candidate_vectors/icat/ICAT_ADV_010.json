@@ -1,0 +1,26 @@
+{
+  "candidate_id": "ICAT_ADV_010",
+  "integrity": {
+    "proof_sufficient": true,
+    "attestation_witnesses": 3,
+    "conservation": null,
+    "inverse": true
+  },
+  "params": {
+    "proof_required": true,
+    "witness_quorum": 2,
+    "conservation_required": true,
+    "inverse_required": true,
+    "lambda_p": 1.0,
+    "lambda_a": 1.0,
+    "lambda_k": 1.0,
+    "lambda_x": 1.0,
+    "base_cost": 1.0
+  },
+  "budget": {
+    "integrity_cost": 10.0
+  },
+  "expected": {
+    "outcome": "FAIL_CLOSED"
+  }
+}
