@@ -1,0 +1,24 @@
+{
+  "name": "stegverse-llm-adapter-gate-v001",
+  "actual_required_path": ".github/workflows/llm-adapter-gate.yml",
+  "display_path_without_leading_dot": "github/workflows/llm-adapter-gate.yml",
+  "required_secrets": [
+    "OPENAI_API_KEY",
+    "ANTHROPIC_API_KEY"
+  ],
+  "optional_variables": [
+    "OPENAI_MODEL",
+    "ANTHROPIC_MODEL"
+  ],
+  "repo_mutation": false,
+  "artifacts": [
+    "llm_request.json",
+    "openai_result.json",
+    "anthropic_result.json",
+    "comparison.json",
+    "tvc_result.json",
+    "cge_result.json",
+    "receipt.json",
+    "llm_adapter_gate_report.json"
+  ]
+}
