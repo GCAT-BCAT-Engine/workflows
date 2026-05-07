@@ -1,0 +1,100 @@
+# StegVerse LLM Provider Check
+#
+# PURPOSE:
+# This workflow verifies that OpenAI and/or Anthropic API keys are available
+# as GitHub Actions secrets without printing or exposing the keys.
+#
+# REQUIRED GITHUB SECRETS:
+#   OPENAI_API_KEY
+#   ANTHROPIC_API_KEY
+#
+# OPTIONAL GITHUB VARIABLES:
+#   STEGVERSE_DEFAULT_LLM_PROVIDER
+#     allowed examples: openai, anthropic, dual
+#
+# INSTALL PATH:
+#   .github/workflows/llm-provider-check.yml
+#
+# Note:
+#   github/workflows/llm-provider-check.yml is displayed without the leading dot.
+#   The actual required GitHub Actions path is .github/workflows/llm-provider-check.yml.
+#
+# DONE MEANS:
+#   - The workflow runs manually.
+#   - It reports whether each provider secret is configured.
+#   - It uploads llm_provider_status.json as an artifact.
+#   - It never prints the API key values.
+
+name: StegVerse LLM Provider Check
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  provider-check:
+    runs-on: ubuntu-latest
+
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      STEGVERSE_DEFAULT_LLM_PROVIDER: ${{ vars.STEGVERSE_DEFAULT_LLM_PROVIDER || 'dual' }}
+
+    steps:
+      - name: Check provider secret availability
+        shell: python
+        run: |
+          import json
+          import os
+          from datetime import datetime, timezone
+
+          def present(name: str) -> bool:
+              value = os.environ.get(name, "")
+              return bool(value.strip())
+
+          status = {
+              "checked_at_utc": datetime.now(timezone.utc).isoformat(),
+              "default_provider": os.environ.get("STEGVERSE_DEFAULT_LLM_PROVIDER", "dual"),
+              "providers": {
+                  "openai": {
+                      "secret_name": "OPENAI_API_KEY",
+                      "configured": present("OPENAI_API_KEY"),
+                      "role": "primary builder / sandbox worker"
+                  },
+                  "anthropic": {
+                      "secret_name": "ANTHROPIC_API_KEY",
+                      "configured": present("ANTHROPIC_API_KEY"),
+                      "role": "review / adversarial comparison"
+                  }
+              },
+              "decision": "ALLOW" if (present("OPENAI_API_KEY") or present("ANTHROPIC_API_KEY")) else "FAIL_CLOSED",
+              "reasons": []
+          }
+
+          if not present("OPENAI_API_KEY"):
+              status["reasons"].append("OPENAI_API_KEY is not configured.")
+          if not present("ANTHROPIC_API_KEY"):
+              status["reasons"].append("ANTHROPIC_API_KEY is not configured.")
+          if status["decision"] == "ALLOW":
+              status["reasons"].append("At least one LLM provider secret is configured.")
+          else:
+              status["reasons"].append("No LLM provider secrets are configured.")
+
+          with open("llm_provider_status.json", "w", encoding="utf-8") as handle:
+              json.dump(status, handle, indent=2, sort_keys=True)
+
+          print(json.dumps({
+              "decision": status["decision"],
+              "openai_configured": status["providers"]["openai"]["configured"],
+              "anthropic_configured": status["providers"]["anthropic"]["configured"],
+              "default_provider": status["default_provider"],
+              "note": "Secret values were not printed."
+          }, indent=2))
+
+      - name: Upload provider status artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: llm-provider-status
+          path: llm_provider_status.json
