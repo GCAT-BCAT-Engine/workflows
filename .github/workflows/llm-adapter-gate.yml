@@ -1,0 +1,392 @@
+# StegVerse LLM Adapter Gate v001
+#
+# PURPOSE:
+# This workflow performs a dry-run dual-provider comparison using OpenAI and Anthropic,
+# then gates the results through a local StegVerse-style boundary:
+#
+#   provider outputs
+#     -> comparison
+#     -> TVC authority check
+#     -> CGE/Data-Continuation decision
+#     -> receipt artifact
+#
+# It does NOT commit files.
+# It does NOT mutate the repo.
+# It does NOT print API keys.
+#
+# REQUIRED GITHUB SECRETS:
+#   OPENAI_API_KEY
+#   ANTHROPIC_API_KEY
+#
+# OPTIONAL GITHUB VARIABLES:
+#   OPENAI_MODEL
+#     default: gpt-4o-mini
+#
+#   ANTHROPIC_MODEL
+#     default: claude-3-5-haiku-latest
+#
+# INSTALL PATH:
+#   .github/workflows/llm-adapter-gate.yml
+#
+# Note:
+#   github/workflows/llm-adapter-gate.yml is displayed without the leading dot.
+#   The actual required GitHub Actions path is .github/workflows/llm-adapter-gate.yml.
+#
+# DONE MEANS:
+#   - Workflow runs manually.
+#   - OpenAI and Anthropic are called when secrets are present.
+#   - Artifacts are uploaded:
+#       llm_request.json
+#       openai_result.json
+#       anthropic_result.json
+#       comparison.json
+#       tvc_result.json
+#       cge_result.json
+#       receipt.json
+#       llm_adapter_gate_report.json
+#
+# SAFETY:
+#   This is a dry-run gate. It does not write to repository state.
+
+name: StegVerse LLM Adapter Gate
+
+on:
+  workflow_dispatch:
+    inputs:
+      prompt:
+        description: "Prompt to evaluate through the StegVerse LLM Adapter Gate"
+        required: false
+        default: "Create a concise plan for building core-lite without touching repo state."
+      authority_ref:
+        description: "Authority reference"
+        required: false
+        default: "auth:stegverse:local-user"
+      policy_ref:
+        description: "Policy reference"
+        required: false
+        default: "policy:llm-adapter-gate-v001"
+      risk:
+        description: "Declared continuation risk from 0.0 to 1.0"
+        required: false
+        default: "0.25"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  dry-run-gate:
+    runs-on: ubuntu-latest
+
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-4o-mini' }}
+      ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL || 'claude-3-5-haiku-latest' }}
+
+    steps:
+      - name: Run dual-provider dry-run gate
+        shell: python
+        run: |
+          import hashlib
+          import json
+          import os
+          import urllib.error
+          import urllib.request
+          from datetime import datetime, timezone
+
+          OUT = "llm_gate_artifacts"
+          os.makedirs(OUT, exist_ok=True)
+
+          def now_utc():
+              return datetime.now(timezone.utc).isoformat()
+
+          def canonical(value):
+              return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+
+          def sha256_text(value):
+              return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+          def write(name, value):
+              path = os.path.join(OUT, name)
+              with open(path, "w", encoding="utf-8") as handle:
+                  json.dump(value, handle, indent=2, sort_keys=True, ensure_ascii=False)
+              return path
+
+          def post_json(url, headers, body, timeout=90):
+              data = json.dumps(body).encode("utf-8")
+              request = urllib.request.Request(url, data=data, headers=headers, method="POST")
+              try:
+                  with urllib.request.urlopen(request, timeout=timeout) as response:
+                      raw = response.read().decode("utf-8")
+                      return {"ok": True, "status": response.status, "json": json.loads(raw)}
+              except urllib.error.HTTPError as error:
+                  raw = error.read().decode("utf-8", errors="replace")
+                  return {"ok": False, "status": error.code, "error": raw[:4000]}
+              except Exception as error:
+                  return {"ok": False, "status": None, "error": str(error)}
+
+          prompt = """${{ github.event.inputs.prompt }}"""
+          authority_ref = """${{ github.event.inputs.authority_ref }}"""
+          policy_ref = """${{ github.event.inputs.policy_ref }}"""
+          risk_raw = """${{ github.event.inputs.risk }}"""
+
+          try:
+              risk = max(0.0, min(1.0, float(risk_raw)))
+          except ValueError:
+              risk = 1.0
+
+          request_obj = {
+              "request_version": "stegverse.llm_adapter_gate.v001",
+              "created_utc": now_utc(),
+              "prompt": prompt,
+              "authority_ref": authority_ref,
+              "policy_ref": policy_ref,
+              "risk": risk,
+              "providers": {
+                  "openai": {
+                      "model": os.environ.get("OPENAI_MODEL", "gpt-4o-mini"),
+                      "secret_ref": "OPENAI_API_KEY"
+                  },
+                  "anthropic": {
+                      "model": os.environ.get("ANTHROPIC_MODEL", "claude-3-5-haiku-latest"),
+                      "secret_ref": "ANTHROPIC_API_KEY"
+                  }
+              }
+          }
+          request_obj["request_hash"] = sha256_text(canonical(request_obj))
+          write("llm_request.json", request_obj)
+
+          provider_instruction = (
+              "You are responding inside the StegVerse LLM Adapter Gate dry run. "
+              "Return a concise implementation plan. Do not claim repo changes were made. "
+              "State assumptions, risks, and the next safe action."
+          )
+
+          openai_key = os.environ.get("OPENAI_API_KEY", "").strip()
+          anthropic_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+
+          if openai_key:
+              openai_payload = {
+                  "model": request_obj["providers"]["openai"]["model"],
+                  "input": [
+                      {"role": "system", "content": provider_instruction},
+                      {"role": "user", "content": prompt}
+                  ],
+                  "max_output_tokens": 700
+              }
+              openai_api = post_json(
+                  "https://api.openai.com/v1/responses",
+                  {
+                      "Authorization": f"Bearer {openai_key}",
+                      "Content-Type": "application/json"
+                  },
+                  openai_payload
+              )
+          else:
+              openai_api = {"ok": False, "status": None, "error": "OPENAI_API_KEY not configured."}
+
+          def extract_openai_text(result):
+              if not result.get("ok"):
+                  return ""
+              data = result.get("json", {})
+              texts = []
+              for item in data.get("output", []):
+                  for content in item.get("content", []):
+                      if content.get("type") in ("output_text", "text") and content.get("text"):
+                          texts.append(content["text"])
+              if texts:
+                  return "\n".join(texts).strip()
+              if isinstance(data.get("output_text"), str):
+                  return data["output_text"].strip()
+              return ""
+
+          openai_result = {
+              "provider": "openai",
+              "model": request_obj["providers"]["openai"]["model"],
+              "ok": bool(openai_api.get("ok")),
+              "status": openai_api.get("status"),
+              "text": extract_openai_text(openai_api),
+              "error": None if openai_api.get("ok") else openai_api.get("error")
+          }
+          openai_result["output_hash"] = sha256_text(canonical({
+              "provider": openai_result["provider"],
+              "model": openai_result["model"],
+              "text": openai_result["text"],
+              "error": openai_result["error"]
+          }))
+          write("openai_result.json", openai_result)
+
+          if anthropic_key:
+              anthropic_payload = {
+                  "model": request_obj["providers"]["anthropic"]["model"],
+                  "max_tokens": 700,
+                  "system": provider_instruction,
+                  "messages": [
+                      {"role": "user", "content": prompt}
+                  ]
+              }
+              anthropic_api = post_json(
+                  "https://api.anthropic.com/v1/messages",
+                  {
+                      "x-api-key": anthropic_key,
+                      "anthropic-version": "2023-06-01",
+                      "Content-Type": "application/json"
+                  },
+                  anthropic_payload
+              )
+          else:
+              anthropic_api = {"ok": False, "status": None, "error": "ANTHROPIC_API_KEY not configured."}
+
+          def extract_anthropic_text(result):
+              if not result.get("ok"):
+                  return ""
+              data = result.get("json", {})
+              texts = []
+              for item in data.get("content", []):
+                  if item.get("type") == "text" and item.get("text"):
+                      texts.append(item["text"])
+              return "\n".join(texts).strip()
+
+          anthropic_result = {
+              "provider": "anthropic",
+              "model": request_obj["providers"]["anthropic"]["model"],
+              "ok": bool(anthropic_api.get("ok")),
+              "status": anthropic_api.get("status"),
+              "text": extract_anthropic_text(anthropic_api),
+              "error": None if anthropic_api.get("ok") else anthropic_api.get("error")
+          }
+          anthropic_result["output_hash"] = sha256_text(canonical({
+              "provider": anthropic_result["provider"],
+              "model": anthropic_result["model"],
+              "text": anthropic_result["text"],
+              "error": anthropic_result["error"]
+          }))
+          write("anthropic_result.json", anthropic_result)
+
+          available = [r for r in (openai_result, anthropic_result) if r["ok"] and r["text"]]
+          failed = [r for r in (openai_result, anthropic_result) if not (r["ok"] and r["text"])]
+
+          comparison = {
+              "comparison_version": "stegverse.dual_provider_comparison.v001",
+              "request_hash": request_obj["request_hash"],
+              "providers_available": [r["provider"] for r in available],
+              "providers_failed": [{"provider": r["provider"], "status": r["status"], "error": r["error"]} for r in failed],
+              "openai_output_hash": openai_result["output_hash"],
+              "anthropic_output_hash": anthropic_result["output_hash"],
+              "comparison_summary": (
+                  "Both providers returned outputs." if len(available) == 2
+                  else "One provider returned output; comparison is partial." if len(available) == 1
+                  else "No provider returned output."
+              )
+          }
+          comparison["comparison_hash"] = sha256_text(canonical(comparison))
+          write("comparison.json", comparison)
+
+          tvc_reasons = []
+          if not authority_ref:
+              tvc_reasons.append("Missing authority_ref.")
+          if not policy_ref:
+              tvc_reasons.append("Missing policy_ref.")
+          if "sk-" in prompt.lower() or "api_key" in prompt.lower() or "password" in prompt.lower():
+              tvc_decision = "DENY"
+              tvc_reasons.append("Prompt appears to contain raw secret material.")
+          elif tvc_reasons:
+              tvc_decision = "FAIL_CLOSED"
+          else:
+              tvc_decision = "ALLOW"
+              tvc_reasons.append("Authority and policy references are present.")
+
+          tvc_result = {
+              "tvc_version": "stegverse.tvc_boundary.v001",
+              "decision": tvc_decision,
+              "authority_ref": authority_ref,
+              "policy_ref": policy_ref,
+              "reasons": tvc_reasons
+          }
+          tvc_result["tvc_hash"] = sha256_text(canonical(tvc_result))
+          write("tvc_result.json", tvc_result)
+
+          cge_reasons = []
+          if tvc_decision != "ALLOW":
+              cge_decision = "FAIL_CLOSED"
+              cge_reasons.append("TVC boundary did not pass.")
+          elif len(available) == 0:
+              cge_decision = "FAIL_CLOSED"
+              cge_reasons.append("No provider output available.")
+          elif risk >= 0.80:
+              cge_decision = "DENY"
+              cge_reasons.append("Declared risk exceeds deny threshold.")
+          elif len(available) < 2 or risk >= 0.45:
+              cge_decision = "SANDBOX"
+              cge_reasons.append("Partial provider comparison or elevated risk requires sandbox.")
+          else:
+              cge_decision = "ALLOW"
+              cge_reasons.append("Dual provider output and TVC boundary passed.")
+
+          cge_result = {
+              "cge_version": "stegverse.cge_dry_run.v001",
+              "decision": cge_decision,
+              "risk": risk,
+              "reasons": cge_reasons,
+              "constraints_checked": [
+                  "provider_availability",
+                  "tvc_authority_reference",
+                  "policy_reference",
+                  "declared_risk",
+                  "dry_run_no_repo_mutation"
+              ]
+          }
+          cge_result["cge_hash"] = sha256_text(canonical(cge_result))
+          write("cge_result.json", cge_result)
+
+          receipt_body = {
+              "receipt_version": "stegverse.llm_adapter_gate.receipt.v001",
+              "created_utc": now_utc(),
+              "event_type": "llm_adapter_gate.dry_run",
+              "request_hash": request_obj["request_hash"],
+              "openai_output_hash": openai_result["output_hash"],
+              "anthropic_output_hash": anthropic_result["output_hash"],
+              "comparison_hash": comparison["comparison_hash"],
+              "tvc_hash": tvc_result["tvc_hash"],
+              "cge_hash": cge_result["cge_hash"],
+              "decision": cge_decision,
+              "repo_mutation": False
+          }
+          receipt_body["receipt_hash"] = sha256_text(canonical(receipt_body))
+          write("receipt.json", receipt_body)
+
+          report = {
+              "report_version": "stegverse.llm_adapter_gate.report.v001",
+              "decision": cge_decision,
+              "request_hash": request_obj["request_hash"],
+              "providers": {
+                  "openai": {"ok": openai_result["ok"], "model": openai_result["model"], "output_hash": openai_result["output_hash"]},
+                  "anthropic": {"ok": anthropic_result["ok"], "model": anthropic_result["model"], "output_hash": anthropic_result["output_hash"]}
+              },
+              "comparison": comparison,
+              "tvc": tvc_result,
+              "cge": cge_result,
+              "receipt_hash": receipt_body["receipt_hash"],
+              "artifact_directory": OUT,
+              "repo_mutation": False
+          }
+          write("llm_adapter_gate_report.json", report)
+
+          print(json.dumps({
+              "decision": report["decision"],
+              "openai_ok": openai_result["ok"],
+              "anthropic_ok": anthropic_result["ok"],
+              "receipt_hash": receipt_body["receipt_hash"],
+              "repo_mutation": False,
+              "artifact_directory": OUT
+          }, indent=2))
+
+          if cge_decision == "FAIL_CLOSED":
+              print("Gate result is FAIL_CLOSED. Artifacts were still generated.")
+
+      - name: Upload gate artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: stegverse-llm-adapter-gate-report
+          path: llm_gate_artifacts/
