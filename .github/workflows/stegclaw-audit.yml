@@ -1,0 +1,43 @@
+name: StegClaw Audit
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "math_solver/**"
+      - "full_pipeline/**"
+      - "triad/**"
+      - "*.py"
+      - ".github/workflows/stegclaw-audit.yml"
+      - "tools/stegclaw_audit.py"
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  audit:
+    name: Audit math_solver construction
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run StegClaw audit
+        run: python tools/stegclaw_audit.py --root . --target math_solver --out stegclaw_out
+
+      - name: Upload StegClaw audit artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: stegclaw-audit
+          path: stegclaw_out/
+          if-no-files-found: error
