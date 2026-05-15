@@ -1,0 +1,277 @@
+{
+  "schema": "stegverse_core_lite_tasks.v1",
+  "description": "All declared tasks invoked by core-lite-intake.yml stable dispatcher. No new workflow files. Ever.",
+  "repo": "GCAT-BCAT-Engine/workflows",
+  "tasks": [
+
+    {
+      "task_id": "self-test",
+      "enabled": true,
+      "description": "Empty queue self-test. Confirms Core-Lite is operational with no bundles pending.",
+      "command": ["python", "core_lite/cli.py", "run", "--repo-root", ".", "--task-manifest", "tools/tasks/core_lite_tasks.json", "--skip-tasks"],
+      "expected_outputs": [
+        "core_lite_run_summary.json",
+        ".stegverse/cge_fingerprint.json"
+      ]
+    },
+
+    {
+      "task_id": "triad-validate",
+      "enabled": true,
+      "description": "Run Triad validator against all candidate vectors. Emits receipts and summary.",
+      "command": [
+        "python", "triad_validator.py",
+        "--vectors", "triad/candidate_vectors",
+        "--report",  "triad/brain_reports/triad_report.json",
+        "--summary", "triad/brain_reports/triad_summary.md"
+      ],
+      "expected_outputs": [
+        "triad/brain_reports/triad_report.json",
+        "triad/brain_reports/triad_summary.md"
+      ]
+    },
+
+    {
+      "task_id": "triad-sandbox",
+      "enabled": true,
+      "description": "Generate receipt chain for all Triad candidates via sandbox adapter.",
+      "command": [
+        "python", "triad/sandbox_adapter.py",
+        "--vectors",  "triad/candidate_vectors",
+        "--receipts", "triad/brain_reports/triad_receipts.jsonl",
+        "--report",   "triad/brain_reports/triad_sandbox_report.json",
+        "--summary",  "triad/brain_reports/triad_sandbox_summary.md"
+      ],
+      "expected_outputs": [
+        "triad/brain_reports/triad_receipts.jsonl",
+        "triad/brain_reports/triad_sandbox_report.json"
+      ]
+    },
+
+    {
+      "task_id": "triad-replay",
+      "enabled": true,
+      "description": "Replay Triad receipt chain and verify integrity.",
+      "command": [
+        "python", "triad/receipt_replay.py",
+        "--receipts", "triad/brain_reports/triad_receipts.jsonl",
+        "--vectors",  "triad/candidate_vectors",
+        "--report",   "triad/brain_reports/triad_replay_report.json",
+        "--summary",  "triad/brain_reports/triad_replay_summary.md"
+      ],
+      "expected_outputs": [
+        "triad/brain_reports/triad_replay_report.json"
+      ]
+    },
+
+    {
+      "task_id": "triad-tamper-test",
+      "enabled": true,
+      "description": "Verify tamper detection on Triad receipt chain.",
+      "command": [
+        "python", "triad/tamper_test.py",
+        "--original_receipts",  "triad/brain_reports/triad_receipts.jsonl",
+        "--tampered_receipts",  "triad/brain_reports/triad_receipts_tampered.jsonl",
+        "--vectors",            "triad/candidate_vectors",
+        "--report",             "triad/brain_reports/triad_tamper_replay_report.json",
+        "--summary",            "triad/brain_reports/triad_tamper_replay_summary.md"
+      ],
+      "expected_outputs": [
+        "triad/brain_reports/triad_tamper_replay_report.json"
+      ]
+    },
+
+    {
+      "task_id": "math-validate",
+      "enabled": true,
+      "description": "Run math solver validation pipeline against problem spec.",
+      "command": [
+        "bash", "math_solver/validation/run_validation.sh",
+        "--spec", "math_solver/validation/problem_spec_sv_math_001.yml"
+      ],
+      "expected_outputs": [
+        "validation_results_VAL-001.json"
+      ]
+    },
+
+    {
+      "task_id": "stegclaw-session",
+      "enabled": true,
+      "description": "Run StegClaw personal entity session. Reads vault, evaluates next action, writes brain_reports.",
+      "command": [
+        "python", "stegclaw.py"
+      ],
+      "env": {
+        "STEGCLAW_USER_ID":    "user_001",
+        "STEGCLAW_TIER":       "assist",
+        "STEGCLAW_SUBJECT_ID": "steg:agent/personal:user_001",
+        "STEGCLAW_OUTPUT_DIR": "brain_reports",
+        "STEGCLAW_VAULT_ROOT": "vault_data",
+        "GITHUB_ACTIONS":      "true"
+      },
+      "expected_outputs": [
+        "brain_reports/next_action.json",
+        "brain_reports/stegclaw_run_report.json",
+        "brain_reports/stegclaw_receipts.jsonl"
+      ]
+    },
+
+    {
+      "task_id": "stegid-provision",
+      "enabled": true,
+      "description": "Provision ecosystem base identity records (system, personal entity, stegclaw). Idempotent.",
+      "command": [
+        "python", "core/stegid.py",
+        "stegid_registry.jsonl",
+        "provision"
+      ],
+      "expected_outputs": [
+        "stegid_registry.jsonl",
+        "stegid_receipts.jsonl"
+      ]
+    },
+
+    {
+      "task_id": "vault-provision",
+      "enabled": true,
+      "description": "Provision Knowledge Vault partitions for a user. Idempotent.",
+      "command": [
+        "python", "core/knowledge_vault.py",
+        "provision",
+        "user_001"
+      ],
+      "expected_outputs": [
+        "vault_data/user_001/working_memory.jsonl",
+        "vault_data/user_001/private_state.jsonl",
+        "vault_data/user_001/genealogy.jsonl",
+        "vault_data/user_001/consent_ledger.jsonl"
+      ]
+    },
+
+    {
+      "task_id": "vault-verify",
+      "enabled": true,
+      "description": "Verify hash chain integrity for all user vault partitions.",
+      "command": [
+        "python", "core/knowledge_vault.py",
+        "verify",
+        "user_001",
+        "working_memory"
+      ],
+      "expected_outputs": []
+    },
+
+    {
+      "task_id": "site-data-pipeline",
+      "enabled": true,
+      "description": "Read receipts, CGE, and brain reports. Write site JSON data files for transition pages.",
+      "command": [
+        "python", "tools/site_data_pipeline.py",
+        "tools/site_pipeline_config.json",
+        "site_data"
+      ],
+      "expected_outputs": [
+        "site_data/transition_release_index.json",
+        "site_data/transition_dev_status.json",
+        "site_data/transition_proof_surface.json",
+        "site_data/pipeline_report.json"
+      ]
+    },
+
+    {
+      "task_id": "finco-validate",
+      "enabled": true,
+      "description": "Run FinCo receipt chain validator demo. Confirms ALLOW/DENY/FAIL_CLOSED across all cases.",
+      "command": [
+        "python", "tools/finco_chain_validator.py"
+      ],
+      "expected_outputs": [
+        "finco_demo_chain.jsonl"
+      ]
+    },
+
+    {
+      "task_id": "genealogy-seed",
+      "enabled": true,
+      "description": "Seed the Randolph Genealogy Hub with documented lineage. Idempotent.",
+      "command": [
+        "python", "tools/genealogy_hub.py",
+        "demo"
+      ],
+      "expected_outputs": [
+        "hub_demo/identities.jsonl",
+        "hub_demo/hub_receipts.jsonl",
+        "hub_demo/hub_meta.json",
+        "hub_demo/fork_manifest.json"
+      ]
+    },
+
+    {
+      "task_id": "genealogy-verify",
+      "enabled": true,
+      "description": "Verify genealogy hub chain integrity.",
+      "command": [
+        "python", "tools/genealogy_hub.py",
+        "verify",
+        "hub_demo",
+        "user_001",
+        "RND"
+      ],
+      "expected_outputs": []
+    },
+
+    {
+      "task_id": "god-paper-validate",
+      "enabled": true,
+      "description": "Run GOD geometry paper through math validation pipeline.",
+      "command": [
+        "bash", "math_solver/validation/run_validation.sh",
+        "--spec", "math_solver/validation/problem_spec_sv_god_001.yml"
+      ],
+      "expected_outputs": [
+        "validation_results_GOD-001.json"
+      ]
+    },
+
+    {
+      "task_id": "full-pipeline",
+      "enabled": true,
+      "description": "Run full ecosystem pipeline: triad → stegclaw → site-data. In dependency order.",
+      "command": [
+        "python", "tools/run_full_pipeline.py"
+      ],
+      "expected_outputs": [
+        "triad/brain_reports/triad_receipts.jsonl",
+        "brain_reports/next_action.json",
+        "site_data/transition_release_index.json"
+      ]
+    },
+
+    {
+      "task_id": "iosnoperiod-restore",
+      "enabled": true,
+      "description": "Restore iosnoperiod mirrors for all leading-period paths.",
+      "command": [
+        "python", "core_lite/iosnoperiod.py",
+        "--repo-root", ".",
+        "--overwrite"
+      ],
+      "expected_outputs": [
+        "iosnoperiod.md"
+      ]
+    },
+
+    {
+      "task_id": "stegclaw-audit",
+      "enabled": true,
+      "description": "Run legacy StegClaw audit scan of math_solver/ directory.",
+      "command": [
+        "python", "tools/stegclaw_audit.py"
+      ],
+      "expected_outputs": [
+        "brain_reports/stegclaw_audit_report.json"
+      ]
+    }
+
+  ]
+}
