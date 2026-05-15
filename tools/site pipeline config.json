@@ -1,0 +1,9 @@
+{
+  "schema": "stegverse_site_pipeline_config.v1",
+  "description": "Data source paths for site_data_pipeline.py. Adjust paths if repo layout differs.",
+  "triad_receipts":   "triad/brain_reports/triad_receipts.jsonl",
+  "cge_path":         ".stegverse/cge_fingerprint.json",
+  "validation_glob":  "validation_results_*.json",
+  "brain_dir":        "brain_reports",
+  "finco_chain":      "finco_demo_chain.jsonl"
+}

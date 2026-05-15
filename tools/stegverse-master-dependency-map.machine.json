@@ -1,0 +1,453 @@
+{
+  "schema": "stegverse_master_dependency_map.v1",
+  "generated_at": "2026-05-13T00:00:00Z",
+  "title": "P0-001: StegVerse Master Dependency and Build-Order Map",
+  "status": "draft",
+  "next_build": "P0-002",
+
+  "org_placement": {
+    "StegVerse-Labs": {
+      "role": "Core infrastructure, TV/TVC, SDK, StegCore, Knowledge Vault, FinCo, Site",
+      "repos": ["StegCore", "TV", "TVC", "SDK", "Site", "StegDB", "FinCo", "Continuity", "StegPay", "HouseHold"]
+    },
+    "GCAT-BCAT-Engine": {
+      "role": "Production-grade formal verification, mathematical engines, Publisher",
+      "repos": ["workflows", "Publisher"]
+    },
+    "ECAT-ICAT-Formal": {
+      "role": "Mathematical formalization with synthetic experimental data",
+      "repos": ["formalism-tests"]
+    },
+    "StegGhost": {
+      "role": "Personal/experimental sandbox, entity-runner testing",
+      "repos": ["sandbox", "entity-runner"]
+    },
+    "StegVerse-org": {
+      "role": "Customer-facing tools, SDK distribution, demo pages",
+      "repos": ["demo", "sdk-dist"]
+    },
+    "Data-Continuation": {
+      "role": "Data continuity engine, ACE entity system",
+      "repos": ["formalism-tests", "Continuity"]
+    },
+    "master-records": {
+      "role": "Durable event, hash, and bundle recall; ecosystem reconciliation",
+      "repos": ["dist", "event-index"]
+    }
+  },
+
+  "bootstrap_critical": [
+    "StegCore",
+    "Ingestion/CGE",
+    "Workflows",
+    "TV/TVC",
+    "StegID",
+    "Transition Table Engine"
+  ],
+
+  "engines": [
+    {
+      "id": "stegcore",
+      "title": "StegCore",
+      "tier": "kernel",
+      "owner_org": "StegVerse-Labs",
+      "owner_repo": "StegCore",
+      "bootstrap_critical": true,
+      "status": "partial",
+      "dependencies": [],
+      "downstream": ["ingestion-cge", "stegid", "tv-tvc", "all-engines"],
+      "target_file": "StegVerse-Labs/StegCore/core/stegid.py",
+      "build_order": 1
+    },
+    {
+      "id": "ingestion-cge",
+      "title": "Ingestion + CGE",
+      "tier": "core",
+      "owner_org": "StegVerse-Labs",
+      "owner_repo": "StegCore",
+      "bootstrap_critical": true,
+      "status": "partial",
+      "dependencies": ["stegcore"],
+      "downstream": ["core-master", "workflows", "stegbrain", "all-engines"],
+      "target_file": "StegVerse-Labs/StegCore/core_lite/cli.py",
+      "build_order": 2
+    },
+    {
+      "id": "workflows",
+      "title": "Workflows",
+      "tier": "governance",
+      "owner_org": "GCAT-BCAT-Engine",
+      "owner_repo": "workflows",
+      "bootstrap_critical": true,
+      "status": "active",
+      "dependencies": ["ingestion-cge"],
+      "downstream": ["stegclaw", "validation-pipeline"],
+      "target_file": "GCAT-BCAT-Engine/workflows/.github/workflows/",
+      "build_order": 3
+    },
+    {
+      "id": "stegid",
+      "title": "StegID",
+      "tier": "identity",
+      "owner_org": "StegVerse-Labs",
+      "owner_repo": "StegCore",
+      "bootstrap_critical": true,
+      "status": "new",
+      "dependencies": ["stegcore"],
+      "downstream": ["stegclaw", "llm-adapter", "hybrid-collab", "stegagents"],
+      "target_file": "StegVerse-Labs/StegCore/core/stegid.py",
+      "build_order": 4
+    },
+    {
+      "id": "tv-tvc",
+      "title": "TV/TVC + Ephemeral Tokens",
+      "tier": "identity",
+      "owner_org": "StegVerse-Labs",
+      "owner_repo": "TV",
+      "bootstrap_critical": true,
+      "status": "active",
+      "dependencies": ["stegcore", "stegid"],
+      "downstream": ["stegclaw", "stegagents", "finco"],
+      "target_file": "StegVerse-Labs/TV/",
+      "build_order": 5
+    },
+    {
+      "id": "bcat-gcat",
+      "title": "BCAT/GCAT Engine",
+      "tier": "formalism",
+      "owner_org": "GCAT-BCAT-Engine",
+      "owner_repo": "workflows",
+      "bootstrap_critical": false,
+      "status": "active",
+      "dependencies": ["stegcore", "ingestion-cge"],
+      "downstream": ["triad-engine", "llm-adapter", "stegclaw"],
+      "target_file": "GCAT-BCAT-Engine/workflows/triad_validator.py",
+      "build_order": 6
+    },
+    {
+      "id": "ecat-icat",
+      "title": "ECAT/ICAT Engine",
+      "tier": "formalism",
+      "owner_org": "GCAT-BCAT-Engine",
+      "owner_repo": "workflows",
+      "bootstrap_critical": false,
+      "status": "active",
+      "dependencies": ["stegcore"],
+      "downstream": ["triad-engine"],
+      "target_file": "GCAT-BCAT-Engine/workflows/ecat_validator.py",
+      "build_order": 7
+    },
+    {
+      "id": "existence-pct",
+      "title": "% Existence Engine",
+      "tier": "formalism",
+      "owner_org": "GCAT-BCAT-Engine",
+      "owner_repo": "workflows",
+      "bootstrap_critical": false,
+      "status": "active",
+      "dependencies": ["stegcore"],
+      "downstream": ["triad-engine"],
+      "target_file": "GCAT-BCAT-Engine/workflows/pe_validator.py",
+      "build_order": 8
+    },
+    {
+      "id": "triad-engine",
+      "title": "Triad Engine",
+      "tier": "formalism",
+      "owner_org": "GCAT-BCAT-Engine",
+      "owner_repo": "workflows",
+      "bootstrap_critical": false,
+      "status": "active",
+      "dependencies": ["bcat-gcat", "ecat-icat", "existence-pct"],
+      "downstream": ["llm-adapter", "stegclaw", "stegagents"],
+      "target_file": "GCAT-BCAT-Engine/workflows/triad_validator.py",
+      "build_order": 9
+    },
+    {
+      "id": "transition-table",
+      "title": "Transition Table Engine",
+      "tier": "governance",
+      "owner_org": "ECAT-ICAT-Formal",
+      "owner_repo": "formalism-tests",
+      "bootstrap_critical": true,
+      "status": "specced",
+      "dependencies": ["stegcore", "ingestion-cge"],
+      "downstream": ["data-continuity", "triad-engine", "all-engines"],
+      "target_file": "ECAT-ICAT-Formal/formalism-tests/transition_table/",
+      "build_order": 10
+    },
+    {
+      "id": "data-continuity",
+      "title": "Data Continuity Engine",
+      "tier": "governance",
+      "owner_org": "Data-Continuation",
+      "owner_repo": "formalism-tests",
+      "bootstrap_critical": false,
+      "status": "partial",
+      "dependencies": ["stegcore", "transition-table"],
+      "downstream": ["core-master", "knowledge-vault"],
+      "target_file": "Data-Continuation/formalism-tests/",
+      "build_order": 11
+    },
+    {
+      "id": "knowledge-vault",
+      "title": "Knowledge Vault",
+      "tier": "infra",
+      "owner_org": "StegVerse-Labs",
+      "owner_repo": "StegCore",
+      "bootstrap_critical": false,
+      "status": "new",
+      "dependencies": ["stegcore", "stegid", "data-continuity"],
+      "downstream": ["stegclaw", "genealogy-hub", "llm-adapter"],
+      "target_file": "StegVerse-Labs/StegCore/core/knowledge_vault.py",
+      "build_order": 12
+    },
+    {
+      "id": "llm-adapter",
+      "title": "LLM Adapter",
+      "tier": "integration",
+      "owner_org": "StegVerse-Labs",
+      "owner_repo": "StegCore",
+      "bootstrap_critical": false,
+      "status": "new",
+      "dependencies": ["stegid", "triad-engine", "knowledge-vault"],
+      "downstream": ["stegclaw", "stegbrain", "hybrid-collab"],
+      "target_file": "StegVerse-Labs/StegCore/core/llm_adapter.py",
+      "build_order": 13
+    },
+    {
+      "id": "stegclaw",
+      "title": "StegClaw / Personal Entity",
+      "tier": "execution",
+      "owner_org": "GCAT-BCAT-Engine",
+      "owner_repo": "workflows",
+      "bootstrap_critical": false,
+      "status": "partial",
+      "dependencies": ["stegid", "knowledge-vault", "llm-adapter", "triad-engine"],
+      "downstream": ["user-facing-apps"],
+      "target_file": "GCAT-BCAT-Engine/workflows/stegclaw.py",
+      "build_order": 14
+    },
+    {
+      "id": "stegbrain",
+      "title": "StegBrain",
+      "tier": "execution",
+      "owner_org": "StegVerse-Labs",
+      "owner_repo": "Continuity",
+      "bootstrap_critical": false,
+      "status": "partial",
+      "dependencies": ["ingestion-cge", "knowledge-vault", "llm-adapter"],
+      "downstream": ["stegops", "stegclaw"],
+      "target_file": "StegVerse-Labs/Continuity/brain_reports/",
+      "build_order": 15
+    },
+    {
+      "id": "stegops",
+      "title": "StegOps Orchestrator",
+      "tier": "execution",
+      "owner_org": "GCAT-BCAT-Engine",
+      "owner_repo": "workflows",
+      "bootstrap_critical": false,
+      "status": "partial",
+      "dependencies": ["stegbrain", "transition-table", "ingestion-cge"],
+      "downstream": ["site-pipeline", "validation-pipeline"],
+      "target_file": "GCAT-BCAT-Engine/workflows/full_pipeline/",
+      "build_order": 16
+    },
+    {
+      "id": "stegagents",
+      "title": "StegAgents",
+      "tier": "execution",
+      "owner_org": "StegVerse-Labs",
+      "owner_repo": "Continuity",
+      "bootstrap_critical": false,
+      "status": "partial",
+      "dependencies": ["stegid", "triad-engine", "knowledge-vault"],
+      "downstream": ["stegops"],
+      "target_file": "StegVerse-Labs/Continuity/entities/",
+      "build_order": 17
+    },
+    {
+      "id": "hybrid-collab",
+      "title": "Hybrid Collab Bridge",
+      "tier": "integration",
+      "owner_org": "StegVerse-Labs",
+      "owner_repo": "StegCore",
+      "bootstrap_critical": false,
+      "status": "specced",
+      "dependencies": ["stegid", "llm-adapter"],
+      "downstream": ["user-facing-apps"],
+      "build_order": 18
+    },
+    {
+      "id": "finco",
+      "title": "Fin-Co / FinCo Receipt Chain",
+      "tier": "infra",
+      "owner_org": "StegVerse-Labs",
+      "owner_repo": "FinCo",
+      "bootstrap_critical": false,
+      "status": "partial",
+      "dependencies": ["stegid", "knowledge-vault", "triad-engine"],
+      "downstream": ["stegtokens", "stegcoin", "stegpay"],
+      "target_file": "StegVerse-Labs/FinCo/tools/finco_chain_validator.py",
+      "build_order": 19
+    },
+    {
+      "id": "genealogy-hub",
+      "title": "Genealogy Hub",
+      "tier": "domain",
+      "owner_org": "StegVerse-Labs",
+      "owner_repo": "Site",
+      "bootstrap_critical": false,
+      "status": "new",
+      "dependencies": ["knowledge-vault", "stegid"],
+      "downstream": ["user-facing-apps", "dna-identity-matrix"],
+      "target_file": "StegVerse-Labs/Site/genealogy/genealogy_hub.py",
+      "build_order": 20
+    },
+    {
+      "id": "telemetry",
+      "title": "Telemetry",
+      "tier": "infra",
+      "owner_org": "StegVerse-Labs",
+      "owner_repo": "StegDB",
+      "bootstrap_critical": false,
+      "status": "specced",
+      "dependencies": ["ingestion-cge", "stegid"],
+      "downstream": ["site-pipeline", "core-master"],
+      "build_order": 21
+    },
+    {
+      "id": "footprint-auditor",
+      "title": "Footprint Auditor",
+      "tier": "infra",
+      "owner_org": "StegVerse-Labs",
+      "owner_repo": "StegDB",
+      "bootstrap_critical": false,
+      "status": "partial",
+      "dependencies": ["ingestion-cge", "stegid"],
+      "downstream": ["core-master", "triage"],
+      "build_order": 22
+    },
+    {
+      "id": "core-master",
+      "title": "Core-Master",
+      "tier": "core",
+      "owner_org": "master-records",
+      "owner_repo": "dist",
+      "bootstrap_critical": false,
+      "status": "specced",
+      "dependencies": ["ingestion-cge", "stegid", "data-continuity"],
+      "downstream": ["ecosystem-wide"],
+      "build_order": 23
+    },
+    {
+      "id": "publisher",
+      "title": "Publisher",
+      "tier": "domain",
+      "owner_org": "GCAT-BCAT-Engine",
+      "owner_repo": "Publisher",
+      "bootstrap_critical": false,
+      "status": "active",
+      "dependencies": ["ingestion-cge"],
+      "downstream": ["god-papers", "site"],
+      "build_order": 24
+    },
+    {
+      "id": "math-solver",
+      "title": "Math Solver",
+      "tier": "domain",
+      "owner_org": "GCAT-BCAT-Engine",
+      "owner_repo": "workflows",
+      "bootstrap_critical": false,
+      "status": "active",
+      "dependencies": ["triad-engine", "ephemeral-sandbox"],
+      "downstream": ["publisher"],
+      "target_file": "GCAT-BCAT-Engine/workflows/math_solver/",
+      "build_order": 25
+    },
+    {
+      "id": "stegverse-scw",
+      "title": "StegVerse SCW",
+      "tier": "infra",
+      "owner_org": "StegVerse-org",
+      "owner_repo": "demo",
+      "bootstrap_critical": false,
+      "status": "partial",
+      "dependencies": ["stegid", "tv-tvc"],
+      "downstream": ["demo-page"],
+      "build_order": 26
+    },
+    {
+      "id": "stegseed",
+      "title": "StegSeed",
+      "tier": "integration",
+      "owner_org": "GCAT-BCAT-Engine",
+      "owner_repo": "workflows",
+      "bootstrap_critical": false,
+      "status": "active",
+      "dependencies": ["stegcore"],
+      "downstream": ["math-solver", "validation-pipeline"],
+      "target_file": "GCAT-BCAT-Engine/workflows/validation_run_v1.yml",
+      "build_order": 27
+    }
+  ],
+
+  "build_phases": {
+    "P0": {
+      "name": "Canonical maps and registries",
+      "builds": ["P0-001", "P0-002", "P0-003"],
+      "gate": "Dependency map complete and machine-readable"
+    },
+    "P1": {
+      "name": "Core-Lite stabilization and workflow freeze",
+      "builds": ["P1-001", "P1-002", "P1-003", "P1-004", "P1-005"],
+      "gate": "CGE healthy in at least one repo; workflow freeze enforced"
+    },
+    "P2": {
+      "name": "Org-level deployment and master-records",
+      "builds": ["P2-001", "P2-002", "P2-003", "P2-004"],
+      "gate": "AaCT-E bootstrap complete; master-records installed"
+    },
+    "P3": {
+      "name": "Sandbox, LLM, StegBrain, and ops loop",
+      "builds": ["P3-001", "P3-002", "P3-003", "P3-004"],
+      "gate": "StegBrain next-action loop running; LLM Adapter receipts emitting"
+    },
+    "P4": {
+      "name": "Formalism and transition enforcement",
+      "builds": ["P4-001", "P4-002", "P4-003"],
+      "gate": "Transition table executable; formalism gates running"
+    },
+    "P5": {
+      "name": "Audit, knowledge, and telemetry",
+      "builds": ["P5-001", "P5-002", "P5-003"],
+      "gate": "Knowledge Vault indexed; telemetry rollup running"
+    },
+    "P6": {
+      "name": "Domain and product integrations",
+      "builds": ["P6-001", "P6-002"],
+      "gate": "Math solver wired; Gemstone IV adapter live"
+    }
+  },
+
+  "current_priority_queue": [
+    "Phase 0: Place foundation files (knowledge_vault.py, stegid.py, llm_adapter.py)",
+    "Phase 1: Core-Lite bootstrap in StegCore repo",
+    "Phase 2: StegID provision + Knowledge Vault init",
+    "Phase 3: LLM Adapter → Triad wiring",
+    "Phase 4: StegClaw entity active via GitHub Actions",
+    "Phase 5: Site data pipeline feeding transition pages",
+    "Phase 6: FinCo receipt chain active",
+    "Phase 7: Genealogy Hub public + fork button",
+    "Phase 8: GOD paper in Publisher"
+  ],
+
+  "done_definition": [
+    "Every engine has owner_org, owner_repo, status, dependencies, downstream consumers, and build_order.",
+    "Bootstrap-critical engines are flagged separately.",
+    "Build order is explicit and machine-readable.",
+    "Org placement is unambiguous.",
+    "No engine has undefined upstream dependencies."
+  ]
+}
