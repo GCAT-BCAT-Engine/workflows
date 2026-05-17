@@ -1,0 +1,48 @@
+problem_id: chf-050
+title: Emergency Override and Break-Glass Gate
+formalism: consequence_horizon_formalism
+model:
+  max_override_duration_minutes: 60
+test_cases:
+  - id: emergency_override_allowed
+    emergency_classification_valid: true
+    duration_minutes: 30
+    multiparty_approval: true
+    post_action_receipt_ready: true
+    mandatory_review_scheduled: true
+    expected: EMERGENCY_OVERRIDE_ALLOWED
+  - id: exact_override_duration_boundary_allowed
+    emergency_classification_valid: true
+    duration_minutes: 60
+    multiparty_approval: true
+    post_action_receipt_ready: true
+    mandatory_review_scheduled: true
+    expected: EMERGENCY_OVERRIDE_ALLOWED
+  - id: emergency_classification_invalid_fail_closed
+    emergency_classification_valid: false
+    duration_minutes: 30
+    multiparty_approval: true
+    post_action_receipt_ready: true
+    mandatory_review_scheduled: true
+    expected: EMERGENCY_OVERRIDE_FAIL_CLOSED
+  - id: duration_too_long_fail_closed
+    emergency_classification_valid: true
+    duration_minutes: 61
+    multiparty_approval: true
+    post_action_receipt_ready: true
+    mandatory_review_scheduled: true
+    expected: EMERGENCY_OVERRIDE_FAIL_CLOSED
+  - id: multiparty_approval_missing_fail_closed
+    emergency_classification_valid: true
+    duration_minutes: 30
+    multiparty_approval: false
+    post_action_receipt_ready: true
+    mandatory_review_scheduled: true
+    expected: EMERGENCY_OVERRIDE_FAIL_CLOSED
+  - id: mandatory_review_missing_fail_closed
+    emergency_classification_valid: true
+    duration_minutes: 30
+    multiparty_approval: true
+    post_action_receipt_ready: true
+    mandatory_review_scheduled: false
+    expected: EMERGENCY_OVERRIDE_FAIL_CLOSED

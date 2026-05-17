@@ -1,0 +1,54 @@
+problem_id: chf-043
+title: Secret and Credential Exposure Gate
+formalism: consequence_horizon_formalism
+model:
+  max_blast_radius: 0.20
+test_cases:
+  - id: credential_access_allowed_without_secret
+    secret_detected: false
+    least_privilege: true
+    redaction_ready: false
+    rotation_supported: false
+    blast_radius: 0.10
+    leak_detected: false
+    expected: CREDENTIAL_ACCESS_ALLOWED
+  - id: credential_access_allowed_with_secret_controls
+    secret_detected: true
+    least_privilege: true
+    redaction_ready: true
+    rotation_supported: true
+    blast_radius: 0.10
+    leak_detected: false
+    expected: CREDENTIAL_ACCESS_ALLOWED
+  - id: leak_quarantine_required
+    secret_detected: true
+    least_privilege: true
+    redaction_ready: true
+    rotation_supported: true
+    blast_radius: 0.10
+    leak_detected: true
+    expected: CREDENTIAL_QUARANTINE_REQUIRED
+  - id: redaction_missing_fail_closed
+    secret_detected: true
+    least_privilege: true
+    redaction_ready: false
+    rotation_supported: true
+    blast_radius: 0.10
+    leak_detected: false
+    expected: CREDENTIAL_ACCESS_FAIL_CLOSED
+  - id: rotation_missing_fail_closed
+    secret_detected: true
+    least_privilege: true
+    redaction_ready: true
+    rotation_supported: false
+    blast_radius: 0.10
+    leak_detected: false
+    expected: CREDENTIAL_ACCESS_FAIL_CLOSED
+  - id: blast_radius_high_fail_closed
+    secret_detected: false
+    least_privilege: true
+    redaction_ready: false
+    rotation_supported: false
+    blast_radius: 0.21
+    leak_detected: false
+    expected: CREDENTIAL_ACCESS_FAIL_CLOSED

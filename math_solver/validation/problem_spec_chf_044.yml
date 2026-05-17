@@ -1,0 +1,54 @@
+problem_id: chf-044
+title: Data Exfiltration and Boundary Crossing Gate
+formalism: consequence_horizon_formalism
+model:
+  data_transfer_rule: require_declared_boundary_trusted_destination_consent_purpose_and_audit_receipt
+test_cases:
+  - id: data_transfer_allowed
+    destination_trusted: true
+    data_classification_valid: true
+    consent_valid: true
+    purpose_limited: true
+    audit_receipt_ready: true
+    boundary_crossing_declared: true
+    expected: DATA_TRANSFER_ALLOWED
+  - id: boundary_crossing_undeclared_fail_closed
+    destination_trusted: true
+    data_classification_valid: true
+    consent_valid: true
+    purpose_limited: true
+    audit_receipt_ready: true
+    boundary_crossing_declared: false
+    expected: DATA_TRANSFER_FAIL_CLOSED
+  - id: destination_untrusted_fail_closed
+    destination_trusted: false
+    data_classification_valid: true
+    consent_valid: true
+    purpose_limited: true
+    audit_receipt_ready: true
+    boundary_crossing_declared: true
+    expected: DATA_TRANSFER_FAIL_CLOSED
+  - id: consent_invalid_fail_closed
+    destination_trusted: true
+    data_classification_valid: true
+    consent_valid: false
+    purpose_limited: true
+    audit_receipt_ready: true
+    boundary_crossing_declared: true
+    expected: DATA_TRANSFER_FAIL_CLOSED
+  - id: purpose_not_limited_fail_closed
+    destination_trusted: true
+    data_classification_valid: true
+    consent_valid: true
+    purpose_limited: false
+    audit_receipt_ready: true
+    boundary_crossing_declared: true
+    expected: DATA_TRANSFER_FAIL_CLOSED
+  - id: audit_receipt_missing_fail_closed
+    destination_trusted: true
+    data_classification_valid: true
+    consent_valid: true
+    purpose_limited: true
+    audit_receipt_ready: false
+    boundary_crossing_declared: true
+    expected: DATA_TRANSFER_FAIL_CLOSED

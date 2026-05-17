@@ -1,0 +1,49 @@
+problem_id: chf-046
+title: Model Output Reliance Gate
+formalism: consequence_horizon_formalism
+model:
+  min_confidence: 0.80
+  high_criticality_threshold: 0.70
+test_cases:
+  - id: output_reliance_allowed
+    confidence: 0.90
+    source_supported: true
+    uncertainty_labeled: true
+    domain_criticality: 0.30
+    human_review_completed: false
+    expected: OUTPUT_RELIANCE_ALLOWED
+  - id: high_criticality_with_review_allowed
+    confidence: 0.90
+    source_supported: true
+    uncertainty_labeled: true
+    domain_criticality: 0.80
+    human_review_completed: true
+    expected: OUTPUT_RELIANCE_ALLOWED
+  - id: high_criticality_requires_review
+    confidence: 0.90
+    source_supported: true
+    uncertainty_labeled: true
+    domain_criticality: 0.80
+    human_review_completed: false
+    expected: OUTPUT_REQUIRES_REVIEW
+  - id: confidence_low_fail_closed
+    confidence: 0.79
+    source_supported: true
+    uncertainty_labeled: true
+    domain_criticality: 0.30
+    human_review_completed: false
+    expected: OUTPUT_RELIANCE_FAIL_CLOSED
+  - id: source_support_missing_fail_closed
+    confidence: 0.90
+    source_supported: false
+    uncertainty_labeled: true
+    domain_criticality: 0.30
+    human_review_completed: false
+    expected: OUTPUT_RELIANCE_FAIL_CLOSED
+  - id: uncertainty_label_missing_fail_closed
+    confidence: 0.90
+    source_supported: true
+    uncertainty_labeled: false
+    domain_criticality: 0.30
+    human_review_completed: false
+    expected: OUTPUT_RELIANCE_FAIL_CLOSED

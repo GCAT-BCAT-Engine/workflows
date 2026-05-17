@@ -1,0 +1,60 @@
+problem_id: chf-042
+title: Tool Invocation Standing Gate
+formalism: consequence_horizon_formalism
+model:
+  tool_gate_rule: require_authority_scope_side_effect_classification_rollback_receipt_and_approval
+test_cases:
+  - id: tool_invocation_allowed
+    tool_authority_valid: true
+    scope_match: true
+    side_effect_classified: true
+    rollback_path_available: true
+    receipt_ready: true
+    high_impact_tool: false
+    explicit_approval: false
+    expected: TOOL_INVOCATION_ALLOWED
+  - id: high_impact_tool_with_approval_allowed
+    tool_authority_valid: true
+    scope_match: true
+    side_effect_classified: true
+    rollback_path_available: true
+    receipt_ready: true
+    high_impact_tool: true
+    explicit_approval: true
+    expected: TOOL_INVOCATION_ALLOWED
+  - id: authority_invalid_fail_closed
+    tool_authority_valid: false
+    scope_match: true
+    side_effect_classified: true
+    rollback_path_available: true
+    receipt_ready: true
+    high_impact_tool: false
+    explicit_approval: false
+    expected: TOOL_INVOCATION_FAIL_CLOSED
+  - id: scope_mismatch_fail_closed
+    tool_authority_valid: true
+    scope_match: false
+    side_effect_classified: true
+    rollback_path_available: true
+    receipt_ready: true
+    high_impact_tool: false
+    explicit_approval: false
+    expected: TOOL_INVOCATION_FAIL_CLOSED
+  - id: side_effect_unclassified_fail_closed
+    tool_authority_valid: true
+    scope_match: true
+    side_effect_classified: false
+    rollback_path_available: true
+    receipt_ready: true
+    high_impact_tool: false
+    explicit_approval: false
+    expected: TOOL_INVOCATION_FAIL_CLOSED
+  - id: high_impact_without_approval_fail_closed
+    tool_authority_valid: true
+    scope_match: true
+    side_effect_classified: true
+    rollback_path_available: true
+    receipt_ready: true
+    high_impact_tool: true
+    explicit_approval: false
+    expected: TOOL_INVOCATION_FAIL_CLOSED

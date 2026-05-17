@@ -1,0 +1,48 @@
+problem_id: chf-049
+title: Dependency Drift and Supply Chain Gate
+formalism: consequence_horizon_formalism
+model:
+  max_dependency_age_days: 180
+test_cases:
+  - id: dependency_state_valid
+    lockfile_match: true
+    hash_match: true
+    publisher_trusted: true
+    dependency_age_days: 30
+    known_vulnerability: false
+    expected: DEPENDENCY_STATE_VALID
+  - id: exact_dependency_age_boundary_valid
+    lockfile_match: true
+    hash_match: true
+    publisher_trusted: true
+    dependency_age_days: 180
+    known_vulnerability: false
+    expected: DEPENDENCY_STATE_VALID
+  - id: lockfile_mismatch_fail_closed
+    lockfile_match: false
+    hash_match: true
+    publisher_trusted: true
+    dependency_age_days: 30
+    known_vulnerability: false
+    expected: DEPENDENCY_FAIL_CLOSED
+  - id: hash_mismatch_fail_closed
+    lockfile_match: true
+    hash_match: false
+    publisher_trusted: true
+    dependency_age_days: 30
+    known_vulnerability: false
+    expected: DEPENDENCY_FAIL_CLOSED
+  - id: publisher_untrusted_fail_closed
+    lockfile_match: true
+    hash_match: true
+    publisher_trusted: false
+    dependency_age_days: 30
+    known_vulnerability: false
+    expected: DEPENDENCY_FAIL_CLOSED
+  - id: known_vulnerability_fail_closed
+    lockfile_match: true
+    hash_match: true
+    publisher_trusted: true
+    dependency_age_days: 30
+    known_vulnerability: true
+    expected: DEPENDENCY_FAIL_CLOSED

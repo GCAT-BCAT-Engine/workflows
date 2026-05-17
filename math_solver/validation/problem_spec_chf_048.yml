@@ -1,0 +1,49 @@
+problem_id: chf-048
+title: Governance Capture and Influence Concentration Gate
+formalism: consequence_horizon_formalism
+model:
+  max_concentration: 0.35
+  max_correlated_failure: 0.25
+test_cases:
+  - id: capture_clear
+    validator_concentration: 0.20
+    token_concentration: 0.20
+    maintainer_concentration: 0.20
+    dependency_concentration: 0.20
+    correlated_failure: 0.10
+    expected: CAPTURE_CLEAR
+  - id: exact_capture_boundary_clear
+    validator_concentration: 0.35
+    token_concentration: 0.35
+    maintainer_concentration: 0.35
+    dependency_concentration: 0.35
+    correlated_failure: 0.25
+    expected: CAPTURE_CLEAR
+  - id: validator_concentration_high_fail_closed
+    validator_concentration: 0.36
+    token_concentration: 0.20
+    maintainer_concentration: 0.20
+    dependency_concentration: 0.20
+    correlated_failure: 0.10
+    expected: CAPTURE_FAIL_CLOSED
+  - id: token_concentration_high_fail_closed
+    validator_concentration: 0.20
+    token_concentration: 0.36
+    maintainer_concentration: 0.20
+    dependency_concentration: 0.20
+    correlated_failure: 0.10
+    expected: CAPTURE_FAIL_CLOSED
+  - id: dependency_concentration_high_fail_closed
+    validator_concentration: 0.20
+    token_concentration: 0.20
+    maintainer_concentration: 0.20
+    dependency_concentration: 0.36
+    correlated_failure: 0.10
+    expected: CAPTURE_FAIL_CLOSED
+  - id: correlated_failure_high_fail_closed
+    validator_concentration: 0.20
+    token_concentration: 0.20
+    maintainer_concentration: 0.20
+    dependency_concentration: 0.20
+    correlated_failure: 0.26
+    expected: CAPTURE_FAIL_CLOSED

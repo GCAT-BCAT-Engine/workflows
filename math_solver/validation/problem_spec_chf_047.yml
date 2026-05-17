@@ -1,0 +1,49 @@
+problem_id: chf-047
+title: Simulation-to-Reality Transfer Gate
+formalism: consequence_horizon_formalism
+model:
+  min_sim_fidelity: 0.90
+  max_environment_gap: 0.10
+test_cases:
+  - id: sim_to_real_allowed
+    sim_fidelity: 0.95
+    environment_gap: 0.05
+    external_dry_run_passed: true
+    bounded_effect: true
+    rollback_ready: true
+    expected: SIM_TO_REAL_ALLOWED
+  - id: exact_sim_boundary_allowed
+    sim_fidelity: 0.90
+    environment_gap: 0.10
+    external_dry_run_passed: true
+    bounded_effect: true
+    rollback_ready: true
+    expected: SIM_TO_REAL_ALLOWED
+  - id: sim_fidelity_low_fail_closed
+    sim_fidelity: 0.89
+    environment_gap: 0.05
+    external_dry_run_passed: true
+    bounded_effect: true
+    rollback_ready: true
+    expected: SIM_TO_REAL_FAIL_CLOSED
+  - id: environment_gap_high_fail_closed
+    sim_fidelity: 0.95
+    environment_gap: 0.11
+    external_dry_run_passed: true
+    bounded_effect: true
+    rollback_ready: true
+    expected: SIM_TO_REAL_FAIL_CLOSED
+  - id: external_dry_run_missing_fail_closed
+    sim_fidelity: 0.95
+    environment_gap: 0.05
+    external_dry_run_passed: false
+    bounded_effect: true
+    rollback_ready: true
+    expected: SIM_TO_REAL_FAIL_CLOSED
+  - id: rollback_not_ready_fail_closed
+    sim_fidelity: 0.95
+    environment_gap: 0.05
+    external_dry_run_passed: true
+    bounded_effect: true
+    rollback_ready: false
+    expected: SIM_TO_REAL_FAIL_CLOSED

@@ -1,0 +1,49 @@
+problem_id: chf-045
+title: Autonomous Recursion Limit Gate
+formalism: consequence_horizon_formalism
+model:
+  max_recursion_depth: 5
+  max_budget_fraction: 0.80
+test_cases:
+  - id: recursion_allowed
+    recursion_depth: 3
+    loop_detectability: true
+    human_override_available: true
+    budget_fraction: 0.50
+    safe_halt_available: true
+    expected: RECURSION_ALLOWED
+  - id: exact_recursion_boundary_allowed
+    recursion_depth: 5
+    loop_detectability: true
+    human_override_available: true
+    budget_fraction: 0.80
+    safe_halt_available: true
+    expected: RECURSION_ALLOWED
+  - id: recursion_depth_high_fail_closed
+    recursion_depth: 6
+    loop_detectability: true
+    human_override_available: true
+    budget_fraction: 0.50
+    safe_halt_available: true
+    expected: RECURSION_FAIL_CLOSED
+  - id: loop_detection_missing_fail_closed
+    recursion_depth: 3
+    loop_detectability: false
+    human_override_available: true
+    budget_fraction: 0.50
+    safe_halt_available: true
+    expected: RECURSION_FAIL_CLOSED
+  - id: human_override_missing_fail_closed
+    recursion_depth: 3
+    loop_detectability: true
+    human_override_available: false
+    budget_fraction: 0.50
+    safe_halt_available: true
+    expected: RECURSION_FAIL_CLOSED
+  - id: safe_halt_missing_fail_closed
+    recursion_depth: 3
+    loop_detectability: true
+    human_override_available: true
+    budget_fraction: 0.50
+    safe_halt_available: false
+    expected: RECURSION_FAIL_CLOSED

@@ -1,0 +1,54 @@
+problem_id: chf-041
+title: Adversarial Prompt and Instruction Boundary Gate
+formalism: consequence_horizon_formalism
+model:
+  instruction_boundary_rule: deny_or_quarantine_override_concealment_and_bypass
+test_cases:
+  - id: instruction_allowed
+    authority_override_attempt: false
+    conceal_intent: false
+    bypass_admissibility: false
+    prompt_injection_detected: false
+    instruction_scope_valid: true
+    quarantine_on_detection: true
+    expected: INSTRUCTION_ALLOWED
+  - id: override_attempt_fail_closed
+    authority_override_attempt: true
+    conceal_intent: false
+    bypass_admissibility: false
+    prompt_injection_detected: false
+    instruction_scope_valid: true
+    quarantine_on_detection: true
+    expected: INSTRUCTION_FAIL_CLOSED
+  - id: concealed_intent_fail_closed
+    authority_override_attempt: false
+    conceal_intent: true
+    bypass_admissibility: false
+    prompt_injection_detected: false
+    instruction_scope_valid: true
+    quarantine_on_detection: true
+    expected: INSTRUCTION_FAIL_CLOSED
+  - id: bypass_admissibility_fail_closed
+    authority_override_attempt: false
+    conceal_intent: false
+    bypass_admissibility: true
+    prompt_injection_detected: false
+    instruction_scope_valid: true
+    quarantine_on_detection: true
+    expected: INSTRUCTION_FAIL_CLOSED
+  - id: prompt_injection_quarantined
+    authority_override_attempt: false
+    conceal_intent: false
+    bypass_admissibility: false
+    prompt_injection_detected: true
+    instruction_scope_valid: true
+    quarantine_on_detection: true
+    expected: INSTRUCTION_QUARANTINED
+  - id: scope_invalid_fail_closed
+    authority_override_attempt: false
+    conceal_intent: false
+    bypass_admissibility: false
+    prompt_injection_detected: false
+    instruction_scope_valid: false
+    quarantine_on_detection: true
+    expected: INSTRUCTION_FAIL_CLOSED
