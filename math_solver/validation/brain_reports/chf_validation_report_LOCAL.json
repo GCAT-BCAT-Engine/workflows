@@ -1,0 +1,340 @@
+{
+  "formalism": "consequence_horizon_formalism",
+  "overall_status": "PASS",
+  "results": [
+    {
+      "cases": [
+        {
+          "actual": "ALLOW",
+          "angle_degrees": 45.0,
+          "cell": "cell_1",
+          "crossing_event_required": true,
+          "expected": "ALLOW",
+          "historical_shell_required": true,
+          "id": "p1",
+          "new_center_created": true,
+          "propagated_record_required": true,
+          "radius": 0.565685,
+          "reason": "cell_rule_allows",
+          "status": "PASS"
+        },
+        {
+          "actual": "DENY",
+          "angle_degrees": 135.0,
+          "cell": "cell_2",
+          "crossing_event_required": false,
+          "expected": "DENY",
+          "historical_shell_required": false,
+          "id": "p2",
+          "new_center_created": false,
+          "propagated_record_required": false,
+          "radius": 0.565685,
+          "reason": "cell_radius_limit_exceeded",
+          "status": "PASS"
+        },
+        {
+          "actual": "DENY",
+          "angle_degrees": 225.0,
+          "cell": "cell_3",
+          "crossing_event_required": false,
+          "expected": "DENY",
+          "historical_shell_required": false,
+          "id": "p3",
+          "new_center_created": false,
+          "propagated_record_required": false,
+          "radius": 0.565685,
+          "reason": "forbidden_cell",
+          "status": "PASS"
+        },
+        {
+          "actual": "FAIL_CLOSED",
+          "angle_degrees": 344.054604,
+          "cell": "cell_4",
+          "crossing_event_required": false,
+          "expected": "FAIL_CLOSED",
+          "historical_shell_required": false,
+          "id": "p4",
+          "new_center_created": false,
+          "propagated_record_required": false,
+          "radius": 0.728011,
+          "reason": "uncertain_cell",
+          "status": "PASS"
+        },
+        {
+          "actual": "DENY",
+          "angle_degrees": 6.340192,
+          "cell": "cell_1",
+          "crossing_event_required": false,
+          "expected": "DENY",
+          "historical_shell_required": false,
+          "id": "p5",
+          "new_center_created": false,
+          "propagated_record_required": false,
+          "radius": 0.905539,
+          "reason": "outside_horizon",
+          "status": "PASS"
+        }
+      ],
+      "spec_id": "chf-001",
+      "status": "PASS"
+    },
+    {
+      "cases": [
+        {
+          "actual": "ALLOW",
+          "center_results": [
+            {
+              "angle_degrees": 45.0,
+              "cell": "cell_1",
+              "cell_allows": true,
+              "center": [
+                0.0,
+                0.0
+              ],
+              "center_pass": true,
+              "inside_horizon": true,
+              "inside_transition": true,
+              "radius": 0.565685
+            },
+            {
+              "angle_degrees": 75.963757,
+              "cell": "cell_1",
+              "cell_allows": true,
+              "center": [
+                0.3,
+                0.0
+              ],
+              "center_pass": true,
+              "inside_horizon": true,
+              "inside_transition": true,
+              "radius": 0.412311
+            }
+          ],
+          "expected": "ALLOW",
+          "id": "pA",
+          "reason": "all_centers_pass",
+          "status": "PASS"
+        },
+        {
+          "actual": "FAIL_CLOSED",
+          "center_results": [
+            {
+              "angle_degrees": 180.0,
+              "cell": "cell_3",
+              "cell_allows": false,
+              "center": [
+                0.0,
+                0.0
+              ],
+              "center_pass": false,
+              "inside_horizon": false,
+              "inside_transition": true,
+              "radius": 0.9
+            },
+            {
+              "angle_degrees": 180.0,
+              "cell": "cell_3",
+              "cell_allows": false,
+              "center": [
+                0.3,
+                0.0
+              ],
+              "center_pass": false,
+              "inside_horizon": false,
+              "inside_transition": false,
+              "radius": 1.2
+            }
+          ],
+          "expected": "FAIL_CLOSED",
+          "id": "pB",
+          "reason": "not_safe_across_all_plausible_centers",
+          "status": "PASS"
+        },
+        {
+          "actual": "FAIL_CLOSED",
+          "center_results": [
+            {
+              "angle_degrees": 0.0,
+              "cell": "cell_1",
+              "cell_allows": true,
+              "center": [
+                0.0,
+                0.0
+              ],
+              "center_pass": false,
+              "inside_horizon": false,
+              "inside_transition": true,
+              "radius": 0.85
+            },
+            {
+              "angle_degrees": 0.0,
+              "cell": "cell_1",
+              "cell_allows": true,
+              "center": [
+                0.3,
+                0.0
+              ],
+              "center_pass": true,
+              "inside_horizon": true,
+              "inside_transition": true,
+              "radius": 0.55
+            }
+          ],
+          "expected": "FAIL_CLOSED",
+          "id": "pC",
+          "reason": "not_safe_across_all_plausible_centers",
+          "status": "PASS"
+        }
+      ],
+      "spec_id": "chf-002",
+      "status": "PASS"
+    },
+    {
+      "cases": [
+        {
+          "actual": "DENY",
+          "expected": "DENY",
+          "id": "chf-003",
+          "reason": "deformation_exceeds_tolerance",
+          "status": "PASS"
+        }
+      ],
+      "spec_id": "chf-003",
+      "status": "PASS"
+    },
+    {
+      "cases": [
+        {
+          "actual": "SMOOTH_SHELL",
+          "expected": "SMOOTH_SHELL",
+          "id": "O_far_low_resolution",
+          "q_observer": 0.05,
+          "reason": "observational_sphericalization",
+          "status": "PASS",
+          "threshold": 1.0
+        },
+        {
+          "actual": "CELL_RESOLVED",
+          "expected": "CELL_RESOLVED",
+          "id": "O_near_high_resolution",
+          "q_observer": 5.0,
+          "reason": "cell_structure_resolved",
+          "status": "PASS",
+          "threshold": 1.0
+        },
+        {
+          "actual": "SMOOTH_SHELL",
+          "expected": "SMOOTH_SHELL",
+          "id": "O_noisy_intermediate",
+          "q_observer": 0.5,
+          "reason": "observational_sphericalization",
+          "status": "PASS",
+          "threshold": 1.0
+        }
+      ],
+      "spec_id": "chf-004",
+      "status": "PASS"
+    },
+    {
+      "cases": [
+        {
+          "actual": "RECORD_LEGIBLE",
+          "expected": "RECORD_LEGIBLE",
+          "id": "chi_allow_legible",
+          "reason": "record_above_legibility_threshold",
+          "status": "PASS"
+        },
+        {
+          "actual": "RECORD_EXISTS_LOW_LEGIBILITY",
+          "expected": "RECORD_EXISTS_LOW_LEGIBILITY",
+          "id": "chi_allow_low_legibility",
+          "reason": "record_exists_but_legibility_decayed",
+          "status": "PASS"
+        },
+        {
+          "actual": "NO_PROPAGATED_RECORD_REQUIRED",
+          "expected": "NO_PROPAGATED_RECORD_REQUIRED",
+          "id": "denied_attempt",
+          "reason": "no_actualized_crossing",
+          "status": "PASS"
+        }
+      ],
+      "spec_id": "chf-005",
+      "status": "PASS"
+    },
+    {
+      "cases": [
+        {
+          "actual": "ALLOW",
+          "assigned_cell": "tetra_cell_1",
+          "dot_score": 0.519615,
+          "expected": "ALLOW",
+          "id": "v1_allow",
+          "radius": 0.519615,
+          "reason": "stable_3d_radial_cell",
+          "status": "PASS"
+        },
+        {
+          "actual": "DENY",
+          "assigned_cell": "tetra_cell_2",
+          "dot_score": 0.69282,
+          "expected": "DENY",
+          "id": "v2_deny",
+          "radius": 0.69282,
+          "reason": "authority_sensitive_3d_cell_denied",
+          "status": "PASS"
+        },
+        {
+          "actual": "FAIL_CLOSED",
+          "assigned_cell": "tetra_cell_3",
+          "dot_score": 0.519615,
+          "expected": "FAIL_CLOSED",
+          "id": "v3_fail_closed",
+          "radius": 0.519615,
+          "reason": "observer_impact_cell_unresolved",
+          "status": "PASS"
+        },
+        {
+          "actual": "DENY",
+          "assigned_cell": "tetra_cell_1",
+          "dot_score": 0.80829,
+          "expected": "DENY",
+          "id": "v4_outside_horizon",
+          "radius": 0.989949,
+          "reason": "outside_horizon",
+          "status": "PASS"
+        }
+      ],
+      "spec_id": "chf-006",
+      "status": "PASS"
+    },
+    {
+      "cases": [
+        {
+          "actual": "GEOMETRY_VALID",
+          "expected": "GEOMETRY_VALID",
+          "id": "convex_region_valid",
+          "reason": "radial_cell_coverage_valid",
+          "status": "PASS"
+        },
+        {
+          "actual": "GEOMETRY_FAIL_CLOSED",
+          "expected": "GEOMETRY_FAIL_CLOSED",
+          "id": "region_with_hole",
+          "reason": "region_not_star_shaped",
+          "status": "PASS"
+        },
+        {
+          "actual": "GEOMETRY_FAIL_CLOSED",
+          "expected": "GEOMETRY_FAIL_CLOSED",
+          "id": "incomplete_boundary_partition",
+          "reason": "boundary_partition_incomplete",
+          "status": "PASS"
+        }
+      ],
+      "spec_id": "chf-007",
+      "status": "PASS"
+    }
+  ],
+  "specs_evaluated": 7
+}
