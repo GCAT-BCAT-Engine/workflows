@@ -1,25 +1,22 @@
 {
-  "bundle": "chf_validation_extension_v0_11_execution_boundary_batch",
+  "bundle": "chf_validation_extension_v0_13_ecosystem_batch",
   "target_repo": "GCAT-BCAT-Engine/workflows",
-  "purpose": "Add execution-boundary semantic gates chf-020 through chf-030 with full local sandbox preflight.",
+  "purpose": "Add ecosystem-level semantic gates chf-031 through chf-040 with full local preflight.",
   "changed_paths": [
     "math_solver/validation/chf_deterministic_validator.py",
-    "math_solver/validation/chf_sandbox_runner.py",
-    "math_solver/validation/chf_sandbox_config.yml",
-    "math_solver/validation/chf_sandbox_readme.md",
-    "math_solver/validation/problem_spec_chf_020.yml",
-    "math_solver/validation/problem_spec_chf_021.yml",
-    "math_solver/validation/problem_spec_chf_022.yml",
-    "math_solver/validation/problem_spec_chf_023.yml",
-    "math_solver/validation/problem_spec_chf_024.yml",
-    "math_solver/validation/problem_spec_chf_025.yml",
-    "math_solver/validation/problem_spec_chf_026.yml",
-    "math_solver/validation/problem_spec_chf_027.yml",
-    "math_solver/validation/problem_spec_chf_028.yml",
-    "math_solver/validation/problem_spec_chf_029.yml",
-    "math_solver/validation/problem_spec_chf_030.yml",
+    "math_solver/validation/problem_spec_chf_031.yml",
+    "math_solver/validation/problem_spec_chf_032.yml",
+    "math_solver/validation/problem_spec_chf_033.yml",
+    "math_solver/validation/problem_spec_chf_034.yml",
+    "math_solver/validation/problem_spec_chf_035.yml",
+    "math_solver/validation/problem_spec_chf_036.yml",
+    "math_solver/validation/problem_spec_chf_037.yml",
+    "math_solver/validation/problem_spec_chf_038.yml",
+    "math_solver/validation/problem_spec_chf_039.yml",
+    "math_solver/validation/problem_spec_chf_040.yml",
     "math_solver/validation/chf_validation_matrix.md",
-    "math_solver/validation/chf_readme.md"
+    "math_solver/validation/chf_readme.md",
+    "math_solver/validation/chf_sandbox_readme.md"
   ],
   "intentionally_not_included": [
     ".github/workflows/chf_validation_run.yml"
@@ -27,17 +24,9 @@
   "expected_github_result": {
     "overall_status": "PASS",
     "explicit_status": "PASS",
-    "specs_evaluated": 30,
+    "specs_evaluated": 40,
     "sandbox_status": "PASS",
     "sandbox_suites_evaluated": 15,
     "sandbox_subtests_generated": 2282
-  },
-  "local_preflight": {
-    "status": "PASS",
-    "returncode": 0,
-    "specs_evaluated": 30,
-    "sandbox_status": "PASS",
-    "sandbox_subtests_generated": 2282,
-    "sandbox_subtests_failed": 0
   }
 }

@@ -3,7 +3,7 @@
   "returncode": 0,
   "overall_status": "PASS",
   "explicit_status": "PASS",
-  "specs_evaluated": 30,
+  "specs_evaluated": 40,
   "sandbox_status": "PASS",
   "sandbox": {
     "suites_evaluated": 15,
@@ -11,7 +11,6 @@
     "subtests_passed": 2282,
     "subtests_failed": 0
   },
-  "stderr_note": "Any spreadsheet warmup warning is container-local and unrelated to CHF validation.",
   "stderr_tail": "Spreadsheet runtime warmup failed during python startup\nTraceback (most recent call last):\n  File \"/tmp/tmp.9eeVjt35CN/artifact_tool_v2-2.7.5/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py\", line 26, in warm_spreadsheet_runtime_on_startup\n  File \"/tmp/tmp.9eeVjt35CN/artifact_tool_v2-2.7.5/artifact_tool/spreadsheet_warmup.py\", line 785, in warm_spreadsheet_runtime\n  File \"/tmp/tmp.9eeVjt35CN/artifact_tool_v2-2.7.5/artifact_tool/spreadsheet_warmup.py\", line 720, in _warm_feature_flows\n  File \"/tmp/tmp.9eeVjt35CN/artifact_tool_v2-2.7.5/artifact_tool/spreadsheet_warmup.py\", line 704, in _warm_collaboration_flows\n  File \"/tmp/tmp.9eeVjt35CN/artifact_tool_v2-2.7.5/artifact_tool/generated/interface/models.py\", line 48821, in hydrate_crdt_from_proto\n  File \"/tmp/tmp.9eeVjt35CN/artifact_tool_v2-2.7.5/artifact_tool/rpc/remote.py\", line 747, in __call__\n  File \"/tmp/tmp.9eeVjt35CN/artifact_tool_v2-2.7.5/artifact_tool/rpc/client.py\", line 150, in call\nartifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document.\n",
-  "stdout": "{\n  \"explicit_status\": \"PASS\",\n  \"formalism\": \"consequence_horizon_formalism\",\n  \"overall_status\": \"PASS\",\n  \"sandbox_status\": \"PASS\",\n  \"sandbox_subtests_failed\": 0,\n  \"sandbox_subtests_generated\": 2282,\n  \"specs_evaluated\": 30\n}\n"
+  "stdout": "{\n  \"explicit_status\": \"PASS\",\n  \"formalism\": \"consequence_horizon_formalism\",\n  \"overall_status\": \"PASS\",\n  \"sandbox_status\": \"PASS\",\n  \"sandbox_subtests_failed\": 0,\n  \"sandbox_subtests_generated\": 2282,\n  \"specs_evaluated\": 40\n}\n"
 }

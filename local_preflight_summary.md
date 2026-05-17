@@ -1,7 +1,7 @@
 # Consequence Horizon Formalism Validation Summary
 
 - Overall status: **PASS**
-- Specs evaluated: **30**
+- Specs evaluated: **40**
 
 ## Sandbox Results
 
@@ -709,4 +709,178 @@
   - Reason: `remediation_receipt_not_ready`
 - `exact_staleness_boundary_rejoin_allowed`: expected `REJOIN_ALLOWED`, actual `REJOIN_ALLOWED` — **PASS**
   - Reason: `ecosystem_rejoin_allowed_after_review`
+
+### chf-031
+
+- Status: **PASS**
+
+- `consensus_accepted`: expected `CONSENSUS_ACCEPTED`, actual `CONSENSUS_ACCEPTED` — **PASS**
+  - Reason: `multi_node_consensus_pass`
+- `quorum_below_minimum_fail_closed`: expected `CONSENSUS_FAIL_CLOSED`, actual `CONSENSUS_FAIL_CLOSED` — **PASS**
+  - Reason: `validator_quorum_below_minimum`
+- `confidence_below_threshold_fail_closed`: expected `CONSENSUS_FAIL_CLOSED`, actual `CONSENSUS_FAIL_CLOSED` — **PASS**
+  - Reason: `weighted_confidence_below_threshold`
+- `dissent_weight_high_fail_closed`: expected `CONSENSUS_FAIL_CLOSED`, actual `CONSENSUS_FAIL_CLOSED` — **PASS**
+  - Reason: `dissent_weight_exceeds_threshold`
+- `receipt_agreement_missing_fail_closed`: expected `CONSENSUS_FAIL_CLOSED`, actual `CONSENSUS_FAIL_CLOSED` — **PASS**
+  - Reason: `receipt_agreement_missing`
+- `byzantine_alert_fail_closed`: expected `CONSENSUS_FAIL_CLOSED`, actual `CONSENSUS_FAIL_CLOSED` — **PASS**
+  - Reason: `byzantine_alert_present`
+
+### chf-032
+
+- Status: **PASS**
+
+- `quarantine_clear`: expected `QUARANTINE_CLEAR`, actual `QUARANTINE_CLEAR` — **PASS**
+  - Reason: `quarantine_clear`
+- `suspected_tamper_quarantine`: expected `QUARANTINE_REQUIRED`, actual `QUARANTINE_REQUIRED` — **PASS**
+  - Reason: `suspected_tamper`
+- `unresolved_authority_quarantine`: expected `QUARANTINE_REQUIRED`, actual `QUARANTINE_REQUIRED` — **PASS**
+  - Reason: `unresolved_authority`
+- `malformed_receipt_quarantine`: expected `QUARANTINE_REQUIRED`, actual `QUARANTINE_REQUIRED` — **PASS**
+  - Reason: `malformed_receipt`
+- `partial_custody_quarantine`: expected `QUARANTINE_REQUIRED`, actual `QUARANTINE_REQUIRED` — **PASS**
+  - Reason: `partial_custody`
+- `unsafe_external_binding_quarantine`: expected `QUARANTINE_REQUIRED`, actual `QUARANTINE_REQUIRED` — **PASS**
+  - Reason: `unsafe_external_binding`
+
+### chf-033
+
+- Status: **PASS**
+
+- `supersession_valid`: expected `SUPERSESSION_VALID`, actual `SUPERSESSION_VALID` — **PASS**
+  - Reason: `supersession_valid`
+- `newer_hash_missing_fail_closed`: expected `SUPERSESSION_FAIL_CLOSED`, actual `SUPERSESSION_FAIL_CLOSED` — **PASS**
+  - Reason: `newer_hash_missing`
+- `supersession_receipt_invalid_fail_closed`: expected `SUPERSESSION_FAIL_CLOSED`, actual `SUPERSESSION_FAIL_CLOSED` — **PASS**
+  - Reason: `supersession_receipt_invalid`
+- `downstream_ack_missing_fail_closed`: expected `SUPERSESSION_FAIL_CLOSED`, actual `SUPERSESSION_FAIL_CLOSED` — **PASS**
+  - Reason: `downstream_acknowledgement_incomplete`
+- `pending_destination_not_safe_fail_closed`: expected `SUPERSESSION_FAIL_CLOSED`, actual `SUPERSESSION_FAIL_CLOSED` — **PASS**
+  - Reason: `pending_destination_not_safe`
+- `discard_rule_not_safe_fail_closed`: expected `SUPERSESSION_FAIL_CLOSED`, actual `SUPERSESSION_FAIL_CLOSED` — **PASS**
+  - Reason: `discard_rule_not_safe`
+
+### chf-034
+
+- Status: **PASS**
+
+- `ingestion_allowed`: expected `INGESTION_ALLOWED`, actual `INGESTION_ALLOWED` — **PASS**
+  - Reason: `cross_repo_ingestion_allowed`
+- `source_trust_low_fail_closed`: expected `INGESTION_FAIL_CLOSED`, actual `INGESTION_FAIL_CLOSED` — **PASS**
+  - Reason: `source_trust_below_threshold`
+- `destination_incompatible_fail_closed`: expected `INGESTION_FAIL_CLOSED`, actual `INGESTION_FAIL_CLOSED` — **PASS**
+  - Reason: `destination_not_compatible`
+- `schema_incompatible_fail_closed`: expected `INGESTION_FAIL_CLOSED`, actual `INGESTION_FAIL_CLOSED` — **PASS**
+  - Reason: `schema_not_compatible`
+- `core_lite_awareness_missing_fail_closed`: expected `INGESTION_FAIL_CLOSED`, actual `INGESTION_FAIL_CLOSED` — **PASS**
+  - Reason: `core_lite_awareness_missing`
+- `ingestion_receipt_missing_fail_closed`: expected `INGESTION_FAIL_CLOSED`, actual `INGESTION_FAIL_CLOSED` — **PASS**
+  - Reason: `ingestion_receipt_not_ready`
+
+### chf-035
+
+- Status: **PASS**
+
+- `privacy_allowed_sensitive_with_consent`: expected `PRIVACY_ALLOWED`, actual `PRIVACY_ALLOWED` — **PASS**
+  - Reason: `privacy_consent_boundary_pass`
+- `non_sensitive_privacy_allowed`: expected `PRIVACY_ALLOWED`, actual `PRIVACY_ALLOWED` — **PASS**
+  - Reason: `privacy_consent_boundary_pass`
+- `sensitive_without_consent_fail_closed`: expected `PRIVACY_FAIL_CLOSED`, actual `PRIVACY_FAIL_CLOSED` — **PASS**
+  - Reason: `sensitive_data_without_valid_consent`
+- `purpose_limitation_missing_fail_closed`: expected `PRIVACY_FAIL_CLOSED`, actual `PRIVACY_FAIL_CLOSED` — **PASS**
+  - Reason: `purpose_limitation_missing`
+- `minimum_disclosure_missing_fail_closed`: expected `PRIVACY_FAIL_CLOSED`, actual `PRIVACY_FAIL_CLOSED` — **PASS**
+  - Reason: `minimum_disclosure_missing`
+- `sensitive_revocation_missing_fail_closed`: expected `PRIVACY_FAIL_CLOSED`, actual `PRIVACY_FAIL_CLOSED` — **PASS**
+  - Reason: `revocation_support_missing`
+
+### chf-036
+
+- Status: **PASS**
+
+- `token_governance_allowed`: expected `TOKEN_GOVERNANCE_ALLOWED`, actual `TOKEN_GOVERNANCE_ALLOWED` — **PASS**
+  - Reason: `tokenized_governance_input_allowed`
+- `stake_concentration_high_fail_closed`: expected `TOKEN_GOVERNANCE_FAIL_CLOSED`, actual `TOKEN_GOVERNANCE_FAIL_CLOSED` — **PASS**
+  - Reason: `stake_concentration_exceeds_threshold`
+- `manipulation_risk_high_fail_closed`: expected `TOKEN_GOVERNANCE_FAIL_CLOSED`, actual `TOKEN_GOVERNANCE_FAIL_CLOSED` — **PASS**
+  - Reason: `manipulation_risk_exceeds_threshold`
+- `vote_authority_unmapped_fail_closed`: expected `TOKEN_GOVERNANCE_FAIL_CLOSED`, actual `TOKEN_GOVERNANCE_FAIL_CLOSED` — **PASS**
+  - Reason: `vote_authority_not_mapped`
+- `fiduciary_conflict_fail_closed`: expected `TOKEN_GOVERNANCE_FAIL_CLOSED`, actual `TOKEN_GOVERNANCE_FAIL_CLOSED` — **PASS**
+  - Reason: `fiduciary_conflict_detected`
+- `anti_capture_failed_fail_closed`: expected `TOKEN_GOVERNANCE_FAIL_CLOSED`, actual `TOKEN_GOVERNANCE_FAIL_CLOSED` — **PASS**
+  - Reason: `anti_capture_threshold_not_met`
+
+### chf-037
+
+- Status: **PASS**
+
+- `publication_ready`: expected `PUBLICATION_READY`, actual `PUBLICATION_READY` — **PASS**
+  - Reason: `publication_patent_disclosure_ready`
+- `novelty_statement_missing_fail_closed`: expected `PUBLICATION_FAIL_CLOSED`, actual `PUBLICATION_FAIL_CLOSED` — **PASS**
+  - Reason: `novelty_statement_missing`
+- `prior_art_note_missing_fail_closed`: expected `PUBLICATION_FAIL_CLOSED`, actual `PUBLICATION_FAIL_CLOSED` — **PASS**
+  - Reason: `prior_art_note_missing`
+- `claim_boundary_missing_fail_closed`: expected `PUBLICATION_FAIL_CLOSED`, actual `PUBLICATION_FAIL_CLOSED` — **PASS**
+  - Reason: `claim_boundary_missing`
+- `evidence_insufficient_fail_closed`: expected `PUBLICATION_FAIL_CLOSED`, actual `PUBLICATION_FAIL_CLOSED` — **PASS**
+  - Reason: `evidence_level_insufficient`
+- `overclaim_guardrail_missing_fail_closed`: expected `PUBLICATION_FAIL_CLOSED`, actual `PUBLICATION_FAIL_CLOSED` — **PASS**
+  - Reason: `overclaim_guardrail_missing`
+
+### chf-038
+
+- Status: **PASS**
+
+- `preservation_allowed_public`: expected `PRESERVATION_ALLOWED`, actual `PRESERVATION_ALLOWED` — **PASS**
+  - Reason: `memoir_preservation_allowed`
+- `preservation_private_only_sensitive`: expected `PRESERVATION_PRIVATE_ONLY`, actual `PRESERVATION_PRIVATE_ONLY` — **PASS**
+  - Reason: `private_preservation_only`
+- `preservation_private_only_not_public`: expected `PRESERVATION_PRIVATE_ONLY`, actual `PRESERVATION_PRIVATE_ONLY` — **PASS**
+  - Reason: `private_preservation_only`
+- `consent_missing_fail_closed`: expected `PRESERVATION_FAIL_CLOSED`, actual `PRESERVATION_FAIL_CLOSED` — **PASS**
+  - Reason: `preservation_consent_missing`
+- `memoir_value_low_fail_closed`: expected `PRESERVATION_FAIL_CLOSED`, actual `PRESERVATION_FAIL_CLOSED` — **PASS**
+  - Reason: `memoir_value_below_threshold`
+- `retrieval_tag_missing_fail_closed`: expected `PRESERVATION_FAIL_CLOSED`, actual `PRESERVATION_FAIL_CLOSED` — **PASS**
+  - Reason: `retrieval_tag_missing`
+
+### chf-039
+
+- Status: **PASS**
+
+- `formalization_ready`: expected `FORMALIZATION_READY`, actual `FORMALIZATION_READY` — **PASS**
+  - Reason: `formal_verification_ready`
+- `finite_state_missing_fail_closed`: expected `FORMALIZATION_FAIL_CLOSED`, actual `FORMALIZATION_FAIL_CLOSED` — **PASS**
+  - Reason: `finite_state_definition_missing`
+- `invariants_missing_fail_closed`: expected `FORMALIZATION_FAIL_CLOSED`, actual `FORMALIZATION_FAIL_CLOSED` — **PASS**
+  - Reason: `clear_invariants_missing`
+- `type_stability_missing_fail_closed`: expected `FORMALIZATION_FAIL_CLOSED`, actual `FORMALIZATION_FAIL_CLOSED` — **PASS**
+  - Reason: `type_stable_inputs_missing`
+- `outcomes_ambiguous_fail_closed`: expected `FORMALIZATION_FAIL_CLOSED`, actual `FORMALIZATION_FAIL_CLOSED` — **PASS**
+  - Reason: `unambiguous_outcomes_missing`
+- `proof_map_missing_fail_closed`: expected `FORMALIZATION_FAIL_CLOSED`, actual `FORMALIZATION_FAIL_CLOSED` — **PASS**
+  - Reason: `proof_obligation_map_missing`
+
+### chf-040
+
+- Status: **PASS**
+
+- `deployment_ready`: expected `DEPLOYMENT_READY`, actual `DEPLOYMENT_READY` — **PASS**
+  - Reason: `production_deployment_ready`
+- `insufficient_dry_runs_fail_closed`: expected `DEPLOYMENT_FAIL_CLOSED`, actual `DEPLOYMENT_FAIL_CLOSED` — **PASS**
+  - Reason: `insufficient_successful_dry_runs`
+- `failure_modes_missing_fail_closed`: expected `DEPLOYMENT_FAIL_CLOSED`, actual `DEPLOYMENT_FAIL_CLOSED` — **PASS**
+  - Reason: `failure_modes_not_covered`
+- `operator_authority_invalid_fail_closed`: expected `DEPLOYMENT_FAIL_CLOSED`, actual `DEPLOYMENT_FAIL_CLOSED` — **PASS**
+  - Reason: `operator_authority_invalid`
+- `rollback_not_ready_fail_closed`: expected `DEPLOYMENT_FAIL_CLOSED`, actual `DEPLOYMENT_FAIL_CLOSED` — **PASS**
+  - Reason: `rollback_not_ready`
+- `audit_trail_missing_fail_closed`: expected `DEPLOYMENT_FAIL_CLOSED`, actual `DEPLOYMENT_FAIL_CLOSED` — **PASS**
+  - Reason: `audit_trail_not_ready`
+- `external_review_incomplete_fail_closed`: expected `DEPLOYMENT_FAIL_CLOSED`, actual `DEPLOYMENT_FAIL_CLOSED` — **PASS**
+  - Reason: `external_review_incomplete`
+- `exact_dry_run_boundary_deployment_ready`: expected `DEPLOYMENT_READY`, actual `DEPLOYMENT_READY` — **PASS**
+  - Reason: `production_deployment_ready`
 
