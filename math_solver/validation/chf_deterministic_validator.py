@@ -20,6 +20,7 @@ import yaml
 ALLOW = "ALLOW"
 DENY = "DENY"
 FAIL_CLOSED = "FAIL_CLOSED"
+NO_EFFECT = "NO_EFFECT"
 SMOOTH_SHELL = "SMOOTH_SHELL"
 CELL_RESOLVED = "CELL_RESOLVED"
 RECORD_LEGIBLE = "RECORD_LEGIBLE"
@@ -27,6 +28,10 @@ RECORD_EXISTS_LOW_LEGIBILITY = "RECORD_EXISTS_LOW_LEGIBILITY"
 NO_PROPAGATED_RECORD_REQUIRED = "NO_PROPAGATED_RECORD_REQUIRED"
 GEOMETRY_VALID = "GEOMETRY_VALID"
 GEOMETRY_FAIL_CLOSED = "GEOMETRY_FAIL_CLOSED"
+WINDOW_OPEN = "WINDOW_OPEN"
+WINDOW_FAIL_CLOSED = "WINDOW_FAIL_CLOSED"
+CHAIN_CONTINUOUS = "CHAIN_CONTINUOUS"
+CHAIN_FAIL_CLOSED = "CHAIN_FAIL_CLOSED"
 
 
 def radius(point: List[float], center: List[float]) -> float:
@@ -464,6 +469,116 @@ def evaluate_chf_010(spec: Dict[str, Any]) -> Dict[str, Any]:
     return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
 
 
+def evaluate_chf_011(spec: Dict[str, Any]) -> Dict[str, Any]:
+    model = spec["model"]
+    cases = []
+    all_pass = True
+
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        base_radius = float(case["base_transition_radius"])
+        lag = float(case["lag"])
+        drift_rate = float(case["drift_rate"])
+        horizon = float(case["horizon_radius"])
+        uncertainty_buffer = float(case.get("uncertainty_buffer", model.get("default_uncertainty_buffer", 0.0)))
+        lag_reachable_radius = base_radius + lag * drift_rate + uncertainty_buffer
+
+        if lag_reachable_radius <= horizon:
+            actual = ALLOW
+            reason = "lag_reachable_set_inside_horizon"
+        else:
+            actual = FAIL_CLOSED
+            reason = "lag_reachable_set_exceeds_horizon"
+
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({
+            "id": case["id"],
+            "lag_reachable_radius": round(lag_reachable_radius, 6),
+            "horizon_radius": horizon,
+            "expected": expected,
+            "actual": actual,
+            "status": "PASS" if passed else "FAIL",
+            "reason": reason,
+        })
+
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_012(spec: Dict[str, Any]) -> Dict[str, Any]:
+    cases = []
+    all_pass = True
+    required_links = set(spec["model"]["required_chain_links"])
+
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        links = set(case["chain_links"])
+        legibility = float(case["record_legibility"])
+        threshold = float(case["legibility_threshold"])
+
+        if not required_links.issubset(links):
+            actual = CHAIN_FAIL_CLOSED
+            reason = "historical_chain_links_missing"
+        elif legibility < threshold:
+            actual = CHAIN_FAIL_CLOSED
+            reason = "historical_chain_legibility_below_threshold"
+        else:
+            actual = CHAIN_CONTINUOUS
+            reason = "historical_shell_chain_continuous"
+
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({
+            "id": case["id"],
+            "expected": expected,
+            "actual": actual,
+            "status": "PASS" if passed else "FAIL",
+            "reason": reason,
+        })
+
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_013(spec: Dict[str, Any]) -> Dict[str, Any]:
+    cases = []
+    all_pass = True
+
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        deformation = case.get("deformation")
+        epsilon = float(case["epsilon"])
+        protected = bool(case.get("protected", False))
+        deformation_known = bool(case.get("deformation_known", True))
+
+        if not deformation_known and protected:
+            actual = FAIL_CLOSED
+            reason = "protected_affected_cloud_unknown_deformation"
+        elif not deformation_known:
+            actual = FAIL_CLOSED
+            reason = "unknown_deformation"
+        elif float(deformation) <= epsilon and not protected:
+            actual = NO_EFFECT
+            reason = "below_relevance_threshold"
+        elif float(deformation) <= epsilon and protected:
+            actual = FAIL_CLOSED
+            reason = "protected_cloud_requires_explicit_review"
+        else:
+            actual = DENY
+            reason = "deformation_exceeds_relevance_threshold"
+
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({
+            "id": case["id"],
+            "expected": expected,
+            "actual": actual,
+            "status": "PASS" if passed else "FAIL",
+            "reason": reason,
+        })
+
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
 EVALUATORS = {
     "chf-001": evaluate_chf_001,
     "chf-002": evaluate_chf_002,
@@ -475,6 +590,9 @@ EVALUATORS = {
     "chf-008": evaluate_chf_008,
     "chf-009": evaluate_chf_009,
     "chf-010": evaluate_chf_010,
+    "chf-011": evaluate_chf_011,
+    "chf-012": evaluate_chf_012,
+    "chf-013": evaluate_chf_013,
 }
 
 

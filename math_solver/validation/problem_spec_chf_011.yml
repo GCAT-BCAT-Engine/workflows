@@ -1,0 +1,27 @@
+problem_id: chf-011
+title: Lag-Reachable Set Commit Gate
+formalism: consequence_horizon_formalism
+model:
+  default_uncertainty_buffer: 0.0
+test_cases:
+  - id: short_lag_inside_horizon
+    base_transition_radius: 0.55
+    lag: 0.5
+    drift_rate: 0.10
+    uncertainty_buffer: 0.05
+    horizon_radius: 0.80
+    expected: ALLOW
+  - id: long_lag_exceeds_horizon
+    base_transition_radius: 0.55
+    lag: 2.0
+    drift_rate: 0.15
+    uncertainty_buffer: 0.05
+    horizon_radius: 0.80
+    expected: FAIL_CLOSED
+  - id: uncertainty_buffer_exceeds_horizon
+    base_transition_radius: 0.60
+    lag: 0.5
+    drift_rate: 0.10
+    uncertainty_buffer: 0.20
+    horizon_radius: 0.80
+    expected: FAIL_CLOSED

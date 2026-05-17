@@ -1,0 +1,26 @@
+problem_id: chf-012
+title: Historical Shell Chain Continuity
+formalism: consequence_horizon_formalism
+model:
+  required_chain_links:
+    - prior_shell
+    - crossing_event
+    - propagated_record
+    - new_center
+    - next_transition_region
+test_cases:
+  - id: complete_chain_legible
+    chain_links: [prior_shell, crossing_event, propagated_record, new_center, next_transition_region]
+    record_legibility: 0.92
+    legibility_threshold: 0.70
+    expected: CHAIN_CONTINUOUS
+  - id: missing_propagated_record_link
+    chain_links: [prior_shell, crossing_event, new_center, next_transition_region]
+    record_legibility: 0.92
+    legibility_threshold: 0.70
+    expected: CHAIN_FAIL_CLOSED
+  - id: low_legibility_chain
+    chain_links: [prior_shell, crossing_event, propagated_record, new_center, next_transition_region]
+    record_legibility: 0.30
+    legibility_threshold: 0.70
+    expected: CHAIN_FAIL_CLOSED

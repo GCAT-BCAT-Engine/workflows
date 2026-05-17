@@ -43,3 +43,15 @@ A commit crossing is only allowed when the projected state passes local admissib
 ## PO-011 — Recoverability and Purpose-Convergence
 
 A transition can be denied when projected recoverability falls below threshold or when the transition inverts the purpose of the boundary it claims to support.
+
+## PO-012 — Lag-Reachable Set Bound
+
+A transition may only cross if the lag-reachable set remains inside the consequence horizon. Otherwise, the system must fail closed.
+
+## PO-013 — Historical Shell Chain Continuity
+
+A new transition sphere must remain linked to the historical shell, crossing event, propagated record, and new center that created it.
+
+## PO-014 — Many-Body Relevance Threshold
+
+Not every coupled deformation requires explicit governance. Deformations below relevance threshold may be NO_EFFECT unless protected status or unknown deformation requires review.

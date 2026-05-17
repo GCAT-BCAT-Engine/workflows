@@ -80,3 +80,28 @@
 | recoverable_purpose_converges | ALLOW |
 | recoverability_below_threshold | DENY |
 | purpose_inversion | DENY |
+
+## CHF-011
+
+| Case | Expected |
+|---|---|
+| short_lag_inside_horizon | ALLOW |
+| long_lag_exceeds_horizon | FAIL_CLOSED |
+| uncertainty_buffer_exceeds_horizon | FAIL_CLOSED |
+
+## CHF-012
+
+| Case | Expected |
+|---|---|
+| complete_chain_legible | CHAIN_CONTINUOUS |
+| missing_propagated_record_link | CHAIN_FAIL_CLOSED |
+| low_legibility_chain | CHAIN_FAIL_CLOSED |
+
+## CHF-013
+
+| Case | Expected |
+|---|---|
+| below_threshold_unprotected | NO_EFFECT |
+| above_threshold_unprotected | DENY |
+| below_threshold_protected | FAIL_CLOSED |
+| unknown_deformation_protected | FAIL_CLOSED |
