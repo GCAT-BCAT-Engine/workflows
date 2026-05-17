@@ -1,24 +1,38 @@
 {
-  "name": "stegverse-llm-adapter-gate-v001",
-  "actual_required_path": ".github/workflows/llm-adapter-gate.yml",
-  "display_path_without_leading_dot": "github/workflows/llm-adapter-gate.yml",
-  "required_secrets": [
-    "OPENAI_API_KEY",
-    "ANTHROPIC_API_KEY"
-  ],
-  "optional_variables": [
-    "OPENAI_MODEL",
-    "ANTHROPIC_MODEL"
-  ],
-  "repo_mutation": false,
-  "artifacts": [
-    "llm_request.json",
-    "openai_result.json",
-    "anthropic_result.json",
-    "comparison.json",
-    "tvc_result.json",
-    "cge_result.json",
-    "receipt.json",
-    "llm_adapter_gate_report.json"
+  "bundle_id": "chf-validation-bundle-v0.1",
+  "created_utc": "2026-05-17T05:38:57.291131Z",
+  "target_repo": "GCAT-BCAT-Engine/workflows",
+  "target_path": "math_solver/validation/",
+  "files": [
+    {
+      "path": "math_solver/validation/problem_spec_chf_001.yml",
+      "sha256": "2efa638ec7df5e3fb5eab20eb93dbf05e831dfc22402e5118f7cf88c97e0b5c5",
+      "bytes": 5390
+    },
+    {
+      "path": "math_solver/validation/problem_spec_chf_002.yml",
+      "sha256": "48835b5eacae0b661005328ccacbf410c3382914ee0dcbcb58a514c075ae0d4d",
+      "bytes": 4757
+    },
+    {
+      "path": "math_solver/validation/problem_spec_chf_003.yml",
+      "sha256": "5559f831550b620c3621816f69e10b5dcc72332933141a4e231038a11769215d",
+      "bytes": 3814
+    },
+    {
+      "path": "math_solver/validation/chf_proof_obligations.md",
+      "sha256": "61445dfe435c2250592e74896824a2dda755dbec2b98124d8732041814c77822",
+      "bytes": 6474
+    },
+    {
+      "path": "math_solver/validation/chf_validation_matrix.md",
+      "sha256": "02824e1de38d266f1a8128db3496c3a239c9e3d8a1f2de03b45bc1275e4c08fc",
+      "bytes": 4272
+    },
+    {
+      "path": "math_solver/validation/chf_readme.md",
+      "sha256": "93d26c6310bff49893a0f14a8782013de355107fee2f253c6ad3cbe04548e531",
+      "bytes": 3366
+    }
   ]
 }
