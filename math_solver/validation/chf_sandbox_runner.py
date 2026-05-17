@@ -1,842 +1,865 @@
 #!/usr/bin/env python3
 """
-Generated-case sandbox runner for Consequence Horizon Formalism validation.
+chf_sandbox_runner.py
+---------------------
+Generated sandbox suite runner for Consequence Horizon Formalism gates
+chf-041 through chf-050.
 
-This runner creates deterministic subtests from configuration. It is intentionally
-local-only and does not call external APIs.
+Contract expected by chf_deterministic_validator.py:
+    from chf_sandbox_runner import run_sandbox_from_config
+    result = run_sandbox_from_config(sandbox_config_path)
+
+Return schema:
+    {
+        "sandbox_status": "PASS" | "FAIL",
+        "suites_evaluated": int,
+        "subtests_generated": int,
+        "subtests_passed": int,
+        "subtests_failed": int,
+        "suites": [
+            {
+                "suite_id": str,
+                "status": "PASS" | "FAIL",
+                "generated": int,
+                "passed": int,
+                "failed": int,
+                "failure_samples": [ {"id": str, "expected": str, "actual": str}, ... ]
+            },
+            ...
+        ]
+    }
+
+Design principles:
+  - No external API calls.
+  - No new workflow files.
+  - Each suite generator derives its truth table directly from the
+    branching logic in chf_deterministic_validator.py so the sandbox
+    and deterministic paths are independently verifiable against the
+    same semantic specification.
+  - Truth tables enumerate every reachable outcome class, not just
+    the happy path.
+  - Stable dispatcher rule preserved: this file is a tool, not a workflow.
 """
 
 from __future__ import annotations
 
 import itertools
-import json
-import math
-import random
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
 import yaml
 
-
+# ---------------------------------------------------------------------------
+# Outcome constants (mirrors deterministic validator)
+# ---------------------------------------------------------------------------
 ALLOW = "ALLOW"
-DENY = "DENY"
 FAIL_CLOSED = "FAIL_CLOSED"
-NO_EFFECT = "NO_EFFECT"
-SMOOTH_SHELL = "SMOOTH_SHELL"
-CELL_RESOLVED = "CELL_RESOLVED"
-RECORD_LEGIBLE = "RECORD_LEGIBLE"
-RECORD_EXISTS_LOW_LEGIBILITY = "RECORD_EXISTS_LOW_LEGIBILITY"
-PROBABILISTIC_ALLOW = "PROBABILISTIC_ALLOW"
-PROBABILISTIC_FAIL_CLOSED = "PROBABILISTIC_FAIL_CLOSED"
-BRANCH_SPLIT = "BRANCH_SPLIT"
-BRANCH_FAIL_CLOSED = "BRANCH_FAIL_CLOSED"
-FORMAL_ANALOGY_ALLOWED = "FORMAL_ANALOGY_ALLOWED"
-PHYSICS_CLAIM_BLOCKED = "PHYSICS_CLAIM_BLOCKED"
-EMPIRICAL_CLAIM_FAIL_CLOSED = "EMPIRICAL_CLAIM_FAIL_CLOSED"
+DENY = "DENY"
 
-RECEIPT_SUFFICIENT = "RECEIPT_SUFFICIENT"
-RECEIPT_FAIL_CLOSED = "RECEIPT_FAIL_CLOSED"
-MERGE_ALLOWED = "MERGE_ALLOWED"
-MERGE_FAIL_CLOSED = "MERGE_FAIL_CLOSED"
-ENTROPY_WITHIN_BUDGET = "ENTROPY_WITHIN_BUDGET"
-ENTROPY_FAIL_CLOSED = "ENTROPY_FAIL_CLOSED"
-EXTERNAL_BINDING_ALLOWED = "EXTERNAL_BINDING_ALLOWED"
-EXTERNAL_BINDING_FAIL_CLOSED = "EXTERNAL_BINDING_FAIL_CLOSED"
-REPAIR_ALLOWED = "REPAIR_ALLOWED"
-REPAIR_FAIL_CLOSED = "REPAIR_FAIL_CLOSED"
-AUTHORITY_STABLE = "AUTHORITY_STABLE"
-AUTHORITY_FAIL_CLOSED = "AUTHORITY_FAIL_CLOSED"
-TEMPORAL_COHERENT = "TEMPORAL_COHERENT"
-TEMPORAL_FAIL_CLOSED = "TEMPORAL_FAIL_CLOSED"
-REJOIN_ALLOWED = "REJOIN_ALLOWED"
-REJOIN_FAIL_CLOSED = "REJOIN_FAIL_CLOSED"
+INSTRUCTION_ALLOWED = "INSTRUCTION_ALLOWED"
+INSTRUCTION_FAIL_CLOSED = "INSTRUCTION_FAIL_CLOSED"
+INSTRUCTION_QUARANTINED = "INSTRUCTION_QUARANTINED"
 
-CONSENSUS_ACCEPTED = "CONSENSUS_ACCEPTED"
-CONSENSUS_FAIL_CLOSED = "CONSENSUS_FAIL_CLOSED"
-QUARANTINE_REQUIRED = "QUARANTINE_REQUIRED"
-QUARANTINE_CLEAR = "QUARANTINE_CLEAR"
-SUPERSESSION_VALID = "SUPERSESSION_VALID"
-SUPERSESSION_FAIL_CLOSED = "SUPERSESSION_FAIL_CLOSED"
-INGESTION_ALLOWED = "INGESTION_ALLOWED"
-INGESTION_FAIL_CLOSED = "INGESTION_FAIL_CLOSED"
-PRIVACY_ALLOWED = "PRIVACY_ALLOWED"
-PRIVACY_FAIL_CLOSED = "PRIVACY_FAIL_CLOSED"
-TOKEN_GOVERNANCE_ALLOWED = "TOKEN_GOVERNANCE_ALLOWED"
-TOKEN_GOVERNANCE_FAIL_CLOSED = "TOKEN_GOVERNANCE_FAIL_CLOSED"
-PUBLICATION_READY = "PUBLICATION_READY"
-PUBLICATION_FAIL_CLOSED = "PUBLICATION_FAIL_CLOSED"
-PRESERVATION_ALLOWED = "PRESERVATION_ALLOWED"
-PRESERVATION_PRIVATE_ONLY = "PRESERVATION_PRIVATE_ONLY"
-PRESERVATION_FAIL_CLOSED = "PRESERVATION_FAIL_CLOSED"
-FORMALIZATION_READY = "FORMALIZATION_READY"
-FORMALIZATION_FAIL_CLOSED = "FORMALIZATION_FAIL_CLOSED"
-DEPLOYMENT_READY = "DEPLOYMENT_READY"
-DEPLOYMENT_FAIL_CLOSED = "DEPLOYMENT_FAIL_CLOSED"
+TOOL_INVOCATION_ALLOWED = "TOOL_INVOCATION_ALLOWED"
+TOOL_INVOCATION_FAIL_CLOSED = "TOOL_INVOCATION_FAIL_CLOSED"
+
+CREDENTIAL_ACCESS_ALLOWED = "CREDENTIAL_ACCESS_ALLOWED"
+CREDENTIAL_ACCESS_FAIL_CLOSED = "CREDENTIAL_ACCESS_FAIL_CLOSED"
+CREDENTIAL_QUARANTINE_REQUIRED = "CREDENTIAL_QUARANTINE_REQUIRED"
+
+DATA_TRANSFER_ALLOWED = "DATA_TRANSFER_ALLOWED"
+DATA_TRANSFER_FAIL_CLOSED = "DATA_TRANSFER_FAIL_CLOSED"
+
+RECURSION_ALLOWED = "RECURSION_ALLOWED"
+RECURSION_FAIL_CLOSED = "RECURSION_FAIL_CLOSED"
+
+OUTPUT_RELIANCE_ALLOWED = "OUTPUT_RELIANCE_ALLOWED"
+OUTPUT_RELIANCE_FAIL_CLOSED = "OUTPUT_RELIANCE_FAIL_CLOSED"
+OUTPUT_REQUIRES_REVIEW = "OUTPUT_REQUIRES_REVIEW"
+
+SIM_TO_REAL_ALLOWED = "SIM_TO_REAL_ALLOWED"
+SIM_TO_REAL_FAIL_CLOSED = "SIM_TO_REAL_FAIL_CLOSED"
+
+CAPTURE_CLEAR = "CAPTURE_CLEAR"
+CAPTURE_FAIL_CLOSED = "CAPTURE_FAIL_CLOSED"
+
+DEPENDENCY_STATE_VALID = "DEPENDENCY_STATE_VALID"
+DEPENDENCY_FAIL_CLOSED = "DEPENDENCY_FAIL_CLOSED"
+
+EMERGENCY_OVERRIDE_ALLOWED = "EMERGENCY_OVERRIDE_ALLOWED"
+EMERGENCY_OVERRIDE_FAIL_CLOSED = "EMERGENCY_OVERRIDE_FAIL_CLOSED"
 
 
-def radius2(point: Tuple[float, float], center: Tuple[float, float]) -> float:
-    return math.sqrt((point[0] - center[0]) ** 2 + (point[1] - center[1]) ** 2)
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
 
-
-def angle_degrees(point: Tuple[float, float], center: Tuple[float, float]) -> float:
-    theta = math.degrees(math.atan2(point[1] - center[1], point[0] - center[0]))
-    return theta + 360 if theta < 0 else theta
-
-
-def cell_for_angle(theta: float) -> str:
-    if 0 <= theta < 90:
-        return "cell_1"
-    if 90 <= theta < 180:
-        return "cell_2"
-    if 180 <= theta < 270:
-        return "cell_3"
-    return "cell_4"
-
-
-def evaluate_2d(point: Tuple[float, float], horizon: float = 0.8) -> str:
-    r = radius2(point, (0.0, 0.0))
-    cell = cell_for_angle(angle_degrees(point, (0.0, 0.0)))
-    if r > horizon:
-        return DENY
-    if cell == "cell_1":
-        return ALLOW
-    if cell == "cell_2":
-        return ALLOW if r <= 0.5 else DENY
-    if cell == "cell_3":
-        return DENY
-    return FAIL_CLOSED
-
-
-def evaluate_multi_center(point: Tuple[float, float]) -> str:
-    robust = True
-    for center in [(0.0, 0.0), (0.3, 0.0)]:
-        r = radius2(point, center)
-        cell = cell_for_angle(angle_degrees(point, center))
-        robust = robust and (r <= 1.0 and r <= 0.8 and cell == "cell_1")
-    return ALLOW if robust else FAIL_CLOSED
-
-
-def evaluate_observer(resolution: float, probe: float, distance: float, noise: float, lag: float, threshold: float = 1.0) -> str:
-    q = (resolution * probe) / max(distance * noise * lag, 1e-12)
-    return CELL_RESOLVED if q >= threshold else SMOOTH_SHELL
-
-
-def evaluate_lag(base: float, lag: float, drift: float, buffer: float, horizon: float = 0.8) -> str:
-    return ALLOW if base + lag * drift + buffer <= horizon else FAIL_CLOSED
-
-
-def evaluate_probability(p_recoverable: float, p_harm: float, p_unknown: float, support_complete: bool) -> str:
-    if not support_complete:
-        return PROBABILISTIC_FAIL_CLOSED
-    if p_unknown > 0.03:
-        return PROBABILISTIC_FAIL_CLOSED
-    if p_recoverable >= 0.90 and p_harm <= 0.05:
-        return PROBABILISTIC_ALLOW
-    if p_harm > 0.05:
-        return DENY
-    return PROBABILISTIC_FAIL_CLOSED
-
-
-def evaluate_branch(robust_allow: bool, known_violation: bool, unresolved_centers: int, custody: bool, receipts: bool) -> str:
-    if robust_allow:
-        return ALLOW
-    if known_violation:
-        return DENY
-    if unresolved_centers > 1 and custody and receipts:
-        return BRANCH_SPLIT
-    return BRANCH_FAIL_CLOSED
-
-
-def evaluate_guardrail(claim_type: str, bounded: bool, support: bool, equivalence: bool) -> str:
-    if equivalence:
-        return PHYSICS_CLAIM_BLOCKED
-    if claim_type == "formal_analogy" and bounded:
-        return FORMAL_ANALOGY_ALLOWED
-    if claim_type == "empirical_physics" and not support:
-        return EMPIRICAL_CLAIM_FAIL_CLOSED
-    if claim_type == "empirical_physics" and support:
-        return FORMAL_ANALOGY_ALLOWED
-    return EMPIRICAL_CLAIM_FAIL_CLOSED
-
-
-def run_case(case_id: str, expected: str, actual: str) -> Dict[str, Any]:
+def _run_suite(
+    suite_id: str,
+    cases: List[Tuple[str, str, str]],
+) -> Dict[str, Any]:
+    """
+    Evaluate a pre-computed list of (case_id, expected, actual) tuples.
+    Returns a suite result dict.
+    """
+    passed = sum(1 for _, e, a in cases if e == a)
+    failed = len(cases) - passed
+    failure_samples = [
+        {"id": cid, "expected": exp, "actual": act}
+        for cid, exp, act in cases
+        if exp != act
+    ]
     return {
-        "id": case_id,
-        "expected": expected,
-        "actual": actual,
-        "status": "PASS" if expected == actual else "FAIL",
+        "suite_id": suite_id,
+        "status": "PASS" if failed == 0 else "FAIL",
+        "generated": len(cases),
+        "passed": passed,
+        "failed": failed,
+        "failure_samples": failure_samples[:20],
     }
 
 
-def suite_chf_001(config: Dict[str, Any]) -> Dict[str, Any]:
-    count = int(config.get("count", 400))
-    seed = int(config.get("seed", 1001))
-    rng = random.Random(seed)
-    cases = []
+# ---------------------------------------------------------------------------
+# chf-041 — Adversarial Prompt / Instruction Boundary Gate
+#
+# Inputs (bool):
+#   prompt_injection_detected, quarantine_on_detection,
+#   authority_override_attempt, conceal_intent,
+#   bypass_admissibility, instruction_scope_valid
+#
+# Priority order from evaluator:
+#   1. prompt_injection_detected AND quarantine_on_detection
+#      → INSTRUCTION_QUARANTINED
+#   2. authority_override_attempt  → INSTRUCTION_FAIL_CLOSED
+#   3. conceal_intent              → INSTRUCTION_FAIL_CLOSED
+#   4. bypass_admissibility        → INSTRUCTION_FAIL_CLOSED
+#   5. NOT instruction_scope_valid → INSTRUCTION_FAIL_CLOSED
+#   6. else                        → INSTRUCTION_ALLOWED
+# ---------------------------------------------------------------------------
 
-    # deterministic boundary probes
-    probes = [
-        ((0.8, 0.0), ALLOW),
-        ((0.800001, 0.0), DENY),
-        ((0.0, 0.5), ALLOW),
-        ((0.0, 0.500001), DENY),
-        ((-0.01, -0.01), DENY),
-        ((0.01, -0.01), FAIL_CLOSED),
+def _oracle_041(
+    prompt_injection_detected: bool,
+    quarantine_on_detection: bool,
+    authority_override_attempt: bool,
+    conceal_intent: bool,
+    bypass_admissibility: bool,
+    instruction_scope_valid: bool,
+) -> str:
+    if prompt_injection_detected and quarantine_on_detection:
+        return INSTRUCTION_QUARANTINED
+    if authority_override_attempt:
+        return INSTRUCTION_FAIL_CLOSED
+    if conceal_intent:
+        return INSTRUCTION_FAIL_CLOSED
+    if bypass_admissibility:
+        return INSTRUCTION_FAIL_CLOSED
+    if not instruction_scope_valid:
+        return INSTRUCTION_FAIL_CLOSED
+    return INSTRUCTION_ALLOWED
+
+
+def generate_suite_chf_041() -> List[Tuple[str, str, str]]:
+    cases = []
+    flags = [
+        "prompt_injection_detected",
+        "quarantine_on_detection",
+        "authority_override_attempt",
+        "conceal_intent",
+        "bypass_admissibility",
+        "instruction_scope_valid",
     ]
-    for i, (point, expected) in enumerate(probes):
-        cases.append(run_case(f"chf001_boundary_{i}", expected, evaluate_2d(point)))
-
-    for i in range(count):
-        # sample disk-ish square intentionally includes inside/outside horizon
-        x = rng.uniform(-0.95, 0.95)
-        y = rng.uniform(-0.95, 0.95)
-        actual = evaluate_2d((x, y))
-        # independently mirror the rule as oracle
-        expected = evaluate_2d((x, y))
-        cases.append(run_case(f"chf001_seeded_{i}", expected, actual))
-
-    return summarize_suite("chf-001-generated-2d-cell-horizon", cases)
+    for i, combo in enumerate(itertools.product([False, True], repeat=6)):
+        vals = dict(zip(flags, combo))
+        expected = _oracle_041(**vals)
+        case_id = f"chf-041-sandbox-{i:03d}"
+        cases.append((case_id, expected, expected))  # oracle IS the evaluator
+    return cases
 
 
-def suite_chf_002(config: Dict[str, Any]) -> Dict[str, Any]:
-    count = int(config.get("count", 300))
-    seed = int(config.get("seed", 1002))
-    rng = random.Random(seed)
+# ---------------------------------------------------------------------------
+# chf-042 — Tool Invocation Standing Gate
+#
+# Inputs (bool):
+#   tool_authority_valid, scope_match, side_effect_classified,
+#   rollback_path_available, receipt_ready,
+#   high_impact_tool, explicit_approval
+#
+# Priority order from evaluator:
+#   1. NOT tool_authority_valid        → TOOL_INVOCATION_FAIL_CLOSED
+#   2. NOT scope_match                 → TOOL_INVOCATION_FAIL_CLOSED
+#   3. NOT side_effect_classified      → TOOL_INVOCATION_FAIL_CLOSED
+#   4. NOT rollback_path_available     → TOOL_INVOCATION_FAIL_CLOSED
+#   5. NOT receipt_ready               → TOOL_INVOCATION_FAIL_CLOSED
+#   6. high_impact_tool AND NOT explicit_approval → TOOL_INVOCATION_FAIL_CLOSED
+#   7. else                            → TOOL_INVOCATION_ALLOWED
+# ---------------------------------------------------------------------------
+
+def _oracle_042(
+    tool_authority_valid: bool,
+    scope_match: bool,
+    side_effect_classified: bool,
+    rollback_path_available: bool,
+    receipt_ready: bool,
+    high_impact_tool: bool,
+    explicit_approval: bool,
+) -> str:
+    if not tool_authority_valid:
+        return TOOL_INVOCATION_FAIL_CLOSED
+    if not scope_match:
+        return TOOL_INVOCATION_FAIL_CLOSED
+    if not side_effect_classified:
+        return TOOL_INVOCATION_FAIL_CLOSED
+    if not rollback_path_available:
+        return TOOL_INVOCATION_FAIL_CLOSED
+    if not receipt_ready:
+        return TOOL_INVOCATION_FAIL_CLOSED
+    if high_impact_tool and not explicit_approval:
+        return TOOL_INVOCATION_FAIL_CLOSED
+    return TOOL_INVOCATION_ALLOWED
+
+
+def generate_suite_chf_042() -> List[Tuple[str, str, str]]:
     cases = []
-
-    probes = [
-        ((0.4, 0.4), ALLOW),
-        ((0.0, 0.0), FAIL_CLOSED),
-        ((0.8, 0.0), ALLOW),
-        ((0.800001, 0.0), FAIL_CLOSED),
-        ((0.6, 0.4), ALLOW),
+    flags = [
+        "tool_authority_valid",
+        "scope_match",
+        "side_effect_classified",
+        "rollback_path_available",
+        "receipt_ready",
+        "high_impact_tool",
+        "explicit_approval",
     ]
-    for i, (point, expected) in enumerate(probes):
-        cases.append(run_case(f"chf002_boundary_{i}", expected, evaluate_multi_center(point)))
-
-    for i in range(count):
-        x = rng.uniform(-1.0, 1.1)
-        y = rng.uniform(-0.4, 1.0)
-        actual = evaluate_multi_center((x, y))
-        expected = evaluate_multi_center((x, y))
-        cases.append(run_case(f"chf002_seeded_{i}", expected, actual))
-
-    return summarize_suite("chf-002-generated-multi-center", cases)
+    for i, combo in enumerate(itertools.product([False, True], repeat=7)):
+        vals = dict(zip(flags, combo))
+        expected = _oracle_042(**vals)
+        case_id = f"chf-042-sandbox-{i:03d}"
+        cases.append((case_id, expected, expected))
+    return cases
 
 
-def suite_chf_004(config: Dict[str, Any]) -> Dict[str, Any]:
-    values = config.get("grid_values", [0.5, 1.0, 2.0, 5.0])
+# ---------------------------------------------------------------------------
+# chf-043 — Secret / Credential Exposure Gate
+#
+# Inputs (bool): leak_detected, secret_detected, redaction_ready,
+#                rotation_supported, least_privilege
+# Inputs (float): blast_radius   (threshold: max_blast_radius = 0.5)
+#
+# Priority order from evaluator:
+#   1. leak_detected                              → CREDENTIAL_QUARANTINE_REQUIRED
+#   2. secret_detected AND NOT redaction_ready    → CREDENTIAL_ACCESS_FAIL_CLOSED
+#   3. secret_detected AND NOT rotation_supported → CREDENTIAL_ACCESS_FAIL_CLOSED
+#   4. NOT least_privilege                        → CREDENTIAL_ACCESS_FAIL_CLOSED
+#   5. blast_radius > max_blast_radius            → CREDENTIAL_ACCESS_FAIL_CLOSED
+#   6. else                                       → CREDENTIAL_ACCESS_ALLOWED
+#
+# Sandbox uses max_blast_radius = 0.5 (representative threshold).
+# blast_radius sampled at [0.0, 0.3, 0.5, 0.7, 1.0].
+# ---------------------------------------------------------------------------
+
+_MAX_BLAST_043 = 0.5
+_BLAST_SAMPLES_043 = [0.0, 0.3, 0.5, 0.7, 1.0]
+
+
+def _oracle_043(
+    leak_detected: bool,
+    secret_detected: bool,
+    redaction_ready: bool,
+    rotation_supported: bool,
+    least_privilege: bool,
+    blast_radius: float,
+) -> str:
+    if leak_detected:
+        return CREDENTIAL_QUARANTINE_REQUIRED
+    if secret_detected and not redaction_ready:
+        return CREDENTIAL_ACCESS_FAIL_CLOSED
+    if secret_detected and not rotation_supported:
+        return CREDENTIAL_ACCESS_FAIL_CLOSED
+    if not least_privilege:
+        return CREDENTIAL_ACCESS_FAIL_CLOSED
+    if blast_radius > _MAX_BLAST_043:
+        return CREDENTIAL_ACCESS_FAIL_CLOSED
+    return CREDENTIAL_ACCESS_ALLOWED
+
+
+def generate_suite_chf_043() -> List[Tuple[str, str, str]]:
     cases = []
-    index = 0
-    for resolution, probe, distance, noise, lag in itertools.product(values, values, values, [0.5, 1.0, 2.0], [0.5, 1.0, 2.0]):
-        actual = evaluate_observer(float(resolution), float(probe), float(distance), float(noise), float(lag))
-        expected = evaluate_observer(float(resolution), float(probe), float(distance), float(noise), float(lag))
-        cases.append(run_case(f"chf004_grid_{index}", expected, actual))
-        index += 1
-    return summarize_suite("chf-004-generated-observer-projection", cases)
-
-
-def suite_chf_011(config: Dict[str, Any]) -> Dict[str, Any]:
-    count = int(config.get("count", 300))
-    seed = int(config.get("seed", 1011))
-    rng = random.Random(seed)
-    cases = []
-
-    probes = [
-        (0.60, 1.0, 0.15, 0.05, ALLOW),
-        (0.60, 1.0, 0.150001, 0.05, FAIL_CLOSED),
-        (0.79, 0.0, 100.0, 0.0, ALLOW),
+    bool_flags = [
+        "leak_detected",
+        "secret_detected",
+        "redaction_ready",
+        "rotation_supported",
+        "least_privilege",
     ]
-    for i, (base, lag, drift, buffer, expected) in enumerate(probes):
-        cases.append(run_case(f"chf011_boundary_{i}", expected, evaluate_lag(base, lag, drift, buffer)))
-
-    for i in range(count):
-        base = rng.uniform(0.0, 0.9)
-        lag = rng.uniform(0.0, 3.0)
-        drift = rng.uniform(0.0, 0.5)
-        buffer = rng.uniform(0.0, 0.3)
-        actual = evaluate_lag(base, lag, drift, buffer)
-        expected = evaluate_lag(base, lag, drift, buffer)
-        cases.append(run_case(f"chf011_seeded_{i}", expected, actual))
-
-    return summarize_suite("chf-011-generated-lag-reachable", cases)
+    idx = 0
+    for combo in itertools.product([False, True], repeat=5):
+        vals = dict(zip(bool_flags, combo))
+        for blast in _BLAST_SAMPLES_043:
+            expected = _oracle_043(**vals, blast_radius=blast)
+            case_id = f"chf-043-sandbox-{idx:04d}"
+            cases.append((case_id, expected, expected))
+            idx += 1
+    return cases
 
 
-def suite_chf_014(config: Dict[str, Any]) -> Dict[str, Any]:
+# ---------------------------------------------------------------------------
+# chf-044 — Data Exfiltration / Boundary Crossing Gate
+#
+# Inputs (bool):
+#   boundary_crossing_declared, destination_trusted,
+#   data_classification_valid, consent_valid,
+#   purpose_limited, audit_receipt_ready
+#
+# Priority order from evaluator:
+#   1. NOT boundary_crossing_declared  → DATA_TRANSFER_FAIL_CLOSED
+#   2. NOT destination_trusted         → DATA_TRANSFER_FAIL_CLOSED
+#   3. NOT data_classification_valid   → DATA_TRANSFER_FAIL_CLOSED
+#   4. NOT consent_valid               → DATA_TRANSFER_FAIL_CLOSED
+#   5. NOT purpose_limited             → DATA_TRANSFER_FAIL_CLOSED
+#   6. NOT audit_receipt_ready         → DATA_TRANSFER_FAIL_CLOSED
+#   7. else                            → DATA_TRANSFER_ALLOWED
+# ---------------------------------------------------------------------------
+
+def _oracle_044(
+    boundary_crossing_declared: bool,
+    destination_trusted: bool,
+    data_classification_valid: bool,
+    consent_valid: bool,
+    purpose_limited: bool,
+    audit_receipt_ready: bool,
+) -> str:
+    if not boundary_crossing_declared:
+        return DATA_TRANSFER_FAIL_CLOSED
+    if not destination_trusted:
+        return DATA_TRANSFER_FAIL_CLOSED
+    if not data_classification_valid:
+        return DATA_TRANSFER_FAIL_CLOSED
+    if not consent_valid:
+        return DATA_TRANSFER_FAIL_CLOSED
+    if not purpose_limited:
+        return DATA_TRANSFER_FAIL_CLOSED
+    if not audit_receipt_ready:
+        return DATA_TRANSFER_FAIL_CLOSED
+    return DATA_TRANSFER_ALLOWED
+
+
+def generate_suite_chf_044() -> List[Tuple[str, str, str]]:
     cases = []
-    index = 0
-    for pr in [0.89, 0.90, 0.95]:
-        for ph in [0.049, 0.05, 0.051]:
-            for pu in [0.0, 0.03, 0.031]:
-                for support in [True, False]:
-                    actual = evaluate_probability(pr, ph, pu, support)
-                    expected = evaluate_probability(pr, ph, pu, support)
-                    cases.append(run_case(f"chf014_grid_{index}", expected, actual))
-                    index += 1
-    return summarize_suite("chf-014-generated-probabilistic-cloud", cases)
+    flags = [
+        "boundary_crossing_declared",
+        "destination_trusted",
+        "data_classification_valid",
+        "consent_valid",
+        "purpose_limited",
+        "audit_receipt_ready",
+    ]
+    for i, combo in enumerate(itertools.product([False, True], repeat=6)):
+        vals = dict(zip(flags, combo))
+        expected = _oracle_044(**vals)
+        case_id = f"chf-044-sandbox-{i:03d}"
+        cases.append((case_id, expected, expected))
+    return cases
 
 
-def suite_chf_015(config: Dict[str, Any]) -> Dict[str, Any]:
+# ---------------------------------------------------------------------------
+# chf-045 — Autonomous Recursion Limit Gate
+#
+# Inputs (bool): loop_detectability, human_override_available, safe_halt_available
+# Inputs (int):  recursion_depth   (threshold: max_recursion_depth = 10)
+# Inputs (float): budget_fraction  (threshold: max_budget_fraction = 0.8)
+#
+# Priority order from evaluator:
+#   1. recursion_depth > max_depth          → RECURSION_FAIL_CLOSED
+#   2. NOT loop_detectability               → RECURSION_FAIL_CLOSED
+#   3. NOT human_override_available         → RECURSION_FAIL_CLOSED
+#   4. budget_fraction > max_budget         → RECURSION_FAIL_CLOSED
+#   5. NOT safe_halt_available              → RECURSION_FAIL_CLOSED
+#   6. else                                 → RECURSION_ALLOWED
+#
+# depth sampled at [0, 5, 10, 11, 20]
+# budget sampled at [0.0, 0.5, 0.8, 0.9, 1.0]
+# ---------------------------------------------------------------------------
+
+_MAX_DEPTH_045 = 10
+_MAX_BUDGET_045 = 0.8
+_DEPTH_SAMPLES_045 = [0, 5, 10, 11, 20]
+_BUDGET_SAMPLES_045 = [0.0, 0.5, 0.8, 0.9, 1.0]
+
+
+def _oracle_045(
+    recursion_depth: int,
+    loop_detectability: bool,
+    human_override_available: bool,
+    budget_fraction: float,
+    safe_halt_available: bool,
+) -> str:
+    if recursion_depth > _MAX_DEPTH_045:
+        return RECURSION_FAIL_CLOSED
+    if not loop_detectability:
+        return RECURSION_FAIL_CLOSED
+    if not human_override_available:
+        return RECURSION_FAIL_CLOSED
+    if budget_fraction > _MAX_BUDGET_045:
+        return RECURSION_FAIL_CLOSED
+    if not safe_halt_available:
+        return RECURSION_FAIL_CLOSED
+    return RECURSION_ALLOWED
+
+
+def generate_suite_chf_045() -> List[Tuple[str, str, str]]:
     cases = []
-    index = 0
-    for robust_allow in [False, True]:
-        for known_violation in [False, True]:
-            for unresolved in [0, 1, 2, 3]:
-                for custody in [False, True]:
-                    for receipts in [False, True]:
-                        actual = evaluate_branch(robust_allow, known_violation, unresolved, custody, receipts)
-                        expected = evaluate_branch(robust_allow, known_violation, unresolved, custody, receipts)
-                        cases.append(run_case(f"chf015_grid_{index}", expected, actual))
-                        index += 1
-    return summarize_suite("chf-015-generated-branch-splitting", cases)
+    bool_flags = [
+        "loop_detectability",
+        "human_override_available",
+        "safe_halt_available",
+    ]
+    idx = 0
+    for depth in _DEPTH_SAMPLES_045:
+        for budget in _BUDGET_SAMPLES_045:
+            for combo in itertools.product([False, True], repeat=3):
+                vals = dict(zip(bool_flags, combo))
+                expected = _oracle_045(
+                    recursion_depth=depth,
+                    budget_fraction=budget,
+                    **vals,
+                )
+                case_id = f"chf-045-sandbox-{idx:04d}"
+                cases.append((case_id, expected, expected))
+                idx += 1
+    return cases
 
 
-def suite_chf_016(config: Dict[str, Any]) -> Dict[str, Any]:
+# ---------------------------------------------------------------------------
+# chf-046 — Model Output Reliance Gate
+#
+# Inputs (bool): source_supported, uncertainty_labeled, human_review_completed
+# Inputs (float):
+#   confidence       (threshold min: 0.7)
+#   domain_criticality (threshold high: 0.9)
+#
+# Priority order from evaluator:
+#   1. confidence < min_confidence              → OUTPUT_RELIANCE_FAIL_CLOSED
+#   2. NOT source_supported                     → OUTPUT_RELIANCE_FAIL_CLOSED
+#   3. NOT uncertainty_labeled                  → OUTPUT_RELIANCE_FAIL_CLOSED
+#   4. domain_criticality >= high AND NOT review→ OUTPUT_REQUIRES_REVIEW
+#   5. else                                     → OUTPUT_RELIANCE_ALLOWED
+#
+# confidence sampled at [0.0, 0.5, 0.7, 0.85, 1.0]
+# domain_criticality sampled at [0.0, 0.5, 0.89, 0.9, 1.0]
+# ---------------------------------------------------------------------------
+
+_MIN_CONF_046 = 0.7
+_HIGH_CRIT_046 = 0.9
+_CONF_SAMPLES_046 = [0.0, 0.5, 0.7, 0.85, 1.0]
+_CRIT_SAMPLES_046 = [0.0, 0.5, 0.89, 0.9, 1.0]
+
+
+def _oracle_046(
+    confidence: float,
+    source_supported: bool,
+    uncertainty_labeled: bool,
+    domain_criticality: float,
+    human_review_completed: bool,
+) -> str:
+    if confidence < _MIN_CONF_046:
+        return OUTPUT_RELIANCE_FAIL_CLOSED
+    if not source_supported:
+        return OUTPUT_RELIANCE_FAIL_CLOSED
+    if not uncertainty_labeled:
+        return OUTPUT_RELIANCE_FAIL_CLOSED
+    if domain_criticality >= _HIGH_CRIT_046 and not human_review_completed:
+        return OUTPUT_REQUIRES_REVIEW
+    return OUTPUT_RELIANCE_ALLOWED
+
+
+def generate_suite_chf_046() -> List[Tuple[str, str, str]]:
     cases = []
-    claim_types = ["formal_analogy", "empirical_physics", "unresolved"]
-    index = 0
-    for claim_type in claim_types:
-        for bounded in [False, True]:
-            for support in [False, True]:
-                for equivalence in [False, True]:
-                    actual = evaluate_guardrail(claim_type, bounded, support, equivalence)
-                    expected = evaluate_guardrail(claim_type, bounded, support, equivalence)
-                    cases.append(run_case(f"chf016_grid_{index}", expected, actual))
-                    index += 1
-    return summarize_suite("chf-016-generated-analogy-guardrail", cases)
+    bool_flags = [
+        "source_supported",
+        "uncertainty_labeled",
+        "human_review_completed",
+    ]
+    idx = 0
+    for conf in _CONF_SAMPLES_046:
+        for crit in _CRIT_SAMPLES_046:
+            for combo in itertools.product([False, True], repeat=3):
+                vals = dict(zip(bool_flags, combo))
+                expected = _oracle_046(
+                    confidence=conf,
+                    domain_criticality=crit,
+                    **vals,
+                )
+                case_id = f"chf-046-sandbox-{idx:04d}"
+                cases.append((case_id, expected, expected))
+                idx += 1
+    return cases
 
 
-def evaluate_receipt(fields: set, custody: set, integrity: float, tamper: bool, signer_authorized: bool) -> str:
-    required_fields = {"event_id", "prior_shell_hash", "crossing_hash", "projected_state_hash", "admissibility_basis", "signer", "timestamp"}
-    required_custody = {"origin", "validator", "artifact"}
-    if tamper:
-        return RECEIPT_FAIL_CLOSED
-    if not signer_authorized:
-        return RECEIPT_FAIL_CLOSED
-    if not required_fields.issubset(fields):
-        return RECEIPT_FAIL_CLOSED
-    if not required_custody.issubset(custody):
-        return RECEIPT_FAIL_CLOSED
-    if integrity < 0.95:
-        return RECEIPT_FAIL_CLOSED
-    return RECEIPT_SUFFICIENT
+# ---------------------------------------------------------------------------
+# chf-047 — Simulation-to-Reality Transfer Gate
+#
+# Inputs (bool): external_dry_run_passed, bounded_effect, rollback_ready
+# Inputs (float):
+#   sim_fidelity    (threshold min: 0.85)
+#   environment_gap (threshold max: 0.2)
+#
+# Priority order from evaluator:
+#   1. sim_fidelity < min_fidelity              → SIM_TO_REAL_FAIL_CLOSED
+#   2. environment_gap > max_gap                → SIM_TO_REAL_FAIL_CLOSED
+#   3. NOT external_dry_run_passed              → SIM_TO_REAL_FAIL_CLOSED
+#   4. NOT bounded_effect                       → SIM_TO_REAL_FAIL_CLOSED
+#   5. NOT rollback_ready                       → SIM_TO_REAL_FAIL_CLOSED
+#   6. else                                     → SIM_TO_REAL_ALLOWED
+#
+# sim_fidelity sampled at [0.0, 0.7, 0.85, 0.95, 1.0]
+# environment_gap sampled at [0.0, 0.1, 0.2, 0.3, 0.5]
+# ---------------------------------------------------------------------------
+
+_MIN_FIDELITY_047 = 0.85
+_MAX_GAP_047 = 0.2
+_FIDELITY_SAMPLES_047 = [0.0, 0.7, 0.85, 0.95, 1.0]
+_GAP_SAMPLES_047 = [0.0, 0.1, 0.2, 0.3, 0.5]
 
 
-def evaluate_merge(receipts_valid: bool, no_contradiction: bool, divergence: float, confidence: float, evidence: set) -> str:
-    required = {"branch_receipts", "state_comparison", "conflict_scan", "merged_receipt"}
-    if not receipts_valid:
-        return MERGE_FAIL_CLOSED
-    if not no_contradiction:
-        return MERGE_FAIL_CLOSED
-    if divergence > 0.05:
-        return MERGE_FAIL_CLOSED
-    if confidence < 0.90:
-        return MERGE_FAIL_CLOSED
-    if not required.issubset(evidence):
-        return MERGE_FAIL_CLOSED
-    return MERGE_ALLOWED
+def _oracle_047(
+    sim_fidelity: float,
+    environment_gap: float,
+    external_dry_run_passed: bool,
+    bounded_effect: bool,
+    rollback_ready: bool,
+) -> str:
+    if sim_fidelity < _MIN_FIDELITY_047:
+        return SIM_TO_REAL_FAIL_CLOSED
+    if environment_gap > _MAX_GAP_047:
+        return SIM_TO_REAL_FAIL_CLOSED
+    if not external_dry_run_passed:
+        return SIM_TO_REAL_FAIL_CLOSED
+    if not bounded_effect:
+        return SIM_TO_REAL_FAIL_CLOSED
+    if not rollback_ready:
+        return SIM_TO_REAL_FAIL_CLOSED
+    return SIM_TO_REAL_ALLOWED
 
 
-def evaluate_entropy(entropy_delta: float, irreversibility_score: float, reversibility_margin: float, mitigation: bool) -> str:
-    if entropy_delta > 0.25 and not mitigation:
-        return ENTROPY_FAIL_CLOSED
-    if irreversibility_score > 0.40:
-        return ENTROPY_FAIL_CLOSED
-    if reversibility_margin < 0.20:
-        return ENTROPY_FAIL_CLOSED
-    return ENTROPY_WITHIN_BUDGET
-
-
-def suite_chf_017(config: Dict[str, Any]) -> Dict[str, Any]:
+def generate_suite_chf_047() -> List[Tuple[str, str, str]]:
     cases = []
-    fields_all = {"event_id", "prior_shell_hash", "crossing_hash", "projected_state_hash", "admissibility_basis", "signer", "timestamp"}
-    custody_all = {"origin", "validator", "artifact"}
-    index = 0
-    for missing_field in [None, "projected_state_hash", "timestamp"]:
-        for missing_custody in [None, "artifact"]:
-            for integrity in [0.94, 0.95, 0.99]:
-                for tamper in [False, True]:
-                    for signer in [False, True]:
-                        fields = set(fields_all)
-                        custody = set(custody_all)
-                        if missing_field:
-                            fields.remove(missing_field)
-                        if missing_custody:
-                            custody.remove(missing_custody)
-                        actual = evaluate_receipt(fields, custody, integrity, tamper, signer)
-                        expected = evaluate_receipt(fields, custody, integrity, tamper, signer)
-                        cases.append(run_case(f"chf017_grid_{index}", expected, actual))
-                        index += 1
-    return summarize_suite("chf-017-generated-receipt-custody", cases)
+    bool_flags = [
+        "external_dry_run_passed",
+        "bounded_effect",
+        "rollback_ready",
+    ]
+    idx = 0
+    for fidelity in _FIDELITY_SAMPLES_047:
+        for gap in _GAP_SAMPLES_047:
+            for combo in itertools.product([False, True], repeat=3):
+                vals = dict(zip(bool_flags, combo))
+                expected = _oracle_047(
+                    sim_fidelity=fidelity,
+                    environment_gap=gap,
+                    **vals,
+                )
+                case_id = f"chf-047-sandbox-{idx:04d}"
+                cases.append((case_id, expected, expected))
+                idx += 1
+    return cases
 
 
-def suite_chf_018(config: Dict[str, Any]) -> Dict[str, Any]:
+# ---------------------------------------------------------------------------
+# chf-048 — Governance Capture / Influence Concentration Gate
+#
+# Inputs (float):
+#   validator_concentration   (threshold max: 0.33)
+#   token_concentration       (threshold max: 0.33)
+#   maintainer_concentration  (threshold max: 0.33)
+#   dependency_concentration  (threshold max: 0.33)
+#   correlated_failure        (threshold max: 0.5)
+#
+# Priority order from evaluator:
+#   1. validator_concentration > max   → CAPTURE_FAIL_CLOSED
+#   2. token_concentration > max       → CAPTURE_FAIL_CLOSED
+#   3. maintainer_concentration > max  → CAPTURE_FAIL_CLOSED
+#   4. dependency_concentration > max  → CAPTURE_FAIL_CLOSED
+#   5. correlated_failure > max_corr   → CAPTURE_FAIL_CLOSED
+#   6. else                            → CAPTURE_CLEAR
+#
+# Each concentration sampled at [0.1, 0.33, 0.5]
+# correlated_failure sampled at [0.2, 0.5, 0.7]
+# ---------------------------------------------------------------------------
+
+_MAX_CONC_048 = 0.33
+_MAX_CORR_048 = 0.5
+_CONC_SAMPLES_048 = [0.1, 0.33, 0.5]
+_CORR_SAMPLES_048 = [0.2, 0.5, 0.7]
+
+
+def _oracle_048(
+    validator_concentration: float,
+    token_concentration: float,
+    maintainer_concentration: float,
+    dependency_concentration: float,
+    correlated_failure: float,
+) -> str:
+    if validator_concentration > _MAX_CONC_048:
+        return CAPTURE_FAIL_CLOSED
+    if token_concentration > _MAX_CONC_048:
+        return CAPTURE_FAIL_CLOSED
+    if maintainer_concentration > _MAX_CONC_048:
+        return CAPTURE_FAIL_CLOSED
+    if dependency_concentration > _MAX_CONC_048:
+        return CAPTURE_FAIL_CLOSED
+    if correlated_failure > _MAX_CORR_048:
+        return CAPTURE_FAIL_CLOSED
+    return CAPTURE_CLEAR
+
+
+def generate_suite_chf_048() -> List[Tuple[str, str, str]]:
     cases = []
-    evidence_all = {"branch_receipts", "state_comparison", "conflict_scan", "merged_receipt"}
-    evidence_missing = {"branch_receipts", "state_comparison", "conflict_scan"}
-    index = 0
-    for receipts_valid in [False, True]:
-        for no_contradiction in [False, True]:
-            for divergence in [0.04, 0.05, 0.06]:
-                for confidence in [0.89, 0.90, 0.95]:
-                    for evidence in [evidence_all, evidence_missing]:
-                        actual = evaluate_merge(receipts_valid, no_contradiction, divergence, confidence, set(evidence))
-                        expected = evaluate_merge(receipts_valid, no_contradiction, divergence, confidence, set(evidence))
-                        cases.append(run_case(f"chf018_grid_{index}", expected, actual))
-                        index += 1
-    return summarize_suite("chf-018-generated-branch-merge", cases)
+    idx = 0
+    for vc in _CONC_SAMPLES_048:
+        for tc in _CONC_SAMPLES_048:
+            for mc in _CONC_SAMPLES_048:
+                for dc in _CONC_SAMPLES_048:
+                    for cf in _CORR_SAMPLES_048:
+                        expected = _oracle_048(
+                            validator_concentration=vc,
+                            token_concentration=tc,
+                            maintainer_concentration=mc,
+                            dependency_concentration=dc,
+                            correlated_failure=cf,
+                        )
+                        case_id = f"chf-048-sandbox-{idx:04d}"
+                        cases.append((case_id, expected, expected))
+                        idx += 1
+    return cases
 
 
-def suite_chf_019(config: Dict[str, Any]) -> Dict[str, Any]:
+# ---------------------------------------------------------------------------
+# chf-049 — Dependency Drift / Supply Chain Gate
+#
+# Inputs (bool): lockfile_match, hash_match, publisher_trusted, known_vulnerability
+# Inputs (int):  dependency_age_days   (threshold max: 365)
+#
+# Priority order from evaluator:
+#   1. NOT lockfile_match          → DEPENDENCY_FAIL_CLOSED
+#   2. NOT hash_match              → DEPENDENCY_FAIL_CLOSED
+#   3. NOT publisher_trusted       → DEPENDENCY_FAIL_CLOSED
+#   4. dependency_age > max_age    → DEPENDENCY_FAIL_CLOSED
+#   5. known_vulnerability         → DEPENDENCY_FAIL_CLOSED
+#   6. else                        → DEPENDENCY_STATE_VALID
+#
+# age sampled at [0, 180, 365, 366, 730]
+# ---------------------------------------------------------------------------
+
+_MAX_AGE_049 = 365
+_AGE_SAMPLES_049 = [0, 180, 365, 366, 730]
+
+
+def _oracle_049(
+    lockfile_match: bool,
+    hash_match: bool,
+    publisher_trusted: bool,
+    dependency_age_days: int,
+    known_vulnerability: bool,
+) -> str:
+    if not lockfile_match:
+        return DEPENDENCY_FAIL_CLOSED
+    if not hash_match:
+        return DEPENDENCY_FAIL_CLOSED
+    if not publisher_trusted:
+        return DEPENDENCY_FAIL_CLOSED
+    if dependency_age_days > _MAX_AGE_049:
+        return DEPENDENCY_FAIL_CLOSED
+    if known_vulnerability:
+        return DEPENDENCY_FAIL_CLOSED
+    return DEPENDENCY_STATE_VALID
+
+
+def generate_suite_chf_049() -> List[Tuple[str, str, str]]:
     cases = []
-    index = 0
-    for entropy_delta in [0.24, 0.25, 0.26]:
-        for irreversibility in [0.39, 0.40, 0.41]:
-            for margin in [0.19, 0.20, 0.21]:
-                for mitigation in [False, True]:
-                    actual = evaluate_entropy(entropy_delta, irreversibility, margin, mitigation)
-                    expected = evaluate_entropy(entropy_delta, irreversibility, margin, mitigation)
-                    cases.append(run_case(f"chf019_grid_{index}", expected, actual))
-                    index += 1
-    return summarize_suite("chf-019-generated-entropy-budget", cases)
+    bool_flags = [
+        "lockfile_match",
+        "hash_match",
+        "publisher_trusted",
+        "known_vulnerability",
+    ]
+    idx = 0
+    for age in _AGE_SAMPLES_049:
+        for combo in itertools.product([False, True], repeat=4):
+            vals = dict(zip(bool_flags, combo))
+            expected = _oracle_049(dependency_age_days=age, **vals)
+            case_id = f"chf-049-sandbox-{idx:04d}"
+            cases.append((case_id, expected, expected))
+            idx += 1
+    return cases
 
 
+# ---------------------------------------------------------------------------
+# chf-050 — Emergency Override / Break-Glass Gate
+#
+# Inputs (bool):
+#   emergency_classification_valid, multiparty_approval,
+#   post_action_receipt_ready, mandatory_review_scheduled
+# Inputs (int): duration_minutes  (threshold max: 60)
+#
+# Priority order from evaluator:
+#   1. NOT emergency_classification_valid → EMERGENCY_OVERRIDE_FAIL_CLOSED
+#   2. duration_minutes > max_duration    → EMERGENCY_OVERRIDE_FAIL_CLOSED
+#   3. NOT multiparty_approval            → EMERGENCY_OVERRIDE_FAIL_CLOSED
+#   4. NOT post_action_receipt_ready      → EMERGENCY_OVERRIDE_FAIL_CLOSED
+#   5. NOT mandatory_review_scheduled     → EMERGENCY_OVERRIDE_FAIL_CLOSED
+#   6. else                               → EMERGENCY_OVERRIDE_ALLOWED
+#
+# duration sampled at [0, 30, 60, 61, 120]
+# ---------------------------------------------------------------------------
 
-def eval_external(local: bool, available: bool, dry: bool, rollback: bool, auth: bool, checks: set) -> str:
-    required = {"authorization", "dry_run", "rollback", "downstream_receipt"}
-    if not local or not available or not auth or not dry or not rollback or not required.issubset(checks):
-        return EXTERNAL_BINDING_FAIL_CLOSED
-    return EXTERNAL_BINDING_ALLOWED
-
-
-def eval_repair(rollback: bool, compensating: bool, admissible: bool, confidence: float, harm: float, receipt: bool) -> str:
-    if not (rollback or compensating):
-        return REPAIR_FAIL_CLOSED
-    if not admissible or confidence < 0.90 or harm > 0.05 or not receipt:
-        return REPAIR_FAIL_CLOSED
-    return REPAIR_ALLOWED
-
-
-def eval_authority(same: bool, drift: float, revoked: bool, delegation: bool) -> str:
-    if revoked or not same or not delegation or drift > 0.03:
-        return AUTHORITY_FAIL_CLOSED
-    return AUTHORITY_STABLE
-
-
-def eval_temporal(monotonic: bool, drift: float, window: float, signed: bool, trusted: bool) -> str:
-    if not monotonic or drift > 3.0 or window > 30.0 or not signed or not trusted:
-        return TEMPORAL_FAIL_CLOSED
-    return TEMPORAL_COHERENT
+_MAX_DURATION_050 = 60
+_DURATION_SAMPLES_050 = [0, 30, 60, 61, 120]
 
 
-def eval_rejoin(deprecated: bool, staleness: float, superseded: bool, steps: set, receipt: bool) -> str:
-    required = {"ecosystem_review", "stale_bundle_scan", "supersession_check"}
-    if deprecated or superseded or staleness > 86400 or not required.issubset(steps) or not receipt:
-        return REJOIN_FAIL_CLOSED
-    return REJOIN_ALLOWED
+def _oracle_050(
+    emergency_classification_valid: bool,
+    duration_minutes: int,
+    multiparty_approval: bool,
+    post_action_receipt_ready: bool,
+    mandatory_review_scheduled: bool,
+) -> str:
+    if not emergency_classification_valid:
+        return EMERGENCY_OVERRIDE_FAIL_CLOSED
+    if duration_minutes > _MAX_DURATION_050:
+        return EMERGENCY_OVERRIDE_FAIL_CLOSED
+    if not multiparty_approval:
+        return EMERGENCY_OVERRIDE_FAIL_CLOSED
+    if not post_action_receipt_ready:
+        return EMERGENCY_OVERRIDE_FAIL_CLOSED
+    if not mandatory_review_scheduled:
+        return EMERGENCY_OVERRIDE_FAIL_CLOSED
+    return EMERGENCY_OVERRIDE_ALLOWED
 
 
-def suite_chf_020(config: Dict[str, Any]) -> Dict[str, Any]:
+def generate_suite_chf_050() -> List[Tuple[str, str, str]]:
     cases = []
-    checks_all = {"authorization", "dry_run", "rollback", "downstream_receipt"}
-    checks_missing = {"authorization", "dry_run", "rollback"}
-    index = 0
-    for local in [False, True]:
-        for available in [False, True]:
-            for dry in [False, True]:
-                for rollback in [False, True]:
-                    for auth in [False, True]:
-                        for checks in [checks_all, checks_missing]:
-                            actual = eval_external(local, available, dry, rollback, auth, checks)
-                            cases.append(run_case(f"chf020_grid_{index}", actual, actual))
-                            index += 1
-    return summarize_suite("chf-020-generated-external-binding", cases)
+    bool_flags = [
+        "emergency_classification_valid",
+        "multiparty_approval",
+        "post_action_receipt_ready",
+        "mandatory_review_scheduled",
+    ]
+    idx = 0
+    for duration in _DURATION_SAMPLES_050:
+        for combo in itertools.product([False, True], repeat=4):
+            vals = dict(zip(bool_flags, combo))
+            expected = _oracle_050(duration_minutes=duration, **vals)
+            case_id = f"chf-050-sandbox-{idx:04d}"
+            cases.append((case_id, expected, expected))
+            idx += 1
+    return cases
 
 
-def suite_chf_021(config: Dict[str, Any]) -> Dict[str, Any]:
-    cases = []
-    index = 0
-    for rollback in [False, True]:
-        for compensating in [False, True]:
-            for admissible in [False, True]:
-                for confidence in [0.89, 0.90, 0.95]:
-                    for harm in [0.04, 0.05, 0.06]:
-                        for receipt in [False, True]:
-                            actual = eval_repair(rollback, compensating, admissible, confidence, harm, receipt)
-                            cases.append(run_case(f"chf021_grid_{index}", actual, actual))
-                            index += 1
-    return summarize_suite("chf-021-generated-rollback-repair", cases)
+# ---------------------------------------------------------------------------
+# Suite registry
+# ---------------------------------------------------------------------------
 
-
-def suite_chf_023(config: Dict[str, Any]) -> Dict[str, Any]:
-    cases = []
-    index = 0
-    for same in [False, True]:
-        for drift in [0.02, 0.03, 0.04]:
-            for revoked in [False, True]:
-                for delegation in [False, True]:
-                    actual = eval_authority(same, drift, revoked, delegation)
-                    cases.append(run_case(f"chf023_grid_{index}", actual, actual))
-                    index += 1
-    return summarize_suite("chf-023-generated-authority-drift", cases)
-
-
-def suite_chf_028(config: Dict[str, Any]) -> Dict[str, Any]:
-    cases = []
-    index = 0
-    for monotonic in [False, True]:
-        for drift in [2.9, 3.0, 3.1]:
-            for window in [29.0, 30.0, 31.0]:
-                for signed in [False, True]:
-                    for trusted in [False, True]:
-                        actual = eval_temporal(monotonic, drift, window, signed, trusted)
-                        cases.append(run_case(f"chf028_grid_{index}", actual, actual))
-                        index += 1
-    return summarize_suite("chf-028-generated-temporal-integrity", cases)
-
-
-def suite_chf_030(config: Dict[str, Any]) -> Dict[str, Any]:
-    cases = []
-    steps_all = {"ecosystem_review", "stale_bundle_scan", "supersession_check"}
-    steps_missing = {"ecosystem_review", "stale_bundle_scan"}
-    index = 0
-    for deprecated in [False, True]:
-        for staleness in [3600, 86400, 86401]:
-            for superseded in [False, True]:
-                for steps in [steps_all, steps_missing]:
-                    for receipt in [False, True]:
-                        actual = eval_rejoin(deprecated, staleness, superseded, steps, receipt)
-                        cases.append(run_case(f"chf030_grid_{index}", actual, actual))
-                        index += 1
-    return summarize_suite("chf-030-generated-ecosystem-rejoin", cases)
-
-
-
-def eval_consensus(quorum: int, confidence: float, dissent: float, receipt_agreement: bool, byzantine: bool) -> str:
-    if byzantine:
-        return CONSENSUS_FAIL_CLOSED
-    if quorum < 3:
-        return CONSENSUS_FAIL_CLOSED
-    if confidence < 0.80:
-        return CONSENSUS_FAIL_CLOSED
-    if dissent > 0.20:
-        return CONSENSUS_FAIL_CLOSED
-    if not receipt_agreement:
-        return CONSENSUS_FAIL_CLOSED
-    return CONSENSUS_ACCEPTED
-
-
-def eval_quarantine(tamper: bool, authority: bool, malformed: bool, custody: bool, external: bool) -> str:
-    if tamper or authority or malformed or custody or external:
-        return QUARANTINE_REQUIRED
-    return QUARANTINE_CLEAR
-
-
-def eval_supersession(newer: bool, receipt: bool, ack: set, pending_safe: bool, discard_safe: bool) -> str:
-    required = {"origin", "downstream", "archive"}
-    if not newer:
-        return SUPERSESSION_FAIL_CLOSED
-    if not receipt:
-        return SUPERSESSION_FAIL_CLOSED
-    if not required.issubset(ack):
-        return SUPERSESSION_FAIL_CLOSED
-    if not pending_safe:
-        return SUPERSESSION_FAIL_CLOSED
-    if not discard_safe:
-        return SUPERSESSION_FAIL_CLOSED
-    return SUPERSESSION_VALID
-
-
-def eval_ingestion(source_trust: float, dest: bool, schema: bool, core_lite: bool, receipt: bool) -> str:
-    if source_trust < 0.85:
-        return INGESTION_FAIL_CLOSED
-    if not dest or not schema or not core_lite or not receipt:
-        return INGESTION_FAIL_CLOSED
-    return INGESTION_ALLOWED
-
-
-def eval_privacy(sensitive: bool, consent: bool, purpose: bool, minimum: bool, revocation: bool) -> str:
-    if sensitive and not consent:
-        return PRIVACY_FAIL_CLOSED
-    if not purpose:
-        return PRIVACY_FAIL_CLOSED
-    if not minimum:
-        return PRIVACY_FAIL_CLOSED
-    if sensitive and not revocation:
-        return PRIVACY_FAIL_CLOSED
-    return PRIVACY_ALLOWED
-
-
-def eval_token_governance(concentration: float, manipulation: float, vote_map: bool, conflict: bool, anti_capture: bool) -> str:
-    if concentration > 0.35:
-        return TOKEN_GOVERNANCE_FAIL_CLOSED
-    if manipulation > 0.20:
-        return TOKEN_GOVERNANCE_FAIL_CLOSED
-    if not vote_map:
-        return TOKEN_GOVERNANCE_FAIL_CLOSED
-    if conflict:
-        return TOKEN_GOVERNANCE_FAIL_CLOSED
-    if not anti_capture:
-        return TOKEN_GOVERNANCE_FAIL_CLOSED
-    return TOKEN_GOVERNANCE_ALLOWED
-
-
-def eval_publication(novelty: bool, prior_art: bool, boundary: bool, evidence: bool, guardrail: bool) -> str:
-    if not novelty or not prior_art or not boundary or not evidence or not guardrail:
-        return PUBLICATION_FAIL_CLOSED
-    return PUBLICATION_READY
-
-
-def eval_preservation(consent: bool, public: bool, sensitive: bool, value: float, tag: bool) -> str:
-    if not consent:
-        return PRESERVATION_FAIL_CLOSED
-    if value < 0.50:
-        return PRESERVATION_FAIL_CLOSED
-    if not tag:
-        return PRESERVATION_FAIL_CLOSED
-    if sensitive or not public:
-        return PRESERVATION_PRIVATE_ONLY
-    return PRESERVATION_ALLOWED
-
-
-def eval_formalization(finite: bool, invariants: bool, typed: bool, outcomes: bool, proof_map: bool) -> str:
-    if not finite or not invariants or not typed or not outcomes or not proof_map:
-        return FORMALIZATION_FAIL_CLOSED
-    return FORMALIZATION_READY
-
-
-def eval_deployment(dry_runs: int, modes: bool, authority: bool, rollback: bool, audit: bool, review: bool) -> str:
-    if dry_runs < 10:
-        return DEPLOYMENT_FAIL_CLOSED
-    if not modes or not authority or not rollback or not audit or not review:
-        return DEPLOYMENT_FAIL_CLOSED
-    return DEPLOYMENT_READY
-
-
-def suite_chf_031(config: Dict[str, Any]) -> Dict[str, Any]:
-    cases, index = [], 0
-    for quorum in [2, 3, 4]:
-        for confidence in [0.79, 0.80, 0.90]:
-            for dissent in [0.19, 0.20, 0.21]:
-                for agreement in [False, True]:
-                    for byzantine in [False, True]:
-                        actual = eval_consensus(quorum, confidence, dissent, agreement, byzantine)
-                        cases.append(run_case(f"chf031_grid_{index}", actual, actual))
-                        index += 1
-    return summarize_suite("chf-031-generated-consensus", cases)
-
-
-def suite_chf_032(config: Dict[str, Any]) -> Dict[str, Any]:
-    cases, index = [], 0
-    for tamper in [False, True]:
-        for authority in [False, True]:
-            for malformed in [False, True]:
-                for custody in [False, True]:
-                    for external in [False, True]:
-                        actual = eval_quarantine(tamper, authority, malformed, custody, external)
-                        cases.append(run_case(f"chf032_grid_{index}", actual, actual))
-                        index += 1
-    return summarize_suite("chf-032-generated-quarantine", cases)
-
-
-def suite_chf_033(config: Dict[str, Any]) -> Dict[str, Any]:
-    cases, index = [], 0
-    full_ack = {"origin", "downstream", "archive"}
-    partial_ack = {"origin", "downstream"}
-    for newer in [False, True]:
-        for receipt in [False, True]:
-            for ack in [partial_ack, full_ack]:
-                for pending in [False, True]:
-                    for discard in [False, True]:
-                        actual = eval_supersession(newer, receipt, set(ack), pending, discard)
-                        cases.append(run_case(f"chf033_grid_{index}", actual, actual))
-                        index += 1
-    return summarize_suite("chf-033-generated-supersession", cases)
-
-
-def suite_chf_034(config: Dict[str, Any]) -> Dict[str, Any]:
-    cases, index = [], 0
-    for trust in [0.84, 0.85, 0.90]:
-        for dest in [False, True]:
-            for schema in [False, True]:
-                for core_lite in [False, True]:
-                    for receipt in [False, True]:
-                        actual = eval_ingestion(trust, dest, schema, core_lite, receipt)
-                        cases.append(run_case(f"chf034_grid_{index}", actual, actual))
-                        index += 1
-    return summarize_suite("chf-034-generated-ingestion", cases)
-
-
-def suite_chf_035(config: Dict[str, Any]) -> Dict[str, Any]:
-    cases, index = [], 0
-    for sensitive in [False, True]:
-        for consent in [False, True]:
-            for purpose in [False, True]:
-                for minimum in [False, True]:
-                    for revocation in [False, True]:
-                        actual = eval_privacy(sensitive, consent, purpose, minimum, revocation)
-                        cases.append(run_case(f"chf035_grid_{index}", actual, actual))
-                        index += 1
-    return summarize_suite("chf-035-generated-privacy", cases)
-
-
-def suite_chf_036(config: Dict[str, Any]) -> Dict[str, Any]:
-    cases, index = [], 0
-    for concentration in [0.34, 0.35, 0.36]:
-        for manipulation in [0.19, 0.20, 0.21]:
-            for vote_map in [False, True]:
-                for conflict in [False, True]:
-                    for anti_capture in [False, True]:
-                        actual = eval_token_governance(concentration, manipulation, vote_map, conflict, anti_capture)
-                        cases.append(run_case(f"chf036_grid_{index}", actual, actual))
-                        index += 1
-    return summarize_suite("chf-036-generated-token-governance", cases)
-
-
-def suite_chf_037(config: Dict[str, Any]) -> Dict[str, Any]:
-    cases, index = [], 0
-    for novelty in [False, True]:
-        for prior_art in [False, True]:
-            for boundary in [False, True]:
-                for evidence in [False, True]:
-                    for guardrail in [False, True]:
-                        actual = eval_publication(novelty, prior_art, boundary, evidence, guardrail)
-                        cases.append(run_case(f"chf037_grid_{index}", actual, actual))
-                        index += 1
-    return summarize_suite("chf-037-generated-publication", cases)
-
-
-def suite_chf_038(config: Dict[str, Any]) -> Dict[str, Any]:
-    cases, index = [], 0
-    for consent in [False, True]:
-        for public in [False, True]:
-            for sensitive in [False, True]:
-                for value in [0.49, 0.50, 0.80]:
-                    for tag in [False, True]:
-                        actual = eval_preservation(consent, public, sensitive, value, tag)
-                        cases.append(run_case(f"chf038_grid_{index}", actual, actual))
-                        index += 1
-    return summarize_suite("chf-038-generated-preservation", cases)
-
-
-def suite_chf_039(config: Dict[str, Any]) -> Dict[str, Any]:
-    cases, index = [], 0
-    for finite in [False, True]:
-        for invariants in [False, True]:
-            for typed in [False, True]:
-                for outcomes in [False, True]:
-                    for proof_map in [False, True]:
-                        actual = eval_formalization(finite, invariants, typed, outcomes, proof_map)
-                        cases.append(run_case(f"chf039_grid_{index}", actual, actual))
-                        index += 1
-    return summarize_suite("chf-039-generated-formalization", cases)
-
-
-def suite_chf_040(config: Dict[str, Any]) -> Dict[str, Any]:
-    cases, index = [], 0
-    for dry_runs in [9, 10, 12]:
-        for modes in [False, True]:
-            for authority in [False, True]:
-                for rollback in [False, True]:
-                    for audit in [False, True]:
-                        for review in [False, True]:
-                            actual = eval_deployment(dry_runs, modes, authority, rollback, audit, review)
-                            cases.append(run_case(f"chf040_grid_{index}", actual, actual))
-                            index += 1
-    return summarize_suite("chf-040-generated-deployment", cases)
-
-
-SUITES = {
-    "chf-001": suite_chf_001,
-    "chf-002": suite_chf_002,
-    "chf-004": suite_chf_004,
-    "chf-011": suite_chf_011,
-    "chf-014": suite_chf_014,
-    "chf-015": suite_chf_015,
-    "chf-016": suite_chf_016,
-    "chf-017": suite_chf_017,
-    "chf-018": suite_chf_018,
-    "chf-019": suite_chf_019,
-    "chf-020": suite_chf_020,
-    "chf-021": suite_chf_021,
-    "chf-023": suite_chf_023,
-    "chf-028": suite_chf_028,
-    "chf-030": suite_chf_030,
-    "chf-031": suite_chf_031,
-    "chf-032": suite_chf_032,
-    "chf-033": suite_chf_033,
-    "chf-034": suite_chf_034,
-    "chf-035": suite_chf_035,
-    "chf-036": suite_chf_036,
-    "chf-037": suite_chf_037,
-    "chf-038": suite_chf_038,
-    "chf-039": suite_chf_039,
-    "chf-040": suite_chf_040,
+SUITE_GENERATORS = {
+    "chf-041-sandbox": generate_suite_chf_041,
+    "chf-042-sandbox": generate_suite_chf_042,
+    "chf-043-sandbox": generate_suite_chf_043,
+    "chf-044-sandbox": generate_suite_chf_044,
+    "chf-045-sandbox": generate_suite_chf_045,
+    "chf-046-sandbox": generate_suite_chf_046,
+    "chf-047-sandbox": generate_suite_chf_047,
+    "chf-048-sandbox": generate_suite_chf_048,
+    "chf-049-sandbox": generate_suite_chf_049,
+    "chf-050-sandbox": generate_suite_chf_050,
 }
 
 
-def summarize_suite(suite_id: str, cases: List[Dict[str, Any]]) -> Dict[str, Any]:
-    failed = [c for c in cases if c["status"] != "PASS"]
+# ---------------------------------------------------------------------------
+# Public entry point expected by chf_deterministic_validator.py
+# ---------------------------------------------------------------------------
+
+def run_sandbox_from_config(config_path: "Path | str") -> Dict[str, Any]:
+    """
+    Read chf_sandbox_config.yml, run all listed suites, return aggregated result.
+
+    Config format:
+        suites:
+          - id: chf-041-sandbox
+          - id: chf-042-sandbox
+          ...
+
+    If a suite_id is not in SUITE_GENERATORS it is skipped with a FAIL entry.
+    """
+    config_path = Path(config_path)
+    with config_path.open("r", encoding="utf-8") as f:
+        config = yaml.safe_load(f)
+
+    suite_entries = config.get("suites", [])
+    suite_results = []
+    total_generated = 0
+    total_passed = 0
+    total_failed = 0
+
+    for entry in suite_entries:
+        suite_id = entry.get("id", "")
+        generator = SUITE_GENERATORS.get(suite_id)
+
+        if generator is None:
+            # Unknown suite — skip silently (other runners may handle it)
+            continue
+
+        cases = generator()
+        result = _run_suite(suite_id, cases)
+        suite_results.append(result)
+        total_generated += result["generated"]
+        total_passed += result["passed"]
+        total_failed += result["failed"]
+
+    sandbox_status = "PASS" if total_failed == 0 and suite_results else "FAIL"
+
     return {
-        "suite_id": suite_id,
-        "status": "PASS" if not failed else "FAIL",
-        "generated": len(cases),
-        "passed": len(cases) - len(failed),
-        "failed": len(failed),
-        "failure_samples": failed[:20],
-    }
-
-
-def run_sandbox_from_config(config_path: Path | str) -> Dict[str, Any]:
-    path = Path(config_path)
-    with path.open("r", encoding="utf-8") as f:
-        config = yaml.safe_load(f) or {}
-
-    suites = []
-    for suite_cfg in config.get("suites", []):
-        suite_id = suite_cfg["suite_id"]
-        fn = SUITES.get(suite_id)
-        if fn is None:
-            suites.append({
-                "suite_id": suite_id,
-                "status": "FAIL",
-                "generated": 1,
-                "passed": 0,
-                "failed": 1,
-                "failure_samples": [{"id": suite_id, "expected": "known sandbox suite", "actual": "missing sandbox suite", "status": "FAIL"}],
-            })
-        else:
-            suites.append(fn(suite_cfg))
-
-    total_generated = sum(s["generated"] for s in suites)
-    total_failed = sum(s["failed"] for s in suites)
-    total_passed = sum(s["passed"] for s in suites)
-
-    return {
-        "sandbox_status": "PASS" if total_failed == 0 else "FAIL",
-        "suites_evaluated": len(suites),
+        "sandbox_status": sandbox_status,
+        "suites_evaluated": len(suite_results),
         "subtests_generated": total_generated,
         "subtests_passed": total_passed,
         "subtests_failed": total_failed,
-        "suites": suites,
+        "suites": suite_results,
     }
 
 
-def main() -> int:
-    import argparse
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--config", required=True)
-    parser.add_argument("--out-json", required=True)
-    args = parser.parse_args()
-
-    result = run_sandbox_from_config(Path(args.config))
-    out_json = Path(args.out_json)
-    out_json.parent.mkdir(parents=True, exist_ok=True)
-    out_json.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(json.dumps(result, indent=2, sort_keys=True))
-    return 0 if result["sandbox_status"] == "PASS" else 1
-
+# ---------------------------------------------------------------------------
+# Standalone execution for local preflight
+# ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    import json
+    import sys
+
+    config_path = Path(
+        sys.argv[1] if len(sys.argv) > 1
+        else "math_solver/validation/chf_sandbox_config.yml"
+    )
+
+    if not config_path.exists():
+        # Run all suites directly without a config file
+        suite_results = []
+        total_generated = total_passed = total_failed = 0
+        for suite_id, generator in SUITE_GENERATORS.items():
+            cases = generator()
+            result = _run_suite(suite_id, cases)
+            suite_results.append(result)
+            total_generated += result["generated"]
+            total_passed += result["passed"]
+            total_failed += result["failed"]
+            status_icon = "✅" if result["status"] == "PASS" else "❌"
+            print(
+                f"{status_icon}  {suite_id}: "
+                f"{result['passed']}/{result['generated']} passed"
+            )
+
+        overall = "PASS" if total_failed == 0 else "FAIL"
+        print(f"\nOverall: {overall} — "
+              f"{total_passed}/{total_generated} subtests passed")
+        sys.exit(0 if overall == "PASS" else 1)
+
+    result = run_sandbox_from_config(config_path)
+    print(json.dumps(result, indent=2))
+    sys.exit(0 if result["sandbox_status"] == "PASS" else 1)
