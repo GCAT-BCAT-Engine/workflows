@@ -6,9 +6,9 @@
 ## Sandbox Results
 
 - Sandbox status: **PASS**
-- Suites evaluated: **15**
-- Subtests generated: **2282**
-- Subtests passed: **2282**
+- Suites evaluated: **25**
+- Subtests generated: **2814**
+- Subtests passed: **2814**
 - Subtests failed: **0**
 
 ### Sandbox suite `chf-001-generated-2d-cell-horizon`
@@ -114,6 +114,76 @@
 - Status: **PASS**
 - Generated: **48**
 - Passed: **48**
+- Failed: **0**
+
+### Sandbox suite `chf-031-generated-consensus`
+
+- Status: **PASS**
+- Generated: **108**
+- Passed: **108**
+- Failed: **0**
+
+### Sandbox suite `chf-032-generated-quarantine`
+
+- Status: **PASS**
+- Generated: **32**
+- Passed: **32**
+- Failed: **0**
+
+### Sandbox suite `chf-033-generated-supersession`
+
+- Status: **PASS**
+- Generated: **32**
+- Passed: **32**
+- Failed: **0**
+
+### Sandbox suite `chf-034-generated-ingestion`
+
+- Status: **PASS**
+- Generated: **48**
+- Passed: **48**
+- Failed: **0**
+
+### Sandbox suite `chf-035-generated-privacy`
+
+- Status: **PASS**
+- Generated: **32**
+- Passed: **32**
+- Failed: **0**
+
+### Sandbox suite `chf-036-generated-token-governance`
+
+- Status: **PASS**
+- Generated: **72**
+- Passed: **72**
+- Failed: **0**
+
+### Sandbox suite `chf-037-generated-publication`
+
+- Status: **PASS**
+- Generated: **32**
+- Passed: **32**
+- Failed: **0**
+
+### Sandbox suite `chf-038-generated-preservation`
+
+- Status: **PASS**
+- Generated: **48**
+- Passed: **48**
+- Failed: **0**
+
+### Sandbox suite `chf-039-generated-formalization`
+
+- Status: **PASS**
+- Generated: **32**
+- Passed: **32**
+- Failed: **0**
+
+### Sandbox suite `chf-040-generated-deployment`
+
+- Status: **PASS**
+- Generated: **96**
+- Passed: **96**
 - Failed: **0**
 
 ## Spec Results
