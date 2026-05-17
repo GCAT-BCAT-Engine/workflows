@@ -1,0 +1,136 @@
+problem_id: chf-003
+domain: consequence_horizon_formalism
+status: formalized
+title: Two-Body Coupled Cloud Deformation Extension
+version: 0.1.0
+seed: 20260517
+
+description: >
+  Validates that local admissibility is not global admissibility. A transition
+  locally ALLOW for the acting entity may be globally DENY or FAIL_CLOSED if it
+  deforms an affected entity cloud beyond tolerance or lowers recoverability
+  below threshold.
+
+assumptions:
+  - The state space is R^2.
+  - Entity A and Entity B each have a local state-cloud.
+  - A proposed transition by A is locally ALLOW under CHF-001 rules.
+  - A's transition deforms B's cloud.
+  - Coupled permission requires bounded deformation and sufficient recoverability.
+  - Reliable known deformation violation yields DENY.
+  - Unknown deformation affecting protected or relevant regions yields FAIL_CLOSED.
+
+state_space:
+  type: euclidean
+  dimension: 2
+  notation: R2
+
+entities:
+  - id: A
+    center: [0.0, 0.0]
+    cloud_radius: 0.2
+    transition_region:
+      type: disk
+      radius: 1.0
+      horizon_radius: 0.8
+  - id: B
+    center: [2.0, 0.0]
+    cloud_radius: 0.2
+    transition_region:
+      type: disk
+      radius: 1.0
+      horizon_radius: 0.8
+    deformation_tolerance: 0.2
+    recoverability_threshold: 0.7
+
+local_transition:
+  acting_entity: A
+  id: pA
+  point: [0.4, 0.4]
+  expected_local_outcome: ALLOW
+  expected_local_cell: Cell_1
+  expected_local_radius_approx: 0.565685
+  expected_local_angle_degrees_approx: 45.0
+
+coupling_model:
+  type: toy_inverse_distance
+  formula: delta_A_to_B = k / distance(A, B)
+  k: 0.5
+  distance_A_B: 2.0
+  expected_delta_A_to_B: 0.25
+  reliability: known
+
+recoverability_model:
+  affected_entity: B
+  R_B_after: 0.65
+  theta_B: 0.7
+
+coupled_permission_rule:
+  allow_requires:
+    - local_outcome_is_ALLOW
+    - delta_A_to_B_less_than_or_equal_to_epsilon_B
+    - R_B_after_greater_than_or_equal_to_theta_B
+  known_deformation_violation: DENY
+  unknown_relevant_deformation: FAIL_CLOSED
+
+validation_cases:
+  - id: coupled_pA_deformation
+    acting_entity: A
+    affected_entity: B
+    local_outcome: ALLOW
+    delta_A_to_B: 0.25
+    epsilon_B: 0.2
+    expected_coupled_outcome: DENY
+    expected_failure_reason: affected_cloud_deformation_exceeds_tolerance
+    expected_crossing_event_required: false
+    expected_new_center_created_for_A_transition: false
+  - id: coupled_pA_recoverability
+    acting_entity: A
+    affected_entity: B
+    local_outcome: ALLOW
+    R_B_after: 0.65
+    theta_B: 0.7
+    expected_coupled_outcome: DENY
+    expected_failure_reason: affected_entity_recoverability_below_threshold
+    expected_crossing_event_required: false
+    expected_new_center_created_for_A_transition: false
+  - id: coupled_pA_unknown_deformation
+    acting_entity: A
+    affected_entity: B
+    local_outcome: ALLOW
+    delta_A_to_B: unknown
+    epsilon_B: 0.2
+    expected_coupled_outcome: FAIL_CLOSED
+    expected_failure_reason: affected_cloud_deformation_unknown
+    expected_crossing_event_required: false
+    expected_new_center_created_for_A_transition: false
+
+invariants:
+  - name: local_global_non_equivalence
+    type: many_body
+    condition: local_allow_does_not_imply_coupled_allow
+    threshold: 1.0
+  - name: bounded_cloud_deformation
+    type: many_body
+    condition: coupled_allow_requires_delta_within_tolerance
+    threshold: 1.0
+  - name: affected_recoverability
+    type: recoverability
+    condition: coupled_allow_requires_affected_recoverability_threshold
+    threshold: 1.0
+  - name: unknown_deformation_fail_closed
+    type: safety_semantics
+    condition: unknown_relevant_affected_cloud_deformation_blocks_crossing
+    threshold: 1.0
+
+sandbox:
+  required: false
+  tier: 0
+  timeout_seconds: 300
+
+expected_summary:
+  total_cases: 3
+  allow: 0
+  deny: 2
+  fail_closed: 1
+  no_effect: 0
