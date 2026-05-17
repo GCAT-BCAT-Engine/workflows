@@ -1,0 +1,74 @@
+problem_id: chf-092
+title: Whitepaper Claim Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [claim_scope_declared, evidence_linked, limitations_declared, citation_plan_ready]
+  required_false: [unsupported_whitepaper_claim]
+  min_metrics:
+    whitepaper_confidence: 0.8
+  max_metrics:
+    citation_gap: 0.1
+test_cases:
+  - id: baseline_allow
+    claim_scope_declared: true
+    evidence_linked: true
+    limitations_declared: true
+    citation_plan_ready: true
+    unsupported_whitepaper_claim: false
+    whitepaper_confidence: 0.8500000000000001
+    citation_gap: 0.09000000000000001
+    expected: ALLOW
+  - id: missing_claim_scope_declared_fail_closed
+    claim_scope_declared: false
+    evidence_linked: true
+    limitations_declared: true
+    citation_plan_ready: true
+    unsupported_whitepaper_claim: false
+    whitepaper_confidence: 0.8500000000000001
+    citation_gap: 0.09000000000000001
+    expected: FAIL_CLOSED
+  - id: unsupported_whitepaper_claim_fail_closed
+    claim_scope_declared: true
+    evidence_linked: true
+    limitations_declared: true
+    citation_plan_ready: true
+    unsupported_whitepaper_claim: true
+    whitepaper_confidence: 0.8500000000000001
+    citation_gap: 0.09000000000000001
+    expected: FAIL_CLOSED
+  - id: whitepaper_confidence_below_minimum_fail_closed
+    claim_scope_declared: true
+    evidence_linked: true
+    limitations_declared: true
+    citation_plan_ready: true
+    unsupported_whitepaper_claim: false
+    whitepaper_confidence: 0.79
+    citation_gap: 0.09000000000000001
+    expected: FAIL_CLOSED
+  - id: whitepaper_confidence_exact_boundary_allow
+    claim_scope_declared: true
+    evidence_linked: true
+    limitations_declared: true
+    citation_plan_ready: true
+    unsupported_whitepaper_claim: false
+    whitepaper_confidence: 0.8
+    citation_gap: 0.09000000000000001
+    expected: ALLOW
+  - id: citation_gap_above_maximum_fail_closed
+    claim_scope_declared: true
+    evidence_linked: true
+    limitations_declared: true
+    citation_plan_ready: true
+    unsupported_whitepaper_claim: false
+    whitepaper_confidence: 0.8500000000000001
+    citation_gap: 0.11
+    expected: FAIL_CLOSED
+  - id: citation_gap_exact_boundary_allow
+    claim_scope_declared: true
+    evidence_linked: true
+    limitations_declared: true
+    citation_plan_ready: true
+    unsupported_whitepaper_claim: false
+    whitepaper_confidence: 0.8500000000000001
+    citation_gap: 0.1
+    expected: ALLOW

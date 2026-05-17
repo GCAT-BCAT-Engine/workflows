@@ -1,0 +1,74 @@
+problem_id: chf-053
+title: Cross-Jurisdiction and Legal Boundary Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [jurisdiction_declared, legal_basis_present, cross_border_review_complete, audit_receipt_ready]
+  required_false: [sanctioned_destination]
+  min_metrics:
+    legal_confidence: 0.85
+  max_metrics:
+    jurisdiction_risk: 0.2
+test_cases:
+  - id: baseline_allow
+    jurisdiction_declared: true
+    legal_basis_present: true
+    cross_border_review_complete: true
+    audit_receipt_ready: true
+    sanctioned_destination: false
+    legal_confidence: 0.9
+    jurisdiction_risk: 0.19
+    expected: ALLOW
+  - id: missing_jurisdiction_declared_fail_closed
+    jurisdiction_declared: false
+    legal_basis_present: true
+    cross_border_review_complete: true
+    audit_receipt_ready: true
+    sanctioned_destination: false
+    legal_confidence: 0.9
+    jurisdiction_risk: 0.19
+    expected: FAIL_CLOSED
+  - id: sanctioned_destination_fail_closed
+    jurisdiction_declared: true
+    legal_basis_present: true
+    cross_border_review_complete: true
+    audit_receipt_ready: true
+    sanctioned_destination: true
+    legal_confidence: 0.9
+    jurisdiction_risk: 0.19
+    expected: FAIL_CLOSED
+  - id: legal_confidence_below_minimum_fail_closed
+    jurisdiction_declared: true
+    legal_basis_present: true
+    cross_border_review_complete: true
+    audit_receipt_ready: true
+    sanctioned_destination: false
+    legal_confidence: 0.84
+    jurisdiction_risk: 0.19
+    expected: FAIL_CLOSED
+  - id: legal_confidence_exact_boundary_allow
+    jurisdiction_declared: true
+    legal_basis_present: true
+    cross_border_review_complete: true
+    audit_receipt_ready: true
+    sanctioned_destination: false
+    legal_confidence: 0.85
+    jurisdiction_risk: 0.19
+    expected: ALLOW
+  - id: jurisdiction_risk_above_maximum_fail_closed
+    jurisdiction_declared: true
+    legal_basis_present: true
+    cross_border_review_complete: true
+    audit_receipt_ready: true
+    sanctioned_destination: false
+    legal_confidence: 0.9
+    jurisdiction_risk: 0.21000000000000002
+    expected: FAIL_CLOSED
+  - id: jurisdiction_risk_exact_boundary_allow
+    jurisdiction_declared: true
+    legal_basis_present: true
+    cross_border_review_complete: true
+    audit_receipt_ready: true
+    sanctioned_destination: false
+    legal_confidence: 0.9
+    jurisdiction_risk: 0.2
+    expected: ALLOW

@@ -1,0 +1,74 @@
+problem_id: chf-085
+title: Audit Export Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [export_schema_declared, redaction_policy_defined, recipient_authorized, export_receipt_ready]
+  required_false: [audit_export_leak_risk]
+  min_metrics:
+    export_confidence: 0.85
+  max_metrics:
+    redaction_gap: 0.05
+test_cases:
+  - id: baseline_allow
+    export_schema_declared: true
+    redaction_policy_defined: true
+    recipient_authorized: true
+    export_receipt_ready: true
+    audit_export_leak_risk: false
+    export_confidence: 0.9
+    redaction_gap: 0.04
+    expected: ALLOW
+  - id: missing_export_schema_declared_fail_closed
+    export_schema_declared: false
+    redaction_policy_defined: true
+    recipient_authorized: true
+    export_receipt_ready: true
+    audit_export_leak_risk: false
+    export_confidence: 0.9
+    redaction_gap: 0.04
+    expected: FAIL_CLOSED
+  - id: audit_export_leak_risk_fail_closed
+    export_schema_declared: true
+    redaction_policy_defined: true
+    recipient_authorized: true
+    export_receipt_ready: true
+    audit_export_leak_risk: true
+    export_confidence: 0.9
+    redaction_gap: 0.04
+    expected: FAIL_CLOSED
+  - id: export_confidence_below_minimum_fail_closed
+    export_schema_declared: true
+    redaction_policy_defined: true
+    recipient_authorized: true
+    export_receipt_ready: true
+    audit_export_leak_risk: false
+    export_confidence: 0.84
+    redaction_gap: 0.04
+    expected: FAIL_CLOSED
+  - id: export_confidence_exact_boundary_allow
+    export_schema_declared: true
+    redaction_policy_defined: true
+    recipient_authorized: true
+    export_receipt_ready: true
+    audit_export_leak_risk: false
+    export_confidence: 0.85
+    redaction_gap: 0.04
+    expected: ALLOW
+  - id: redaction_gap_above_maximum_fail_closed
+    export_schema_declared: true
+    redaction_policy_defined: true
+    recipient_authorized: true
+    export_receipt_ready: true
+    audit_export_leak_risk: false
+    export_confidence: 0.9
+    redaction_gap: 0.060000000000000005
+    expected: FAIL_CLOSED
+  - id: redaction_gap_exact_boundary_allow
+    export_schema_declared: true
+    redaction_policy_defined: true
+    recipient_authorized: true
+    export_receipt_ready: true
+    audit_export_leak_risk: false
+    export_confidence: 0.9
+    redaction_gap: 0.05
+    expected: ALLOW

@@ -1,0 +1,74 @@
+problem_id: chf-093
+title: Public Demo Readiness Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [demo_scope_declared, failure_modes_documented, safe_inputs_defined, demo_receipt_ready]
+  required_false: [demo_overclaim_risk]
+  min_metrics:
+    demo_confidence: 0.85
+  max_metrics:
+    demo_gap: 0.1
+test_cases:
+  - id: baseline_allow
+    demo_scope_declared: true
+    failure_modes_documented: true
+    safe_inputs_defined: true
+    demo_receipt_ready: true
+    demo_overclaim_risk: false
+    demo_confidence: 0.9
+    demo_gap: 0.09000000000000001
+    expected: ALLOW
+  - id: missing_demo_scope_declared_fail_closed
+    demo_scope_declared: false
+    failure_modes_documented: true
+    safe_inputs_defined: true
+    demo_receipt_ready: true
+    demo_overclaim_risk: false
+    demo_confidence: 0.9
+    demo_gap: 0.09000000000000001
+    expected: FAIL_CLOSED
+  - id: demo_overclaim_risk_fail_closed
+    demo_scope_declared: true
+    failure_modes_documented: true
+    safe_inputs_defined: true
+    demo_receipt_ready: true
+    demo_overclaim_risk: true
+    demo_confidence: 0.9
+    demo_gap: 0.09000000000000001
+    expected: FAIL_CLOSED
+  - id: demo_confidence_below_minimum_fail_closed
+    demo_scope_declared: true
+    failure_modes_documented: true
+    safe_inputs_defined: true
+    demo_receipt_ready: true
+    demo_overclaim_risk: false
+    demo_confidence: 0.84
+    demo_gap: 0.09000000000000001
+    expected: FAIL_CLOSED
+  - id: demo_confidence_exact_boundary_allow
+    demo_scope_declared: true
+    failure_modes_documented: true
+    safe_inputs_defined: true
+    demo_receipt_ready: true
+    demo_overclaim_risk: false
+    demo_confidence: 0.85
+    demo_gap: 0.09000000000000001
+    expected: ALLOW
+  - id: demo_gap_above_maximum_fail_closed
+    demo_scope_declared: true
+    failure_modes_documented: true
+    safe_inputs_defined: true
+    demo_receipt_ready: true
+    demo_overclaim_risk: false
+    demo_confidence: 0.9
+    demo_gap: 0.11
+    expected: FAIL_CLOSED
+  - id: demo_gap_exact_boundary_allow
+    demo_scope_declared: true
+    failure_modes_documented: true
+    safe_inputs_defined: true
+    demo_receipt_ready: true
+    demo_overclaim_risk: false
+    demo_confidence: 0.9
+    demo_gap: 0.1
+    expected: ALLOW

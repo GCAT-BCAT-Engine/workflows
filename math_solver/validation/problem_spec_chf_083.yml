@@ -1,0 +1,74 @@
+problem_id: chf-083
+title: Rollback Orchestration Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [rollback_plan_declared, rollback_tested, dependencies_reversible, rollback_receipt_ready]
+  required_false: [rollback_conflict_detected]
+  min_metrics:
+    rollback_confidence: 0.85
+  max_metrics:
+    rollback_time_minutes: 60
+test_cases:
+  - id: baseline_allow
+    rollback_plan_declared: true
+    rollback_tested: true
+    dependencies_reversible: true
+    rollback_receipt_ready: true
+    rollback_conflict_detected: false
+    rollback_confidence: 0.9
+    rollback_time_minutes: 59
+    expected: ALLOW
+  - id: missing_rollback_plan_declared_fail_closed
+    rollback_plan_declared: false
+    rollback_tested: true
+    dependencies_reversible: true
+    rollback_receipt_ready: true
+    rollback_conflict_detected: false
+    rollback_confidence: 0.9
+    rollback_time_minutes: 59
+    expected: FAIL_CLOSED
+  - id: rollback_conflict_detected_fail_closed
+    rollback_plan_declared: true
+    rollback_tested: true
+    dependencies_reversible: true
+    rollback_receipt_ready: true
+    rollback_conflict_detected: true
+    rollback_confidence: 0.9
+    rollback_time_minutes: 59
+    expected: FAIL_CLOSED
+  - id: rollback_confidence_below_minimum_fail_closed
+    rollback_plan_declared: true
+    rollback_tested: true
+    dependencies_reversible: true
+    rollback_receipt_ready: true
+    rollback_conflict_detected: false
+    rollback_confidence: 0.84
+    rollback_time_minutes: 59
+    expected: FAIL_CLOSED
+  - id: rollback_confidence_exact_boundary_allow
+    rollback_plan_declared: true
+    rollback_tested: true
+    dependencies_reversible: true
+    rollback_receipt_ready: true
+    rollback_conflict_detected: false
+    rollback_confidence: 0.85
+    rollback_time_minutes: 59
+    expected: ALLOW
+  - id: rollback_time_minutes_above_maximum_fail_closed
+    rollback_plan_declared: true
+    rollback_tested: true
+    dependencies_reversible: true
+    rollback_receipt_ready: true
+    rollback_conflict_detected: false
+    rollback_confidence: 0.9
+    rollback_time_minutes: 61
+    expected: FAIL_CLOSED
+  - id: rollback_time_minutes_exact_boundary_allow
+    rollback_plan_declared: true
+    rollback_tested: true
+    dependencies_reversible: true
+    rollback_receipt_ready: true
+    rollback_conflict_detected: false
+    rollback_confidence: 0.9
+    rollback_time_minutes: 60
+    expected: ALLOW

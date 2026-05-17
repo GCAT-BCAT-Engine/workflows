@@ -1,0 +1,74 @@
+problem_id: chf-103
+title: Ecosystem Fork Governance Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [fork_reason_declared, fork_authority_valid, state_split_receipt_ready, reconciliation_policy_ready]
+  required_false: [fork_capture_risk]
+  min_metrics:
+    fork_confidence: 0.8
+  max_metrics:
+    reconciliation_gap: 0.15
+test_cases:
+  - id: baseline_allow
+    fork_reason_declared: true
+    fork_authority_valid: true
+    state_split_receipt_ready: true
+    reconciliation_policy_ready: true
+    fork_capture_risk: false
+    fork_confidence: 0.8500000000000001
+    reconciliation_gap: 0.13999999999999999
+    expected: ALLOW
+  - id: missing_fork_reason_declared_fail_closed
+    fork_reason_declared: false
+    fork_authority_valid: true
+    state_split_receipt_ready: true
+    reconciliation_policy_ready: true
+    fork_capture_risk: false
+    fork_confidence: 0.8500000000000001
+    reconciliation_gap: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: fork_capture_risk_fail_closed
+    fork_reason_declared: true
+    fork_authority_valid: true
+    state_split_receipt_ready: true
+    reconciliation_policy_ready: true
+    fork_capture_risk: true
+    fork_confidence: 0.8500000000000001
+    reconciliation_gap: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: fork_confidence_below_minimum_fail_closed
+    fork_reason_declared: true
+    fork_authority_valid: true
+    state_split_receipt_ready: true
+    reconciliation_policy_ready: true
+    fork_capture_risk: false
+    fork_confidence: 0.79
+    reconciliation_gap: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: fork_confidence_exact_boundary_allow
+    fork_reason_declared: true
+    fork_authority_valid: true
+    state_split_receipt_ready: true
+    reconciliation_policy_ready: true
+    fork_capture_risk: false
+    fork_confidence: 0.8
+    reconciliation_gap: 0.13999999999999999
+    expected: ALLOW
+  - id: reconciliation_gap_above_maximum_fail_closed
+    fork_reason_declared: true
+    fork_authority_valid: true
+    state_split_receipt_ready: true
+    reconciliation_policy_ready: true
+    fork_capture_risk: false
+    fork_confidence: 0.8500000000000001
+    reconciliation_gap: 0.16
+    expected: FAIL_CLOSED
+  - id: reconciliation_gap_exact_boundary_allow
+    fork_reason_declared: true
+    fork_authority_valid: true
+    state_split_receipt_ready: true
+    reconciliation_policy_ready: true
+    fork_capture_risk: false
+    fork_confidence: 0.8500000000000001
+    reconciliation_gap: 0.15
+    expected: ALLOW

@@ -1,0 +1,74 @@
+problem_id: chf-073
+title: TLA+ Model Readiness Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [variables_declared, actions_declared, temporal_properties_declared, model_check_scope_ready]
+  required_false: [liveness_conflict_unhandled]
+  min_metrics:
+    model_confidence: 0.75
+  max_metrics:
+    state_explosion_risk: 0.3
+test_cases:
+  - id: baseline_allow
+    variables_declared: true
+    actions_declared: true
+    temporal_properties_declared: true
+    model_check_scope_ready: true
+    liveness_conflict_unhandled: false
+    model_confidence: 0.8
+    state_explosion_risk: 0.29
+    expected: ALLOW
+  - id: missing_variables_declared_fail_closed
+    variables_declared: false
+    actions_declared: true
+    temporal_properties_declared: true
+    model_check_scope_ready: true
+    liveness_conflict_unhandled: false
+    model_confidence: 0.8
+    state_explosion_risk: 0.29
+    expected: FAIL_CLOSED
+  - id: liveness_conflict_unhandled_fail_closed
+    variables_declared: true
+    actions_declared: true
+    temporal_properties_declared: true
+    model_check_scope_ready: true
+    liveness_conflict_unhandled: true
+    model_confidence: 0.8
+    state_explosion_risk: 0.29
+    expected: FAIL_CLOSED
+  - id: model_confidence_below_minimum_fail_closed
+    variables_declared: true
+    actions_declared: true
+    temporal_properties_declared: true
+    model_check_scope_ready: true
+    liveness_conflict_unhandled: false
+    model_confidence: 0.74
+    state_explosion_risk: 0.29
+    expected: FAIL_CLOSED
+  - id: model_confidence_exact_boundary_allow
+    variables_declared: true
+    actions_declared: true
+    temporal_properties_declared: true
+    model_check_scope_ready: true
+    liveness_conflict_unhandled: false
+    model_confidence: 0.75
+    state_explosion_risk: 0.29
+    expected: ALLOW
+  - id: state_explosion_risk_above_maximum_fail_closed
+    variables_declared: true
+    actions_declared: true
+    temporal_properties_declared: true
+    model_check_scope_ready: true
+    liveness_conflict_unhandled: false
+    model_confidence: 0.8
+    state_explosion_risk: 0.31
+    expected: FAIL_CLOSED
+  - id: state_explosion_risk_exact_boundary_allow
+    variables_declared: true
+    actions_declared: true
+    temporal_properties_declared: true
+    model_check_scope_ready: true
+    liveness_conflict_unhandled: false
+    model_confidence: 0.8
+    state_explosion_risk: 0.3
+    expected: ALLOW

@@ -1,0 +1,74 @@
+problem_id: chf-105
+title: Multi-Formalism Conflict Arbitration Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [conflict_declared, priority_rule_defined, affected_formalisms_listed, arbitration_receipt_ready]
+  required_false: [unresolved_formalism_conflict]
+  min_metrics:
+    arbitration_confidence: 0.8
+  max_metrics:
+    priority_ambiguity: 0.1
+test_cases:
+  - id: baseline_allow
+    conflict_declared: true
+    priority_rule_defined: true
+    affected_formalisms_listed: true
+    arbitration_receipt_ready: true
+    unresolved_formalism_conflict: false
+    arbitration_confidence: 0.8500000000000001
+    priority_ambiguity: 0.09000000000000001
+    expected: ALLOW
+  - id: missing_conflict_declared_fail_closed
+    conflict_declared: false
+    priority_rule_defined: true
+    affected_formalisms_listed: true
+    arbitration_receipt_ready: true
+    unresolved_formalism_conflict: false
+    arbitration_confidence: 0.8500000000000001
+    priority_ambiguity: 0.09000000000000001
+    expected: FAIL_CLOSED
+  - id: unresolved_formalism_conflict_fail_closed
+    conflict_declared: true
+    priority_rule_defined: true
+    affected_formalisms_listed: true
+    arbitration_receipt_ready: true
+    unresolved_formalism_conflict: true
+    arbitration_confidence: 0.8500000000000001
+    priority_ambiguity: 0.09000000000000001
+    expected: FAIL_CLOSED
+  - id: arbitration_confidence_below_minimum_fail_closed
+    conflict_declared: true
+    priority_rule_defined: true
+    affected_formalisms_listed: true
+    arbitration_receipt_ready: true
+    unresolved_formalism_conflict: false
+    arbitration_confidence: 0.79
+    priority_ambiguity: 0.09000000000000001
+    expected: FAIL_CLOSED
+  - id: arbitration_confidence_exact_boundary_allow
+    conflict_declared: true
+    priority_rule_defined: true
+    affected_formalisms_listed: true
+    arbitration_receipt_ready: true
+    unresolved_formalism_conflict: false
+    arbitration_confidence: 0.8
+    priority_ambiguity: 0.09000000000000001
+    expected: ALLOW
+  - id: priority_ambiguity_above_maximum_fail_closed
+    conflict_declared: true
+    priority_rule_defined: true
+    affected_formalisms_listed: true
+    arbitration_receipt_ready: true
+    unresolved_formalism_conflict: false
+    arbitration_confidence: 0.8500000000000001
+    priority_ambiguity: 0.11
+    expected: FAIL_CLOSED
+  - id: priority_ambiguity_exact_boundary_allow
+    conflict_declared: true
+    priority_rule_defined: true
+    affected_formalisms_listed: true
+    arbitration_receipt_ready: true
+    unresolved_formalism_conflict: false
+    arbitration_confidence: 0.8500000000000001
+    priority_ambiguity: 0.1
+    expected: ALLOW

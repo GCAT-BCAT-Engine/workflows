@@ -1,0 +1,74 @@
+problem_id: chf-088
+title: Service-Level Admissibility Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [service_slo_declared, degradation_policy_ready, user_notice_ready, service_receipt_ready]
+  required_false: [service_degradation_unbounded]
+  min_metrics:
+    service_confidence: 0.8
+  max_metrics:
+    slo_violation_risk: 0.2
+test_cases:
+  - id: baseline_allow
+    service_slo_declared: true
+    degradation_policy_ready: true
+    user_notice_ready: true
+    service_receipt_ready: true
+    service_degradation_unbounded: false
+    service_confidence: 0.8500000000000001
+    slo_violation_risk: 0.19
+    expected: ALLOW
+  - id: missing_service_slo_declared_fail_closed
+    service_slo_declared: false
+    degradation_policy_ready: true
+    user_notice_ready: true
+    service_receipt_ready: true
+    service_degradation_unbounded: false
+    service_confidence: 0.8500000000000001
+    slo_violation_risk: 0.19
+    expected: FAIL_CLOSED
+  - id: service_degradation_unbounded_fail_closed
+    service_slo_declared: true
+    degradation_policy_ready: true
+    user_notice_ready: true
+    service_receipt_ready: true
+    service_degradation_unbounded: true
+    service_confidence: 0.8500000000000001
+    slo_violation_risk: 0.19
+    expected: FAIL_CLOSED
+  - id: service_confidence_below_minimum_fail_closed
+    service_slo_declared: true
+    degradation_policy_ready: true
+    user_notice_ready: true
+    service_receipt_ready: true
+    service_degradation_unbounded: false
+    service_confidence: 0.79
+    slo_violation_risk: 0.19
+    expected: FAIL_CLOSED
+  - id: service_confidence_exact_boundary_allow
+    service_slo_declared: true
+    degradation_policy_ready: true
+    user_notice_ready: true
+    service_receipt_ready: true
+    service_degradation_unbounded: false
+    service_confidence: 0.8
+    slo_violation_risk: 0.19
+    expected: ALLOW
+  - id: slo_violation_risk_above_maximum_fail_closed
+    service_slo_declared: true
+    degradation_policy_ready: true
+    user_notice_ready: true
+    service_receipt_ready: true
+    service_degradation_unbounded: false
+    service_confidence: 0.8500000000000001
+    slo_violation_risk: 0.21000000000000002
+    expected: FAIL_CLOSED
+  - id: slo_violation_risk_exact_boundary_allow
+    service_slo_declared: true
+    degradation_policy_ready: true
+    user_notice_ready: true
+    service_receipt_ready: true
+    service_degradation_unbounded: false
+    service_confidence: 0.8500000000000001
+    slo_violation_risk: 0.2
+    expected: ALLOW

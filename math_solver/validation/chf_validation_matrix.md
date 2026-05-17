@@ -1,6 +1,6 @@
-# CHF Validation Matrix — v0.16 Agent Boundary Batch
+# CHF Validation Matrix — v0.17 Sixty-Gate Expansion
 
-Adds explicit deterministic specs for `chf-041` through `chf-050`.
+Adds explicit deterministic specs for `chf-051` through `chf-110`.
 
 ## Stable dispatcher
 
@@ -10,26 +10,35 @@ This bundle does not include:
 .github/workflows/chf_validation_run.yml
 ```
 
-## New gates
+## Scope
 
-| Spec | Purpose |
-|---|---|
-| `chf-041` | adversarial prompt / instruction boundary |
-| `chf-042` | tool invocation standing |
-| `chf-043` | secret / credential exposure |
-| `chf-044` | data exfiltration / boundary crossing |
-| `chf-045` | autonomous recursion limit |
-| `chf-046` | model output reliance |
-| `chf-047` | simulation-to-reality transfer |
-| `chf-048` | governance capture / influence concentration |
-| `chf-049` | dependency drift / supply chain |
-| `chf-050` | emergency override / break-glass |
+```text
+chf-051 through chf-060:
+  human override, AI coordination, legal boundary, accessibility, epistemic provenance,
+  scientific escalation, dataset/training, identity continuity, deletion/retention,
+  cross-formalism composition
+
+chf-061 through chf-070:
+  mathematical hardening
+
+chf-071 through chf-080:
+  formal-methods translation readiness
+
+chf-081 through chf-090:
+  operational deployment hardening
+
+chf-091 through chf-100:
+  publication, benchmark, archive, phase-one completion
+
+chf-101 through chf-110:
+  phase-two admission and cross-formalism extension gates
+```
 
 ## Expected result
 
 ```text
 Overall status: PASS
 Explicit status: PASS
-Specs evaluated: 50
+Specs evaluated: 110
 Sandbox status: PASS
 ```

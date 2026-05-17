@@ -1,0 +1,74 @@
+problem_id: chf-058
+title: Identity and Persona Continuity Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [identity_authorized, persona_scope_declared, memory_boundary_valid, continuity_receipt_ready]
+  required_false: [identity_impersonation_risk]
+  min_metrics:
+    continuity_confidence: 0.85
+  max_metrics:
+    persona_drift: 0.2
+test_cases:
+  - id: baseline_allow
+    identity_authorized: true
+    persona_scope_declared: true
+    memory_boundary_valid: true
+    continuity_receipt_ready: true
+    identity_impersonation_risk: false
+    continuity_confidence: 0.9
+    persona_drift: 0.19
+    expected: ALLOW
+  - id: missing_identity_authorized_fail_closed
+    identity_authorized: false
+    persona_scope_declared: true
+    memory_boundary_valid: true
+    continuity_receipt_ready: true
+    identity_impersonation_risk: false
+    continuity_confidence: 0.9
+    persona_drift: 0.19
+    expected: FAIL_CLOSED
+  - id: identity_impersonation_risk_fail_closed
+    identity_authorized: true
+    persona_scope_declared: true
+    memory_boundary_valid: true
+    continuity_receipt_ready: true
+    identity_impersonation_risk: true
+    continuity_confidence: 0.9
+    persona_drift: 0.19
+    expected: FAIL_CLOSED
+  - id: continuity_confidence_below_minimum_fail_closed
+    identity_authorized: true
+    persona_scope_declared: true
+    memory_boundary_valid: true
+    continuity_receipt_ready: true
+    identity_impersonation_risk: false
+    continuity_confidence: 0.84
+    persona_drift: 0.19
+    expected: FAIL_CLOSED
+  - id: continuity_confidence_exact_boundary_allow
+    identity_authorized: true
+    persona_scope_declared: true
+    memory_boundary_valid: true
+    continuity_receipt_ready: true
+    identity_impersonation_risk: false
+    continuity_confidence: 0.85
+    persona_drift: 0.19
+    expected: ALLOW
+  - id: persona_drift_above_maximum_fail_closed
+    identity_authorized: true
+    persona_scope_declared: true
+    memory_boundary_valid: true
+    continuity_receipt_ready: true
+    identity_impersonation_risk: false
+    continuity_confidence: 0.9
+    persona_drift: 0.21000000000000002
+    expected: FAIL_CLOSED
+  - id: persona_drift_exact_boundary_allow
+    identity_authorized: true
+    persona_scope_declared: true
+    memory_boundary_valid: true
+    continuity_receipt_ready: true
+    identity_impersonation_risk: false
+    continuity_confidence: 0.9
+    persona_drift: 0.2
+    expected: ALLOW

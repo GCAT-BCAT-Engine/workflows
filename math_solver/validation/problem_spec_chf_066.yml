@@ -1,0 +1,74 @@
+problem_id: chf-066
+title: Entropy Reversibility Function Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [entropy_function_declared, reversibility_margin_defined, budget_rule_declared, mitigation_path_ready]
+  required_false: [entropy_function_conflict]
+  min_metrics:
+    reversibility_confidence: 0.8
+  max_metrics:
+    entropy_error: 0.1
+test_cases:
+  - id: baseline_allow
+    entropy_function_declared: true
+    reversibility_margin_defined: true
+    budget_rule_declared: true
+    mitigation_path_ready: true
+    entropy_function_conflict: false
+    reversibility_confidence: 0.8500000000000001
+    entropy_error: 0.09000000000000001
+    expected: ALLOW
+  - id: missing_entropy_function_declared_fail_closed
+    entropy_function_declared: false
+    reversibility_margin_defined: true
+    budget_rule_declared: true
+    mitigation_path_ready: true
+    entropy_function_conflict: false
+    reversibility_confidence: 0.8500000000000001
+    entropy_error: 0.09000000000000001
+    expected: FAIL_CLOSED
+  - id: entropy_function_conflict_fail_closed
+    entropy_function_declared: true
+    reversibility_margin_defined: true
+    budget_rule_declared: true
+    mitigation_path_ready: true
+    entropy_function_conflict: true
+    reversibility_confidence: 0.8500000000000001
+    entropy_error: 0.09000000000000001
+    expected: FAIL_CLOSED
+  - id: reversibility_confidence_below_minimum_fail_closed
+    entropy_function_declared: true
+    reversibility_margin_defined: true
+    budget_rule_declared: true
+    mitigation_path_ready: true
+    entropy_function_conflict: false
+    reversibility_confidence: 0.79
+    entropy_error: 0.09000000000000001
+    expected: FAIL_CLOSED
+  - id: reversibility_confidence_exact_boundary_allow
+    entropy_function_declared: true
+    reversibility_margin_defined: true
+    budget_rule_declared: true
+    mitigation_path_ready: true
+    entropy_function_conflict: false
+    reversibility_confidence: 0.8
+    entropy_error: 0.09000000000000001
+    expected: ALLOW
+  - id: entropy_error_above_maximum_fail_closed
+    entropy_function_declared: true
+    reversibility_margin_defined: true
+    budget_rule_declared: true
+    mitigation_path_ready: true
+    entropy_function_conflict: false
+    reversibility_confidence: 0.8500000000000001
+    entropy_error: 0.11
+    expected: FAIL_CLOSED
+  - id: entropy_error_exact_boundary_allow
+    entropy_function_declared: true
+    reversibility_margin_defined: true
+    budget_rule_declared: true
+    mitigation_path_ready: true
+    entropy_function_conflict: false
+    reversibility_confidence: 0.8500000000000001
+    entropy_error: 0.1
+    expected: ALLOW

@@ -1,0 +1,74 @@
+problem_id: chf-061
+title: Invariant Strengthening Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [invariant_named, state_space_declared, violation_outcome_defined, proof_obligation_ready]
+  required_false: [contradictory_invariant]
+  min_metrics:
+    invariant_confidence: 0.85
+  max_metrics:
+    invariant_gap: 0.15
+test_cases:
+  - id: baseline_allow
+    invariant_named: true
+    state_space_declared: true
+    violation_outcome_defined: true
+    proof_obligation_ready: true
+    contradictory_invariant: false
+    invariant_confidence: 0.9
+    invariant_gap: 0.13999999999999999
+    expected: ALLOW
+  - id: missing_invariant_named_fail_closed
+    invariant_named: false
+    state_space_declared: true
+    violation_outcome_defined: true
+    proof_obligation_ready: true
+    contradictory_invariant: false
+    invariant_confidence: 0.9
+    invariant_gap: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: contradictory_invariant_fail_closed
+    invariant_named: true
+    state_space_declared: true
+    violation_outcome_defined: true
+    proof_obligation_ready: true
+    contradictory_invariant: true
+    invariant_confidence: 0.9
+    invariant_gap: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: invariant_confidence_below_minimum_fail_closed
+    invariant_named: true
+    state_space_declared: true
+    violation_outcome_defined: true
+    proof_obligation_ready: true
+    contradictory_invariant: false
+    invariant_confidence: 0.84
+    invariant_gap: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: invariant_confidence_exact_boundary_allow
+    invariant_named: true
+    state_space_declared: true
+    violation_outcome_defined: true
+    proof_obligation_ready: true
+    contradictory_invariant: false
+    invariant_confidence: 0.85
+    invariant_gap: 0.13999999999999999
+    expected: ALLOW
+  - id: invariant_gap_above_maximum_fail_closed
+    invariant_named: true
+    state_space_declared: true
+    violation_outcome_defined: true
+    proof_obligation_ready: true
+    contradictory_invariant: false
+    invariant_confidence: 0.9
+    invariant_gap: 0.16
+    expected: FAIL_CLOSED
+  - id: invariant_gap_exact_boundary_allow
+    invariant_named: true
+    state_space_declared: true
+    violation_outcome_defined: true
+    proof_obligation_ready: true
+    contradictory_invariant: false
+    invariant_confidence: 0.9
+    invariant_gap: 0.15
+    expected: ALLOW

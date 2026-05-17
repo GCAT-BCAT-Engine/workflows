@@ -1,0 +1,74 @@
+problem_id: chf-089
+title: Cross-Cloud Deployment Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [cloud_boundary_declared, provider_policy_match, egress_review_complete, cloud_receipt_ready]
+  required_false: [provider_trust_break]
+  min_metrics:
+    cloud_confidence: 0.8
+  max_metrics:
+    egress_risk: 0.2
+test_cases:
+  - id: baseline_allow
+    cloud_boundary_declared: true
+    provider_policy_match: true
+    egress_review_complete: true
+    cloud_receipt_ready: true
+    provider_trust_break: false
+    cloud_confidence: 0.8500000000000001
+    egress_risk: 0.19
+    expected: ALLOW
+  - id: missing_cloud_boundary_declared_fail_closed
+    cloud_boundary_declared: false
+    provider_policy_match: true
+    egress_review_complete: true
+    cloud_receipt_ready: true
+    provider_trust_break: false
+    cloud_confidence: 0.8500000000000001
+    egress_risk: 0.19
+    expected: FAIL_CLOSED
+  - id: provider_trust_break_fail_closed
+    cloud_boundary_declared: true
+    provider_policy_match: true
+    egress_review_complete: true
+    cloud_receipt_ready: true
+    provider_trust_break: true
+    cloud_confidence: 0.8500000000000001
+    egress_risk: 0.19
+    expected: FAIL_CLOSED
+  - id: cloud_confidence_below_minimum_fail_closed
+    cloud_boundary_declared: true
+    provider_policy_match: true
+    egress_review_complete: true
+    cloud_receipt_ready: true
+    provider_trust_break: false
+    cloud_confidence: 0.79
+    egress_risk: 0.19
+    expected: FAIL_CLOSED
+  - id: cloud_confidence_exact_boundary_allow
+    cloud_boundary_declared: true
+    provider_policy_match: true
+    egress_review_complete: true
+    cloud_receipt_ready: true
+    provider_trust_break: false
+    cloud_confidence: 0.8
+    egress_risk: 0.19
+    expected: ALLOW
+  - id: egress_risk_above_maximum_fail_closed
+    cloud_boundary_declared: true
+    provider_policy_match: true
+    egress_review_complete: true
+    cloud_receipt_ready: true
+    provider_trust_break: false
+    cloud_confidence: 0.8500000000000001
+    egress_risk: 0.21000000000000002
+    expected: FAIL_CLOSED
+  - id: egress_risk_exact_boundary_allow
+    cloud_boundary_declared: true
+    provider_policy_match: true
+    egress_review_complete: true
+    cloud_receipt_ready: true
+    provider_trust_break: false
+    cloud_confidence: 0.8500000000000001
+    egress_risk: 0.2
+    expected: ALLOW

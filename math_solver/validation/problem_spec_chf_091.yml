@@ -1,0 +1,74 @@
+problem_id: chf-091
+title: Patent Boundary Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [novelty_boundary_declared, inventor_notes_preserved, prior_art_search_ready, claim_receipt_ready]
+  required_false: [public_disclosure_risk_unhandled]
+  min_metrics:
+    patent_confidence: 0.75
+  max_metrics:
+    claim_overlap_risk: 0.25
+test_cases:
+  - id: baseline_allow
+    novelty_boundary_declared: true
+    inventor_notes_preserved: true
+    prior_art_search_ready: true
+    claim_receipt_ready: true
+    public_disclosure_risk_unhandled: false
+    patent_confidence: 0.8
+    claim_overlap_risk: 0.24
+    expected: ALLOW
+  - id: missing_novelty_boundary_declared_fail_closed
+    novelty_boundary_declared: false
+    inventor_notes_preserved: true
+    prior_art_search_ready: true
+    claim_receipt_ready: true
+    public_disclosure_risk_unhandled: false
+    patent_confidence: 0.8
+    claim_overlap_risk: 0.24
+    expected: FAIL_CLOSED
+  - id: public_disclosure_risk_unhandled_fail_closed
+    novelty_boundary_declared: true
+    inventor_notes_preserved: true
+    prior_art_search_ready: true
+    claim_receipt_ready: true
+    public_disclosure_risk_unhandled: true
+    patent_confidence: 0.8
+    claim_overlap_risk: 0.24
+    expected: FAIL_CLOSED
+  - id: patent_confidence_below_minimum_fail_closed
+    novelty_boundary_declared: true
+    inventor_notes_preserved: true
+    prior_art_search_ready: true
+    claim_receipt_ready: true
+    public_disclosure_risk_unhandled: false
+    patent_confidence: 0.74
+    claim_overlap_risk: 0.24
+    expected: FAIL_CLOSED
+  - id: patent_confidence_exact_boundary_allow
+    novelty_boundary_declared: true
+    inventor_notes_preserved: true
+    prior_art_search_ready: true
+    claim_receipt_ready: true
+    public_disclosure_risk_unhandled: false
+    patent_confidence: 0.75
+    claim_overlap_risk: 0.24
+    expected: ALLOW
+  - id: claim_overlap_risk_above_maximum_fail_closed
+    novelty_boundary_declared: true
+    inventor_notes_preserved: true
+    prior_art_search_ready: true
+    claim_receipt_ready: true
+    public_disclosure_risk_unhandled: false
+    patent_confidence: 0.8
+    claim_overlap_risk: 0.26
+    expected: FAIL_CLOSED
+  - id: claim_overlap_risk_exact_boundary_allow
+    novelty_boundary_declared: true
+    inventor_notes_preserved: true
+    prior_art_search_ready: true
+    claim_receipt_ready: true
+    public_disclosure_risk_unhandled: false
+    patent_confidence: 0.8
+    claim_overlap_risk: 0.25
+    expected: ALLOW

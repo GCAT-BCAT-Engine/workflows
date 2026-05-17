@@ -1,0 +1,74 @@
+problem_id: chf-080
+title: Formal Release Candidate Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [formal_scope_frozen, proof_status_declared, known_gaps_declared, release_receipt_ready]
+  required_false: [unresolved_blocker]
+  min_metrics:
+    release_confidence: 0.85
+  max_metrics:
+    known_gap_risk: 0.15
+test_cases:
+  - id: baseline_allow
+    formal_scope_frozen: true
+    proof_status_declared: true
+    known_gaps_declared: true
+    release_receipt_ready: true
+    unresolved_blocker: false
+    release_confidence: 0.9
+    known_gap_risk: 0.13999999999999999
+    expected: ALLOW
+  - id: missing_formal_scope_frozen_fail_closed
+    formal_scope_frozen: false
+    proof_status_declared: true
+    known_gaps_declared: true
+    release_receipt_ready: true
+    unresolved_blocker: false
+    release_confidence: 0.9
+    known_gap_risk: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: unresolved_blocker_fail_closed
+    formal_scope_frozen: true
+    proof_status_declared: true
+    known_gaps_declared: true
+    release_receipt_ready: true
+    unresolved_blocker: true
+    release_confidence: 0.9
+    known_gap_risk: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: release_confidence_below_minimum_fail_closed
+    formal_scope_frozen: true
+    proof_status_declared: true
+    known_gaps_declared: true
+    release_receipt_ready: true
+    unresolved_blocker: false
+    release_confidence: 0.84
+    known_gap_risk: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: release_confidence_exact_boundary_allow
+    formal_scope_frozen: true
+    proof_status_declared: true
+    known_gaps_declared: true
+    release_receipt_ready: true
+    unresolved_blocker: false
+    release_confidence: 0.85
+    known_gap_risk: 0.13999999999999999
+    expected: ALLOW
+  - id: known_gap_risk_above_maximum_fail_closed
+    formal_scope_frozen: true
+    proof_status_declared: true
+    known_gaps_declared: true
+    release_receipt_ready: true
+    unresolved_blocker: false
+    release_confidence: 0.9
+    known_gap_risk: 0.16
+    expected: FAIL_CLOSED
+  - id: known_gap_risk_exact_boundary_allow
+    formal_scope_frozen: true
+    proof_status_declared: true
+    known_gaps_declared: true
+    release_receipt_ready: true
+    unresolved_blocker: false
+    release_confidence: 0.9
+    known_gap_risk: 0.15
+    expected: ALLOW

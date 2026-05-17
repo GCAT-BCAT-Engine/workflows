@@ -1,0 +1,74 @@
+problem_id: chf-075
+title: Theorem Mapping Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [informal_claim_linked, formal_statement_linked, proof_strategy_declared, dependency_theorems_declared]
+  required_false: [claim_mapping_conflict]
+  min_metrics:
+    mapping_confidence: 0.8
+  max_metrics:
+    mapping_gap: 0.1
+test_cases:
+  - id: baseline_allow
+    informal_claim_linked: true
+    formal_statement_linked: true
+    proof_strategy_declared: true
+    dependency_theorems_declared: true
+    claim_mapping_conflict: false
+    mapping_confidence: 0.8500000000000001
+    mapping_gap: 0.09000000000000001
+    expected: ALLOW
+  - id: missing_informal_claim_linked_fail_closed
+    informal_claim_linked: false
+    formal_statement_linked: true
+    proof_strategy_declared: true
+    dependency_theorems_declared: true
+    claim_mapping_conflict: false
+    mapping_confidence: 0.8500000000000001
+    mapping_gap: 0.09000000000000001
+    expected: FAIL_CLOSED
+  - id: claim_mapping_conflict_fail_closed
+    informal_claim_linked: true
+    formal_statement_linked: true
+    proof_strategy_declared: true
+    dependency_theorems_declared: true
+    claim_mapping_conflict: true
+    mapping_confidence: 0.8500000000000001
+    mapping_gap: 0.09000000000000001
+    expected: FAIL_CLOSED
+  - id: mapping_confidence_below_minimum_fail_closed
+    informal_claim_linked: true
+    formal_statement_linked: true
+    proof_strategy_declared: true
+    dependency_theorems_declared: true
+    claim_mapping_conflict: false
+    mapping_confidence: 0.79
+    mapping_gap: 0.09000000000000001
+    expected: FAIL_CLOSED
+  - id: mapping_confidence_exact_boundary_allow
+    informal_claim_linked: true
+    formal_statement_linked: true
+    proof_strategy_declared: true
+    dependency_theorems_declared: true
+    claim_mapping_conflict: false
+    mapping_confidence: 0.8
+    mapping_gap: 0.09000000000000001
+    expected: ALLOW
+  - id: mapping_gap_above_maximum_fail_closed
+    informal_claim_linked: true
+    formal_statement_linked: true
+    proof_strategy_declared: true
+    dependency_theorems_declared: true
+    claim_mapping_conflict: false
+    mapping_confidence: 0.8500000000000001
+    mapping_gap: 0.11
+    expected: FAIL_CLOSED
+  - id: mapping_gap_exact_boundary_allow
+    informal_claim_linked: true
+    formal_statement_linked: true
+    proof_strategy_declared: true
+    dependency_theorems_declared: true
+    claim_mapping_conflict: false
+    mapping_confidence: 0.8500000000000001
+    mapping_gap: 0.1
+    expected: ALLOW

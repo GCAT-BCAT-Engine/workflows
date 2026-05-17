@@ -1,0 +1,74 @@
+problem_id: chf-090
+title: Production Promotion Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [promotion_policy_declared, approval_chain_valid, rollback_ready, promotion_receipt_ready]
+  required_false: [promotion_blocker_present]
+  min_metrics:
+    promotion_confidence: 0.85
+  max_metrics:
+    promotion_risk: 0.15
+test_cases:
+  - id: baseline_allow
+    promotion_policy_declared: true
+    approval_chain_valid: true
+    rollback_ready: true
+    promotion_receipt_ready: true
+    promotion_blocker_present: false
+    promotion_confidence: 0.9
+    promotion_risk: 0.13999999999999999
+    expected: ALLOW
+  - id: missing_promotion_policy_declared_fail_closed
+    promotion_policy_declared: false
+    approval_chain_valid: true
+    rollback_ready: true
+    promotion_receipt_ready: true
+    promotion_blocker_present: false
+    promotion_confidence: 0.9
+    promotion_risk: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: promotion_blocker_present_fail_closed
+    promotion_policy_declared: true
+    approval_chain_valid: true
+    rollback_ready: true
+    promotion_receipt_ready: true
+    promotion_blocker_present: true
+    promotion_confidence: 0.9
+    promotion_risk: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: promotion_confidence_below_minimum_fail_closed
+    promotion_policy_declared: true
+    approval_chain_valid: true
+    rollback_ready: true
+    promotion_receipt_ready: true
+    promotion_blocker_present: false
+    promotion_confidence: 0.84
+    promotion_risk: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: promotion_confidence_exact_boundary_allow
+    promotion_policy_declared: true
+    approval_chain_valid: true
+    rollback_ready: true
+    promotion_receipt_ready: true
+    promotion_blocker_present: false
+    promotion_confidence: 0.85
+    promotion_risk: 0.13999999999999999
+    expected: ALLOW
+  - id: promotion_risk_above_maximum_fail_closed
+    promotion_policy_declared: true
+    approval_chain_valid: true
+    rollback_ready: true
+    promotion_receipt_ready: true
+    promotion_blocker_present: false
+    promotion_confidence: 0.9
+    promotion_risk: 0.16
+    expected: FAIL_CLOSED
+  - id: promotion_risk_exact_boundary_allow
+    promotion_policy_declared: true
+    approval_chain_valid: true
+    rollback_ready: true
+    promotion_receipt_ready: true
+    promotion_blocker_present: false
+    promotion_confidence: 0.9
+    promotion_risk: 0.15
+    expected: ALLOW

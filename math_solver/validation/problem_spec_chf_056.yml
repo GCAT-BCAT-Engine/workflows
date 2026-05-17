@@ -1,0 +1,74 @@
+problem_id: chf-056
+title: Scientific Claim Escalation Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [claim_boundary_declared, evidence_level_declared, peer_review_path_defined, overclaim_guardrail_present]
+  required_false: [extraordinary_claim_unreviewed]
+  min_metrics:
+    evidence_confidence: 0.8
+  max_metrics:
+    speculation_ratio: 0.25
+test_cases:
+  - id: baseline_allow
+    claim_boundary_declared: true
+    evidence_level_declared: true
+    peer_review_path_defined: true
+    overclaim_guardrail_present: true
+    extraordinary_claim_unreviewed: false
+    evidence_confidence: 0.8500000000000001
+    speculation_ratio: 0.24
+    expected: ALLOW
+  - id: missing_claim_boundary_declared_fail_closed
+    claim_boundary_declared: false
+    evidence_level_declared: true
+    peer_review_path_defined: true
+    overclaim_guardrail_present: true
+    extraordinary_claim_unreviewed: false
+    evidence_confidence: 0.8500000000000001
+    speculation_ratio: 0.24
+    expected: FAIL_CLOSED
+  - id: extraordinary_claim_unreviewed_fail_closed
+    claim_boundary_declared: true
+    evidence_level_declared: true
+    peer_review_path_defined: true
+    overclaim_guardrail_present: true
+    extraordinary_claim_unreviewed: true
+    evidence_confidence: 0.8500000000000001
+    speculation_ratio: 0.24
+    expected: FAIL_CLOSED
+  - id: evidence_confidence_below_minimum_fail_closed
+    claim_boundary_declared: true
+    evidence_level_declared: true
+    peer_review_path_defined: true
+    overclaim_guardrail_present: true
+    extraordinary_claim_unreviewed: false
+    evidence_confidence: 0.79
+    speculation_ratio: 0.24
+    expected: FAIL_CLOSED
+  - id: evidence_confidence_exact_boundary_allow
+    claim_boundary_declared: true
+    evidence_level_declared: true
+    peer_review_path_defined: true
+    overclaim_guardrail_present: true
+    extraordinary_claim_unreviewed: false
+    evidence_confidence: 0.8
+    speculation_ratio: 0.24
+    expected: ALLOW
+  - id: speculation_ratio_above_maximum_fail_closed
+    claim_boundary_declared: true
+    evidence_level_declared: true
+    peer_review_path_defined: true
+    overclaim_guardrail_present: true
+    extraordinary_claim_unreviewed: false
+    evidence_confidence: 0.8500000000000001
+    speculation_ratio: 0.26
+    expected: FAIL_CLOSED
+  - id: speculation_ratio_exact_boundary_allow
+    claim_boundary_declared: true
+    evidence_level_declared: true
+    peer_review_path_defined: true
+    overclaim_guardrail_present: true
+    extraordinary_claim_unreviewed: false
+    evidence_confidence: 0.8500000000000001
+    speculation_ratio: 0.25
+    expected: ALLOW

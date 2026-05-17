@@ -1,5 +1,5 @@
-# CHF Sandbox Runner — v0.16
+# CHF Sandbox Runner — v0.17
 
-v0.16 adds explicit deterministic specs for `chf-041` through `chf-050`.
+v0.17 adds explicit deterministic specs for `chf-051` through `chf-110`.
 
-Generated sandbox suites for these gates are intentionally deferred to v0.17 after the explicit semantics are confirmed in GitHub.
+Generated sandbox suites for these sixty new gates are intentionally deferred until the explicit semantics are confirmed in GitHub.

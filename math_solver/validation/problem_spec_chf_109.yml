@@ -1,0 +1,74 @@
+problem_id: chf-109
+title: Transition Periodic Table Alignment Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [transition_class_declared, element_mapping_ready, interaction_rule_defined, transition_receipt_ready]
+  required_false: [transition_class_conflict]
+  min_metrics:
+    transition_alignment: 0.8
+  max_metrics:
+    mapping_ambiguity: 0.15
+test_cases:
+  - id: baseline_allow
+    transition_class_declared: true
+    element_mapping_ready: true
+    interaction_rule_defined: true
+    transition_receipt_ready: true
+    transition_class_conflict: false
+    transition_alignment: 0.8500000000000001
+    mapping_ambiguity: 0.13999999999999999
+    expected: ALLOW
+  - id: missing_transition_class_declared_fail_closed
+    transition_class_declared: false
+    element_mapping_ready: true
+    interaction_rule_defined: true
+    transition_receipt_ready: true
+    transition_class_conflict: false
+    transition_alignment: 0.8500000000000001
+    mapping_ambiguity: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: transition_class_conflict_fail_closed
+    transition_class_declared: true
+    element_mapping_ready: true
+    interaction_rule_defined: true
+    transition_receipt_ready: true
+    transition_class_conflict: true
+    transition_alignment: 0.8500000000000001
+    mapping_ambiguity: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: transition_alignment_below_minimum_fail_closed
+    transition_class_declared: true
+    element_mapping_ready: true
+    interaction_rule_defined: true
+    transition_receipt_ready: true
+    transition_class_conflict: false
+    transition_alignment: 0.79
+    mapping_ambiguity: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: transition_alignment_exact_boundary_allow
+    transition_class_declared: true
+    element_mapping_ready: true
+    interaction_rule_defined: true
+    transition_receipt_ready: true
+    transition_class_conflict: false
+    transition_alignment: 0.8
+    mapping_ambiguity: 0.13999999999999999
+    expected: ALLOW
+  - id: mapping_ambiguity_above_maximum_fail_closed
+    transition_class_declared: true
+    element_mapping_ready: true
+    interaction_rule_defined: true
+    transition_receipt_ready: true
+    transition_class_conflict: false
+    transition_alignment: 0.8500000000000001
+    mapping_ambiguity: 0.16
+    expected: FAIL_CLOSED
+  - id: mapping_ambiguity_exact_boundary_allow
+    transition_class_declared: true
+    element_mapping_ready: true
+    interaction_rule_defined: true
+    transition_receipt_ready: true
+    transition_class_conflict: false
+    transition_alignment: 0.8500000000000001
+    mapping_ambiguity: 0.15
+    expected: ALLOW

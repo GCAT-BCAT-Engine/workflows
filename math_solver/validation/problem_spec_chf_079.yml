@@ -1,0 +1,74 @@
+problem_id: chf-079
+title: Specification Drift Detection Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [spec_hash_ready, baseline_declared, drift_policy_defined, drift_receipt_ready]
+  required_false: [unauthorized_spec_drift]
+  min_metrics:
+    drift_detection_confidence: 0.85
+  max_metrics:
+    drift_gap: 0.05
+test_cases:
+  - id: baseline_allow
+    spec_hash_ready: true
+    baseline_declared: true
+    drift_policy_defined: true
+    drift_receipt_ready: true
+    unauthorized_spec_drift: false
+    drift_detection_confidence: 0.9
+    drift_gap: 0.04
+    expected: ALLOW
+  - id: missing_spec_hash_ready_fail_closed
+    spec_hash_ready: false
+    baseline_declared: true
+    drift_policy_defined: true
+    drift_receipt_ready: true
+    unauthorized_spec_drift: false
+    drift_detection_confidence: 0.9
+    drift_gap: 0.04
+    expected: FAIL_CLOSED
+  - id: unauthorized_spec_drift_fail_closed
+    spec_hash_ready: true
+    baseline_declared: true
+    drift_policy_defined: true
+    drift_receipt_ready: true
+    unauthorized_spec_drift: true
+    drift_detection_confidence: 0.9
+    drift_gap: 0.04
+    expected: FAIL_CLOSED
+  - id: drift_detection_confidence_below_minimum_fail_closed
+    spec_hash_ready: true
+    baseline_declared: true
+    drift_policy_defined: true
+    drift_receipt_ready: true
+    unauthorized_spec_drift: false
+    drift_detection_confidence: 0.84
+    drift_gap: 0.04
+    expected: FAIL_CLOSED
+  - id: drift_detection_confidence_exact_boundary_allow
+    spec_hash_ready: true
+    baseline_declared: true
+    drift_policy_defined: true
+    drift_receipt_ready: true
+    unauthorized_spec_drift: false
+    drift_detection_confidence: 0.85
+    drift_gap: 0.04
+    expected: ALLOW
+  - id: drift_gap_above_maximum_fail_closed
+    spec_hash_ready: true
+    baseline_declared: true
+    drift_policy_defined: true
+    drift_receipt_ready: true
+    unauthorized_spec_drift: false
+    drift_detection_confidence: 0.9
+    drift_gap: 0.060000000000000005
+    expected: FAIL_CLOSED
+  - id: drift_gap_exact_boundary_allow
+    spec_hash_ready: true
+    baseline_declared: true
+    drift_policy_defined: true
+    drift_receipt_ready: true
+    unauthorized_spec_drift: false
+    drift_detection_confidence: 0.9
+    drift_gap: 0.05
+    expected: ALLOW

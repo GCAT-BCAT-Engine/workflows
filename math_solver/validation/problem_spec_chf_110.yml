@@ -1,0 +1,74 @@
+problem_id: chf-110
+title: CHF Phase-Two Launch Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [phase_two_scope_ready, phase_one_archive_complete, new_gate_policy_ready, launch_receipt_ready]
+  required_false: [phase_two_blocker_present]
+  min_metrics:
+    launch_confidence: 0.9
+  max_metrics:
+    launch_gap: 0.05
+test_cases:
+  - id: baseline_allow
+    phase_two_scope_ready: true
+    phase_one_archive_complete: true
+    new_gate_policy_ready: true
+    launch_receipt_ready: true
+    phase_two_blocker_present: false
+    launch_confidence: 0.9500000000000001
+    launch_gap: 0.04
+    expected: ALLOW
+  - id: missing_phase_two_scope_ready_fail_closed
+    phase_two_scope_ready: false
+    phase_one_archive_complete: true
+    new_gate_policy_ready: true
+    launch_receipt_ready: true
+    phase_two_blocker_present: false
+    launch_confidence: 0.9500000000000001
+    launch_gap: 0.04
+    expected: FAIL_CLOSED
+  - id: phase_two_blocker_present_fail_closed
+    phase_two_scope_ready: true
+    phase_one_archive_complete: true
+    new_gate_policy_ready: true
+    launch_receipt_ready: true
+    phase_two_blocker_present: true
+    launch_confidence: 0.9500000000000001
+    launch_gap: 0.04
+    expected: FAIL_CLOSED
+  - id: launch_confidence_below_minimum_fail_closed
+    phase_two_scope_ready: true
+    phase_one_archive_complete: true
+    new_gate_policy_ready: true
+    launch_receipt_ready: true
+    phase_two_blocker_present: false
+    launch_confidence: 0.89
+    launch_gap: 0.04
+    expected: FAIL_CLOSED
+  - id: launch_confidence_exact_boundary_allow
+    phase_two_scope_ready: true
+    phase_one_archive_complete: true
+    new_gate_policy_ready: true
+    launch_receipt_ready: true
+    phase_two_blocker_present: false
+    launch_confidence: 0.9
+    launch_gap: 0.04
+    expected: ALLOW
+  - id: launch_gap_above_maximum_fail_closed
+    phase_two_scope_ready: true
+    phase_one_archive_complete: true
+    new_gate_policy_ready: true
+    launch_receipt_ready: true
+    phase_two_blocker_present: false
+    launch_confidence: 0.9500000000000001
+    launch_gap: 0.060000000000000005
+    expected: FAIL_CLOSED
+  - id: launch_gap_exact_boundary_allow
+    phase_two_scope_ready: true
+    phase_one_archive_complete: true
+    new_gate_policy_ready: true
+    launch_receipt_ready: true
+    phase_two_blocker_present: false
+    launch_confidence: 0.9500000000000001
+    launch_gap: 0.05
+    expected: ALLOW

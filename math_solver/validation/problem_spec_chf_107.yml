@@ -1,0 +1,74 @@
+problem_id: chf-107
+title: Life-Promotion Consistency Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [life_impact_declared, recoverability_preserved, purpose_convergence_preserved, ethics_receipt_ready]
+  required_false: [life_harm_unbounded]
+  min_metrics:
+    life_alignment: 0.85
+  max_metrics:
+    life_harm_risk: 0.1
+test_cases:
+  - id: baseline_allow
+    life_impact_declared: true
+    recoverability_preserved: true
+    purpose_convergence_preserved: true
+    ethics_receipt_ready: true
+    life_harm_unbounded: false
+    life_alignment: 0.9
+    life_harm_risk: 0.09000000000000001
+    expected: ALLOW
+  - id: missing_life_impact_declared_fail_closed
+    life_impact_declared: false
+    recoverability_preserved: true
+    purpose_convergence_preserved: true
+    ethics_receipt_ready: true
+    life_harm_unbounded: false
+    life_alignment: 0.9
+    life_harm_risk: 0.09000000000000001
+    expected: FAIL_CLOSED
+  - id: life_harm_unbounded_fail_closed
+    life_impact_declared: true
+    recoverability_preserved: true
+    purpose_convergence_preserved: true
+    ethics_receipt_ready: true
+    life_harm_unbounded: true
+    life_alignment: 0.9
+    life_harm_risk: 0.09000000000000001
+    expected: FAIL_CLOSED
+  - id: life_alignment_below_minimum_fail_closed
+    life_impact_declared: true
+    recoverability_preserved: true
+    purpose_convergence_preserved: true
+    ethics_receipt_ready: true
+    life_harm_unbounded: false
+    life_alignment: 0.84
+    life_harm_risk: 0.09000000000000001
+    expected: FAIL_CLOSED
+  - id: life_alignment_exact_boundary_allow
+    life_impact_declared: true
+    recoverability_preserved: true
+    purpose_convergence_preserved: true
+    ethics_receipt_ready: true
+    life_harm_unbounded: false
+    life_alignment: 0.85
+    life_harm_risk: 0.09000000000000001
+    expected: ALLOW
+  - id: life_harm_risk_above_maximum_fail_closed
+    life_impact_declared: true
+    recoverability_preserved: true
+    purpose_convergence_preserved: true
+    ethics_receipt_ready: true
+    life_harm_unbounded: false
+    life_alignment: 0.9
+    life_harm_risk: 0.11
+    expected: FAIL_CLOSED
+  - id: life_harm_risk_exact_boundary_allow
+    life_impact_declared: true
+    recoverability_preserved: true
+    purpose_convergence_preserved: true
+    ethics_receipt_ready: true
+    life_harm_unbounded: false
+    life_alignment: 0.9
+    life_harm_risk: 0.1
+    expected: ALLOW

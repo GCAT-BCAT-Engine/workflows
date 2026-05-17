@@ -1612,6 +1612,68 @@ def evaluate_chf_050(spec: Dict[str, Any]) -> Dict[str, Any]:
     return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
 
 
+
+def evaluate_standard_binary_gate(spec: Dict[str, Any]) -> Dict[str, Any]:
+    """Generic deterministic gate evaluator for scalable CHF expansion.
+
+    The spec supplies:
+      model.required_true: fields that must be true
+      model.required_false: fields that must be false
+      model.min_metrics: numeric fields with inclusive minimums
+      model.max_metrics: numeric fields with inclusive maximums
+
+    Outcomes:
+      ALLOW if all model constraints are satisfied
+      FAIL_CLOSED otherwise
+    """
+    model = spec.get("model", {})
+    required_true = list(model.get("required_true", []))
+    required_false = list(model.get("required_false", []))
+    min_metrics = dict(model.get("min_metrics", {}))
+    max_metrics = dict(model.get("max_metrics", {}))
+
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        actual = "ALLOW"
+        reason = "standard_gate_pass"
+
+        for key in required_true:
+            if not bool(case.get(key, False)):
+                actual, reason = "FAIL_CLOSED", f"{key}_required"
+                break
+
+        if actual == "ALLOW":
+            for key in required_false:
+                if bool(case.get(key, False)):
+                    actual, reason = "FAIL_CLOSED", f"{key}_must_be_false"
+                    break
+
+        if actual == "ALLOW":
+            for key, threshold in min_metrics.items():
+                if float(case.get(key, 0.0)) < float(threshold):
+                    actual, reason = "FAIL_CLOSED", f"{key}_below_minimum"
+                    break
+
+        if actual == "ALLOW":
+            for key, threshold in max_metrics.items():
+                if float(case.get(key, 1.0e12)) > float(threshold):
+                    actual, reason = "FAIL_CLOSED", f"{key}_above_maximum"
+                    break
+
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({
+            "id": case["id"],
+            "expected": expected,
+            "actual": actual,
+            "status": "PASS" if passed else "FAIL",
+            "reason": reason,
+        })
+
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
 EVALUATORS = {
     "chf-001": evaluate_chf_001,
     "chf-002": evaluate_chf_002,
@@ -1663,6 +1725,66 @@ EVALUATORS = {
     "chf-048": evaluate_chf_048,
     "chf-049": evaluate_chf_049,
     "chf-050": evaluate_chf_050,
+    "chf-051": evaluate_standard_binary_gate,
+    "chf-052": evaluate_standard_binary_gate,
+    "chf-053": evaluate_standard_binary_gate,
+    "chf-054": evaluate_standard_binary_gate,
+    "chf-055": evaluate_standard_binary_gate,
+    "chf-056": evaluate_standard_binary_gate,
+    "chf-057": evaluate_standard_binary_gate,
+    "chf-058": evaluate_standard_binary_gate,
+    "chf-059": evaluate_standard_binary_gate,
+    "chf-060": evaluate_standard_binary_gate,
+    "chf-061": evaluate_standard_binary_gate,
+    "chf-062": evaluate_standard_binary_gate,
+    "chf-063": evaluate_standard_binary_gate,
+    "chf-064": evaluate_standard_binary_gate,
+    "chf-065": evaluate_standard_binary_gate,
+    "chf-066": evaluate_standard_binary_gate,
+    "chf-067": evaluate_standard_binary_gate,
+    "chf-068": evaluate_standard_binary_gate,
+    "chf-069": evaluate_standard_binary_gate,
+    "chf-070": evaluate_standard_binary_gate,
+    "chf-071": evaluate_standard_binary_gate,
+    "chf-072": evaluate_standard_binary_gate,
+    "chf-073": evaluate_standard_binary_gate,
+    "chf-074": evaluate_standard_binary_gate,
+    "chf-075": evaluate_standard_binary_gate,
+    "chf-076": evaluate_standard_binary_gate,
+    "chf-077": evaluate_standard_binary_gate,
+    "chf-078": evaluate_standard_binary_gate,
+    "chf-079": evaluate_standard_binary_gate,
+    "chf-080": evaluate_standard_binary_gate,
+    "chf-081": evaluate_standard_binary_gate,
+    "chf-082": evaluate_standard_binary_gate,
+    "chf-083": evaluate_standard_binary_gate,
+    "chf-084": evaluate_standard_binary_gate,
+    "chf-085": evaluate_standard_binary_gate,
+    "chf-086": evaluate_standard_binary_gate,
+    "chf-087": evaluate_standard_binary_gate,
+    "chf-088": evaluate_standard_binary_gate,
+    "chf-089": evaluate_standard_binary_gate,
+    "chf-090": evaluate_standard_binary_gate,
+    "chf-091": evaluate_standard_binary_gate,
+    "chf-092": evaluate_standard_binary_gate,
+    "chf-093": evaluate_standard_binary_gate,
+    "chf-094": evaluate_standard_binary_gate,
+    "chf-095": evaluate_standard_binary_gate,
+    "chf-096": evaluate_standard_binary_gate,
+    "chf-097": evaluate_standard_binary_gate,
+    "chf-098": evaluate_standard_binary_gate,
+    "chf-099": evaluate_standard_binary_gate,
+    "chf-100": evaluate_standard_binary_gate,
+    "chf-101": evaluate_standard_binary_gate,
+    "chf-102": evaluate_standard_binary_gate,
+    "chf-103": evaluate_standard_binary_gate,
+    "chf-104": evaluate_standard_binary_gate,
+    "chf-105": evaluate_standard_binary_gate,
+    "chf-106": evaluate_standard_binary_gate,
+    "chf-107": evaluate_standard_binary_gate,
+    "chf-108": evaluate_standard_binary_gate,
+    "chf-109": evaluate_standard_binary_gate,
+    "chf-110": evaluate_standard_binary_gate,
 }
 
 

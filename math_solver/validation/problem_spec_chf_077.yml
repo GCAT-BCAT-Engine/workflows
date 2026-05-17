@@ -1,0 +1,74 @@
+problem_id: chf-077
+title: Runtime Monitor Extraction Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [invariant_runtime_form_declared, monitor_inputs_declared, alert_policy_defined, monitor_receipt_ready]
+  required_false: [monitor_side_effect_unbounded]
+  min_metrics:
+    monitor_confidence: 0.8
+  max_metrics:
+    monitor_overhead: 0.2
+test_cases:
+  - id: baseline_allow
+    invariant_runtime_form_declared: true
+    monitor_inputs_declared: true
+    alert_policy_defined: true
+    monitor_receipt_ready: true
+    monitor_side_effect_unbounded: false
+    monitor_confidence: 0.8500000000000001
+    monitor_overhead: 0.19
+    expected: ALLOW
+  - id: missing_invariant_runtime_form_declared_fail_closed
+    invariant_runtime_form_declared: false
+    monitor_inputs_declared: true
+    alert_policy_defined: true
+    monitor_receipt_ready: true
+    monitor_side_effect_unbounded: false
+    monitor_confidence: 0.8500000000000001
+    monitor_overhead: 0.19
+    expected: FAIL_CLOSED
+  - id: monitor_side_effect_unbounded_fail_closed
+    invariant_runtime_form_declared: true
+    monitor_inputs_declared: true
+    alert_policy_defined: true
+    monitor_receipt_ready: true
+    monitor_side_effect_unbounded: true
+    monitor_confidence: 0.8500000000000001
+    monitor_overhead: 0.19
+    expected: FAIL_CLOSED
+  - id: monitor_confidence_below_minimum_fail_closed
+    invariant_runtime_form_declared: true
+    monitor_inputs_declared: true
+    alert_policy_defined: true
+    monitor_receipt_ready: true
+    monitor_side_effect_unbounded: false
+    monitor_confidence: 0.79
+    monitor_overhead: 0.19
+    expected: FAIL_CLOSED
+  - id: monitor_confidence_exact_boundary_allow
+    invariant_runtime_form_declared: true
+    monitor_inputs_declared: true
+    alert_policy_defined: true
+    monitor_receipt_ready: true
+    monitor_side_effect_unbounded: false
+    monitor_confidence: 0.8
+    monitor_overhead: 0.19
+    expected: ALLOW
+  - id: monitor_overhead_above_maximum_fail_closed
+    invariant_runtime_form_declared: true
+    monitor_inputs_declared: true
+    alert_policy_defined: true
+    monitor_receipt_ready: true
+    monitor_side_effect_unbounded: false
+    monitor_confidence: 0.8500000000000001
+    monitor_overhead: 0.21000000000000002
+    expected: FAIL_CLOSED
+  - id: monitor_overhead_exact_boundary_allow
+    invariant_runtime_form_declared: true
+    monitor_inputs_declared: true
+    alert_policy_defined: true
+    monitor_receipt_ready: true
+    monitor_side_effect_unbounded: false
+    monitor_confidence: 0.8500000000000001
+    monitor_overhead: 0.2
+    expected: ALLOW

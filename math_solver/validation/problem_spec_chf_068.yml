@@ -1,0 +1,74 @@
+problem_id: chf-068
+title: Finite State Abstraction Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [state_variables_declared, domain_bounds_declared, transition_relation_declared, abstraction_receipt_ready]
+  required_false: [unbounded_state_unhandled]
+  min_metrics:
+    abstraction_confidence: 0.8
+  max_metrics:
+    state_aliasing_risk: 0.15
+test_cases:
+  - id: baseline_allow
+    state_variables_declared: true
+    domain_bounds_declared: true
+    transition_relation_declared: true
+    abstraction_receipt_ready: true
+    unbounded_state_unhandled: false
+    abstraction_confidence: 0.8500000000000001
+    state_aliasing_risk: 0.13999999999999999
+    expected: ALLOW
+  - id: missing_state_variables_declared_fail_closed
+    state_variables_declared: false
+    domain_bounds_declared: true
+    transition_relation_declared: true
+    abstraction_receipt_ready: true
+    unbounded_state_unhandled: false
+    abstraction_confidence: 0.8500000000000001
+    state_aliasing_risk: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: unbounded_state_unhandled_fail_closed
+    state_variables_declared: true
+    domain_bounds_declared: true
+    transition_relation_declared: true
+    abstraction_receipt_ready: true
+    unbounded_state_unhandled: true
+    abstraction_confidence: 0.8500000000000001
+    state_aliasing_risk: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: abstraction_confidence_below_minimum_fail_closed
+    state_variables_declared: true
+    domain_bounds_declared: true
+    transition_relation_declared: true
+    abstraction_receipt_ready: true
+    unbounded_state_unhandled: false
+    abstraction_confidence: 0.79
+    state_aliasing_risk: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: abstraction_confidence_exact_boundary_allow
+    state_variables_declared: true
+    domain_bounds_declared: true
+    transition_relation_declared: true
+    abstraction_receipt_ready: true
+    unbounded_state_unhandled: false
+    abstraction_confidence: 0.8
+    state_aliasing_risk: 0.13999999999999999
+    expected: ALLOW
+  - id: state_aliasing_risk_above_maximum_fail_closed
+    state_variables_declared: true
+    domain_bounds_declared: true
+    transition_relation_declared: true
+    abstraction_receipt_ready: true
+    unbounded_state_unhandled: false
+    abstraction_confidence: 0.8500000000000001
+    state_aliasing_risk: 0.16
+    expected: FAIL_CLOSED
+  - id: state_aliasing_risk_exact_boundary_allow
+    state_variables_declared: true
+    domain_bounds_declared: true
+    transition_relation_declared: true
+    abstraction_receipt_ready: true
+    unbounded_state_unhandled: false
+    abstraction_confidence: 0.8500000000000001
+    state_aliasing_risk: 0.15
+    expected: ALLOW

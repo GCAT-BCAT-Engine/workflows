@@ -1,0 +1,74 @@
+problem_id: chf-108
+title: Observer-Reality Coupling Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [observer_class_declared, observed_state_declared, coupling_rule_defined, coupling_receipt_ready]
+  required_false: [observer_state_conflict]
+  min_metrics:
+    coupling_confidence: 0.8
+  max_metrics:
+    observation_gap: 0.15
+test_cases:
+  - id: baseline_allow
+    observer_class_declared: true
+    observed_state_declared: true
+    coupling_rule_defined: true
+    coupling_receipt_ready: true
+    observer_state_conflict: false
+    coupling_confidence: 0.8500000000000001
+    observation_gap: 0.13999999999999999
+    expected: ALLOW
+  - id: missing_observer_class_declared_fail_closed
+    observer_class_declared: false
+    observed_state_declared: true
+    coupling_rule_defined: true
+    coupling_receipt_ready: true
+    observer_state_conflict: false
+    coupling_confidence: 0.8500000000000001
+    observation_gap: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: observer_state_conflict_fail_closed
+    observer_class_declared: true
+    observed_state_declared: true
+    coupling_rule_defined: true
+    coupling_receipt_ready: true
+    observer_state_conflict: true
+    coupling_confidence: 0.8500000000000001
+    observation_gap: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: coupling_confidence_below_minimum_fail_closed
+    observer_class_declared: true
+    observed_state_declared: true
+    coupling_rule_defined: true
+    coupling_receipt_ready: true
+    observer_state_conflict: false
+    coupling_confidence: 0.79
+    observation_gap: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: coupling_confidence_exact_boundary_allow
+    observer_class_declared: true
+    observed_state_declared: true
+    coupling_rule_defined: true
+    coupling_receipt_ready: true
+    observer_state_conflict: false
+    coupling_confidence: 0.8
+    observation_gap: 0.13999999999999999
+    expected: ALLOW
+  - id: observation_gap_above_maximum_fail_closed
+    observer_class_declared: true
+    observed_state_declared: true
+    coupling_rule_defined: true
+    coupling_receipt_ready: true
+    observer_state_conflict: false
+    coupling_confidence: 0.8500000000000001
+    observation_gap: 0.16
+    expected: FAIL_CLOSED
+  - id: observation_gap_exact_boundary_allow
+    observer_class_declared: true
+    observed_state_declared: true
+    coupling_rule_defined: true
+    coupling_receipt_ready: true
+    observer_state_conflict: false
+    coupling_confidence: 0.8500000000000001
+    observation_gap: 0.15
+    expected: ALLOW

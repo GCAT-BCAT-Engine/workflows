@@ -1,0 +1,74 @@
+problem_id: chf-094
+title: Adversarial Review Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [review_scope_declared, reviewer_independence_checked, findings_tracking_ready, review_receipt_ready]
+  required_false: [critical_finding_unresolved]
+  min_metrics:
+    review_confidence: 0.8
+  max_metrics:
+    unresolved_finding_risk: 0.15
+test_cases:
+  - id: baseline_allow
+    review_scope_declared: true
+    reviewer_independence_checked: true
+    findings_tracking_ready: true
+    review_receipt_ready: true
+    critical_finding_unresolved: false
+    review_confidence: 0.8500000000000001
+    unresolved_finding_risk: 0.13999999999999999
+    expected: ALLOW
+  - id: missing_review_scope_declared_fail_closed
+    review_scope_declared: false
+    reviewer_independence_checked: true
+    findings_tracking_ready: true
+    review_receipt_ready: true
+    critical_finding_unresolved: false
+    review_confidence: 0.8500000000000001
+    unresolved_finding_risk: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: critical_finding_unresolved_fail_closed
+    review_scope_declared: true
+    reviewer_independence_checked: true
+    findings_tracking_ready: true
+    review_receipt_ready: true
+    critical_finding_unresolved: true
+    review_confidence: 0.8500000000000001
+    unresolved_finding_risk: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: review_confidence_below_minimum_fail_closed
+    review_scope_declared: true
+    reviewer_independence_checked: true
+    findings_tracking_ready: true
+    review_receipt_ready: true
+    critical_finding_unresolved: false
+    review_confidence: 0.79
+    unresolved_finding_risk: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: review_confidence_exact_boundary_allow
+    review_scope_declared: true
+    reviewer_independence_checked: true
+    findings_tracking_ready: true
+    review_receipt_ready: true
+    critical_finding_unresolved: false
+    review_confidence: 0.8
+    unresolved_finding_risk: 0.13999999999999999
+    expected: ALLOW
+  - id: unresolved_finding_risk_above_maximum_fail_closed
+    review_scope_declared: true
+    reviewer_independence_checked: true
+    findings_tracking_ready: true
+    review_receipt_ready: true
+    critical_finding_unresolved: false
+    review_confidence: 0.8500000000000001
+    unresolved_finding_risk: 0.16
+    expected: FAIL_CLOSED
+  - id: unresolved_finding_risk_exact_boundary_allow
+    review_scope_declared: true
+    reviewer_independence_checked: true
+    findings_tracking_ready: true
+    review_receipt_ready: true
+    critical_finding_unresolved: false
+    review_confidence: 0.8500000000000001
+    unresolved_finding_risk: 0.15
+    expected: ALLOW

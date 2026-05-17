@@ -1,0 +1,74 @@
+problem_id: chf-106
+title: Reality-Contact Escalation Gate
+formalism: consequence_horizon_formalism
+model:
+  required_true: [reality_effect_declared, harm_scope_bounded, external_review_ready, contact_receipt_ready]
+  required_false: [unbounded_reality_contact]
+  min_metrics:
+    contact_confidence: 0.85
+  max_metrics:
+    harm_uncertainty: 0.15
+test_cases:
+  - id: baseline_allow
+    reality_effect_declared: true
+    harm_scope_bounded: true
+    external_review_ready: true
+    contact_receipt_ready: true
+    unbounded_reality_contact: false
+    contact_confidence: 0.9
+    harm_uncertainty: 0.13999999999999999
+    expected: ALLOW
+  - id: missing_reality_effect_declared_fail_closed
+    reality_effect_declared: false
+    harm_scope_bounded: true
+    external_review_ready: true
+    contact_receipt_ready: true
+    unbounded_reality_contact: false
+    contact_confidence: 0.9
+    harm_uncertainty: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: unbounded_reality_contact_fail_closed
+    reality_effect_declared: true
+    harm_scope_bounded: true
+    external_review_ready: true
+    contact_receipt_ready: true
+    unbounded_reality_contact: true
+    contact_confidence: 0.9
+    harm_uncertainty: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: contact_confidence_below_minimum_fail_closed
+    reality_effect_declared: true
+    harm_scope_bounded: true
+    external_review_ready: true
+    contact_receipt_ready: true
+    unbounded_reality_contact: false
+    contact_confidence: 0.84
+    harm_uncertainty: 0.13999999999999999
+    expected: FAIL_CLOSED
+  - id: contact_confidence_exact_boundary_allow
+    reality_effect_declared: true
+    harm_scope_bounded: true
+    external_review_ready: true
+    contact_receipt_ready: true
+    unbounded_reality_contact: false
+    contact_confidence: 0.85
+    harm_uncertainty: 0.13999999999999999
+    expected: ALLOW
+  - id: harm_uncertainty_above_maximum_fail_closed
+    reality_effect_declared: true
+    harm_scope_bounded: true
+    external_review_ready: true
+    contact_receipt_ready: true
+    unbounded_reality_contact: false
+    contact_confidence: 0.9
+    harm_uncertainty: 0.16
+    expected: FAIL_CLOSED
+  - id: harm_uncertainty_exact_boundary_allow
+    reality_effect_declared: true
+    harm_scope_bounded: true
+    external_review_ready: true
+    contact_receipt_ready: true
+    unbounded_reality_contact: false
+    contact_confidence: 0.9
+    harm_uncertainty: 0.15
+    expected: ALLOW
