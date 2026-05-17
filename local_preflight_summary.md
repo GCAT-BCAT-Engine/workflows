@@ -1,14 +1,14 @@
 # Consequence Horizon Formalism Validation Summary
 
 - Overall status: **PASS**
-- Specs evaluated: **16**
+- Specs evaluated: **19**
 
 ## Sandbox Results
 
 - Sandbox status: **PASS**
-- Suites evaluated: **7**
-- Subtests generated: **1732**
-- Subtests passed: **1732**
+- Suites evaluated: **10**
+- Subtests generated: **1930**
+- Subtests passed: **1930**
 - Subtests failed: **0**
 
 ### Sandbox suite `chf-001-generated-2d-cell-horizon`
@@ -58,6 +58,27 @@
 - Status: **PASS**
 - Generated: **24**
 - Passed: **24**
+- Failed: **0**
+
+### Sandbox suite `chf-017-generated-receipt-custody`
+
+- Status: **PASS**
+- Generated: **72**
+- Passed: **72**
+- Failed: **0**
+
+### Sandbox suite `chf-018-generated-branch-merge`
+
+- Status: **PASS**
+- Generated: **72**
+- Passed: **72**
+- Failed: **0**
+
+### Sandbox suite `chf-019-generated-entropy-budget`
+
+- Status: **PASS**
+- Generated: **54**
+- Passed: **54**
 - Failed: **0**
 
 ## Spec Results
@@ -413,4 +434,57 @@
   - Reason: `empirical_claim_marked_for_external_review`
 - `unresolved_claim_scope_fail_closed`: expected `EMPIRICAL_CLAIM_FAIL_CLOSED`, actual `EMPIRICAL_CLAIM_FAIL_CLOSED` — **PASS**
   - Reason: `claim_scope_unresolved`
+
+### chf-017
+
+- Status: **PASS**
+
+- `complete_receipt_sufficient`: expected `RECEIPT_SUFFICIENT`, actual `RECEIPT_SUFFICIENT` — **PASS**
+  - Reason: `receipt_sufficiency_and_custody_pass`
+- `missing_projected_state_hash_fail_closed`: expected `RECEIPT_FAIL_CLOSED`, actual `RECEIPT_FAIL_CLOSED` — **PASS**
+  - Reason: `receipt_fields_incomplete`
+- `missing_artifact_custody_fail_closed`: expected `RECEIPT_FAIL_CLOSED`, actual `RECEIPT_FAIL_CLOSED` — **PASS**
+  - Reason: `receipt_custody_links_incomplete`
+- `integrity_below_threshold_fail_closed`: expected `RECEIPT_FAIL_CLOSED`, actual `RECEIPT_FAIL_CLOSED` — **PASS**
+  - Reason: `receipt_integrity_below_threshold`
+- `tamper_detected_fail_closed`: expected `RECEIPT_FAIL_CLOSED`, actual `RECEIPT_FAIL_CLOSED` — **PASS**
+  - Reason: `receipt_tamper_detected`
+- `unauthorized_signer_fail_closed`: expected `RECEIPT_FAIL_CLOSED`, actual `RECEIPT_FAIL_CLOSED` — **PASS**
+  - Reason: `receipt_signer_not_authorized`
+
+### chf-018
+
+- Status: **PASS**
+
+- `merge_ready_allowed`: expected `MERGE_ALLOWED`, actual `MERGE_ALLOWED` — **PASS**
+  - Reason: `branch_merge_reconciliation_pass`
+- `invalid_branch_receipts_fail_closed`: expected `MERGE_FAIL_CLOSED`, actual `MERGE_FAIL_CLOSED` — **PASS**
+  - Reason: `branch_receipts_invalid`
+- `contradiction_detected_fail_closed`: expected `MERGE_FAIL_CLOSED`, actual `MERGE_FAIL_CLOSED` — **PASS**
+  - Reason: `branch_contradiction_detected`
+- `state_divergence_too_high_fail_closed`: expected `MERGE_FAIL_CLOSED`, actual `MERGE_FAIL_CLOSED` — **PASS**
+  - Reason: `state_divergence_exceeds_merge_tolerance`
+- `reconciliation_confidence_low_fail_closed`: expected `MERGE_FAIL_CLOSED`, actual `MERGE_FAIL_CLOSED` — **PASS**
+  - Reason: `reconciliation_confidence_below_threshold`
+- `missing_merged_receipt_evidence_fail_closed`: expected `MERGE_FAIL_CLOSED`, actual `MERGE_FAIL_CLOSED` — **PASS**
+  - Reason: `reconciliation_evidence_incomplete`
+- `exact_divergence_and_confidence_boundary_allowed`: expected `MERGE_ALLOWED`, actual `MERGE_ALLOWED` — **PASS**
+  - Reason: `branch_merge_reconciliation_pass`
+
+### chf-019
+
+- Status: **PASS**
+
+- `entropy_budget_pass`: expected `ENTROPY_WITHIN_BUDGET`, actual `ENTROPY_WITHIN_BUDGET` — **PASS**
+  - Reason: `entropy_irreversibility_budget_pass`
+- `entropy_exact_boundary_pass`: expected `ENTROPY_WITHIN_BUDGET`, actual `ENTROPY_WITHIN_BUDGET` — **PASS**
+  - Reason: `entropy_irreversibility_budget_pass`
+- `entropy_exceeds_without_mitigation_fail_closed`: expected `ENTROPY_FAIL_CLOSED`, actual `ENTROPY_FAIL_CLOSED` — **PASS**
+  - Reason: `entropy_delta_exceeds_budget_without_mitigation`
+- `entropy_exceeds_with_mitigation_pass`: expected `ENTROPY_WITHIN_BUDGET`, actual `ENTROPY_WITHIN_BUDGET` — **PASS**
+  - Reason: `entropy_irreversibility_budget_pass`
+- `irreversibility_exceeds_budget_fail_closed`: expected `ENTROPY_FAIL_CLOSED`, actual `ENTROPY_FAIL_CLOSED` — **PASS**
+  - Reason: `irreversibility_score_exceeds_budget`
+- `reversibility_margin_too_low_fail_closed`: expected `ENTROPY_FAIL_CLOSED`, actual `ENTROPY_FAIL_CLOSED` — **PASS**
+  - Reason: `reversibility_margin_below_threshold`
 

@@ -1,12 +1,15 @@
 {
-  "bundle": "chf_validation_extension_v0_9_full_sandbox_preflight",
+  "bundle": "chf_validation_extension_v0_10_receipt_reconcile_entropy",
   "target_repo": "GCAT-BCAT-Engine/workflows",
-  "purpose": "Add generated-case sandbox validation while keeping the GitHub Actions workflow unchanged.",
+  "purpose": "Add receipt sufficiency, branch merge/reconciliation, and entropy/irreversibility budget gates with sandbox preflight.",
   "changed_paths": [
     "math_solver/validation/chf_deterministic_validator.py",
     "math_solver/validation/chf_sandbox_runner.py",
     "math_solver/validation/chf_sandbox_config.yml",
     "math_solver/validation/chf_sandbox_readme.md",
+    "math_solver/validation/problem_spec_chf_017.yml",
+    "math_solver/validation/problem_spec_chf_018.yml",
+    "math_solver/validation/problem_spec_chf_019.yml",
     "math_solver/validation/chf_validation_matrix.md",
     "math_solver/validation/chf_readme.md"
   ],
@@ -16,9 +19,9 @@
   "expected_github_result": {
     "overall_status": "PASS",
     "explicit_status": "PASS",
-    "specs_evaluated": 16,
+    "specs_evaluated": 19,
     "sandbox_status": "PASS",
-    "sandbox_subtests_generated": 1732
-  },
-  "local_preflight_baseline": "chf_deterministic_validation_bundle_v0_7_lag_chain_manybody.zip"
+    "sandbox_subtests_generated": 1930,
+    "sandbox_suites_evaluated": 10
+  }
 }
