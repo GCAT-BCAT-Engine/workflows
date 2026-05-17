@@ -1,0 +1,19 @@
+{
+  "bundle": "chf_problem_spec_expansion_v0_7b_boundary_fix",
+  "target_repo": "GCAT-BCAT-Engine/workflows",
+  "purpose": "Correct v0.7a edge-case expectation mismatches using spec/docs only.",
+  "changed_paths": [
+    "math_solver/validation/problem_spec_chf_001.yml",
+    "math_solver/validation/problem_spec_chf_002.yml",
+    "math_solver/validation/chf_validation_matrix.md",
+    "math_solver/validation/chf_readme.md"
+  ],
+  "intentionally_not_included": [
+    ".github/workflows/chf_validation_run.yml",
+    "math_solver/validation/chf_deterministic_validator.py"
+  ],
+  "expected_result": {
+    "overall_status": "PASS",
+    "specs_evaluated": 13
+  }
+}

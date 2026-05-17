@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "cases": {
+    "chf-001/EDGE_cell2_limit_3_4_5_triangle_allow": "ALLOW",
+    "chf-001/EDGE_cell2_just_over_limit_3_4_5_triangle_deny": "DENY",
+    "chf-002/EDGE_upper_shared_cell1_allow": "ALLOW"
+  }
+}
