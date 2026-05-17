@@ -6,7 +6,7 @@ on:
       run_id:
         description: CHF validation run ID
         required: true
-        default: CHF-VAL-005
+        default: CHF-VAL-006
         type: string
 
 jobs:
