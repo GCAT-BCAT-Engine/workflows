@@ -1,0 +1,48 @@
+problem_id: chf-037
+title: Publication and Patent Disclosure Readiness Gate
+formalism: consequence_horizon_formalism
+model:
+  disclosure_rule: require_boundary_evidence_and_overclaim_guardrail
+test_cases:
+  - id: publication_ready
+    novelty_statement: true
+    prior_art_note: true
+    claim_boundary: true
+    evidence_level_sufficient: true
+    overclaim_guardrail: true
+    expected: PUBLICATION_READY
+  - id: novelty_statement_missing_fail_closed
+    novelty_statement: false
+    prior_art_note: true
+    claim_boundary: true
+    evidence_level_sufficient: true
+    overclaim_guardrail: true
+    expected: PUBLICATION_FAIL_CLOSED
+  - id: prior_art_note_missing_fail_closed
+    novelty_statement: true
+    prior_art_note: false
+    claim_boundary: true
+    evidence_level_sufficient: true
+    overclaim_guardrail: true
+    expected: PUBLICATION_FAIL_CLOSED
+  - id: claim_boundary_missing_fail_closed
+    novelty_statement: true
+    prior_art_note: true
+    claim_boundary: false
+    evidence_level_sufficient: true
+    overclaim_guardrail: true
+    expected: PUBLICATION_FAIL_CLOSED
+  - id: evidence_insufficient_fail_closed
+    novelty_statement: true
+    prior_art_note: true
+    claim_boundary: true
+    evidence_level_sufficient: false
+    overclaim_guardrail: true
+    expected: PUBLICATION_FAIL_CLOSED
+  - id: overclaim_guardrail_missing_fail_closed
+    novelty_statement: true
+    prior_art_note: true
+    claim_boundary: true
+    evidence_level_sufficient: true
+    overclaim_guardrail: false
+    expected: PUBLICATION_FAIL_CLOSED

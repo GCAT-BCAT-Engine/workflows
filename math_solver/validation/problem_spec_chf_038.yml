@@ -1,0 +1,48 @@
+problem_id: chf-038
+title: Memoir and Reflection Preservation Gate
+formalism: consequence_horizon_formalism
+model:
+  min_memoir_value: 0.50
+test_cases:
+  - id: preservation_allowed_public
+    consent_to_preserve: true
+    public_classification: true
+    sensitivity_high: false
+    memoir_value: 0.80
+    retrieval_tag_present: true
+    expected: PRESERVATION_ALLOWED
+  - id: preservation_private_only_sensitive
+    consent_to_preserve: true
+    public_classification: true
+    sensitivity_high: true
+    memoir_value: 0.80
+    retrieval_tag_present: true
+    expected: PRESERVATION_PRIVATE_ONLY
+  - id: preservation_private_only_not_public
+    consent_to_preserve: true
+    public_classification: false
+    sensitivity_high: false
+    memoir_value: 0.80
+    retrieval_tag_present: true
+    expected: PRESERVATION_PRIVATE_ONLY
+  - id: consent_missing_fail_closed
+    consent_to_preserve: false
+    public_classification: true
+    sensitivity_high: false
+    memoir_value: 0.80
+    retrieval_tag_present: true
+    expected: PRESERVATION_FAIL_CLOSED
+  - id: memoir_value_low_fail_closed
+    consent_to_preserve: true
+    public_classification: true
+    sensitivity_high: false
+    memoir_value: 0.49
+    retrieval_tag_present: true
+    expected: PRESERVATION_FAIL_CLOSED
+  - id: retrieval_tag_missing_fail_closed
+    consent_to_preserve: true
+    public_classification: true
+    sensitivity_high: false
+    memoir_value: 0.80
+    retrieval_tag_present: false
+    expected: PRESERVATION_FAIL_CLOSED

@@ -84,6 +84,37 @@ REPLAY_DIVERGENCE_FAIL_CLOSED = "REPLAY_DIVERGENCE_FAIL_CLOSED"
 REJOIN_ALLOWED = "REJOIN_ALLOWED"
 REJOIN_FAIL_CLOSED = "REJOIN_FAIL_CLOSED"
 
+CONSENSUS_ACCEPTED = "CONSENSUS_ACCEPTED"
+CONSENSUS_FAIL_CLOSED = "CONSENSUS_FAIL_CLOSED"
+
+QUARANTINE_REQUIRED = "QUARANTINE_REQUIRED"
+QUARANTINE_CLEAR = "QUARANTINE_CLEAR"
+
+SUPERSESSION_VALID = "SUPERSESSION_VALID"
+SUPERSESSION_FAIL_CLOSED = "SUPERSESSION_FAIL_CLOSED"
+
+INGESTION_ALLOWED = "INGESTION_ALLOWED"
+INGESTION_FAIL_CLOSED = "INGESTION_FAIL_CLOSED"
+
+PRIVACY_ALLOWED = "PRIVACY_ALLOWED"
+PRIVACY_FAIL_CLOSED = "PRIVACY_FAIL_CLOSED"
+
+TOKEN_GOVERNANCE_ALLOWED = "TOKEN_GOVERNANCE_ALLOWED"
+TOKEN_GOVERNANCE_FAIL_CLOSED = "TOKEN_GOVERNANCE_FAIL_CLOSED"
+
+PUBLICATION_READY = "PUBLICATION_READY"
+PUBLICATION_FAIL_CLOSED = "PUBLICATION_FAIL_CLOSED"
+
+PRESERVATION_ALLOWED = "PRESERVATION_ALLOWED"
+PRESERVATION_PRIVATE_ONLY = "PRESERVATION_PRIVATE_ONLY"
+PRESERVATION_FAIL_CLOSED = "PRESERVATION_FAIL_CLOSED"
+
+FORMALIZATION_READY = "FORMALIZATION_READY"
+FORMALIZATION_FAIL_CLOSED = "FORMALIZATION_FAIL_CLOSED"
+
+DEPLOYMENT_READY = "DEPLOYMENT_READY"
+DEPLOYMENT_FAIL_CLOSED = "DEPLOYMENT_FAIL_CLOSED"
+
 
 def radius(point: List[float], center: List[float]) -> float:
     return math.sqrt(sum((point[i] - center[i]) ** 2 for i in range(len(point))))
@@ -979,6 +1010,286 @@ def evaluate_chf_030(spec: Dict[str, Any]) -> Dict[str, Any]:
     return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
 
 
+
+def evaluate_chf_031(spec: Dict[str, Any]) -> Dict[str, Any]:
+    model = spec["model"]
+    min_quorum = int(model["min_quorum"])
+    min_weight = float(model["min_weighted_confidence"])
+    max_dissent = float(model["max_dissent_weight"])
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        quorum = int(case.get("validator_quorum", 0))
+        weight = float(case.get("weighted_confidence", 0.0))
+        dissent = float(case.get("dissent_weight", 1.0))
+        receipt_agreement = bool(case.get("receipt_agreement", False))
+        byzantine_alert = bool(case.get("byzantine_alert", False))
+        if byzantine_alert:
+            actual, reason = CONSENSUS_FAIL_CLOSED, "byzantine_alert_present"
+        elif quorum < min_quorum:
+            actual, reason = CONSENSUS_FAIL_CLOSED, "validator_quorum_below_minimum"
+        elif weight < min_weight:
+            actual, reason = CONSENSUS_FAIL_CLOSED, "weighted_confidence_below_threshold"
+        elif dissent > max_dissent:
+            actual, reason = CONSENSUS_FAIL_CLOSED, "dissent_weight_exceeds_threshold"
+        elif not receipt_agreement:
+            actual, reason = CONSENSUS_FAIL_CLOSED, "receipt_agreement_missing"
+        else:
+            actual, reason = CONSENSUS_ACCEPTED, "multi_node_consensus_pass"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_032(spec: Dict[str, Any]) -> Dict[str, Any]:
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        suspected_tamper = bool(case.get("suspected_tamper", False))
+        unresolved_authority = bool(case.get("unresolved_authority", False))
+        malformed_receipt = bool(case.get("malformed_receipt", False))
+        partial_custody = bool(case.get("partial_custody", False))
+        unsafe_external_binding = bool(case.get("unsafe_external_binding", False))
+        if suspected_tamper:
+            actual, reason = QUARANTINE_REQUIRED, "suspected_tamper"
+        elif unresolved_authority:
+            actual, reason = QUARANTINE_REQUIRED, "unresolved_authority"
+        elif malformed_receipt:
+            actual, reason = QUARANTINE_REQUIRED, "malformed_receipt"
+        elif partial_custody:
+            actual, reason = QUARANTINE_REQUIRED, "partial_custody"
+        elif unsafe_external_binding:
+            actual, reason = QUARANTINE_REQUIRED, "unsafe_external_binding"
+        else:
+            actual, reason = QUARANTINE_CLEAR, "quarantine_clear"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_033(spec: Dict[str, Any]) -> Dict[str, Any]:
+    required_ack = set(spec["model"]["required_acknowledgements"])
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        newer_hash_present = bool(case.get("newer_hash_present", False))
+        supersession_receipt_valid = bool(case.get("supersession_receipt_valid", False))
+        downstream_ack = set(case.get("downstream_acknowledgements", []))
+        pending_destination_safe = bool(case.get("pending_destination_safe", False))
+        discard_rule_safe = bool(case.get("discard_rule_safe", False))
+        if not newer_hash_present:
+            actual, reason = SUPERSESSION_FAIL_CLOSED, "newer_hash_missing"
+        elif not supersession_receipt_valid:
+            actual, reason = SUPERSESSION_FAIL_CLOSED, "supersession_receipt_invalid"
+        elif not required_ack.issubset(downstream_ack):
+            actual, reason = SUPERSESSION_FAIL_CLOSED, "downstream_acknowledgement_incomplete"
+        elif not pending_destination_safe:
+            actual, reason = SUPERSESSION_FAIL_CLOSED, "pending_destination_not_safe"
+        elif not discard_rule_safe:
+            actual, reason = SUPERSESSION_FAIL_CLOSED, "discard_rule_not_safe"
+        else:
+            actual, reason = SUPERSESSION_VALID, "supersession_valid"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_034(spec: Dict[str, Any]) -> Dict[str, Any]:
+    min_trust = float(spec["model"]["min_source_trust"])
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        source_trust = float(case.get("source_trust", 0.0))
+        destination_compatible = bool(case.get("destination_compatible", False))
+        schema_compatible = bool(case.get("schema_compatible", False))
+        core_lite_awareness = bool(case.get("core_lite_awareness", False))
+        ingestion_receipt_ready = bool(case.get("ingestion_receipt_ready", False))
+        if source_trust < min_trust:
+            actual, reason = INGESTION_FAIL_CLOSED, "source_trust_below_threshold"
+        elif not destination_compatible:
+            actual, reason = INGESTION_FAIL_CLOSED, "destination_not_compatible"
+        elif not schema_compatible:
+            actual, reason = INGESTION_FAIL_CLOSED, "schema_not_compatible"
+        elif not core_lite_awareness:
+            actual, reason = INGESTION_FAIL_CLOSED, "core_lite_awareness_missing"
+        elif not ingestion_receipt_ready:
+            actual, reason = INGESTION_FAIL_CLOSED, "ingestion_receipt_not_ready"
+        else:
+            actual, reason = INGESTION_ALLOWED, "cross_repo_ingestion_allowed"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_035(spec: Dict[str, Any]) -> Dict[str, Any]:
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        touches_sensitive_data = bool(case.get("touches_sensitive_data", False))
+        consent_valid = bool(case.get("consent_valid", False))
+        purpose_limited = bool(case.get("purpose_limited", False))
+        minimum_disclosure = bool(case.get("minimum_disclosure", False))
+        revocation_supported = bool(case.get("revocation_supported", False))
+        if touches_sensitive_data and not consent_valid:
+            actual, reason = PRIVACY_FAIL_CLOSED, "sensitive_data_without_valid_consent"
+        elif not purpose_limited:
+            actual, reason = PRIVACY_FAIL_CLOSED, "purpose_limitation_missing"
+        elif not minimum_disclosure:
+            actual, reason = PRIVACY_FAIL_CLOSED, "minimum_disclosure_missing"
+        elif touches_sensitive_data and not revocation_supported:
+            actual, reason = PRIVACY_FAIL_CLOSED, "revocation_support_missing"
+        else:
+            actual, reason = PRIVACY_ALLOWED, "privacy_consent_boundary_pass"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_036(spec: Dict[str, Any]) -> Dict[str, Any]:
+    max_concentration = float(spec["model"]["max_stake_concentration"])
+    max_manipulation = float(spec["model"]["max_manipulation_risk"])
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        stake_concentration = float(case.get("stake_concentration", 1.0))
+        manipulation_risk = float(case.get("manipulation_risk", 1.0))
+        vote_authority_mapped = bool(case.get("vote_authority_mapped", False))
+        fiduciary_conflict_detected = bool(case.get("fiduciary_conflict_detected", False))
+        anti_capture_passed = bool(case.get("anti_capture_passed", False))
+        if stake_concentration > max_concentration:
+            actual, reason = TOKEN_GOVERNANCE_FAIL_CLOSED, "stake_concentration_exceeds_threshold"
+        elif manipulation_risk > max_manipulation:
+            actual, reason = TOKEN_GOVERNANCE_FAIL_CLOSED, "manipulation_risk_exceeds_threshold"
+        elif not vote_authority_mapped:
+            actual, reason = TOKEN_GOVERNANCE_FAIL_CLOSED, "vote_authority_not_mapped"
+        elif fiduciary_conflict_detected:
+            actual, reason = TOKEN_GOVERNANCE_FAIL_CLOSED, "fiduciary_conflict_detected"
+        elif not anti_capture_passed:
+            actual, reason = TOKEN_GOVERNANCE_FAIL_CLOSED, "anti_capture_threshold_not_met"
+        else:
+            actual, reason = TOKEN_GOVERNANCE_ALLOWED, "tokenized_governance_input_allowed"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_037(spec: Dict[str, Any]) -> Dict[str, Any]:
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        novelty_statement = bool(case.get("novelty_statement", False))
+        prior_art_note = bool(case.get("prior_art_note", False))
+        claim_boundary = bool(case.get("claim_boundary", False))
+        evidence_level_sufficient = bool(case.get("evidence_level_sufficient", False))
+        overclaim_guardrail = bool(case.get("overclaim_guardrail", False))
+        if not novelty_statement:
+            actual, reason = PUBLICATION_FAIL_CLOSED, "novelty_statement_missing"
+        elif not prior_art_note:
+            actual, reason = PUBLICATION_FAIL_CLOSED, "prior_art_note_missing"
+        elif not claim_boundary:
+            actual, reason = PUBLICATION_FAIL_CLOSED, "claim_boundary_missing"
+        elif not evidence_level_sufficient:
+            actual, reason = PUBLICATION_FAIL_CLOSED, "evidence_level_insufficient"
+        elif not overclaim_guardrail:
+            actual, reason = PUBLICATION_FAIL_CLOSED, "overclaim_guardrail_missing"
+        else:
+            actual, reason = PUBLICATION_READY, "publication_patent_disclosure_ready"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_038(spec: Dict[str, Any]) -> Dict[str, Any]:
+    min_value = float(spec["model"]["min_memoir_value"])
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        consent_to_preserve = bool(case.get("consent_to_preserve", False))
+        public_classification = bool(case.get("public_classification", False))
+        sensitivity_high = bool(case.get("sensitivity_high", False))
+        memoir_value = float(case.get("memoir_value", 0.0))
+        retrieval_tag_present = bool(case.get("retrieval_tag_present", False))
+        if not consent_to_preserve:
+            actual, reason = PRESERVATION_FAIL_CLOSED, "preservation_consent_missing"
+        elif memoir_value < min_value:
+            actual, reason = PRESERVATION_FAIL_CLOSED, "memoir_value_below_threshold"
+        elif not retrieval_tag_present:
+            actual, reason = PRESERVATION_FAIL_CLOSED, "retrieval_tag_missing"
+        elif sensitivity_high or not public_classification:
+            actual, reason = PRESERVATION_PRIVATE_ONLY, "private_preservation_only"
+        else:
+            actual, reason = PRESERVATION_ALLOWED, "memoir_preservation_allowed"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_039(spec: Dict[str, Any]) -> Dict[str, Any]:
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        finite_state_definition = bool(case.get("finite_state_definition", False))
+        clear_invariants = bool(case.get("clear_invariants", False))
+        type_stable_inputs = bool(case.get("type_stable_inputs", False))
+        unambiguous_outcomes = bool(case.get("unambiguous_outcomes", False))
+        proof_obligation_map = bool(case.get("proof_obligation_map", False))
+        if not finite_state_definition:
+            actual, reason = FORMALIZATION_FAIL_CLOSED, "finite_state_definition_missing"
+        elif not clear_invariants:
+            actual, reason = FORMALIZATION_FAIL_CLOSED, "clear_invariants_missing"
+        elif not type_stable_inputs:
+            actual, reason = FORMALIZATION_FAIL_CLOSED, "type_stable_inputs_missing"
+        elif not unambiguous_outcomes:
+            actual, reason = FORMALIZATION_FAIL_CLOSED, "unambiguous_outcomes_missing"
+        elif not proof_obligation_map:
+            actual, reason = FORMALIZATION_FAIL_CLOSED, "proof_obligation_map_missing"
+        else:
+            actual, reason = FORMALIZATION_READY, "formal_verification_ready"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_040(spec: Dict[str, Any]) -> Dict[str, Any]:
+    min_dry_runs = int(spec["model"]["min_successful_dry_runs"])
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        dry_run_count = int(case.get("successful_dry_runs", 0))
+        failure_modes_covered = bool(case.get("failure_modes_covered", False))
+        operator_authority_valid = bool(case.get("operator_authority_valid", False))
+        rollback_ready = bool(case.get("rollback_ready", False))
+        audit_trail_ready = bool(case.get("audit_trail_ready", False))
+        external_review_complete = bool(case.get("external_review_complete", False))
+        if dry_run_count < min_dry_runs:
+            actual, reason = DEPLOYMENT_FAIL_CLOSED, "insufficient_successful_dry_runs"
+        elif not failure_modes_covered:
+            actual, reason = DEPLOYMENT_FAIL_CLOSED, "failure_modes_not_covered"
+        elif not operator_authority_valid:
+            actual, reason = DEPLOYMENT_FAIL_CLOSED, "operator_authority_invalid"
+        elif not rollback_ready:
+            actual, reason = DEPLOYMENT_FAIL_CLOSED, "rollback_not_ready"
+        elif not audit_trail_ready:
+            actual, reason = DEPLOYMENT_FAIL_CLOSED, "audit_trail_not_ready"
+        elif not external_review_complete:
+            actual, reason = DEPLOYMENT_FAIL_CLOSED, "external_review_incomplete"
+        else:
+            actual, reason = DEPLOYMENT_READY, "production_deployment_ready"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
 EVALUATORS = {
     "chf-001": evaluate_chf_001,
     "chf-002": evaluate_chf_002,
@@ -1010,6 +1321,16 @@ EVALUATORS = {
     "chf-028": evaluate_chf_028,
     "chf-029": evaluate_chf_029,
     "chf-030": evaluate_chf_030,
+    "chf-031": evaluate_chf_031,
+    "chf-032": evaluate_chf_032,
+    "chf-033": evaluate_chf_033,
+    "chf-034": evaluate_chf_034,
+    "chf-035": evaluate_chf_035,
+    "chf-036": evaluate_chf_036,
+    "chf-037": evaluate_chf_037,
+    "chf-038": evaluate_chf_038,
+    "chf-039": evaluate_chf_039,
+    "chf-040": evaluate_chf_040,
 }
 
 

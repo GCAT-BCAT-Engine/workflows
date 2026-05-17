@@ -1,0 +1,48 @@
+problem_id: chf-035
+title: Privacy and Consent Boundary Gate
+formalism: consequence_horizon_formalism
+model:
+  consent_rule: require_valid_consent_for_sensitive_data_and_minimum_disclosure
+test_cases:
+  - id: privacy_allowed_sensitive_with_consent
+    touches_sensitive_data: true
+    consent_valid: true
+    purpose_limited: true
+    minimum_disclosure: true
+    revocation_supported: true
+    expected: PRIVACY_ALLOWED
+  - id: non_sensitive_privacy_allowed
+    touches_sensitive_data: false
+    consent_valid: false
+    purpose_limited: true
+    minimum_disclosure: true
+    revocation_supported: false
+    expected: PRIVACY_ALLOWED
+  - id: sensitive_without_consent_fail_closed
+    touches_sensitive_data: true
+    consent_valid: false
+    purpose_limited: true
+    minimum_disclosure: true
+    revocation_supported: true
+    expected: PRIVACY_FAIL_CLOSED
+  - id: purpose_limitation_missing_fail_closed
+    touches_sensitive_data: false
+    consent_valid: false
+    purpose_limited: false
+    minimum_disclosure: true
+    revocation_supported: false
+    expected: PRIVACY_FAIL_CLOSED
+  - id: minimum_disclosure_missing_fail_closed
+    touches_sensitive_data: true
+    consent_valid: true
+    purpose_limited: true
+    minimum_disclosure: false
+    revocation_supported: true
+    expected: PRIVACY_FAIL_CLOSED
+  - id: sensitive_revocation_missing_fail_closed
+    touches_sensitive_data: true
+    consent_valid: true
+    purpose_limited: true
+    minimum_disclosure: true
+    revocation_supported: false
+    expected: PRIVACY_FAIL_CLOSED

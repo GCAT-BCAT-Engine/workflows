@@ -1,0 +1,70 @@
+problem_id: chf-040
+title: Production Deployment Readiness Gate
+formalism: consequence_horizon_formalism
+model:
+  min_successful_dry_runs: 10
+test_cases:
+  - id: deployment_ready
+    successful_dry_runs: 12
+    failure_modes_covered: true
+    operator_authority_valid: true
+    rollback_ready: true
+    audit_trail_ready: true
+    external_review_complete: true
+    expected: DEPLOYMENT_READY
+  - id: insufficient_dry_runs_fail_closed
+    successful_dry_runs: 9
+    failure_modes_covered: true
+    operator_authority_valid: true
+    rollback_ready: true
+    audit_trail_ready: true
+    external_review_complete: true
+    expected: DEPLOYMENT_FAIL_CLOSED
+  - id: failure_modes_missing_fail_closed
+    successful_dry_runs: 12
+    failure_modes_covered: false
+    operator_authority_valid: true
+    rollback_ready: true
+    audit_trail_ready: true
+    external_review_complete: true
+    expected: DEPLOYMENT_FAIL_CLOSED
+  - id: operator_authority_invalid_fail_closed
+    successful_dry_runs: 12
+    failure_modes_covered: true
+    operator_authority_valid: false
+    rollback_ready: true
+    audit_trail_ready: true
+    external_review_complete: true
+    expected: DEPLOYMENT_FAIL_CLOSED
+  - id: rollback_not_ready_fail_closed
+    successful_dry_runs: 12
+    failure_modes_covered: true
+    operator_authority_valid: true
+    rollback_ready: false
+    audit_trail_ready: true
+    external_review_complete: true
+    expected: DEPLOYMENT_FAIL_CLOSED
+  - id: audit_trail_missing_fail_closed
+    successful_dry_runs: 12
+    failure_modes_covered: true
+    operator_authority_valid: true
+    rollback_ready: true
+    audit_trail_ready: false
+    external_review_complete: true
+    expected: DEPLOYMENT_FAIL_CLOSED
+  - id: external_review_incomplete_fail_closed
+    successful_dry_runs: 12
+    failure_modes_covered: true
+    operator_authority_valid: true
+    rollback_ready: true
+    audit_trail_ready: true
+    external_review_complete: false
+    expected: DEPLOYMENT_FAIL_CLOSED
+  - id: exact_dry_run_boundary_deployment_ready
+    successful_dry_runs: 10
+    failure_modes_covered: true
+    operator_authority_valid: true
+    rollback_ready: true
+    audit_trail_ready: true
+    external_review_complete: true
+    expected: DEPLOYMENT_READY

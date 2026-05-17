@@ -1,0 +1,50 @@
+problem_id: chf-031
+title: Multi-Node Consensus and Weighted Reconciliation Gate
+formalism: consequence_horizon_formalism
+model:
+  min_quorum: 3
+  min_weighted_confidence: 0.80
+  max_dissent_weight: 0.20
+test_cases:
+  - id: consensus_accepted
+    validator_quorum: 4
+    weighted_confidence: 0.90
+    dissent_weight: 0.10
+    receipt_agreement: true
+    byzantine_alert: false
+    expected: CONSENSUS_ACCEPTED
+  - id: quorum_below_minimum_fail_closed
+    validator_quorum: 2
+    weighted_confidence: 0.90
+    dissent_weight: 0.10
+    receipt_agreement: true
+    byzantine_alert: false
+    expected: CONSENSUS_FAIL_CLOSED
+  - id: confidence_below_threshold_fail_closed
+    validator_quorum: 4
+    weighted_confidence: 0.79
+    dissent_weight: 0.10
+    receipt_agreement: true
+    byzantine_alert: false
+    expected: CONSENSUS_FAIL_CLOSED
+  - id: dissent_weight_high_fail_closed
+    validator_quorum: 4
+    weighted_confidence: 0.90
+    dissent_weight: 0.21
+    receipt_agreement: true
+    byzantine_alert: false
+    expected: CONSENSUS_FAIL_CLOSED
+  - id: receipt_agreement_missing_fail_closed
+    validator_quorum: 4
+    weighted_confidence: 0.90
+    dissent_weight: 0.10
+    receipt_agreement: false
+    byzantine_alert: false
+    expected: CONSENSUS_FAIL_CLOSED
+  - id: byzantine_alert_fail_closed
+    validator_quorum: 4
+    weighted_confidence: 0.90
+    dissent_weight: 0.10
+    receipt_agreement: true
+    byzantine_alert: true
+    expected: CONSENSUS_FAIL_CLOSED

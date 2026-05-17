@@ -1,0 +1,48 @@
+problem_id: chf-032
+title: Quarantine and Isolation Gate
+formalism: consequence_horizon_formalism
+model:
+  quarantine_rule: isolate_on_unresolved_trust_break
+test_cases:
+  - id: quarantine_clear
+    suspected_tamper: false
+    unresolved_authority: false
+    malformed_receipt: false
+    partial_custody: false
+    unsafe_external_binding: false
+    expected: QUARANTINE_CLEAR
+  - id: suspected_tamper_quarantine
+    suspected_tamper: true
+    unresolved_authority: false
+    malformed_receipt: false
+    partial_custody: false
+    unsafe_external_binding: false
+    expected: QUARANTINE_REQUIRED
+  - id: unresolved_authority_quarantine
+    suspected_tamper: false
+    unresolved_authority: true
+    malformed_receipt: false
+    partial_custody: false
+    unsafe_external_binding: false
+    expected: QUARANTINE_REQUIRED
+  - id: malformed_receipt_quarantine
+    suspected_tamper: false
+    unresolved_authority: false
+    malformed_receipt: true
+    partial_custody: false
+    unsafe_external_binding: false
+    expected: QUARANTINE_REQUIRED
+  - id: partial_custody_quarantine
+    suspected_tamper: false
+    unresolved_authority: false
+    malformed_receipt: false
+    partial_custody: true
+    unsafe_external_binding: false
+    expected: QUARANTINE_REQUIRED
+  - id: unsafe_external_binding_quarantine
+    suspected_tamper: false
+    unresolved_authority: false
+    malformed_receipt: false
+    partial_custody: false
+    unsafe_external_binding: true
+    expected: QUARANTINE_REQUIRED

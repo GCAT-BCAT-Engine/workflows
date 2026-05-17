@@ -1,0 +1,48 @@
+problem_id: chf-033
+title: Supersession and Deprecation Gate
+formalism: consequence_horizon_formalism
+model:
+  required_acknowledgements: [origin, downstream, archive]
+test_cases:
+  - id: supersession_valid
+    newer_hash_present: true
+    supersession_receipt_valid: true
+    downstream_acknowledgements: [origin, downstream, archive]
+    pending_destination_safe: true
+    discard_rule_safe: true
+    expected: SUPERSESSION_VALID
+  - id: newer_hash_missing_fail_closed
+    newer_hash_present: false
+    supersession_receipt_valid: true
+    downstream_acknowledgements: [origin, downstream, archive]
+    pending_destination_safe: true
+    discard_rule_safe: true
+    expected: SUPERSESSION_FAIL_CLOSED
+  - id: supersession_receipt_invalid_fail_closed
+    newer_hash_present: true
+    supersession_receipt_valid: false
+    downstream_acknowledgements: [origin, downstream, archive]
+    pending_destination_safe: true
+    discard_rule_safe: true
+    expected: SUPERSESSION_FAIL_CLOSED
+  - id: downstream_ack_missing_fail_closed
+    newer_hash_present: true
+    supersession_receipt_valid: true
+    downstream_acknowledgements: [origin, downstream]
+    pending_destination_safe: true
+    discard_rule_safe: true
+    expected: SUPERSESSION_FAIL_CLOSED
+  - id: pending_destination_not_safe_fail_closed
+    newer_hash_present: true
+    supersession_receipt_valid: true
+    downstream_acknowledgements: [origin, downstream, archive]
+    pending_destination_safe: false
+    discard_rule_safe: true
+    expected: SUPERSESSION_FAIL_CLOSED
+  - id: discard_rule_not_safe_fail_closed
+    newer_hash_present: true
+    supersession_receipt_valid: true
+    downstream_acknowledgements: [origin, downstream, archive]
+    pending_destination_safe: true
+    discard_rule_safe: false
+    expected: SUPERSESSION_FAIL_CLOSED

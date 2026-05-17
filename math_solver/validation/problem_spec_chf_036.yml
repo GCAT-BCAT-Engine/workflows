@@ -1,0 +1,49 @@
+problem_id: chf-036
+title: Economic and Tokenized Governance Gate
+formalism: consequence_horizon_formalism
+model:
+  max_stake_concentration: 0.35
+  max_manipulation_risk: 0.20
+test_cases:
+  - id: token_governance_allowed
+    stake_concentration: 0.20
+    manipulation_risk: 0.10
+    vote_authority_mapped: true
+    fiduciary_conflict_detected: false
+    anti_capture_passed: true
+    expected: TOKEN_GOVERNANCE_ALLOWED
+  - id: stake_concentration_high_fail_closed
+    stake_concentration: 0.36
+    manipulation_risk: 0.10
+    vote_authority_mapped: true
+    fiduciary_conflict_detected: false
+    anti_capture_passed: true
+    expected: TOKEN_GOVERNANCE_FAIL_CLOSED
+  - id: manipulation_risk_high_fail_closed
+    stake_concentration: 0.20
+    manipulation_risk: 0.21
+    vote_authority_mapped: true
+    fiduciary_conflict_detected: false
+    anti_capture_passed: true
+    expected: TOKEN_GOVERNANCE_FAIL_CLOSED
+  - id: vote_authority_unmapped_fail_closed
+    stake_concentration: 0.20
+    manipulation_risk: 0.10
+    vote_authority_mapped: false
+    fiduciary_conflict_detected: false
+    anti_capture_passed: true
+    expected: TOKEN_GOVERNANCE_FAIL_CLOSED
+  - id: fiduciary_conflict_fail_closed
+    stake_concentration: 0.20
+    manipulation_risk: 0.10
+    vote_authority_mapped: true
+    fiduciary_conflict_detected: true
+    anti_capture_passed: true
+    expected: TOKEN_GOVERNANCE_FAIL_CLOSED
+  - id: anti_capture_failed_fail_closed
+    stake_concentration: 0.20
+    manipulation_risk: 0.10
+    vote_authority_mapped: true
+    fiduciary_conflict_detected: false
+    anti_capture_passed: false
+    expected: TOKEN_GOVERNANCE_FAIL_CLOSED

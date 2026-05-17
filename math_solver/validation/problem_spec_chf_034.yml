@@ -1,0 +1,48 @@
+problem_id: chf-034
+title: Cross-Repository Ingestion Gate
+formalism: consequence_horizon_formalism
+model:
+  min_source_trust: 0.85
+test_cases:
+  - id: ingestion_allowed
+    source_trust: 0.90
+    destination_compatible: true
+    schema_compatible: true
+    core_lite_awareness: true
+    ingestion_receipt_ready: true
+    expected: INGESTION_ALLOWED
+  - id: source_trust_low_fail_closed
+    source_trust: 0.84
+    destination_compatible: true
+    schema_compatible: true
+    core_lite_awareness: true
+    ingestion_receipt_ready: true
+    expected: INGESTION_FAIL_CLOSED
+  - id: destination_incompatible_fail_closed
+    source_trust: 0.90
+    destination_compatible: false
+    schema_compatible: true
+    core_lite_awareness: true
+    ingestion_receipt_ready: true
+    expected: INGESTION_FAIL_CLOSED
+  - id: schema_incompatible_fail_closed
+    source_trust: 0.90
+    destination_compatible: true
+    schema_compatible: false
+    core_lite_awareness: true
+    ingestion_receipt_ready: true
+    expected: INGESTION_FAIL_CLOSED
+  - id: core_lite_awareness_missing_fail_closed
+    source_trust: 0.90
+    destination_compatible: true
+    schema_compatible: true
+    core_lite_awareness: false
+    ingestion_receipt_ready: true
+    expected: INGESTION_FAIL_CLOSED
+  - id: ingestion_receipt_missing_fail_closed
+    source_trust: 0.90
+    destination_compatible: true
+    schema_compatible: true
+    core_lite_awareness: true
+    ingestion_receipt_ready: false
+    expected: INGESTION_FAIL_CLOSED

@@ -1,0 +1,48 @@
+problem_id: chf-039
+title: Formal Verification Readiness Gate
+formalism: consequence_horizon_formalism
+model:
+  formalization_rule: require_finite_typed_invariant_proof_obligation_map
+test_cases:
+  - id: formalization_ready
+    finite_state_definition: true
+    clear_invariants: true
+    type_stable_inputs: true
+    unambiguous_outcomes: true
+    proof_obligation_map: true
+    expected: FORMALIZATION_READY
+  - id: finite_state_missing_fail_closed
+    finite_state_definition: false
+    clear_invariants: true
+    type_stable_inputs: true
+    unambiguous_outcomes: true
+    proof_obligation_map: true
+    expected: FORMALIZATION_FAIL_CLOSED
+  - id: invariants_missing_fail_closed
+    finite_state_definition: true
+    clear_invariants: false
+    type_stable_inputs: true
+    unambiguous_outcomes: true
+    proof_obligation_map: true
+    expected: FORMALIZATION_FAIL_CLOSED
+  - id: type_stability_missing_fail_closed
+    finite_state_definition: true
+    clear_invariants: true
+    type_stable_inputs: false
+    unambiguous_outcomes: true
+    proof_obligation_map: true
+    expected: FORMALIZATION_FAIL_CLOSED
+  - id: outcomes_ambiguous_fail_closed
+    finite_state_definition: true
+    clear_invariants: true
+    type_stable_inputs: true
+    unambiguous_outcomes: false
+    proof_obligation_map: true
+    expected: FORMALIZATION_FAIL_CLOSED
+  - id: proof_map_missing_fail_closed
+    finite_state_definition: true
+    clear_invariants: true
+    type_stable_inputs: true
+    unambiguous_outcomes: true
+    proof_obligation_map: false
+    expected: FORMALIZATION_FAIL_CLOSED
