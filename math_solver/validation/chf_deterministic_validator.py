@@ -52,6 +52,15 @@ FORMAL_ANALOGY_ALLOWED = "FORMAL_ANALOGY_ALLOWED"
 PHYSICS_CLAIM_BLOCKED = "PHYSICS_CLAIM_BLOCKED"
 EMPIRICAL_CLAIM_FAIL_CLOSED = "EMPIRICAL_CLAIM_FAIL_CLOSED"
 
+RECEIPT_SUFFICIENT = "RECEIPT_SUFFICIENT"
+RECEIPT_FAIL_CLOSED = "RECEIPT_FAIL_CLOSED"
+
+MERGE_ALLOWED = "MERGE_ALLOWED"
+MERGE_FAIL_CLOSED = "MERGE_FAIL_CLOSED"
+
+ENTROPY_WITHIN_BUDGET = "ENTROPY_WITHIN_BUDGET"
+ENTROPY_FAIL_CLOSED = "ENTROPY_FAIL_CLOSED"
+
 
 def radius(point: List[float], center: List[float]) -> float:
     return math.sqrt(sum((point[i] - center[i]) ** 2 for i in range(len(point))))
@@ -525,6 +534,126 @@ def evaluate_chf_016(spec: Dict[str, Any]) -> Dict[str, Any]:
     return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
 
 
+def evaluate_chf_017(spec: Dict[str, Any]) -> Dict[str, Any]:
+    """Receipt sufficiency and custody gate."""
+    required_fields = set(spec["model"]["required_receipt_fields"])
+    required_custody = set(spec["model"]["required_custody_links"])
+    min_integrity = float(spec["model"]["min_integrity_score"])
+    cases, all_pass = [], True
+
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        receipt_fields = set(case.get("receipt_fields", []))
+        custody_links = set(case.get("custody_links", []))
+        integrity_score = float(case.get("integrity_score", 0.0))
+        tamper_detected = bool(case.get("tamper_detected", False))
+        signer_authorized = bool(case.get("signer_authorized", False))
+
+        if tamper_detected:
+            actual, reason = RECEIPT_FAIL_CLOSED, "receipt_tamper_detected"
+        elif not signer_authorized:
+            actual, reason = RECEIPT_FAIL_CLOSED, "receipt_signer_not_authorized"
+        elif not required_fields.issubset(receipt_fields):
+            actual, reason = RECEIPT_FAIL_CLOSED, "receipt_fields_incomplete"
+        elif not required_custody.issubset(custody_links):
+            actual, reason = RECEIPT_FAIL_CLOSED, "receipt_custody_links_incomplete"
+        elif integrity_score < min_integrity:
+            actual, reason = RECEIPT_FAIL_CLOSED, "receipt_integrity_below_threshold"
+        else:
+            actual, reason = RECEIPT_SUFFICIENT, "receipt_sufficiency_and_custody_pass"
+
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({
+            "id": case["id"],
+            "expected": expected,
+            "actual": actual,
+            "status": "PASS" if passed else "FAIL",
+            "reason": reason,
+        })
+
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_018(spec: Dict[str, Any]) -> Dict[str, Any]:
+    """Branch merge and reconciliation gate."""
+    model = spec["model"]
+    max_divergence = float(model["max_state_divergence"])
+    min_confidence = float(model["min_reconciliation_confidence"])
+    required_evidence = set(model["required_evidence"])
+    cases, all_pass = [], True
+
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        branch_receipts_valid = bool(case.get("branch_receipts_valid", False))
+        no_contradiction = bool(case.get("no_contradiction", False))
+        state_divergence = float(case.get("state_divergence", 1.0))
+        reconciliation_confidence = float(case.get("reconciliation_confidence", 0.0))
+        evidence = set(case.get("evidence", []))
+
+        if not branch_receipts_valid:
+            actual, reason = MERGE_FAIL_CLOSED, "branch_receipts_invalid"
+        elif not no_contradiction:
+            actual, reason = MERGE_FAIL_CLOSED, "branch_contradiction_detected"
+        elif state_divergence > max_divergence:
+            actual, reason = MERGE_FAIL_CLOSED, "state_divergence_exceeds_merge_tolerance"
+        elif reconciliation_confidence < min_confidence:
+            actual, reason = MERGE_FAIL_CLOSED, "reconciliation_confidence_below_threshold"
+        elif not required_evidence.issubset(evidence):
+            actual, reason = MERGE_FAIL_CLOSED, "reconciliation_evidence_incomplete"
+        else:
+            actual, reason = MERGE_ALLOWED, "branch_merge_reconciliation_pass"
+
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({
+            "id": case["id"],
+            "expected": expected,
+            "actual": actual,
+            "status": "PASS" if passed else "FAIL",
+            "reason": reason,
+        })
+
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_019(spec: Dict[str, Any]) -> Dict[str, Any]:
+    """Entropy / irreversibility budget gate."""
+    model = spec["model"]
+    max_entropy_delta = float(model["max_entropy_delta"])
+    max_irreversibility = float(model["max_irreversibility_score"])
+    min_reversibility_margin = float(model["min_reversibility_margin"])
+    cases, all_pass = [], True
+
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        entropy_delta = float(case.get("entropy_delta", 0.0))
+        irreversibility_score = float(case.get("irreversibility_score", 0.0))
+        reversibility_margin = float(case.get("reversibility_margin", 0.0))
+        mitigation_available = bool(case.get("mitigation_available", False))
+
+        if entropy_delta > max_entropy_delta and not mitigation_available:
+            actual, reason = ENTROPY_FAIL_CLOSED, "entropy_delta_exceeds_budget_without_mitigation"
+        elif irreversibility_score > max_irreversibility:
+            actual, reason = ENTROPY_FAIL_CLOSED, "irreversibility_score_exceeds_budget"
+        elif reversibility_margin < min_reversibility_margin:
+            actual, reason = ENTROPY_FAIL_CLOSED, "reversibility_margin_below_threshold"
+        else:
+            actual, reason = ENTROPY_WITHIN_BUDGET, "entropy_irreversibility_budget_pass"
+
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({
+            "id": case["id"],
+            "expected": expected,
+            "actual": actual,
+            "status": "PASS" if passed else "FAIL",
+            "reason": reason,
+        })
+
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
 EVALUATORS = {
     "chf-001": evaluate_chf_001,
     "chf-002": evaluate_chf_002,
@@ -542,6 +671,9 @@ EVALUATORS = {
     "chf-014": evaluate_chf_014,
     "chf-015": evaluate_chf_015,
     "chf-016": evaluate_chf_016,
+    "chf-017": evaluate_chf_017,
+    "chf-018": evaluate_chf_018,
+    "chf-019": evaluate_chf_019,
 }
 
 

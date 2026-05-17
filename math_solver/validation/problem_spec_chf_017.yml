@@ -1,0 +1,60 @@
+problem_id: chf-017
+title: Receipt Sufficiency and Custody Gate
+formalism: consequence_horizon_formalism
+model:
+  min_integrity_score: 0.95
+  required_receipt_fields:
+    - event_id
+    - prior_shell_hash
+    - crossing_hash
+    - projected_state_hash
+    - admissibility_basis
+    - signer
+    - timestamp
+  required_custody_links:
+    - origin
+    - validator
+    - artifact
+test_cases:
+  - id: complete_receipt_sufficient
+    receipt_fields: [event_id, prior_shell_hash, crossing_hash, projected_state_hash, admissibility_basis, signer, timestamp]
+    custody_links: [origin, validator, artifact]
+    integrity_score: 0.99
+    tamper_detected: false
+    signer_authorized: true
+    expected: RECEIPT_SUFFICIENT
+  - id: missing_projected_state_hash_fail_closed
+    receipt_fields: [event_id, prior_shell_hash, crossing_hash, admissibility_basis, signer, timestamp]
+    custody_links: [origin, validator, artifact]
+    integrity_score: 0.99
+    tamper_detected: false
+    signer_authorized: true
+    expected: RECEIPT_FAIL_CLOSED
+  - id: missing_artifact_custody_fail_closed
+    receipt_fields: [event_id, prior_shell_hash, crossing_hash, projected_state_hash, admissibility_basis, signer, timestamp]
+    custody_links: [origin, validator]
+    integrity_score: 0.99
+    tamper_detected: false
+    signer_authorized: true
+    expected: RECEIPT_FAIL_CLOSED
+  - id: integrity_below_threshold_fail_closed
+    receipt_fields: [event_id, prior_shell_hash, crossing_hash, projected_state_hash, admissibility_basis, signer, timestamp]
+    custody_links: [origin, validator, artifact]
+    integrity_score: 0.94
+    tamper_detected: false
+    signer_authorized: true
+    expected: RECEIPT_FAIL_CLOSED
+  - id: tamper_detected_fail_closed
+    receipt_fields: [event_id, prior_shell_hash, crossing_hash, projected_state_hash, admissibility_basis, signer, timestamp]
+    custody_links: [origin, validator, artifact]
+    integrity_score: 1.0
+    tamper_detected: true
+    signer_authorized: true
+    expected: RECEIPT_FAIL_CLOSED
+  - id: unauthorized_signer_fail_closed
+    receipt_fields: [event_id, prior_shell_hash, crossing_hash, projected_state_hash, admissibility_basis, signer, timestamp]
+    custody_links: [origin, validator, artifact]
+    integrity_score: 0.99
+    tamper_detected: false
+    signer_authorized: false
+    expected: RECEIPT_FAIL_CLOSED

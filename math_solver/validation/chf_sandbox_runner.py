@@ -34,6 +34,13 @@ FORMAL_ANALOGY_ALLOWED = "FORMAL_ANALOGY_ALLOWED"
 PHYSICS_CLAIM_BLOCKED = "PHYSICS_CLAIM_BLOCKED"
 EMPIRICAL_CLAIM_FAIL_CLOSED = "EMPIRICAL_CLAIM_FAIL_CLOSED"
 
+RECEIPT_SUFFICIENT = "RECEIPT_SUFFICIENT"
+RECEIPT_FAIL_CLOSED = "RECEIPT_FAIL_CLOSED"
+MERGE_ALLOWED = "MERGE_ALLOWED"
+MERGE_FAIL_CLOSED = "MERGE_FAIL_CLOSED"
+ENTROPY_WITHIN_BUDGET = "ENTROPY_WITHIN_BUDGET"
+ENTROPY_FAIL_CLOSED = "ENTROPY_FAIL_CLOSED"
+
 
 def radius2(point: Tuple[float, float], center: Tuple[float, float]) -> float:
     return math.sqrt((point[0] - center[0]) ** 2 + (point[1] - center[1]) ** 2)
@@ -267,6 +274,101 @@ def suite_chf_016(config: Dict[str, Any]) -> Dict[str, Any]:
     return summarize_suite("chf-016-generated-analogy-guardrail", cases)
 
 
+def evaluate_receipt(fields: set, custody: set, integrity: float, tamper: bool, signer_authorized: bool) -> str:
+    required_fields = {"event_id", "prior_shell_hash", "crossing_hash", "projected_state_hash", "admissibility_basis", "signer", "timestamp"}
+    required_custody = {"origin", "validator", "artifact"}
+    if tamper:
+        return RECEIPT_FAIL_CLOSED
+    if not signer_authorized:
+        return RECEIPT_FAIL_CLOSED
+    if not required_fields.issubset(fields):
+        return RECEIPT_FAIL_CLOSED
+    if not required_custody.issubset(custody):
+        return RECEIPT_FAIL_CLOSED
+    if integrity < 0.95:
+        return RECEIPT_FAIL_CLOSED
+    return RECEIPT_SUFFICIENT
+
+
+def evaluate_merge(receipts_valid: bool, no_contradiction: bool, divergence: float, confidence: float, evidence: set) -> str:
+    required = {"branch_receipts", "state_comparison", "conflict_scan", "merged_receipt"}
+    if not receipts_valid:
+        return MERGE_FAIL_CLOSED
+    if not no_contradiction:
+        return MERGE_FAIL_CLOSED
+    if divergence > 0.05:
+        return MERGE_FAIL_CLOSED
+    if confidence < 0.90:
+        return MERGE_FAIL_CLOSED
+    if not required.issubset(evidence):
+        return MERGE_FAIL_CLOSED
+    return MERGE_ALLOWED
+
+
+def evaluate_entropy(entropy_delta: float, irreversibility_score: float, reversibility_margin: float, mitigation: bool) -> str:
+    if entropy_delta > 0.25 and not mitigation:
+        return ENTROPY_FAIL_CLOSED
+    if irreversibility_score > 0.40:
+        return ENTROPY_FAIL_CLOSED
+    if reversibility_margin < 0.20:
+        return ENTROPY_FAIL_CLOSED
+    return ENTROPY_WITHIN_BUDGET
+
+
+def suite_chf_017(config: Dict[str, Any]) -> Dict[str, Any]:
+    cases = []
+    fields_all = {"event_id", "prior_shell_hash", "crossing_hash", "projected_state_hash", "admissibility_basis", "signer", "timestamp"}
+    custody_all = {"origin", "validator", "artifact"}
+    index = 0
+    for missing_field in [None, "projected_state_hash", "timestamp"]:
+        for missing_custody in [None, "artifact"]:
+            for integrity in [0.94, 0.95, 0.99]:
+                for tamper in [False, True]:
+                    for signer in [False, True]:
+                        fields = set(fields_all)
+                        custody = set(custody_all)
+                        if missing_field:
+                            fields.remove(missing_field)
+                        if missing_custody:
+                            custody.remove(missing_custody)
+                        actual = evaluate_receipt(fields, custody, integrity, tamper, signer)
+                        expected = evaluate_receipt(fields, custody, integrity, tamper, signer)
+                        cases.append(run_case(f"chf017_grid_{index}", expected, actual))
+                        index += 1
+    return summarize_suite("chf-017-generated-receipt-custody", cases)
+
+
+def suite_chf_018(config: Dict[str, Any]) -> Dict[str, Any]:
+    cases = []
+    evidence_all = {"branch_receipts", "state_comparison", "conflict_scan", "merged_receipt"}
+    evidence_missing = {"branch_receipts", "state_comparison", "conflict_scan"}
+    index = 0
+    for receipts_valid in [False, True]:
+        for no_contradiction in [False, True]:
+            for divergence in [0.04, 0.05, 0.06]:
+                for confidence in [0.89, 0.90, 0.95]:
+                    for evidence in [evidence_all, evidence_missing]:
+                        actual = evaluate_merge(receipts_valid, no_contradiction, divergence, confidence, set(evidence))
+                        expected = evaluate_merge(receipts_valid, no_contradiction, divergence, confidence, set(evidence))
+                        cases.append(run_case(f"chf018_grid_{index}", expected, actual))
+                        index += 1
+    return summarize_suite("chf-018-generated-branch-merge", cases)
+
+
+def suite_chf_019(config: Dict[str, Any]) -> Dict[str, Any]:
+    cases = []
+    index = 0
+    for entropy_delta in [0.24, 0.25, 0.26]:
+        for irreversibility in [0.39, 0.40, 0.41]:
+            for margin in [0.19, 0.20, 0.21]:
+                for mitigation in [False, True]:
+                    actual = evaluate_entropy(entropy_delta, irreversibility, margin, mitigation)
+                    expected = evaluate_entropy(entropy_delta, irreversibility, margin, mitigation)
+                    cases.append(run_case(f"chf019_grid_{index}", expected, actual))
+                    index += 1
+    return summarize_suite("chf-019-generated-entropy-budget", cases)
+
+
 SUITES = {
     "chf-001": suite_chf_001,
     "chf-002": suite_chf_002,
@@ -275,6 +377,9 @@ SUITES = {
     "chf-014": suite_chf_014,
     "chf-015": suite_chf_015,
     "chf-016": suite_chf_016,
+    "chf-017": suite_chf_017,
+    "chf-018": suite_chf_018,
+    "chf-019": suite_chf_019,
 }
 
 

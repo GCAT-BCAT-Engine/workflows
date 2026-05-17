@@ -1,0 +1,44 @@
+problem_id: chf-019
+title: Entropy and Irreversibility Budget Gate
+formalism: consequence_horizon_formalism
+model:
+  max_entropy_delta: 0.25
+  max_irreversibility_score: 0.40
+  min_reversibility_margin: 0.20
+test_cases:
+  - id: entropy_budget_pass
+    entropy_delta: 0.10
+    irreversibility_score: 0.20
+    reversibility_margin: 0.50
+    mitigation_available: false
+    expected: ENTROPY_WITHIN_BUDGET
+  - id: entropy_exact_boundary_pass
+    entropy_delta: 0.25
+    irreversibility_score: 0.40
+    reversibility_margin: 0.20
+    mitigation_available: false
+    expected: ENTROPY_WITHIN_BUDGET
+  - id: entropy_exceeds_without_mitigation_fail_closed
+    entropy_delta: 0.26
+    irreversibility_score: 0.20
+    reversibility_margin: 0.50
+    mitigation_available: false
+    expected: ENTROPY_FAIL_CLOSED
+  - id: entropy_exceeds_with_mitigation_pass
+    entropy_delta: 0.26
+    irreversibility_score: 0.20
+    reversibility_margin: 0.50
+    mitigation_available: true
+    expected: ENTROPY_WITHIN_BUDGET
+  - id: irreversibility_exceeds_budget_fail_closed
+    entropy_delta: 0.10
+    irreversibility_score: 0.41
+    reversibility_margin: 0.50
+    mitigation_available: true
+    expected: ENTROPY_FAIL_CLOSED
+  - id: reversibility_margin_too_low_fail_closed
+    entropy_delta: 0.10
+    irreversibility_score: 0.20
+    reversibility_margin: 0.19
+    mitigation_available: true
+    expected: ENTROPY_FAIL_CLOSED

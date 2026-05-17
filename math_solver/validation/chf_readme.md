@@ -1,6 +1,6 @@
-# Consequence Horizon Formalism Validation — v0.9
+# Consequence Horizon Formalism Validation — v0.10
 
-This version adds the CHF sandbox runner.
+This version adds receipt sufficiency, branch merge reconciliation, and entropy/irreversibility budget validation.
 
 ## Stable dispatcher preserved
 
@@ -17,16 +17,11 @@ math_solver/validation/chf_deterministic_validator.py
 math_solver/validation/chf_sandbox_runner.py
 math_solver/validation/chf_sandbox_config.yml
 math_solver/validation/chf_sandbox_readme.md
+math_solver/validation/problem_spec_chf_017.yml
+math_solver/validation/problem_spec_chf_018.yml
+math_solver/validation/problem_spec_chf_019.yml
 math_solver/validation/chf_validation_matrix.md
 math_solver/validation/chf_readme.md
-```
-
-## Validation layers
-
-```text
-Layer 1: explicit problem specs
-Layer 2: generated sandbox subtests
-Layer 3: aggregate report
 ```
 
 ## Expected GitHub result
@@ -34,6 +29,6 @@ Layer 3: aggregate report
 ```text
 Overall status: PASS
 Explicit status: PASS
-Specs evaluated: 16
+Specs evaluated: 19
 Sandbox status: PASS
 ```

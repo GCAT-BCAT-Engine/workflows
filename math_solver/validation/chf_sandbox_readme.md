@@ -1,30 +1,20 @@
-# CHF Sandbox Runner
+# CHF Sandbox Runner — v0.10
 
 The CHF sandbox runner is the generated-case test bed for Consequence Horizon Formalism validation.
 
-## Purpose
-
-The direct problem specs validate known cases. The sandbox validates generated families of cases.
-
-## Current suites
+## v0.10 added suites
 
 | Suite | Generated coverage |
 |---|---|
-| `chf-001` | 2D cell / horizon seeded sweeps and boundary probes |
-| `chf-002` | multi-center robust permission seeded sweeps |
-| `chf-004` | observer projection distinguishability grid |
-| `chf-011` | lag-reachable radius seeded sweeps |
-| `chf-014` | probabilistic recoverability / harm / unknown grid |
-| `chf-015` | branch custody / receipts truth-table grid |
-| `chf-016` | analogy-guardrail claim-scope truth-table grid |
+| `chf-017` | receipt sufficiency, custody links, integrity threshold, tamper, signer authorization |
+| `chf-018` | branch merge reconciliation truth table |
+| `chf-019` | entropy / irreversibility budget grid |
 
-## Done condition
-
-The full validator should report both:
+## Expected aggregate
 
 ```text
-Overall status: PASS
 Sandbox status: PASS
+Subtests failed: 0
 ```
 
 The workflow file remains a stable dispatcher and does not need to change.

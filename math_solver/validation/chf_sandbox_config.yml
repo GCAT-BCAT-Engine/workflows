@@ -15,3 +15,6 @@ suites:
   - suite_id: chf-014
   - suite_id: chf-015
   - suite_id: chf-016
+  - suite_id: chf-017
+  - suite_id: chf-018
+  - suite_id: chf-019

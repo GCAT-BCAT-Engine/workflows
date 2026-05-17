@@ -1,37 +1,33 @@
-# CHF Validation Matrix — v0.9 Full Sandbox Preflight
+# CHF Validation Matrix — v0.10 Receipt, Reconciliation, Entropy
 
-This bundle adds generated-case sandbox validation while preserving the stable workflow dispatcher.
+This bundle adds semantic specs 017-019 and generated sandbox suites for each.
 
-## Direct specs
+## New specs
 
-The repo should continue evaluating:
+| Spec | Purpose |
+|---|---|
+| `chf-017` | Receipt sufficiency and custody gate |
+| `chf-018` | Branch merge and reconciliation gate |
+| `chf-019` | Entropy and irreversibility budget gate |
+
+## Stable dispatcher
+
+This bundle does not include:
 
 ```text
-problem_spec_chf_001.yml through problem_spec_chf_016.yml
+.github/workflows/chf_validation_run.yml
 ```
 
-Expected direct result:
+## Expected direct result
 
 ```text
 Explicit status: PASS
-Specs evaluated: 16
+Specs evaluated: 19
 ```
 
-## Sandbox suites
-
-| Suite | Expected |
-|---|---|
-| `chf-001` generated 2D cell/horizon | PASS |
-| `chf-002` generated multi-center uncertainty | PASS |
-| `chf-004` generated observer projection grid | PASS |
-| `chf-011` generated lag reachability | PASS |
-| `chf-014` generated probabilistic cloud grid | PASS |
-| `chf-015` generated branch-splitting grid | PASS |
-| `chf-016` generated analogy guardrail grid | PASS |
-
-Expected aggregate result:
+## Expected sandbox result
 
 ```text
-Overall status: PASS
 Sandbox status: PASS
+Subtests failed: 0
 ```

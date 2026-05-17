@@ -1,0 +1,61 @@
+problem_id: chf-018
+title: Branch Merge and Reconciliation Gate
+formalism: consequence_horizon_formalism
+model:
+  max_state_divergence: 0.05
+  min_reconciliation_confidence: 0.90
+  required_evidence:
+    - branch_receipts
+    - state_comparison
+    - conflict_scan
+    - merged_receipt
+test_cases:
+  - id: merge_ready_allowed
+    branch_receipts_valid: true
+    no_contradiction: true
+    state_divergence: 0.02
+    reconciliation_confidence: 0.95
+    evidence: [branch_receipts, state_comparison, conflict_scan, merged_receipt]
+    expected: MERGE_ALLOWED
+  - id: invalid_branch_receipts_fail_closed
+    branch_receipts_valid: false
+    no_contradiction: true
+    state_divergence: 0.02
+    reconciliation_confidence: 0.95
+    evidence: [branch_receipts, state_comparison, conflict_scan, merged_receipt]
+    expected: MERGE_FAIL_CLOSED
+  - id: contradiction_detected_fail_closed
+    branch_receipts_valid: true
+    no_contradiction: false
+    state_divergence: 0.02
+    reconciliation_confidence: 0.95
+    evidence: [branch_receipts, state_comparison, conflict_scan, merged_receipt]
+    expected: MERGE_FAIL_CLOSED
+  - id: state_divergence_too_high_fail_closed
+    branch_receipts_valid: true
+    no_contradiction: true
+    state_divergence: 0.06
+    reconciliation_confidence: 0.95
+    evidence: [branch_receipts, state_comparison, conflict_scan, merged_receipt]
+    expected: MERGE_FAIL_CLOSED
+  - id: reconciliation_confidence_low_fail_closed
+    branch_receipts_valid: true
+    no_contradiction: true
+    state_divergence: 0.02
+    reconciliation_confidence: 0.89
+    evidence: [branch_receipts, state_comparison, conflict_scan, merged_receipt]
+    expected: MERGE_FAIL_CLOSED
+  - id: missing_merged_receipt_evidence_fail_closed
+    branch_receipts_valid: true
+    no_contradiction: true
+    state_divergence: 0.02
+    reconciliation_confidence: 0.95
+    evidence: [branch_receipts, state_comparison, conflict_scan]
+    expected: MERGE_FAIL_CLOSED
+  - id: exact_divergence_and_confidence_boundary_allowed
+    branch_receipts_valid: true
+    no_contradiction: true
+    state_divergence: 0.05
+    reconciliation_confidence: 0.90
+    evidence: [branch_receipts, state_comparison, conflict_scan, merged_receipt]
+    expected: MERGE_ALLOWED
