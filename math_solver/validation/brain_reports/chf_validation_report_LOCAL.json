@@ -421,7 +421,101 @@
       ],
       "spec_id": "chf-010",
       "status": "PASS"
+    },
+    {
+      "cases": [
+        {
+          "actual": "ALLOW",
+          "expected": "ALLOW",
+          "horizon_radius": 0.8,
+          "id": "short_lag_inside_horizon",
+          "lag_reachable_radius": 0.65,
+          "reason": "lag_reachable_set_inside_horizon",
+          "status": "PASS"
+        },
+        {
+          "actual": "FAIL_CLOSED",
+          "expected": "FAIL_CLOSED",
+          "horizon_radius": 0.8,
+          "id": "long_lag_exceeds_horizon",
+          "lag_reachable_radius": 0.9,
+          "reason": "lag_reachable_set_exceeds_horizon",
+          "status": "PASS"
+        },
+        {
+          "actual": "FAIL_CLOSED",
+          "expected": "FAIL_CLOSED",
+          "horizon_radius": 0.8,
+          "id": "uncertainty_buffer_exceeds_horizon",
+          "lag_reachable_radius": 0.85,
+          "reason": "lag_reachable_set_exceeds_horizon",
+          "status": "PASS"
+        }
+      ],
+      "spec_id": "chf-011",
+      "status": "PASS"
+    },
+    {
+      "cases": [
+        {
+          "actual": "CHAIN_CONTINUOUS",
+          "expected": "CHAIN_CONTINUOUS",
+          "id": "complete_chain_legible",
+          "reason": "historical_shell_chain_continuous",
+          "status": "PASS"
+        },
+        {
+          "actual": "CHAIN_FAIL_CLOSED",
+          "expected": "CHAIN_FAIL_CLOSED",
+          "id": "missing_propagated_record_link",
+          "reason": "historical_chain_links_missing",
+          "status": "PASS"
+        },
+        {
+          "actual": "CHAIN_FAIL_CLOSED",
+          "expected": "CHAIN_FAIL_CLOSED",
+          "id": "low_legibility_chain",
+          "reason": "historical_chain_legibility_below_threshold",
+          "status": "PASS"
+        }
+      ],
+      "spec_id": "chf-012",
+      "status": "PASS"
+    },
+    {
+      "cases": [
+        {
+          "actual": "NO_EFFECT",
+          "expected": "NO_EFFECT",
+          "id": "below_threshold_unprotected",
+          "reason": "below_relevance_threshold",
+          "status": "PASS"
+        },
+        {
+          "actual": "DENY",
+          "expected": "DENY",
+          "id": "above_threshold_unprotected",
+          "reason": "deformation_exceeds_relevance_threshold",
+          "status": "PASS"
+        },
+        {
+          "actual": "FAIL_CLOSED",
+          "expected": "FAIL_CLOSED",
+          "id": "below_threshold_protected",
+          "reason": "protected_cloud_requires_explicit_review",
+          "status": "PASS"
+        },
+        {
+          "actual": "FAIL_CLOSED",
+          "expected": "FAIL_CLOSED",
+          "id": "unknown_deformation_protected",
+          "reason": "protected_affected_cloud_unknown_deformation",
+          "status": "PASS"
+        }
+      ],
+      "spec_id": "chf-013",
+      "status": "PASS"
     }
   ],
-  "specs_evaluated": 10
+  "specs_evaluated": 13
 }

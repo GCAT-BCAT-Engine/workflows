@@ -1,7 +1,7 @@
 # Consequence Horizon Formalism Validation Summary
 
 - Overall status: **PASS**
-- Specs evaluated: **10**
+- Specs evaluated: **13**
 
 ## Spec Results
 
@@ -116,4 +116,39 @@
   - Reason: `recoverability_below_threshold`
 - `purpose_inversion`: expected `DENY`, actual `DENY` — **PASS**
   - Reason: `purpose_inversion_detected`
+
+### chf-011
+
+- Status: **PASS**
+
+- `short_lag_inside_horizon`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `lag_reachable_set_inside_horizon`
+- `long_lag_exceeds_horizon`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `lag_reachable_set_exceeds_horizon`
+- `uncertainty_buffer_exceeds_horizon`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `lag_reachable_set_exceeds_horizon`
+
+### chf-012
+
+- Status: **PASS**
+
+- `complete_chain_legible`: expected `CHAIN_CONTINUOUS`, actual `CHAIN_CONTINUOUS` — **PASS**
+  - Reason: `historical_shell_chain_continuous`
+- `missing_propagated_record_link`: expected `CHAIN_FAIL_CLOSED`, actual `CHAIN_FAIL_CLOSED` — **PASS**
+  - Reason: `historical_chain_links_missing`
+- `low_legibility_chain`: expected `CHAIN_FAIL_CLOSED`, actual `CHAIN_FAIL_CLOSED` — **PASS**
+  - Reason: `historical_chain_legibility_below_threshold`
+
+### chf-013
+
+- Status: **PASS**
+
+- `below_threshold_unprotected`: expected `NO_EFFECT`, actual `NO_EFFECT` — **PASS**
+  - Reason: `below_relevance_threshold`
+- `above_threshold_unprotected`: expected `DENY`, actual `DENY` — **PASS**
+  - Reason: `deformation_exceeds_relevance_threshold`
+- `below_threshold_protected`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `protected_cloud_requires_explicit_review`
+- `unknown_deformation_protected`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `protected_affected_cloud_unknown_deformation`
 
