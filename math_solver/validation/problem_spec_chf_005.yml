@@ -1,5 +1,5 @@
 problem_id: chf-005
-title: Threshold Record and Legibility Decay
+title: Threshold Record and Legibility Decay - v0.8a Adversarial Existing-Schema Cases
 formalism: consequence_horizon_formalism
 model:
   legibility_threshold: 0.70
@@ -14,4 +14,20 @@ test_cases:
     expected: RECORD_EXISTS_LOW_LEGIBILITY
   - id: denied_attempt
     actualized_crossing: false
+    expected: NO_PROPAGATED_RECORD_REQUIRED
+
+  - id: ADV_exact_legibility_threshold_record_legible
+    actualized_crossing: true
+    legibility: 0.70
+    expected: RECORD_LEGIBLE
+  - id: ADV_just_below_legibility_threshold_low_legibility
+    actualized_crossing: true
+    legibility: 0.699
+    expected: RECORD_EXISTS_LOW_LEGIBILITY
+  - id: ADV_actualized_missing_legibility_treated_low_legibility
+    actualized_crossing: true
+    expected: RECORD_EXISTS_LOW_LEGIBILITY
+  - id: ADV_denied_attempt_with_legibility_still_no_record_required
+    actualized_crossing: false
+    legibility: 1.0
     expected: NO_PROPAGATED_RECORD_REQUIRED

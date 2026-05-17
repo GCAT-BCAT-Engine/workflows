@@ -1,5 +1,5 @@
 problem_id: chf-001
-title: Minimal 2D Consequence Horizon Model - Expanded Edge Cases v0.7b
+title: Minimal 2D Consequence Horizon Model - v0.8a Adversarial Existing-Schema Cases
 formalism: consequence_horizon_formalism
 model:
   state_space: R2
@@ -58,3 +58,19 @@ test_cases:
   - id: STRESS_diagonal_cell1_exact_horizon_allow
     point: [0.5656854249, 0.5656854249]
     expected: ALLOW
+
+  - id: ADV_cell4_beyond_horizon_denied_before_uncertain_cell
+    point: [0.1, -0.9]
+    expected: DENY
+  - id: ADV_cell2_angle90_over_radius_limit_deny
+    point: [0.0, 0.5001]
+    expected: DENY
+  - id: ADV_cell2_angle90_exact_radius_limit_allow
+    point: [0.0, 0.5]
+    expected: ALLOW
+  - id: ADV_cell3_low_radius_still_forbidden_deny
+    point: [-0.01, -0.01]
+    expected: DENY
+  - id: ADV_cell1_inside_unit_but_outside_horizon_deny
+    point: [0.79, 0.2]
+    expected: DENY

@@ -1,5 +1,5 @@
 problem_id: chf-011
-title: Lag-Reachable Set Commit Gate - Expanded Boundary Cases
+title: Lag-Reachable Set Commit Gate - v0.8a Adversarial Existing-Schema Cases
 formalism: consequence_horizon_formalism
 model:
   default_uncertainty_buffer: 0.0
@@ -25,6 +25,7 @@ test_cases:
     uncertainty_buffer: 0.20
     horizon_radius: 0.80
     expected: FAIL_CLOSED
+
   - id: EDGE_exact_lag_reachable_horizon_allow
     base_transition_radius: 0.60
     lag: 1.0
@@ -60,3 +61,17 @@ test_cases:
     uncertainty_buffer: 0.10
     horizon_radius: 0.80
     expected: ALLOW
+
+  - id: ADV_default_uncertainty_buffer_exact_horizon_allow
+    base_transition_radius: 0.70
+    lag: 1.0
+    drift_rate: 0.10
+    horizon_radius: 0.80
+    expected: ALLOW
+  - id: ADV_high_drift_short_lag_exceeds_horizon_fail_closed
+    base_transition_radius: 0.40
+    lag: 0.5
+    drift_rate: 1.0
+    uncertainty_buffer: 0.0
+    horizon_radius: 0.80
+    expected: FAIL_CLOSED

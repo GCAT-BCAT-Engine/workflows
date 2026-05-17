@@ -1,5 +1,5 @@
 problem_id: chf-007
-title: Star-Shaped Geometry Gate and Radial Coverage Failure Modes
+title: Star-Shaped Geometry Gate and Radial Coverage Failure Modes - v0.8a Adversarial Existing-Schema Cases
 formalism: consequence_horizon_formalism
 model:
   geometry_gate: require_star_shaped_radial_region
@@ -18,4 +18,20 @@ test_cases:
     star_shaped: true
     radial_path_clear: true
     boundary_partition_complete: false
+    expected: GEOMETRY_FAIL_CLOSED
+
+  - id: ADV_star_shaped_but_radial_path_blocked_fail_closed
+    star_shaped: true
+    radial_path_clear: false
+    boundary_partition_complete: true
+    expected: GEOMETRY_FAIL_CLOSED
+  - id: ADV_all_geometry_flags_false_fail_closed
+    star_shaped: false
+    radial_path_clear: false
+    boundary_partition_complete: false
+    expected: GEOMETRY_FAIL_CLOSED
+  - id: ADV_radial_clear_complete_but_not_star_shaped_fail_closed
+    star_shaped: false
+    radial_path_clear: true
+    boundary_partition_complete: true
     expected: GEOMETRY_FAIL_CLOSED

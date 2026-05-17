@@ -1,5 +1,5 @@
 problem_id: chf-008
-title: GCAT/BCAT Local Admissibility Operator Inside a Radial Cell
+title: GCAT/BCAT Local Admissibility Operator Inside a Radial Cell - v0.8a Adversarial Existing-Schema Cases
 formalism: consequence_horizon_formalism
 model:
   gcat_params:
@@ -19,3 +19,16 @@ test_cases:
   - id: gcat_fail_closed_not_simplex
     state: {g: 0.4, c: 0.4, a: 0.3, t: 0.2}
     expected: FAIL_CLOSED
+
+  - id: ADV_zero_autonomy_zero_trust_simplex_allow
+    state: {g: 0.5, c: 0.5, a: 0.0, t: 0.0}
+    expected: ALLOW
+  - id: ADV_negative_component_fail_closed
+    state: {g: -0.1, c: 0.5, a: 0.1, t: 0.5}
+    expected: FAIL_CLOSED
+  - id: ADV_component_greater_than_one_fail_closed
+    state: {g: 1.1, c: 0.0, a: 0.0, t: -0.1}
+    expected: FAIL_CLOSED
+  - id: ADV_low_governance_high_autonomy_deny
+    state: {g: 0.05, c: 0.30, a: 0.30, t: 0.35}
+    expected: DENY

@@ -1,22 +1,30 @@
-# CHF Validation Matrix — v0.7b Boundary Fix
+# CHF Validation Matrix — v0.8a Adversarial Existing-Spec Expansion
 
-This bundle fixes the v0.7a edge-test expectations without touching the stable dispatcher or validator.
+This bundle performs Option A: more adversarial cases inside existing supported schemas only.
 
-## Why v0.7a failed
+## Stable files intentionally untouched
 
-Two cases exposed mismatches between the expected labels and current validator semantics:
+```text
+.github/workflows/chf_validation_run.yml
+math_solver/validation/chf_deterministic_validator.py
+```
 
-| Spec | Case | v0.7a issue |
-|---|---|---|
-| `chf-001` | `EDGE_exact_cell2_limit_allow` | Point `[-0.5, 0.0]` lies exactly at 180 degrees, which the validator assigns to `cell_3`, not `cell_2`. |
-| `chf-002` | `EDGE_upper_shared_cell1_allow` | Point `[0.3, 0.4]` is at 90 degrees relative to center `[0.3, 0.0]`, which the validator assigns to `cell_2`, so robust all-center `cell_1` permission fails. |
+## Expanded specs
 
-## v0.7b corrections
-
-| Spec | Correction |
+| Spec | New pressure |
 |---|---|
-| `chf-001` | Replaced exact cell-2 tests with 3-4-5 triangle points that truly fall inside `cell_2`. |
-| `chf-002` | Moved `EDGE_upper_shared_cell1_allow` to `[0.6, 0.4]`, which is `cell_1` relative to both plausible centers. |
+| `chf-001` | precedence of horizon denial over cell uncertainty, radius boundary, cell boundary behavior |
+| `chf-002` | conservative multi-center disagreement and robust all-center allow cases |
+| `chf-004` | observer distinguishability exact threshold and high-lag smoothing |
+| `chf-005` | record legibility exact threshold and missing legibility behavior |
+| `chf-006` | 3D zero-vector and axis-tie assignment behavior |
+| `chf-007` | geometry gate combinations beyond baseline |
+| `chf-008` | GCAT invalid bounds and low-governance/high-autonomy cases |
+| `chf-009` | missing propagated record and invalid-simplex commit cases |
+| `chf-010` | exact recoverability threshold and combined failure cases |
+| `chf-011` | default uncertainty buffer and high-drift failure |
+| `chf-012` | extra links, missing prior shell, exact legibility threshold |
+| `chf-013` | zero epsilon and protected above-threshold behavior |
 
 ## Expected run
 
@@ -24,3 +32,7 @@ Two cases exposed mismatches between the expected labels and current validator s
 Overall status: PASS
 Specs evaluated: 13
 ```
+
+## Note
+
+Case IDs are intentionally descriptive because YAML comments do not appear in the GitHub Actions summary.

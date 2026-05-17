@@ -1,8 +1,25 @@
-# Consequence Horizon Formalism Validation — v0.7b Boundary Fix
+# Consequence Horizon Formalism Validation — v0.8a
 
-This package is a data/spec-only correction for the v0.7a edge expansion.
+This is Option A: add adversarial validation pressure to existing supported problem-spec schemas only.
 
-## Stable dispatcher rule preserved
+## Done condition
+
+The existing workflow dispatcher and validator remain unchanged, and the run should report:
+
+```text
+Overall status: PASS
+Specs evaluated: 13
+```
+
+## Changed files
+
+This bundle replaces only supported problem specs and docs under:
+
+```text
+math_solver/validation/
+```
+
+## Not changed
 
 This bundle does not include or modify:
 
@@ -11,24 +28,12 @@ This bundle does not include or modify:
 math_solver/validation/chf_deterministic_validator.py
 ```
 
-## Changed files
+## Next step after v0.8a
+
+Option B should add new semantic coverage with new spec files, likely requiring validator support. Candidate new specs:
 
 ```text
-math_solver/validation/problem_spec_chf_001.yml
-math_solver/validation/problem_spec_chf_002.yml
-math_solver/validation/chf_validation_matrix.md
-math_solver/validation/chf_readme.md
+problem_spec_chf_014.yml  # probabilistic cloud admissibility
+problem_spec_chf_015.yml  # branch splitting after unresolved uncertainty
+problem_spec_chf_016.yml  # irreversible horizon / black-hole-like threshold analogy guardrail
 ```
-
-## Done condition
-
-The existing workflow should run unchanged and report:
-
-```text
-Overall status: PASS
-Specs evaluated: 13
-```
-
-## Meaning
-
-The v0.7a failure was useful. It showed that the stable dispatcher and validator correctly surfaced edge-case expectation errors in the problem specs. v0.7b corrects those data points without changing the dispatcher or validator.

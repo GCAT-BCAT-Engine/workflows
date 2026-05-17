@@ -1,5 +1,5 @@
 problem_id: chf-013
-title: Many-Body Relevance Threshold Gate - Expanded Threshold Cases
+title: Many-Body Relevance Threshold Gate - v0.8a Adversarial Existing-Schema Cases
 formalism: consequence_horizon_formalism
 model:
   gate: require_relevance_threshold_or_protected_review
@@ -27,6 +27,7 @@ test_cases:
     protected: true
     deformation_known: false
     expected: FAIL_CLOSED
+
   - id: EDGE_exact_threshold_unprotected_no_effect
     deformation: 0.10
     epsilon: 0.10
@@ -62,3 +63,22 @@ test_cases:
     protected: true
     deformation_known: true
     expected: FAIL_CLOSED
+
+  - id: ADV_zero_epsilon_zero_deformation_unprotected_no_effect
+    deformation: 0.0
+    epsilon: 0.0
+    protected: false
+    deformation_known: true
+    expected: NO_EFFECT
+  - id: ADV_zero_epsilon_small_deformation_unprotected_deny
+    deformation: 0.0001
+    epsilon: 0.0
+    protected: false
+    deformation_known: true
+    expected: DENY
+  - id: ADV_above_threshold_protected_currently_deny
+    deformation: 0.25
+    epsilon: 0.10
+    protected: true
+    deformation_known: true
+    expected: DENY

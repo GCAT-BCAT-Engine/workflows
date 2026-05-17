@@ -1,5 +1,5 @@
 problem_id: chf-012
-title: Historical Shell Chain Continuity
+title: Historical Shell Chain Continuity - v0.8a Adversarial Existing-Schema Cases
 formalism: consequence_horizon_formalism
 model:
   required_chain_links:
@@ -24,3 +24,19 @@ test_cases:
     record_legibility: 0.30
     legibility_threshold: 0.70
     expected: CHAIN_FAIL_CLOSED
+
+  - id: ADV_complete_chain_with_extra_links_continuous
+    chain_links: [prior_shell, crossing_event, propagated_record, new_center, next_transition_region, observer_projection, audit_note]
+    record_legibility: 0.91
+    legibility_threshold: 0.70
+    expected: CHAIN_CONTINUOUS
+  - id: ADV_missing_prior_shell_fail_closed
+    chain_links: [crossing_event, propagated_record, new_center, next_transition_region]
+    record_legibility: 0.91
+    legibility_threshold: 0.70
+    expected: CHAIN_FAIL_CLOSED
+  - id: ADV_exact_legibility_threshold_chain_continuous
+    chain_links: [prior_shell, crossing_event, propagated_record, new_center, next_transition_region]
+    record_legibility: 0.70
+    legibility_threshold: 0.70
+    expected: CHAIN_CONTINUOUS
