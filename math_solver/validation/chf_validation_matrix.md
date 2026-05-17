@@ -1,34 +1,37 @@
-# CHF Validation Matrix — v0.8b New Semantic Specs
+# CHF Validation Matrix — v0.9 Full Sandbox Preflight
 
-This bundle performs Option B: add new semantic spec files and the corresponding validator support.
+This bundle adds generated-case sandbox validation while preserving the stable workflow dispatcher.
 
-## Stable dispatcher rule
+## Direct specs
 
-The GitHub Actions workflow is still not included and should remain unchanged.
-
-## New specs
-
-| Spec | Purpose |
-|---|---|
-| `problem_spec_chf_014.yml` | Probabilistic cloud admissibility gate |
-| `problem_spec_chf_015.yml` | Branch splitting after unresolved uncertainty |
-| `problem_spec_chf_016.yml` | Irreversible horizon analogy guardrail |
-
-## Expected run
+The repo should continue evaluating:
 
 ```text
-Overall status: PASS
+problem_spec_chf_001.yml through problem_spec_chf_016.yml
+```
+
+Expected direct result:
+
+```text
+Explicit status: PASS
 Specs evaluated: 16
 ```
 
-## New result labels
+## Sandbox suites
+
+| Suite | Expected |
+|---|---|
+| `chf-001` generated 2D cell/horizon | PASS |
+| `chf-002` generated multi-center uncertainty | PASS |
+| `chf-004` generated observer projection grid | PASS |
+| `chf-011` generated lag reachability | PASS |
+| `chf-014` generated probabilistic cloud grid | PASS |
+| `chf-015` generated branch-splitting grid | PASS |
+| `chf-016` generated analogy guardrail grid | PASS |
+
+Expected aggregate result:
 
 ```text
-PROBABILISTIC_ALLOW
-PROBABILISTIC_FAIL_CLOSED
-BRANCH_SPLIT
-BRANCH_FAIL_CLOSED
-FORMAL_ANALOGY_ALLOWED
-PHYSICS_CLAIM_BLOCKED
-EMPIRICAL_CLAIM_FAIL_CLOSED
+Overall status: PASS
+Sandbox status: PASS
 ```

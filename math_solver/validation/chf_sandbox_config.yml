@@ -1,0 +1,17 @@
+version: chf-sandbox-v0.9
+description: Deterministic generated-case sandbox for Consequence Horizon Formalism.
+suites:
+  - suite_id: chf-001
+    seed: 1001
+    count: 400
+  - suite_id: chf-002
+    seed: 1002
+    count: 300
+  - suite_id: chf-004
+    grid_values: [0.5, 1.0, 2.0, 5.0]
+  - suite_id: chf-011
+    seed: 1011
+    count: 300
+  - suite_id: chf-014
+  - suite_id: chf-015
+  - suite_id: chf-016

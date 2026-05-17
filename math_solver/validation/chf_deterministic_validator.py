@@ -18,6 +18,11 @@ from typing import Any, Dict, List
 
 import yaml
 
+try:
+    from chf_sandbox_runner import run_sandbox_from_config
+except Exception:
+    run_sandbox_from_config = None
+
 
 ALLOW = "ALLOW"
 DENY = "DENY"
@@ -557,6 +562,29 @@ def write_markdown(report: Dict[str, Any], out_md: Path) -> None:
     lines.append(f"- Overall status: **{report['overall_status']}**")
     lines.append(f"- Specs evaluated: **{report['specs_evaluated']}**")
     lines.append("")
+    if report.get("sandbox"):
+        sandbox = report["sandbox"]
+        lines.append("## Sandbox Results")
+        lines.append("")
+        lines.append(f"- Sandbox status: **{sandbox.get('sandbox_status', 'NOT_RUN')}**")
+        lines.append(f"- Suites evaluated: **{sandbox.get('suites_evaluated', 0)}**")
+        lines.append(f"- Subtests generated: **{sandbox.get('subtests_generated', 0)}**")
+        lines.append(f"- Subtests passed: **{sandbox.get('subtests_passed', 0)}**")
+        lines.append(f"- Subtests failed: **{sandbox.get('subtests_failed', 0)}**")
+        lines.append("")
+        for suite in sandbox.get("suites", []):
+            lines.append(f"### Sandbox suite `{suite.get('suite_id')}`")
+            lines.append("")
+            lines.append(f"- Status: **{suite.get('status')}**")
+            lines.append(f"- Generated: **{suite.get('generated')}**")
+            lines.append(f"- Passed: **{suite.get('passed')}**")
+            lines.append(f"- Failed: **{suite.get('failed')}**")
+            if suite.get("failure_samples"):
+                lines.append("- Failure samples:")
+                for failure in suite["failure_samples"][:10]:
+                    lines.append(f"  - `{failure.get('id')}` expected `{failure.get('expected')}`, actual `{failure.get('actual')}`")
+            lines.append("")
+
     lines.append("## Spec Results")
     lines.append("")
 
@@ -607,13 +635,39 @@ def main() -> int:
         else:
             results.append(evaluator(spec))
 
-    overall_status = "PASS" if results and all(r["status"] == "PASS" for r in results) else "FAIL"
+    explicit_status = "PASS" if results and all(r["status"] == "PASS" for r in results) else "FAIL"
+
+    sandbox_result = None
+    sandbox_config = spec_dir / "chf_sandbox_config.yml"
+    if sandbox_config.exists():
+        if run_sandbox_from_config is None:
+            sandbox_result = {
+                "sandbox_status": "FAIL",
+                "reason": "sandbox_runner_import_failed",
+                "suites_evaluated": 0,
+                "subtests_generated": 0,
+                "subtests_passed": 0,
+                "subtests_failed": 1,
+                "suites": [],
+            }
+        else:
+            sandbox_result = run_sandbox_from_config(sandbox_config)
+
+    sandbox_status = "PASS"
+    if sandbox_result is not None:
+        sandbox_status = sandbox_result.get("sandbox_status", "FAIL")
+
+    overall_status = "PASS" if explicit_status == "PASS" and sandbox_status == "PASS" else "FAIL"
     report = {
         "formalism": "consequence_horizon_formalism",
         "overall_status": overall_status,
+        "explicit_status": explicit_status,
+        "sandbox_status": sandbox_status,
         "specs_evaluated": len(results),
         "results": results,
     }
+    if sandbox_result is not None:
+        report["sandbox"] = sandbox_result
 
     out_json.parent.mkdir(parents=True, exist_ok=True)
     out_json.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
