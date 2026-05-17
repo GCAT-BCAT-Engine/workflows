@@ -1,0 +1,150 @@
+# chf_sandbox_config_sprint_a_additions.yml
+# ------------------------------------------
+# Append these suite entries to chf_sandbox_config.yml
+# after the existing chf-050-sandbox entry.
+
+suites:
+
+  - id: chf-056-sandbox
+    gate: chf-056
+    name: Scientific Claim Escalation Gate
+    maturity: expanding
+    description: >
+      5 speculation_ratio samples × 2^5 boolean combos = 160 cases.
+      Three-outcome gate: ALLOW, ESCALATION_REQUIRED, FAIL_CLOSED.
+      Verifies conditional: extraordinary_claim only escalates when
+      evidence_level_sufficient is false.
+
+  - id: chf-059-sandbox
+    gate: chf-059
+    name: Deletion / Forgetting / Retention Gate
+    maturity: expanding
+    description: >
+      5 orphan_record_risk samples × 2^5 boolean combos = 160 cases.
+      Three-outcome gate: RETENTION_ALLOWED, DELETION_REQUIRED,
+      RETENTION_FAIL_CLOSED. Verifies retention_forbidden as hard
+      DELETION_REQUIRED trigger regardless of other fields.
+
+  - id: chf-079-sandbox
+    gate: chf-079
+    name: Specification Drift Detection Gate
+    maturity: expanding
+    description: >
+      7 semantic_drift × 7 structural_drift × 2^3 boolean = 392 cases.
+      Three-outcome gate: DRIFT_ACCEPTABLE, DRIFT_QUARANTINE,
+      DRIFT_FAIL_CLOSED. Boundary cases at warn=0.05 and
+      critical=0.15 verified for both drift dimensions.
+
+  - id: chf-084-sandbox
+    gate: chf-084
+    name: Quarantine Routing Gate
+    maturity: expanding
+    description: >
+      7 severity samples × 2^5 boolean combos = 224 cases.
+      Four-outcome gate: ROUTE_TO_QUARANTINE, ROUTE_TO_REVIEW,
+      ROUTING_CLEAR, ROUTING_FAIL_CLOSED. Verifies tamper_suspected
+      and authority_unresolved as hard quarantine triggers.
+
+  - id: chf-087-sandbox
+    gate: chf-087
+    name: Incident Response Gate
+    maturity: expanding
+    description: >
+      7 severity samples × 2^6 boolean combos = 448 cases.
+      Four-outcome gate: INCIDENT_ESCALATE, INCIDENT_CONTAIN,
+      INCIDENT_MONITOR, INCIDENT_FAIL_CLOSED. Verifies
+      data_breach_detected as regulatory escalation override.
+
+  - id: chf-094-sandbox
+    gate: chf-094
+    name: Adversarial Review Gate
+    maturity: expanding
+    description: >
+      7 severity samples × 2^4 boolean combos = 112 cases.
+      Four-outcome gate: FINDING_CRITICAL, FINDING_MINOR,
+      REVIEW_CLEAR, REVIEW_FAIL_CLOSED. Verifies
+      critical_finding_present as hard block regardless of
+      numeric severity score.
+
+  - id: chf-100-sandbox
+    gate: chf-100
+    name: Phase-One Completion Gate
+    maturity: expanding
+    description: >
+      4 pass_fraction × 4 sandbox_fraction × 4 pub_count ×
+      2^5 boolean combos = 2,048 cases.
+      Three-outcome gate: PHASE_COMPLETE, PHASE_INCOMPLETE,
+      PHASE_BLOCKED. Verifies distinction between blocked
+      (critical gap) and incomplete (artifacts pending).
+      This is the v0.30 phase receipt gate.
+
+---
+# INTEGRATION INSTRUCTIONS — Sprint A
+# ====================================
+#
+# Step 1: chf_deterministic_validator.py
+# ---------------------------------------
+# a. Add NEW_OUTCOME_CONSTANTS from chf_evaluators_sprint_a.py
+#    to the constants block (after existing outcome constants).
+#
+# b. Add the 7 evaluator functions from chf_evaluators_sprint_a.py
+#    after evaluate_chf_050().
+#
+# c. Replace these entries in EVALUATORS dict:
+#      "chf-056": evaluate_standard_binary_gate,
+#      "chf-059": evaluate_standard_binary_gate,
+#      "chf-079": evaluate_standard_binary_gate,
+#      "chf-084": evaluate_standard_binary_gate,
+#      "chf-087": evaluate_standard_binary_gate,
+#      "chf-094": evaluate_standard_binary_gate,
+#      "chf-100": evaluate_standard_binary_gate,
+#    with:
+#      "chf-056": evaluate_chf_056,
+#      "chf-059": evaluate_chf_059,
+#      "chf-079": evaluate_chf_079,
+#      "chf-084": evaluate_chf_084,
+#      "chf-087": evaluate_chf_087,
+#      "chf-094": evaluate_chf_094,
+#      "chf-100": evaluate_chf_100,
+#
+# Step 2: chf_sandbox_runner.py
+# ------------------------------
+# a. Add outcome constants from chf_sandbox_runner_sprint_a.py
+#    to the constants block.
+#
+# b. Add the 7 oracle functions and generator functions
+#    from chf_sandbox_runner_sprint_a.py.
+#
+# c. Add SUITE_GENERATORS_PATCH entries to SUITE_GENERATORS dict.
+#
+# Step 3: chf_sandbox_config.yml
+# --------------------------------
+# Append the 7 suite entries from this file after chf-050-sandbox.
+#
+# Step 4: Local preflight
+# ------------------------
+#   python chf_sandbox_runner.py          # all suites including sprint-A
+#   python chf_deterministic_validator.py \
+#     --spec-dir math_solver/validation \
+#     --out-json brain_reports/chf_report.json \
+#     --out-md   brain_reports/chf_report.md
+#
+# Step 5: GitHub dispatch
+# ------------------------
+#   Trigger chf_validation_run.yml via workflow_dispatch.
+#   Confirm PASS with specs_evaluated >= 110 and sandbox PASS.
+#
+# After Sprint A passes:
+# ----------------------
+#   Sprint B: Author all 50 problem_spec_chf_0XX.yml files
+#             (38 standard gate + 7 dedicated + 5 from README)
+#   Sprint C: Extend sandbox runner for chf-051 through chf-100
+#             standard gate suites (bulk generation)
+#   Sprint D: Single dispatch confirms all 100 specs PASS
+#             → begin publication work
+#
+# Subtest totals after full integration:
+#   v0.18 suites (chf-041 to chf-050):  1,419
+#   Sprint A suites (7 dedicated):      3,544
+#   Sprint B/C suites (38 standard):    ~3,000 (estimated)
+#                              Total:  ~7,963 sandbox subtests
