@@ -1,6 +1,6 @@
-# Consequence Horizon Formalism Validation — v0.13
+# Consequence Horizon Formalism Validation — v0.14
 
-This version adds ecosystem-level gates `chf-031` through `chf-040`.
+This version expands sandbox pressure over the ecosystem-level gates introduced in v0.13.
 
 ## Stable dispatcher preserved
 
@@ -10,17 +10,21 @@ This bundle does not include or modify:
 .github/workflows/chf_validation_run.yml
 ```
 
-## New gates
+## Changed files
 
 ```text
-chf-031 multi-node consensus
-chf-032 quarantine / isolation
-chf-033 supersession / deprecation
-chf-034 cross-repository ingestion
-chf-035 privacy / consent boundary
-chf-036 tokenized governance
-chf-037 publication / patent disclosure readiness
-chf-038 memoir / reflection preservation
-chf-039 formal verification readiness
-chf-040 production deployment readiness
+math_solver/validation/chf_sandbox_runner.py
+math_solver/validation/chf_sandbox_config.yml
+math_solver/validation/chf_sandbox_readme.md
+math_solver/validation/chf_validation_matrix.md
+math_solver/validation/chf_readme.md
+```
+
+## Expected GitHub result
+
+```text
+Overall status: PASS
+Explicit status: PASS
+Specs evaluated: 40
+Sandbox status: PASS
 ```

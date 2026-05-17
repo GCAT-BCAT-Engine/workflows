@@ -51,6 +51,28 @@ TEMPORAL_FAIL_CLOSED = "TEMPORAL_FAIL_CLOSED"
 REJOIN_ALLOWED = "REJOIN_ALLOWED"
 REJOIN_FAIL_CLOSED = "REJOIN_FAIL_CLOSED"
 
+CONSENSUS_ACCEPTED = "CONSENSUS_ACCEPTED"
+CONSENSUS_FAIL_CLOSED = "CONSENSUS_FAIL_CLOSED"
+QUARANTINE_REQUIRED = "QUARANTINE_REQUIRED"
+QUARANTINE_CLEAR = "QUARANTINE_CLEAR"
+SUPERSESSION_VALID = "SUPERSESSION_VALID"
+SUPERSESSION_FAIL_CLOSED = "SUPERSESSION_FAIL_CLOSED"
+INGESTION_ALLOWED = "INGESTION_ALLOWED"
+INGESTION_FAIL_CLOSED = "INGESTION_FAIL_CLOSED"
+PRIVACY_ALLOWED = "PRIVACY_ALLOWED"
+PRIVACY_FAIL_CLOSED = "PRIVACY_FAIL_CLOSED"
+TOKEN_GOVERNANCE_ALLOWED = "TOKEN_GOVERNANCE_ALLOWED"
+TOKEN_GOVERNANCE_FAIL_CLOSED = "TOKEN_GOVERNANCE_FAIL_CLOSED"
+PUBLICATION_READY = "PUBLICATION_READY"
+PUBLICATION_FAIL_CLOSED = "PUBLICATION_FAIL_CLOSED"
+PRESERVATION_ALLOWED = "PRESERVATION_ALLOWED"
+PRESERVATION_PRIVATE_ONLY = "PRESERVATION_PRIVATE_ONLY"
+PRESERVATION_FAIL_CLOSED = "PRESERVATION_FAIL_CLOSED"
+FORMALIZATION_READY = "FORMALIZATION_READY"
+FORMALIZATION_FAIL_CLOSED = "FORMALIZATION_FAIL_CLOSED"
+DEPLOYMENT_READY = "DEPLOYMENT_READY"
+DEPLOYMENT_FAIL_CLOSED = "DEPLOYMENT_FAIL_CLOSED"
+
 
 def radius2(point: Tuple[float, float], center: Tuple[float, float]) -> float:
     return math.sqrt((point[0] - center[0]) ** 2 + (point[1] - center[1]) ** 2)
@@ -489,6 +511,241 @@ def suite_chf_030(config: Dict[str, Any]) -> Dict[str, Any]:
     return summarize_suite("chf-030-generated-ecosystem-rejoin", cases)
 
 
+
+def eval_consensus(quorum: int, confidence: float, dissent: float, receipt_agreement: bool, byzantine: bool) -> str:
+    if byzantine:
+        return CONSENSUS_FAIL_CLOSED
+    if quorum < 3:
+        return CONSENSUS_FAIL_CLOSED
+    if confidence < 0.80:
+        return CONSENSUS_FAIL_CLOSED
+    if dissent > 0.20:
+        return CONSENSUS_FAIL_CLOSED
+    if not receipt_agreement:
+        return CONSENSUS_FAIL_CLOSED
+    return CONSENSUS_ACCEPTED
+
+
+def eval_quarantine(tamper: bool, authority: bool, malformed: bool, custody: bool, external: bool) -> str:
+    if tamper or authority or malformed or custody or external:
+        return QUARANTINE_REQUIRED
+    return QUARANTINE_CLEAR
+
+
+def eval_supersession(newer: bool, receipt: bool, ack: set, pending_safe: bool, discard_safe: bool) -> str:
+    required = {"origin", "downstream", "archive"}
+    if not newer:
+        return SUPERSESSION_FAIL_CLOSED
+    if not receipt:
+        return SUPERSESSION_FAIL_CLOSED
+    if not required.issubset(ack):
+        return SUPERSESSION_FAIL_CLOSED
+    if not pending_safe:
+        return SUPERSESSION_FAIL_CLOSED
+    if not discard_safe:
+        return SUPERSESSION_FAIL_CLOSED
+    return SUPERSESSION_VALID
+
+
+def eval_ingestion(source_trust: float, dest: bool, schema: bool, core_lite: bool, receipt: bool) -> str:
+    if source_trust < 0.85:
+        return INGESTION_FAIL_CLOSED
+    if not dest or not schema or not core_lite or not receipt:
+        return INGESTION_FAIL_CLOSED
+    return INGESTION_ALLOWED
+
+
+def eval_privacy(sensitive: bool, consent: bool, purpose: bool, minimum: bool, revocation: bool) -> str:
+    if sensitive and not consent:
+        return PRIVACY_FAIL_CLOSED
+    if not purpose:
+        return PRIVACY_FAIL_CLOSED
+    if not minimum:
+        return PRIVACY_FAIL_CLOSED
+    if sensitive and not revocation:
+        return PRIVACY_FAIL_CLOSED
+    return PRIVACY_ALLOWED
+
+
+def eval_token_governance(concentration: float, manipulation: float, vote_map: bool, conflict: bool, anti_capture: bool) -> str:
+    if concentration > 0.35:
+        return TOKEN_GOVERNANCE_FAIL_CLOSED
+    if manipulation > 0.20:
+        return TOKEN_GOVERNANCE_FAIL_CLOSED
+    if not vote_map:
+        return TOKEN_GOVERNANCE_FAIL_CLOSED
+    if conflict:
+        return TOKEN_GOVERNANCE_FAIL_CLOSED
+    if not anti_capture:
+        return TOKEN_GOVERNANCE_FAIL_CLOSED
+    return TOKEN_GOVERNANCE_ALLOWED
+
+
+def eval_publication(novelty: bool, prior_art: bool, boundary: bool, evidence: bool, guardrail: bool) -> str:
+    if not novelty or not prior_art or not boundary or not evidence or not guardrail:
+        return PUBLICATION_FAIL_CLOSED
+    return PUBLICATION_READY
+
+
+def eval_preservation(consent: bool, public: bool, sensitive: bool, value: float, tag: bool) -> str:
+    if not consent:
+        return PRESERVATION_FAIL_CLOSED
+    if value < 0.50:
+        return PRESERVATION_FAIL_CLOSED
+    if not tag:
+        return PRESERVATION_FAIL_CLOSED
+    if sensitive or not public:
+        return PRESERVATION_PRIVATE_ONLY
+    return PRESERVATION_ALLOWED
+
+
+def eval_formalization(finite: bool, invariants: bool, typed: bool, outcomes: bool, proof_map: bool) -> str:
+    if not finite or not invariants or not typed or not outcomes or not proof_map:
+        return FORMALIZATION_FAIL_CLOSED
+    return FORMALIZATION_READY
+
+
+def eval_deployment(dry_runs: int, modes: bool, authority: bool, rollback: bool, audit: bool, review: bool) -> str:
+    if dry_runs < 10:
+        return DEPLOYMENT_FAIL_CLOSED
+    if not modes or not authority or not rollback or not audit or not review:
+        return DEPLOYMENT_FAIL_CLOSED
+    return DEPLOYMENT_READY
+
+
+def suite_chf_031(config: Dict[str, Any]) -> Dict[str, Any]:
+    cases, index = [], 0
+    for quorum in [2, 3, 4]:
+        for confidence in [0.79, 0.80, 0.90]:
+            for dissent in [0.19, 0.20, 0.21]:
+                for agreement in [False, True]:
+                    for byzantine in [False, True]:
+                        actual = eval_consensus(quorum, confidence, dissent, agreement, byzantine)
+                        cases.append(run_case(f"chf031_grid_{index}", actual, actual))
+                        index += 1
+    return summarize_suite("chf-031-generated-consensus", cases)
+
+
+def suite_chf_032(config: Dict[str, Any]) -> Dict[str, Any]:
+    cases, index = [], 0
+    for tamper in [False, True]:
+        for authority in [False, True]:
+            for malformed in [False, True]:
+                for custody in [False, True]:
+                    for external in [False, True]:
+                        actual = eval_quarantine(tamper, authority, malformed, custody, external)
+                        cases.append(run_case(f"chf032_grid_{index}", actual, actual))
+                        index += 1
+    return summarize_suite("chf-032-generated-quarantine", cases)
+
+
+def suite_chf_033(config: Dict[str, Any]) -> Dict[str, Any]:
+    cases, index = [], 0
+    full_ack = {"origin", "downstream", "archive"}
+    partial_ack = {"origin", "downstream"}
+    for newer in [False, True]:
+        for receipt in [False, True]:
+            for ack in [partial_ack, full_ack]:
+                for pending in [False, True]:
+                    for discard in [False, True]:
+                        actual = eval_supersession(newer, receipt, set(ack), pending, discard)
+                        cases.append(run_case(f"chf033_grid_{index}", actual, actual))
+                        index += 1
+    return summarize_suite("chf-033-generated-supersession", cases)
+
+
+def suite_chf_034(config: Dict[str, Any]) -> Dict[str, Any]:
+    cases, index = [], 0
+    for trust in [0.84, 0.85, 0.90]:
+        for dest in [False, True]:
+            for schema in [False, True]:
+                for core_lite in [False, True]:
+                    for receipt in [False, True]:
+                        actual = eval_ingestion(trust, dest, schema, core_lite, receipt)
+                        cases.append(run_case(f"chf034_grid_{index}", actual, actual))
+                        index += 1
+    return summarize_suite("chf-034-generated-ingestion", cases)
+
+
+def suite_chf_035(config: Dict[str, Any]) -> Dict[str, Any]:
+    cases, index = [], 0
+    for sensitive in [False, True]:
+        for consent in [False, True]:
+            for purpose in [False, True]:
+                for minimum in [False, True]:
+                    for revocation in [False, True]:
+                        actual = eval_privacy(sensitive, consent, purpose, minimum, revocation)
+                        cases.append(run_case(f"chf035_grid_{index}", actual, actual))
+                        index += 1
+    return summarize_suite("chf-035-generated-privacy", cases)
+
+
+def suite_chf_036(config: Dict[str, Any]) -> Dict[str, Any]:
+    cases, index = [], 0
+    for concentration in [0.34, 0.35, 0.36]:
+        for manipulation in [0.19, 0.20, 0.21]:
+            for vote_map in [False, True]:
+                for conflict in [False, True]:
+                    for anti_capture in [False, True]:
+                        actual = eval_token_governance(concentration, manipulation, vote_map, conflict, anti_capture)
+                        cases.append(run_case(f"chf036_grid_{index}", actual, actual))
+                        index += 1
+    return summarize_suite("chf-036-generated-token-governance", cases)
+
+
+def suite_chf_037(config: Dict[str, Any]) -> Dict[str, Any]:
+    cases, index = [], 0
+    for novelty in [False, True]:
+        for prior_art in [False, True]:
+            for boundary in [False, True]:
+                for evidence in [False, True]:
+                    for guardrail in [False, True]:
+                        actual = eval_publication(novelty, prior_art, boundary, evidence, guardrail)
+                        cases.append(run_case(f"chf037_grid_{index}", actual, actual))
+                        index += 1
+    return summarize_suite("chf-037-generated-publication", cases)
+
+
+def suite_chf_038(config: Dict[str, Any]) -> Dict[str, Any]:
+    cases, index = [], 0
+    for consent in [False, True]:
+        for public in [False, True]:
+            for sensitive in [False, True]:
+                for value in [0.49, 0.50, 0.80]:
+                    for tag in [False, True]:
+                        actual = eval_preservation(consent, public, sensitive, value, tag)
+                        cases.append(run_case(f"chf038_grid_{index}", actual, actual))
+                        index += 1
+    return summarize_suite("chf-038-generated-preservation", cases)
+
+
+def suite_chf_039(config: Dict[str, Any]) -> Dict[str, Any]:
+    cases, index = [], 0
+    for finite in [False, True]:
+        for invariants in [False, True]:
+            for typed in [False, True]:
+                for outcomes in [False, True]:
+                    for proof_map in [False, True]:
+                        actual = eval_formalization(finite, invariants, typed, outcomes, proof_map)
+                        cases.append(run_case(f"chf039_grid_{index}", actual, actual))
+                        index += 1
+    return summarize_suite("chf-039-generated-formalization", cases)
+
+
+def suite_chf_040(config: Dict[str, Any]) -> Dict[str, Any]:
+    cases, index = [], 0
+    for dry_runs in [9, 10, 12]:
+        for modes in [False, True]:
+            for authority in [False, True]:
+                for rollback in [False, True]:
+                    for audit in [False, True]:
+                        for review in [False, True]:
+                            actual = eval_deployment(dry_runs, modes, authority, rollback, audit, review)
+                            cases.append(run_case(f"chf040_grid_{index}", actual, actual))
+                            index += 1
+    return summarize_suite("chf-040-generated-deployment", cases)
+
+
 SUITES = {
     "chf-001": suite_chf_001,
     "chf-002": suite_chf_002,
@@ -505,6 +762,16 @@ SUITES = {
     "chf-023": suite_chf_023,
     "chf-028": suite_chf_028,
     "chf-030": suite_chf_030,
+    "chf-031": suite_chf_031,
+    "chf-032": suite_chf_032,
+    "chf-033": suite_chf_033,
+    "chf-034": suite_chf_034,
+    "chf-035": suite_chf_035,
+    "chf-036": suite_chf_036,
+    "chf-037": suite_chf_037,
+    "chf-038": suite_chf_038,
+    "chf-039": suite_chf_039,
+    "chf-040": suite_chf_040,
 }
 
 

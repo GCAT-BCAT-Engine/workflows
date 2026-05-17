@@ -23,3 +23,13 @@ suites:
   - suite_id: chf-023
   - suite_id: chf-028
   - suite_id: chf-030
+  - suite_id: chf-031
+  - suite_id: chf-032
+  - suite_id: chf-033
+  - suite_id: chf-034
+  - suite_id: chf-035
+  - suite_id: chf-036
+  - suite_id: chf-037
+  - suite_id: chf-038
+  - suite_id: chf-039
+  - suite_id: chf-040

@@ -1,12 +1,21 @@
-# CHF Validation Matrix — v0.13 Ecosystem Batch
+# CHF Validation Matrix — v0.14 Ecosystem Sandbox Expansion
 
-Adds `chf-031` through `chf-040`.
+This bundle adds generated sandbox suites for `chf-031` through `chf-040`.
 
-Expected:
+## Stable dispatcher
+
+This bundle does not include:
+
+```text
+.github/workflows/chf_validation_run.yml
+```
+
+## Expected result
 
 ```text
 Overall status: PASS
 Explicit status: PASS
 Specs evaluated: 40
 Sandbox status: PASS
+Subtests failed: 0
 ```
