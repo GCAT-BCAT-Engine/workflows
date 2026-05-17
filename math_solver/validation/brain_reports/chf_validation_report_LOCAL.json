@@ -334,7 +334,94 @@
       ],
       "spec_id": "chf-007",
       "status": "PASS"
+    },
+    {
+      "cases": [
+        {
+          "actual": "ALLOW",
+          "expected": "ALLOW",
+          "id": "gcat_allow_balanced",
+          "invariant": -0.0248,
+          "lambda": 0.0648,
+          "reason": "gcat_invariant_satisfied",
+          "status": "PASS"
+        },
+        {
+          "actual": "DENY",
+          "expected": "DENY",
+          "id": "gcat_deny_excess_autonomy",
+          "invariant": 0.492,
+          "lambda": 0.008,
+          "reason": "gcat_invariant_violated",
+          "status": "PASS"
+        },
+        {
+          "actual": "FAIL_CLOSED",
+          "expected": "FAIL_CLOSED",
+          "id": "gcat_fail_closed_not_simplex",
+          "invariant": null,
+          "lambda": null,
+          "reason": "simplex_or_bounds_invalid",
+          "status": "PASS"
+        }
+      ],
+      "spec_id": "chf-008",
+      "status": "PASS"
+    },
+    {
+      "cases": [
+        {
+          "actual": "ALLOW",
+          "expected": "ALLOW",
+          "id": "commit_ready",
+          "reason": "commit_crossing_gcat_shell_record_ready",
+          "status": "PASS"
+        },
+        {
+          "actual": "FAIL_CLOSED",
+          "expected": "FAIL_CLOSED",
+          "id": "commit_missing_shell",
+          "reason": "historical_shell_incomplete",
+          "status": "PASS"
+        },
+        {
+          "actual": "DENY",
+          "expected": "DENY",
+          "id": "commit_gcat_violation",
+          "reason": "gcat_invariant_violated",
+          "status": "PASS"
+        }
+      ],
+      "spec_id": "chf-009",
+      "status": "PASS"
+    },
+    {
+      "cases": [
+        {
+          "actual": "ALLOW",
+          "expected": "ALLOW",
+          "id": "recoverable_purpose_converges",
+          "reason": "recoverability_and_purpose_converge",
+          "status": "PASS"
+        },
+        {
+          "actual": "DENY",
+          "expected": "DENY",
+          "id": "recoverability_below_threshold",
+          "reason": "recoverability_below_threshold",
+          "status": "PASS"
+        },
+        {
+          "actual": "DENY",
+          "expected": "DENY",
+          "id": "purpose_inversion",
+          "reason": "purpose_inversion_detected",
+          "status": "PASS"
+        }
+      ],
+      "spec_id": "chf-010",
+      "status": "PASS"
     }
   ],
-  "specs_evaluated": 7
+  "specs_evaluated": 10
 }

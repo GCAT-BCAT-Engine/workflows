@@ -1,7 +1,7 @@
 # Consequence Horizon Formalism Validation Summary
 
 - Overall status: **PASS**
-- Specs evaluated: **7**
+- Specs evaluated: **10**
 
 ## Spec Results
 
@@ -83,4 +83,37 @@
   - Reason: `region_not_star_shaped`
 - `incomplete_boundary_partition`: expected `GEOMETRY_FAIL_CLOSED`, actual `GEOMETRY_FAIL_CLOSED` — **PASS**
   - Reason: `boundary_partition_incomplete`
+
+### chf-008
+
+- Status: **PASS**
+
+- `gcat_allow_balanced`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `gcat_invariant_satisfied`
+- `gcat_deny_excess_autonomy`: expected `DENY`, actual `DENY` — **PASS**
+  - Reason: `gcat_invariant_violated`
+- `gcat_fail_closed_not_simplex`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `simplex_or_bounds_invalid`
+
+### chf-009
+
+- Status: **PASS**
+
+- `commit_ready`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `commit_crossing_gcat_shell_record_ready`
+- `commit_missing_shell`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `historical_shell_incomplete`
+- `commit_gcat_violation`: expected `DENY`, actual `DENY` — **PASS**
+  - Reason: `gcat_invariant_violated`
+
+### chf-010
+
+- Status: **PASS**
+
+- `recoverable_purpose_converges`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `recoverability_and_purpose_converge`
+- `recoverability_below_threshold`: expected `DENY`, actual `DENY` — **PASS**
+  - Reason: `recoverability_below_threshold`
+- `purpose_inversion`: expected `DENY`, actual `DENY` — **PASS**
+  - Reason: `purpose_inversion_detected`
 
