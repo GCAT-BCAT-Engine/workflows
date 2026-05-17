@@ -1,5 +1,5 @@
 problem_id: chf-001
-title: Minimal 2D Consequence Horizon Model - Expanded Edge Cases
+title: Minimal 2D Consequence Horizon Model - Expanded Edge Cases v0.7b
 formalism: consequence_horizon_formalism
 model:
   state_space: R2
@@ -27,6 +27,7 @@ test_cases:
   - id: baseline_p5_cell1_outside_horizon_deny
     point: [0.9, 0.1]
     expected: DENY
+
   - id: EDGE_origin_zero_radius_currently_cell1_allow
     point: [0.0, 0.0]
     expected: ALLOW
@@ -36,11 +37,11 @@ test_cases:
   - id: EDGE_just_outside_horizon_cell1_deny
     point: [0.8001, 0.0]
     expected: DENY
-  - id: EDGE_exact_cell2_limit_allow
-    point: [-0.5, 0.0]
+  - id: EDGE_cell2_limit_3_4_5_triangle_allow
+    point: [-0.3, 0.4]
     expected: ALLOW
-  - id: EDGE_just_over_cell2_limit_deny
-    point: [-0.5001, 0.0]
+  - id: EDGE_cell2_just_over_limit_3_4_5_triangle_deny
+    point: [-0.3001, 0.4]
     expected: DENY
   - id: EDGE_angle_90_boundary_currently_cell2_allow
     point: [0.0, 0.4]

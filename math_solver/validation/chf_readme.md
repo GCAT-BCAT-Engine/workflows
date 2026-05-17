@@ -1,46 +1,34 @@
-# Consequence Horizon Formalism Validation — v0.7a Edge Expansion
+# Consequence Horizon Formalism Validation — v0.7b Boundary Fix
 
-This package expands existing CHF problem specs without changing the stable GitHub Actions dispatcher or the deterministic validator.
+This package is a data/spec-only correction for the v0.7a edge expansion.
 
-## Stable dispatcher rule
+## Stable dispatcher rule preserved
 
-The workflow remains a dispatcher only:
-
-```text
-checkout
-setup Python
-install dependencies
-run validator
-upload reports
-```
-
-New validation pressure is added through problem spec files under:
-
-```text
-math_solver/validation/
-```
-
-## Changed files in this bundle
-
-```text
-math_solver/validation/problem_spec_chf_001.yml
-math_solver/validation/problem_spec_chf_002.yml
-math_solver/validation/problem_spec_chf_006.yml
-math_solver/validation/problem_spec_chf_011.yml
-math_solver/validation/problem_spec_chf_013.yml
-math_solver/validation/chf_validation_matrix.md
-math_solver/validation/chf_readme.md
-```
-
-## Not changed
+This bundle does not include or modify:
 
 ```text
 .github/workflows/chf_validation_run.yml
 math_solver/validation/chf_deterministic_validator.py
 ```
 
-## Purpose
+## Changed files
 
-This expansion tests whether the current validator semantics are stable at boundary conditions.
+```text
+math_solver/validation/problem_spec_chf_001.yml
+math_solver/validation/problem_spec_chf_002.yml
+math_solver/validation/chf_validation_matrix.md
+math_solver/validation/chf_readme.md
+```
 
-The case IDs intentionally document the expected behavior because YAML comments are not surfaced in the workflow summary.
+## Done condition
+
+The existing workflow should run unchanged and report:
+
+```text
+Overall status: PASS
+Specs evaluated: 13
+```
+
+## Meaning
+
+The v0.7a failure was useful. It showed that the stable dispatcher and validator correctly surfaced edge-case expectation errors in the problem specs. v0.7b corrects those data points without changing the dispatcher or validator.

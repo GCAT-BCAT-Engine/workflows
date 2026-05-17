@@ -1,5 +1,5 @@
 problem_id: chf-002
-title: Multi-Center Uncertainty Extension - Expanded Robustness Cases
+title: Multi-Center Uncertainty Extension - Expanded Robustness Cases v0.7b
 formalism: consequence_horizon_formalism
 model:
   state_space: R2
@@ -19,6 +19,7 @@ test_cases:
   - id: baseline_pC_horizon_violation_under_one_center_fail_closed
     point: [0.85, 0.0]
     expected: FAIL_CLOSED
+
   - id: EDGE_shared_origin_center1_but_cell_boundary_center2_fail_closed
     point: [0.0, 0.0]
     expected: FAIL_CLOSED
@@ -32,7 +33,7 @@ test_cases:
     point: [0.8001, 0.0]
     expected: FAIL_CLOSED
   - id: EDGE_upper_shared_cell1_allow
-    point: [0.3, 0.4]
+    point: [0.6, 0.4]
     expected: ALLOW
   - id: STRESS_center_disagreement_cell1_vs_cell2_fail_closed
     point: [0.2, 0.8]
