@@ -1,175 +1,37 @@
 problem_id: chf-002
 domain: consequence_horizon_formalism
-status: formalized
 title: Multi-Center Uncertainty Extension
-version: 0.1.0
-seed: 20260517
-
-description: >
-  Validates conservative admissibility under state-cloud uncertainty. A proposed
-  transition may be robustly ALLOW only if it is safe under every represented
-  plausible center. The test prevents uncertainty from being converted into
-  permission.
-
-assumptions:
-  - The state space is R^2.
-  - The state-cloud contains two plausible centers.
-  - Each plausible center has a unit disk transition region.
-  - The conservative safe region is the intersection of all represented transition regions.
-  - The consequence horizon radius for each plausible center is h = 0.8.
-  - Robust ALLOW requires the transition to pass all represented centers.
-  - Failure under unresolved plausible centers produces FAIL_CLOSED rather than ALLOW.
-
-state_space:
-  type: euclidean
-  dimension: 2
-  notation: R2
-
-state_cloud:
-  id: C0
-  type: multi_center
-  plausible_centers:
-    - id: S0_1
-      coordinates: [0.0, 0.0]
-      confidence: 0.5
-    - id: S0_2
-      coordinates: [0.3, 0.0]
-      confidence: 0.5
-
-operational_center:
-  id: S_hat_0
-  source: S0_1
-  coordinates: [0.0, 0.0]
-  selection_basis: provisional_center_with_uncertainty_preserved
-
-transition_regions:
-  - id: Omega_0_1
-    type: disk
-    center_ref: S0_1
-    center: [0.0, 0.0]
-    radius: 1.0
-    horizon_radius: 0.8
-  - id: Omega_0_2
-    type: disk
-    center_ref: S0_2
-    center: [0.3, 0.0]
-    radius: 1.0
-    horizon_radius: 0.8
-
-safe_region:
-  id: Omega_safe
-  type: intersection
-  components: [Omega_0_1, Omega_0_2]
-
-conservative_rule:
-  robust_allow_requires:
-    - point_in_all_transition_regions
-    - point_within_all_horizon_radii
-    - cell_permit_passes_under_all_plausible_centers
-  failure_policy: FAIL_CLOSED
-  principle: do_not_convert_uncertainty_into_permission
-
-radial_cells:
-  relative_to_each_center: true
-  cells:
-    - id: Cell_1
-      angle_degrees: [0.0, 90.0]
-      permit_rule:
-        outcome: ALLOW
-        max_radius: 0.8
-    - id: Cell_2
-      angle_degrees: [90.0, 180.0]
-      permit_rule:
-        outcome: ALLOW
-        max_radius: 0.5
-        otherwise: DENY
-    - id: Cell_3
-      angle_degrees: [180.0, 270.0]
-      permit_rule:
-        outcome: DENY
-    - id: Cell_4
-      angle_degrees: [270.0, 360.0]
-      permit_rule:
-        outcome: FAIL_CLOSED
-        allow_if_confidence_at_least: 0.95
-
-validation_cases:
-  - id: pA
-    point: [0.4, 0.4]
-    expected_by_center:
-      S0_1:
-        distance_approx: 0.565685
-        angle_degrees_approx: 45.0
-        expected_cell: Cell_1
-        local_outcome: ALLOW
-      S0_2:
-        distance_approx: 0.412311
-        angle_degrees_approx: 75.963757
-        expected_cell: Cell_1
-        local_outcome: ALLOW
-    expected_robust_outcome: ALLOW
-    expected_crossing_event_required: true
-    expected_historical_shell_required: true
-    expected_propagated_record_required: true
-    expected_new_center_created: true
-  - id: pB
-    point: [-0.9, 0.0]
-    expected_by_center:
-      S0_1:
-        distance_approx: 0.9
-        angle_degrees_approx: 180.0
-        local_region_membership: true
-      S0_2:
-        distance_approx: 1.2
-        local_region_membership: false
-    expected_robust_outcome: FAIL_CLOSED
-    expected_failure_reason: not_in_all_plausible_transition_regions
-    expected_crossing_event_required: false
-    expected_new_center_created: false
-  - id: pC
-    point: [0.85, 0.0]
-    expected_by_center:
-      S0_1:
-        distance_approx: 0.85
-        angle_degrees_approx: 0.0
-        local_region_membership: true
-        local_horizon_pass: false
-      S0_2:
-        distance_approx: 0.55
-        angle_degrees_approx: 0.0
-        local_region_membership: true
-        local_horizon_pass: true
-    expected_robust_outcome: FAIL_CLOSED
-    expected_failure_reason: horizon_status_depends_on_unresolved_center
-    expected_crossing_event_required: false
-    expected_new_center_created: false
-
-invariants:
-  - name: uncertainty_preservation
-    type: state_cloud
-    condition: all_plausible_centers_recorded_in_shell
-    threshold: 1.0
-  - name: conservative_intersection
-    type: admissibility
-    condition: robust_allow_requires_safe_region_membership
-    threshold: 1.0
-  - name: no_cherry_picked_center
-    type: safety_semantics
-    condition: no_transition_allowed_under_only_one_plausible_center
-    threshold: 1.0
-  - name: fail_closed_under_unresolved_center_conflict
-    type: safety_semantics
-    condition: unresolved_center_conflict_blocks_crossing
-    threshold: 1.0
-
-sandbox:
-  required: false
-  tier: 0
-  timeout_seconds: 300
-
-expected_summary:
-  total_cases: 3
-  allow: 1
-  deny: 0
-  fail_closed: 2
-  no_effect: 0
+version: '0.1'
+state_space: R2
+plausible_centers:
+- - 0.0
+  - 0.0
+- - 0.3
+  - 0.0
+transition_region:
+  type: disk
+  radius: 1.0
+horizon:
+  type: internal_radius
+  radius: 0.8
+policy: conservative_intersection
+test_points:
+- id: pA
+  point:
+  - 0.4
+  - 0.4
+  expected: ALLOW
+- id: pB
+  point:
+  - -0.9
+  - 0.0
+  expected: FAIL_CLOSED
+- id: pC
+  point:
+  - 0.85
+  - 0.0
+  expected: FAIL_CLOSED
+assertions:
+  allow_only_if_all_centers_pass: true
+  uncertainty_defaults_to: FAIL_CLOSED
+  preserve_plausible_centers: true

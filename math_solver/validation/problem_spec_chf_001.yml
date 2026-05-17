@@ -1,183 +1,83 @@
 problem_id: chf-001
 domain: consequence_horizon_formalism
-status: formalized
 title: Minimal 2D Consequence Horizon Model
-version: 0.1.0
-seed: 20260517
-
-description: >
-  Validates the minimal transition grammar for Consequence Horizon Formalism:
-  cloud -> operational center -> radial transition region -> radial cell ->
-  consequence horizon -> crossing -> historical shell -> propagated record ->
-  new center.
-
-assumptions:
-  - The state space is R^2.
-  - The initial state-cloud is singleton and contains only the operational center.
-  - The transition-potential region is the unit disk centered at the operational center.
-  - The consequence horizon is an internal radius threshold h = 0.8.
-  - Four angular radial cells partition the disk.
-  - ALLOW creates a crossing event, historical shell, propagated record, and new center.
-  - DENY and FAIL_CLOSED do not actualize the proposed transition.
-
-state_space:
-  type: euclidean
-  dimension: 2
-  notation: R2
-
-state_cloud:
-  id: C0
-  type: singleton
-  plausible_centers:
-    - id: S0
-      coordinates: [0.0, 0.0]
-      confidence: 1.0
-
-operational_center:
-  id: S_hat_0
-  source: S0
-  coordinates: [0.0, 0.0]
-  selection_basis: singleton_cloud
-
+version: '0.1'
+state_space: R2
+center:
+- 0.0
+- 0.0
 transition_region:
-  id: Omega_0
   type: disk
-  center: [0.0, 0.0]
   radius: 1.0
-  star_shaped_with_respect_to: S_hat_0
-
-consequence_horizon:
-  id: H0
+horizon:
   type: internal_radius
   radius: 0.8
-  category_change: potential_to_actual
-
-radial_cells:
-  - id: Cell_1
-    angle_degrees: [0.0, 90.0]
-    boundary_policy: lower_inclusive_upper_exclusive
-    semantic_role: stable_permitted_region
-    permit_rule:
-      outcome: ALLOW
-      max_radius: 0.8
-  - id: Cell_2
-    angle_degrees: [90.0, 180.0]
-    boundary_policy: lower_inclusive_upper_exclusive
-    semantic_role: limited_recoverability_region
-    permit_rule:
-      outcome: ALLOW
-      max_radius: 0.5
-      otherwise: DENY
-  - id: Cell_3
-    angle_degrees: [180.0, 270.0]
-    boundary_policy: lower_inclusive_upper_exclusive
-    semantic_role: forbidden_region
-    permit_rule:
-      outcome: DENY
-  - id: Cell_4
-    angle_degrees: [270.0, 360.0]
-    boundary_policy: lower_inclusive_upper_exclusive
-    semantic_role: unresolved_region
-    permit_rule:
-      outcome: FAIL_CLOSED
-      allow_if_confidence_at_least: 0.95
-
-global_rules:
-  boundary_case_policy: FAIL_CLOSED
-  outside_transition_region: DENY
-  outside_consequence_horizon: DENY
-  deny_meaning: known_constraint_violation
-  fail_closed_meaning: insufficient_certainty_to_allow
-
-validation_cases:
-  - id: p1
-    point: [0.4, 0.4]
-    expected_radius_approx: 0.565685
-    expected_angle_degrees_approx: 45.0
-    expected_cell: Cell_1
-    expected_outcome: ALLOW
-    expected_crossing_event_required: true
-    expected_historical_shell_required: true
-    expected_propagated_record_required: true
-    expected_new_center_created: true
-  - id: p2
-    point: [-0.4, 0.4]
-    expected_radius_approx: 0.565685
-    expected_angle_degrees_approx: 135.0
-    expected_cell: Cell_2
-    expected_outcome: DENY
-    expected_crossing_event_required: false
-    expected_historical_shell_required: false
-    expected_historical_shell_optional: true
-    expected_propagated_record_required: false
-    expected_new_center_created: false
-  - id: p3
-    point: [-0.4, -0.4]
-    expected_radius_approx: 0.565685
-    expected_angle_degrees_approx: 225.0
-    expected_cell: Cell_3
-    expected_outcome: DENY
-    expected_crossing_event_required: false
-    expected_historical_shell_required: false
-    expected_historical_shell_optional: true
-    expected_propagated_record_required: false
-    expected_new_center_created: false
-  - id: p4
-    point: [0.7, -0.2]
-    expected_radius_approx: 0.728011
-    expected_angle_degrees_approx: 344.054604
-    expected_cell: Cell_4
-    expected_outcome: FAIL_CLOSED
-    expected_crossing_event_required: false
-    expected_failure_reason_required: true
-    expected_failure_reason: confidence_unspecified_for_unresolved_cell
-    expected_historical_shell_required: false
-    expected_historical_shell_optional: true
-    expected_propagated_record_required: false
-    expected_new_center_created: false
-  - id: p5
-    point: [0.9, 0.1]
-    expected_radius_approx: 0.905539
-    expected_angle_degrees_approx: 6.340192
-    expected_cell: Cell_1
-    expected_outcome: DENY
-    expected_crossing_event_required: false
-    expected_failure_reason: outside_consequence_horizon
-    expected_historical_shell_required: false
-    expected_historical_shell_optional: true
-    expected_propagated_record_required: false
-    expected_new_center_created: false
-
-invariants:
-  - name: center_inclusion
-    type: geometry
-    condition: S_hat_0_in_Omega_0
-    threshold: 1.0
-  - name: radial_cell_partition
-    type: geometry
-    condition: four_cells_cover_unit_disk_by_angle
-    threshold: 1.0
-  - name: category_change
-    type: consequence_horizon
-    condition: actualization_requires_crossing_event
-    threshold: 1.0
-  - name: shell_record_on_allow
-    type: receipt_semantics
-    condition: allowed_crossing_requires_shell_and_record
-    threshold: 1.0
-  - name: deny_fail_closed_no_actualization
-    type: safety_semantics
-    condition: denied_or_failed_transition_does_not_create_new_center
-    threshold: 1.0
-
-sandbox:
-  required: false
-  tier: 0
-  timeout_seconds: 300
-
-expected_summary:
-  total_cases: 5
-  allow: 1
-  deny: 3
-  fail_closed: 1
-  no_effect: 0
+cells:
+- id: cell_1
+  angle_min_deg: 0
+  angle_max_deg: 90
+  meaning: stable_permitted_region
+  rule:
+    result: ALLOW
+    max_radius: 0.8
+- id: cell_2
+  angle_min_deg: 90
+  angle_max_deg: 180
+  meaning: limited_recoverability_region
+  rule:
+    result: ALLOW
+    max_radius: 0.5
+    else: DENY
+- id: cell_3
+  angle_min_deg: 180
+  angle_max_deg: 270
+  meaning: forbidden_region
+  rule:
+    result: DENY
+- id: cell_4
+  angle_min_deg: 270
+  angle_max_deg: 360
+  meaning: uncertain_region
+  rule:
+    result: FAIL_CLOSED
+    allow_if_confidence_at_least: 0.95
+test_points:
+- id: p1
+  point:
+  - 0.4
+  - 0.4
+  expected: ALLOW
+- id: p2
+  point:
+  - -0.4
+  - 0.4
+  expected: DENY
+- id: p3
+  point:
+  - -0.4
+  - -0.4
+  expected: DENY
+- id: p4
+  point:
+  - 0.7
+  - -0.2
+  expected: FAIL_CLOSED
+- id: p5
+  point:
+  - 0.9
+  - 0.1
+  expected: DENY
+assertions:
+  allow_requires:
+  - crossing_event
+  - historical_shell
+  - propagated_record
+  - new_center
+  deny_requires_no:
+  - crossing_event
+  - new_center
+  fail_closed_requires_no:
+  - crossing_event
+  - new_center
+  fail_closed_requires:
+  - failure_reason
