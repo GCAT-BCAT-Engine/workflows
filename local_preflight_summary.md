@@ -1,7 +1,7 @@
 # Consequence Horizon Formalism Validation Summary
 
 - Overall status: **PASS**
-- Specs evaluated: **50**
+- Specs evaluated: **110**
 
 ## Sandbox Results
 
@@ -1123,4 +1123,1144 @@
   - Reason: `multiparty_approval_missing`
 - `mandatory_review_missing_fail_closed`: expected `EMERGENCY_OVERRIDE_FAIL_CLOSED`, actual `EMERGENCY_OVERRIDE_FAIL_CLOSED` — **PASS**
   - Reason: `mandatory_review_not_scheduled`
+
+### chf-051
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_operator_reachable_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `operator_reachable_required`
+- `override_blocked_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `override_blocked_must_be_false`
+- `operator_recovery_score_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `operator_recovery_score_below_minimum`
+- `operator_recovery_score_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `override_latency_seconds_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `override_latency_seconds_above_maximum`
+- `override_latency_seconds_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-052
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_peer_identity_verified_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `peer_identity_verified_required`
+- `collusion_risk_detected_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `collusion_risk_detected_must_be_false`
+- `coordination_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `coordination_confidence_below_minimum`
+- `coordination_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `network_fanout_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `network_fanout_above_maximum`
+- `network_fanout_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-053
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_jurisdiction_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `jurisdiction_declared_required`
+- `sanctioned_destination_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `sanctioned_destination_must_be_false`
+- `legal_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `legal_confidence_below_minimum`
+- `legal_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `jurisdiction_risk_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `jurisdiction_risk_above_maximum`
+- `jurisdiction_risk_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-054
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_accessible_recovery_path_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `accessible_recovery_path_required`
+- `lockout_detected_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `lockout_detected_must_be_false`
+- `accessibility_score_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `accessibility_score_below_minimum`
+- `accessibility_score_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `recovery_burden_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `recovery_burden_above_maximum`
+- `recovery_burden_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-055
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_source_trace_present_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `source_trace_present_required`
+- `unsupported_assertion_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `unsupported_assertion_must_be_false`
+- `source_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `source_confidence_below_minimum`
+- `source_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `unexplained_claim_fraction_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `unexplained_claim_fraction_above_maximum`
+- `unexplained_claim_fraction_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-056
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_claim_boundary_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `claim_boundary_declared_required`
+- `extraordinary_claim_unreviewed_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `extraordinary_claim_unreviewed_must_be_false`
+- `evidence_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `evidence_confidence_below_minimum`
+- `evidence_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `speculation_ratio_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `speculation_ratio_above_maximum`
+- `speculation_ratio_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-057
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_dataset_consent_valid_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `dataset_consent_valid_required`
+- `restricted_dataset_detected_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `restricted_dataset_detected_must_be_false`
+- `dataset_quality_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `dataset_quality_below_minimum`
+- `dataset_quality_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `privacy_risk_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `privacy_risk_above_maximum`
+- `privacy_risk_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-058
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_identity_authorized_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `identity_authorized_required`
+- `identity_impersonation_risk_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `identity_impersonation_risk_must_be_false`
+- `continuity_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `continuity_confidence_below_minimum`
+- `continuity_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `persona_drift_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `persona_drift_above_maximum`
+- `persona_drift_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-059
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_retention_basis_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `retention_basis_declared_required`
+- `retention_forbidden_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `retention_forbidden_must_be_false`
+- `deletion_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `deletion_confidence_below_minimum`
+- `deletion_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `orphan_record_risk_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `orphan_record_risk_above_maximum`
+- `orphan_record_risk_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-060
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_formalism_interfaces_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `formalism_interfaces_declared_required`
+- `invariant_conflict_detected_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `invariant_conflict_detected_must_be_false`
+- `composition_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `composition_confidence_below_minimum`
+- `composition_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `semantic_drift_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `semantic_drift_above_maximum`
+- `semantic_drift_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-061
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_invariant_named_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `invariant_named_required`
+- `contradictory_invariant_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `contradictory_invariant_must_be_false`
+- `invariant_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `invariant_confidence_below_minimum`
+- `invariant_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `invariant_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `invariant_gap_above_maximum`
+- `invariant_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-062
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_topology_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `topology_declared_required`
+- `non_star_shaped_unhandled_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `non_star_shaped_unhandled_must_be_false`
+- `coverage_ratio_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `coverage_ratio_below_minimum`
+- `coverage_ratio_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `boundary_ambiguity_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `boundary_ambiguity_above_maximum`
+- `boundary_ambiguity_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-063
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_shell_origin_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `shell_origin_declared_required`
+- `shell_intersection_conflict_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `shell_intersection_conflict_must_be_false`
+- `shell_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `shell_confidence_below_minimum`
+- `shell_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `shell_deformation_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `shell_deformation_above_maximum`
+- `shell_deformation_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-064
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_operator_set_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `operator_set_declared_required`
+- `non_closing_operation_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `non_closing_operation_must_be_false`
+- `algebra_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `algebra_confidence_below_minimum`
+- `algebra_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `undefined_operation_fraction_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `undefined_operation_fraction_above_maximum`
+- `undefined_operation_fraction_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-065
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_recoverability_metric_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `recoverability_metric_declared_required`
+- `uncalibrated_metric_used_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `uncalibrated_metric_used_must_be_false`
+- `calibration_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `calibration_confidence_below_minimum`
+- `calibration_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `metric_error_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `metric_error_above_maximum`
+- `metric_error_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-066
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_entropy_function_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `entropy_function_declared_required`
+- `entropy_function_conflict_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `entropy_function_conflict_must_be_false`
+- `reversibility_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `reversibility_confidence_below_minimum`
+- `reversibility_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `entropy_error_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `entropy_error_above_maximum`
+- `entropy_error_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-067
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_preconditions_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `preconditions_declared_required`
+- `missing_core_obligation_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `missing_core_obligation_must_be_false`
+- `proof_map_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `proof_map_confidence_below_minimum`
+- `proof_map_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `obligation_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `obligation_gap_above_maximum`
+- `obligation_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-068
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_state_variables_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `state_variables_declared_required`
+- `unbounded_state_unhandled_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `unbounded_state_unhandled_must_be_false`
+- `abstraction_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `abstraction_confidence_below_minimum`
+- `abstraction_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `state_aliasing_risk_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `state_aliasing_risk_above_maximum`
+- `state_aliasing_risk_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-069
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_counterexample_captured_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `counterexample_captured_required`
+- `counterexample_suppressed_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `counterexample_suppressed_must_be_false`
+- `triage_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `triage_confidence_below_minimum`
+- `triage_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `untriaged_fraction_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `untriaged_fraction_above_maximum`
+- `untriaged_fraction_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-070
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_claim_formalized_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `claim_formalized_required`
+- `claim_overlocked_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `claim_overlocked_must_be_false`
+- `claim_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `claim_confidence_below_minimum`
+- `claim_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `assumption_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `assumption_gap_above_maximum`
+- `assumption_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-071
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_types_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `types_declared_required`
+- `nonconstructive_gap_unhandled_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `nonconstructive_gap_unhandled_must_be_false`
+- `translation_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `translation_confidence_below_minimum`
+- `translation_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `type_ambiguity_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `type_ambiguity_above_maximum`
+- `type_ambiguity_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-072
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_inductive_structure_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `inductive_structure_declared_required`
+- `proof_term_conflict_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `proof_term_conflict_must_be_false`
+- `translation_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `translation_confidence_below_minimum`
+- `translation_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `induction_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `induction_gap_above_maximum`
+- `induction_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-073
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_variables_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `variables_declared_required`
+- `liveness_conflict_unhandled_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `liveness_conflict_unhandled_must_be_false`
+- `model_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `model_confidence_below_minimum`
+- `model_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `state_explosion_risk_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `state_explosion_risk_above_maximum`
+- `state_explosion_risk_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-074
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_signatures_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `signatures_declared_required`
+- `unsat_core_unhandled_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `unsat_core_unhandled_must_be_false`
+- `model_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `model_confidence_below_minimum`
+- `model_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `relation_ambiguity_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `relation_ambiguity_above_maximum`
+- `relation_ambiguity_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-075
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_informal_claim_linked_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `informal_claim_linked_required`
+- `claim_mapping_conflict_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `claim_mapping_conflict_must_be_false`
+- `mapping_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `mapping_confidence_below_minimum`
+- `mapping_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `mapping_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `mapping_gap_above_maximum`
+- `mapping_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-076
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_finite_scope_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `finite_scope_declared_required`
+- `counterexample_ignored_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `counterexample_ignored_must_be_false`
+- `search_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `search_confidence_below_minimum`
+- `search_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `unsearched_scope_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `unsearched_scope_above_maximum`
+- `unsearched_scope_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-077
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_invariant_runtime_form_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `invariant_runtime_form_declared_required`
+- `monitor_side_effect_unbounded_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `monitor_side_effect_unbounded_must_be_false`
+- `monitor_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `monitor_confidence_below_minimum`
+- `monitor_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `monitor_overhead_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `monitor_overhead_above_maximum`
+- `monitor_overhead_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-078
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_proof_hash_ready_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `proof_hash_ready_required`
+- `proof_artifact_tampered_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `proof_artifact_tampered_must_be_false`
+- `artifact_integrity_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `artifact_integrity_below_minimum`
+- `artifact_integrity_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `custody_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `custody_gap_above_maximum`
+- `custody_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-079
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_spec_hash_ready_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `spec_hash_ready_required`
+- `unauthorized_spec_drift_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `unauthorized_spec_drift_must_be_false`
+- `drift_detection_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `drift_detection_confidence_below_minimum`
+- `drift_detection_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `drift_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `drift_gap_above_maximum`
+- `drift_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-080
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_formal_scope_frozen_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `formal_scope_frozen_required`
+- `unresolved_blocker_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `unresolved_blocker_must_be_false`
+- `release_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `release_confidence_below_minimum`
+- `release_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `known_gap_risk_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `known_gap_risk_above_maximum`
+- `known_gap_risk_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-081
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_ci_policy_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `ci_policy_declared_required`
+- `bypass_branch_detected_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `bypass_branch_detected_must_be_false`
+- `ci_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `ci_confidence_below_minimum`
+- `ci_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `ci_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `ci_gap_above_maximum`
+- `ci_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-082
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_source_org_verified_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `source_org_verified_required`
+- `org_trust_break_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `org_trust_break_must_be_false`
+- `org_trust_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `org_trust_below_minimum`
+- `org_trust_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `org_mismatch_risk_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `org_mismatch_risk_above_maximum`
+- `org_mismatch_risk_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-083
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_rollback_plan_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `rollback_plan_declared_required`
+- `rollback_conflict_detected_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `rollback_conflict_detected_must_be_false`
+- `rollback_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `rollback_confidence_below_minimum`
+- `rollback_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `rollback_time_minutes_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `rollback_time_minutes_above_maximum`
+- `rollback_time_minutes_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-084
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_quarantine_destination_defined_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `quarantine_destination_defined_required`
+- `quarantine_escape_risk_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `quarantine_escape_risk_must_be_false`
+- `quarantine_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `quarantine_confidence_below_minimum`
+- `quarantine_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `isolation_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `isolation_gap_above_maximum`
+- `isolation_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-085
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_export_schema_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `export_schema_declared_required`
+- `audit_export_leak_risk_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `audit_export_leak_risk_must_be_false`
+- `export_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `export_confidence_below_minimum`
+- `export_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `redaction_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `redaction_gap_above_maximum`
+- `redaction_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-086
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_dry_run_environment_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `dry_run_environment_declared_required`
+- `dry_run_nonrepresentative_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `dry_run_nonrepresentative_must_be_false`
+- `dry_run_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `dry_run_confidence_below_minimum`
+- `dry_run_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `production_delta_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `production_delta_above_maximum`
+- `production_delta_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-087
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_incident_classified_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `incident_classified_required`
+- `incident_uncontained_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `incident_uncontained_must_be_false`
+- `response_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `response_confidence_below_minimum`
+- `response_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `response_delay_minutes_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `response_delay_minutes_above_maximum`
+- `response_delay_minutes_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-088
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_service_slo_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `service_slo_declared_required`
+- `service_degradation_unbounded_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `service_degradation_unbounded_must_be_false`
+- `service_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `service_confidence_below_minimum`
+- `service_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `slo_violation_risk_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `slo_violation_risk_above_maximum`
+- `slo_violation_risk_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-089
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_cloud_boundary_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `cloud_boundary_declared_required`
+- `provider_trust_break_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `provider_trust_break_must_be_false`
+- `cloud_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `cloud_confidence_below_minimum`
+- `cloud_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `egress_risk_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `egress_risk_above_maximum`
+- `egress_risk_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-090
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_promotion_policy_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `promotion_policy_declared_required`
+- `promotion_blocker_present_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `promotion_blocker_present_must_be_false`
+- `promotion_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `promotion_confidence_below_minimum`
+- `promotion_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `promotion_risk_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `promotion_risk_above_maximum`
+- `promotion_risk_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-091
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_novelty_boundary_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `novelty_boundary_declared_required`
+- `public_disclosure_risk_unhandled_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `public_disclosure_risk_unhandled_must_be_false`
+- `patent_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `patent_confidence_below_minimum`
+- `patent_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `claim_overlap_risk_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `claim_overlap_risk_above_maximum`
+- `claim_overlap_risk_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-092
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_claim_scope_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `claim_scope_declared_required`
+- `unsupported_whitepaper_claim_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `unsupported_whitepaper_claim_must_be_false`
+- `whitepaper_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `whitepaper_confidence_below_minimum`
+- `whitepaper_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `citation_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `citation_gap_above_maximum`
+- `citation_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-093
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_demo_scope_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `demo_scope_declared_required`
+- `demo_overclaim_risk_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `demo_overclaim_risk_must_be_false`
+- `demo_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `demo_confidence_below_minimum`
+- `demo_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `demo_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `demo_gap_above_maximum`
+- `demo_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-094
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_review_scope_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `review_scope_declared_required`
+- `critical_finding_unresolved_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `critical_finding_unresolved_must_be_false`
+- `review_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `review_confidence_below_minimum`
+- `review_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `unresolved_finding_risk_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `unresolved_finding_risk_above_maximum`
+- `unresolved_finding_risk_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-095
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_benchmark_scope_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `benchmark_scope_declared_required`
+- `benchmark_bias_unhandled_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `benchmark_bias_unhandled_must_be_false`
+- `benchmark_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `benchmark_confidence_below_minimum`
+- `benchmark_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `benchmark_bias_risk_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `benchmark_bias_risk_above_maximum`
+- `benchmark_bias_risk_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-096
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_site_target_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `site_target_declared_required`
+- `site_claim_mismatch_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `site_claim_mismatch_must_be_false`
+- `site_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `site_confidence_below_minimum`
+- `site_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `broken_link_risk_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `broken_link_risk_above_maximum`
+- `broken_link_risk_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-097
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_audience_scope_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `audience_scope_declared_required`
+- `viral_overclaim_risk_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `viral_overclaim_risk_must_be_false`
+- `publication_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `publication_confidence_below_minimum`
+- `publication_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `misinterpretation_risk_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `misinterpretation_risk_above_maximum`
+- `misinterpretation_risk_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-098
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_target_audience_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `target_audience_declared_required`
+- `outreach_misalignment_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `outreach_misalignment_must_be_false`
+- `outreach_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `outreach_confidence_below_minimum`
+- `outreach_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `recipient_mismatch_risk_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `recipient_mismatch_risk_above_maximum`
+- `recipient_mismatch_risk_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-099
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_archive_manifest_ready_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `archive_manifest_ready_required`
+- `archive_incomplete_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `archive_incomplete_must_be_false`
+- `archive_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `archive_confidence_below_minimum`
+- `archive_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `archive_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `archive_gap_above_maximum`
+- `archive_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-100
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_all_prior_gates_indexed_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `all_prior_gates_indexed_required`
+- `phase_blocker_present_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `phase_blocker_present_must_be_false`
+- `completion_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `completion_confidence_below_minimum`
+- `completion_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `phase_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `phase_gap_above_maximum`
+- `phase_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-101
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_extension_scope_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `extension_scope_declared_required`
+- `phase_scope_conflict_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `phase_scope_conflict_must_be_false`
+- `extension_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `extension_confidence_below_minimum`
+- `extension_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `legacy_break_risk_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `legacy_break_risk_above_maximum`
+- `legacy_break_risk_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-102
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_upgrade_scope_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `upgrade_scope_declared_required`
+- `upgrade_invariant_break_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `upgrade_invariant_break_must_be_false`
+- `upgrade_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `upgrade_confidence_below_minimum`
+- `upgrade_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `migration_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `migration_gap_above_maximum`
+- `migration_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-103
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_fork_reason_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `fork_reason_declared_required`
+- `fork_capture_risk_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `fork_capture_risk_must_be_false`
+- `fork_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `fork_confidence_below_minimum`
+- `fork_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `reconciliation_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `reconciliation_gap_above_maximum`
+- `reconciliation_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-104
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_federation_scope_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `federation_scope_declared_required`
+- `federation_trust_break_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `federation_trust_break_must_be_false`
+- `federation_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `federation_confidence_below_minimum`
+- `federation_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `trust_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `trust_gap_above_maximum`
+- `trust_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-105
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_conflict_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `conflict_declared_required`
+- `unresolved_formalism_conflict_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `unresolved_formalism_conflict_must_be_false`
+- `arbitration_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `arbitration_confidence_below_minimum`
+- `arbitration_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `priority_ambiguity_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `priority_ambiguity_above_maximum`
+- `priority_ambiguity_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-106
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_reality_effect_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `reality_effect_declared_required`
+- `unbounded_reality_contact_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `unbounded_reality_contact_must_be_false`
+- `contact_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `contact_confidence_below_minimum`
+- `contact_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `harm_uncertainty_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `harm_uncertainty_above_maximum`
+- `harm_uncertainty_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-107
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_life_impact_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `life_impact_declared_required`
+- `life_harm_unbounded_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `life_harm_unbounded_must_be_false`
+- `life_alignment_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `life_alignment_below_minimum`
+- `life_alignment_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `life_harm_risk_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `life_harm_risk_above_maximum`
+- `life_harm_risk_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-108
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_observer_class_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `observer_class_declared_required`
+- `observer_state_conflict_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `observer_state_conflict_must_be_false`
+- `coupling_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `coupling_confidence_below_minimum`
+- `coupling_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `observation_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `observation_gap_above_maximum`
+- `observation_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-109
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_transition_class_declared_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `transition_class_declared_required`
+- `transition_class_conflict_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `transition_class_conflict_must_be_false`
+- `transition_alignment_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `transition_alignment_below_minimum`
+- `transition_alignment_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `mapping_ambiguity_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `mapping_ambiguity_above_maximum`
+- `mapping_ambiguity_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+
+### chf-110
+
+- Status: **PASS**
+
+- `baseline_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `missing_phase_two_scope_ready_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `phase_two_scope_ready_required`
+- `phase_two_blocker_present_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `phase_two_blocker_present_must_be_false`
+- `launch_confidence_below_minimum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `launch_confidence_below_minimum`
+- `launch_confidence_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
+- `launch_gap_above_maximum_fail_closed`: expected `FAIL_CLOSED`, actual `FAIL_CLOSED` — **PASS**
+  - Reason: `launch_gap_above_maximum`
+- `launch_gap_exact_boundary_allow`: expected `ALLOW`, actual `ALLOW` — **PASS**
+  - Reason: `standard_gate_pass`
 
