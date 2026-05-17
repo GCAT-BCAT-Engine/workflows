@@ -1,0 +1,38 @@
+problem_id: chf-014
+title: Probabilistic Cloud Admissibility Gate
+formalism: consequence_horizon_formalism
+model:
+  recoverability_probability_threshold: 0.90
+  harm_probability_ceiling: 0.05
+  unknown_probability_ceiling: 0.03
+test_cases:
+  - id: probabilistic_cloud_passes_bounds
+    p_recoverable: 0.94
+    p_harm: 0.02
+    p_unknown: 0.01
+    support_complete: true
+    expected: PROBABILISTIC_ALLOW
+  - id: harm_probability_exceeds_ceiling_deny
+    p_recoverable: 0.96
+    p_harm: 0.06
+    p_unknown: 0.01
+    support_complete: true
+    expected: DENY
+  - id: recoverability_probability_low_fail_closed
+    p_recoverable: 0.84
+    p_harm: 0.02
+    p_unknown: 0.01
+    support_complete: true
+    expected: PROBABILISTIC_FAIL_CLOSED
+  - id: unknown_probability_exceeds_ceiling_fail_closed
+    p_recoverable: 0.95
+    p_harm: 0.02
+    p_unknown: 0.05
+    support_complete: true
+    expected: PROBABILISTIC_FAIL_CLOSED
+  - id: probability_support_incomplete_fail_closed
+    p_recoverable: 0.95
+    p_harm: 0.02
+    p_unknown: 0.01
+    support_complete: false
+    expected: PROBABILISTIC_FAIL_CLOSED

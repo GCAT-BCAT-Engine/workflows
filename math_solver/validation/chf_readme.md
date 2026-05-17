@@ -1,39 +1,47 @@
-# Consequence Horizon Formalism Validation — v0.8a
+# Consequence Horizon Formalism Validation — v0.8b
 
-This is Option A: add adversarial validation pressure to existing supported problem-spec schemas only.
+This is Option B: new semantic specs plus validator support.
 
-## Done condition
-
-The existing workflow dispatcher and validator remain unchanged, and the run should report:
-
-```text
-Overall status: PASS
-Specs evaluated: 13
-```
-
-## Changed files
-
-This bundle replaces only supported problem specs and docs under:
-
-```text
-math_solver/validation/
-```
-
-## Not changed
+## Stable dispatcher preserved
 
 This bundle does not include or modify:
 
 ```text
 .github/workflows/chf_validation_run.yml
-math_solver/validation/chf_deterministic_validator.py
 ```
 
-## Next step after v0.8a
+The workflow remains a stable dispatcher.
 
-Option B should add new semantic coverage with new spec files, likely requiring validator support. Candidate new specs:
+## Changed files
 
 ```text
-problem_spec_chf_014.yml  # probabilistic cloud admissibility
-problem_spec_chf_015.yml  # branch splitting after unresolved uncertainty
-problem_spec_chf_016.yml  # irreversible horizon / black-hole-like threshold analogy guardrail
+math_solver/validation/chf_deterministic_validator.py
+math_solver/validation/problem_spec_chf_014.yml
+math_solver/validation/problem_spec_chf_015.yml
+math_solver/validation/problem_spec_chf_016.yml
+math_solver/validation/chf_validation_matrix.md
+math_solver/validation/chf_readme.md
+```
+
+## New semantic coverage
+
+### CHF-014 — Probabilistic Cloud Admissibility
+
+Adds probability thresholds for recoverability, harm, and unknown mass.
+
+### CHF-015 — Branch Splitting
+
+Allows unresolved uncertainty to split into preserved branches only when custody and receipts are ready.
+
+### CHF-016 — Irreversible Horizon Analogy Guardrail
+
+Allows bounded formal analogy while blocking unsupported physical-equivalence claims.
+
+## Done condition
+
+The existing workflow should run unchanged and report:
+
+```text
+Overall status: PASS
+Specs evaluated: 16
 ```

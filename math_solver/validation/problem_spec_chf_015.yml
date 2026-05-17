@@ -1,0 +1,48 @@
+problem_id: chf-015
+title: Branch Splitting After Unresolved Uncertainty
+formalism: consequence_horizon_formalism
+model:
+  branch_rule: preserve_unresolved_plausible_centers_when_custody_and_receipts_are_ready
+test_cases:
+  - id: robust_allow_no_branch_split
+    robust_allow: true
+    known_violation: false
+    unresolved_centers: 1
+    branch_custody_available: false
+    branch_receipts_ready: false
+    expected: ALLOW
+  - id: unresolved_two_centers_branch_split
+    robust_allow: false
+    known_violation: false
+    unresolved_centers: 2
+    branch_custody_available: true
+    branch_receipts_ready: true
+    expected: BRANCH_SPLIT
+  - id: unresolved_three_centers_branch_split
+    robust_allow: false
+    known_violation: false
+    unresolved_centers: 3
+    branch_custody_available: true
+    branch_receipts_ready: true
+    expected: BRANCH_SPLIT
+  - id: branch_custody_missing_fail_closed
+    robust_allow: false
+    known_violation: false
+    unresolved_centers: 2
+    branch_custody_available: false
+    branch_receipts_ready: true
+    expected: BRANCH_FAIL_CLOSED
+  - id: branch_receipts_missing_fail_closed
+    robust_allow: false
+    known_violation: false
+    unresolved_centers: 2
+    branch_custody_available: true
+    branch_receipts_ready: false
+    expected: BRANCH_FAIL_CLOSED
+  - id: known_violation_blocks_branching
+    robust_allow: false
+    known_violation: true
+    unresolved_centers: 2
+    branch_custody_available: true
+    branch_receipts_ready: true
+    expected: DENY

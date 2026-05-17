@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """
-Deterministic validator for the Consequence Horizon Formalism specs.
+Deterministic validator for Consequence Horizon Formalism specs.
 
-This validator intentionally performs local deterministic checks only.
-No external API calls are used.
+Stable-dispatcher rule:
+- GitHub Actions workflow stays a dispatcher.
+- Semantic expansion belongs here and in problem_spec_chf_*.yml files.
+- No external API calls.
 """
 
 from __future__ import annotations
@@ -21,17 +23,29 @@ ALLOW = "ALLOW"
 DENY = "DENY"
 FAIL_CLOSED = "FAIL_CLOSED"
 NO_EFFECT = "NO_EFFECT"
+
 SMOOTH_SHELL = "SMOOTH_SHELL"
 CELL_RESOLVED = "CELL_RESOLVED"
+
 RECORD_LEGIBLE = "RECORD_LEGIBLE"
 RECORD_EXISTS_LOW_LEGIBILITY = "RECORD_EXISTS_LOW_LEGIBILITY"
 NO_PROPAGATED_RECORD_REQUIRED = "NO_PROPAGATED_RECORD_REQUIRED"
+
 GEOMETRY_VALID = "GEOMETRY_VALID"
 GEOMETRY_FAIL_CLOSED = "GEOMETRY_FAIL_CLOSED"
-WINDOW_OPEN = "WINDOW_OPEN"
-WINDOW_FAIL_CLOSED = "WINDOW_FAIL_CLOSED"
+
 CHAIN_CONTINUOUS = "CHAIN_CONTINUOUS"
 CHAIN_FAIL_CLOSED = "CHAIN_FAIL_CLOSED"
+
+PROBABILISTIC_ALLOW = "PROBABILISTIC_ALLOW"
+PROBABILISTIC_FAIL_CLOSED = "PROBABILISTIC_FAIL_CLOSED"
+
+BRANCH_SPLIT = "BRANCH_SPLIT"
+BRANCH_FAIL_CLOSED = "BRANCH_FAIL_CLOSED"
+
+FORMAL_ANALOGY_ALLOWED = "FORMAL_ANALOGY_ALLOWED"
+PHYSICS_CLAIM_BLOCKED = "PHYSICS_CLAIM_BLOCKED"
+EMPIRICAL_CLAIM_FAIL_CLOSED = "EMPIRICAL_CLAIM_FAIL_CLOSED"
 
 
 def radius(point: List[float], center: List[float]) -> float:
@@ -73,35 +87,19 @@ def legitimacy_capacity(x: Dict[str, float], params: Dict[str, float]) -> float:
 
 def evaluate_gcat_state(x: Dict[str, float], params: Dict[str, float]) -> Dict[str, Any]:
     if not simplex_valid(x, tolerance=float(params.get("simplex_tolerance", 1e-9))):
-        return {
-            "actual": FAIL_CLOSED,
-            "reason": "simplex_or_bounds_invalid",
-            "lambda": None,
-            "invariant": None,
-        }
+        return {"actual": FAIL_CLOSED, "reason": "simplex_or_bounds_invalid", "lambda": None, "invariant": None}
 
     lam = legitimacy_capacity(x, params)
     invariant = float(x["a"]) - lam
     if invariant <= float(params.get("invariant_tolerance", 1e-9)):
-        return {
-            "actual": ALLOW,
-            "reason": "gcat_invariant_satisfied",
-            "lambda": round(lam, 12),
-            "invariant": round(invariant, 12),
-        }
-    return {
-        "actual": DENY,
-        "reason": "gcat_invariant_violated",
-        "lambda": round(lam, 12),
-        "invariant": round(invariant, 12),
-    }
+        return {"actual": ALLOW, "reason": "gcat_invariant_satisfied", "lambda": round(lam, 12), "invariant": round(invariant, 12)}
+    return {"actual": DENY, "reason": "gcat_invariant_violated", "lambda": round(lam, 12), "invariant": round(invariant, 12)}
 
 
 def evaluate_chf_001(spec: Dict[str, Any]) -> Dict[str, Any]:
     center = spec["model"]["center"]
     horizon = float(spec["model"]["horizon_radius"])
-    cases = []
-    all_pass = True
+    cases, all_pass = [], True
 
     for case in spec["test_cases"]:
         p = case["point"]
@@ -111,32 +109,23 @@ def evaluate_chf_001(spec: Dict[str, Any]) -> Dict[str, Any]:
         expected = case["expected"]
 
         if r > horizon:
-            actual = DENY
-            reason = "outside_horizon"
+            actual, reason = DENY, "outside_horizon"
         elif cell == "cell_1":
-            actual = ALLOW
-            reason = "cell_rule_allows"
+            actual, reason = ALLOW, "cell_rule_allows"
         elif cell == "cell_2":
             actual = ALLOW if r <= 0.5 else DENY
             reason = "cell_rule_allows" if actual == ALLOW else "cell_radius_limit_exceeded"
         elif cell == "cell_3":
-            actual = DENY
-            reason = "forbidden_cell"
+            actual, reason = DENY, "forbidden_cell"
         else:
-            actual = FAIL_CLOSED
-            reason = "uncertain_cell"
+            actual, reason = FAIL_CLOSED, "uncertain_cell"
 
         passed = actual == expected
         all_pass = all_pass and passed
         cases.append({
-            "id": case["id"],
-            "radius": round(r, 6),
-            "angle_degrees": round(theta, 6),
-            "cell": cell,
-            "expected": expected,
-            "actual": actual,
-            "status": "PASS" if passed else "FAIL",
-            "reason": reason,
+            "id": case["id"], "radius": round(r, 6), "angle_degrees": round(theta, 6),
+            "cell": cell, "expected": expected, "actual": actual,
+            "status": "PASS" if passed else "FAIL", "reason": reason,
             "crossing_event_required": actual == ALLOW,
             "historical_shell_required": actual == ALLOW,
             "propagated_record_required": actual == ALLOW,
@@ -150,8 +139,7 @@ def evaluate_chf_002(spec: Dict[str, Any]) -> Dict[str, Any]:
     centers = spec["model"]["plausible_centers"]
     horizon = float(spec["model"]["horizon_radius"])
     transition_radius = float(spec["model"]["transition_radius"])
-    cases = []
-    all_pass = True
+    cases, all_pass = [], True
 
     for case in spec["test_cases"]:
         p = case["point"]
@@ -169,13 +157,9 @@ def evaluate_chf_002(spec: Dict[str, Any]) -> Dict[str, Any]:
             center_pass = inside_transition and inside_horizon and cell_allows
             robust = robust and center_pass
             center_results.append({
-                "center": c,
-                "radius": round(r, 6),
-                "angle_degrees": round(theta, 6),
-                "cell": cell,
-                "inside_transition": inside_transition,
-                "inside_horizon": inside_horizon,
-                "cell_allows": cell_allows,
+                "center": c, "radius": round(r, 6), "angle_degrees": round(theta, 6),
+                "cell": cell, "inside_transition": inside_transition,
+                "inside_horizon": inside_horizon, "cell_allows": cell_allows,
                 "center_pass": center_pass,
             })
 
@@ -183,14 +167,7 @@ def evaluate_chf_002(spec: Dict[str, Any]) -> Dict[str, Any]:
         reason = "all_centers_pass" if robust else "not_safe_across_all_plausible_centers"
         passed = actual == expected
         all_pass = all_pass and passed
-        cases.append({
-            "id": case["id"],
-            "expected": expected,
-            "actual": actual,
-            "status": "PASS" if passed else "FAIL",
-            "reason": reason,
-            "center_results": center_results,
-        })
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason, "center_results": center_results})
 
     return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
 
@@ -205,67 +182,39 @@ def evaluate_chf_003(spec: Dict[str, Any]) -> Dict[str, Any]:
     recoverability_threshold = float(model.get("recoverability_threshold", 0.0))
 
     if local != ALLOW:
-        actual = local
-        reason = "local_not_allowed"
+        actual, reason = local, "local_not_allowed"
     elif deformation > tolerance:
-        actual = DENY
-        reason = "deformation_exceeds_tolerance"
+        actual, reason = DENY, "deformation_exceeds_tolerance"
     elif recoverability_after < recoverability_threshold:
-        actual = DENY
-        reason = "recoverability_below_threshold"
+        actual, reason = DENY, "recoverability_below_threshold"
     else:
-        actual = ALLOW
-        reason = "coupled_constraints_pass"
+        actual, reason = ALLOW, "coupled_constraints_pass"
 
     passed = actual == expected
-    return {
-        "spec_id": spec["problem_id"],
-        "status": "PASS" if passed else "FAIL",
-        "cases": [{
-            "id": spec["problem_id"],
-            "expected": expected,
-            "actual": actual,
-            "status": "PASS" if passed else "FAIL",
-            "reason": reason,
-        }],
-    }
+    return {"spec_id": spec["problem_id"], "status": "PASS" if passed else "FAIL", "cases": [{"id": spec["problem_id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason}]}
 
 
 def evaluate_chf_004(spec: Dict[str, Any]) -> Dict[str, Any]:
     threshold = float(spec["model"]["distinguishability_threshold"])
-    cases = []
-    all_pass = True
+    cases, all_pass = [], True
 
     for case in spec["test_cases"]:
-        resolution = float(case["resolution"])
-        probe_capacity = float(case["probe_capacity"])
-        distance = float(case["distance"])
-        noise = float(case["noise"])
-        lag = float(case["lag"])
+        q = (
+            float(case["resolution"]) * float(case["probe_capacity"])
+        ) / max(float(case["distance"]) * float(case["noise"]) * float(case["lag"]), 1e-12)
         expected = case["expected"]
-
-        q = (resolution * probe_capacity) / max(distance * noise * lag, 1e-12)
         actual = CELL_RESOLVED if q >= threshold else SMOOTH_SHELL
         reason = "cell_structure_resolved" if actual == CELL_RESOLVED else "observational_sphericalization"
         passed = actual == expected
         all_pass = all_pass and passed
-        cases.append({
-            "id": case["id"],
-            "q_observer": round(q, 6),
-            "threshold": threshold,
-            "expected": expected,
-            "actual": actual,
-            "status": "PASS" if passed else "FAIL",
-            "reason": reason,
-        })
+        cases.append({"id": case["id"], "q_observer": round(q, 6), "threshold": threshold, "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
 
     return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
 
 
 def evaluate_chf_005(spec: Dict[str, Any]) -> Dict[str, Any]:
     threshold = float(spec["model"]["legibility_threshold"])
-    cases = []
-    all_pass = True
+    cases, all_pass = [], True
 
     for case in spec["test_cases"]:
         expected = case["expected"]
@@ -273,24 +222,15 @@ def evaluate_chf_005(spec: Dict[str, Any]) -> Dict[str, Any]:
         legibility = case.get("legibility", None)
 
         if not actualized:
-            actual = NO_PROPAGATED_RECORD_REQUIRED
-            reason = "no_actualized_crossing"
+            actual, reason = NO_PROPAGATED_RECORD_REQUIRED, "no_actualized_crossing"
         elif legibility is not None and float(legibility) >= threshold:
-            actual = RECORD_LEGIBLE
-            reason = "record_above_legibility_threshold"
+            actual, reason = RECORD_LEGIBLE, "record_above_legibility_threshold"
         else:
-            actual = RECORD_EXISTS_LOW_LEGIBILITY
-            reason = "record_exists_but_legibility_decayed"
+            actual, reason = RECORD_EXISTS_LOW_LEGIBILITY, "record_exists_but_legibility_decayed"
 
         passed = actual == expected
         all_pass = all_pass and passed
-        cases.append({
-            "id": case["id"],
-            "expected": expected,
-            "actual": actual,
-            "status": "PASS" if passed else "FAIL",
-            "reason": reason,
-        })
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
 
     return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
 
@@ -299,48 +239,33 @@ def evaluate_chf_006(spec: Dict[str, Any]) -> Dict[str, Any]:
     model = spec["model"]
     horizon = float(model["horizon_radius"])
     cells = model["cells"]
-    cases = []
-    all_pass = True
+    cases, all_pass = [], True
 
     for case in spec["test_cases"]:
         vector = case["vector"]
         expected = case["expected"]
         r = math.sqrt(sum(v * v for v in vector))
-        best_cell = None
-        best_dot = -10**9
+        best_cell, best_dot = None, -10**9
+
         for cell in cells:
-            direction = cell["direction"]
-            dot = sum(vector[i] * direction[i] for i in range(3))
+            dot = sum(vector[i] * cell["direction"][i] for i in range(3))
             if dot > best_dot:
-                best_dot = dot
-                best_cell = cell
+                best_dot, best_cell = dot, cell
 
         if r > horizon:
-            actual = DENY
-            reason = "outside_horizon"
+            actual, reason = DENY, "outside_horizon"
         else:
-            actual = best_cell["result"]
-            reason = best_cell["reason"]
+            actual, reason = best_cell["result"], best_cell["reason"]
 
         passed = actual == expected
         all_pass = all_pass and passed
-        cases.append({
-            "id": case["id"],
-            "radius": round(r, 6),
-            "assigned_cell": best_cell["id"],
-            "dot_score": round(best_dot, 6),
-            "expected": expected,
-            "actual": actual,
-            "status": "PASS" if passed else "FAIL",
-            "reason": reason,
-        })
+        cases.append({"id": case["id"], "radius": round(r, 6), "assigned_cell": best_cell["id"], "dot_score": round(best_dot, 6), "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
 
     return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
 
 
 def evaluate_chf_007(spec: Dict[str, Any]) -> Dict[str, Any]:
-    cases = []
-    all_pass = True
+    cases, all_pass = [], True
 
     for case in spec["test_cases"]:
         expected = case["expected"]
@@ -349,8 +274,7 @@ def evaluate_chf_007(spec: Dict[str, Any]) -> Dict[str, Any]:
         boundary_partition_complete = bool(case["boundary_partition_complete"])
 
         if star_shaped and radial_path_clear and boundary_partition_complete:
-            actual = GEOMETRY_VALID
-            reason = "radial_cell_coverage_valid"
+            actual, reason = GEOMETRY_VALID, "radial_cell_coverage_valid"
         else:
             actual = GEOMETRY_FAIL_CLOSED
             if not star_shaped:
@@ -362,21 +286,14 @@ def evaluate_chf_007(spec: Dict[str, Any]) -> Dict[str, Any]:
 
         passed = actual == expected
         all_pass = all_pass and passed
-        cases.append({
-            "id": case["id"],
-            "expected": expected,
-            "actual": actual,
-            "status": "PASS" if passed else "FAIL",
-            "reason": reason,
-        })
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
 
     return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
 
 
 def evaluate_chf_008(spec: Dict[str, Any]) -> Dict[str, Any]:
     params = spec["model"]["gcat_params"]
-    cases = []
-    all_pass = True
+    cases, all_pass = [], True
 
     for case in spec["test_cases"]:
         expected = case["expected"]
@@ -384,15 +301,7 @@ def evaluate_chf_008(spec: Dict[str, Any]) -> Dict[str, Any]:
         actual = result["actual"]
         passed = actual == expected
         all_pass = all_pass and passed
-        cases.append({
-            "id": case["id"],
-            "expected": expected,
-            "actual": actual,
-            "status": "PASS" if passed else "FAIL",
-            "reason": result["reason"],
-            "lambda": result["lambda"],
-            "invariant": result["invariant"],
-        })
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": result["reason"], "lambda": result["lambda"], "invariant": result["invariant"]})
 
     return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
 
@@ -401,8 +310,7 @@ def evaluate_chf_009(spec: Dict[str, Any]) -> Dict[str, Any]:
     params = spec["model"]["gcat_params"]
     shell_required_fields = set(spec["model"]["shell_required_fields"])
     record_required_fields = set(spec["model"]["record_required_fields"])
-    cases = []
-    all_pass = True
+    cases, all_pass = [], True
 
     for case in spec["test_cases"]:
         expected = case["expected"]
@@ -411,34 +319,23 @@ def evaluate_chf_009(spec: Dict[str, Any]) -> Dict[str, Any]:
         record_fields = set(case.get("record_fields", []))
 
         if gcat["actual"] != ALLOW:
-            actual = gcat["actual"]
-            reason = gcat["reason"]
+            actual, reason = gcat["actual"], gcat["reason"]
         elif not shell_required_fields.issubset(shell_fields):
-            actual = FAIL_CLOSED
-            reason = "historical_shell_incomplete"
+            actual, reason = FAIL_CLOSED, "historical_shell_incomplete"
         elif not record_required_fields.issubset(record_fields):
-            actual = FAIL_CLOSED
-            reason = "propagated_record_incomplete"
+            actual, reason = FAIL_CLOSED, "propagated_record_incomplete"
         else:
-            actual = ALLOW
-            reason = "commit_crossing_gcat_shell_record_ready"
+            actual, reason = ALLOW, "commit_crossing_gcat_shell_record_ready"
 
         passed = actual == expected
         all_pass = all_pass and passed
-        cases.append({
-            "id": case["id"],
-            "expected": expected,
-            "actual": actual,
-            "status": "PASS" if passed else "FAIL",
-            "reason": reason,
-        })
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
 
     return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
 
 
 def evaluate_chf_010(spec: Dict[str, Any]) -> Dict[str, Any]:
-    cases = []
-    all_pass = True
+    cases, all_pass = [], True
 
     for case in spec["test_cases"]:
         expected = case["expected"]
@@ -447,68 +344,43 @@ def evaluate_chf_010(spec: Dict[str, Any]) -> Dict[str, Any]:
         purpose_converges = bool(case["purpose_converges"])
 
         if recoverability < recoverability_threshold:
-            actual = DENY
-            reason = "recoverability_below_threshold"
+            actual, reason = DENY, "recoverability_below_threshold"
         elif not purpose_converges:
-            actual = DENY
-            reason = "purpose_inversion_detected"
+            actual, reason = DENY, "purpose_inversion_detected"
         else:
-            actual = ALLOW
-            reason = "recoverability_and_purpose_converge"
+            actual, reason = ALLOW, "recoverability_and_purpose_converge"
 
         passed = actual == expected
         all_pass = all_pass and passed
-        cases.append({
-            "id": case["id"],
-            "expected": expected,
-            "actual": actual,
-            "status": "PASS" if passed else "FAIL",
-            "reason": reason,
-        })
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
 
     return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
 
 
 def evaluate_chf_011(spec: Dict[str, Any]) -> Dict[str, Any]:
-    model = spec["model"]
-    cases = []
-    all_pass = True
+    cases, all_pass = [], True
+    default_buffer = float(spec["model"].get("default_uncertainty_buffer", 0.0))
 
     for case in spec["test_cases"]:
         expected = case["expected"]
-        base_radius = float(case["base_transition_radius"])
-        lag = float(case["lag"])
-        drift_rate = float(case["drift_rate"])
+        lag_reachable_radius = float(case["base_transition_radius"]) + float(case["lag"]) * float(case["drift_rate"]) + float(case.get("uncertainty_buffer", default_buffer))
         horizon = float(case["horizon_radius"])
-        uncertainty_buffer = float(case.get("uncertainty_buffer", model.get("default_uncertainty_buffer", 0.0)))
-        lag_reachable_radius = base_radius + lag * drift_rate + uncertainty_buffer
 
         if lag_reachable_radius <= horizon:
-            actual = ALLOW
-            reason = "lag_reachable_set_inside_horizon"
+            actual, reason = ALLOW, "lag_reachable_set_inside_horizon"
         else:
-            actual = FAIL_CLOSED
-            reason = "lag_reachable_set_exceeds_horizon"
+            actual, reason = FAIL_CLOSED, "lag_reachable_set_exceeds_horizon"
 
         passed = actual == expected
         all_pass = all_pass and passed
-        cases.append({
-            "id": case["id"],
-            "lag_reachable_radius": round(lag_reachable_radius, 6),
-            "horizon_radius": horizon,
-            "expected": expected,
-            "actual": actual,
-            "status": "PASS" if passed else "FAIL",
-            "reason": reason,
-        })
+        cases.append({"id": case["id"], "lag_reachable_radius": round(lag_reachable_radius, 6), "horizon_radius": horizon, "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
 
     return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
 
 
 def evaluate_chf_012(spec: Dict[str, Any]) -> Dict[str, Any]:
-    cases = []
-    all_pass = True
     required_links = set(spec["model"]["required_chain_links"])
+    cases, all_pass = [], True
 
     for case in spec["test_cases"]:
         expected = case["expected"]
@@ -517,31 +389,21 @@ def evaluate_chf_012(spec: Dict[str, Any]) -> Dict[str, Any]:
         threshold = float(case["legibility_threshold"])
 
         if not required_links.issubset(links):
-            actual = CHAIN_FAIL_CLOSED
-            reason = "historical_chain_links_missing"
+            actual, reason = CHAIN_FAIL_CLOSED, "historical_chain_links_missing"
         elif legibility < threshold:
-            actual = CHAIN_FAIL_CLOSED
-            reason = "historical_chain_legibility_below_threshold"
+            actual, reason = CHAIN_FAIL_CLOSED, "historical_chain_legibility_below_threshold"
         else:
-            actual = CHAIN_CONTINUOUS
-            reason = "historical_shell_chain_continuous"
+            actual, reason = CHAIN_CONTINUOUS, "historical_shell_chain_continuous"
 
         passed = actual == expected
         all_pass = all_pass and passed
-        cases.append({
-            "id": case["id"],
-            "expected": expected,
-            "actual": actual,
-            "status": "PASS" if passed else "FAIL",
-            "reason": reason,
-        })
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
 
     return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
 
 
 def evaluate_chf_013(spec: Dict[str, Any]) -> Dict[str, Any]:
-    cases = []
-    all_pass = True
+    cases, all_pass = [], True
 
     for case in spec["test_cases"]:
         expected = case["expected"]
@@ -551,30 +413,109 @@ def evaluate_chf_013(spec: Dict[str, Any]) -> Dict[str, Any]:
         deformation_known = bool(case.get("deformation_known", True))
 
         if not deformation_known and protected:
-            actual = FAIL_CLOSED
-            reason = "protected_affected_cloud_unknown_deformation"
+            actual, reason = FAIL_CLOSED, "protected_affected_cloud_unknown_deformation"
         elif not deformation_known:
-            actual = FAIL_CLOSED
-            reason = "unknown_deformation"
+            actual, reason = FAIL_CLOSED, "unknown_deformation"
         elif float(deformation) <= epsilon and not protected:
-            actual = NO_EFFECT
-            reason = "below_relevance_threshold"
+            actual, reason = NO_EFFECT, "below_relevance_threshold"
         elif float(deformation) <= epsilon and protected:
-            actual = FAIL_CLOSED
-            reason = "protected_cloud_requires_explicit_review"
+            actual, reason = FAIL_CLOSED, "protected_cloud_requires_explicit_review"
         else:
-            actual = DENY
-            reason = "deformation_exceeds_relevance_threshold"
+            actual, reason = DENY, "deformation_exceeds_relevance_threshold"
 
         passed = actual == expected
         all_pass = all_pass and passed
-        cases.append({
-            "id": case["id"],
-            "expected": expected,
-            "actual": actual,
-            "status": "PASS" if passed else "FAIL",
-            "reason": reason,
-        })
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_014(spec: Dict[str, Any]) -> Dict[str, Any]:
+    """Probabilistic cloud admissibility gate."""
+    model = spec["model"]
+    theta = float(model["recoverability_probability_threshold"])
+    epsilon = float(model["harm_probability_ceiling"])
+    max_unknown = float(model["unknown_probability_ceiling"])
+    cases, all_pass = [], True
+
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        p_recoverable = float(case["p_recoverable"])
+        p_harm = float(case["p_harm"])
+        p_unknown = float(case.get("p_unknown", 0.0))
+        support_complete = bool(case.get("support_complete", True))
+
+        if not support_complete:
+            actual, reason = PROBABILISTIC_FAIL_CLOSED, "probability_support_incomplete"
+        elif p_unknown > max_unknown:
+            actual, reason = PROBABILISTIC_FAIL_CLOSED, "unknown_probability_exceeds_ceiling"
+        elif p_recoverable >= theta and p_harm <= epsilon:
+            actual, reason = PROBABILISTIC_ALLOW, "probabilistic_recoverability_harm_bounds_pass"
+        elif p_harm > epsilon:
+            actual, reason = DENY, "harm_probability_exceeds_ceiling"
+        else:
+            actual, reason = PROBABILISTIC_FAIL_CLOSED, "recoverability_probability_below_threshold"
+
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_015(spec: Dict[str, Any]) -> Dict[str, Any]:
+    """Branch splitting after unresolved uncertainty."""
+    cases, all_pass = [], True
+
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        robust_allow = bool(case.get("robust_allow", False))
+        known_violation = bool(case.get("known_violation", False))
+        unresolved_centers = int(case.get("unresolved_centers", 0))
+        branch_custody_available = bool(case.get("branch_custody_available", False))
+        branch_receipts_ready = bool(case.get("branch_receipts_ready", False))
+
+        if robust_allow:
+            actual, reason = ALLOW, "robust_allow_no_branch_split_required"
+        elif known_violation:
+            actual, reason = DENY, "known_violation_blocks_branching"
+        elif unresolved_centers > 1 and branch_custody_available and branch_receipts_ready:
+            actual, reason = BRANCH_SPLIT, "unresolved_uncertainty_preserved_by_branch_split"
+        else:
+            actual, reason = BRANCH_FAIL_CLOSED, "unresolved_uncertainty_without_branch_custody"
+
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_016(spec: Dict[str, Any]) -> Dict[str, Any]:
+    """Guardrail for formal analogy vs unsupported physical/cosmological claim."""
+    cases, all_pass = [], True
+
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        claim_type = case["claim_type"]
+        empirical_support = bool(case.get("empirical_support", False))
+        analogy_scope_bounded = bool(case.get("analogy_scope_bounded", False))
+        asserts_physical_equivalence = bool(case.get("asserts_physical_equivalence", False))
+
+        if asserts_physical_equivalence:
+            actual, reason = PHYSICS_CLAIM_BLOCKED, "physical_equivalence_claim_blocked"
+        elif claim_type == "formal_analogy" and analogy_scope_bounded:
+            actual, reason = FORMAL_ANALOGY_ALLOWED, "bounded_formal_analogy_allowed"
+        elif claim_type == "empirical_physics" and not empirical_support:
+            actual, reason = EMPIRICAL_CLAIM_FAIL_CLOSED, "empirical_support_required"
+        elif claim_type == "empirical_physics" and empirical_support:
+            actual, reason = FORMAL_ANALOGY_ALLOWED, "empirical_claim_marked_for_external_review"
+        else:
+            actual, reason = EMPIRICAL_CLAIM_FAIL_CLOSED, "claim_scope_unresolved"
+
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
 
     return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
 
@@ -593,6 +534,9 @@ EVALUATORS = {
     "chf-011": evaluate_chf_011,
     "chf-012": evaluate_chf_012,
     "chf-013": evaluate_chf_013,
+    "chf-014": evaluate_chf_014,
+    "chf-015": evaluate_chf_015,
+    "chf-016": evaluate_chf_016,
 }
 
 
@@ -664,7 +608,6 @@ def main() -> int:
             results.append(evaluator(spec))
 
     overall_status = "PASS" if results and all(r["status"] == "PASS" for r in results) else "FAIL"
-
     report = {
         "formalism": "consequence_horizon_formalism",
         "overall_status": overall_status,

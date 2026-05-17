@@ -1,0 +1,36 @@
+problem_id: chf-016
+title: Irreversible Horizon Analogy Guardrail
+formalism: consequence_horizon_formalism
+model:
+  guardrail: distinguish_formal_consequence_horizon_analogy_from_empirical_physics_claim
+test_cases:
+  - id: bounded_formal_event_horizon_analogy_allowed
+    claim_type: formal_analogy
+    analogy_scope_bounded: true
+    empirical_support: false
+    asserts_physical_equivalence: false
+    expected: FORMAL_ANALOGY_ALLOWED
+  - id: black_hole_equivalence_claim_blocked
+    claim_type: formal_analogy
+    analogy_scope_bounded: false
+    empirical_support: false
+    asserts_physical_equivalence: true
+    expected: PHYSICS_CLAIM_BLOCKED
+  - id: micro_black_hole_empirical_claim_without_support_fail_closed
+    claim_type: empirical_physics
+    analogy_scope_bounded: false
+    empirical_support: false
+    asserts_physical_equivalence: false
+    expected: EMPIRICAL_CLAIM_FAIL_CLOSED
+  - id: empirical_claim_with_support_marked_review_allowed
+    claim_type: empirical_physics
+    analogy_scope_bounded: true
+    empirical_support: true
+    asserts_physical_equivalence: false
+    expected: FORMAL_ANALOGY_ALLOWED
+  - id: unresolved_claim_scope_fail_closed
+    claim_type: unresolved
+    analogy_scope_bounded: false
+    empirical_support: false
+    asserts_physical_equivalence: false
+    expected: EMPIRICAL_CLAIM_FAIL_CLOSED

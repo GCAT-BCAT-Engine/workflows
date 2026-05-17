@@ -1,38 +1,34 @@
-# CHF Validation Matrix — v0.8a Adversarial Existing-Spec Expansion
+# CHF Validation Matrix — v0.8b New Semantic Specs
 
-This bundle performs Option A: more adversarial cases inside existing supported schemas only.
+This bundle performs Option B: add new semantic spec files and the corresponding validator support.
 
-## Stable files intentionally untouched
+## Stable dispatcher rule
 
-```text
-.github/workflows/chf_validation_run.yml
-math_solver/validation/chf_deterministic_validator.py
-```
+The GitHub Actions workflow is still not included and should remain unchanged.
 
-## Expanded specs
+## New specs
 
-| Spec | New pressure |
+| Spec | Purpose |
 |---|---|
-| `chf-001` | precedence of horizon denial over cell uncertainty, radius boundary, cell boundary behavior |
-| `chf-002` | conservative multi-center disagreement and robust all-center allow cases |
-| `chf-004` | observer distinguishability exact threshold and high-lag smoothing |
-| `chf-005` | record legibility exact threshold and missing legibility behavior |
-| `chf-006` | 3D zero-vector and axis-tie assignment behavior |
-| `chf-007` | geometry gate combinations beyond baseline |
-| `chf-008` | GCAT invalid bounds and low-governance/high-autonomy cases |
-| `chf-009` | missing propagated record and invalid-simplex commit cases |
-| `chf-010` | exact recoverability threshold and combined failure cases |
-| `chf-011` | default uncertainty buffer and high-drift failure |
-| `chf-012` | extra links, missing prior shell, exact legibility threshold |
-| `chf-013` | zero epsilon and protected above-threshold behavior |
+| `problem_spec_chf_014.yml` | Probabilistic cloud admissibility gate |
+| `problem_spec_chf_015.yml` | Branch splitting after unresolved uncertainty |
+| `problem_spec_chf_016.yml` | Irreversible horizon analogy guardrail |
 
 ## Expected run
 
 ```text
 Overall status: PASS
-Specs evaluated: 13
+Specs evaluated: 16
 ```
 
-## Note
+## New result labels
 
-Case IDs are intentionally descriptive because YAML comments do not appear in the GitHub Actions summary.
+```text
+PROBABILISTIC_ALLOW
+PROBABILISTIC_FAIL_CLOSED
+BRANCH_SPLIT
+BRANCH_FAIL_CLOSED
+FORMAL_ANALOGY_ALLOWED
+PHYSICS_CLAIM_BLOCKED
+EMPIRICAL_CLAIM_FAIL_CLOSED
+```
