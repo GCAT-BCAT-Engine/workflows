@@ -1,29 +1,12 @@
 problem_id: chf-003
-domain: consequence_horizon_formalism
 title: Two-Body Coupled Cloud Deformation Extension
-version: '0.1'
-entities:
-  A:
-    center:
-    - 0.0
-    - 0.0
-    local_transition:
-    - 0.4
-    - 0.4
-    local_permit: ALLOW
-  B:
-    center:
-    - 2.0
-    - 0.0
-    deformation_tolerance: 0.2
-    recoverability_threshold: 0.7
-coupling:
-  type: fixed
-  delta_A_to_B: 0.25
-recoverability:
-  B_after: 0.65
+formalism: consequence_horizon_formalism
+model:
+  actor: A
+  affected: B
+  local_permit: ALLOW
+  deformation: 0.25
+  deformation_tolerance: 0.20
+  recoverability_after: 0.65
+  recoverability_threshold: 0.70
 expected: DENY
-assertions:
-  local_allow_not_global_allow: true
-  deny_if_deformation_exceeds_tolerance: true
-  deny_if_recoverability_below_threshold: true

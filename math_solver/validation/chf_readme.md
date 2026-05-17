@@ -1,46 +1,40 @@
 # Consequence Horizon Formalism Validation
 
-This directory contains deterministic pre-code validation specs for the Consequence Horizon Formalism (CHF).
+This directory contains deterministic pre-code validation specs for the Consequence Horizon Formalism.
 
-CHF models transition logic as:
+The validation lane is intentionally local and deterministic. It does not call external APIs.
 
-```text
-cloud -> center -> radial transition region -> cell -> horizon -> crossing -> shell -> record -> new center
-```
+## Current specs
 
-The current validation suite is intentionally narrow and deterministic. It does not call external APIs.
+| Spec | Purpose |
+|---|---|
+| `problem_spec_chf_001.yml` | Minimal 2D consequence horizon model |
+| `problem_spec_chf_002.yml` | Multi-center uncertainty extension |
+| `problem_spec_chf_003.yml` | Two-body coupled cloud deformation |
+| `problem_spec_chf_004.yml` | Observer projection and sphericalization |
+| `problem_spec_chf_005.yml` | Threshold record and legibility decay |
+| `problem_spec_chf_006.yml` | 3D radial consequence cell assignment |
+| `problem_spec_chf_007.yml` | Star-shaped geometry gate and radial coverage failure modes |
 
-## Included specs
+## Current validation target
 
-| Spec | Purpose | Core claim |
-|---|---|---|
-| `problem_spec_chf_001.yml` | Minimal 2D disk model | ALLOW / DENY / FAIL_CLOSED category grammar |
-| `problem_spec_chf_002.yml` | Multi-center uncertainty | uncertainty must not become permission |
-| `problem_spec_chf_003.yml` | Two-body coupling | local ALLOW is not global ALLOW |
-| `problem_spec_chf_004.yml` | Observer projection | distance sphericalizes, resolution re-cellularizes |
-| `problem_spec_chf_005.yml` | Threshold record | crossings require shell and record; legibility may decay |
-
-## Run locally
-
-```bash
-python math_solver/validation/chf_deterministic_validator.py \
-  --spec-dir math_solver/validation \
-  --out-json math_solver/validation/brain_reports/chf_validation_report_LOCAL.json \
-  --out-md math_solver/validation/brain_reports/chf_validation_summary_LOCAL.md
-```
-
-## GitHub Actions
-
-The workflow file is installed at:
+The validator should report:
 
 ```text
-.github/workflows/chf_validation_run.yml
+Overall status: PASS
+Specs evaluated: 7
 ```
 
-For iOS-safe upload workflows, the same file is mirrored at:
+## Formal interpretation
 
-```text
-iosnoperiod/github/workflows/chf_validation_run.yml
-```
+The current lane validates these claims:
 
-The mirror path is for visibility only. The canonical GitHub Actions path remains `.github/workflows/chf_validation_run.yml`.
+1. A proposed transition can be assigned to a radial consequence cell.
+2. ALLOW, DENY, and FAIL_CLOSED remain distinct.
+3. Potential does not become actual without a threshold crossing.
+4. Multi-center uncertainty blocks non-robust permission.
+5. Local admissibility is not global admissibility.
+6. Observer distance and resolution affect whether the shell appears smooth or cell-resolved.
+7. Actualized crossings require records, while record legibility can decay.
+8. 3D radial cell assignment can be checked deterministically.
+9. Non-star-shaped geometry fails closed before cell coverage is assumed.

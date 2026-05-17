@@ -1,0 +1,38 @@
+problem_id: chf-006
+title: 3D Radial Consequence Cell Assignment
+formalism: consequence_horizon_formalism
+model:
+  state_space: R3
+  center: [0.0, 0.0, 0.0]
+  transition_region: unit_ball
+  horizon_radius: 0.8
+  cells:
+    - id: tetra_cell_1
+      direction: [0.577350269, 0.577350269, 0.577350269]
+      result: ALLOW
+      reason: stable_3d_radial_cell
+    - id: tetra_cell_2
+      direction: [0.577350269, -0.577350269, -0.577350269]
+      result: DENY
+      reason: authority_sensitive_3d_cell_denied
+    - id: tetra_cell_3
+      direction: [-0.577350269, 0.577350269, -0.577350269]
+      result: FAIL_CLOSED
+      reason: observer_impact_cell_unresolved
+    - id: tetra_cell_4
+      direction: [-0.577350269, -0.577350269, 0.577350269]
+      result: DENY
+      reason: recoverability_cell_denied
+test_cases:
+  - id: v1_allow
+    vector: [0.3, 0.3, 0.3]
+    expected: ALLOW
+  - id: v2_deny
+    vector: [0.4, -0.4, -0.4]
+    expected: DENY
+  - id: v3_fail_closed
+    vector: [-0.3, 0.3, -0.3]
+    expected: FAIL_CLOSED
+  - id: v4_outside_horizon
+    vector: [0.7, 0.7, 0.0]
+    expected: DENY

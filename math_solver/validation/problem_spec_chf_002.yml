@@ -1,37 +1,21 @@
 problem_id: chf-002
-domain: consequence_horizon_formalism
 title: Multi-Center Uncertainty Extension
-version: '0.1'
-state_space: R2
-plausible_centers:
-- - 0.0
-  - 0.0
-- - 0.3
-  - 0.0
-transition_region:
-  type: disk
-  radius: 1.0
-horizon:
-  type: internal_radius
-  radius: 0.8
-policy: conservative_intersection
-test_points:
-- id: pA
-  point:
-  - 0.4
-  - 0.4
-  expected: ALLOW
-- id: pB
-  point:
-  - -0.9
-  - 0.0
-  expected: FAIL_CLOSED
-- id: pC
-  point:
-  - 0.85
-  - 0.0
-  expected: FAIL_CLOSED
-assertions:
-  allow_only_if_all_centers_pass: true
-  uncertainty_defaults_to: FAIL_CLOSED
-  preserve_plausible_centers: true
+formalism: consequence_horizon_formalism
+model:
+  state_space: R2
+  plausible_centers:
+    - [0.0, 0.0]
+    - [0.3, 0.0]
+  transition_radius: 1.0
+  horizon_radius: 0.8
+  conservative_rule: require_all_plausible_centers_to_pass
+test_cases:
+  - id: pA
+    point: [0.4, 0.4]
+    expected: ALLOW
+  - id: pB
+    point: [-0.9, 0.0]
+    expected: FAIL_CLOSED
+  - id: pC
+    point: [0.85, 0.0]
+    expected: FAIL_CLOSED

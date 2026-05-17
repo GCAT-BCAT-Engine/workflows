@@ -1,83 +1,29 @@
 problem_id: chf-001
-domain: consequence_horizon_formalism
 title: Minimal 2D Consequence Horizon Model
-version: '0.1'
-state_space: R2
-center:
-- 0.0
-- 0.0
-transition_region:
-  type: disk
-  radius: 1.0
-horizon:
-  type: internal_radius
-  radius: 0.8
-cells:
-- id: cell_1
-  angle_min_deg: 0
-  angle_max_deg: 90
-  meaning: stable_permitted_region
-  rule:
-    result: ALLOW
-    max_radius: 0.8
-- id: cell_2
-  angle_min_deg: 90
-  angle_max_deg: 180
-  meaning: limited_recoverability_region
-  rule:
-    result: ALLOW
-    max_radius: 0.5
-    else: DENY
-- id: cell_3
-  angle_min_deg: 180
-  angle_max_deg: 270
-  meaning: forbidden_region
-  rule:
-    result: DENY
-- id: cell_4
-  angle_min_deg: 270
-  angle_max_deg: 360
-  meaning: uncertain_region
-  rule:
-    result: FAIL_CLOSED
-    allow_if_confidence_at_least: 0.95
-test_points:
-- id: p1
-  point:
-  - 0.4
-  - 0.4
-  expected: ALLOW
-- id: p2
-  point:
-  - -0.4
-  - 0.4
-  expected: DENY
-- id: p3
-  point:
-  - -0.4
-  - -0.4
-  expected: DENY
-- id: p4
-  point:
-  - 0.7
-  - -0.2
-  expected: FAIL_CLOSED
-- id: p5
-  point:
-  - 0.9
-  - 0.1
-  expected: DENY
-assertions:
-  allow_requires:
-  - crossing_event
-  - historical_shell
-  - propagated_record
-  - new_center
-  deny_requires_no:
-  - crossing_event
-  - new_center
-  fail_closed_requires_no:
-  - crossing_event
-  - new_center
-  fail_closed_requires:
-  - failure_reason
+formalism: consequence_horizon_formalism
+model:
+  state_space: R2
+  center: [0.0, 0.0]
+  transition_region: unit_disk
+  horizon_radius: 0.8
+  cells:
+    cell_1: {theta_min: 0, theta_max: 90, rule: allow_if_inside_horizon}
+    cell_2: {theta_min: 90, theta_max: 180, rule: allow_if_radius_lte_0_5}
+    cell_3: {theta_min: 180, theta_max: 270, rule: deny}
+    cell_4: {theta_min: 270, theta_max: 360, rule: fail_closed}
+test_cases:
+  - id: p1
+    point: [0.4, 0.4]
+    expected: ALLOW
+  - id: p2
+    point: [-0.4, 0.4]
+    expected: DENY
+  - id: p3
+    point: [-0.4, -0.4]
+    expected: DENY
+  - id: p4
+    point: [0.7, -0.2]
+    expected: FAIL_CLOSED
+  - id: p5
+    point: [0.9, 0.1]
+    expected: DENY
