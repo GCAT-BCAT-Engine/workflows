@@ -1,15 +1,23 @@
 {
-  "bundle": "chf_validation_extension_v0_10_receipt_reconcile_entropy",
+  "bundle": "chf_validation_extension_v0_11_execution_boundary_batch",
   "target_repo": "GCAT-BCAT-Engine/workflows",
-  "purpose": "Add receipt sufficiency, branch merge/reconciliation, and entropy/irreversibility budget gates with sandbox preflight.",
+  "purpose": "Add execution-boundary semantic gates chf-020 through chf-030 with full local sandbox preflight.",
   "changed_paths": [
     "math_solver/validation/chf_deterministic_validator.py",
     "math_solver/validation/chf_sandbox_runner.py",
     "math_solver/validation/chf_sandbox_config.yml",
     "math_solver/validation/chf_sandbox_readme.md",
-    "math_solver/validation/problem_spec_chf_017.yml",
-    "math_solver/validation/problem_spec_chf_018.yml",
-    "math_solver/validation/problem_spec_chf_019.yml",
+    "math_solver/validation/problem_spec_chf_020.yml",
+    "math_solver/validation/problem_spec_chf_021.yml",
+    "math_solver/validation/problem_spec_chf_022.yml",
+    "math_solver/validation/problem_spec_chf_023.yml",
+    "math_solver/validation/problem_spec_chf_024.yml",
+    "math_solver/validation/problem_spec_chf_025.yml",
+    "math_solver/validation/problem_spec_chf_026.yml",
+    "math_solver/validation/problem_spec_chf_027.yml",
+    "math_solver/validation/problem_spec_chf_028.yml",
+    "math_solver/validation/problem_spec_chf_029.yml",
+    "math_solver/validation/problem_spec_chf_030.yml",
     "math_solver/validation/chf_validation_matrix.md",
     "math_solver/validation/chf_readme.md"
   ],
@@ -19,9 +27,17 @@
   "expected_github_result": {
     "overall_status": "PASS",
     "explicit_status": "PASS",
-    "specs_evaluated": 19,
+    "specs_evaluated": 30,
     "sandbox_status": "PASS",
-    "sandbox_subtests_generated": 1930,
-    "sandbox_suites_evaluated": 10
+    "sandbox_suites_evaluated": 15,
+    "sandbox_subtests_generated": 2282
+  },
+  "local_preflight": {
+    "status": "PASS",
+    "returncode": 0,
+    "specs_evaluated": 30,
+    "sandbox_status": "PASS",
+    "sandbox_subtests_generated": 2282,
+    "sandbox_subtests_failed": 0
   }
 }

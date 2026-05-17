@@ -1,14 +1,14 @@
 # Consequence Horizon Formalism Validation Summary
 
 - Overall status: **PASS**
-- Specs evaluated: **19**
+- Specs evaluated: **30**
 
 ## Sandbox Results
 
 - Sandbox status: **PASS**
-- Suites evaluated: **10**
-- Subtests generated: **1930**
-- Subtests passed: **1930**
+- Suites evaluated: **15**
+- Subtests generated: **2282**
+- Subtests passed: **2282**
 - Subtests failed: **0**
 
 ### Sandbox suite `chf-001-generated-2d-cell-horizon`
@@ -79,6 +79,41 @@
 - Status: **PASS**
 - Generated: **54**
 - Passed: **54**
+- Failed: **0**
+
+### Sandbox suite `chf-020-generated-external-binding`
+
+- Status: **PASS**
+- Generated: **64**
+- Passed: **64**
+- Failed: **0**
+
+### Sandbox suite `chf-021-generated-rollback-repair`
+
+- Status: **PASS**
+- Generated: **144**
+- Passed: **144**
+- Failed: **0**
+
+### Sandbox suite `chf-023-generated-authority-drift`
+
+- Status: **PASS**
+- Generated: **24**
+- Passed: **24**
+- Failed: **0**
+
+### Sandbox suite `chf-028-generated-temporal-integrity`
+
+- Status: **PASS**
+- Generated: **72**
+- Passed: **72**
+- Failed: **0**
+
+### Sandbox suite `chf-030-generated-ecosystem-rejoin`
+
+- Status: **PASS**
+- Generated: **48**
+- Passed: **48**
 - Failed: **0**
 
 ## Spec Results
@@ -487,4 +522,191 @@
   - Reason: `irreversibility_score_exceeds_budget`
 - `reversibility_margin_too_low_fail_closed`: expected `ENTROPY_FAIL_CLOSED`, actual `ENTROPY_FAIL_CLOSED` — **PASS**
   - Reason: `reversibility_margin_below_threshold`
+
+### chf-020
+
+- Status: **PASS**
+
+- `external_binding_ready`: expected `EXTERNAL_BINDING_ALLOWED`, actual `EXTERNAL_BINDING_ALLOWED` — **PASS**
+  - Reason: `external_binding_gate_pass`
+- `local_not_admissible_fail_closed`: expected `EXTERNAL_BINDING_FAIL_CLOSED`, actual `EXTERNAL_BINDING_FAIL_CLOSED` — **PASS**
+  - Reason: `local_admissibility_not_established`
+- `external_authority_invalid_fail_closed`: expected `EXTERNAL_BINDING_FAIL_CLOSED`, actual `EXTERNAL_BINDING_FAIL_CLOSED` — **PASS**
+  - Reason: `external_authority_invalid`
+- `dry_run_failed_fail_closed`: expected `EXTERNAL_BINDING_FAIL_CLOSED`, actual `EXTERNAL_BINDING_FAIL_CLOSED` — **PASS**
+  - Reason: `external_dry_run_failed`
+- `rollback_path_missing_fail_closed`: expected `EXTERNAL_BINDING_FAIL_CLOSED`, actual `EXTERNAL_BINDING_FAIL_CLOSED` — **PASS**
+  - Reason: `external_rollback_path_missing`
+- `missing_downstream_receipt_check_fail_closed`: expected `EXTERNAL_BINDING_FAIL_CLOSED`, actual `EXTERNAL_BINDING_FAIL_CLOSED` — **PASS**
+  - Reason: `external_checks_incomplete`
+
+### chf-021
+
+- Status: **PASS**
+
+- `rollback_repair_ready`: expected `REPAIR_ALLOWED`, actual `REPAIR_ALLOWED` — **PASS**
+  - Reason: `rollback_or_repair_gate_pass`
+- `compensating_action_ready`: expected `REPAIR_ALLOWED`, actual `REPAIR_ALLOWED` — **PASS**
+  - Reason: `rollback_or_repair_gate_pass`
+- `no_repair_path_fail_closed`: expected `REPAIR_FAIL_CLOSED`, actual `REPAIR_FAIL_CLOSED` — **PASS**
+  - Reason: `no_rollback_or_compensating_action`
+- `repair_confidence_low_fail_closed`: expected `REPAIR_FAIL_CLOSED`, actual `REPAIR_FAIL_CLOSED` — **PASS**
+  - Reason: `repair_confidence_below_threshold`
+- `repair_harm_high_fail_closed`: expected `REPAIR_FAIL_CLOSED`, actual `REPAIR_FAIL_CLOSED` — **PASS**
+  - Reason: `repair_harm_exceeds_ceiling`
+- `exact_repair_boundary_allowed`: expected `REPAIR_ALLOWED`, actual `REPAIR_ALLOWED` — **PASS**
+  - Reason: `rollback_or_repair_gate_pass`
+
+### chf-022
+
+- Status: **PASS**
+
+- `replay_confident`: expected `REPLAY_CONFIDENT`, actual `REPLAY_CONFIDENT` — **PASS**
+  - Reason: `receipt_replay_reconstruction_confident`
+- `replay_not_deterministic_fail_closed`: expected `REPLAY_FAIL_CLOSED`, actual `REPLAY_FAIL_CLOSED` — **PASS**
+  - Reason: `deterministic_replay_not_established`
+- `missing_artifact_hashes_fail_closed`: expected `REPLAY_FAIL_CLOSED`, actual `REPLAY_FAIL_CLOSED` — **PASS**
+  - Reason: `reconstruction_components_incomplete`
+- `confidence_low_fail_closed`: expected `REPLAY_FAIL_CLOSED`, actual `REPLAY_FAIL_CLOSED` — **PASS**
+  - Reason: `reconstruction_confidence_below_threshold`
+- `variance_high_fail_closed`: expected `REPLAY_FAIL_CLOSED`, actual `REPLAY_FAIL_CLOSED` — **PASS**
+  - Reason: `unexplained_variance_exceeds_ceiling`
+- `exact_replay_boundary_confident`: expected `REPLAY_CONFIDENT`, actual `REPLAY_CONFIDENT` — **PASS**
+  - Reason: `receipt_replay_reconstruction_confident`
+
+### chf-023
+
+- Status: **PASS**
+
+- `authority_stable`: expected `AUTHORITY_STABLE`, actual `AUTHORITY_STABLE` — **PASS**
+  - Reason: `authority_stable_at_commit`
+- `authority_identity_changed_fail_closed`: expected `AUTHORITY_FAIL_CLOSED`, actual `AUTHORITY_FAIL_CLOSED` — **PASS**
+  - Reason: `authority_identity_changed`
+- `revocation_seen_fail_closed`: expected `AUTHORITY_FAIL_CLOSED`, actual `AUTHORITY_FAIL_CLOSED` — **PASS**
+  - Reason: `authority_revocation_seen`
+- `delegation_invalid_fail_closed`: expected `AUTHORITY_FAIL_CLOSED`, actual `AUTHORITY_FAIL_CLOSED` — **PASS**
+  - Reason: `delegation_chain_invalid`
+- `authority_drift_high_fail_closed`: expected `AUTHORITY_FAIL_CLOSED`, actual `AUTHORITY_FAIL_CLOSED` — **PASS**
+  - Reason: `authority_drift_exceeds_tolerance`
+- `exact_authority_drift_boundary_stable`: expected `AUTHORITY_STABLE`, actual `AUTHORITY_STABLE` — **PASS**
+  - Reason: `authority_stable_at_commit`
+
+### chf-024
+
+- Status: **PASS**
+
+- `policy_version_stable`: expected `POLICY_VERSION_VALID`, actual `POLICY_VERSION_VALID` — **PASS**
+  - Reason: `policy_version_stable`
+- `policy_version_inactive_fail_closed`: expected `POLICY_VERSION_FAIL_CLOSED`, actual `POLICY_VERSION_FAIL_CLOSED` — **PASS**
+  - Reason: `policy_version_not_active`
+- `policy_migration_with_proof_valid`: expected `POLICY_VERSION_VALID`, actual `POLICY_VERSION_VALID` — **PASS**
+  - Reason: `policy_version_migrated_with_proof`
+- `policy_changed_without_proof_fail_closed`: expected `POLICY_VERSION_FAIL_CLOSED`, actual `POLICY_VERSION_FAIL_CLOSED` — **PASS**
+  - Reason: `policy_version_changed_without_valid_migration`
+- `policy_changed_not_backward_compatible_fail_closed`: expected `POLICY_VERSION_FAIL_CLOSED`, actual `POLICY_VERSION_FAIL_CLOSED` — **PASS**
+  - Reason: `policy_version_changed_without_valid_migration`
+
+### chf-025
+
+- Status: **PASS**
+
+- `propagation_validated`: expected `PROPAGATION_VALIDATED`, actual `PROPAGATION_VALIDATED` — **PASS**
+  - Reason: `cross_domain_propagation_validated`
+- `affected_domain_not_validated_fail_closed`: expected `PROPAGATION_FAIL_CLOSED`, actual `PROPAGATION_FAIL_CLOSED` — **PASS**
+  - Reason: `affected_domains_not_validated`
+- `required_downstream_not_validated_fail_closed`: expected `PROPAGATION_FAIL_CLOSED`, actual `PROPAGATION_FAIL_CLOSED` — **PASS**
+  - Reason: `required_domains_not_validated`
+- `downstream_receipts_missing_fail_closed`: expected `PROPAGATION_FAIL_CLOSED`, actual `PROPAGATION_FAIL_CLOSED` — **PASS**
+  - Reason: `downstream_receipts_not_ready`
+- `cross_domain_harm_fail_closed`: expected `PROPAGATION_FAIL_CLOSED`, actual `PROPAGATION_FAIL_CLOSED` — **PASS**
+  - Reason: `cross_domain_harm_detected`
+
+### chf-026
+
+- Status: **PASS**
+
+- `participant_impact_admissible`: expected `PARTICIPANT_IMPACT_ADMISSIBLE`, actual `PARTICIPANT_IMPACT_ADMISSIBLE` — **PASS**
+  - Reason: `participant_impact_admissible`
+- `human_livability_low_fail_closed`: expected `PARTICIPANT_IMPACT_FAIL_CLOSED`, actual `PARTICIPANT_IMPACT_FAIL_CLOSED` — **PASS**
+  - Reason: `participant_livability_below_threshold`
+- `ai_recoverability_low_fail_closed`: expected `PARTICIPANT_IMPACT_FAIL_CLOSED`, actual `PARTICIPANT_IMPACT_FAIL_CLOSED` — **PASS**
+  - Reason: `participant_recoverability_below_threshold`
+- `power_asymmetry_high_fail_closed`: expected `PARTICIPANT_IMPACT_FAIL_CLOSED`, actual `PARTICIPANT_IMPACT_FAIL_CLOSED` — **PASS**
+  - Reason: `participant_power_asymmetry_exceeds_threshold`
+- `participant_notice_missing_fail_closed`: expected `PARTICIPANT_IMPACT_FAIL_CLOSED`, actual `PARTICIPANT_IMPACT_FAIL_CLOSED` — **PASS**
+  - Reason: `participant_notice_missing`
+- `exact_participant_thresholds_admissible`: expected `PARTICIPANT_IMPACT_ADMISSIBLE`, actual `PARTICIPANT_IMPACT_ADMISSIBLE` — **PASS**
+  - Reason: `participant_impact_admissible`
+
+### chf-027
+
+- Status: **PASS**
+
+- `no_protected_entity_ordinary_pass_clear`: expected `PROTECTED_ESCALATION_CLEAR`, actual `PROTECTED_ESCALATION_CLEAR` — **PASS**
+  - Reason: `protected_escalation_clear`
+- `protected_review_missing_required`: expected `PROTECTED_ESCALATION_REQUIRED`, actual `PROTECTED_ESCALATION_REQUIRED` — **PASS**
+  - Reason: `protected_entity_requires_special_review`
+- `protected_basis_missing_required`: expected `PROTECTED_ESCALATION_REQUIRED`, actual `PROTECTED_ESCALATION_REQUIRED` — **PASS**
+  - Reason: `protected_basis_not_explicit`
+- `protected_review_complete_clear`: expected `PROTECTED_ESCALATION_CLEAR`, actual `PROTECTED_ESCALATION_CLEAR` — **PASS**
+  - Reason: `protected_escalation_clear`
+- `ordinary_gate_failed_required`: expected `PROTECTED_ESCALATION_REQUIRED`, actual `PROTECTED_ESCALATION_REQUIRED` — **PASS**
+  - Reason: `ordinary_gate_not_passed`
+
+### chf-028
+
+- Status: **PASS**
+
+- `temporal_coherent`: expected `TEMPORAL_COHERENT`, actual `TEMPORAL_COHERENT` — **PASS**
+  - Reason: `temporal_clock_integrity_pass`
+- `non_monotonic_order_fail_closed`: expected `TEMPORAL_FAIL_CLOSED`, actual `TEMPORAL_FAIL_CLOSED` — **PASS**
+  - Reason: `temporal_order_not_monotonic`
+- `clock_drift_high_fail_closed`: expected `TEMPORAL_FAIL_CLOSED`, actual `TEMPORAL_FAIL_CLOSED` — **PASS**
+  - Reason: `clock_drift_exceeds_tolerance`
+- `replay_window_high_fail_closed`: expected `TEMPORAL_FAIL_CLOSED`, actual `TEMPORAL_FAIL_CLOSED` — **PASS**
+  - Reason: `replay_window_exceeds_tolerance`
+- `timestamp_unsigned_fail_closed`: expected `TEMPORAL_FAIL_CLOSED`, actual `TEMPORAL_FAIL_CLOSED` — **PASS**
+  - Reason: `timestamp_not_signed`
+- `trusted_time_missing_fail_closed`: expected `TEMPORAL_FAIL_CLOSED`, actual `TEMPORAL_FAIL_CLOSED` — **PASS**
+  - Reason: `trusted_time_source_missing`
+- `exact_temporal_boundaries_coherent`: expected `TEMPORAL_COHERENT`, actual `TEMPORAL_COHERENT` — **PASS**
+  - Reason: `temporal_clock_integrity_pass`
+
+### chf-029
+
+- Status: **PASS**
+
+- `replay_converged`: expected `REPLAY_CONVERGED`, actual `REPLAY_CONVERGED` — **PASS**
+  - Reason: `deterministic_replay_converged`
+- `command_fidelity_missing_fail_closed`: expected `REPLAY_DIVERGENCE_FAIL_CLOSED`, actual `REPLAY_DIVERGENCE_FAIL_CLOSED` — **PASS**
+  - Reason: `command_fidelity_missing`
+- `environment_hash_mismatch_fail_closed`: expected `REPLAY_DIVERGENCE_FAIL_CLOSED`, actual `REPLAY_DIVERGENCE_FAIL_CLOSED` — **PASS**
+  - Reason: `environment_hash_mismatch`
+- `dependency_hash_mismatch_fail_closed`: expected `REPLAY_DIVERGENCE_FAIL_CLOSED`, actual `REPLAY_DIVERGENCE_FAIL_CLOSED` — **PASS**
+  - Reason: `dependency_hash_mismatch`
+- `output_delta_high_fail_closed`: expected `REPLAY_DIVERGENCE_FAIL_CLOSED`, actual `REPLAY_DIVERGENCE_FAIL_CLOSED` — **PASS**
+  - Reason: `output_delta_exceeds_tolerance`
+- `state_delta_high_fail_closed`: expected `REPLAY_DIVERGENCE_FAIL_CLOSED`, actual `REPLAY_DIVERGENCE_FAIL_CLOSED` — **PASS**
+  - Reason: `state_delta_exceeds_tolerance`
+- `exact_replay_divergence_boundaries_converged`: expected `REPLAY_CONVERGED`, actual `REPLAY_CONVERGED` — **PASS**
+  - Reason: `deterministic_replay_converged`
+
+### chf-030
+
+- Status: **PASS**
+
+- `rejoin_allowed_after_review`: expected `REJOIN_ALLOWED`, actual `REJOIN_ALLOWED` — **PASS**
+  - Reason: `ecosystem_rejoin_allowed_after_review`
+- `node_deprecated_fail_closed`: expected `REJOIN_FAIL_CLOSED`, actual `REJOIN_FAIL_CLOSED` — **PASS**
+  - Reason: `node_deprecated`
+- `retained_bundle_superseded_fail_closed`: expected `REJOIN_FAIL_CLOSED`, actual `REJOIN_FAIL_CLOSED` — **PASS**
+  - Reason: `retained_bundle_superseded`
+- `retained_bundle_stale_fail_closed`: expected `REJOIN_FAIL_CLOSED`, actual `REJOIN_FAIL_CLOSED` — **PASS**
+  - Reason: `retained_bundle_stale`
+- `ecosystem_review_incomplete_fail_closed`: expected `REJOIN_FAIL_CLOSED`, actual `REJOIN_FAIL_CLOSED` — **PASS**
+  - Reason: `ecosystem_review_incomplete`
+- `remediation_receipt_missing_fail_closed`: expected `REJOIN_FAIL_CLOSED`, actual `REJOIN_FAIL_CLOSED` — **PASS**
+  - Reason: `remediation_receipt_not_ready`
+- `exact_staleness_boundary_rejoin_allowed`: expected `REJOIN_ALLOWED`, actual `REJOIN_ALLOWED` — **PASS**
+  - Reason: `ecosystem_rejoin_allowed_after_review`
 
