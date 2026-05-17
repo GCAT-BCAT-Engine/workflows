@@ -1,4 +1,4 @@
-name: "Consequence Horizon Formalism Validation"
+name: Consequence Horizon Formalism Validation
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
       run_id:
         description: CHF validation run ID
         required: true
-        default: CHF-001
+        default: CHF-VAL-005
         type: string
 
 jobs:
@@ -21,16 +21,19 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: '3.11'
 
       - name: Install dependencies
         run: pip install pyyaml
 
-      - name: Run deterministic CHF validation
+      - name: Run CHF deterministic validator
         env:
           RUN_ID: ${{ github.event.inputs.run_id }}
         run: |
-          python math_solver/validation/chf_deterministic_validator.py             --spec-dir math_solver/validation             --out-json math_solver/validation/brain_reports/chf_validation_report_${RUN_ID}.json             --out-md math_solver/validation/brain_reports/chf_validation_summary_${RUN_ID}.md
+          python math_solver/validation/chf_deterministic_validator.py \
+            --spec-dir math_solver/validation \
+            --out-json math_solver/validation/brain_reports/chf_validation_report_${RUN_ID}.json \
+            --out-md math_solver/validation/brain_reports/chf_validation_summary_${RUN_ID}.md
 
       - name: Write workflow summary
         if: always()
@@ -39,6 +42,7 @@ jobs:
         run: |
           echo "# Consequence Horizon Formalism Validation" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
+
           SUMMARY="math_solver/validation/brain_reports/chf_validation_summary_${RUN_ID}.md"
           if [ -f "$SUMMARY" ]; then
             cat "$SUMMARY" >> "$GITHUB_STEP_SUMMARY"
