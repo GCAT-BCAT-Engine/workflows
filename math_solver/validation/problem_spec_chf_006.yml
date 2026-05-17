@@ -1,5 +1,5 @@
 problem_id: chf-006
-title: 3D Radial Consequence Cell Assignment
+title: 3D Radial Consequence Cell Assignment - Expanded Vector Cases
 formalism: consequence_horizon_formalism
 model:
   state_space: R3
@@ -24,15 +24,36 @@ model:
       result: DENY
       reason: recoverability_cell_denied
 test_cases:
-  - id: v1_allow
+  - id: baseline_v1_allow
     vector: [0.3, 0.3, 0.3]
     expected: ALLOW
-  - id: v2_deny
+  - id: baseline_v2_deny
     vector: [0.4, -0.4, -0.4]
     expected: DENY
-  - id: v3_fail_closed
+  - id: baseline_v3_fail_closed
     vector: [-0.3, 0.3, -0.3]
     expected: FAIL_CLOSED
-  - id: v4_outside_horizon
+  - id: baseline_v4_outside_horizon_deny
     vector: [0.7, 0.7, 0.0]
+    expected: DENY
+  - id: EDGE_exact_horizon_cell1_allow
+    vector: [0.4618802152, 0.4618802152, 0.4618802152]
+    expected: ALLOW
+  - id: EDGE_just_outside_horizon_cell1_deny
+    vector: [0.4620, 0.4620, 0.4620]
+    expected: DENY
+  - id: EDGE_axis_x_tie_currently_cell1_allow
+    vector: [0.5, 0.0, 0.0]
+    expected: ALLOW
+  - id: EDGE_axis_negative_x_tie_currently_cell3_fail_closed
+    vector: [-0.5, 0.0, 0.0]
+    expected: FAIL_CLOSED
+  - id: EDGE_axis_z_tie_currently_cell1_allow
+    vector: [0.0, 0.0, 0.5]
+    expected: ALLOW
+  - id: STRESS_cell4_recoverability_deny
+    vector: [-0.3, -0.3, 0.3]
+    expected: DENY
+  - id: STRESS_small_cell2_deny_even_low_radius
+    vector: [0.05, -0.05, -0.05]
     expected: DENY

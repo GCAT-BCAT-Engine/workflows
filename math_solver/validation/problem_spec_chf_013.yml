@@ -1,29 +1,64 @@
 problem_id: chf-013
-title: Many-Body Relevance Threshold Gate
+title: Many-Body Relevance Threshold Gate - Expanded Threshold Cases
 formalism: consequence_horizon_formalism
 model:
   gate: require_relevance_threshold_or_protected_review
 test_cases:
-  - id: below_threshold_unprotected
+  - id: baseline_below_threshold_unprotected_no_effect
     deformation: 0.05
     epsilon: 0.10
     protected: false
     deformation_known: true
     expected: NO_EFFECT
-  - id: above_threshold_unprotected
+  - id: baseline_above_threshold_unprotected_deny
     deformation: 0.25
     epsilon: 0.10
     protected: false
     deformation_known: true
     expected: DENY
-  - id: below_threshold_protected
+  - id: baseline_below_threshold_protected_fail_closed
     deformation: 0.05
     epsilon: 0.10
     protected: true
     deformation_known: true
     expected: FAIL_CLOSED
-  - id: unknown_deformation_protected
+  - id: baseline_unknown_deformation_protected_fail_closed
     epsilon: 0.10
     protected: true
     deformation_known: false
+    expected: FAIL_CLOSED
+  - id: EDGE_exact_threshold_unprotected_no_effect
+    deformation: 0.10
+    epsilon: 0.10
+    protected: false
+    deformation_known: true
+    expected: NO_EFFECT
+  - id: EDGE_just_above_threshold_unprotected_deny
+    deformation: 0.1001
+    epsilon: 0.10
+    protected: false
+    deformation_known: true
+    expected: DENY
+  - id: EDGE_exact_threshold_protected_fail_closed
+    deformation: 0.10
+    epsilon: 0.10
+    protected: true
+    deformation_known: true
+    expected: FAIL_CLOSED
+  - id: EDGE_unknown_deformation_unprotected_fail_closed
+    epsilon: 0.10
+    protected: false
+    deformation_known: false
+    expected: FAIL_CLOSED
+  - id: STRESS_zero_deformation_unprotected_no_effect
+    deformation: 0.0
+    epsilon: 0.10
+    protected: false
+    deformation_known: true
+    expected: NO_EFFECT
+  - id: STRESS_zero_deformation_protected_fail_closed
+    deformation: 0.0
+    epsilon: 0.10
+    protected: true
+    deformation_known: true
     expected: FAIL_CLOSED

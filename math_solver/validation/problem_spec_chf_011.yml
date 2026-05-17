@@ -1,27 +1,62 @@
 problem_id: chf-011
-title: Lag-Reachable Set Commit Gate
+title: Lag-Reachable Set Commit Gate - Expanded Boundary Cases
 formalism: consequence_horizon_formalism
 model:
   default_uncertainty_buffer: 0.0
 test_cases:
-  - id: short_lag_inside_horizon
+  - id: baseline_short_lag_inside_horizon_allow
     base_transition_radius: 0.55
     lag: 0.5
     drift_rate: 0.10
     uncertainty_buffer: 0.05
     horizon_radius: 0.80
     expected: ALLOW
-  - id: long_lag_exceeds_horizon
+  - id: baseline_long_lag_exceeds_horizon_fail_closed
     base_transition_radius: 0.55
     lag: 2.0
     drift_rate: 0.15
     uncertainty_buffer: 0.05
     horizon_radius: 0.80
     expected: FAIL_CLOSED
-  - id: uncertainty_buffer_exceeds_horizon
+  - id: baseline_uncertainty_buffer_exceeds_horizon_fail_closed
     base_transition_radius: 0.60
     lag: 0.5
     drift_rate: 0.10
     uncertainty_buffer: 0.20
     horizon_radius: 0.80
     expected: FAIL_CLOSED
+  - id: EDGE_exact_lag_reachable_horizon_allow
+    base_transition_radius: 0.60
+    lag: 1.0
+    drift_rate: 0.15
+    uncertainty_buffer: 0.05
+    horizon_radius: 0.80
+    expected: ALLOW
+  - id: EDGE_just_over_lag_reachable_horizon_fail_closed
+    base_transition_radius: 0.60
+    lag: 1.0
+    drift_rate: 0.1501
+    uncertainty_buffer: 0.05
+    horizon_radius: 0.80
+    expected: FAIL_CLOSED
+  - id: EDGE_zero_lag_inside_horizon_allow
+    base_transition_radius: 0.79
+    lag: 0.0
+    drift_rate: 100.0
+    uncertainty_buffer: 0.0
+    horizon_radius: 0.80
+    expected: ALLOW
+  - id: STRESS_high_uncertainty_low_drift_fail_closed
+    base_transition_radius: 0.30
+    lag: 0.1
+    drift_rate: 0.10
+    uncertainty_buffer: 0.60
+    horizon_radius: 0.80
+    expected: FAIL_CLOSED
+  - id: STRESS_low_base_high_lag_allow
+    base_transition_radius: 0.10
+    lag: 3.0
+    drift_rate: 0.10
+    uncertainty_buffer: 0.10
+    horizon_radius: 0.80
+    expected: ALLOW

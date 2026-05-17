@@ -1,52 +1,46 @@
-# Consequence Horizon Formalism Validation
+# Consequence Horizon Formalism Validation — v0.7a Edge Expansion
 
-This directory contains deterministic pre-code validation specs for the Consequence Horizon Formalism.
+This package expands existing CHF problem specs without changing the stable GitHub Actions dispatcher or the deterministic validator.
 
-The validation lane is intentionally local and deterministic. It does not call external APIs.
+## Stable dispatcher rule
 
-## Current specs
-
-| Spec | Purpose |
-|---|---|
-| `problem_spec_chf_001.yml` | Minimal 2D consequence horizon model |
-| `problem_spec_chf_002.yml` | Multi-center uncertainty extension |
-| `problem_spec_chf_003.yml` | Two-body coupled cloud deformation |
-| `problem_spec_chf_004.yml` | Observer projection and sphericalization |
-| `problem_spec_chf_005.yml` | Threshold record and legibility decay |
-| `problem_spec_chf_006.yml` | 3D radial consequence cell assignment |
-| `problem_spec_chf_007.yml` | Star-shaped geometry gate and radial coverage failure modes |
-| `problem_spec_chf_008.yml` | GCAT/BCAT local admissibility operator inside a radial cell |
-| `problem_spec_chf_009.yml` | Commit crossing requires GCAT pass, historical shell, and propagated record |
-| `problem_spec_chf_010.yml` | Recoverability and purpose-convergence gate |
-| `problem_spec_chf_011.yml` | Lag-reachable set commit gate |
-| `problem_spec_chf_012.yml` | Historical shell chain continuity |
-| `problem_spec_chf_013.yml` | Many-body relevance threshold gate |
-
-## Current validation target
-
-The validator should report:
+The workflow remains a dispatcher only:
 
 ```text
-Overall status: PASS
-Specs evaluated: 13
+checkout
+setup Python
+install dependencies
+run validator
+upload reports
 ```
 
-## Formal interpretation
+New validation pressure is added through problem spec files under:
 
-The current lane validates these claims:
+```text
+math_solver/validation/
+```
 
-1. A proposed transition can be assigned to a radial consequence cell.
-2. ALLOW, DENY, FAIL_CLOSED, and NO_EFFECT remain distinct.
-3. Potential does not become actual without a threshold crossing.
-4. Multi-center uncertainty blocks non-robust permission.
-5. Local admissibility is not global admissibility.
-6. Observer distance and resolution affect whether the shell appears smooth or cell-resolved.
-7. Actualized crossings require records, while record legibility can decay.
-8. 3D radial cell assignment can be checked deterministically.
-9. Non-star-shaped geometry fails closed before cell coverage is assumed.
-10. GCAT/BCAT can operate as a local admissibility operator inside a CHF radial cell.
-11. Commit crossing requires both admissibility and shell/record readiness.
-12. Recoverability and purpose-convergence can independently block a transition.
-13. Lag-reachable uncertainty can fail closed before commit.
-14. Historical shell chains require continuity and sufficient legibility.
-15. Many-body effects below threshold may be NO_EFFECT, while protected/unknown effects fail closed.
+## Changed files in this bundle
+
+```text
+math_solver/validation/problem_spec_chf_001.yml
+math_solver/validation/problem_spec_chf_002.yml
+math_solver/validation/problem_spec_chf_006.yml
+math_solver/validation/problem_spec_chf_011.yml
+math_solver/validation/problem_spec_chf_013.yml
+math_solver/validation/chf_validation_matrix.md
+math_solver/validation/chf_readme.md
+```
+
+## Not changed
+
+```text
+.github/workflows/chf_validation_run.yml
+math_solver/validation/chf_deterministic_validator.py
+```
+
+## Purpose
+
+This expansion tests whether the current validator semantics are stable at boundary conditions.
+
+The case IDs intentionally document the expected behavior because YAML comments are not surfaced in the workflow summary.

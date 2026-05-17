@@ -1,5 +1,5 @@
 problem_id: chf-002
-title: Multi-Center Uncertainty Extension
+title: Multi-Center Uncertainty Extension - Expanded Robustness Cases
 formalism: consequence_horizon_formalism
 model:
   state_space: R2
@@ -10,12 +10,33 @@ model:
   horizon_radius: 0.8
   conservative_rule: require_all_plausible_centers_to_pass
 test_cases:
-  - id: pA
+  - id: baseline_pA_all_centers_allow
     point: [0.4, 0.4]
     expected: ALLOW
-  - id: pB
+  - id: baseline_pB_outside_one_transition_region_fail_closed
     point: [-0.9, 0.0]
     expected: FAIL_CLOSED
-  - id: pC
+  - id: baseline_pC_horizon_violation_under_one_center_fail_closed
     point: [0.85, 0.0]
+    expected: FAIL_CLOSED
+  - id: EDGE_shared_origin_center1_but_cell_boundary_center2_fail_closed
+    point: [0.0, 0.0]
+    expected: FAIL_CLOSED
+  - id: EDGE_between_centers_same_axis_all_cell1_allow
+    point: [0.4, 0.0]
+    expected: ALLOW
+  - id: EDGE_exact_horizon_center1_inside_center2_allow
+    point: [0.8, 0.0]
+    expected: ALLOW
+  - id: EDGE_just_outside_horizon_center1_fail_closed
+    point: [0.8001, 0.0]
+    expected: FAIL_CLOSED
+  - id: EDGE_upper_shared_cell1_allow
+    point: [0.3, 0.4]
+    expected: ALLOW
+  - id: STRESS_center_disagreement_cell1_vs_cell2_fail_closed
+    point: [0.2, 0.8]
+    expected: FAIL_CLOSED
+  - id: STRESS_negative_x_safe_for_center1_not_center2_fail_closed
+    point: [-0.49, 0.0]
     expected: FAIL_CLOSED

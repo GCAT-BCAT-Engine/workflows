@@ -1,5 +1,5 @@
 problem_id: chf-001
-title: Minimal 2D Consequence Horizon Model
+title: Minimal 2D Consequence Horizon Model - Expanded Edge Cases
 formalism: consequence_horizon_formalism
 model:
   state_space: R2
@@ -12,18 +12,48 @@ model:
     cell_3: {theta_min: 180, theta_max: 270, rule: deny}
     cell_4: {theta_min: 270, theta_max: 360, rule: fail_closed}
 test_cases:
-  - id: p1
+  - id: baseline_p1_cell1_allow
     point: [0.4, 0.4]
     expected: ALLOW
-  - id: p2
+  - id: baseline_p2_cell2_radius_limit_deny
     point: [-0.4, 0.4]
     expected: DENY
-  - id: p3
+  - id: baseline_p3_cell3_forbidden_deny
     point: [-0.4, -0.4]
     expected: DENY
-  - id: p4
+  - id: baseline_p4_cell4_uncertain_fail_closed
     point: [0.7, -0.2]
     expected: FAIL_CLOSED
-  - id: p5
+  - id: baseline_p5_cell1_outside_horizon_deny
     point: [0.9, 0.1]
     expected: DENY
+  - id: EDGE_origin_zero_radius_currently_cell1_allow
+    point: [0.0, 0.0]
+    expected: ALLOW
+  - id: EDGE_exact_horizon_cell1_allow
+    point: [0.8, 0.0]
+    expected: ALLOW
+  - id: EDGE_just_outside_horizon_cell1_deny
+    point: [0.8001, 0.0]
+    expected: DENY
+  - id: EDGE_exact_cell2_limit_allow
+    point: [-0.5, 0.0]
+    expected: ALLOW
+  - id: EDGE_just_over_cell2_limit_deny
+    point: [-0.5001, 0.0]
+    expected: DENY
+  - id: EDGE_angle_90_boundary_currently_cell2_allow
+    point: [0.0, 0.4]
+    expected: ALLOW
+  - id: EDGE_angle_180_boundary_currently_cell3_deny
+    point: [-0.4, 0.0]
+    expected: DENY
+  - id: EDGE_angle_270_boundary_currently_cell4_fail_closed
+    point: [0.0, -0.4]
+    expected: FAIL_CLOSED
+  - id: STRESS_near_origin_cell4_fail_closed
+    point: [0.000001, -0.000001]
+    expected: FAIL_CLOSED
+  - id: STRESS_diagonal_cell1_exact_horizon_allow
+    point: [0.5656854249, 0.5656854249]
+    expected: ALLOW
