@@ -52,6 +52,46 @@ def cell_for_angle(theta: float) -> str:
     return "cell_4"
 
 
+def simplex_valid(x: Dict[str, float], tolerance: float = 1e-9) -> bool:
+    vals = [float(x[k]) for k in ("g", "c", "a", "t")]
+    return all(0.0 <= v <= 1.0 for v in vals) and abs(sum(vals) - 1.0) <= tolerance
+
+
+def legitimacy_capacity(x: Dict[str, float], params: Dict[str, float]) -> float:
+    return (
+        float(params["K"])
+        * float(x["g"]) ** float(params["alpha"])
+        * float(x["c"]) ** float(params["beta"])
+        * float(x["t"]) ** float(params["gamma"])
+    )
+
+
+def evaluate_gcat_state(x: Dict[str, float], params: Dict[str, float]) -> Dict[str, Any]:
+    if not simplex_valid(x, tolerance=float(params.get("simplex_tolerance", 1e-9))):
+        return {
+            "actual": FAIL_CLOSED,
+            "reason": "simplex_or_bounds_invalid",
+            "lambda": None,
+            "invariant": None,
+        }
+
+    lam = legitimacy_capacity(x, params)
+    invariant = float(x["a"]) - lam
+    if invariant <= float(params.get("invariant_tolerance", 1e-9)):
+        return {
+            "actual": ALLOW,
+            "reason": "gcat_invariant_satisfied",
+            "lambda": round(lam, 12),
+            "invariant": round(invariant, 12),
+        }
+    return {
+        "actual": DENY,
+        "reason": "gcat_invariant_violated",
+        "lambda": round(lam, 12),
+        "invariant": round(invariant, 12),
+    }
+
+
 def evaluate_chf_001(spec: Dict[str, Any]) -> Dict[str, Any]:
     center = spec["model"]["center"]
     horizon = float(spec["model"]["horizon_radius"])
@@ -251,7 +291,6 @@ def evaluate_chf_005(spec: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def evaluate_chf_006(spec: Dict[str, Any]) -> Dict[str, Any]:
-    """Validate simple 3D radial cell assignment against tetrahedral directions."""
     model = spec["model"]
     horizon = float(model["horizon_radius"])
     cells = model["cells"]
@@ -329,6 +368,102 @@ def evaluate_chf_007(spec: Dict[str, Any]) -> Dict[str, Any]:
     return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
 
 
+def evaluate_chf_008(spec: Dict[str, Any]) -> Dict[str, Any]:
+    params = spec["model"]["gcat_params"]
+    cases = []
+    all_pass = True
+
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        result = evaluate_gcat_state(case["state"], params)
+        actual = result["actual"]
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({
+            "id": case["id"],
+            "expected": expected,
+            "actual": actual,
+            "status": "PASS" if passed else "FAIL",
+            "reason": result["reason"],
+            "lambda": result["lambda"],
+            "invariant": result["invariant"],
+        })
+
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_009(spec: Dict[str, Any]) -> Dict[str, Any]:
+    params = spec["model"]["gcat_params"]
+    shell_required_fields = set(spec["model"]["shell_required_fields"])
+    record_required_fields = set(spec["model"]["record_required_fields"])
+    cases = []
+    all_pass = True
+
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        gcat = evaluate_gcat_state(case["projected_state"], params)
+        shell_fields = set(case.get("shell_fields", []))
+        record_fields = set(case.get("record_fields", []))
+
+        if gcat["actual"] != ALLOW:
+            actual = gcat["actual"]
+            reason = gcat["reason"]
+        elif not shell_required_fields.issubset(shell_fields):
+            actual = FAIL_CLOSED
+            reason = "historical_shell_incomplete"
+        elif not record_required_fields.issubset(record_fields):
+            actual = FAIL_CLOSED
+            reason = "propagated_record_incomplete"
+        else:
+            actual = ALLOW
+            reason = "commit_crossing_gcat_shell_record_ready"
+
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({
+            "id": case["id"],
+            "expected": expected,
+            "actual": actual,
+            "status": "PASS" if passed else "FAIL",
+            "reason": reason,
+        })
+
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_010(spec: Dict[str, Any]) -> Dict[str, Any]:
+    cases = []
+    all_pass = True
+
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        recoverability = float(case["recoverability"])
+        recoverability_threshold = float(case["recoverability_threshold"])
+        purpose_converges = bool(case["purpose_converges"])
+
+        if recoverability < recoverability_threshold:
+            actual = DENY
+            reason = "recoverability_below_threshold"
+        elif not purpose_converges:
+            actual = DENY
+            reason = "purpose_inversion_detected"
+        else:
+            actual = ALLOW
+            reason = "recoverability_and_purpose_converge"
+
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({
+            "id": case["id"],
+            "expected": expected,
+            "actual": actual,
+            "status": "PASS" if passed else "FAIL",
+            "reason": reason,
+        })
+
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
 EVALUATORS = {
     "chf-001": evaluate_chf_001,
     "chf-002": evaluate_chf_002,
@@ -337,6 +472,9 @@ EVALUATORS = {
     "chf-005": evaluate_chf_005,
     "chf-006": evaluate_chf_006,
     "chf-007": evaluate_chf_007,
+    "chf-008": evaluate_chf_008,
+    "chf-009": evaluate_chf_009,
+    "chf-010": evaluate_chf_010,
 }
 
 

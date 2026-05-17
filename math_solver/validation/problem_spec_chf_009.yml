@@ -1,0 +1,39 @@
+problem_id: chf-009
+title: Commit Crossing Requires GCAT Pass, Historical Shell, and Propagated Record
+formalism: consequence_horizon_formalism
+model:
+  gcat_params:
+    K: 2.0
+    alpha: 1.0
+    beta: 1.0
+    gamma: 1.0
+    simplex_tolerance: 0.000000001
+    invariant_tolerance: 0.000000001
+  shell_required_fields:
+    - prior_cloud
+    - operational_center
+    - transition_region
+    - selected_transition
+    - admissibility_basis
+    - horizon
+  record_required_fields:
+    - event_id
+    - crossing_event
+    - shell_reference
+    - new_center
+test_cases:
+  - id: commit_ready
+    projected_state: {g: 0.3, c: 0.3, a: 0.04, t: 0.36}
+    shell_fields: [prior_cloud, operational_center, transition_region, selected_transition, admissibility_basis, horizon]
+    record_fields: [event_id, crossing_event, shell_reference, new_center]
+    expected: ALLOW
+  - id: commit_missing_shell
+    projected_state: {g: 0.3, c: 0.3, a: 0.04, t: 0.36}
+    shell_fields: [prior_cloud, operational_center, selected_transition]
+    record_fields: [event_id, crossing_event, shell_reference, new_center]
+    expected: FAIL_CLOSED
+  - id: commit_gcat_violation
+    projected_state: {g: 0.2, c: 0.2, a: 0.5, t: 0.1}
+    shell_fields: [prior_cloud, operational_center, transition_region, selected_transition, admissibility_basis, horizon]
+    record_fields: [event_id, crossing_event, shell_reference, new_center]
+    expected: DENY

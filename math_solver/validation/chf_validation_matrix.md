@@ -56,3 +56,27 @@
 | convex_region_valid | GEOMETRY_VALID |
 | region_with_hole | GEOMETRY_FAIL_CLOSED |
 | incomplete_boundary_partition | GEOMETRY_FAIL_CLOSED |
+
+## CHF-008
+
+| Case | Expected |
+|---|---|
+| gcat_allow_balanced | ALLOW |
+| gcat_deny_excess_autonomy | DENY |
+| gcat_fail_closed_not_simplex | FAIL_CLOSED |
+
+## CHF-009
+
+| Case | Expected |
+|---|---|
+| commit_ready | ALLOW |
+| commit_missing_shell | FAIL_CLOSED |
+| commit_gcat_violation | DENY |
+
+## CHF-010
+
+| Case | Expected |
+|---|---|
+| recoverable_purpose_converges | ALLOW |
+| recoverability_below_threshold | DENY |
+| purpose_inversion | DENY |

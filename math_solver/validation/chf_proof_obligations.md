@@ -31,3 +31,15 @@ The 3D model must assign transition vectors to radial cells using deterministic 
 ## PO-008 — Star-Shaped Geometry Gate
 
 The radial consequence cell model requires a star-shaped transition region with respect to the operational center. Non-star-shaped or incomplete geometry must fail closed before coverage is assumed.
+
+## PO-009 — GCAT/BCAT Local Operator
+
+GCAT/BCAT may serve as a local admissibility operator inside a radial consequence cell by evaluating the projected post-transition state.
+
+## PO-010 — Commit Crossing Sufficiency
+
+A commit crossing is only allowed when the projected state passes local admissibility and the historical shell and propagated record are ready.
+
+## PO-011 — Recoverability and Purpose-Convergence
+
+A transition can be denied when projected recoverability falls below threshold or when the transition inverts the purpose of the boundary it claims to support.

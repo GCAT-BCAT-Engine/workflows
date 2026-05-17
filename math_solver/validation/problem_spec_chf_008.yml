@@ -1,0 +1,21 @@
+problem_id: chf-008
+title: GCAT/BCAT Local Admissibility Operator Inside a Radial Cell
+formalism: consequence_horizon_formalism
+model:
+  gcat_params:
+    K: 2.0
+    alpha: 1.0
+    beta: 1.0
+    gamma: 1.0
+    simplex_tolerance: 0.000000001
+    invariant_tolerance: 0.000000001
+test_cases:
+  - id: gcat_allow_balanced
+    state: {g: 0.3, c: 0.3, a: 0.04, t: 0.36}
+    expected: ALLOW
+  - id: gcat_deny_excess_autonomy
+    state: {g: 0.2, c: 0.2, a: 0.5, t: 0.1}
+    expected: DENY
+  - id: gcat_fail_closed_not_simplex
+    state: {g: 0.4, c: 0.4, a: 0.3, t: 0.2}
+    expected: FAIL_CLOSED

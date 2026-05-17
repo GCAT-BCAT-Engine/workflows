@@ -1,0 +1,21 @@
+problem_id: chf-010
+title: Recoverability and Purpose-Convergence Gate
+formalism: consequence_horizon_formalism
+model:
+  gate: require_recoverability_and_purpose_convergence
+test_cases:
+  - id: recoverable_purpose_converges
+    recoverability: 0.82
+    recoverability_threshold: 0.70
+    purpose_converges: true
+    expected: ALLOW
+  - id: recoverability_below_threshold
+    recoverability: 0.52
+    recoverability_threshold: 0.70
+    purpose_converges: true
+    expected: DENY
+  - id: purpose_inversion
+    recoverability: 0.83
+    recoverability_threshold: 0.70
+    purpose_converges: false
+    expected: DENY
