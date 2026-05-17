@@ -1,41 +1,24 @@
 {
-  "bundle": "chf_deterministic_validation_bundle_v0_4_observer_record.zip",
-  "canonical_paths": [
-    ".github/workflows/chf_validation_run.yml",
-    "iosnoperiod.md",
-    "manifest.json",
-    "math_solver/validation/__pycache__/chf_deterministic_validator.cpython-313.pyc",
+  "bundle": "chf_validation_extension_v0_9_full_sandbox_preflight",
+  "target_repo": "GCAT-BCAT-Engine/workflows",
+  "purpose": "Add generated-case sandbox validation while keeping the GitHub Actions workflow unchanged.",
+  "changed_paths": [
     "math_solver/validation/chf_deterministic_validator.py",
-    "math_solver/validation/chf_proof_obligations.md",
-    "math_solver/validation/chf_readme.md",
+    "math_solver/validation/chf_sandbox_runner.py",
+    "math_solver/validation/chf_sandbox_config.yml",
+    "math_solver/validation/chf_sandbox_readme.md",
     "math_solver/validation/chf_validation_matrix.md",
-    "math_solver/validation/problem_spec_chf_001.yml",
-    "math_solver/validation/problem_spec_chf_002.yml",
-    "math_solver/validation/problem_spec_chf_003.yml",
-    "math_solver/validation/problem_spec_chf_004.yml",
-    "math_solver/validation/problem_spec_chf_005.yml"
+    "math_solver/validation/chf_readme.md"
   ],
-  "formalism": "consequence_horizon_formalism",
-  "ios_safe_mappings": {
-    "iosnoperiod/github/workflows/chf_validation_run_yml": ".github/workflows/chf_validation_run.yml"
+  "intentionally_not_included": [
+    ".github/workflows/chf_validation_run.yml"
+  ],
+  "expected_github_result": {
+    "overall_status": "PASS",
+    "explicit_status": "PASS",
+    "specs_evaluated": 16,
+    "sandbox_status": "PASS",
+    "sandbox_subtests_generated": 1732
   },
-  "sha256": {
-    ".github/workflows/chf_validation_run.yml": "ff0a3915abf4d18c6e8a13303eb590adfd5e3015882e9d4488cc62df35a3df44",
-    "iosnoperiod.md": "022270f1012888648cfe260af993135ddc2ae721d74d80b191eb4b59282585e9",
-    "iosnoperiod/github/workflows/chf_validation_run_yml": "ff0a3915abf4d18c6e8a13303eb590adfd5e3015882e9d4488cc62df35a3df44",
-    "manifest.json": "0321c2ef6d00472b557dbf163e60a815bbdbe5c38f171ddf689ad5fe4f21bc81",
-    "math_solver/validation/__pycache__/chf_deterministic_validator.cpython-313.pyc": "b7b38feddce297c26dcbcf2a5df1353c92c99870cac2d9f69aa0cdc2d3f8ccbd",
-    "math_solver/validation/chf_deterministic_validator.py": "75cd69eb3fcbfe079f7eafba489a1511cbaf7dca2c8c1c6d0439a515589171c7",
-    "math_solver/validation/chf_proof_obligations.md": "8bd917324d103e9829652d0e7e3212d6a6d0ac92f87e5dfef8cbdf4823713207",
-    "math_solver/validation/chf_readme.md": "8ce6d49ddcbb1cac6e8625b0a2c8866ded0e0d765699e6c1c6cb2e42a7c36ea3",
-    "math_solver/validation/chf_validation_matrix.md": "a624fc15b944331b889d44f59f81755601edc01c867554cc7814aec77a0346df",
-    "math_solver/validation/problem_spec_chf_001.yml": "eedea8a7e61d1b328feb249e09ff819d4c46fbcc5ba299f958e3400a6dac73e1",
-    "math_solver/validation/problem_spec_chf_002.yml": "58f9833bb6578682aa158007d9958599f8f2ad06e99c81332e236e89f3622c32",
-    "math_solver/validation/problem_spec_chf_003.yml": "bc729d1402086a6f840c24e1b8d2881599002aca73b3377c83249d98dcdc55bf",
-    "math_solver/validation/problem_spec_chf_004.yml": "83e663725a98e28d948cd326b4f04d796c0d94ea2c612135449e74b19eadc5ac",
-    "math_solver/validation/problem_spec_chf_005.yml": "92bb5f61af433313ce82b4c2d9e445ad0490208c29df314e3fc3904e436a3db8"
-  },
-  "specs_evaluated": 5,
-  "status": "verified_locally_pass",
-  "target_repo": "GCAT-BCAT-Engine/workflows"
+  "local_preflight_baseline": "chf_deterministic_validation_bundle_v0_7_lag_chain_manybody.zip"
 }
