@@ -1,21 +1,46 @@
-# Consequence Horizon Formalism Validation Package
+# Consequence Horizon Formalism Validation
 
-## Purpose
+This directory contains deterministic pre-code validation specs for the Consequence Horizon Formalism (CHF).
 
-This package adds a deterministic validation lane for the Consequence Horizon Formalism inside `GCAT-BCAT-Engine/workflows`.
+CHF models transition logic as:
 
-It does not replace the existing real API validation workflow. It adds an offline mathematical validation path for the first CHF toy models.
+```text
+cloud -> center -> radial transition region -> cell -> horizon -> crossing -> shell -> record -> new center
+```
 
-## Files
+The current validation suite is intentionally narrow and deterministic. It does not call external APIs.
 
-- `github/workflows/chf_validation_run.yml` — displayed without the leading dot; the bundle preserves the real `.github/workflows/` path.
-- `math_solver/validation/problem_spec_chf_001.yml`
-- `math_solver/validation/problem_spec_chf_002.yml`
-- `math_solver/validation/problem_spec_chf_003.yml`
-- `math_solver/validation/chf_deterministic_validator.py`
-- `math_solver/validation/chf_proof_obligations.md`
-- `math_solver/validation/chf_validation_matrix.md`
+## Included specs
 
-## Done Criteria
+| Spec | Purpose | Core claim |
+|---|---|---|
+| `problem_spec_chf_001.yml` | Minimal 2D disk model | ALLOW / DENY / FAIL_CLOSED category grammar |
+| `problem_spec_chf_002.yml` | Multi-center uncertainty | uncertainty must not become permission |
+| `problem_spec_chf_003.yml` | Two-body coupling | local ALLOW is not global ALLOW |
+| `problem_spec_chf_004.yml` | Observer projection | distance sphericalizes, resolution re-cellularizes |
+| `problem_spec_chf_005.yml` | Threshold record | crossings require shell and record; legibility may decay |
 
-Run the `Consequence Horizon Formalism Validation` workflow manually. The run is successful when the uploaded artifact contains a JSON report and Markdown summary showing all CHF specs passed.
+## Run locally
+
+```bash
+python math_solver/validation/chf_deterministic_validator.py \
+  --spec-dir math_solver/validation \
+  --out-json math_solver/validation/brain_reports/chf_validation_report_LOCAL.json \
+  --out-md math_solver/validation/brain_reports/chf_validation_summary_LOCAL.md
+```
+
+## GitHub Actions
+
+The workflow file is installed at:
+
+```text
+.github/workflows/chf_validation_run.yml
+```
+
+For iOS-safe upload workflows, the same file is mirrored at:
+
+```text
+iosnoperiod/github/workflows/chf_validation_run.yml
+```
+
+The mirror path is for visibility only. The canonical GitHub Actions path remains `.github/workflows/chf_validation_run.yml`.

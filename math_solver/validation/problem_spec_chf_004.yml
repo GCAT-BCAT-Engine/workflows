@@ -1,0 +1,39 @@
+problem_id: chf-004
+formalism: consequence_horizon_formalism
+title: Observer Projection and Sphericalization Extension
+version: 0.1
+purpose: >-
+  Validate that the same radial tessellation can appear smooth or cell-resolved
+  depending on observer distance, resolution, noise, lag, and probe capacity.
+observer_model:
+  distinguishability_formula: "Q = (resolution * probe_capacity) / (distance * noise * lag)"
+  q_min: 1.0
+  outcomes:
+    low_q: SMOOTH_SHELL
+    high_q: CELL_RESOLVED
+test_observers:
+  - id: O_far_low_resolution
+    resolution: 1.0
+    probe_capacity: 1.0
+    distance: 10.0
+    noise: 1.0
+    lag: 1.0
+    expected: SMOOTH_SHELL
+  - id: O_near_high_resolution
+    resolution: 5.0
+    probe_capacity: 2.0
+    distance: 2.0
+    noise: 1.0
+    lag: 1.0
+    expected: CELL_RESOLVED
+  - id: O_noisy_intermediate
+    resolution: 4.0
+    probe_capacity: 1.0
+    distance: 4.0
+    noise: 2.0
+    lag: 1.0
+    expected: SMOOTH_SHELL
+validation_claims:
+  - distance_sphericalizes_consequence
+  - resolution_recellularizes_consequence
+  - projection_difference_is_not_contradiction

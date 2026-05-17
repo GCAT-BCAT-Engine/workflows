@@ -1,0 +1,31 @@
+problem_id: chf-005
+formalism: consequence_horizon_formalism
+title: Threshold Record and Legibility Decay Extension
+version: 0.1
+purpose: >-
+  Validate that actualized threshold crossings require historical shells and
+  propagated records, while record legibility may decay independently of record
+  existence.
+legibility_model:
+  formula: "L = initial_legibility * exp(-decay_alpha * delta_t)"
+  minimum_legibility: 0.5
+test_events:
+  - id: chi_allow_legible
+    crossing_actualized: true
+    initial_legibility: 1.0
+    decay_alpha: 0.2
+    delta_t: 3.0
+    expected: RECORD_LEGIBLE
+  - id: chi_allow_low_legibility
+    crossing_actualized: true
+    initial_legibility: 1.0
+    decay_alpha: 0.5
+    delta_t: 4.0
+    expected: RECORD_EXISTS_LOW_LEGIBILITY
+  - id: denied_attempt
+    crossing_actualized: false
+    expected: NO_PROPAGATED_RECORD_REQUIRED
+validation_claims:
+  - actualized_crossing_requires_shell
+  - actualized_crossing_requires_propagated_record
+  - record_existence_and_legibility_are_distinct

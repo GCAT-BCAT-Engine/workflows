@@ -6,6 +6,8 @@ mathematical sandbox specs:
 - chf-001: single-center 2D disk
 - chf-002: multi-center uncertainty
 - chf-003: two-body coupled deformation
+- chf-004: observer projection and sphericalization
+- chf-005: threshold record and legibility decay
 
 It does not call external APIs.
 """
@@ -173,6 +175,76 @@ def validate_chf_003(spec: Dict[str, Any]) -> Dict[str, Any]:
     return {"problem_id": spec["problem_id"], "passed": result["passed"], "results": [result]}
 
 
+def validate_chf_004(spec: Dict[str, Any]) -> Dict[str, Any]:
+    q_min = float(spec["observer_model"]["q_min"])
+    results = []
+
+    for item in spec["test_observers"]:
+        resolution = float(item["resolution"])
+        probe_capacity = float(item["probe_capacity"])
+        distance = float(item["distance"])
+        noise = float(item["noise"])
+        lag = float(item["lag"])
+        q = (resolution * probe_capacity) / (distance * noise * lag)
+        actual = "CELL_RESOLVED" if q >= q_min else "SMOOTH_SHELL"
+        expected = item["expected"]
+        results.append({
+            "id": item["id"],
+            "q": q,
+            "q_min": q_min,
+            "resolution": resolution,
+            "probe_capacity": probe_capacity,
+            "distance": distance,
+            "noise": noise,
+            "lag": lag,
+            "expected": expected,
+            "actual": actual,
+            "passed": actual == expected,
+            "reason": "cell_structure_resolved" if actual == "CELL_RESOLVED" else "observational_sphericalization",
+        })
+
+    return {"problem_id": spec["problem_id"], "passed": all(r["passed"] for r in results), "results": results}
+
+
+def validate_chf_005(spec: Dict[str, Any]) -> Dict[str, Any]:
+    minimum_legibility = float(spec["legibility_model"]["minimum_legibility"])
+    results = []
+
+    for item in spec["test_events"]:
+        crossing_actualized = bool(item["crossing_actualized"])
+        if not crossing_actualized:
+            actual = "NO_PROPAGATED_RECORD_REQUIRED"
+            legibility = None
+            reason = "no_actualized_crossing"
+            shell_required = False
+            propagated_record_required = False
+        else:
+            initial_legibility = float(item["initial_legibility"])
+            decay_alpha = float(item["decay_alpha"])
+            delta_t = float(item["delta_t"])
+            legibility = initial_legibility * math.exp(-decay_alpha * delta_t)
+            actual = "RECORD_LEGIBLE" if legibility >= minimum_legibility else "RECORD_EXISTS_LOW_LEGIBILITY"
+            reason = "record_above_legibility_threshold" if actual == "RECORD_LEGIBLE" else "record_exists_but_legibility_decayed"
+            shell_required = True
+            propagated_record_required = True
+
+        expected = item["expected"]
+        results.append({
+            "id": item["id"],
+            "crossing_actualized": crossing_actualized,
+            "legibility": legibility,
+            "minimum_legibility": minimum_legibility,
+            "expected": expected,
+            "actual": actual,
+            "passed": actual == expected,
+            "reason": reason,
+            "historical_shell_required": shell_required,
+            "propagated_record_required": propagated_record_required,
+        })
+
+    return {"problem_id": spec["problem_id"], "passed": all(r["passed"] for r in results), "results": results}
+
+
 def validate_spec(path: Path) -> Dict[str, Any]:
     spec = yaml.safe_load(path.read_text(encoding="utf-8"))
     problem_id = spec.get("problem_id")
@@ -182,6 +254,10 @@ def validate_spec(path: Path) -> Dict[str, Any]:
         out = validate_chf_002(spec)
     elif problem_id == "chf-003":
         out = validate_chf_003(spec)
+    elif problem_id == "chf-004":
+        out = validate_chf_004(spec)
+    elif problem_id == "chf-005":
+        out = validate_chf_005(spec)
     else:
         out = {"problem_id": problem_id, "passed": False, "results": [], "error": "unsupported_problem_id"}
     out["spec_path"] = str(path)
