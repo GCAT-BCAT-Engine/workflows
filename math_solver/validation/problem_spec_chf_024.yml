@@ -1,0 +1,41 @@
+problem_id: chf-024
+title: Policy Version Validity Gate
+formalism: consequence_horizon_formalism
+model:
+  policy_gate: require_commit_valid_policy_or_migration_proof
+test_cases:
+  - id: policy_version_stable
+    evaluated_policy_version: policy_v1
+    commit_policy_version: policy_v1
+    version_active: true
+    migration_proof_present: false
+    backward_compatible: false
+    expected: POLICY_VERSION_VALID
+  - id: policy_version_inactive_fail_closed
+    evaluated_policy_version: policy_v1
+    commit_policy_version: policy_v1
+    version_active: false
+    migration_proof_present: false
+    backward_compatible: false
+    expected: POLICY_VERSION_FAIL_CLOSED
+  - id: policy_migration_with_proof_valid
+    evaluated_policy_version: policy_v1
+    commit_policy_version: policy_v2
+    version_active: true
+    migration_proof_present: true
+    backward_compatible: true
+    expected: POLICY_VERSION_VALID
+  - id: policy_changed_without_proof_fail_closed
+    evaluated_policy_version: policy_v1
+    commit_policy_version: policy_v2
+    version_active: true
+    migration_proof_present: false
+    backward_compatible: true
+    expected: POLICY_VERSION_FAIL_CLOSED
+  - id: policy_changed_not_backward_compatible_fail_closed
+    evaluated_policy_version: policy_v1
+    commit_policy_version: policy_v2
+    version_active: true
+    migration_proof_present: true
+    backward_compatible: false
+    expected: POLICY_VERSION_FAIL_CLOSED

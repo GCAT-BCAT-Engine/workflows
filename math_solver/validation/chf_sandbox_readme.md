@@ -1,20 +1,18 @@
-# CHF Sandbox Runner — v0.10
+# CHF Sandbox Runner — v0.11
 
-The CHF sandbox runner is the generated-case test bed for Consequence Horizon Formalism validation.
-
-## v0.10 added suites
+v0.11 adds generated sandbox suites for selected execution-boundary gates.
 
 | Suite | Generated coverage |
 |---|---|
-| `chf-017` | receipt sufficiency, custody links, integrity threshold, tamper, signer authorization |
-| `chf-018` | branch merge reconciliation truth table |
-| `chf-019` | entropy / irreversibility budget grid |
+| `chf-020` | external-effect binding truth table |
+| `chf-021` | rollback / compensating repair grid |
+| `chf-023` | authority drift / revocation / delegation grid |
+| `chf-028` | temporal coherence / clock integrity grid |
+| `chf-030` | ecosystem rejoin / stale bundle remediation grid |
 
-## Expected aggregate
+Expected aggregate:
 
 ```text
 Sandbox status: PASS
 Subtests failed: 0
 ```
-
-The workflow file remains a stable dispatcher and does not need to change.

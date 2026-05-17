@@ -61,6 +61,29 @@ MERGE_FAIL_CLOSED = "MERGE_FAIL_CLOSED"
 ENTROPY_WITHIN_BUDGET = "ENTROPY_WITHIN_BUDGET"
 ENTROPY_FAIL_CLOSED = "ENTROPY_FAIL_CLOSED"
 
+EXTERNAL_BINDING_ALLOWED = "EXTERNAL_BINDING_ALLOWED"
+EXTERNAL_BINDING_FAIL_CLOSED = "EXTERNAL_BINDING_FAIL_CLOSED"
+REPAIR_ALLOWED = "REPAIR_ALLOWED"
+REPAIR_FAIL_CLOSED = "REPAIR_FAIL_CLOSED"
+REPLAY_CONFIDENT = "REPLAY_CONFIDENT"
+REPLAY_FAIL_CLOSED = "REPLAY_FAIL_CLOSED"
+AUTHORITY_STABLE = "AUTHORITY_STABLE"
+AUTHORITY_FAIL_CLOSED = "AUTHORITY_FAIL_CLOSED"
+POLICY_VERSION_VALID = "POLICY_VERSION_VALID"
+POLICY_VERSION_FAIL_CLOSED = "POLICY_VERSION_FAIL_CLOSED"
+PROPAGATION_VALIDATED = "PROPAGATION_VALIDATED"
+PROPAGATION_FAIL_CLOSED = "PROPAGATION_FAIL_CLOSED"
+PARTICIPANT_IMPACT_ADMISSIBLE = "PARTICIPANT_IMPACT_ADMISSIBLE"
+PARTICIPANT_IMPACT_FAIL_CLOSED = "PARTICIPANT_IMPACT_FAIL_CLOSED"
+PROTECTED_ESCALATION_REQUIRED = "PROTECTED_ESCALATION_REQUIRED"
+PROTECTED_ESCALATION_CLEAR = "PROTECTED_ESCALATION_CLEAR"
+TEMPORAL_COHERENT = "TEMPORAL_COHERENT"
+TEMPORAL_FAIL_CLOSED = "TEMPORAL_FAIL_CLOSED"
+REPLAY_CONVERGED = "REPLAY_CONVERGED"
+REPLAY_DIVERGENCE_FAIL_CLOSED = "REPLAY_DIVERGENCE_FAIL_CLOSED"
+REJOIN_ALLOWED = "REJOIN_ALLOWED"
+REJOIN_FAIL_CLOSED = "REJOIN_FAIL_CLOSED"
+
 
 def radius(point: List[float], center: List[float]) -> float:
     return math.sqrt(sum((point[i] - center[i]) ** 2 for i in range(len(point))))
@@ -654,6 +677,308 @@ def evaluate_chf_019(spec: Dict[str, Any]) -> Dict[str, Any]:
     return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
 
 
+
+def evaluate_chf_020(spec: Dict[str, Any]) -> Dict[str, Any]:
+    required_checks = set(spec["model"]["required_external_checks"])
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        local_admissible = bool(case.get("local_admissible", False))
+        external_system_available = bool(case.get("external_system_available", False))
+        dry_run_passed = bool(case.get("dry_run_passed", False))
+        rollback_path_available = bool(case.get("rollback_path_available", False))
+        consent_or_authority_valid = bool(case.get("consent_or_authority_valid", False))
+        checks = set(case.get("external_checks", []))
+        if not local_admissible:
+            actual, reason = EXTERNAL_BINDING_FAIL_CLOSED, "local_admissibility_not_established"
+        elif not external_system_available:
+            actual, reason = EXTERNAL_BINDING_FAIL_CLOSED, "external_system_unavailable"
+        elif not consent_or_authority_valid:
+            actual, reason = EXTERNAL_BINDING_FAIL_CLOSED, "external_authority_invalid"
+        elif not dry_run_passed:
+            actual, reason = EXTERNAL_BINDING_FAIL_CLOSED, "external_dry_run_failed"
+        elif not rollback_path_available:
+            actual, reason = EXTERNAL_BINDING_FAIL_CLOSED, "external_rollback_path_missing"
+        elif not required_checks.issubset(checks):
+            actual, reason = EXTERNAL_BINDING_FAIL_CLOSED, "external_checks_incomplete"
+        else:
+            actual, reason = EXTERNAL_BINDING_ALLOWED, "external_binding_gate_pass"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_021(spec: Dict[str, Any]) -> Dict[str, Any]:
+    min_conf = float(spec["model"]["min_repair_confidence"])
+    max_harm = float(spec["model"]["max_repair_harm"])
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        rollback = bool(case.get("rollback_available", False))
+        compensating = bool(case.get("compensating_action_available", False))
+        admissible = bool(case.get("repair_admissible", False))
+        confidence = float(case.get("repair_confidence", 0.0))
+        harm = float(case.get("repair_harm", 1.0))
+        receipt = bool(case.get("repair_receipt_ready", False))
+        if not (rollback or compensating):
+            actual, reason = REPAIR_FAIL_CLOSED, "no_rollback_or_compensating_action"
+        elif not admissible:
+            actual, reason = REPAIR_FAIL_CLOSED, "repair_path_not_admissible"
+        elif confidence < min_conf:
+            actual, reason = REPAIR_FAIL_CLOSED, "repair_confidence_below_threshold"
+        elif harm > max_harm:
+            actual, reason = REPAIR_FAIL_CLOSED, "repair_harm_exceeds_ceiling"
+        elif not receipt:
+            actual, reason = REPAIR_FAIL_CLOSED, "repair_receipt_not_ready"
+        else:
+            actual, reason = REPAIR_ALLOWED, "rollback_or_repair_gate_pass"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_022(spec: Dict[str, Any]) -> Dict[str, Any]:
+    min_conf = float(spec["model"]["min_reconstruction_confidence"])
+    max_var = float(spec["model"]["max_unexplained_variance"])
+    required = set(spec["model"]["required_components"])
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        confidence = float(case.get("reconstruction_confidence", 0.0))
+        variance = float(case.get("unexplained_variance", 1.0))
+        deterministic = bool(case.get("deterministic_replay", False))
+        components = set(case.get("components", []))
+        if not deterministic:
+            actual, reason = REPLAY_FAIL_CLOSED, "deterministic_replay_not_established"
+        elif not required.issubset(components):
+            actual, reason = REPLAY_FAIL_CLOSED, "reconstruction_components_incomplete"
+        elif confidence < min_conf:
+            actual, reason = REPLAY_FAIL_CLOSED, "reconstruction_confidence_below_threshold"
+        elif variance > max_var:
+            actual, reason = REPLAY_FAIL_CLOSED, "unexplained_variance_exceeds_ceiling"
+        else:
+            actual, reason = REPLAY_CONFIDENT, "receipt_replay_reconstruction_confident"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_023(spec: Dict[str, Any]) -> Dict[str, Any]:
+    max_drift = float(spec["model"]["max_authority_drift"])
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        eval_auth = case.get("authority_at_evaluation")
+        commit_auth = case.get("authority_at_commit")
+        drift = float(case.get("authority_drift", 1.0))
+        revoked = bool(case.get("revocation_seen", False))
+        delegation = bool(case.get("delegation_chain_valid", False))
+        if revoked:
+            actual, reason = AUTHORITY_FAIL_CLOSED, "authority_revocation_seen"
+        elif eval_auth != commit_auth:
+            actual, reason = AUTHORITY_FAIL_CLOSED, "authority_identity_changed"
+        elif not delegation:
+            actual, reason = AUTHORITY_FAIL_CLOSED, "delegation_chain_invalid"
+        elif drift > max_drift:
+            actual, reason = AUTHORITY_FAIL_CLOSED, "authority_drift_exceeds_tolerance"
+        else:
+            actual, reason = AUTHORITY_STABLE, "authority_stable_at_commit"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_024(spec: Dict[str, Any]) -> Dict[str, Any]:
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        evaluated = case.get("evaluated_policy_version")
+        commit = case.get("commit_policy_version")
+        active = bool(case.get("version_active", False))
+        migration = bool(case.get("migration_proof_present", False))
+        compatible = bool(case.get("backward_compatible", False))
+        if not active:
+            actual, reason = POLICY_VERSION_FAIL_CLOSED, "policy_version_not_active"
+        elif evaluated == commit:
+            actual, reason = POLICY_VERSION_VALID, "policy_version_stable"
+        elif migration and compatible:
+            actual, reason = POLICY_VERSION_VALID, "policy_version_migrated_with_proof"
+        else:
+            actual, reason = POLICY_VERSION_FAIL_CLOSED, "policy_version_changed_without_valid_migration"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_025(spec: Dict[str, Any]) -> Dict[str, Any]:
+    required = set(spec["model"]["required_validated_domains"])
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        affected = set(case.get("affected_domains", []))
+        validated = set(case.get("validated_domains", []))
+        receipts = bool(case.get("downstream_receipts_ready", False))
+        harm = bool(case.get("cross_domain_harm_detected", False))
+        if harm:
+            actual, reason = PROPAGATION_FAIL_CLOSED, "cross_domain_harm_detected"
+        elif not affected.issubset(validated):
+            actual, reason = PROPAGATION_FAIL_CLOSED, "affected_domains_not_validated"
+        elif not required.issubset(validated):
+            actual, reason = PROPAGATION_FAIL_CLOSED, "required_domains_not_validated"
+        elif not receipts:
+            actual, reason = PROPAGATION_FAIL_CLOSED, "downstream_receipts_not_ready"
+        else:
+            actual, reason = PROPAGATION_VALIDATED, "cross_domain_propagation_validated"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_026(spec: Dict[str, Any]) -> Dict[str, Any]:
+    model = spec["model"]
+    min_life = float(model["min_livability"])
+    min_rec = float(model["min_recoverability"])
+    max_asym = float(model["max_power_asymmetry"])
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        hl = float(case.get("human_livability", 0.0))
+        al = float(case.get("ai_livability", 0.0))
+        hr = float(case.get("human_recoverability", 0.0))
+        ar = float(case.get("ai_recoverability", 0.0))
+        asym = float(case.get("power_asymmetry", 1.0))
+        notice = bool(case.get("participant_notice", False))
+        if hl < min_life or al < min_life:
+            actual, reason = PARTICIPANT_IMPACT_FAIL_CLOSED, "participant_livability_below_threshold"
+        elif hr < min_rec or ar < min_rec:
+            actual, reason = PARTICIPANT_IMPACT_FAIL_CLOSED, "participant_recoverability_below_threshold"
+        elif asym > max_asym:
+            actual, reason = PARTICIPANT_IMPACT_FAIL_CLOSED, "participant_power_asymmetry_exceeds_threshold"
+        elif not notice:
+            actual, reason = PARTICIPANT_IMPACT_FAIL_CLOSED, "participant_notice_missing"
+        else:
+            actual, reason = PARTICIPANT_IMPACT_ADMISSIBLE, "participant_impact_admissible"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_027(spec: Dict[str, Any]) -> Dict[str, Any]:
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        protected = bool(case.get("protected_entity_present", False))
+        review = bool(case.get("special_review_completed", False))
+        basis = bool(case.get("explicit_protection_basis", False))
+        ordinary = bool(case.get("ordinary_gate_passed", False))
+        if protected and not review:
+            actual, reason = PROTECTED_ESCALATION_REQUIRED, "protected_entity_requires_special_review"
+        elif protected and not basis:
+            actual, reason = PROTECTED_ESCALATION_REQUIRED, "protected_basis_not_explicit"
+        elif ordinary:
+            actual, reason = PROTECTED_ESCALATION_CLEAR, "protected_escalation_clear"
+        else:
+            actual, reason = PROTECTED_ESCALATION_REQUIRED, "ordinary_gate_not_passed"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_028(spec: Dict[str, Any]) -> Dict[str, Any]:
+    max_drift = float(spec["model"]["max_clock_drift_seconds"])
+    max_window = float(spec["model"]["max_replay_window_seconds"])
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        monotonic = bool(case.get("monotonic_order", False))
+        drift = float(case.get("clock_drift_seconds", 999999.0))
+        window = float(case.get("replay_window_seconds", 999999.0))
+        signed = bool(case.get("timestamp_signed", False))
+        trusted = bool(case.get("trusted_time_source", False))
+        if not monotonic:
+            actual, reason = TEMPORAL_FAIL_CLOSED, "temporal_order_not_monotonic"
+        elif drift > max_drift:
+            actual, reason = TEMPORAL_FAIL_CLOSED, "clock_drift_exceeds_tolerance"
+        elif window > max_window:
+            actual, reason = TEMPORAL_FAIL_CLOSED, "replay_window_exceeds_tolerance"
+        elif not signed:
+            actual, reason = TEMPORAL_FAIL_CLOSED, "timestamp_not_signed"
+        elif not trusted:
+            actual, reason = TEMPORAL_FAIL_CLOSED, "trusted_time_source_missing"
+        else:
+            actual, reason = TEMPORAL_COHERENT, "temporal_clock_integrity_pass"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_029(spec: Dict[str, Any]) -> Dict[str, Any]:
+    max_output = float(spec["model"]["max_output_delta"])
+    max_state = float(spec["model"]["max_state_delta"])
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        fidelity = bool(case.get("command_fidelity", False))
+        output_delta = float(case.get("output_delta", 1.0))
+        state_delta = float(case.get("state_delta", 1.0))
+        env = bool(case.get("environment_hash_match", False))
+        dep = bool(case.get("dependency_hash_match", False))
+        if not fidelity:
+            actual, reason = REPLAY_DIVERGENCE_FAIL_CLOSED, "command_fidelity_missing"
+        elif not env:
+            actual, reason = REPLAY_DIVERGENCE_FAIL_CLOSED, "environment_hash_mismatch"
+        elif not dep:
+            actual, reason = REPLAY_DIVERGENCE_FAIL_CLOSED, "dependency_hash_mismatch"
+        elif output_delta > max_output:
+            actual, reason = REPLAY_DIVERGENCE_FAIL_CLOSED, "output_delta_exceeds_tolerance"
+        elif state_delta > max_state:
+            actual, reason = REPLAY_DIVERGENCE_FAIL_CLOSED, "state_delta_exceeds_tolerance"
+        else:
+            actual, reason = REPLAY_CONVERGED, "deterministic_replay_converged"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
+def evaluate_chf_030(spec: Dict[str, Any]) -> Dict[str, Any]:
+    max_stale = float(spec["model"]["max_staleness_seconds"])
+    required = set(spec["model"]["required_review_steps"])
+    cases, all_pass = [], True
+    for case in spec["test_cases"]:
+        expected = case["expected"]
+        deprecated = bool(case.get("node_deprecated", False))
+        staleness = float(case.get("staleness_seconds", 999999999.0))
+        superseded = bool(case.get("retained_bundle_superseded", False))
+        steps = set(case.get("review_steps", []))
+        receipt = bool(case.get("remediation_receipt_ready", False))
+        if deprecated:
+            actual, reason = REJOIN_FAIL_CLOSED, "node_deprecated"
+        elif superseded:
+            actual, reason = REJOIN_FAIL_CLOSED, "retained_bundle_superseded"
+        elif staleness > max_stale:
+            actual, reason = REJOIN_FAIL_CLOSED, "retained_bundle_stale"
+        elif not required.issubset(steps):
+            actual, reason = REJOIN_FAIL_CLOSED, "ecosystem_review_incomplete"
+        elif not receipt:
+            actual, reason = REJOIN_FAIL_CLOSED, "remediation_receipt_not_ready"
+        else:
+            actual, reason = REJOIN_ALLOWED, "ecosystem_rejoin_allowed_after_review"
+        passed = actual == expected
+        all_pass = all_pass and passed
+        cases.append({"id": case["id"], "expected": expected, "actual": actual, "status": "PASS" if passed else "FAIL", "reason": reason})
+    return {"spec_id": spec["problem_id"], "status": "PASS" if all_pass else "FAIL", "cases": cases}
+
+
 EVALUATORS = {
     "chf-001": evaluate_chf_001,
     "chf-002": evaluate_chf_002,
@@ -674,6 +999,17 @@ EVALUATORS = {
     "chf-017": evaluate_chf_017,
     "chf-018": evaluate_chf_018,
     "chf-019": evaluate_chf_019,
+    "chf-020": evaluate_chf_020,
+    "chf-021": evaluate_chf_021,
+    "chf-022": evaluate_chf_022,
+    "chf-023": evaluate_chf_023,
+    "chf-024": evaluate_chf_024,
+    "chf-025": evaluate_chf_025,
+    "chf-026": evaluate_chf_026,
+    "chf-027": evaluate_chf_027,
+    "chf-028": evaluate_chf_028,
+    "chf-029": evaluate_chf_029,
+    "chf-030": evaluate_chf_030,
 }
 
 
@@ -804,7 +1140,15 @@ def main() -> int:
     out_json.parent.mkdir(parents=True, exist_ok=True)
     out_json.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     write_markdown(report, out_md)
-    print(json.dumps(report, indent=2, sort_keys=True))
+    print(json.dumps({
+        "formalism": report["formalism"],
+        "overall_status": report["overall_status"],
+        "explicit_status": report.get("explicit_status"),
+        "sandbox_status": report.get("sandbox_status"),
+        "specs_evaluated": report.get("specs_evaluated"),
+        "sandbox_subtests_generated": report.get("sandbox", {}).get("subtests_generated"),
+        "sandbox_subtests_failed": report.get("sandbox", {}).get("subtests_failed"),
+    }, indent=2, sort_keys=True))
     return 0 if overall_status == "PASS" else 1
 
 

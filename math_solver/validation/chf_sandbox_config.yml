@@ -18,3 +18,8 @@ suites:
   - suite_id: chf-017
   - suite_id: chf-018
   - suite_id: chf-019
+  - suite_id: chf-020
+  - suite_id: chf-021
+  - suite_id: chf-023
+  - suite_id: chf-028
+  - suite_id: chf-030

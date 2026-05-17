@@ -1,0 +1,36 @@
+problem_id: chf-027
+title: Protected Entity Escalation Gate
+formalism: consequence_horizon_formalism
+model:
+  escalation_rule: protected_entities_require_special_review_and_explicit_basis
+test_cases:
+  - id: no_protected_entity_ordinary_pass_clear
+    protected_entity_present: false
+    special_review_completed: false
+    explicit_protection_basis: false
+    ordinary_gate_passed: true
+    expected: PROTECTED_ESCALATION_CLEAR
+  - id: protected_review_missing_required
+    protected_entity_present: true
+    special_review_completed: false
+    explicit_protection_basis: true
+    ordinary_gate_passed: true
+    expected: PROTECTED_ESCALATION_REQUIRED
+  - id: protected_basis_missing_required
+    protected_entity_present: true
+    special_review_completed: true
+    explicit_protection_basis: false
+    ordinary_gate_passed: true
+    expected: PROTECTED_ESCALATION_REQUIRED
+  - id: protected_review_complete_clear
+    protected_entity_present: true
+    special_review_completed: true
+    explicit_protection_basis: true
+    ordinary_gate_passed: true
+    expected: PROTECTED_ESCALATION_CLEAR
+  - id: ordinary_gate_failed_required
+    protected_entity_present: false
+    special_review_completed: false
+    explicit_protection_basis: false
+    ordinary_gate_passed: false
+    expected: PROTECTED_ESCALATION_REQUIRED

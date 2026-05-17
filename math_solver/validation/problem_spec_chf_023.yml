@@ -1,0 +1,48 @@
+problem_id: chf-023
+title: Authority Drift Gate
+formalism: consequence_horizon_formalism
+model:
+  max_authority_drift: 0.03
+test_cases:
+  - id: authority_stable
+    authority_at_evaluation: admin_v1
+    authority_at_commit: admin_v1
+    authority_drift: 0.01
+    revocation_seen: false
+    delegation_chain_valid: true
+    expected: AUTHORITY_STABLE
+  - id: authority_identity_changed_fail_closed
+    authority_at_evaluation: admin_v1
+    authority_at_commit: admin_v2
+    authority_drift: 0.01
+    revocation_seen: false
+    delegation_chain_valid: true
+    expected: AUTHORITY_FAIL_CLOSED
+  - id: revocation_seen_fail_closed
+    authority_at_evaluation: admin_v1
+    authority_at_commit: admin_v1
+    authority_drift: 0.01
+    revocation_seen: true
+    delegation_chain_valid: true
+    expected: AUTHORITY_FAIL_CLOSED
+  - id: delegation_invalid_fail_closed
+    authority_at_evaluation: admin_v1
+    authority_at_commit: admin_v1
+    authority_drift: 0.01
+    revocation_seen: false
+    delegation_chain_valid: false
+    expected: AUTHORITY_FAIL_CLOSED
+  - id: authority_drift_high_fail_closed
+    authority_at_evaluation: admin_v1
+    authority_at_commit: admin_v1
+    authority_drift: 0.04
+    revocation_seen: false
+    delegation_chain_valid: true
+    expected: AUTHORITY_FAIL_CLOSED
+  - id: exact_authority_drift_boundary_stable
+    authority_at_evaluation: admin_v1
+    authority_at_commit: admin_v1
+    authority_drift: 0.03
+    revocation_seen: false
+    delegation_chain_valid: true
+    expected: AUTHORITY_STABLE

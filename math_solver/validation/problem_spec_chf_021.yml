@@ -1,0 +1,55 @@
+problem_id: chf-021
+title: Rollback and Repair Admissibility Gate
+formalism: consequence_horizon_formalism
+model:
+  min_repair_confidence: 0.90
+  max_repair_harm: 0.05
+test_cases:
+  - id: rollback_repair_ready
+    rollback_available: true
+    compensating_action_available: false
+    repair_admissible: true
+    repair_confidence: 0.95
+    repair_harm: 0.02
+    repair_receipt_ready: true
+    expected: REPAIR_ALLOWED
+  - id: compensating_action_ready
+    rollback_available: false
+    compensating_action_available: true
+    repair_admissible: true
+    repair_confidence: 0.95
+    repair_harm: 0.02
+    repair_receipt_ready: true
+    expected: REPAIR_ALLOWED
+  - id: no_repair_path_fail_closed
+    rollback_available: false
+    compensating_action_available: false
+    repair_admissible: true
+    repair_confidence: 0.95
+    repair_harm: 0.02
+    repair_receipt_ready: true
+    expected: REPAIR_FAIL_CLOSED
+  - id: repair_confidence_low_fail_closed
+    rollback_available: true
+    compensating_action_available: false
+    repair_admissible: true
+    repair_confidence: 0.89
+    repair_harm: 0.02
+    repair_receipt_ready: true
+    expected: REPAIR_FAIL_CLOSED
+  - id: repair_harm_high_fail_closed
+    rollback_available: true
+    compensating_action_available: false
+    repair_admissible: true
+    repair_confidence: 0.95
+    repair_harm: 0.06
+    repair_receipt_ready: true
+    expected: REPAIR_FAIL_CLOSED
+  - id: exact_repair_boundary_allowed
+    rollback_available: true
+    compensating_action_available: false
+    repair_admissible: true
+    repair_confidence: 0.90
+    repair_harm: 0.05
+    repair_receipt_ready: true
+    expected: REPAIR_ALLOWED

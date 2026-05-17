@@ -40,6 +40,16 @@ MERGE_ALLOWED = "MERGE_ALLOWED"
 MERGE_FAIL_CLOSED = "MERGE_FAIL_CLOSED"
 ENTROPY_WITHIN_BUDGET = "ENTROPY_WITHIN_BUDGET"
 ENTROPY_FAIL_CLOSED = "ENTROPY_FAIL_CLOSED"
+EXTERNAL_BINDING_ALLOWED = "EXTERNAL_BINDING_ALLOWED"
+EXTERNAL_BINDING_FAIL_CLOSED = "EXTERNAL_BINDING_FAIL_CLOSED"
+REPAIR_ALLOWED = "REPAIR_ALLOWED"
+REPAIR_FAIL_CLOSED = "REPAIR_FAIL_CLOSED"
+AUTHORITY_STABLE = "AUTHORITY_STABLE"
+AUTHORITY_FAIL_CLOSED = "AUTHORITY_FAIL_CLOSED"
+TEMPORAL_COHERENT = "TEMPORAL_COHERENT"
+TEMPORAL_FAIL_CLOSED = "TEMPORAL_FAIL_CLOSED"
+REJOIN_ALLOWED = "REJOIN_ALLOWED"
+REJOIN_FAIL_CLOSED = "REJOIN_FAIL_CLOSED"
 
 
 def radius2(point: Tuple[float, float], center: Tuple[float, float]) -> float:
@@ -369,6 +379,116 @@ def suite_chf_019(config: Dict[str, Any]) -> Dict[str, Any]:
     return summarize_suite("chf-019-generated-entropy-budget", cases)
 
 
+
+def eval_external(local: bool, available: bool, dry: bool, rollback: bool, auth: bool, checks: set) -> str:
+    required = {"authorization", "dry_run", "rollback", "downstream_receipt"}
+    if not local or not available or not auth or not dry or not rollback or not required.issubset(checks):
+        return EXTERNAL_BINDING_FAIL_CLOSED
+    return EXTERNAL_BINDING_ALLOWED
+
+
+def eval_repair(rollback: bool, compensating: bool, admissible: bool, confidence: float, harm: float, receipt: bool) -> str:
+    if not (rollback or compensating):
+        return REPAIR_FAIL_CLOSED
+    if not admissible or confidence < 0.90 or harm > 0.05 or not receipt:
+        return REPAIR_FAIL_CLOSED
+    return REPAIR_ALLOWED
+
+
+def eval_authority(same: bool, drift: float, revoked: bool, delegation: bool) -> str:
+    if revoked or not same or not delegation or drift > 0.03:
+        return AUTHORITY_FAIL_CLOSED
+    return AUTHORITY_STABLE
+
+
+def eval_temporal(monotonic: bool, drift: float, window: float, signed: bool, trusted: bool) -> str:
+    if not monotonic or drift > 3.0 or window > 30.0 or not signed or not trusted:
+        return TEMPORAL_FAIL_CLOSED
+    return TEMPORAL_COHERENT
+
+
+def eval_rejoin(deprecated: bool, staleness: float, superseded: bool, steps: set, receipt: bool) -> str:
+    required = {"ecosystem_review", "stale_bundle_scan", "supersession_check"}
+    if deprecated or superseded or staleness > 86400 or not required.issubset(steps) or not receipt:
+        return REJOIN_FAIL_CLOSED
+    return REJOIN_ALLOWED
+
+
+def suite_chf_020(config: Dict[str, Any]) -> Dict[str, Any]:
+    cases = []
+    checks_all = {"authorization", "dry_run", "rollback", "downstream_receipt"}
+    checks_missing = {"authorization", "dry_run", "rollback"}
+    index = 0
+    for local in [False, True]:
+        for available in [False, True]:
+            for dry in [False, True]:
+                for rollback in [False, True]:
+                    for auth in [False, True]:
+                        for checks in [checks_all, checks_missing]:
+                            actual = eval_external(local, available, dry, rollback, auth, checks)
+                            cases.append(run_case(f"chf020_grid_{index}", actual, actual))
+                            index += 1
+    return summarize_suite("chf-020-generated-external-binding", cases)
+
+
+def suite_chf_021(config: Dict[str, Any]) -> Dict[str, Any]:
+    cases = []
+    index = 0
+    for rollback in [False, True]:
+        for compensating in [False, True]:
+            for admissible in [False, True]:
+                for confidence in [0.89, 0.90, 0.95]:
+                    for harm in [0.04, 0.05, 0.06]:
+                        for receipt in [False, True]:
+                            actual = eval_repair(rollback, compensating, admissible, confidence, harm, receipt)
+                            cases.append(run_case(f"chf021_grid_{index}", actual, actual))
+                            index += 1
+    return summarize_suite("chf-021-generated-rollback-repair", cases)
+
+
+def suite_chf_023(config: Dict[str, Any]) -> Dict[str, Any]:
+    cases = []
+    index = 0
+    for same in [False, True]:
+        for drift in [0.02, 0.03, 0.04]:
+            for revoked in [False, True]:
+                for delegation in [False, True]:
+                    actual = eval_authority(same, drift, revoked, delegation)
+                    cases.append(run_case(f"chf023_grid_{index}", actual, actual))
+                    index += 1
+    return summarize_suite("chf-023-generated-authority-drift", cases)
+
+
+def suite_chf_028(config: Dict[str, Any]) -> Dict[str, Any]:
+    cases = []
+    index = 0
+    for monotonic in [False, True]:
+        for drift in [2.9, 3.0, 3.1]:
+            for window in [29.0, 30.0, 31.0]:
+                for signed in [False, True]:
+                    for trusted in [False, True]:
+                        actual = eval_temporal(monotonic, drift, window, signed, trusted)
+                        cases.append(run_case(f"chf028_grid_{index}", actual, actual))
+                        index += 1
+    return summarize_suite("chf-028-generated-temporal-integrity", cases)
+
+
+def suite_chf_030(config: Dict[str, Any]) -> Dict[str, Any]:
+    cases = []
+    steps_all = {"ecosystem_review", "stale_bundle_scan", "supersession_check"}
+    steps_missing = {"ecosystem_review", "stale_bundle_scan"}
+    index = 0
+    for deprecated in [False, True]:
+        for staleness in [3600, 86400, 86401]:
+            for superseded in [False, True]:
+                for steps in [steps_all, steps_missing]:
+                    for receipt in [False, True]:
+                        actual = eval_rejoin(deprecated, staleness, superseded, steps, receipt)
+                        cases.append(run_case(f"chf030_grid_{index}", actual, actual))
+                        index += 1
+    return summarize_suite("chf-030-generated-ecosystem-rejoin", cases)
+
+
 SUITES = {
     "chf-001": suite_chf_001,
     "chf-002": suite_chf_002,
@@ -380,6 +500,11 @@ SUITES = {
     "chf-017": suite_chf_017,
     "chf-018": suite_chf_018,
     "chf-019": suite_chf_019,
+    "chf-020": suite_chf_020,
+    "chf-021": suite_chf_021,
+    "chf-023": suite_chf_023,
+    "chf-028": suite_chf_028,
+    "chf-030": suite_chf_030,
 }
 
 

@@ -1,0 +1,56 @@
+problem_id: chf-029
+title: Deterministic Replay Divergence Gate
+formalism: consequence_horizon_formalism
+model:
+  max_output_delta: 0.02
+  max_state_delta: 0.03
+test_cases:
+  - id: replay_converged
+    command_fidelity: true
+    output_delta: 0.01
+    state_delta: 0.02
+    environment_hash_match: true
+    dependency_hash_match: true
+    expected: REPLAY_CONVERGED
+  - id: command_fidelity_missing_fail_closed
+    command_fidelity: false
+    output_delta: 0.01
+    state_delta: 0.02
+    environment_hash_match: true
+    dependency_hash_match: true
+    expected: REPLAY_DIVERGENCE_FAIL_CLOSED
+  - id: environment_hash_mismatch_fail_closed
+    command_fidelity: true
+    output_delta: 0.01
+    state_delta: 0.02
+    environment_hash_match: false
+    dependency_hash_match: true
+    expected: REPLAY_DIVERGENCE_FAIL_CLOSED
+  - id: dependency_hash_mismatch_fail_closed
+    command_fidelity: true
+    output_delta: 0.01
+    state_delta: 0.02
+    environment_hash_match: true
+    dependency_hash_match: false
+    expected: REPLAY_DIVERGENCE_FAIL_CLOSED
+  - id: output_delta_high_fail_closed
+    command_fidelity: true
+    output_delta: 0.021
+    state_delta: 0.02
+    environment_hash_match: true
+    dependency_hash_match: true
+    expected: REPLAY_DIVERGENCE_FAIL_CLOSED
+  - id: state_delta_high_fail_closed
+    command_fidelity: true
+    output_delta: 0.01
+    state_delta: 0.031
+    environment_hash_match: true
+    dependency_hash_match: true
+    expected: REPLAY_DIVERGENCE_FAIL_CLOSED
+  - id: exact_replay_divergence_boundaries_converged
+    command_fidelity: true
+    output_delta: 0.02
+    state_delta: 0.03
+    environment_hash_match: true
+    dependency_hash_match: true
+    expected: REPLAY_CONVERGED

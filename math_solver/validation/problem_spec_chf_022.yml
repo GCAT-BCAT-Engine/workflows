@@ -1,0 +1,44 @@
+problem_id: chf-022
+title: Receipt Replay and Reconstruction Confidence Gate
+formalism: consequence_horizon_formalism
+model:
+  min_reconstruction_confidence: 0.92
+  max_unexplained_variance: 0.04
+  required_components: [receipt_chain, command_log, state_snapshot, artifact_hashes]
+test_cases:
+  - id: replay_confident
+    reconstruction_confidence: 0.96
+    unexplained_variance: 0.02
+    deterministic_replay: true
+    components: [receipt_chain, command_log, state_snapshot, artifact_hashes]
+    expected: REPLAY_CONFIDENT
+  - id: replay_not_deterministic_fail_closed
+    reconstruction_confidence: 0.96
+    unexplained_variance: 0.02
+    deterministic_replay: false
+    components: [receipt_chain, command_log, state_snapshot, artifact_hashes]
+    expected: REPLAY_FAIL_CLOSED
+  - id: missing_artifact_hashes_fail_closed
+    reconstruction_confidence: 0.96
+    unexplained_variance: 0.02
+    deterministic_replay: true
+    components: [receipt_chain, command_log, state_snapshot]
+    expected: REPLAY_FAIL_CLOSED
+  - id: confidence_low_fail_closed
+    reconstruction_confidence: 0.91
+    unexplained_variance: 0.02
+    deterministic_replay: true
+    components: [receipt_chain, command_log, state_snapshot, artifact_hashes]
+    expected: REPLAY_FAIL_CLOSED
+  - id: variance_high_fail_closed
+    reconstruction_confidence: 0.96
+    unexplained_variance: 0.05
+    deterministic_replay: true
+    components: [receipt_chain, command_log, state_snapshot, artifact_hashes]
+    expected: REPLAY_FAIL_CLOSED
+  - id: exact_replay_boundary_confident
+    reconstruction_confidence: 0.92
+    unexplained_variance: 0.04
+    deterministic_replay: true
+    components: [receipt_chain, command_log, state_snapshot, artifact_hashes]
+    expected: REPLAY_CONFIDENT

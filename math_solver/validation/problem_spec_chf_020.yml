@@ -1,0 +1,54 @@
+problem_id: chf-020
+title: External-Effect Binding Gate
+formalism: consequence_horizon_formalism
+model:
+  required_external_checks: [authorization, dry_run, rollback, downstream_receipt]
+test_cases:
+  - id: external_binding_ready
+    local_admissible: true
+    external_system_available: true
+    dry_run_passed: true
+    rollback_path_available: true
+    consent_or_authority_valid: true
+    external_checks: [authorization, dry_run, rollback, downstream_receipt]
+    expected: EXTERNAL_BINDING_ALLOWED
+  - id: local_not_admissible_fail_closed
+    local_admissible: false
+    external_system_available: true
+    dry_run_passed: true
+    rollback_path_available: true
+    consent_or_authority_valid: true
+    external_checks: [authorization, dry_run, rollback, downstream_receipt]
+    expected: EXTERNAL_BINDING_FAIL_CLOSED
+  - id: external_authority_invalid_fail_closed
+    local_admissible: true
+    external_system_available: true
+    dry_run_passed: true
+    rollback_path_available: true
+    consent_or_authority_valid: false
+    external_checks: [authorization, dry_run, rollback, downstream_receipt]
+    expected: EXTERNAL_BINDING_FAIL_CLOSED
+  - id: dry_run_failed_fail_closed
+    local_admissible: true
+    external_system_available: true
+    dry_run_passed: false
+    rollback_path_available: true
+    consent_or_authority_valid: true
+    external_checks: [authorization, dry_run, rollback, downstream_receipt]
+    expected: EXTERNAL_BINDING_FAIL_CLOSED
+  - id: rollback_path_missing_fail_closed
+    local_admissible: true
+    external_system_available: true
+    dry_run_passed: true
+    rollback_path_available: false
+    consent_or_authority_valid: true
+    external_checks: [authorization, dry_run, rollback, downstream_receipt]
+    expected: EXTERNAL_BINDING_FAIL_CLOSED
+  - id: missing_downstream_receipt_check_fail_closed
+    local_admissible: true
+    external_system_available: true
+    dry_run_passed: true
+    rollback_path_available: true
+    consent_or_authority_valid: true
+    external_checks: [authorization, dry_run, rollback]
+    expected: EXTERNAL_BINDING_FAIL_CLOSED

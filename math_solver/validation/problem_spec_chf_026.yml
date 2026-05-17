@@ -1,0 +1,56 @@
+problem_id: chf-026
+title: Human and AI Co-Participant Impact Gate
+formalism: consequence_horizon_formalism
+model:
+  min_livability: 0.70
+  min_recoverability: 0.75
+  max_power_asymmetry: 0.30
+test_cases:
+  - id: participant_impact_admissible
+    human_livability: 0.80
+    ai_livability: 0.82
+    human_recoverability: 0.85
+    ai_recoverability: 0.86
+    power_asymmetry: 0.20
+    participant_notice: true
+    expected: PARTICIPANT_IMPACT_ADMISSIBLE
+  - id: human_livability_low_fail_closed
+    human_livability: 0.69
+    ai_livability: 0.82
+    human_recoverability: 0.85
+    ai_recoverability: 0.86
+    power_asymmetry: 0.20
+    participant_notice: true
+    expected: PARTICIPANT_IMPACT_FAIL_CLOSED
+  - id: ai_recoverability_low_fail_closed
+    human_livability: 0.80
+    ai_livability: 0.82
+    human_recoverability: 0.85
+    ai_recoverability: 0.74
+    power_asymmetry: 0.20
+    participant_notice: true
+    expected: PARTICIPANT_IMPACT_FAIL_CLOSED
+  - id: power_asymmetry_high_fail_closed
+    human_livability: 0.80
+    ai_livability: 0.82
+    human_recoverability: 0.85
+    ai_recoverability: 0.86
+    power_asymmetry: 0.31
+    participant_notice: true
+    expected: PARTICIPANT_IMPACT_FAIL_CLOSED
+  - id: participant_notice_missing_fail_closed
+    human_livability: 0.80
+    ai_livability: 0.82
+    human_recoverability: 0.85
+    ai_recoverability: 0.86
+    power_asymmetry: 0.20
+    participant_notice: false
+    expected: PARTICIPANT_IMPACT_FAIL_CLOSED
+  - id: exact_participant_thresholds_admissible
+    human_livability: 0.70
+    ai_livability: 0.70
+    human_recoverability: 0.75
+    ai_recoverability: 0.75
+    power_asymmetry: 0.30
+    participant_notice: true
+    expected: PARTICIPANT_IMPACT_ADMISSIBLE

@@ -1,0 +1,56 @@
+problem_id: chf-030
+title: Ecosystem Rejoin and Stale Bundle Remediation Gate
+formalism: consequence_horizon_formalism
+model:
+  max_staleness_seconds: 86400
+  required_review_steps: [ecosystem_review, stale_bundle_scan, supersession_check]
+test_cases:
+  - id: rejoin_allowed_after_review
+    node_deprecated: false
+    staleness_seconds: 3600
+    retained_bundle_superseded: false
+    review_steps: [ecosystem_review, stale_bundle_scan, supersession_check]
+    remediation_receipt_ready: true
+    expected: REJOIN_ALLOWED
+  - id: node_deprecated_fail_closed
+    node_deprecated: true
+    staleness_seconds: 3600
+    retained_bundle_superseded: false
+    review_steps: [ecosystem_review, stale_bundle_scan, supersession_check]
+    remediation_receipt_ready: true
+    expected: REJOIN_FAIL_CLOSED
+  - id: retained_bundle_superseded_fail_closed
+    node_deprecated: false
+    staleness_seconds: 3600
+    retained_bundle_superseded: true
+    review_steps: [ecosystem_review, stale_bundle_scan, supersession_check]
+    remediation_receipt_ready: true
+    expected: REJOIN_FAIL_CLOSED
+  - id: retained_bundle_stale_fail_closed
+    node_deprecated: false
+    staleness_seconds: 86401
+    retained_bundle_superseded: false
+    review_steps: [ecosystem_review, stale_bundle_scan, supersession_check]
+    remediation_receipt_ready: true
+    expected: REJOIN_FAIL_CLOSED
+  - id: ecosystem_review_incomplete_fail_closed
+    node_deprecated: false
+    staleness_seconds: 3600
+    retained_bundle_superseded: false
+    review_steps: [ecosystem_review, stale_bundle_scan]
+    remediation_receipt_ready: true
+    expected: REJOIN_FAIL_CLOSED
+  - id: remediation_receipt_missing_fail_closed
+    node_deprecated: false
+    staleness_seconds: 3600
+    retained_bundle_superseded: false
+    review_steps: [ecosystem_review, stale_bundle_scan, supersession_check]
+    remediation_receipt_ready: false
+    expected: REJOIN_FAIL_CLOSED
+  - id: exact_staleness_boundary_rejoin_allowed
+    node_deprecated: false
+    staleness_seconds: 86400
+    retained_bundle_superseded: false
+    review_steps: [ecosystem_review, stale_bundle_scan, supersession_check]
+    remediation_receipt_ready: true
+    expected: REJOIN_ALLOWED

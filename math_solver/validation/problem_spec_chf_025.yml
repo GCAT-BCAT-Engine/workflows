@@ -1,0 +1,36 @@
+problem_id: chf-025
+title: Cross-Domain Effect Propagation Gate
+formalism: consequence_horizon_formalism
+model:
+  required_validated_domains: [local, downstream]
+test_cases:
+  - id: propagation_validated
+    affected_domains: [local, downstream]
+    validated_domains: [local, downstream]
+    downstream_receipts_ready: true
+    cross_domain_harm_detected: false
+    expected: PROPAGATION_VALIDATED
+  - id: affected_domain_not_validated_fail_closed
+    affected_domains: [local, downstream, finance]
+    validated_domains: [local, downstream]
+    downstream_receipts_ready: true
+    cross_domain_harm_detected: false
+    expected: PROPAGATION_FAIL_CLOSED
+  - id: required_downstream_not_validated_fail_closed
+    affected_domains: [local]
+    validated_domains: [local]
+    downstream_receipts_ready: true
+    cross_domain_harm_detected: false
+    expected: PROPAGATION_FAIL_CLOSED
+  - id: downstream_receipts_missing_fail_closed
+    affected_domains: [local, downstream]
+    validated_domains: [local, downstream]
+    downstream_receipts_ready: false
+    cross_domain_harm_detected: false
+    expected: PROPAGATION_FAIL_CLOSED
+  - id: cross_domain_harm_fail_closed
+    affected_domains: [local, downstream]
+    validated_domains: [local, downstream]
+    downstream_receipts_ready: true
+    cross_domain_harm_detected: true
+    expected: PROPAGATION_FAIL_CLOSED

@@ -1,0 +1,56 @@
+problem_id: chf-028
+title: Temporal Coherence and Clock Integrity Gate
+formalism: consequence_horizon_formalism
+model:
+  max_clock_drift_seconds: 3.0
+  max_replay_window_seconds: 30.0
+test_cases:
+  - id: temporal_coherent
+    monotonic_order: true
+    clock_drift_seconds: 1.0
+    replay_window_seconds: 10.0
+    timestamp_signed: true
+    trusted_time_source: true
+    expected: TEMPORAL_COHERENT
+  - id: non_monotonic_order_fail_closed
+    monotonic_order: false
+    clock_drift_seconds: 1.0
+    replay_window_seconds: 10.0
+    timestamp_signed: true
+    trusted_time_source: true
+    expected: TEMPORAL_FAIL_CLOSED
+  - id: clock_drift_high_fail_closed
+    monotonic_order: true
+    clock_drift_seconds: 3.1
+    replay_window_seconds: 10.0
+    timestamp_signed: true
+    trusted_time_source: true
+    expected: TEMPORAL_FAIL_CLOSED
+  - id: replay_window_high_fail_closed
+    monotonic_order: true
+    clock_drift_seconds: 1.0
+    replay_window_seconds: 31.0
+    timestamp_signed: true
+    trusted_time_source: true
+    expected: TEMPORAL_FAIL_CLOSED
+  - id: timestamp_unsigned_fail_closed
+    monotonic_order: true
+    clock_drift_seconds: 1.0
+    replay_window_seconds: 10.0
+    timestamp_signed: false
+    trusted_time_source: true
+    expected: TEMPORAL_FAIL_CLOSED
+  - id: trusted_time_missing_fail_closed
+    monotonic_order: true
+    clock_drift_seconds: 1.0
+    replay_window_seconds: 10.0
+    timestamp_signed: true
+    trusted_time_source: false
+    expected: TEMPORAL_FAIL_CLOSED
+  - id: exact_temporal_boundaries_coherent
+    monotonic_order: true
+    clock_drift_seconds: 3.0
+    replay_window_seconds: 30.0
+    timestamp_signed: true
+    trusted_time_source: true
+    expected: TEMPORAL_COHERENT
