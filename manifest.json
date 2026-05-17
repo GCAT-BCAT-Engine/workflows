@@ -1,23 +1,32 @@
 {
-  "bundle": "chf_validation_extension_v0_14_ecosystem_sandbox_expansion",
+  "bundle": "chf_validation_extension_v0_16_agent_boundary_batch",
   "target_repo": "GCAT-BCAT-Engine/workflows",
-  "purpose": "Add generated sandbox suites for ecosystem gates chf-031 through chf-040.",
+  "purpose": "Add agent-boundary explicit semantic gates chf-041 through chf-050 with full local preflight.",
   "changed_paths": [
-    "math_solver/validation/chf_sandbox_runner.py",
-    "math_solver/validation/chf_sandbox_config.yml",
-    "math_solver/validation/chf_sandbox_readme.md",
+    "math_solver/validation/chf_deterministic_validator.py",
+    "math_solver/validation/problem_spec_chf_041.yml",
+    "math_solver/validation/problem_spec_chf_042.yml",
+    "math_solver/validation/problem_spec_chf_043.yml",
+    "math_solver/validation/problem_spec_chf_044.yml",
+    "math_solver/validation/problem_spec_chf_045.yml",
+    "math_solver/validation/problem_spec_chf_046.yml",
+    "math_solver/validation/problem_spec_chf_047.yml",
+    "math_solver/validation/problem_spec_chf_048.yml",
+    "math_solver/validation/problem_spec_chf_049.yml",
+    "math_solver/validation/problem_spec_chf_050.yml",
     "math_solver/validation/chf_validation_matrix.md",
-    "math_solver/validation/chf_readme.md"
+    "math_solver/validation/chf_readme.md",
+    "math_solver/validation/chf_sandbox_readme.md"
   ],
   "intentionally_not_included": [
     ".github/workflows/chf_validation_run.yml",
-    "math_solver/validation/chf_deterministic_validator.py",
-    "math_solver/validation/problem_spec_chf_001.yml through problem_spec_chf_040.yml"
+    "math_solver/validation/chf_sandbox_runner.py",
+    "math_solver/validation/chf_sandbox_config.yml"
   ],
   "expected_github_result": {
     "overall_status": "PASS",
     "explicit_status": "PASS",
-    "specs_evaluated": 40,
+    "specs_evaluated": 50,
     "sandbox_status": "PASS",
     "sandbox_suites_evaluated": 25,
     "sandbox_subtests_generated": 2814

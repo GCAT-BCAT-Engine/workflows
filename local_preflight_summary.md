@@ -1,7 +1,7 @@
 # Consequence Horizon Formalism Validation Summary
 
 - Overall status: **PASS**
-- Specs evaluated: **40**
+- Specs evaluated: **50**
 
 ## Sandbox Results
 
@@ -953,4 +953,174 @@
   - Reason: `external_review_incomplete`
 - `exact_dry_run_boundary_deployment_ready`: expected `DEPLOYMENT_READY`, actual `DEPLOYMENT_READY` — **PASS**
   - Reason: `production_deployment_ready`
+
+### chf-041
+
+- Status: **PASS**
+
+- `instruction_allowed`: expected `INSTRUCTION_ALLOWED`, actual `INSTRUCTION_ALLOWED` — **PASS**
+  - Reason: `instruction_boundary_pass`
+- `override_attempt_fail_closed`: expected `INSTRUCTION_FAIL_CLOSED`, actual `INSTRUCTION_FAIL_CLOSED` — **PASS**
+  - Reason: `authority_override_attempt`
+- `concealed_intent_fail_closed`: expected `INSTRUCTION_FAIL_CLOSED`, actual `INSTRUCTION_FAIL_CLOSED` — **PASS**
+  - Reason: `concealed_intent_detected`
+- `bypass_admissibility_fail_closed`: expected `INSTRUCTION_FAIL_CLOSED`, actual `INSTRUCTION_FAIL_CLOSED` — **PASS**
+  - Reason: `admissibility_bypass_attempt`
+- `prompt_injection_quarantined`: expected `INSTRUCTION_QUARANTINED`, actual `INSTRUCTION_QUARANTINED` — **PASS**
+  - Reason: `prompt_injection_quarantined`
+- `scope_invalid_fail_closed`: expected `INSTRUCTION_FAIL_CLOSED`, actual `INSTRUCTION_FAIL_CLOSED` — **PASS**
+  - Reason: `instruction_scope_invalid`
+
+### chf-042
+
+- Status: **PASS**
+
+- `tool_invocation_allowed`: expected `TOOL_INVOCATION_ALLOWED`, actual `TOOL_INVOCATION_ALLOWED` — **PASS**
+  - Reason: `tool_invocation_standing_pass`
+- `high_impact_tool_with_approval_allowed`: expected `TOOL_INVOCATION_ALLOWED`, actual `TOOL_INVOCATION_ALLOWED` — **PASS**
+  - Reason: `tool_invocation_standing_pass`
+- `authority_invalid_fail_closed`: expected `TOOL_INVOCATION_FAIL_CLOSED`, actual `TOOL_INVOCATION_FAIL_CLOSED` — **PASS**
+  - Reason: `tool_authority_invalid`
+- `scope_mismatch_fail_closed`: expected `TOOL_INVOCATION_FAIL_CLOSED`, actual `TOOL_INVOCATION_FAIL_CLOSED` — **PASS**
+  - Reason: `tool_scope_mismatch`
+- `side_effect_unclassified_fail_closed`: expected `TOOL_INVOCATION_FAIL_CLOSED`, actual `TOOL_INVOCATION_FAIL_CLOSED` — **PASS**
+  - Reason: `side_effect_not_classified`
+- `high_impact_without_approval_fail_closed`: expected `TOOL_INVOCATION_FAIL_CLOSED`, actual `TOOL_INVOCATION_FAIL_CLOSED` — **PASS**
+  - Reason: `high_impact_tool_requires_explicit_approval`
+
+### chf-043
+
+- Status: **PASS**
+
+- `credential_access_allowed_without_secret`: expected `CREDENTIAL_ACCESS_ALLOWED`, actual `CREDENTIAL_ACCESS_ALLOWED` — **PASS**
+  - Reason: `credential_boundary_pass`
+- `credential_access_allowed_with_secret_controls`: expected `CREDENTIAL_ACCESS_ALLOWED`, actual `CREDENTIAL_ACCESS_ALLOWED` — **PASS**
+  - Reason: `credential_boundary_pass`
+- `leak_quarantine_required`: expected `CREDENTIAL_QUARANTINE_REQUIRED`, actual `CREDENTIAL_QUARANTINE_REQUIRED` — **PASS**
+  - Reason: `credential_leak_detected`
+- `redaction_missing_fail_closed`: expected `CREDENTIAL_ACCESS_FAIL_CLOSED`, actual `CREDENTIAL_ACCESS_FAIL_CLOSED` — **PASS**
+  - Reason: `secret_redaction_not_ready`
+- `rotation_missing_fail_closed`: expected `CREDENTIAL_ACCESS_FAIL_CLOSED`, actual `CREDENTIAL_ACCESS_FAIL_CLOSED` — **PASS**
+  - Reason: `secret_rotation_not_supported`
+- `blast_radius_high_fail_closed`: expected `CREDENTIAL_ACCESS_FAIL_CLOSED`, actual `CREDENTIAL_ACCESS_FAIL_CLOSED` — **PASS**
+  - Reason: `credential_blast_radius_exceeds_threshold`
+
+### chf-044
+
+- Status: **PASS**
+
+- `data_transfer_allowed`: expected `DATA_TRANSFER_ALLOWED`, actual `DATA_TRANSFER_ALLOWED` — **PASS**
+  - Reason: `data_boundary_crossing_pass`
+- `boundary_crossing_undeclared_fail_closed`: expected `DATA_TRANSFER_FAIL_CLOSED`, actual `DATA_TRANSFER_FAIL_CLOSED` — **PASS**
+  - Reason: `boundary_crossing_not_declared`
+- `destination_untrusted_fail_closed`: expected `DATA_TRANSFER_FAIL_CLOSED`, actual `DATA_TRANSFER_FAIL_CLOSED` — **PASS**
+  - Reason: `destination_not_trusted`
+- `consent_invalid_fail_closed`: expected `DATA_TRANSFER_FAIL_CLOSED`, actual `DATA_TRANSFER_FAIL_CLOSED` — **PASS**
+  - Reason: `consent_invalid`
+- `purpose_not_limited_fail_closed`: expected `DATA_TRANSFER_FAIL_CLOSED`, actual `DATA_TRANSFER_FAIL_CLOSED` — **PASS**
+  - Reason: `purpose_limitation_missing`
+- `audit_receipt_missing_fail_closed`: expected `DATA_TRANSFER_FAIL_CLOSED`, actual `DATA_TRANSFER_FAIL_CLOSED` — **PASS**
+  - Reason: `audit_receipt_not_ready`
+
+### chf-045
+
+- Status: **PASS**
+
+- `recursion_allowed`: expected `RECURSION_ALLOWED`, actual `RECURSION_ALLOWED` — **PASS**
+  - Reason: `autonomous_recursion_bounded`
+- `exact_recursion_boundary_allowed`: expected `RECURSION_ALLOWED`, actual `RECURSION_ALLOWED` — **PASS**
+  - Reason: `autonomous_recursion_bounded`
+- `recursion_depth_high_fail_closed`: expected `RECURSION_FAIL_CLOSED`, actual `RECURSION_FAIL_CLOSED` — **PASS**
+  - Reason: `recursion_depth_exceeds_limit`
+- `loop_detection_missing_fail_closed`: expected `RECURSION_FAIL_CLOSED`, actual `RECURSION_FAIL_CLOSED` — **PASS**
+  - Reason: `loop_detectability_missing`
+- `human_override_missing_fail_closed`: expected `RECURSION_FAIL_CLOSED`, actual `RECURSION_FAIL_CLOSED` — **PASS**
+  - Reason: `human_override_missing`
+- `safe_halt_missing_fail_closed`: expected `RECURSION_FAIL_CLOSED`, actual `RECURSION_FAIL_CLOSED` — **PASS**
+  - Reason: `safe_halt_missing`
+
+### chf-046
+
+- Status: **PASS**
+
+- `output_reliance_allowed`: expected `OUTPUT_RELIANCE_ALLOWED`, actual `OUTPUT_RELIANCE_ALLOWED` — **PASS**
+  - Reason: `model_output_reliance_allowed`
+- `high_criticality_with_review_allowed`: expected `OUTPUT_RELIANCE_ALLOWED`, actual `OUTPUT_RELIANCE_ALLOWED` — **PASS**
+  - Reason: `model_output_reliance_allowed`
+- `high_criticality_requires_review`: expected `OUTPUT_REQUIRES_REVIEW`, actual `OUTPUT_REQUIRES_REVIEW` — **PASS**
+  - Reason: `high_criticality_requires_human_review`
+- `confidence_low_fail_closed`: expected `OUTPUT_RELIANCE_FAIL_CLOSED`, actual `OUTPUT_RELIANCE_FAIL_CLOSED` — **PASS**
+  - Reason: `output_confidence_below_threshold`
+- `source_support_missing_fail_closed`: expected `OUTPUT_RELIANCE_FAIL_CLOSED`, actual `OUTPUT_RELIANCE_FAIL_CLOSED` — **PASS**
+  - Reason: `source_support_missing`
+- `uncertainty_label_missing_fail_closed`: expected `OUTPUT_RELIANCE_FAIL_CLOSED`, actual `OUTPUT_RELIANCE_FAIL_CLOSED` — **PASS**
+  - Reason: `uncertainty_label_missing`
+
+### chf-047
+
+- Status: **PASS**
+
+- `sim_to_real_allowed`: expected `SIM_TO_REAL_ALLOWED`, actual `SIM_TO_REAL_ALLOWED` — **PASS**
+  - Reason: `simulation_to_reality_transfer_allowed`
+- `exact_sim_boundary_allowed`: expected `SIM_TO_REAL_ALLOWED`, actual `SIM_TO_REAL_ALLOWED` — **PASS**
+  - Reason: `simulation_to_reality_transfer_allowed`
+- `sim_fidelity_low_fail_closed`: expected `SIM_TO_REAL_FAIL_CLOSED`, actual `SIM_TO_REAL_FAIL_CLOSED` — **PASS**
+  - Reason: `simulation_fidelity_below_threshold`
+- `environment_gap_high_fail_closed`: expected `SIM_TO_REAL_FAIL_CLOSED`, actual `SIM_TO_REAL_FAIL_CLOSED` — **PASS**
+  - Reason: `environment_gap_exceeds_threshold`
+- `external_dry_run_missing_fail_closed`: expected `SIM_TO_REAL_FAIL_CLOSED`, actual `SIM_TO_REAL_FAIL_CLOSED` — **PASS**
+  - Reason: `external_dry_run_not_passed`
+- `rollback_not_ready_fail_closed`: expected `SIM_TO_REAL_FAIL_CLOSED`, actual `SIM_TO_REAL_FAIL_CLOSED` — **PASS**
+  - Reason: `real_world_rollback_not_ready`
+
+### chf-048
+
+- Status: **PASS**
+
+- `capture_clear`: expected `CAPTURE_CLEAR`, actual `CAPTURE_CLEAR` — **PASS**
+  - Reason: `governance_capture_clear`
+- `exact_capture_boundary_clear`: expected `CAPTURE_CLEAR`, actual `CAPTURE_CLEAR` — **PASS**
+  - Reason: `governance_capture_clear`
+- `validator_concentration_high_fail_closed`: expected `CAPTURE_FAIL_CLOSED`, actual `CAPTURE_FAIL_CLOSED` — **PASS**
+  - Reason: `validator_concentration_exceeds_threshold`
+- `token_concentration_high_fail_closed`: expected `CAPTURE_FAIL_CLOSED`, actual `CAPTURE_FAIL_CLOSED` — **PASS**
+  - Reason: `token_concentration_exceeds_threshold`
+- `dependency_concentration_high_fail_closed`: expected `CAPTURE_FAIL_CLOSED`, actual `CAPTURE_FAIL_CLOSED` — **PASS**
+  - Reason: `dependency_concentration_exceeds_threshold`
+- `correlated_failure_high_fail_closed`: expected `CAPTURE_FAIL_CLOSED`, actual `CAPTURE_FAIL_CLOSED` — **PASS**
+  - Reason: `correlated_failure_exceeds_threshold`
+
+### chf-049
+
+- Status: **PASS**
+
+- `dependency_state_valid`: expected `DEPENDENCY_STATE_VALID`, actual `DEPENDENCY_STATE_VALID` — **PASS**
+  - Reason: `dependency_state_valid`
+- `exact_dependency_age_boundary_valid`: expected `DEPENDENCY_STATE_VALID`, actual `DEPENDENCY_STATE_VALID` — **PASS**
+  - Reason: `dependency_state_valid`
+- `lockfile_mismatch_fail_closed`: expected `DEPENDENCY_FAIL_CLOSED`, actual `DEPENDENCY_FAIL_CLOSED` — **PASS**
+  - Reason: `lockfile_mismatch`
+- `hash_mismatch_fail_closed`: expected `DEPENDENCY_FAIL_CLOSED`, actual `DEPENDENCY_FAIL_CLOSED` — **PASS**
+  - Reason: `dependency_hash_mismatch`
+- `publisher_untrusted_fail_closed`: expected `DEPENDENCY_FAIL_CLOSED`, actual `DEPENDENCY_FAIL_CLOSED` — **PASS**
+  - Reason: `publisher_not_trusted`
+- `known_vulnerability_fail_closed`: expected `DEPENDENCY_FAIL_CLOSED`, actual `DEPENDENCY_FAIL_CLOSED` — **PASS**
+  - Reason: `known_dependency_vulnerability`
+
+### chf-050
+
+- Status: **PASS**
+
+- `emergency_override_allowed`: expected `EMERGENCY_OVERRIDE_ALLOWED`, actual `EMERGENCY_OVERRIDE_ALLOWED` — **PASS**
+  - Reason: `emergency_override_allowed`
+- `exact_override_duration_boundary_allowed`: expected `EMERGENCY_OVERRIDE_ALLOWED`, actual `EMERGENCY_OVERRIDE_ALLOWED` — **PASS**
+  - Reason: `emergency_override_allowed`
+- `emergency_classification_invalid_fail_closed`: expected `EMERGENCY_OVERRIDE_FAIL_CLOSED`, actual `EMERGENCY_OVERRIDE_FAIL_CLOSED` — **PASS**
+  - Reason: `emergency_classification_invalid`
+- `duration_too_long_fail_closed`: expected `EMERGENCY_OVERRIDE_FAIL_CLOSED`, actual `EMERGENCY_OVERRIDE_FAIL_CLOSED` — **PASS**
+  - Reason: `emergency_override_duration_exceeds_limit`
+- `multiparty_approval_missing_fail_closed`: expected `EMERGENCY_OVERRIDE_FAIL_CLOSED`, actual `EMERGENCY_OVERRIDE_FAIL_CLOSED` — **PASS**
+  - Reason: `multiparty_approval_missing`
+- `mandatory_review_missing_fail_closed`: expected `EMERGENCY_OVERRIDE_FAIL_CLOSED`, actual `EMERGENCY_OVERRIDE_FAIL_CLOSED` — **PASS**
+  - Reason: `mandatory_review_not_scheduled`
 
