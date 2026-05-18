@@ -1,0 +1,745 @@
+---
+problem_id: chf-081
+title: CI/CD Enforcement Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - pipeline_enforced
+    - gate_checks_required
+    - enforcement_receipt_ready
+  required_false:
+    - bypass_enabled
+    - gate_check_skipped
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-081-pass-enforcement-active
+    pipeline_enforced: true
+    gate_checks_required: true
+    enforcement_receipt_ready: true
+    bypass_enabled: false
+    gate_check_skipped: false
+    expected: ALLOW
+
+  - id: chf-081-fail-bypass-enabled
+    pipeline_enforced: true
+    gate_checks_required: true
+    enforcement_receipt_ready: true
+    bypass_enabled: true
+    gate_check_skipped: false
+    expected: FAIL_CLOSED
+
+  - id: chf-081-fail-gate-check-skipped
+    pipeline_enforced: true
+    gate_checks_required: true
+    enforcement_receipt_ready: true
+    bypass_enabled: false
+    gate_check_skipped: true
+    expected: FAIL_CLOSED
+
+  - id: chf-081-fail-pipeline-not-enforced
+    pipeline_enforced: false
+    gate_checks_required: true
+    enforcement_receipt_ready: true
+    bypass_enabled: false
+    gate_check_skipped: false
+    expected: FAIL_CLOSED
+
+  - id: chf-081-fail-receipt-not-ready
+    pipeline_enforced: true
+    gate_checks_required: true
+    enforcement_receipt_ready: false
+    bypass_enabled: false
+    gate_check_skipped: false
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-082
+title: Repo / Org Ingestion Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - source_org_trusted
+    - destination_compatible
+    - schema_compatible
+    - core_lite_awareness
+    - ingestion_receipt_ready
+  required_false:
+    - source_org_sanctioned
+  min_metrics:
+    source_trust_score: 0.8
+  max_metrics: {}
+
+test_cases:
+  - id: chf-082-pass-ingestion-allowed
+    source_org_trusted: true
+    destination_compatible: true
+    schema_compatible: true
+    core_lite_awareness: true
+    ingestion_receipt_ready: true
+    source_org_sanctioned: false
+    source_trust_score: 0.95
+    expected: ALLOW
+
+  - id: chf-082-fail-org-sanctioned
+    source_org_trusted: true
+    destination_compatible: true
+    schema_compatible: true
+    core_lite_awareness: true
+    ingestion_receipt_ready: true
+    source_org_sanctioned: true
+    source_trust_score: 0.95
+    expected: FAIL_CLOSED
+
+  - id: chf-082-fail-trust-score-low
+    source_org_trusted: true
+    destination_compatible: true
+    schema_compatible: true
+    core_lite_awareness: true
+    ingestion_receipt_ready: true
+    source_org_sanctioned: false
+    source_trust_score: 0.5
+    expected: FAIL_CLOSED
+
+  - id: chf-082-fail-core-lite-missing
+    source_org_trusted: true
+    destination_compatible: true
+    schema_compatible: true
+    core_lite_awareness: false
+    ingestion_receipt_ready: true
+    source_org_sanctioned: false
+    source_trust_score: 0.95
+    expected: FAIL_CLOSED
+
+  - id: chf-082-fail-schema-incompatible
+    source_org_trusted: true
+    destination_compatible: true
+    schema_compatible: false
+    core_lite_awareness: true
+    ingestion_receipt_ready: true
+    source_org_sanctioned: false
+    source_trust_score: 0.95
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-083
+title: Rollback Orchestration Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - rollback_plan_exists
+    - rollback_tested
+    - rollback_receipt_ready
+    - operator_authority_valid
+  required_false:
+    - rollback_path_broken
+  min_metrics: {}
+  max_metrics:
+    recovery_time_seconds: 300.0
+
+test_cases:
+  - id: chf-083-pass-rollback-ready
+    rollback_plan_exists: true
+    rollback_tested: true
+    rollback_receipt_ready: true
+    operator_authority_valid: true
+    rollback_path_broken: false
+    recovery_time_seconds: 120.0
+    expected: ALLOW
+
+  - id: chf-083-fail-no-plan
+    rollback_plan_exists: false
+    rollback_tested: true
+    rollback_receipt_ready: true
+    operator_authority_valid: true
+    rollback_path_broken: false
+    recovery_time_seconds: 120.0
+    expected: FAIL_CLOSED
+
+  - id: chf-083-fail-path-broken
+    rollback_plan_exists: true
+    rollback_tested: true
+    rollback_receipt_ready: true
+    operator_authority_valid: true
+    rollback_path_broken: true
+    recovery_time_seconds: 120.0
+    expected: FAIL_CLOSED
+
+  - id: chf-083-fail-recovery-time-exceeded
+    rollback_plan_exists: true
+    rollback_tested: true
+    rollback_receipt_ready: true
+    operator_authority_valid: true
+    rollback_path_broken: false
+    recovery_time_seconds: 600.0
+    expected: FAIL_CLOSED
+
+  - id: chf-083-fail-not-tested
+    rollback_plan_exists: true
+    rollback_tested: false
+    rollback_receipt_ready: true
+    operator_authority_valid: true
+    rollback_path_broken: false
+    recovery_time_seconds: 120.0
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-084
+title: Quarantine Routing Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  severity_critical_threshold: 0.8
+  severity_review_threshold: 0.4
+
+test_cases:
+  - id: chf-084-quarantine-critical-severity
+    routing_system_available: true
+    flag_classified: true
+    severity_score: 0.9
+    tamper_suspected: false
+    authority_unresolved: false
+    human_review_requested: false
+    expected: ROUTE_TO_QUARANTINE
+
+  - id: chf-084-quarantine-tamper
+    routing_system_available: true
+    flag_classified: true
+    severity_score: 0.2
+    tamper_suspected: true
+    authority_unresolved: false
+    human_review_requested: false
+    expected: ROUTE_TO_QUARANTINE
+
+  - id: chf-084-quarantine-authority-unresolved
+    routing_system_available: true
+    flag_classified: true
+    severity_score: 0.2
+    tamper_suspected: false
+    authority_unresolved: true
+    human_review_requested: false
+    expected: ROUTE_TO_QUARANTINE
+
+  - id: chf-084-review-medium-severity
+    routing_system_available: true
+    flag_classified: true
+    severity_score: 0.6
+    tamper_suspected: false
+    authority_unresolved: false
+    human_review_requested: false
+    expected: ROUTE_TO_REVIEW
+
+  - id: chf-084-review-requested
+    routing_system_available: true
+    flag_classified: true
+    severity_score: 0.2
+    tamper_suspected: false
+    authority_unresolved: false
+    human_review_requested: true
+    expected: ROUTE_TO_REVIEW
+
+  - id: chf-084-clear-low-severity
+    routing_system_available: true
+    flag_classified: true
+    severity_score: 0.1
+    tamper_suspected: false
+    authority_unresolved: false
+    human_review_requested: false
+    expected: ROUTING_CLEAR
+
+  - id: chf-084-fail-system-unavailable
+    routing_system_available: false
+    flag_classified: true
+    severity_score: 0.1
+    tamper_suspected: false
+    authority_unresolved: false
+    human_review_requested: false
+    expected: ROUTING_FAIL_CLOSED
+
+  - id: chf-084-fail-flag-not-classified
+    routing_system_available: true
+    flag_classified: false
+    severity_score: 0.1
+    tamper_suspected: false
+    authority_unresolved: false
+    human_review_requested: false
+    expected: ROUTING_FAIL_CLOSED
+
+  - id: chf-084-clear-boundary-severity
+    routing_system_available: true
+    flag_classified: true
+    severity_score: 0.4
+    tamper_suspected: false
+    authority_unresolved: false
+    human_review_requested: false
+    expected: ROUTING_CLEAR
+
+---
+problem_id: chf-085
+title: Audit Export Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - export_ready
+    - format_valid
+    - custody_chain_present
+    - recipient_authorized
+    - export_receipt_ready
+  required_false:
+    - sensitive_data_unredacted
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-085-pass-export-ready
+    export_ready: true
+    format_valid: true
+    custody_chain_present: true
+    recipient_authorized: true
+    export_receipt_ready: true
+    sensitive_data_unredacted: false
+    expected: ALLOW
+
+  - id: chf-085-fail-sensitive-data-exposed
+    export_ready: true
+    format_valid: true
+    custody_chain_present: true
+    recipient_authorized: true
+    export_receipt_ready: true
+    sensitive_data_unredacted: true
+    expected: FAIL_CLOSED
+
+  - id: chf-085-fail-recipient-not-authorized
+    export_ready: true
+    format_valid: true
+    custody_chain_present: true
+    recipient_authorized: false
+    export_receipt_ready: true
+    sensitive_data_unredacted: false
+    expected: FAIL_CLOSED
+
+  - id: chf-085-fail-format-invalid
+    export_ready: true
+    format_valid: false
+    custody_chain_present: true
+    recipient_authorized: true
+    export_receipt_ready: true
+    sensitive_data_unredacted: false
+    expected: FAIL_CLOSED
+
+  - id: chf-085-fail-custody-missing
+    export_ready: true
+    format_valid: true
+    custody_chain_present: false
+    recipient_authorized: true
+    export_receipt_ready: true
+    sensitive_data_unredacted: false
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-086
+title: Production Dry Run Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - failure_modes_covered
+    - operator_authority_valid
+    - rollback_ready
+    - dry_run_receipt_ready
+  required_false:
+    - dry_run_failure_detected
+  min_metrics:
+    successful_dry_run_count: 3.0
+  max_metrics: {}
+
+test_cases:
+  - id: chf-086-pass-dry-runs-complete
+    failure_modes_covered: true
+    operator_authority_valid: true
+    rollback_ready: true
+    dry_run_receipt_ready: true
+    dry_run_failure_detected: false
+    successful_dry_run_count: 5.0
+    expected: ALLOW
+
+  - id: chf-086-fail-dry-run-failed
+    failure_modes_covered: true
+    operator_authority_valid: true
+    rollback_ready: true
+    dry_run_receipt_ready: true
+    dry_run_failure_detected: true
+    successful_dry_run_count: 5.0
+    expected: FAIL_CLOSED
+
+  - id: chf-086-fail-insufficient-dry-runs
+    failure_modes_covered: true
+    operator_authority_valid: true
+    rollback_ready: true
+    dry_run_receipt_ready: true
+    dry_run_failure_detected: false
+    successful_dry_run_count: 2.0
+    expected: FAIL_CLOSED
+
+  - id: chf-086-fail-failure-modes-not-covered
+    failure_modes_covered: false
+    operator_authority_valid: true
+    rollback_ready: true
+    dry_run_receipt_ready: true
+    dry_run_failure_detected: false
+    successful_dry_run_count: 5.0
+    expected: FAIL_CLOSED
+
+  - id: chf-086-pass-boundary-dry-run-count
+    failure_modes_covered: true
+    operator_authority_valid: true
+    rollback_ready: true
+    dry_run_receipt_ready: true
+    dry_run_failure_detected: false
+    successful_dry_run_count: 3.0
+    expected: ALLOW
+
+---
+problem_id: chf-087
+title: Incident Response Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  severity_critical_threshold: 0.8
+  severity_contain_threshold: 0.4
+  severity_monitor_threshold: 0.2
+
+test_cases:
+  - id: chf-087-escalate-external-parties
+    incident_class_defined: true
+    response_plan_exists: true
+    external_parties_affected: true
+    severity_score: 0.3
+    data_breach_detected: false
+    containment_path_available: true
+    rollback_ready: true
+    expected: INCIDENT_ESCALATE
+
+  - id: chf-087-escalate-critical-severity
+    incident_class_defined: true
+    response_plan_exists: true
+    external_parties_affected: false
+    severity_score: 0.9
+    data_breach_detected: false
+    containment_path_available: true
+    rollback_ready: true
+    expected: INCIDENT_ESCALATE
+
+  - id: chf-087-escalate-data-breach
+    incident_class_defined: true
+    response_plan_exists: true
+    external_parties_affected: false
+    severity_score: 0.3
+    data_breach_detected: true
+    containment_path_available: true
+    rollback_ready: true
+    expected: INCIDENT_ESCALATE
+
+  - id: chf-087-contain-medium-severity
+    incident_class_defined: true
+    response_plan_exists: true
+    external_parties_affected: false
+    severity_score: 0.6
+    data_breach_detected: false
+    containment_path_available: true
+    rollback_ready: true
+    expected: INCIDENT_CONTAIN
+
+  - id: chf-087-contain-path-available
+    incident_class_defined: true
+    response_plan_exists: true
+    external_parties_affected: false
+    severity_score: 0.3
+    data_breach_detected: false
+    containment_path_available: true
+    rollback_ready: true
+    expected: INCIDENT_CONTAIN
+
+  - id: chf-087-monitor-low-severity
+    incident_class_defined: true
+    response_plan_exists: true
+    external_parties_affected: false
+    severity_score: 0.1
+    data_breach_detected: false
+    containment_path_available: false
+    rollback_ready: false
+    expected: INCIDENT_MONITOR
+
+  - id: chf-087-fail-class-undefined
+    incident_class_defined: false
+    response_plan_exists: true
+    external_parties_affected: false
+    severity_score: 0.1
+    data_breach_detected: false
+    containment_path_available: false
+    rollback_ready: false
+    expected: INCIDENT_FAIL_CLOSED
+
+  - id: chf-087-fail-no-response-plan
+    incident_class_defined: true
+    response_plan_exists: false
+    external_parties_affected: false
+    severity_score: 0.1
+    data_breach_detected: false
+    containment_path_available: false
+    rollback_ready: false
+    expected: INCIDENT_FAIL_CLOSED
+
+---
+problem_id: chf-088
+title: Service-Level Admissibility Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - sla_defined
+    - recovery_path_available
+    - sla_receipt_ready
+  required_false:
+    - sla_breach_detected
+  min_metrics: {}
+  max_metrics:
+    degradation_score: 0.2
+    latency_p99_ms: 2000.0
+
+test_cases:
+  - id: chf-088-pass-sla-within-bounds
+    sla_defined: true
+    recovery_path_available: true
+    sla_receipt_ready: true
+    sla_breach_detected: false
+    degradation_score: 0.05
+    latency_p99_ms: 500.0
+    expected: ALLOW
+
+  - id: chf-088-fail-sla-breach
+    sla_defined: true
+    recovery_path_available: true
+    sla_receipt_ready: true
+    sla_breach_detected: true
+    degradation_score: 0.05
+    latency_p99_ms: 500.0
+    expected: FAIL_CLOSED
+
+  - id: chf-088-fail-degradation-high
+    sla_defined: true
+    recovery_path_available: true
+    sla_receipt_ready: true
+    sla_breach_detected: false
+    degradation_score: 0.5
+    latency_p99_ms: 500.0
+    expected: FAIL_CLOSED
+
+  - id: chf-088-fail-latency-exceeded
+    sla_defined: true
+    recovery_path_available: true
+    sla_receipt_ready: true
+    sla_breach_detected: false
+    degradation_score: 0.05
+    latency_p99_ms: 3000.0
+    expected: FAIL_CLOSED
+
+  - id: chf-088-fail-no-recovery-path
+    sla_defined: true
+    recovery_path_available: false
+    sla_receipt_ready: true
+    sla_breach_detected: false
+    degradation_score: 0.05
+    latency_p99_ms: 500.0
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-089
+title: Cross-Cloud Deployment Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - target_cloud_compatible
+    - deployment_receipt_ready
+    - rollback_available_on_target
+    - authority_valid_on_target
+  required_false:
+    - target_cloud_sanctioned
+  min_metrics:
+    target_trust_score: 0.8
+  max_metrics: {}
+
+test_cases:
+  - id: chf-089-pass-deployment-allowed
+    target_cloud_compatible: true
+    deployment_receipt_ready: true
+    rollback_available_on_target: true
+    authority_valid_on_target: true
+    target_cloud_sanctioned: false
+    target_trust_score: 0.95
+    expected: ALLOW
+
+  - id: chf-089-fail-cloud-sanctioned
+    target_cloud_compatible: true
+    deployment_receipt_ready: true
+    rollback_available_on_target: true
+    authority_valid_on_target: true
+    target_cloud_sanctioned: true
+    target_trust_score: 0.95
+    expected: FAIL_CLOSED
+
+  - id: chf-089-fail-trust-score-low
+    target_cloud_compatible: true
+    deployment_receipt_ready: true
+    rollback_available_on_target: true
+    authority_valid_on_target: true
+    target_cloud_sanctioned: false
+    target_trust_score: 0.5
+    expected: FAIL_CLOSED
+
+  - id: chf-089-fail-no-rollback-on-target
+    target_cloud_compatible: true
+    deployment_receipt_ready: true
+    rollback_available_on_target: false
+    authority_valid_on_target: true
+    target_cloud_sanctioned: false
+    target_trust_score: 0.95
+    expected: FAIL_CLOSED
+
+  - id: chf-089-fail-incompatible
+    target_cloud_compatible: false
+    deployment_receipt_ready: true
+    rollback_available_on_target: true
+    authority_valid_on_target: true
+    target_cloud_sanctioned: false
+    target_trust_score: 0.95
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-090
+title: Production Promotion Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - all_operational_gates_passed
+    - promotion_receipt_ready
+    - authority_valid
+    - rollback_confirmed_available
+    - external_sign_off_received
+  required_false:
+    - open_blocking_operational_issue
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-090-pass-promotion-ready
+    all_operational_gates_passed: true
+    promotion_receipt_ready: true
+    authority_valid: true
+    rollback_confirmed_available: true
+    external_sign_off_received: true
+    open_blocking_operational_issue: false
+    expected: ALLOW
+
+  - id: chf-090-fail-operational-gates-not-passed
+    all_operational_gates_passed: false
+    promotion_receipt_ready: true
+    authority_valid: true
+    rollback_confirmed_available: true
+    external_sign_off_received: true
+    open_blocking_operational_issue: false
+    expected: FAIL_CLOSED
+
+  - id: chf-090-fail-blocking-issue-open
+    all_operational_gates_passed: true
+    promotion_receipt_ready: true
+    authority_valid: true
+    rollback_confirmed_available: true
+    external_sign_off_received: true
+    open_blocking_operational_issue: true
+    expected: FAIL_CLOSED
+
+  - id: chf-090-fail-no-sign-off
+    all_operational_gates_passed: true
+    promotion_receipt_ready: true
+    authority_valid: true
+    rollback_confirmed_available: true
+    external_sign_off_received: false
+    open_blocking_operational_issue: false
+    expected: FAIL_CLOSED
+
+  - id: chf-090-fail-authority-invalid
+    all_operational_gates_passed: true
+    promotion_receipt_ready: true
+    authority_valid: false
+    rollback_confirmed_available: true
+    external_sign_off_received: true
+    open_blocking_operational_issue: false
+    expected: FAIL_CLOSED

@@ -1,0 +1,674 @@
+---
+problem_id: chf-061
+title: Invariant Strengthening Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - invariants_formalized
+    - boundary_conditions_covered
+    - counterexamples_triaged
+    - proof_obligations_mapped
+  required_false:
+    - open_invariant_violation_known
+  min_metrics:
+    invariant_coverage_fraction: 1.0
+  max_metrics: {}
+
+test_cases:
+  - id: chf-061-pass-all-conditions-met
+    invariants_formalized: true
+    boundary_conditions_covered: true
+    counterexamples_triaged: true
+    proof_obligations_mapped: true
+    open_invariant_violation_known: false
+    invariant_coverage_fraction: 1.0
+    expected: ALLOW
+
+  - id: chf-061-fail-invariants-not-formalized
+    invariants_formalized: false
+    boundary_conditions_covered: true
+    counterexamples_triaged: true
+    proof_obligations_mapped: true
+    open_invariant_violation_known: false
+    invariant_coverage_fraction: 1.0
+    expected: FAIL_CLOSED
+
+  - id: chf-061-fail-open-violation-known
+    invariants_formalized: true
+    boundary_conditions_covered: true
+    counterexamples_triaged: true
+    proof_obligations_mapped: true
+    open_invariant_violation_known: true
+    invariant_coverage_fraction: 1.0
+    expected: FAIL_CLOSED
+
+  - id: chf-061-fail-coverage-below-threshold
+    invariants_formalized: true
+    boundary_conditions_covered: true
+    counterexamples_triaged: true
+    proof_obligations_mapped: true
+    open_invariant_violation_known: false
+    invariant_coverage_fraction: 0.9
+    expected: FAIL_CLOSED
+
+  - id: chf-061-fail-boundary-conditions-missing
+    invariants_formalized: true
+    boundary_conditions_covered: false
+    counterexamples_triaged: true
+    proof_obligations_mapped: true
+    open_invariant_violation_known: false
+    invariant_coverage_fraction: 1.0
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-062
+title: Topological Consistency Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - shell_topology_valid
+    - cell_partition_complete
+    - star_shaped_verified
+    - boundary_continuity_confirmed
+  required_false: []
+  min_metrics: {}
+  max_metrics:
+    boundary_gap_fraction: 0.0
+
+test_cases:
+  - id: chf-062-pass-all-conditions-met
+    shell_topology_valid: true
+    cell_partition_complete: true
+    star_shaped_verified: true
+    boundary_continuity_confirmed: true
+    boundary_gap_fraction: 0.0
+    expected: ALLOW
+
+  - id: chf-062-fail-topology-invalid
+    shell_topology_valid: false
+    cell_partition_complete: true
+    star_shaped_verified: true
+    boundary_continuity_confirmed: true
+    boundary_gap_fraction: 0.0
+    expected: FAIL_CLOSED
+
+  - id: chf-062-fail-partition-incomplete
+    shell_topology_valid: true
+    cell_partition_complete: false
+    star_shaped_verified: true
+    boundary_continuity_confirmed: true
+    boundary_gap_fraction: 0.0
+    expected: FAIL_CLOSED
+
+  - id: chf-062-fail-boundary-gap-present
+    shell_topology_valid: true
+    cell_partition_complete: true
+    star_shaped_verified: true
+    boundary_continuity_confirmed: true
+    boundary_gap_fraction: 0.05
+    expected: FAIL_CLOSED
+
+  - id: chf-062-fail-star-shaped-not-verified
+    shell_topology_valid: true
+    cell_partition_complete: true
+    star_shaped_verified: false
+    boundary_continuity_confirmed: true
+    boundary_gap_fraction: 0.0
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-063
+title: Shell Geometry Completeness Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - radial_cells_defined
+    - horizon_radius_bounded
+    - inward_cone_volumes_valid
+    - center_state_defined
+    - shell_record_schema_complete
+  required_false:
+    - geometry_contradiction_detected
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-063-pass-all-conditions-met
+    radial_cells_defined: true
+    horizon_radius_bounded: true
+    inward_cone_volumes_valid: true
+    center_state_defined: true
+    shell_record_schema_complete: true
+    geometry_contradiction_detected: false
+    expected: ALLOW
+
+  - id: chf-063-fail-radial-cells-missing
+    radial_cells_defined: false
+    horizon_radius_bounded: true
+    inward_cone_volumes_valid: true
+    center_state_defined: true
+    shell_record_schema_complete: true
+    geometry_contradiction_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-063-fail-contradiction-detected
+    radial_cells_defined: true
+    horizon_radius_bounded: true
+    inward_cone_volumes_valid: true
+    center_state_defined: true
+    shell_record_schema_complete: true
+    geometry_contradiction_detected: true
+    expected: FAIL_CLOSED
+
+  - id: chf-063-fail-horizon-unbounded
+    radial_cells_defined: true
+    horizon_radius_bounded: false
+    inward_cone_volumes_valid: true
+    center_state_defined: true
+    shell_record_schema_complete: true
+    geometry_contradiction_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-063-fail-schema-incomplete
+    radial_cells_defined: true
+    horizon_radius_bounded: true
+    inward_cone_volumes_valid: true
+    center_state_defined: true
+    shell_record_schema_complete: false
+    geometry_contradiction_detected: false
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-064
+title: Transition Algebra Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - composition_defined
+    - identity_element_exists
+    - associativity_verified
+    - admissibility_closed_under_composition
+  required_false:
+    - algebra_contradiction_detected
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-064-pass-all-conditions-met
+    composition_defined: true
+    identity_element_exists: true
+    associativity_verified: true
+    admissibility_closed_under_composition: true
+    algebra_contradiction_detected: false
+    expected: ALLOW
+
+  - id: chf-064-fail-composition-not-defined
+    composition_defined: false
+    identity_element_exists: true
+    associativity_verified: true
+    admissibility_closed_under_composition: true
+    algebra_contradiction_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-064-fail-not-closed-under-composition
+    composition_defined: true
+    identity_element_exists: true
+    associativity_verified: true
+    admissibility_closed_under_composition: false
+    algebra_contradiction_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-064-fail-contradiction-detected
+    composition_defined: true
+    identity_element_exists: true
+    associativity_verified: true
+    admissibility_closed_under_composition: true
+    algebra_contradiction_detected: true
+    expected: FAIL_CLOSED
+
+  - id: chf-064-fail-associativity-not-verified
+    composition_defined: true
+    identity_element_exists: true
+    associativity_verified: false
+    admissibility_closed_under_composition: true
+    algebra_contradiction_detected: false
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-065
+title: Recoverability Metric Calibration Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - metric_calibrated
+    - validated_against_test_cases
+    - calibration_receipt_ready
+  required_false:
+    - calibration_drift_detected
+  min_metrics:
+    calibration_confidence: 0.9
+  max_metrics:
+    calibration_error_rate: 0.05
+
+test_cases:
+  - id: chf-065-pass-all-conditions-met
+    metric_calibrated: true
+    validated_against_test_cases: true
+    calibration_receipt_ready: true
+    calibration_drift_detected: false
+    calibration_confidence: 0.95
+    calibration_error_rate: 0.02
+    expected: ALLOW
+
+  - id: chf-065-fail-not-calibrated
+    metric_calibrated: false
+    validated_against_test_cases: true
+    calibration_receipt_ready: true
+    calibration_drift_detected: false
+    calibration_confidence: 0.95
+    calibration_error_rate: 0.02
+    expected: FAIL_CLOSED
+
+  - id: chf-065-fail-drift-detected
+    metric_calibrated: true
+    validated_against_test_cases: true
+    calibration_receipt_ready: true
+    calibration_drift_detected: true
+    calibration_confidence: 0.95
+    calibration_error_rate: 0.02
+    expected: FAIL_CLOSED
+
+  - id: chf-065-fail-error-rate-high
+    metric_calibrated: true
+    validated_against_test_cases: true
+    calibration_receipt_ready: true
+    calibration_drift_detected: false
+    calibration_confidence: 0.95
+    calibration_error_rate: 0.1
+    expected: FAIL_CLOSED
+
+  - id: chf-065-fail-confidence-low
+    metric_calibrated: true
+    validated_against_test_cases: true
+    calibration_receipt_ready: true
+    calibration_drift_detected: false
+    calibration_confidence: 0.7
+    calibration_error_rate: 0.02
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-066
+title: Entropy / Reversibility Function Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - entropy_function_defined
+    - reversibility_function_defined
+    - functions_validated_on_test_cases
+    - budget_parameters_bounded
+    - function_receipt_ready
+  required_false:
+    - function_contradiction_detected
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-066-pass-all-conditions-met
+    entropy_function_defined: true
+    reversibility_function_defined: true
+    functions_validated_on_test_cases: true
+    budget_parameters_bounded: true
+    function_receipt_ready: true
+    function_contradiction_detected: false
+    expected: ALLOW
+
+  - id: chf-066-fail-entropy-not-defined
+    entropy_function_defined: false
+    reversibility_function_defined: true
+    functions_validated_on_test_cases: true
+    budget_parameters_bounded: true
+    function_receipt_ready: true
+    function_contradiction_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-066-fail-contradiction-detected
+    entropy_function_defined: true
+    reversibility_function_defined: true
+    functions_validated_on_test_cases: true
+    budget_parameters_bounded: true
+    function_receipt_ready: true
+    function_contradiction_detected: true
+    expected: FAIL_CLOSED
+
+  - id: chf-066-fail-budget-unbounded
+    entropy_function_defined: true
+    reversibility_function_defined: true
+    functions_validated_on_test_cases: true
+    budget_parameters_bounded: false
+    function_receipt_ready: true
+    function_contradiction_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-066-fail-not-validated
+    entropy_function_defined: true
+    reversibility_function_defined: true
+    functions_validated_on_test_cases: false
+    budget_parameters_bounded: true
+    function_receipt_ready: true
+    function_contradiction_detected: false
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-067
+title: Proof Obligation Completeness Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - all_gates_have_proof_targets
+    - obligation_map_complete
+    - proof_receipt_ready
+  required_false:
+    - unresolved_proof_obligation_known
+  min_metrics:
+    obligation_coverage_fraction: 1.0
+  max_metrics: {}
+
+test_cases:
+  - id: chf-067-pass-all-conditions-met
+    all_gates_have_proof_targets: true
+    obligation_map_complete: true
+    proof_receipt_ready: true
+    unresolved_proof_obligation_known: false
+    obligation_coverage_fraction: 1.0
+    expected: ALLOW
+
+  - id: chf-067-fail-gates-missing-targets
+    all_gates_have_proof_targets: false
+    obligation_map_complete: true
+    proof_receipt_ready: true
+    unresolved_proof_obligation_known: false
+    obligation_coverage_fraction: 1.0
+    expected: FAIL_CLOSED
+
+  - id: chf-067-fail-unresolved-obligation
+    all_gates_have_proof_targets: true
+    obligation_map_complete: true
+    proof_receipt_ready: true
+    unresolved_proof_obligation_known: true
+    obligation_coverage_fraction: 1.0
+    expected: FAIL_CLOSED
+
+  - id: chf-067-fail-coverage-incomplete
+    all_gates_have_proof_targets: true
+    obligation_map_complete: true
+    proof_receipt_ready: true
+    unresolved_proof_obligation_known: false
+    obligation_coverage_fraction: 0.85
+    expected: FAIL_CLOSED
+
+  - id: chf-067-fail-map-incomplete
+    all_gates_have_proof_targets: true
+    obligation_map_complete: false
+    proof_receipt_ready: true
+    unresolved_proof_obligation_known: false
+    obligation_coverage_fraction: 1.0
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-068
+title: Finite-State Abstraction Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - states_finite_and_enumerable
+    - transitions_enumerable
+    - accepting_states_defined
+    - reachability_verified
+    - abstraction_receipt_ready
+  required_false:
+    - infinite_state_space_detected
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-068-pass-all-conditions-met
+    states_finite_and_enumerable: true
+    transitions_enumerable: true
+    accepting_states_defined: true
+    reachability_verified: true
+    abstraction_receipt_ready: true
+    infinite_state_space_detected: false
+    expected: ALLOW
+
+  - id: chf-068-fail-infinite-state-space
+    states_finite_and_enumerable: true
+    transitions_enumerable: true
+    accepting_states_defined: true
+    reachability_verified: true
+    abstraction_receipt_ready: true
+    infinite_state_space_detected: true
+    expected: FAIL_CLOSED
+
+  - id: chf-068-fail-states-not-enumerable
+    states_finite_and_enumerable: false
+    transitions_enumerable: true
+    accepting_states_defined: true
+    reachability_verified: true
+    abstraction_receipt_ready: true
+    infinite_state_space_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-068-fail-reachability-not-verified
+    states_finite_and_enumerable: true
+    transitions_enumerable: true
+    accepting_states_defined: true
+    reachability_verified: false
+    abstraction_receipt_ready: true
+    infinite_state_space_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-068-fail-accepting-states-missing
+    states_finite_and_enumerable: true
+    transitions_enumerable: true
+    accepting_states_defined: false
+    reachability_verified: true
+    abstraction_receipt_ready: true
+    infinite_state_space_detected: false
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-069
+title: Counterexample Triage Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - all_counterexamples_triaged
+    - triage_receipts_ready
+    - disposition_recorded
+  required_false:
+    - blocking_counterexample_unresolved
+  min_metrics: {}
+  max_metrics:
+    open_counterexample_count: 0.0
+
+test_cases:
+  - id: chf-069-pass-all-triaged
+    all_counterexamples_triaged: true
+    triage_receipts_ready: true
+    disposition_recorded: true
+    blocking_counterexample_unresolved: false
+    open_counterexample_count: 0.0
+    expected: ALLOW
+
+  - id: chf-069-fail-blocking-unresolved
+    all_counterexamples_triaged: true
+    triage_receipts_ready: true
+    disposition_recorded: true
+    blocking_counterexample_unresolved: true
+    open_counterexample_count: 0.0
+    expected: FAIL_CLOSED
+
+  - id: chf-069-fail-open-counterexamples
+    all_counterexamples_triaged: false
+    triage_receipts_ready: true
+    disposition_recorded: true
+    blocking_counterexample_unresolved: false
+    open_counterexample_count: 3.0
+    expected: FAIL_CLOSED
+
+  - id: chf-069-fail-receipts-not-ready
+    all_counterexamples_triaged: true
+    triage_receipts_ready: false
+    disposition_recorded: true
+    blocking_counterexample_unresolved: false
+    open_counterexample_count: 0.0
+    expected: FAIL_CLOSED
+
+  - id: chf-069-fail-disposition-not-recorded
+    all_counterexamples_triaged: true
+    triage_receipts_ready: true
+    disposition_recorded: false
+    blocking_counterexample_unresolved: false
+    open_counterexample_count: 0.0
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-070
+title: Mathematical Claim Locking Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - all_claims_boundary_defined
+    - overclaim_guardrail_present
+    - version_hash_present
+    - lock_receipt_ready
+  required_false:
+    - unlocked_claim_detected
+    - overclaim_detected
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-070-pass-all-claims-locked
+    all_claims_boundary_defined: true
+    overclaim_guardrail_present: true
+    version_hash_present: true
+    lock_receipt_ready: true
+    unlocked_claim_detected: false
+    overclaim_detected: false
+    expected: ALLOW
+
+  - id: chf-070-fail-unlocked-claim
+    all_claims_boundary_defined: true
+    overclaim_guardrail_present: true
+    version_hash_present: true
+    lock_receipt_ready: true
+    unlocked_claim_detected: true
+    overclaim_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-070-fail-overclaim-detected
+    all_claims_boundary_defined: true
+    overclaim_guardrail_present: true
+    version_hash_present: true
+    lock_receipt_ready: true
+    unlocked_claim_detected: false
+    overclaim_detected: true
+    expected: FAIL_CLOSED
+
+  - id: chf-070-fail-no-version-hash
+    all_claims_boundary_defined: true
+    overclaim_guardrail_present: true
+    version_hash_present: false
+    lock_receipt_ready: true
+    unlocked_claim_detected: false
+    overclaim_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-070-fail-guardrail-missing
+    all_claims_boundary_defined: true
+    overclaim_guardrail_present: false
+    version_hash_present: true
+    lock_receipt_ready: true
+    unlocked_claim_detected: false
+    overclaim_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-070-fail-receipt-not-ready
+    all_claims_boundary_defined: true
+    overclaim_guardrail_present: true
+    version_hash_present: true
+    lock_receipt_ready: false
+    unlocked_claim_detected: false
+    overclaim_detected: false
+    expected: FAIL_CLOSED

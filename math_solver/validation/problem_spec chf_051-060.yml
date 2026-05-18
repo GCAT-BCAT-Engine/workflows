@@ -1,0 +1,841 @@
+---
+problem_id: chf-051
+title: Human Override and Operator Recovery Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - operator_reachable
+    - override_channel_available
+    - revocation_propagated
+    - recovery_receipt_ready
+    - degraded_access_supported
+  required_false: []
+  min_metrics:
+    latency_ms: 0.0
+  max_metrics:
+    latency_ms: 5000.0
+
+test_cases:
+  - id: chf-051-pass-all-conditions-met
+    operator_reachable: true
+    override_channel_available: true
+    revocation_propagated: true
+    recovery_receipt_ready: true
+    degraded_access_supported: true
+    latency_ms: 1000.0
+    expected: ALLOW
+
+  - id: chf-051-fail-operator-not-reachable
+    operator_reachable: false
+    override_channel_available: true
+    revocation_propagated: true
+    recovery_receipt_ready: true
+    degraded_access_supported: true
+    latency_ms: 1000.0
+    expected: FAIL_CLOSED
+
+  - id: chf-051-fail-override-channel-missing
+    operator_reachable: true
+    override_channel_available: false
+    revocation_propagated: true
+    recovery_receipt_ready: true
+    degraded_access_supported: true
+    latency_ms: 1000.0
+    expected: FAIL_CLOSED
+
+  - id: chf-051-fail-revocation-not-propagated
+    operator_reachable: true
+    override_channel_available: true
+    revocation_propagated: false
+    recovery_receipt_ready: true
+    degraded_access_supported: true
+    latency_ms: 1000.0
+    expected: FAIL_CLOSED
+
+  - id: chf-051-fail-receipt-not-ready
+    operator_reachable: true
+    override_channel_available: true
+    revocation_propagated: true
+    recovery_receipt_ready: false
+    degraded_access_supported: true
+    latency_ms: 1000.0
+    expected: FAIL_CLOSED
+
+  - id: chf-051-fail-degraded-access-missing
+    operator_reachable: true
+    override_channel_available: true
+    revocation_propagated: true
+    recovery_receipt_ready: true
+    degraded_access_supported: false
+    latency_ms: 1000.0
+    expected: FAIL_CLOSED
+
+  - id: chf-051-fail-latency-exceeded
+    operator_reachable: true
+    override_channel_available: true
+    revocation_propagated: true
+    recovery_receipt_ready: true
+    degraded_access_supported: true
+    latency_ms: 6000.0
+    expected: FAIL_CLOSED
+
+  - id: chf-051-pass-boundary-latency
+    operator_reachable: true
+    override_channel_available: true
+    revocation_propagated: true
+    recovery_receipt_ready: true
+    degraded_access_supported: true
+    latency_ms: 5000.0
+    expected: ALLOW
+
+---
+problem_id: chf-052
+title: AI-to-AI Coordination Boundary Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - peer_identity_verified
+    - coordination_scope_valid
+    - shared_receipts_ready
+  required_false:
+    - collusion_risk_detected
+  min_metrics:
+    coordination_confidence: 0.8
+  max_metrics:
+    fanout_count: 10.0
+    collusion_risk_score: 0.2
+
+test_cases:
+  - id: chf-052-pass-all-conditions-met
+    peer_identity_verified: true
+    coordination_scope_valid: true
+    shared_receipts_ready: true
+    collusion_risk_detected: false
+    coordination_confidence: 0.9
+    fanout_count: 5.0
+    collusion_risk_score: 0.1
+    expected: ALLOW
+
+  - id: chf-052-fail-peer-identity-unverified
+    peer_identity_verified: false
+    coordination_scope_valid: true
+    shared_receipts_ready: true
+    collusion_risk_detected: false
+    coordination_confidence: 0.9
+    fanout_count: 5.0
+    collusion_risk_score: 0.1
+    expected: FAIL_CLOSED
+
+  - id: chf-052-fail-scope-invalid
+    peer_identity_verified: true
+    coordination_scope_valid: false
+    shared_receipts_ready: true
+    collusion_risk_detected: false
+    coordination_confidence: 0.9
+    fanout_count: 5.0
+    collusion_risk_score: 0.1
+    expected: FAIL_CLOSED
+
+  - id: chf-052-fail-collusion-detected
+    peer_identity_verified: true
+    coordination_scope_valid: true
+    shared_receipts_ready: true
+    collusion_risk_detected: true
+    coordination_confidence: 0.9
+    fanout_count: 5.0
+    collusion_risk_score: 0.1
+    expected: FAIL_CLOSED
+
+  - id: chf-052-fail-fanout-exceeded
+    peer_identity_verified: true
+    coordination_scope_valid: true
+    shared_receipts_ready: true
+    collusion_risk_detected: false
+    coordination_confidence: 0.9
+    fanout_count: 11.0
+    collusion_risk_score: 0.1
+    expected: FAIL_CLOSED
+
+  - id: chf-052-fail-confidence-below-threshold
+    peer_identity_verified: true
+    coordination_scope_valid: true
+    shared_receipts_ready: true
+    collusion_risk_detected: false
+    coordination_confidence: 0.7
+    fanout_count: 5.0
+    collusion_risk_score: 0.1
+    expected: FAIL_CLOSED
+
+  - id: chf-052-fail-collusion-score-high
+    peer_identity_verified: true
+    coordination_scope_valid: true
+    shared_receipts_ready: true
+    collusion_risk_detected: false
+    coordination_confidence: 0.9
+    fanout_count: 5.0
+    collusion_risk_score: 0.3
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-053
+title: Cross-Jurisdiction / Legal Boundary Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - jurisdiction_declared
+    - legal_basis_valid
+    - cross_border_review_complete
+  required_false:
+    - destination_sanctioned
+  min_metrics:
+    legal_confidence: 0.85
+  max_metrics:
+    jurisdiction_risk_score: 0.3
+
+test_cases:
+  - id: chf-053-pass-all-conditions-met
+    jurisdiction_declared: true
+    legal_basis_valid: true
+    cross_border_review_complete: true
+    destination_sanctioned: false
+    legal_confidence: 0.95
+    jurisdiction_risk_score: 0.1
+    expected: ALLOW
+
+  - id: chf-053-fail-jurisdiction-not-declared
+    jurisdiction_declared: false
+    legal_basis_valid: true
+    cross_border_review_complete: true
+    destination_sanctioned: false
+    legal_confidence: 0.95
+    jurisdiction_risk_score: 0.1
+    expected: FAIL_CLOSED
+
+  - id: chf-053-fail-destination-sanctioned
+    jurisdiction_declared: true
+    legal_basis_valid: true
+    cross_border_review_complete: true
+    destination_sanctioned: true
+    legal_confidence: 0.95
+    jurisdiction_risk_score: 0.1
+    expected: FAIL_CLOSED
+
+  - id: chf-053-fail-legal-confidence-low
+    jurisdiction_declared: true
+    legal_basis_valid: true
+    cross_border_review_complete: true
+    destination_sanctioned: false
+    legal_confidence: 0.7
+    jurisdiction_risk_score: 0.1
+    expected: FAIL_CLOSED
+
+  - id: chf-053-fail-jurisdiction-risk-high
+    jurisdiction_declared: true
+    legal_basis_valid: true
+    cross_border_review_complete: true
+    destination_sanctioned: false
+    legal_confidence: 0.95
+    jurisdiction_risk_score: 0.5
+    expected: FAIL_CLOSED
+
+  - id: chf-053-fail-review-incomplete
+    jurisdiction_declared: true
+    legal_basis_valid: true
+    cross_border_review_complete: false
+    destination_sanctioned: false
+    legal_confidence: 0.95
+    jurisdiction_risk_score: 0.1
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-054
+title: Accessibility and Degraded-Authority Recovery Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - accessible_recovery_path
+    - alternate_operator_path
+    - degraded_mode_supported
+    - accessible_notice
+  required_false:
+    - lockout_detected
+  min_metrics: {}
+  max_metrics:
+    recovery_burden_score: 0.4
+
+test_cases:
+  - id: chf-054-pass-all-conditions-met
+    accessible_recovery_path: true
+    alternate_operator_path: true
+    degraded_mode_supported: true
+    accessible_notice: true
+    lockout_detected: false
+    recovery_burden_score: 0.2
+    expected: ALLOW
+
+  - id: chf-054-fail-lockout-detected
+    accessible_recovery_path: true
+    alternate_operator_path: true
+    degraded_mode_supported: true
+    accessible_notice: true
+    lockout_detected: true
+    recovery_burden_score: 0.2
+    expected: FAIL_CLOSED
+
+  - id: chf-054-fail-no-recovery-path
+    accessible_recovery_path: false
+    alternate_operator_path: true
+    degraded_mode_supported: true
+    accessible_notice: true
+    lockout_detected: false
+    recovery_burden_score: 0.2
+    expected: FAIL_CLOSED
+
+  - id: chf-054-fail-no-alternate-operator
+    accessible_recovery_path: true
+    alternate_operator_path: false
+    degraded_mode_supported: true
+    accessible_notice: true
+    lockout_detected: false
+    recovery_burden_score: 0.2
+    expected: FAIL_CLOSED
+
+  - id: chf-054-fail-burden-too-high
+    accessible_recovery_path: true
+    alternate_operator_path: true
+    degraded_mode_supported: true
+    accessible_notice: true
+    lockout_detected: false
+    recovery_burden_score: 0.6
+    expected: FAIL_CLOSED
+
+  - id: chf-054-fail-notice-missing
+    accessible_recovery_path: true
+    alternate_operator_path: true
+    degraded_mode_supported: true
+    accessible_notice: false
+    lockout_detected: false
+    recovery_burden_score: 0.2
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-055
+title: Epistemic Provenance Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - source_trace_present
+    - claim_support_sufficient
+    - uncertainty_labeled
+  required_false:
+    - unsupported_assertion_detected
+  min_metrics:
+    source_confidence: 0.75
+  max_metrics:
+    unexplained_claim_fraction: 0.15
+
+test_cases:
+  - id: chf-055-pass-all-conditions-met
+    source_trace_present: true
+    claim_support_sufficient: true
+    uncertainty_labeled: true
+    unsupported_assertion_detected: false
+    source_confidence: 0.9
+    unexplained_claim_fraction: 0.05
+    expected: ALLOW
+
+  - id: chf-055-fail-no-source-trace
+    source_trace_present: false
+    claim_support_sufficient: true
+    uncertainty_labeled: true
+    unsupported_assertion_detected: false
+    source_confidence: 0.9
+    unexplained_claim_fraction: 0.05
+    expected: FAIL_CLOSED
+
+  - id: chf-055-fail-unsupported-assertion
+    source_trace_present: true
+    claim_support_sufficient: true
+    uncertainty_labeled: true
+    unsupported_assertion_detected: true
+    source_confidence: 0.9
+    unexplained_claim_fraction: 0.05
+    expected: FAIL_CLOSED
+
+  - id: chf-055-fail-confidence-low
+    source_trace_present: true
+    claim_support_sufficient: true
+    uncertainty_labeled: true
+    unsupported_assertion_detected: false
+    source_confidence: 0.5
+    unexplained_claim_fraction: 0.05
+    expected: FAIL_CLOSED
+
+  - id: chf-055-fail-unexplained-fraction-high
+    source_trace_present: true
+    claim_support_sufficient: true
+    uncertainty_labeled: true
+    unsupported_assertion_detected: false
+    source_confidence: 0.9
+    unexplained_claim_fraction: 0.3
+    expected: FAIL_CLOSED
+
+  - id: chf-055-fail-uncertainty-not-labeled
+    source_trace_present: true
+    claim_support_sufficient: true
+    uncertainty_labeled: false
+    unsupported_assertion_detected: false
+    source_confidence: 0.9
+    unexplained_claim_fraction: 0.05
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-056
+title: Scientific Claim Escalation Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  max_speculation_ratio: 0.2
+
+test_cases:
+  - id: chf-056-pass-evidence-sufficient
+    claim_boundary_defined: true
+    overclaim_guardrail: true
+    speculation_ratio: 0.1
+    extraordinary_claim: false
+    evidence_level_sufficient: true
+    peer_review_path_exists: true
+    expected: ALLOW
+
+  - id: chf-056-pass-extraordinary-with-evidence
+    claim_boundary_defined: true
+    overclaim_guardrail: true
+    speculation_ratio: 0.1
+    extraordinary_claim: true
+    evidence_level_sufficient: true
+    peer_review_path_exists: true
+    expected: ALLOW
+
+  - id: chf-056-escalate-extraordinary-no-evidence
+    claim_boundary_defined: true
+    overclaim_guardrail: true
+    speculation_ratio: 0.1
+    extraordinary_claim: true
+    evidence_level_sufficient: false
+    peer_review_path_exists: true
+    expected: ESCALATION_REQUIRED
+
+  - id: chf-056-escalate-no-peer-review-path
+    claim_boundary_defined: true
+    overclaim_guardrail: true
+    speculation_ratio: 0.1
+    extraordinary_claim: false
+    evidence_level_sufficient: false
+    peer_review_path_exists: false
+    expected: ESCALATION_REQUIRED
+
+  - id: chf-056-escalate-evidence-insufficient
+    claim_boundary_defined: true
+    overclaim_guardrail: true
+    speculation_ratio: 0.1
+    extraordinary_claim: false
+    evidence_level_sufficient: false
+    peer_review_path_exists: true
+    expected: ESCALATION_REQUIRED
+
+  - id: chf-056-fail-no-claim-boundary
+    claim_boundary_defined: false
+    overclaim_guardrail: true
+    speculation_ratio: 0.1
+    extraordinary_claim: false
+    evidence_level_sufficient: true
+    peer_review_path_exists: true
+    expected: FAIL_CLOSED
+
+  - id: chf-056-fail-no-overclaim-guardrail
+    claim_boundary_defined: true
+    overclaim_guardrail: false
+    speculation_ratio: 0.1
+    extraordinary_claim: false
+    evidence_level_sufficient: true
+    peer_review_path_exists: true
+    expected: FAIL_CLOSED
+
+  - id: chf-056-fail-speculation-too-high
+    claim_boundary_defined: true
+    overclaim_guardrail: true
+    speculation_ratio: 0.4
+    extraordinary_claim: false
+    evidence_level_sufficient: true
+    peer_review_path_exists: true
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-057
+title: Dataset Ingestion and Training Boundary Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - dataset_consent_valid
+    - license_valid
+    - purpose_fit
+    - training_receipt_ready
+  required_false:
+    - restricted_dataset_detected
+  min_metrics: {}
+  max_metrics:
+    privacy_risk_score: 0.25
+
+test_cases:
+  - id: chf-057-pass-all-conditions-met
+    dataset_consent_valid: true
+    license_valid: true
+    purpose_fit: true
+    training_receipt_ready: true
+    restricted_dataset_detected: false
+    privacy_risk_score: 0.1
+    expected: ALLOW
+
+  - id: chf-057-fail-restricted-dataset
+    dataset_consent_valid: true
+    license_valid: true
+    purpose_fit: true
+    training_receipt_ready: true
+    restricted_dataset_detected: true
+    privacy_risk_score: 0.1
+    expected: FAIL_CLOSED
+
+  - id: chf-057-fail-consent-invalid
+    dataset_consent_valid: false
+    license_valid: true
+    purpose_fit: true
+    training_receipt_ready: true
+    restricted_dataset_detected: false
+    privacy_risk_score: 0.1
+    expected: FAIL_CLOSED
+
+  - id: chf-057-fail-license-invalid
+    dataset_consent_valid: true
+    license_valid: false
+    purpose_fit: true
+    training_receipt_ready: true
+    restricted_dataset_detected: false
+    privacy_risk_score: 0.1
+    expected: FAIL_CLOSED
+
+  - id: chf-057-fail-privacy-risk-high
+    dataset_consent_valid: true
+    license_valid: true
+    purpose_fit: true
+    training_receipt_ready: true
+    restricted_dataset_detected: false
+    privacy_risk_score: 0.4
+    expected: FAIL_CLOSED
+
+  - id: chf-057-fail-receipt-not-ready
+    dataset_consent_valid: true
+    license_valid: true
+    purpose_fit: true
+    training_receipt_ready: false
+    restricted_dataset_detected: false
+    privacy_risk_score: 0.1
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-058
+title: Identity / Persona Continuity Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - identity_authorized
+    - persona_scope_valid
+    - memory_within_boundary
+  required_false:
+    - impersonation_risk_detected
+  min_metrics:
+    continuity_confidence: 0.8
+  max_metrics:
+    persona_drift_score: 0.2
+    impersonation_risk_score: 0.15
+
+test_cases:
+  - id: chf-058-pass-all-conditions-met
+    identity_authorized: true
+    persona_scope_valid: true
+    memory_within_boundary: true
+    impersonation_risk_detected: false
+    continuity_confidence: 0.95
+    persona_drift_score: 0.05
+    impersonation_risk_score: 0.05
+    expected: ALLOW
+
+  - id: chf-058-fail-identity-not-authorized
+    identity_authorized: false
+    persona_scope_valid: true
+    memory_within_boundary: true
+    impersonation_risk_detected: false
+    continuity_confidence: 0.95
+    persona_drift_score: 0.05
+    impersonation_risk_score: 0.05
+    expected: FAIL_CLOSED
+
+  - id: chf-058-fail-impersonation-detected
+    identity_authorized: true
+    persona_scope_valid: true
+    memory_within_boundary: true
+    impersonation_risk_detected: true
+    continuity_confidence: 0.95
+    persona_drift_score: 0.05
+    impersonation_risk_score: 0.05
+    expected: FAIL_CLOSED
+
+  - id: chf-058-fail-drift-too-high
+    identity_authorized: true
+    persona_scope_valid: true
+    memory_within_boundary: true
+    impersonation_risk_detected: false
+    continuity_confidence: 0.95
+    persona_drift_score: 0.4
+    impersonation_risk_score: 0.05
+    expected: FAIL_CLOSED
+
+  - id: chf-058-fail-confidence-low
+    identity_authorized: true
+    persona_scope_valid: true
+    memory_within_boundary: true
+    impersonation_risk_detected: false
+    continuity_confidence: 0.5
+    persona_drift_score: 0.05
+    impersonation_risk_score: 0.05
+    expected: FAIL_CLOSED
+
+  - id: chf-058-fail-impersonation-score-high
+    identity_authorized: true
+    persona_scope_valid: true
+    memory_within_boundary: true
+    impersonation_risk_detected: false
+    continuity_confidence: 0.95
+    persona_drift_score: 0.05
+    impersonation_risk_score: 0.3
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-059
+title: Deletion / Forgetting / Retention Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  max_orphan_record_risk: 0.1
+
+test_cases:
+  - id: chf-059-allow-valid-retention
+    retention_basis_valid: true
+    deletion_path_exists: false
+    retention_forbidden: false
+    tombstone_receipt_ready: false
+    downstream_notice_sent: true
+    orphan_record_risk: 0.0
+    expected: RETENTION_ALLOWED
+
+  - id: chf-059-deletion-required-forbidden
+    retention_basis_valid: true
+    deletion_path_exists: true
+    retention_forbidden: true
+    tombstone_receipt_ready: true
+    downstream_notice_sent: true
+    orphan_record_risk: 0.0
+    expected: DELETION_REQUIRED
+
+  - id: chf-059-deletion-required-forbidden-no-receipt
+    retention_basis_valid: false
+    deletion_path_exists: true
+    retention_forbidden: true
+    tombstone_receipt_ready: false
+    downstream_notice_sent: true
+    orphan_record_risk: 0.0
+    expected: DELETION_REQUIRED
+
+  - id: chf-059-fail-no-basis-no-deletion-path
+    retention_basis_valid: false
+    deletion_path_exists: false
+    retention_forbidden: false
+    tombstone_receipt_ready: false
+    downstream_notice_sent: true
+    orphan_record_risk: 0.0
+    expected: RETENTION_FAIL_CLOSED
+
+  - id: chf-059-fail-tombstone-not-ready
+    retention_basis_valid: true
+    deletion_path_exists: true
+    retention_forbidden: false
+    tombstone_receipt_ready: false
+    downstream_notice_sent: true
+    orphan_record_risk: 0.0
+    expected: RETENTION_FAIL_CLOSED
+
+  - id: chf-059-fail-notice-not-sent
+    retention_basis_valid: true
+    deletion_path_exists: false
+    retention_forbidden: false
+    tombstone_receipt_ready: false
+    downstream_notice_sent: false
+    orphan_record_risk: 0.0
+    expected: RETENTION_FAIL_CLOSED
+
+  - id: chf-059-fail-orphan-risk-high
+    retention_basis_valid: true
+    deletion_path_exists: true
+    retention_forbidden: false
+    tombstone_receipt_ready: true
+    downstream_notice_sent: true
+    orphan_record_risk: 0.5
+    expected: RETENTION_FAIL_CLOSED
+
+  - id: chf-059-allow-boundary-orphan-risk
+    retention_basis_valid: true
+    deletion_path_exists: true
+    retention_forbidden: false
+    tombstone_receipt_ready: true
+    downstream_notice_sent: true
+    orphan_record_risk: 0.1
+    expected: RETENTION_ALLOWED
+
+---
+problem_id: chf-060
+title: Cross-Formalism Composition Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - formalism_interfaces_defined
+    - composition_invariants_hold
+    - conflict_resolution_defined
+    - composition_receipts_ready
+  required_false: []
+  min_metrics: {}
+  max_metrics:
+    semantic_drift_score: 0.1
+
+test_cases:
+  - id: chf-060-pass-all-conditions-met
+    formalism_interfaces_defined: true
+    composition_invariants_hold: true
+    conflict_resolution_defined: true
+    composition_receipts_ready: true
+    semantic_drift_score: 0.02
+    expected: ALLOW
+
+  - id: chf-060-fail-interfaces-not-defined
+    formalism_interfaces_defined: false
+    composition_invariants_hold: true
+    conflict_resolution_defined: true
+    composition_receipts_ready: true
+    semantic_drift_score: 0.02
+    expected: FAIL_CLOSED
+
+  - id: chf-060-fail-invariants-violated
+    formalism_interfaces_defined: true
+    composition_invariants_hold: false
+    conflict_resolution_defined: true
+    composition_receipts_ready: true
+    semantic_drift_score: 0.02
+    expected: FAIL_CLOSED
+
+  - id: chf-060-fail-drift-too-high
+    formalism_interfaces_defined: true
+    composition_invariants_hold: true
+    conflict_resolution_defined: true
+    composition_receipts_ready: true
+    semantic_drift_score: 0.2
+    expected: FAIL_CLOSED
+
+  - id: chf-060-fail-receipts-not-ready
+    formalism_interfaces_defined: true
+    composition_invariants_hold: true
+    conflict_resolution_defined: true
+    composition_receipts_ready: false
+    semantic_drift_score: 0.02
+    expected: FAIL_CLOSED
+
+  - id: chf-060-fail-conflict-resolution-missing
+    formalism_interfaces_defined: true
+    composition_invariants_hold: true
+    conflict_resolution_defined: false
+    composition_receipts_ready: true
+    semantic_drift_score: 0.02
+    expected: FAIL_CLOSED
+
+  - id: chf-060-pass-boundary-drift
+    formalism_interfaces_defined: true
+    composition_invariants_hold: true
+    conflict_resolution_defined: true
+    composition_receipts_ready: true
+    semantic_drift_score: 0.1
+    expected: ALLOW

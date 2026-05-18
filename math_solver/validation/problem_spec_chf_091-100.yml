@@ -1,0 +1,761 @@
+---
+problem_id: chf-091
+title: Patent Boundary Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - claim_boundary_defined
+    - prior_art_search_complete
+    - novelty_statement_present
+    - patent_receipt_ready
+  required_false:
+    - prior_art_conflict_detected
+    - public_disclosure_premature
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-091-pass-patent-ready
+    claim_boundary_defined: true
+    prior_art_search_complete: true
+    novelty_statement_present: true
+    patent_receipt_ready: true
+    prior_art_conflict_detected: false
+    public_disclosure_premature: false
+    expected: ALLOW
+
+  - id: chf-091-fail-prior-art-conflict
+    claim_boundary_defined: true
+    prior_art_search_complete: true
+    novelty_statement_present: true
+    patent_receipt_ready: true
+    prior_art_conflict_detected: true
+    public_disclosure_premature: false
+    expected: FAIL_CLOSED
+
+  - id: chf-091-fail-premature-disclosure
+    claim_boundary_defined: true
+    prior_art_search_complete: true
+    novelty_statement_present: true
+    patent_receipt_ready: true
+    prior_art_conflict_detected: false
+    public_disclosure_premature: true
+    expected: FAIL_CLOSED
+
+  - id: chf-091-fail-no-claim-boundary
+    claim_boundary_defined: false
+    prior_art_search_complete: true
+    novelty_statement_present: true
+    patent_receipt_ready: true
+    prior_art_conflict_detected: false
+    public_disclosure_premature: false
+    expected: FAIL_CLOSED
+
+  - id: chf-091-fail-novelty-missing
+    claim_boundary_defined: true
+    prior_art_search_complete: true
+    novelty_statement_present: false
+    patent_receipt_ready: true
+    prior_art_conflict_detected: false
+    public_disclosure_premature: false
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-092
+title: Whitepaper Claims Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - claims_evidence_graded
+    - overclaim_guardrail_present
+    - publication_receipt_ready
+    - all_claims_bounded
+  required_false:
+    - overclaim_detected
+    - unsupported_claim_present
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-092-pass-claims-valid
+    claims_evidence_graded: true
+    overclaim_guardrail_present: true
+    publication_receipt_ready: true
+    all_claims_bounded: true
+    overclaim_detected: false
+    unsupported_claim_present: false
+    expected: ALLOW
+
+  - id: chf-092-fail-overclaim-detected
+    claims_evidence_graded: true
+    overclaim_guardrail_present: true
+    publication_receipt_ready: true
+    all_claims_bounded: true
+    overclaim_detected: true
+    unsupported_claim_present: false
+    expected: FAIL_CLOSED
+
+  - id: chf-092-fail-unsupported-claim
+    claims_evidence_graded: true
+    overclaim_guardrail_present: true
+    publication_receipt_ready: true
+    all_claims_bounded: true
+    overclaim_detected: false
+    unsupported_claim_present: true
+    expected: FAIL_CLOSED
+
+  - id: chf-092-fail-not-evidence-graded
+    claims_evidence_graded: false
+    overclaim_guardrail_present: true
+    publication_receipt_ready: true
+    all_claims_bounded: true
+    overclaim_detected: false
+    unsupported_claim_present: false
+    expected: FAIL_CLOSED
+
+  - id: chf-092-fail-claims-unbounded
+    claims_evidence_graded: true
+    overclaim_guardrail_present: true
+    publication_receipt_ready: true
+    all_claims_bounded: false
+    overclaim_detected: false
+    unsupported_claim_present: false
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-093
+title: Public Demo Readiness Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - demo_reproduces_claims
+    - safety_review_complete
+    - demo_receipt_ready
+    - reproducibility_confirmed
+  required_false:
+    - sensitive_data_exposed
+    - demo_crashes_on_baseline
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-093-pass-demo-ready
+    demo_reproduces_claims: true
+    safety_review_complete: true
+    demo_receipt_ready: true
+    reproducibility_confirmed: true
+    sensitive_data_exposed: false
+    demo_crashes_on_baseline: false
+    expected: ALLOW
+
+  - id: chf-093-fail-sensitive-data-exposed
+    demo_reproduces_claims: true
+    safety_review_complete: true
+    demo_receipt_ready: true
+    reproducibility_confirmed: true
+    sensitive_data_exposed: true
+    demo_crashes_on_baseline: false
+    expected: FAIL_CLOSED
+
+  - id: chf-093-fail-demo-crashes
+    demo_reproduces_claims: true
+    safety_review_complete: true
+    demo_receipt_ready: true
+    reproducibility_confirmed: true
+    sensitive_data_exposed: false
+    demo_crashes_on_baseline: true
+    expected: FAIL_CLOSED
+
+  - id: chf-093-fail-does-not-reproduce-claims
+    demo_reproduces_claims: false
+    safety_review_complete: true
+    demo_receipt_ready: true
+    reproducibility_confirmed: true
+    sensitive_data_exposed: false
+    demo_crashes_on_baseline: false
+    expected: FAIL_CLOSED
+
+  - id: chf-093-fail-reproducibility-not-confirmed
+    demo_reproduces_claims: true
+    safety_review_complete: true
+    demo_receipt_ready: true
+    reproducibility_confirmed: false
+    sensitive_data_exposed: false
+    demo_crashes_on_baseline: false
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-094
+title: Adversarial Review Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  finding_critical_threshold: 0.7
+  finding_minor_threshold: 0.3
+
+test_cases:
+  - id: chf-094-clear-no-findings
+    review_process_valid: true
+    review_completed: true
+    critical_finding_present: false
+    finding_severity: 0.1
+    minor_finding_present: false
+    expected: REVIEW_CLEAR
+
+  - id: chf-094-critical-finding-flag
+    review_process_valid: true
+    review_completed: true
+    critical_finding_present: true
+    finding_severity: 0.1
+    minor_finding_present: false
+    expected: FINDING_CRITICAL
+
+  - id: chf-094-critical-high-severity
+    review_process_valid: true
+    review_completed: true
+    critical_finding_present: false
+    finding_severity: 0.9
+    minor_finding_present: false
+    expected: FINDING_CRITICAL
+
+  - id: chf-094-minor-medium-severity
+    review_process_valid: true
+    review_completed: true
+    critical_finding_present: false
+    finding_severity: 0.5
+    minor_finding_present: false
+    expected: FINDING_MINOR
+
+  - id: chf-094-minor-finding-flag
+    review_process_valid: true
+    review_completed: true
+    critical_finding_present: false
+    finding_severity: 0.1
+    minor_finding_present: true
+    expected: FINDING_MINOR
+
+  - id: chf-094-fail-review-incomplete
+    review_process_valid: true
+    review_completed: false
+    critical_finding_present: false
+    finding_severity: 0.1
+    minor_finding_present: false
+    expected: REVIEW_FAIL_CLOSED
+
+  - id: chf-094-fail-process-invalid
+    review_process_valid: false
+    review_completed: true
+    critical_finding_present: false
+    finding_severity: 0.1
+    minor_finding_present: false
+    expected: REVIEW_FAIL_CLOSED
+
+  - id: chf-094-clear-boundary-severity
+    review_process_valid: true
+    review_completed: true
+    critical_finding_present: false
+    finding_severity: 0.3
+    minor_finding_present: false
+    expected: REVIEW_CLEAR
+
+---
+problem_id: chf-095
+title: Benchmark Packaging Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - benchmark_reproducible
+    - seed_locked
+    - dependencies_pinned
+    - results_archived
+    - benchmark_receipt_ready
+  required_false:
+    - benchmark_overfit_detected
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-095-pass-benchmark-packaged
+    benchmark_reproducible: true
+    seed_locked: true
+    dependencies_pinned: true
+    results_archived: true
+    benchmark_receipt_ready: true
+    benchmark_overfit_detected: false
+    expected: ALLOW
+
+  - id: chf-095-fail-overfit-detected
+    benchmark_reproducible: true
+    seed_locked: true
+    dependencies_pinned: true
+    results_archived: true
+    benchmark_receipt_ready: true
+    benchmark_overfit_detected: true
+    expected: FAIL_CLOSED
+
+  - id: chf-095-fail-not-reproducible
+    benchmark_reproducible: false
+    seed_locked: true
+    dependencies_pinned: true
+    results_archived: true
+    benchmark_receipt_ready: true
+    benchmark_overfit_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-095-fail-seed-not-locked
+    benchmark_reproducible: true
+    seed_locked: false
+    dependencies_pinned: true
+    results_archived: true
+    benchmark_receipt_ready: true
+    benchmark_overfit_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-095-fail-deps-not-pinned
+    benchmark_reproducible: true
+    seed_locked: true
+    dependencies_pinned: false
+    results_archived: true
+    benchmark_receipt_ready: true
+    benchmark_overfit_detected: false
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-096
+title: StegVerse.org Integration Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - site_claims_aligned_with_evidence
+    - demo_functional
+    - publisher_synced
+    - site_receipt_ready
+  required_false:
+    - broken_link_detected
+    - site_overclaim_detected
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-096-pass-site-integrated
+    site_claims_aligned_with_evidence: true
+    demo_functional: true
+    publisher_synced: true
+    site_receipt_ready: true
+    broken_link_detected: false
+    site_overclaim_detected: false
+    expected: ALLOW
+
+  - id: chf-096-fail-broken-link
+    site_claims_aligned_with_evidence: true
+    demo_functional: true
+    publisher_synced: true
+    site_receipt_ready: true
+    broken_link_detected: true
+    site_overclaim_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-096-fail-overclaim-on-site
+    site_claims_aligned_with_evidence: true
+    demo_functional: true
+    publisher_synced: true
+    site_receipt_ready: true
+    broken_link_detected: false
+    site_overclaim_detected: true
+    expected: FAIL_CLOSED
+
+  - id: chf-096-fail-claims-misaligned
+    site_claims_aligned_with_evidence: false
+    demo_functional: true
+    publisher_synced: true
+    site_receipt_ready: true
+    broken_link_detected: false
+    site_overclaim_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-096-fail-publisher-not-synced
+    site_claims_aligned_with_evidence: true
+    demo_functional: true
+    publisher_synced: false
+    site_receipt_ready: true
+    broken_link_detected: false
+    site_overclaim_detected: false
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-097
+title: LinkedIn / Publication Framing Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - framing_matches_evidence_level
+    - publication_receipt_present
+    - audience_appropriate
+  required_false:
+    - framing_overclaim_detected
+    - unverified_claim_in_framing
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-097-pass-framing-valid
+    framing_matches_evidence_level: true
+    publication_receipt_present: true
+    audience_appropriate: true
+    framing_overclaim_detected: false
+    unverified_claim_in_framing: false
+    expected: ALLOW
+
+  - id: chf-097-fail-framing-overclaim
+    framing_matches_evidence_level: true
+    publication_receipt_present: true
+    audience_appropriate: true
+    framing_overclaim_detected: true
+    unverified_claim_in_framing: false
+    expected: FAIL_CLOSED
+
+  - id: chf-097-fail-unverified-claim
+    framing_matches_evidence_level: true
+    publication_receipt_present: true
+    audience_appropriate: true
+    framing_overclaim_detected: false
+    unverified_claim_in_framing: true
+    expected: FAIL_CLOSED
+
+  - id: chf-097-fail-framing-mismatch
+    framing_matches_evidence_level: false
+    publication_receipt_present: true
+    audience_appropriate: true
+    framing_overclaim_detected: false
+    unverified_claim_in_framing: false
+    expected: FAIL_CLOSED
+
+  - id: chf-097-fail-no-receipt
+    framing_matches_evidence_level: true
+    publication_receipt_present: false
+    audience_appropriate: true
+    framing_overclaim_detected: false
+    unverified_claim_in_framing: false
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-098
+title: Research Outreach Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - outreach_claims_bounded
+    - contact_receipt_ready
+    - response_handling_defined
+    - outreach_authority_valid
+  required_false:
+    - outreach_overclaim_detected
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-098-pass-outreach-valid
+    outreach_claims_bounded: true
+    contact_receipt_ready: true
+    response_handling_defined: true
+    outreach_authority_valid: true
+    outreach_overclaim_detected: false
+    expected: ALLOW
+
+  - id: chf-098-fail-overclaim-in-outreach
+    outreach_claims_bounded: true
+    contact_receipt_ready: true
+    response_handling_defined: true
+    outreach_authority_valid: true
+    outreach_overclaim_detected: true
+    expected: FAIL_CLOSED
+
+  - id: chf-098-fail-claims-not-bounded
+    outreach_claims_bounded: false
+    contact_receipt_ready: true
+    response_handling_defined: true
+    outreach_authority_valid: true
+    outreach_overclaim_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-098-fail-no-receipt
+    outreach_claims_bounded: true
+    contact_receipt_ready: false
+    response_handling_defined: true
+    outreach_authority_valid: true
+    outreach_overclaim_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-098-fail-authority-invalid
+    outreach_claims_bounded: true
+    contact_receipt_ready: true
+    response_handling_defined: true
+    outreach_authority_valid: false
+    outreach_overclaim_detected: false
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-099
+title: Phase-One Archive Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - all_phase_one_artifacts_present
+    - archive_receipt_ready
+    - custody_chain_complete
+    - archive_hash_verified
+    - retrieval_index_present
+  required_false:
+    - archive_gap_detected
+    - archive_tamper_detected
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-099-pass-archive-complete
+    all_phase_one_artifacts_present: true
+    archive_receipt_ready: true
+    custody_chain_complete: true
+    archive_hash_verified: true
+    retrieval_index_present: true
+    archive_gap_detected: false
+    archive_tamper_detected: false
+    expected: ALLOW
+
+  - id: chf-099-fail-archive-gap
+    all_phase_one_artifacts_present: true
+    archive_receipt_ready: true
+    custody_chain_complete: true
+    archive_hash_verified: true
+    retrieval_index_present: true
+    archive_gap_detected: true
+    archive_tamper_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-099-fail-tamper-detected
+    all_phase_one_artifacts_present: true
+    archive_receipt_ready: true
+    custody_chain_complete: true
+    archive_hash_verified: true
+    retrieval_index_present: true
+    archive_gap_detected: false
+    archive_tamper_detected: true
+    expected: FAIL_CLOSED
+
+  - id: chf-099-fail-artifacts-missing
+    all_phase_one_artifacts_present: false
+    archive_receipt_ready: true
+    custody_chain_complete: true
+    archive_hash_verified: true
+    retrieval_index_present: true
+    archive_gap_detected: false
+    archive_tamper_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-099-fail-hash-not-verified
+    all_phase_one_artifacts_present: true
+    archive_receipt_ready: true
+    custody_chain_complete: true
+    archive_hash_verified: false
+    retrieval_index_present: true
+    archive_gap_detected: false
+    archive_tamper_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-099-fail-no-retrieval-index
+    all_phase_one_artifacts_present: true
+    archive_receipt_ready: true
+    custody_chain_complete: true
+    archive_hash_verified: true
+    retrieval_index_present: false
+    archive_gap_detected: false
+    archive_tamper_detected: false
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-100
+title: Phase-One Completion Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  min_sandbox_coverage_fraction: 1.0
+  min_publication_grade_count: 100
+
+test_cases:
+  - id: chf-100-complete-all-conditions-met
+    all_specs_evaluated: true
+    explicit_pass_fraction: 1.0
+    sandbox_coverage_fraction: 1.0
+    publication_grade_count: 100
+    maturity_matrix_complete: true
+    whitepaper_outline_present: true
+    formal_methods_map_present: true
+    archive_receipt_ready: true
+    expected: PHASE_COMPLETE
+
+  - id: chf-100-blocked-specs-not-evaluated
+    all_specs_evaluated: false
+    explicit_pass_fraction: 1.0
+    sandbox_coverage_fraction: 1.0
+    publication_grade_count: 100
+    maturity_matrix_complete: true
+    whitepaper_outline_present: true
+    formal_methods_map_present: true
+    archive_receipt_ready: true
+    expected: PHASE_BLOCKED
+
+  - id: chf-100-blocked-explicit-failures
+    all_specs_evaluated: true
+    explicit_pass_fraction: 0.95
+    sandbox_coverage_fraction: 1.0
+    publication_grade_count: 100
+    maturity_matrix_complete: true
+    whitepaper_outline_present: true
+    formal_methods_map_present: true
+    archive_receipt_ready: true
+    expected: PHASE_BLOCKED
+
+  - id: chf-100-blocked-sandbox-coverage-low
+    all_specs_evaluated: true
+    explicit_pass_fraction: 1.0
+    sandbox_coverage_fraction: 0.9
+    publication_grade_count: 100
+    maturity_matrix_complete: true
+    whitepaper_outline_present: true
+    formal_methods_map_present: true
+    archive_receipt_ready: true
+    expected: PHASE_BLOCKED
+
+  - id: chf-100-blocked-pub-grade-count-low
+    all_specs_evaluated: true
+    explicit_pass_fraction: 1.0
+    sandbox_coverage_fraction: 1.0
+    publication_grade_count: 50
+    maturity_matrix_complete: true
+    whitepaper_outline_present: true
+    formal_methods_map_present: true
+    archive_receipt_ready: true
+    expected: PHASE_BLOCKED
+
+  - id: chf-100-incomplete-maturity-matrix-missing
+    all_specs_evaluated: true
+    explicit_pass_fraction: 1.0
+    sandbox_coverage_fraction: 1.0
+    publication_grade_count: 100
+    maturity_matrix_complete: false
+    whitepaper_outline_present: true
+    formal_methods_map_present: true
+    archive_receipt_ready: true
+    expected: PHASE_INCOMPLETE
+
+  - id: chf-100-incomplete-whitepaper-missing
+    all_specs_evaluated: true
+    explicit_pass_fraction: 1.0
+    sandbox_coverage_fraction: 1.0
+    publication_grade_count: 100
+    maturity_matrix_complete: true
+    whitepaper_outline_present: false
+    formal_methods_map_present: true
+    archive_receipt_ready: true
+    expected: PHASE_INCOMPLETE
+
+  - id: chf-100-incomplete-formal-methods-map-missing
+    all_specs_evaluated: true
+    explicit_pass_fraction: 1.0
+    sandbox_coverage_fraction: 1.0
+    publication_grade_count: 100
+    maturity_matrix_complete: true
+    whitepaper_outline_present: true
+    formal_methods_map_present: false
+    archive_receipt_ready: true
+    expected: PHASE_INCOMPLETE
+
+  - id: chf-100-incomplete-archive-not-ready
+    all_specs_evaluated: true
+    explicit_pass_fraction: 1.0
+    sandbox_coverage_fraction: 1.0
+    publication_grade_count: 100
+    maturity_matrix_complete: true
+    whitepaper_outline_present: true
+    formal_methods_map_present: true
+    archive_receipt_ready: false
+    expected: PHASE_INCOMPLETE
+
+  - id: chf-100-blocked-boundary-pub-count
+    all_specs_evaluated: true
+    explicit_pass_fraction: 1.0
+    sandbox_coverage_fraction: 1.0
+    publication_grade_count: 99
+    maturity_matrix_complete: true
+    whitepaper_outline_present: true
+    formal_methods_map_present: true
+    archive_receipt_ready: true
+    expected: PHASE_BLOCKED

@@ -1,0 +1,657 @@
+---
+problem_id: chf-071
+title: Lean Readiness Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - lean_type_signatures_defined
+    - invariants_expressible_in_lean
+    - proof_sketch_complete
+    - lean_receipt_ready
+  required_false:
+    - lean_type_error_detected
+  min_metrics:
+    lean_coverage_fraction: 0.9
+  max_metrics: {}
+
+test_cases:
+  - id: chf-071-pass-lean-ready
+    lean_type_signatures_defined: true
+    invariants_expressible_in_lean: true
+    proof_sketch_complete: true
+    lean_receipt_ready: true
+    lean_type_error_detected: false
+    lean_coverage_fraction: 1.0
+    expected: ALLOW
+
+  - id: chf-071-fail-type-error
+    lean_type_signatures_defined: true
+    invariants_expressible_in_lean: true
+    proof_sketch_complete: true
+    lean_receipt_ready: true
+    lean_type_error_detected: true
+    lean_coverage_fraction: 1.0
+    expected: FAIL_CLOSED
+
+  - id: chf-071-fail-signatures-missing
+    lean_type_signatures_defined: false
+    invariants_expressible_in_lean: true
+    proof_sketch_complete: true
+    lean_receipt_ready: true
+    lean_type_error_detected: false
+    lean_coverage_fraction: 1.0
+    expected: FAIL_CLOSED
+
+  - id: chf-071-fail-coverage-low
+    lean_type_signatures_defined: true
+    invariants_expressible_in_lean: true
+    proof_sketch_complete: true
+    lean_receipt_ready: true
+    lean_type_error_detected: false
+    lean_coverage_fraction: 0.7
+    expected: FAIL_CLOSED
+
+  - id: chf-071-fail-sketch-incomplete
+    lean_type_signatures_defined: true
+    invariants_expressible_in_lean: true
+    proof_sketch_complete: false
+    lean_receipt_ready: true
+    lean_type_error_detected: false
+    lean_coverage_fraction: 1.0
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-072
+title: Coq Readiness Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - coq_definitions_complete
+    - invariants_expressible_in_coq
+    - proof_sketch_complete
+    - coq_receipt_ready
+  required_false:
+    - coq_type_error_detected
+  min_metrics:
+    coq_coverage_fraction: 0.9
+  max_metrics: {}
+
+test_cases:
+  - id: chf-072-pass-coq-ready
+    coq_definitions_complete: true
+    invariants_expressible_in_coq: true
+    proof_sketch_complete: true
+    coq_receipt_ready: true
+    coq_type_error_detected: false
+    coq_coverage_fraction: 1.0
+    expected: ALLOW
+
+  - id: chf-072-fail-type-error
+    coq_definitions_complete: true
+    invariants_expressible_in_coq: true
+    proof_sketch_complete: true
+    coq_receipt_ready: true
+    coq_type_error_detected: true
+    coq_coverage_fraction: 1.0
+    expected: FAIL_CLOSED
+
+  - id: chf-072-fail-definitions-incomplete
+    coq_definitions_complete: false
+    invariants_expressible_in_coq: true
+    proof_sketch_complete: true
+    coq_receipt_ready: true
+    coq_type_error_detected: false
+    coq_coverage_fraction: 1.0
+    expected: FAIL_CLOSED
+
+  - id: chf-072-fail-coverage-low
+    coq_definitions_complete: true
+    invariants_expressible_in_coq: true
+    proof_sketch_complete: true
+    coq_receipt_ready: true
+    coq_type_error_detected: false
+    coq_coverage_fraction: 0.6
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-073
+title: TLA+ Readiness Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - tla_spec_defined
+    - safety_properties_expressible
+    - liveness_properties_expressible
+    - model_checker_passed
+    - tla_receipt_ready
+  required_false:
+    - tla_spec_error_detected
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-073-pass-tla-ready
+    tla_spec_defined: true
+    safety_properties_expressible: true
+    liveness_properties_expressible: true
+    model_checker_passed: true
+    tla_receipt_ready: true
+    tla_spec_error_detected: false
+    expected: ALLOW
+
+  - id: chf-073-fail-spec-error
+    tla_spec_defined: true
+    safety_properties_expressible: true
+    liveness_properties_expressible: true
+    model_checker_passed: true
+    tla_receipt_ready: true
+    tla_spec_error_detected: true
+    expected: FAIL_CLOSED
+
+  - id: chf-073-fail-model-checker-failed
+    tla_spec_defined: true
+    safety_properties_expressible: true
+    liveness_properties_expressible: true
+    model_checker_passed: false
+    tla_receipt_ready: true
+    tla_spec_error_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-073-fail-spec-not-defined
+    tla_spec_defined: false
+    safety_properties_expressible: true
+    liveness_properties_expressible: true
+    model_checker_passed: true
+    tla_receipt_ready: true
+    tla_spec_error_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-073-fail-liveness-not-expressible
+    tla_spec_defined: true
+    safety_properties_expressible: true
+    liveness_properties_expressible: false
+    model_checker_passed: true
+    tla_receipt_ready: true
+    tla_spec_error_detected: false
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-074
+title: Alloy Readiness Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - alloy_model_defined
+    - constraints_expressible
+    - alloy_analyzer_passed
+    - alloy_receipt_ready
+  required_false:
+    - alloy_inconsistency_detected
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-074-pass-alloy-ready
+    alloy_model_defined: true
+    constraints_expressible: true
+    alloy_analyzer_passed: true
+    alloy_receipt_ready: true
+    alloy_inconsistency_detected: false
+    expected: ALLOW
+
+  - id: chf-074-fail-inconsistency
+    alloy_model_defined: true
+    constraints_expressible: true
+    alloy_analyzer_passed: true
+    alloy_receipt_ready: true
+    alloy_inconsistency_detected: true
+    expected: FAIL_CLOSED
+
+  - id: chf-074-fail-analyzer-failed
+    alloy_model_defined: true
+    constraints_expressible: true
+    alloy_analyzer_passed: false
+    alloy_receipt_ready: true
+    alloy_inconsistency_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-074-fail-model-not-defined
+    alloy_model_defined: false
+    constraints_expressible: true
+    alloy_analyzer_passed: true
+    alloy_receipt_ready: true
+    alloy_inconsistency_detected: false
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-075
+title: Theorem Mapping Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - theorem_map_complete
+    - all_invariants_mapped
+    - mapping_receipt_ready
+  required_false:
+    - unmapped_invariant_detected
+  min_metrics:
+    mapping_coverage_fraction: 1.0
+  max_metrics: {}
+
+test_cases:
+  - id: chf-075-pass-all-mapped
+    theorem_map_complete: true
+    all_invariants_mapped: true
+    mapping_receipt_ready: true
+    unmapped_invariant_detected: false
+    mapping_coverage_fraction: 1.0
+    expected: ALLOW
+
+  - id: chf-075-fail-unmapped-invariant
+    theorem_map_complete: true
+    all_invariants_mapped: false
+    mapping_receipt_ready: true
+    unmapped_invariant_detected: true
+    mapping_coverage_fraction: 0.8
+    expected: FAIL_CLOSED
+
+  - id: chf-075-fail-map-incomplete
+    theorem_map_complete: false
+    all_invariants_mapped: true
+    mapping_receipt_ready: true
+    unmapped_invariant_detected: false
+    mapping_coverage_fraction: 1.0
+    expected: FAIL_CLOSED
+
+  - id: chf-075-fail-coverage-below-threshold
+    theorem_map_complete: true
+    all_invariants_mapped: true
+    mapping_receipt_ready: true
+    unmapped_invariant_detected: false
+    mapping_coverage_fraction: 0.9
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-076
+title: Finite Model Counterexample Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - model_checker_passed
+    - bound_sufficient
+    - counterexample_search_complete
+    - finite_model_receipt_ready
+  required_false:
+    - counterexample_found
+  min_metrics: {}
+  max_metrics:
+    open_counterexample_count: 0.0
+
+test_cases:
+  - id: chf-076-pass-no-counterexamples
+    model_checker_passed: true
+    bound_sufficient: true
+    counterexample_search_complete: true
+    finite_model_receipt_ready: true
+    counterexample_found: false
+    open_counterexample_count: 0.0
+    expected: ALLOW
+
+  - id: chf-076-fail-counterexample-found
+    model_checker_passed: true
+    bound_sufficient: true
+    counterexample_search_complete: true
+    finite_model_receipt_ready: true
+    counterexample_found: true
+    open_counterexample_count: 1.0
+    expected: FAIL_CLOSED
+
+  - id: chf-076-fail-checker-failed
+    model_checker_passed: false
+    bound_sufficient: true
+    counterexample_search_complete: true
+    finite_model_receipt_ready: true
+    counterexample_found: false
+    open_counterexample_count: 0.0
+    expected: FAIL_CLOSED
+
+  - id: chf-076-fail-bound-insufficient
+    model_checker_passed: true
+    bound_sufficient: false
+    counterexample_search_complete: true
+    finite_model_receipt_ready: true
+    counterexample_found: false
+    open_counterexample_count: 0.0
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-077
+title: Runtime Monitor Extraction Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - monitors_extractable
+    - monitor_receipt_ready
+    - deployment_path_defined
+  required_false:
+    - monitor_contradiction_detected
+  min_metrics:
+    monitor_coverage_fraction: 0.9
+  max_metrics: {}
+
+test_cases:
+  - id: chf-077-pass-monitors-ready
+    monitors_extractable: true
+    monitor_receipt_ready: true
+    deployment_path_defined: true
+    monitor_contradiction_detected: false
+    monitor_coverage_fraction: 1.0
+    expected: ALLOW
+
+  - id: chf-077-fail-not-extractable
+    monitors_extractable: false
+    monitor_receipt_ready: true
+    deployment_path_defined: true
+    monitor_contradiction_detected: false
+    monitor_coverage_fraction: 1.0
+    expected: FAIL_CLOSED
+
+  - id: chf-077-fail-contradiction
+    monitors_extractable: true
+    monitor_receipt_ready: true
+    deployment_path_defined: true
+    monitor_contradiction_detected: true
+    monitor_coverage_fraction: 1.0
+    expected: FAIL_CLOSED
+
+  - id: chf-077-fail-coverage-low
+    monitors_extractable: true
+    monitor_receipt_ready: true
+    deployment_path_defined: true
+    monitor_contradiction_detected: false
+    monitor_coverage_fraction: 0.7
+    expected: FAIL_CLOSED
+
+  - id: chf-077-fail-deployment-path-missing
+    monitors_extractable: true
+    monitor_receipt_ready: true
+    deployment_path_defined: false
+    monitor_contradiction_detected: false
+    monitor_coverage_fraction: 1.0
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-078
+title: Proof Artifact Custody Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - proof_artifacts_present
+    - custody_chain_complete
+    - artifact_hash_verified
+    - custody_receipt_ready
+  required_false:
+    - tamper_detected
+    - custody_gap_detected
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-078-pass-custody-valid
+    proof_artifacts_present: true
+    custody_chain_complete: true
+    artifact_hash_verified: true
+    custody_receipt_ready: true
+    tamper_detected: false
+    custody_gap_detected: false
+    expected: ALLOW
+
+  - id: chf-078-fail-tamper-detected
+    proof_artifacts_present: true
+    custody_chain_complete: true
+    artifact_hash_verified: true
+    custody_receipt_ready: true
+    tamper_detected: true
+    custody_gap_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-078-fail-custody-gap
+    proof_artifacts_present: true
+    custody_chain_complete: true
+    artifact_hash_verified: true
+    custody_receipt_ready: true
+    tamper_detected: false
+    custody_gap_detected: true
+    expected: FAIL_CLOSED
+
+  - id: chf-078-fail-artifacts-missing
+    proof_artifacts_present: false
+    custody_chain_complete: true
+    artifact_hash_verified: true
+    custody_receipt_ready: true
+    tamper_detected: false
+    custody_gap_detected: false
+    expected: FAIL_CLOSED
+
+  - id: chf-078-fail-hash-not-verified
+    proof_artifacts_present: true
+    custody_chain_complete: true
+    artifact_hash_verified: false
+    custody_receipt_ready: true
+    tamper_detected: false
+    custody_gap_detected: false
+    expected: FAIL_CLOSED
+
+---
+problem_id: chf-079
+title: Specification Drift Detection Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  drift_warning_threshold: 0.05
+  drift_critical_threshold: 0.15
+
+test_cases:
+  - id: chf-079-acceptable-no-drift
+    baseline_hash_present: true
+    drift_measurable: true
+    semantic_drift: 0.01
+    structural_drift: 0.01
+    re_validation_receipt_present: false
+    expected: DRIFT_ACCEPTABLE
+
+  - id: chf-079-acceptable-with-receipt
+    baseline_hash_present: true
+    drift_measurable: true
+    semantic_drift: 0.08
+    structural_drift: 0.04
+    re_validation_receipt_present: true
+    expected: DRIFT_ACCEPTABLE
+
+  - id: chf-079-quarantine-semantic-critical
+    baseline_hash_present: true
+    drift_measurable: true
+    semantic_drift: 0.20
+    structural_drift: 0.01
+    re_validation_receipt_present: true
+    expected: DRIFT_QUARANTINE
+
+  - id: chf-079-quarantine-structural-critical
+    baseline_hash_present: true
+    drift_measurable: true
+    semantic_drift: 0.01
+    structural_drift: 0.20
+    re_validation_receipt_present: false
+    expected: DRIFT_QUARANTINE
+
+  - id: chf-079-quarantine-warning-no-receipt
+    baseline_hash_present: true
+    drift_measurable: true
+    semantic_drift: 0.08
+    structural_drift: 0.01
+    re_validation_receipt_present: false
+    expected: DRIFT_QUARANTINE
+
+  - id: chf-079-fail-no-baseline
+    baseline_hash_present: false
+    drift_measurable: true
+    semantic_drift: 0.01
+    structural_drift: 0.01
+    re_validation_receipt_present: false
+    expected: DRIFT_FAIL_CLOSED
+
+  - id: chf-079-fail-not-measurable
+    baseline_hash_present: true
+    drift_measurable: false
+    semantic_drift: 0.01
+    structural_drift: 0.01
+    re_validation_receipt_present: false
+    expected: DRIFT_FAIL_CLOSED
+
+  - id: chf-079-acceptable-boundary-warn
+    baseline_hash_present: true
+    drift_measurable: true
+    semantic_drift: 0.05
+    structural_drift: 0.05
+    re_validation_receipt_present: false
+    expected: DRIFT_ACCEPTABLE
+
+---
+problem_id: chf-080
+title: Formal Release Candidate Gate
+version: "1.0.0"
+maturity:
+  explicit_validated: false
+  sandbox_validated: false
+  semantic_reviewed: true
+  publication_grade: false
+  provisional: false
+
+model:
+  required_true:
+    - all_formal_gates_passed
+    - release_receipt_ready
+    - external_review_complete
+    - version_locked
+    - formal_release_candidate_tagged
+  required_false:
+    - open_blocking_issue_known
+  min_metrics: {}
+  max_metrics: {}
+
+test_cases:
+  - id: chf-080-pass-release-ready
+    all_formal_gates_passed: true
+    release_receipt_ready: true
+    external_review_complete: true
+    version_locked: true
+    formal_release_candidate_tagged: true
+    open_blocking_issue_known: false
+    expected: ALLOW
+
+  - id: chf-080-fail-formal-gates-not-passed
+    all_formal_gates_passed: false
+    release_receipt_ready: true
+    external_review_complete: true
+    version_locked: true
+    formal_release_candidate_tagged: true
+    open_blocking_issue_known: false
+    expected: FAIL_CLOSED
+
+  - id: chf-080-fail-blocking-issue-known
+    all_formal_gates_passed: true
+    release_receipt_ready: true
+    external_review_complete: true
+    version_locked: true
+    formal_release_candidate_tagged: true
+    open_blocking_issue_known: true
+    expected: FAIL_CLOSED
+
+  - id: chf-080-fail-external-review-incomplete
+    all_formal_gates_passed: true
+    release_receipt_ready: true
+    external_review_complete: false
+    version_locked: true
+    formal_release_candidate_tagged: true
+    open_blocking_issue_known: false
+    expected: FAIL_CLOSED
+
+  - id: chf-080-fail-version-not-locked
+    all_formal_gates_passed: true
+    release_receipt_ready: true
+    external_review_complete: true
+    version_locked: false
+    formal_release_candidate_tagged: true
+    open_blocking_issue_known: false
+    expected: FAIL_CLOSED
+
+  - id: chf-080-fail-not-tagged
+    all_formal_gates_passed: true
+    release_receipt_ready: true
+    external_review_complete: true
+    version_locked: true
+    formal_release_candidate_tagged: false
+    open_blocking_issue_known: false
+    expected: FAIL_CLOSED
