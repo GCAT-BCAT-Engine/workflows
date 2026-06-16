@@ -1,0 +1,43 @@
+{
+  "candidate_id": "RTG-001-CV-001",
+  "generated": "2026-06-16T01:53:55Z",
+  "source_repo": "Data-Continuation/RTG-Tests",
+  "target_repo": "GCAT-BCAT-Engine/workflows",
+  "problem_spec": "math_solver/validation/problem_spec_rtg_001.yml",
+  "basis_state": "live_handoff_contract",
+  "current_stage": "contract_ready",
+  "transition_path": [
+    {
+      "stage": "contract_ready",
+      "claim_allowed": "RTG handoff contract is ready",
+      "claim_blocked": [
+        "math solver executed",
+        "Anthropic API called",
+        "Ubuntu validation performed",
+        "artifacts returned",
+        "RTG state updated"
+      ]
+    },
+    {
+      "stage": "dispatch_attempted",
+      "claim_allowed": "RTG request crossed into workflows repo"
+    },
+    {
+      "stage": "artifact_returned",
+      "claim_allowed": "math-solver produced returned artifacts"
+    },
+    {
+      "stage": "artifact_ingested",
+      "claim_allowed": "RTG ingested returned solver evidence"
+    },
+    {
+      "stage": "rtg_state_updated",
+      "claim_allowed": "RTG state changed because of returned solver evidence"
+    }
+  ],
+  "dead_basis_guard": {
+    "enabled": true,
+    "blocked_false_transition": "local RTG test pass cannot be reported as external solver execution",
+    "requires_external_artifact_for_solver_claim": true
+  }
+}
