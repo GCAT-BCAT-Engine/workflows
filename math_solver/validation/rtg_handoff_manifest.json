@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "generated": "2026-06-16T01:53:55Z",
+  "manifest_name": "rtg_001_handoff_manifest",
+  "install_target_repo": "GCAT-BCAT-Engine/workflows",
+  "source_repo": "Data-Continuation/RTG-Tests",
+  "problem_spec": "math_solver/validation/problem_spec_rtg_001.yml",
+  "candidate_vector": "math_solver/validation/candidate_vectors/rtg/rtg_001.json",
+  "cost_estimate": "math_solver/validation/cost_estimates/rtg_001_cost_estimate.json",
+  "workflow": ".github/workflows/validation_run.yml",
+  "dispatch": {
+    "trigger": "workflow_dispatch",
+    "inputs": {
+      "run_id": "RTG-001",
+      "budget_ceiling": "50.00"
+    }
+  },
+  "expected_runner": "ubuntu-latest",
+  "required_secret": "ANTHROPIC_API_KEY",
+  "expected_artifact": {
+    "name": "external-full-results",
+    "path_pattern": "ext2_*.json",
+    "files": [
+      "ext2_phase1.json",
+      "ext2_sources.json",
+      "ext2_phase3.json",
+      "ext2_report.json"
+    ]
+  },
+  "claim_boundary": {
+    "contract_package_installed": true,
+    "actual_dispatch_performed": false,
+    "external_solver_execution_claimed": false,
+    "returned_artifacts_required_before_ingestion_claim": true
+  }
+}
