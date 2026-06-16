@@ -1,0 +1,65 @@
+problem_id: RTG-001
+title: RTG live-basis handoff validation candidate
+source_repo: Data-Continuation/RTG-Tests
+target_repo: GCAT-BCAT-Engine/workflows
+domain: relative_transition_geometry
+status: contract_ready
+claim_boundary:
+  candidate_generation_only: true
+  autonomous_theorem_proving_claimed: false
+  final_correctness_claimed: false
+  human_or_formal_review_required: true
+execution:
+  requested_workflow: .github/workflows/validation_run.yml
+  trigger: workflow_dispatch
+  runner: ubuntu-latest
+  required_secret: ANTHROPIC_API_KEY
+  run_id: RTG-001
+  budget_ceiling_usd: 50.00
+rtg_basis:
+  basis_type: live_handoff_contract
+  dead_basis_guard: true
+  false_execution_claim_blocked: true
+  actual_dispatch_performed: false
+  expected_external_execution: true
+solver_request:
+  objective: >
+    Evaluate whether the RTG live-basis handoff contract preserves the distinction
+    between local scaffold tests and external solver execution. Produce a structured
+    candidate analysis explaining what evidence is required to graduate from
+    contract_ready to dispatch_attempted, artifact_returned, artifact_ingested,
+    and rtg_state_updated.
+  required_outputs:
+    - classification
+    - transition_boundary_analysis
+    - dead_basis_risk_assessment
+    - cost_basis_assessment
+    - artifact_ingestion_requirements
+    - next_state_recommendation
+invariants:
+  - name: no_false_execution_claim
+    type: rtg_claim_boundary
+    required: true
+  - name: target_repo_preserved
+    type: cross_repo_handoff
+    expected: GCAT-BCAT-Engine/workflows
+  - name: source_repo_preserved
+    type: cross_repo_handoff
+    expected: Data-Continuation/RTG-Tests
+  - name: required_secret_declared
+    type: workflow_security
+    expected: ANTHROPIC_API_KEY
+  - name: dispatch_inputs_declared
+    type: workflow_contract
+    expected:
+      - run_id
+      - budget_ceiling
+expected_artifacts:
+  - ext2_phase1.json
+  - ext2_sources.json
+  - ext2_phase3.json
+  - ext2_report.json
+sandbox:
+  required: true
+  tier: 1
+  timeout_seconds: 7200
