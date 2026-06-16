@@ -1,0 +1,65 @@
+name: "RTG-001 Auto Dispatch"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "math_solver/validation/rtg_auto_run_request.json"
+      - "math_solver/validation/problem_spec_rtg_001.yml"
+      - "math_solver/validation/rtg_handoff_manifest.json"
+      - ".github/workflows/rtg_001_auto_dispatch.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  dispatch_existing_solver_workflow:
+    name: "Dispatch existing RTG-001 solver workflow"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Validate RTG-001 install contract
+        run: python math_solver/validation/tests/test_rtg_001_workflows_install_contract.py
+
+      - name: Dispatch validation_run.yml for RTG-001
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run validation_run.yml \
+            --ref main \
+            -f run_id=RTG-001 \
+            -f budget_ceiling=50.00
+
+      - name: Write dispatch receipt
+        run: |
+          mkdir -p dispatch_receipts
+          cat > dispatch_receipts/rtg_001_auto_dispatch_receipt.json <<'JSON'
+          {
+            "schema_version": "1.0",
+            "case_id": "RTG-001",
+            "dispatch_status": "requested",
+            "target_workflow": "validation_run.yml",
+            "run_id": "RTG-001",
+            "budget_ceiling": "50.00",
+            "claim_boundary": {
+              "workflow_dispatch_attempted": true,
+              "artifact_returned": false,
+              "artifact_ingested": false,
+              "rtg_state_updated": false,
+              "autonomous_theorem_proving_claimed": false,
+              "final_correctness_claimed": false
+            }
+          }
+          JSON
+
+      - name: Upload dispatch receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: rtg-001-auto-dispatch-receipt
+          path: dispatch_receipts/rtg_001_auto_dispatch_receipt.json
