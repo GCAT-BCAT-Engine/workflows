@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "case_id": "RTG-001",
+  "status": "ready",
+  "target_workflow": "validation_run.yml",
+  "run_id": "RTG-001",
+  "budget_ceiling": "50.00",
+  "notes": "Marker file for RTG-001 workflow automation. This file does not claim returned artifacts or final correctness."
+}
