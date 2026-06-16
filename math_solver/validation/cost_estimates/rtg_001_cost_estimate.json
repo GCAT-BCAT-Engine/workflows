@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "generated": "2026-06-16T01:53:55Z",
+  "problem_id": "RTG-001",
+  "estimate_type": "pre_execution_reference_estimate",
+  "budget_ceiling_usd": 50.0,
+  "reference_costs": {
+    "external_full_process_reference_usd": 0.02086,
+    "external_incremental_reference_usd": 0.035,
+    "native_full_process_reference_usd": 0.06505,
+    "validation_connectivity_reference_usd": 0.015
+  },
+  "recommended_budget_gate": {
+    "soft_expected_range_usd": [
+      0.02,
+      0.1
+    ],
+    "hard_budget_ceiling_usd": 50.0,
+    "status": "within_budget"
+  },
+  "receipt_requirement": {
+    "actual_cost_must_be_read_from_returned_artifact": true,
+    "pre_execution_estimate_is_not_receipt": true,
+    "must_preserve_task_identity": true,
+    "must_preserve_output_type": true,
+    "must_preserve_claim_boundary": true
+  }
+}
