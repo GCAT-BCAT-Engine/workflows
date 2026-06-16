@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "repo": "GCAT-BCAT-Engine/workflows",
+  "generated": "2026-06-16T01:53:55Z",
+  "tasks": [
+    {
+      "name": "rtg_001_workflows_install_contract_tests",
+      "description": "Validate that the RTG-001 handoff package is installed correctly inside GCAT-BCAT-Engine/workflows before workflow_dispatch.",
+      "enabled": true,
+      "command": [
+        "python",
+        "math_solver/validation/tests/test_rtg_001_workflows_install_contract.py"
+      ]
+    }
+  ]
+}
