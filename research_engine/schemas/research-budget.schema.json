@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/research-budget.schema.json",
+  "title": "Governed Research Budget",
+  "type": "object",
+  "required": ["budget_id", "research_id", "currency", "hard_limit", "reserved", "spent", "remaining", "stage_authorizations", "automatic_stop"],
+  "properties": {
+    "budget_id": {"type": "string", "minLength": 1},
+    "research_id": {"type": "string", "minLength": 1},
+    "currency": {"const": "USD"},
+    "hard_limit": {"type": "number", "minimum": 0},
+    "reserved": {"type": "number", "minimum": 0},
+    "spent": {"type": "number", "minimum": 0},
+    "remaining": {"type": "number", "minimum": 0},
+    "pricing_registry_ref": {"type": "string", "minLength": 1},
+    "pricing_effective_at": {"type": "string", "format": "date-time"},
+    "stage_authorizations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["stage_id", "authorized_amount", "status", "authorization_ref"],
+        "properties": {
+          "stage_id": {"type": "string", "minLength": 1},
+          "authorized_amount": {"type": "number", "minimum": 0},
+          "spent_amount": {"type": "number", "minimum": 0},
+          "status": {"enum": ["not_authorized", "authorized", "running", "stopped", "complete", "released"]},
+          "authorization_ref": {"type": "string", "minLength": 1},
+          "authorized_at": {"type": ["string", "null"], "format": "date-time"},
+          "completed_at": {"type": ["string", "null"], "format": "date-time"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "automatic_stop": {
+      "type": "object",
+      "required": ["enabled", "threshold", "triggered"],
+      "properties": {
+        "enabled": {"type": "boolean"},
+        "threshold": {"type": "number", "minimum": 0},
+        "triggered": {"type": "boolean"},
+        "reason": {"type": ["string", "null"]},
+        "triggered_at": {"type": ["string", "null"], "format": "date-time"}
+      },
+      "additionalProperties": false
+    },
+    "execution_authority_ref": {"type": ["string", "null"]},
+    "budget_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  },
+  "allOf": [
+    {"if": {"properties": {"spent": {"type": "number"}, "hard_limit": {"type": "number"}}}, "then": {}}
+  ],
+  "additionalProperties": false
+}
