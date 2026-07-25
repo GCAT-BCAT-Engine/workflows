@@ -1,0 +1,56 @@
+{
+  "schema": "stegverse.research.cost_plan.v1",
+  "research_id": "TIDC-001",
+  "hard_limit_usd": 250,
+  "confidence_z": 1.96,
+  "stages": [
+    {
+      "stage_id": "triadic_protocol_review",
+      "units": 2,
+      "unit_cost_usd": 8,
+      "retry_rate": 0.25,
+      "uncertainty_fraction": 0.20,
+      "fixed_cost_usd": 0
+    },
+    {
+      "stage_id": "source_discovery_and_screening",
+      "units": 40,
+      "unit_cost_usd": 0.75,
+      "retry_rate": 0.10,
+      "uncertainty_fraction": 0.30,
+      "fixed_cost_usd": 0
+    },
+    {
+      "stage_id": "dataset_normalization",
+      "units": 20,
+      "unit_cost_usd": 1.25,
+      "retry_rate": 0.15,
+      "uncertainty_fraction": 0.25,
+      "fixed_cost_usd": 0
+    },
+    {
+      "stage_id": "math_solver_analysis",
+      "units": 6,
+      "unit_cost_usd": 5,
+      "retry_rate": 0.20,
+      "uncertainty_fraction": 0.20,
+      "fixed_cost_usd": 0
+    },
+    {
+      "stage_id": "independent_validation",
+      "units": 2,
+      "unit_cost_usd": 10,
+      "retry_rate": 0.10,
+      "uncertainty_fraction": 0.20,
+      "fixed_cost_usd": 0
+    },
+    {
+      "stage_id": "publication_bundle",
+      "units": 1,
+      "unit_cost_usd": 12,
+      "retry_rate": 0.10,
+      "uncertainty_fraction": 0.15,
+      "fixed_cost_usd": 0
+    }
+  ]
+}
