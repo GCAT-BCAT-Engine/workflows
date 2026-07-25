@@ -1,0 +1,49 @@
+{
+  "request_id": "MS-TIDC-001-PILOT-V1",
+  "research_id": "TIDC-001",
+  "protocol_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "dataset_refs": [
+    "StegVerse-Labs/Site:data/tidc/pilot-events-v0.1.json"
+  ],
+  "analysis_objectives": [
+    "estimate temporal clustering within technology waves",
+    "compare candidate-generation, verification, and publication timing",
+    "measure the proportion of self-capability versus external discoveries",
+    "run placebo-date and shuffled-exposure negative controls"
+  ],
+  "methods": [
+    {
+      "method_id": "tidc-descriptive-v1",
+      "family": "descriptive",
+      "purpose": "summarize event counts, timing gaps, confidence, dependency class, and orientation",
+      "assumptions": ["pilot records are seed-coded and not independently validated"],
+      "seed": 20260725,
+      "software_ref": "python:stdlib+pandas"
+    },
+    {
+      "method_id": "tidc-change-point-v1",
+      "family": "change_point",
+      "purpose": "test whether event intensity changes after technology exposure milestones",
+      "assumptions": ["event dates are measured consistently", "technology exposure dates are prespecified"],
+      "seed": 20260725,
+      "software_ref": "math_solver:change-point"
+    }
+  ],
+  "required_outputs": [
+    "point_estimates",
+    "standard_errors",
+    "confidence_intervals",
+    "effect_sizes",
+    "diagnostics",
+    "sensitivity_tests",
+    "negative_controls",
+    "missing_data_analysis",
+    "reproducibility_receipt"
+  ],
+  "alpha": 0.05,
+  "budget_authorization_ref": "pending:user:TIDC-001:stage:math_solver_analysis",
+  "maximum_compute_cost_usd": 30.0,
+  "execution_authority": true,
+  "requested_at": "2026-07-25T00:00:00Z",
+  "request_hash": "0000000000000000000000000000000000000000000000000000000000000000"
+}
