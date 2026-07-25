@@ -1,0 +1,40 @@
+{
+  "budget_id": "BUDGET-TIDC-001-V1",
+  "research_id": "TIDC-001",
+  "currency": "USD",
+  "hard_limit": 125.0,
+  "reserved": 110.0,
+  "spent": 0.0,
+  "remaining": 125.0,
+  "pricing_registry_ref": "research_engine/costing/pricing_registry.example.json",
+  "pricing_effective_at": "2026-07-25T00:00:00Z",
+  "stage_authorizations": [
+    {
+      "stage_id": "triadic_protocol",
+      "authorized_amount": 15.0,
+      "spent_amount": 0.0,
+      "status": "authorized",
+      "authorization_ref": "user:TIDC-001:stage:triadic_protocol:v1",
+      "authorized_at": "2026-07-25T00:00:00Z",
+      "completed_at": null
+    },
+    {
+      "stage_id": "math_solver_analysis",
+      "authorized_amount": 30.0,
+      "spent_amount": 0.0,
+      "status": "not_authorized",
+      "authorization_ref": "pending:user:TIDC-001:stage:math_solver_analysis",
+      "authorized_at": null,
+      "completed_at": null
+    }
+  ],
+  "automatic_stop": {
+    "enabled": true,
+    "threshold": 125.0,
+    "triggered": false,
+    "reason": null,
+    "triggered_at": null
+  },
+  "execution_authority_ref": "user:TIDC-001:bounded-stage-authority:v1",
+  "budget_hash": "0000000000000000000000000000000000000000000000000000000000000000"
+}
