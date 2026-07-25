@@ -1,5 +1,16 @@
 # GCAT-BCAT-Engine / Workflows
 
+## Position in the StegVerse LLM Communications Stack
+
+- **Stack ID:** `STEGVERSE-LLM-COMMS-STACK-v1`
+- **Component ID:** `gcat-bcat-workflows`
+- **Bounded role:** deterministic validation and cross-repository orchestration
+- **Consumes:** transition candidates, problem specifications, policy-bound tests, and reproducibility inputs
+- **Produces:** validation findings, proof artifacts, workflow results, and publication-readiness evidence
+- **Does not own:** operational standing, model inference, provider brokerage, identity, continuity truth, commit-time authority, execution, publication, or durable custody
+
+See [`docs/LLM_COMMUNICATIONS_STACK.md`](docs/LLM_COMMUNICATIONS_STACK.md) for the complete component boundary.
+
 **Deterministic workflow orchestration for GCAT/BCAT formal validation and mathematical proof pipelines.**
 
 This repository houses the GitHub Actions workflows, validation runners, and orchestration specs that power automated mathematical verification, problem-solving pipelines, and deterministic state-transition testing across the StegVerse ecosystem.
