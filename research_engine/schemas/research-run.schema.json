@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/research-run.schema.json",
+  "title": "Governed Research Run",
+  "type": "object",
+  "required": [
+    "research_id",
+    "topic",
+    "witness_statement",
+    "protocol_status",
+    "budget",
+    "analysis_objectives",
+    "required_outputs"
+  ],
+  "properties": {
+    "research_id": {"type": "string", "minLength": 1},
+    "topic": {"type": "string", "minLength": 1},
+    "witness_statement": {"type": "string", "minLength": 1},
+    "protocol_status": {
+      "enum": ["draft", "triadic_review", "user_approved", "execution_authorized", "running", "completed", "halted"]
+    },
+    "analysis_objectives": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "minItems": 1
+    },
+    "candidate_methods": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "required_outputs": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "estimates",
+          "standard_errors",
+          "confidence_intervals",
+          "effect_sizes",
+          "sensitivity_analysis",
+          "model_diagnostics",
+          "negative_controls",
+          "reproducibility_bundle",
+          "conclusion_record"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "budget": {
+      "type": "object",
+      "required": ["currency", "hard_limit", "execution_authority"],
+      "properties": {
+        "currency": {"const": "USD"},
+        "hard_limit": {"type": "number", "minimum": 0},
+        "stage_limit": {"type": "number", "minimum": 0},
+        "execution_authority": {"type": "boolean"},
+        "automatic_stop": {"type": "boolean", "default": true}
+      },
+      "additionalProperties": false
+    },
+    "allowed_providers": {
+      "type": "array",
+      "items": {"enum": ["openai", "anthropic", "local", "math_solver"]},
+      "uniqueItems": true
+    },
+    "human_review_gates": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  },
+  "additionalProperties": true
+}
