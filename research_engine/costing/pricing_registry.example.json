@@ -1,0 +1,40 @@
+{
+  "schema": "stegverse.research.pricing_registry.v1",
+  "effective_date": "2026-07-25",
+  "currency": "USD",
+  "status": "example_only_not_current_pricing_authority",
+  "providers": {
+    "openai": {
+      "models": {
+        "MODEL_ID": {
+          "input_per_million_tokens": 0,
+          "cached_input_per_million_tokens": 0,
+          "output_per_million_tokens": 0
+        }
+      }
+    },
+    "anthropic": {
+      "models": {
+        "MODEL_ID": {
+          "input_per_million_tokens": 0,
+          "cache_read_per_million_tokens": 0,
+          "output_per_million_tokens": 0
+        }
+      }
+    },
+    "local": {
+      "models": {
+        "LOCAL_RUNTIME": {
+          "compute_per_hour": 0,
+          "storage_per_gb_month": 0
+        }
+      }
+    }
+  },
+  "rules": [
+    "Replace example values only from a dated authoritative pricing source.",
+    "Preserve prior registries for cost-receipt reconstruction.",
+    "Do not authorize execution from an example or stale registry.",
+    "Actual provider usage overrides estimates during reconciliation."
+  ]
+}
