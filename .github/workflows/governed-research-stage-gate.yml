@@ -1,0 +1,49 @@
+name: Governed Research Stage Gate
+
+on:
+  workflow_dispatch:
+    inputs:
+      budget_path:
+        description: "Path to governed research budget JSON"
+        required: true
+        default: "research_engine/examples/tidc-budget.example.json"
+      stage_id:
+        description: "Authorized research stage"
+        required: true
+        default: "triadic_protocol"
+      requested_usd:
+        description: "Requested stage spend in USD"
+        required: true
+        default: "10.00"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  budget-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Evaluate stage authorization and cumulative spend
+        run: |
+          mkdir -p governed_research_stage_gate
+          python research_engine/costing/budget_gate.py \
+            --budget "${{ inputs.budget_path }}" \
+            --stage "${{ inputs.stage_id }}" \
+            --requested-usd "${{ inputs.requested_usd }}" \
+            --output governed_research_stage_gate/budget-gate-receipt.json
+
+      - name: Preserve gate receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: governed-research-stage-gate
+          path: governed_research_stage_gate/budget-gate-receipt.json
+          if-no-files-found: error
+
+# Boundary:
+# An ALLOW receipt authorizes only the named stage and requested amount.
+# It does not authorize a different stage, provider, scientific conclusion,
+# publication, repository mutation, or spending above the recorded boundary.
