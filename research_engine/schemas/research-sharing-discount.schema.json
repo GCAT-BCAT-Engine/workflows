@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/research-sharing-discount.schema.json",
+  "title": "Research Sharing Pricing Adjustment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "adjustment_id",
+    "research_id",
+    "consent_hash",
+    "base_price_usd",
+    "discount_type",
+    "discount_value",
+    "discount_amount_usd",
+    "final_price_usd",
+    "pricing_policy_ref",
+    "calculated_at",
+    "adjustment_hash"
+  ],
+  "properties": {
+    "adjustment_id": {"type": "string", "minLength": 1},
+    "research_id": {"type": "string", "minLength": 1},
+    "consent_hash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "base_price_usd": {"type": "number", "minimum": 0},
+    "discount_type": {"type": "string", "enum": ["percentage", "fixed", "compute_credit", "none"]},
+    "discount_value": {"type": "number", "minimum": 0},
+    "discount_amount_usd": {"type": "number", "minimum": 0},
+    "final_price_usd": {"type": "number", "minimum": 0},
+    "eligible_shared_components": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["protocol", "sources", "dataset", "results", "prompts"]},
+      "uniqueItems": true
+    },
+    "pricing_policy_ref": {"type": "string", "minLength": 1},
+    "calculated_at": {"type": "string", "format": "date-time"},
+    "expires_at": {"type": ["string", "null"], "format": "date-time"},
+    "creates_data_ownership_transfer": {"const": false},
+    "creates_publication_permission": {"const": false},
+    "adjustment_hash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}
+  }
+}
