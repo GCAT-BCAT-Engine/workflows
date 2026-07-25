@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/research-sharing-consent.schema.json",
+  "title": "Governed Research Sharing Consent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "consent_id",
+    "research_id",
+    "user_id_ref",
+    "sharing_enabled",
+    "scope",
+    "pricing_adjustment_ref",
+    "consent_version",
+    "consented_at",
+    "revocation_policy_ref",
+    "consent_hash"
+  ],
+  "properties": {
+    "consent_id": {"type": "string", "minLength": 1},
+    "research_id": {"type": "string", "minLength": 1},
+    "user_id_ref": {"type": "string", "minLength": 1},
+    "sharing_enabled": {"type": "boolean"},
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["share_protocol", "share_sources", "share_dataset", "share_results", "share_prompts", "share_identity"],
+      "properties": {
+        "share_protocol": {"type": "boolean"},
+        "share_sources": {"type": "boolean"},
+        "share_dataset": {"type": "boolean"},
+        "share_results": {"type": "boolean"},
+        "share_prompts": {"type": "boolean"},
+        "share_identity": {"type": "boolean"}
+      }
+    },
+    "license_posture": {
+      "type": "string",
+      "enum": ["private_to_stegverse", "research_pool_nonexclusive", "public_open", "custom"]
+    },
+    "allowed_uses": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "deduplication",
+          "method_comparison",
+          "aggregate_analysis",
+          "benchmarking",
+          "model_improvement",
+          "future_research",
+          "public_republication"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "excluded_data_classes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["direct_identifiers", "health_data", "financial_data", "legal_privileged", "trade_secrets", "third_party_restricted", "minors_data"]
+      },
+      "uniqueItems": true
+    },
+    "pricing_adjustment_ref": {"type": "string", "minLength": 1},
+    "consent_version": {"type": "string", "minLength": 1},
+    "consented_at": {"type": "string", "format": "date-time"},
+    "expires_at": {"type": ["string", "null"], "format": "date-time"},
+    "revocation_policy_ref": {"type": "string", "minLength": 1},
+    "revoked_at": {"type": ["string", "null"], "format": "date-time"},
+    "consent_hash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"sharing_enabled": {"const": false}}},
+      "then": {
+        "properties": {
+          "scope": {
+            "properties": {
+              "share_protocol": {"const": false},
+              "share_sources": {"const": false},
+              "share_dataset": {"const": false},
+              "share_results": {"const": false},
+              "share_prompts": {"const": false},
+              "share_identity": {"const": false}
+            }
+          }
+        }
+      }
+    }
+  ]
+}
