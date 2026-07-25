@@ -1,0 +1,93 @@
+name: Governed Research Plan
+
+on:
+  workflow_dispatch:
+    inputs:
+      research_id:
+        description: Research identifier
+        required: true
+        default: TIDC-001
+      topic:
+        description: Research topic
+        required: true
+        default: Technology-Induced Discovery Clustering
+      hard_limit_usd:
+        description: Hard planning limit in USD
+        required: true
+        default: "250"
+      execution_authority:
+        description: Planning only; must remain false in this workflow
+        required: true
+        default: "false"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Enforce planning-only boundary
+        shell: python
+        run: |
+          import json
+          import os
+          from pathlib import Path
+
+          authority = "${{ github.event.inputs.execution_authority }}".strip().lower()
+          if authority != "false":
+              raise SystemExit("This workflow is planning-only. execution_authority must be false.")
+
+          source = Path("research_engine/examples/tidc-cost-plan.example.json")
+          plan = json.loads(source.read_text(encoding="utf-8"))
+          plan["research_id"] = "${{ github.event.inputs.research_id }}"
+          plan["topic"] = "${{ github.event.inputs.topic }}"
+          plan["hard_limit_usd"] = float("${{ github.event.inputs.hard_limit_usd }}")
+          Path("research-plan-artifacts").mkdir(exist_ok=True)
+          Path("research-plan-artifacts/cost-plan.json").write_text(
+              json.dumps(plan, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+
+      - name: Calculate bounded cost estimate
+        run: |
+          python research_engine/costing/cost_estimator.py \
+            research-plan-artifacts/cost-plan.json \
+            --out research-plan-artifacts/cost-estimate.json
+
+      - name: Emit planning receipt
+        shell: python
+        run: |
+          import hashlib
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          plan = json.loads(Path("research-plan-artifacts/cost-plan.json").read_text())
+          estimate = json.loads(Path("research-plan-artifacts/cost-estimate.json").read_text())
+          receipt = {
+              "schema": "stegverse.research.planning_receipt.v1",
+              "created_utc": datetime.now(timezone.utc).isoformat(),
+              "research_id": plan["research_id"],
+              "topic": plan["topic"],
+              "cost_estimate_hash": estimate["estimate_hash"],
+              "decision": estimate["decision"],
+              "execution_authority": False,
+              "repo_mutation_authority": False,
+              "boundary": "Planning and estimation only. User approval and a separate execution gate are required."
+          }
+          encoded = json.dumps(receipt, sort_keys=True, separators=(",", ":")).encode()
+          receipt["receipt_hash"] = hashlib.sha256(encoded).hexdigest()
+          Path("research-plan-artifacts/planning-receipt.json").write_text(
+              json.dumps(receipt, indent=2, sort_keys=True) + "\n"
+          )
+
+      - name: Upload governed research plan
+        uses: actions/upload-artifact@v4
+        with:
+          name: governed-research-plan-${{ github.run_id }}
+          path: research-plan-artifacts/
+          if-no-files-found: error
