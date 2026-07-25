@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/triadic-deliberation.schema.json",
+  "title": "Triadic Research Deliberation",
+  "type": "object",
+  "required": ["deliberation_id", "research_id", "witness_statement", "constructive_review", "adversarial_review", "user_resolution", "protocol_status"],
+  "properties": {
+    "deliberation_id": {"type": "string", "minLength": 1},
+    "research_id": {"type": "string", "minLength": 1},
+    "witness_statement": {
+      "type": "object",
+      "required": ["text", "captured_at", "witness_ref", "content_hash"],
+      "properties": {
+        "text": {"type": "string", "minLength": 1},
+        "captured_at": {"type": "string", "format": "date-time"},
+        "witness_ref": {"type": "string", "minLength": 1},
+        "content_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "constructive_review": {"$ref": "#/$defs/model_review"},
+    "adversarial_review": {"$ref": "#/$defs/model_review"},
+    "user_resolution": {
+      "type": "object",
+      "required": ["accepted_points", "rejected_points", "unresolved_points", "scope_statement", "approved_by_user"],
+      "properties": {
+        "accepted_points": {"type": "array", "items": {"type": "string"}},
+        "rejected_points": {"type": "array", "items": {"type": "string"}},
+        "unresolved_points": {"type": "array", "items": {"type": "string"}},
+        "scope_statement": {"type": "string", "minLength": 1},
+        "approved_by_user": {"type": "boolean"},
+        "approved_at": {"type": ["string", "null"], "format": "date-time"}
+      },
+      "additionalProperties": false
+    },
+    "protocol_status": {"enum": ["draft", "needs_revision", "user_approved", "rejected"]},
+    "protocol_candidate_hash": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+    "execution_authority": {"const": false}
+  },
+  "$defs": {
+    "model_review": {
+      "type": "object",
+      "required": ["provider", "model", "role", "output", "assumptions", "risks", "output_hash"],
+      "properties": {
+        "provider": {"type": "string", "minLength": 1},
+        "model": {"type": "string", "minLength": 1},
+        "role": {"enum": ["constructive_formulation", "adversarial_method_review"]},
+        "output": {"type": "string", "minLength": 1},
+        "assumptions": {"type": "array", "items": {"type": "string"}},
+        "risks": {"type": "array", "items": {"type": "string"}},
+        "disagreements": {"type": "array", "items": {"type": "string"}},
+        "input_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "output_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "actual_cost_usd": {"type": ["number", "null"], "minimum": 0},
+        "pricing_ref": {"type": ["string", "null"]},
+        "output_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
