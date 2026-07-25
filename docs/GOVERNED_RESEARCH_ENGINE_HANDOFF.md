@@ -44,10 +44,18 @@ StegVerse-Labs/Site
 
 ```text
 research_engine/schemas/research-run.schema.json
+research_engine/schemas/triadic-deliberation.schema.json
+research_engine/schemas/research-budget.schema.json
+research_engine/schemas/math-solver-compute-request.schema.json
+research_engine/schemas/research-result.schema.json
 research_engine/costing/pricing_registry.example.json
 research_engine/costing/cost_estimator.py
+research_engine/costing/budget_gate.py
 research_engine/examples/tidc-cost-plan.example.json
+research_engine/examples/tidc-budget.example.json
+research_engine/examples/tidc-math-solver-request.example.json
 .github/workflows/governed-research-plan.yml
+.github/workflows/governed-research-stage-gate.yml
 ```
 
 The planning workflow is deliberately non-executing. It produces:
@@ -59,6 +67,19 @@ planning-receipt.json
 ```
 
 It rejects `execution_authority=true` and grants no provider-call, spending, repository-mutation, conclusion, or publication authority.
+
+The stage-gate workflow now evaluates:
+
+```text
+named stage exists
+→ stage status is authorized
+→ requested amount fits stage authorization
+→ projected cumulative spend fits hard limit
+→ projected spend fits automatic-stop threshold
+→ hash-bound budget-gate receipt
+```
+
+An `ALLOW` decision is stage-specific and amount-specific. It cannot authorize another stage, provider, publication, conclusion, or repository mutation.
 
 ## Cost model
 
@@ -79,18 +100,36 @@ high_confidence_cost = expected_total + z × sigma_total
 
 The plan is within budget only if the high-confidence cost does not exceed the user's hard limit.
 
+## TIDC-001 first-case posture
+
+The first Math Solver request contract now asks for:
+
+```text
+point estimates
+standard errors
+confidence intervals
+effect sizes
+diagnostics
+sensitivity tests
+negative controls
+missing-data analysis
+reproducibility receipt
+```
+
+The example remains non-executable because the Math Solver stage is explicitly `not_authorized` and its authorization reference is pending. This is intentional evidence that the budget gate fails closed before compute.
+
 ## Required next build
 
-1. Add a triadic-deliberation request and response schema.
-2. Add OpenAI and Anthropic role-separated prompts: formulation versus adversarial review.
-3. Record provider token usage and actual provider cost.
-4. Add a dated pricing-registry loader that fails closed on example, unknown, or stale pricing.
-5. Add budget reservation, stage authorization, cumulative spend, and automatic-stop records.
-6. Add a Math Solver compute-request schema and adapter.
-7. Add result schemas for estimates, standard errors, confidence intervals, diagnostics, sensitivity tests, negative controls, and conclusion classes.
-8. Add an execution workflow separate from the planning workflow.
-9. Add actual-cost reconciliation and unused-budget release receipts.
-10. Connect TIDC-001 as the first end-to-end research case.
+1. Add OpenAI and Anthropic role-separated prompts and a triadic deliberation runner.
+2. Record provider token usage and actual provider cost.
+3. Add a dated pricing-registry loader that fails closed on example, unknown, or stale pricing.
+4. Add stage reservation mutation receipts and cumulative-spend reconciliation.
+5. Add the Math Solver adapter that validates request, budget-gate receipt, dataset hashes, and protocol hash before dispatch.
+6. Implement deterministic pilot computations for TIDC-001.
+7. Add independent result validation and conclusion-classification gates.
+8. Add actual-cost reconciliation and unused-budget release receipts.
+9. Connect StegScholar custody and Site progressive publication manifests.
+10. Run the first complete artifact-only TIDC-001 research cycle before any paid live execution.
 
 ## Required authority boundaries
 
