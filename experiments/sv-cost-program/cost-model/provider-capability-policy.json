@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "policy_id": "SV-MODEL-CAPABILITY-POLICY-001",
+  "authority_role": "TV_TVC_MODEL_ROUTE_RESOLUTION_POLICY",
+  "request_contract": {
+    "capability_class": "general_reasoning",
+    "quality_tier": "production",
+    "cost_posture": "balanced",
+    "required_providers": ["openai", "anthropic"]
+  },
+  "provider_adapters": {
+    "openai": {
+      "list_models_url": "https://api.openai.com/v1/models",
+      "auth_header": "Authorization",
+      "auth_scheme": "Bearer",
+      "response_list_field": "data",
+      "model_id_field": "id",
+      "selection": {
+        "include_patterns": ["^gpt-5", "^o[0-9]", "^gpt-4\\.1"],
+        "exclude_patterns": ["audio", "image", "realtime", "transcribe", "tts", "embedding", "moderation", "search", "mini", "nano", "pro"],
+        "preference_patterns": ["^gpt-5$", "^gpt-5-", "^o3$", "^gpt-4\\.1$"]
+      }
+    },
+    "anthropic": {
+      "list_models_url": "https://api.anthropic.com/v1/models?limit=1000",
+      "auth_header": "x-api-key",
+      "response_list_field": "data",
+      "model_id_field": "id",
+      "extra_headers": {"anthropic-version": "2023-06-01"},
+      "selection": {
+        "include_patterns": ["claude"],
+        "exclude_patterns": ["haiku", "opus"],
+        "preference_patterns": ["sonnet-4", "sonnet"]
+      }
+    }
+  },
+  "selection_rules": [
+    "Discover models from each provider using the credential already delivered by TV/TVC.",
+    "Never require a human to type a provider model ID into the consuming repository.",
+    "Filter discovered models by the requested capability class and policy allow/deny patterns.",
+    "Choose the highest-preference available route deterministically.",
+    "Record every discovered candidate, exclusion reason, selected route, policy hash, and resolution hash without recording credentials.",
+    "Fail closed when no eligible route exists for a required provider."
+  ],
+  "claim_boundary": "This file governs route discovery and deterministic selection. It does not assert cross-provider capability equivalence, price equivalence, or outcome equivalence."
+}
