@@ -1,0 +1,79 @@
+name: SV-COST Cross-Model Session Consolidation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - SV_COST_MIRROR_HANDOFF.md
+      - experiments/sv-cost-program/cross-model-session-inventory.json
+      - experiments/sv-cost-program/results/governance-cross-model-matrix.json
+      - experiments/sv-cost-program/results/normalized-operation-class-matrix.json
+      - tools/validate_sv_cost_cross_model_session.py
+      - .github/workflows/sv-cost-cross-model-session-consolidation.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sv-cost-cross-model-session-consolidation
+  cancel-in-progress: false
+
+jobs:
+  consolidate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate and emit receipt
+        id: validate
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          python tools/validate_sv_cost_cross_model_session.py | tee /tmp/cross-model-session-validation.json
+
+      - name: Validate receipt syntax
+        if: always()
+        run: python -m json.tool experiments/sv-cost-program/results/cross-model-session-receipt.json >/dev/null
+
+      - name: Commit receipt
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name "stegverse-governance-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add experiments/sv-cost-program/results/cross-model-session-receipt.json
+          if git diff --cached --quiet; then
+            echo "No receipt changes to commit."
+          else
+            git commit -m "Record cross-model session consolidation state"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+      - name: Publish summary
+        if: always()
+        run: |
+          echo "## SV-COST Cross-Model Session Consolidation" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f experiments/sv-cost-program/results/cross-model-session-receipt.json ]; then
+            cat experiments/sv-cost-program/results/cross-model-session-receipt.json >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Receipt missing." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Enforce terminal result
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('experiments/sv-cost-program/results/cross-model-session-receipt.json')
+          d=json.loads(p.read_text())
+          if d['status'] != 'ARCHIVE_READY':
+              raise SystemExit('cross-model session remains blocked: ' + '; '.join(d.get('errors', [])))
+          print('cross-model session archive readiness validated')
+          PY
