@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "session_goal_id": "SV-COST-CROSS-MODEL-SESSION-001",
+  "generated_at": "2026-08-03T19:52:05.403602+00:00",
+  "status": "BLOCKED",
+  "errors": [
+    "normalized operation-class matrix missing",
+    "handoff missing reference: cross-model-session-inventory.json",
+    "handoff missing reference: governance-cross-model-matrix.json",
+    "handoff missing reference: normalized-operation-class-matrix.json",
+    "handoff missing reference: issue #13"
+  ],
+  "canonical_continuation": "GCAT-BCAT-Engine/workflows/SV_COST_MIRROR_HANDOFF.md and issue #13",
+  "next_executable_action": "Resolve each named error and rerun this validator."
+}
