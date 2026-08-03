@@ -1,0 +1,24 @@
+name: SV-COST R3 Controller Kick
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sv-cost-r3-controller-kick.yml'
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch-controller:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch generation-aware R3 controller
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh workflow run sv-cost-r3-controller-v2.yml --repo "$GITHUB_REPOSITORY" --ref main
