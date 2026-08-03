@@ -1,0 +1,119 @@
+{
+  "schema_version": "1.0.0",
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "estimator_id": "SV-COST-BEST-CASE-ESTIMATOR-001",
+  "status": "PRELIMINARY_COMMERCIAL_ESTIMATE",
+  "purpose": "Provide a first-call best-case StegVerse estimate using current OpenAI and Anthropic spend as the starting variable.",
+  "currency": "USD",
+  "variables": {
+    "monthly_provider_spend": "B",
+    "gross_savings_rate": "g",
+    "stegverse_operating_cost_rate": "o",
+    "stegverse_fee_share_of_verified_savings": "f"
+  },
+  "formulas": {
+    "gross_savings": "B * g",
+    "stegverse_operating_cost": "B * o",
+    "stegverse_commercial_fee": "B * g * f",
+    "customer_net_savings_before_operating_cost": "B * g * (1 - f)",
+    "customer_net_savings_after_operating_cost": "B * g * (1 - f) - B * o"
+  },
+  "scenarios": {
+    "conservative": {
+      "gross_savings_rate": 0.10,
+      "stegverse_operating_cost_rate": 0.03,
+      "stegverse_fee_share_of_verified_savings": 0.10
+    },
+    "expected": {
+      "gross_savings_rate": 0.25,
+      "stegverse_operating_cost_rate": 0.02,
+      "stegverse_fee_share_of_verified_savings": 0.15
+    },
+    "best_case": {
+      "gross_savings_rate": 0.50,
+      "stegverse_operating_cost_rate": 0.01,
+      "stegverse_fee_share_of_verified_savings": 0.20,
+      "derived_share_of_provider_spend": {
+        "gross_savings": 0.50,
+        "stegverse_operating_cost": 0.01,
+        "stegverse_commercial_fee": 0.10,
+        "customer_net_savings_after_fee_and_operating_cost": 0.39
+      }
+    }
+  },
+  "best_case_examples": [
+    {
+      "monthly_provider_spend": 10000,
+      "gross_savings": 5000,
+      "stegverse_operating_cost": 100,
+      "stegverse_commercial_fee": 1000,
+      "customer_net_savings_after_fee_and_operating_cost": 3900
+    },
+    {
+      "monthly_provider_spend": 50000,
+      "gross_savings": 25000,
+      "stegverse_operating_cost": 500,
+      "stegverse_commercial_fee": 5000,
+      "customer_net_savings_after_fee_and_operating_cost": 19500
+    },
+    {
+      "monthly_provider_spend": 100000,
+      "gross_savings": 50000,
+      "stegverse_operating_cost": 1000,
+      "stegverse_commercial_fee": 10000,
+      "customer_net_savings_after_fee_and_operating_cost": 39000
+    },
+    {
+      "monthly_provider_spend": 500000,
+      "gross_savings": 250000,
+      "stegverse_operating_cost": 5000,
+      "stegverse_commercial_fee": 50000,
+      "customer_net_savings_after_fee_and_operating_cost": 195000
+    },
+    {
+      "monthly_provider_spend": 1000000,
+      "gross_savings": 500000,
+      "stegverse_operating_cost": 10000,
+      "stegverse_commercial_fee": 100000,
+      "customer_net_savings_after_fee_and_operating_cost": 390000
+    }
+  ],
+  "pilot_price_ranges": {
+    "small": {
+      "minimum_usd": 2500,
+      "maximum_usd": 5000,
+      "scope": "Up to 100000 governed events, one provider, one workflow, 30 days"
+    },
+    "standard_enterprise": {
+      "minimum_usd": 10000,
+      "maximum_usd": 25000,
+      "scope": "Up to 1000000 events, one provider, paired native and governed lanes, 30 to 60 days"
+    },
+    "dual_provider": {
+      "minimum_usd": 25000,
+      "maximum_usd": 50000,
+      "scope": "OpenAI and Anthropic, four primary lanes, same stream and outcome contract, 60 to 90 days"
+    }
+  },
+  "synthetic_calibration": {
+    "evidence_class": "SYNTHETIC_DETERMINISTIC_CALIBRATION",
+    "admission_usd_per_event": 0.00005,
+    "receipt_usd_per_event": 0.00001,
+    "verification_usd_per_event": 0.00002,
+    "replay_usd_per_event": 0.00002,
+    "narrow_normal_transition_cost_usd": 0.00008,
+    "narrow_cost_per_million_transitions_usd": 80,
+    "production_price": false
+  },
+  "required_customer_inputs": [
+    "monthly_openai_and_anthropic_spend",
+    "monthly_request_or_event_volume",
+    "average_retries_per_successful_outcome",
+    "human_review_rate",
+    "cost_of_failed_or_incorrect_execution",
+    "regeneration_versus_replay_frequency"
+  ],
+  "claim_boundary": "This estimator supports preliminary first-call qualification only. It does not guarantee savings, establish production operating cost, replace invoice reconciliation, or prove customer-specific ROI.",
+  "human_analysis": "docs/STEGVERSE_BEST_CASE_COST_ANALYSIS.md",
+  "canonical_issue": 13
+}
