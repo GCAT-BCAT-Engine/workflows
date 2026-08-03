@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "type":"object",
+  "required":["problem_id","lane_id","provider","model_or_runtime","execution_posture","estimated_total_cost_low","estimated_total_cost_central","estimated_total_cost_high","estimated_elapsed_hours_low","estimated_elapsed_hours_central","estimated_elapsed_hours_high","estimated_success_probability","confidence","assumptions","uncertainty_drivers","minimum_evidence","receipt_hash"],
+  "properties":{
+    "problem_id":{"type":"string"},"lane_id":{"type":"string"},"provider":{"type":"string"},"model_or_runtime":{"type":"string"},"execution_posture":{"enum":["non_governed","governed","stegverse_only"]},
+    "estimated_input_tokens":{"type":"integer","minimum":0},"estimated_output_tokens":{"type":"integer","minimum":0},"estimated_reasoning_tokens":{"type":"integer","minimum":0},"estimated_candidate_branches":{"type":"integer","minimum":0},"estimated_failed_branches":{"type":"integer","minimum":0},"estimated_retries":{"type":"integer","minimum":0},
+    "estimated_search_cost":{"type":"number","minimum":0},"estimated_governance_overhead":{"type":"number","minimum":0},"estimated_verification_cost":{"type":"number","minimum":0},"estimated_total_cost_low":{"type":"number","minimum":0},"estimated_total_cost_central":{"type":"number","minimum":0},"estimated_total_cost_high":{"type":"number","minimum":0},
+    "estimated_elapsed_hours_low":{"type":"number","minimum":0},"estimated_elapsed_hours_central":{"type":"number","minimum":0},"estimated_elapsed_hours_high":{"type":"number","minimum":0},"estimated_success_probability":{"type":"number","minimum":0,"maximum":1},"estimated_reproduction_probability":{"type":"number","minimum":0,"maximum":1},"estimated_independent_result_probability":{"type":"number","minimum":0,"maximum":1},"confidence":{"type":"number","minimum":0,"maximum":1},
+    "assumptions":{"type":"array","items":{"type":"string"},"minItems":1},"uncertainty_drivers":{"type":"array","items":{"type":"string"},"minItems":1},"minimum_evidence":{"type":"array","items":{"type":"string"},"minItems":1},"blockers":{"type":"array","items":{"type":"string"}},"receipt_hash":{"type":"string"}
+  }
+}
