@@ -2,63 +2,75 @@ S2: Theorem formulation
 
 ---
 
-## Artifact Identity
+## 1. Reused Admitted Artifacts
 
-**Artifact ID:** `stegverse-anthropic-compact:S2`
-**Stage:** S2 — Theorem formulation
-**Admitted dependencies:** S0 (`sha256:77440705fc32ede8c3192c51adddc018e761d6a6dd865bf2a527746e8d59ceb2`), S1 (`sha256:53b49be015948cc5c330dc9ae58787d3ce6c26f54b2c0529cb98a5d05c650bba`)
+**From S1 (sha256:ba7aff1e81a6b2118b4a12c01ea4f78b78b3c369b4b06a12fc9a694158017340):**
 
----
+- `C : Type` — abstract candidate type
+- `GBP BD OC : C → Prop` — total predicates, no assumed relationships, no decidability
+- **DEF-ALLOW (S-DEF):** `ALLOW(c) := GBP(c) ∧ BD(c) ∧ OC(c)`
 
-## 1. Reuse of Admitted Definitions
-
-From S1 (selected retrieval, admitted):
-
-- `T` : an arbitrary type (the type of candidate transitions)
-- `GBP BD OC : T → Prop` — total abstract predicates on `T`
-- **D-ALLOW (stipulated):**
-
-$$\forall\, t : T,\quad \mathrm{ALLOW}(t) \;\iff\; \mathrm{GBP}(t) \;\land\; \mathrm{BD}(t) \;\land\; \mathrm{OC}(t)$$
-
-No predicate has a default truth value. No claim is made about any deployed GCAT/BCAT system.
+All items remain stipulations. No deployed system conformance is claimed.
 
 ---
 
 ## 2. Theorem Statement
 
-**Theorem T-ALLOW-NAS** *(Necessary-and-Sufficient Characterization of ALLOW)*
+**THM-ALLOW-IFF (S2-MAIN).**
 
-Let `T` be an arbitrary type. Let `GBP`, `BD`, `OC`, `ALLOW : T → Prop` satisfy D-ALLOW. Then for every `t : T`:
+> For all `c : C`,
+> `ALLOW(c) ↔ GBP(c) ∧ BD(c) ∧ OC(c)`
 
-$$\mathrm{ALLOW}(t) \;\iff\; \mathrm{GBP}(t) \;\land\; \mathrm{BD}(t) \;\land\; \mathrm{OC}(t)$$
+This is the necessary-and-sufficient characterization of `ALLOW` admissibility. It follows directly from DEF-ALLOW (S-DEF) by definitional unfolding; no additional premises are required.
 
-That is:
-
-- **(Sufficiency / Forward direction):** If `GBP(t)` and `BD(t)` and `OC(t)`, then `ALLOW(t)`.
-- **(Necessity / Backward direction):** If `ALLOW(t)`, then `GBP(t)` and `BD(t)` and `OC(t)`.
-
-**Corollaries** (immediate consequences, not separately named):
-
-- C1. `¬ALLOW(t) ↔ ¬GBP(t) ∨ ¬BD(t) ∨ ¬OC(t)`
-- C2. Each of `GBP`, `BD`, `OC` is individually necessary for `ALLOW`.
-- C3. Their joint satisfaction is sufficient and exhaustive.
+**Status:** *Stipulated theorem* — provable by reflexivity of `↔` under the given definition. Not an empirical claim about any implementation.
 
 ---
 
-## 3. Claim Boundary
+## 3. Decomposed Directions
 
-| Category | Content |
-|---|---|
-| **Stipulated (not proved)** | D-ALLOW: the biconditional definition itself |
-| **Generated claim (T-ALLOW-NAS)** | The biconditional is the necessary-and-sufficient characterization, derivable from D-ALLOW by identity |
-| **Verified claims** | None yet — Lean 4 proof candidate is prepared below but **not validated by a running kernel** |
-| **Unresolved** | Implementation binding: no claim that any deployed GCAT/BCAT system satisfies D-ALLOW or T-ALLOW-NAS |
+**THM-ALLOW-FWD (S2-FWD).**
+> `ALLOW(c) → GBP(c) ∧ BD(c) ∧ OC(c)`
 
-The theorem is a direct unpacking of the stipulated definition. Its logical content is tautologous relative to D-ALLOW; the value is in the explicit separation of directions and the machine-checkable form below.
+*(Necessity: if the evaluator returns ALLOW, then all three predicates hold.)*
+
+**THM-ALLOW-BWD (S2-BWD).**
+> `GBP(c) ∧ BD(c) ∧ OC(c) → ALLOW(c)`
+
+*(Sufficiency: if all three predicates hold, the evaluator returns ALLOW.)*
+
+Both directions follow immediately from DEF-ALLOW (S-DEF) by unfolding.
 
 ---
 
-## 4. Lean 4 Candidate
+## 4. Claim Boundary
+
+| Item | Type | Status |
+|---|---|---|
+| THM-ALLOW-IFF | Necessary-and-sufficient characterization | Stipulated; follows by definition |
+| THM-ALLOW-FWD | Necessity direction | Stipulated; follows by definition |
+| THM-ALLOW-BWD | Sufficiency direction | Stipulated; follows by definition |
+| Implementation binding | Any deployed GCAT/BCAT system conforms | **Unresolved; not claimed** |
+| Decidability of predicates | GBP, BD, OC are decidable | **Not assumed; not claimed** |
+| Independence of predicates | GBP, BD, OC are mutually independent | **Not assumed; not claimed** |
+
+---
+
+## 5. Lean 4 Candidate — Logical Core
 
 ```lean4
--- S2: Lean 4 candidate for
+-- S2: Lean 4 candidate for logical core
+-- STIPULATION: Abstract model only. Does not assert conformance
+-- of any deployed GCAT/BCAT implementation.
+-- Implementation validity is NOT claimed.
+
+variable {C : Type}
+variable (GBP BD OC : C → Prop)
+
+/-- DEF-ALLOW (S-DEF): definitional equality, carried forward from S1. -/
+def ALLOW (c : C) : Prop := GBP c ∧ BD c ∧ OC c
+
+/-- THM-ALLOW-IFF (S2-MAIN):
+    Necessary-and-sufficient characterization of ALLOW admissibility.
+    Proof: by definitional unfolding (Iff.rfl). -/
+theorem th

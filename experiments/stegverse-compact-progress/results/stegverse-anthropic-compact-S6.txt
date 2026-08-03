@@ -1,0 +1,51 @@
+# S6: Verification ledger
+
+---
+
+## 1. Ledger Purpose
+
+This artifact constitutes the verification ledger for EXPERIMENT SV-COST-STAGED-001 / CAPABILITY TEST SV-COMPACT-PROGRESS-001. It collects, in one place, the full chain of admitted artifacts (S0–S5), records the verification status of each claim, separates stipulations from generated claims, and records all unresolved implementation evidence. No new mathematical content is introduced here.
+
+---
+
+## 2. Artifact Registry
+
+| Artifact ID | Stage | SHA-256 (prefix) | Admitted | Description |
+|---|---|---|---|---|
+| `stegverse-anthropic-compact:S0` | S0 | `ea05ec26…` | ✓ | Task parsing and claim boundary |
+| `stegverse-anthropic-compact:S1` | S1 | `ba7aff1e…` | ✓ | Formal definitions and assumptions |
+| `stegverse-anthropic-compact:S2` | S2 | `7f8dec22…` | ✓ | Theorem formulation (THM-ALLOW-IFF) |
+| `stegverse-anthropic-compact:S3` | S3 | `317ac7f2…` | ✓ | Proof strategy and lemma decomposition |
+| `stegverse-anthropic-compact:S4` | S4 | `ad99bd46…` | ✓ | Complete informal proof |
+| `stegverse-anthropic-compact:S5` | S5 | `0fb77d20…` | ✓ | Lean 4 candidate (logical core) |
+
+---
+
+## 3. Stipulations Register
+
+Stipulations are axiomatic for this experiment. They carry no claim of external conformance.
+
+| ID | Statement | Source | Status |
+|---|---|---|---|
+| **STIP-C** | `C` is an arbitrary type of candidate transitions | S1 | Stipulated |
+| **STIP-GBP** | `GBP : C → Prop` is an uninterpreted predicate | S1 | Stipulated |
+| **STIP-BD** | `BD : C → Prop` is an uninterpreted predicate | S1 | Stipulated |
+| **STIP-OC** | `OC : C → Prop` is an uninterpreted predicate | S1 | Stipulated |
+| **STIP-DEF-ALLOW** | `ALLOW(c) :≡ GBP(c) ∧ BD(c) ∧ OC(c)` (definitional equality) | S0, S1 | Stipulated |
+| **STIP-GCAT-BCAT** | The abstract evaluator is characterised solely by STIP-DEF-ALLOW; no deployed system is referenced | S0 | Stipulated |
+
+---
+
+## 4. Generated Claims Register
+
+Generated claims are logical consequences derived within the experiment. Each is tagged with its derivation basis and verification status.
+
+### 4.1 Main Theorem
+
+| ID | Statement | Derivation Basis | Informal Proof Status | Lean 4 Candidate Status |
+|---|---|---|---|---|
+| **THM-ALLOW-IFF** | `∀ c : C, ALLOW(c) ↔ GBP(c) ∧ BD(c) ∧ OC(c)` | STIP-DEF-ALLOW, reflexivity of `↔` | ✓ Complete (S4) | Candidate present (S5); compilation unverified |
+
+### 4.2 Sub-Lemmas
+
+| ID | Statement | Direction | Proof Method

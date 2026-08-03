@@ -1,24 +1,20 @@
 S0: Task parsing and claim boundary.
 
-**Task identity:** SV-COST-STAGED-001 / SV-COMPACT-PROGRESS-001
+**Task identity**  
+Experiment `SV-COST-STAGED-001`; capability test `SV-COMPACT-PROGRESS-001`.
 
-**Stipulations**
-- For a candidate transition `t`, `GBP t`, `BD t`, and `OC t` are predicates.
-- The abstract evaluator returns `ALLOW` exactly when all three predicates hold.
-- No artifacts are admitted from prior stages.
+**Stipulations**  
+For an abstract candidate transition \(t\), let \(GBP(t)\), \(BD(t)\), and \(OC(t)\) be predicates. The evaluator returns `ALLOW` exactly when all three predicates hold.
 
-**Target claim**
-- Necessary and sufficient condition:
-  `ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
-- Equivalently, necessity is `ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)`, and sufficiency is the converse.
+**Target claim for later establishment**  
+\[
+\operatorname{ALLOW}(t)\iff GBP(t)\land BD(t)\land OC(t).
+\]
 
-**Claim boundary**
-- The target concerns only the stipulated abstract evaluator.
-- It does not establish that any deployed or concrete GCAT/BCAT implementation uses these predicates, computes them correctly, or conforms to this characterization.
-- No implementation validity, refinement, or correspondence claim is in scope.
-- A Lean 4 candidate for the logical core belongs to a later stage and is not supplied here.
+Equivalently, `ALLOW` is admissible precisely when each of `GBP`, `BD`, and `OC` holds; failure of any one makes `ALLOW` inadmissible.
 
-**Verification status**
-- Generated target claim: identified but not yet formally derived.
-- Verified claims: none.
-- Unresolved evidence: all implementation-level definitions, behavior, and conformance.
+**Claim boundary**  
+The target is only the propositional characterization of the stipulated abstract evaluator. No claim is made about the meaning, correctness, completeness, or computability of the predicates, nor about any concrete or deployed GCAT/BCAT implementation. A later Lean 4 candidate may encode the logical core, but compilation, proof acceptance, integration, and implementation conformance remain unverified.
+
+**Current-stage status**  
+Task parsed and claim boundary fixed. No mathematical proof or Lean 4 candidate is asserted at S0.

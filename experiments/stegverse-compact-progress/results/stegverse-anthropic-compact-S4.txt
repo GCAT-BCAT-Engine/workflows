@@ -1,73 +1,72 @@
-S4: Complete informal proof.
+S4: Complete informal proof
 
 ---
 
 ## Stage S4 — Complete Informal Proof
 
-**Experiment:** SV-COST-STAGED-001
-**Capability Test:** SV-COMPACT-PROGRESS-001
-**Stage:** S4 — Complete informal proof
-**Admitted prior artifacts:** S0, S1, S2, S3 (see ledger)
-**Selected retrieval:** S2 (sha256:a4a513a9fb2eb2c95c4b6a2c3ebaeebb750f36ffa493d07df0c87715fdc2af59), S3 (sha256:0ab825ee33c6c972516044f5b842e2f6cf6d5ea14cf8009c95ee455b77390051)
+**Artifact ID:** stegverse-anthropic-compact:S4
+**Depends on:** S0, S1, S2, S3
+**Status:** Stipulated informal proof. No claim of implementation conformance.
 
 ---
 
-### 1. Setup and Recollection of Definitions
+### 1. Restatement of What Is to Be Proved
 
-Let `T` be an arbitrary type (the type of candidate transitions). Let the following be total predicates on `T`:
+**THM-ALLOW-IFF (S2-MAIN).**
+For all candidates `c : C`,
 
-- `GBP : T → Prop`
-- `BD : T → Prop`
-- `OC : T → Prop`
-- `ALLOW : T → Prop`
-
-The evaluator stipulation (from S0/S1) is:
-
-> **Stipulation (STI-ALLOW):** For all `t : T`, `ALLOW t` holds if and only if `GBP t`, `BD t`, and `OC t` all hold.
-
-This stipulation is the *sole* definition of `ALLOW` in this abstract setting. It is not a claim about any deployed system.
+```
+ALLOW(c) ↔ GBP(c) ∧ BD(c) ∧ OC(c)
+```
 
 ---
 
-### 2. Theorem to be Proved
+### 2. Definitions in Force (from S1)
 
-**Theorem T-ALLOW-NAS** (from S2):
-
-> For all `t : T`:
-> $$\mathrm{ALLOW}(t) \;\iff\; \mathrm{GBP}(t) \;\land\; \mathrm{BD}(t) \;\land\; \mathrm{OC}(t)$$
-
----
-
-### 3. Informal Proof
-
-Fix an arbitrary `t : T`. We prove both directions.
+- **DEF-ALLOW:** `ALLOW(c)` is defined to mean `GBP(c) ∧ BD(c) ∧ OC(c)`.
+- `GBP`, `BD`, `OC` are arbitrary predicates `C → Prop`.
+- No axioms beyond DEF-ALLOW are required.
 
 ---
 
-#### 3.1 Forward Direction (Necessity): `ALLOW t → GBP t ∧ BD t ∧ OC t`
+### 3. Proof of the Forward Direction (LEM-FWD: Necessity)
 
-**Lemma L1-ALLOW-Nec** (from S3):
+**Claim:** `ALLOW(c) → GBP(c) ∧ BD(c) ∧ OC(c)`
 
-*Assume* `ALLOW t` holds.
+**Proof.**
+Assume `ALLOW(c)` holds. By DEF-ALLOW, `ALLOW(c)` is *identical by definition* to `GBP(c) ∧ BD(c) ∧ OC(c)`. Therefore the assumption directly yields `GBP(c) ∧ BD(c) ∧ OC(c)`. The hypothesis is discharged without any additional reasoning. □
 
-By STI-ALLOW (the defining stipulation of the evaluator), `ALLOW t` holds if and only if `GBP t ∧ BD t ∧ OC t`. Since `ALLOW t` is assumed, the right-hand side of the biconditional must hold. Therefore `GBP t ∧ BD t ∧ OC t` holds, which is to say:
-
-- `GBP t` holds, and
-- `BD t` holds, and
-- `OC t` holds.
-
-This establishes the forward direction. Each of `GBP`, `BD`, `OC` is individually *necessary* for `ALLOW` (Corollary C2 from S2): if any one failed, `ALLOW t` could not hold under STI-ALLOW.
+**Proof method:** Definitional unfolding followed by assumption discharge (`intro h; exact h` in term mode).
 
 ---
 
-#### 3.2 Backward Direction (Sufficiency): `GBP t ∧ BD t ∧ OC t → ALLOW t`
+### 4. Proof of the Backward Direction (LEM-BWD: Sufficiency)
 
-**Lemma L2-ALLOW-Suf** (from S3):
+**Claim:** `GBP(c) ∧ BD(c) ∧ OC(c) → ALLOW(c)`
 
-*Assume* `GBP t ∧ BD t ∧ OC t` holds, i.e., assume:
+**Proof.**
+Assume `GBP(c) ∧ BD(c) ∧ OC(c)` holds. By DEF-ALLOW, `ALLOW(c)` is defined to be precisely this conjunction. Therefore `ALLOW(c)` holds immediately by folding the definition. □
 
-- `GBP t` holds,
-- `BD t` holds,
-- `OC t` holds.
+**Proof method:** Definitional folding (`intro h; exact h` in term mode, symmetrically to LEM-FWD).
 
-By STI-ALLOW, `ALLOW t` holds if and only if `GBP t 
+---
+
+### 5. Assembly of THM-ALLOW-IFF
+
+**Proof.**
+The biconditional `ALLOW(c) ↔ GBP(c) ∧ BD(c) ∧ OC(c)` is established by introducing both directions:
+
+- The forward direction is LEM-FWD (§3).
+- The backward direction is LEM-BWD (§4).
+
+Since DEF-ALLOW makes `ALLOW(c)` *definitionally equal* to `GBP(c) ∧ BD(c) ∧ OC(c)`, the biconditional is in fact an instance of `P ↔ P`, i.e., `Iff.rfl` in Lean 4's type theory. Both directions reduce to identity; no case analysis, induction, or auxiliary lemma with non-trivial content is required.
+
+The proof is complete. □
+
+---
+
+### 6. Structural Observations
+
+| Component | Direction | Key Step | Complexity |
+|---|---|---|---|
+| LEM-FWD | `ALLOW → GBP ∧ BD ∧ OC` | Unfold DEF-ALLOW; discharge assumption | Triv

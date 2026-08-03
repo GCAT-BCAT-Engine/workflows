@@ -2,61 +2,86 @@ S0: Task parsing and claim boundary
 
 ---
 
-## 1. Task Parsing
+## 1. Task Identity
 
-**Experiment / Capability identifiers (stipulated, not verified):**
-- Experiment: SV-COST-STAGED-001
-- Capability test: SV-COMPACT-PROGRESS-001
-
-**Domain framing (stipulated):**
-The problem concerns an *abstract* evaluator, notionally labeled GCAT/BCAT. No claim is made that any deployed GCAT/BCAT system is described or constrained by what follows. All predicates and the ALLOW relation are abstract symbols.
-
-**Given primitives (stipulated definitions, this stage only):**
-
-| Symbol | Type | Role |
-|--------|------|------|
-| `GBP` | predicate on candidate transitions | "Good-basis predicate" (name stipulated) |
-| `BD` | predicate on candidate transitions | "Boundary predicate" (name stipulated) |
-| `OC` | predicate on candidate transitions | "Other condition" (name stipulated) |
-| `ALLOW` | predicate on candidate transitions | Output relation of the evaluator |
-
-**Evaluator rule (stipulated, source: problem statement):**
-
-> The evaluator returns ALLOW exactly when GBP and BD and OC all hold.
-
-This is a biconditional specification:
-
-$$\forall t,\quad \mathrm{ALLOW}(t) \iff \mathrm{GBP}(t) \land \mathrm{BD}(t) \land \mathrm{OC}(t)$$
+**Experiment:** SV-COST-STAGED-001
+**Capability Test:** SV-COMPACT-PROGRESS-001
+**Stage:** S0 — Task parsing and claim boundary
 
 ---
 
-## 2. Claim Boundary
+## 2. Stipulated Definitions (Input Layer)
 
-The following table partitions all claims for the full task.
+The following are **stipulations**, not derived claims. They define the abstract evaluator for this experiment.
 
-| # | Claim | Status at S0 | Requires |
-|---|-------|-------------|---------|
-| C1 | The biconditional above is the necessary-and-sufficient characterization of ALLOW | **Stipulated (definitional)** — follows directly from the problem statement by semantic fiat; no proof burden beyond recording the definition | Nothing further |
-| C2 | The necessity direction: `ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)` | Follows from C1; proof is trivial by biconditional elimination | Admitted at S1 |
-| C3 | The sufficiency direction: `GBP(t) ∧ BD(t) ∧ OC(t) → ALLOW(t)` | Follows from C1; proof is trivial by biconditional elimination | Admitted at S1 |
-| C4 | A Lean 4 candidate encodes C1–C3 correctly | **Not yet assessed** — candidate to be produced at S2; no implementation validity claimed | S2 artifact + review |
-| C5 | Any deployed GCAT/BCAT system conforms to this characterization | **Explicitly out of scope** — not claimed at any stage | — |
+| Symbol | Kind | Meaning |
+|--------|------|---------|
+| `C` | Type | The type of candidate transitions |
+| `GBP` | Predicate `C → Prop` | "Good-by-policy" condition |
+| `BD` | Predicate `C → Prop` | "Boundary" condition |
+| `OC` | Predicate `C → Prop` | "Other-condition" condition |
+| `ALLOW` | Predicate `C → Prop` | The evaluator's admit decision |
 
----
+**Evaluator stipulation (S-DEF):**
+> The abstract GCAT/BCAT evaluator returns ALLOW on candidate `c` if and only if `GBP(c)`, `BD(c)`, and `OC(c)` all hold.
 
-## 3. Boundary Statements (explicit)
-
-- **In scope:** Logical structure of the abstract evaluator; formal biconditional; Lean 4 encoding of that logic.
-- **Out of scope:** Semantic correctness of any running system; runtime behavior; soundness of any GCAT/BCAT deployment; anything beyond the symbolic predicates as given.
-- **No claim is made** that this characterization is complete with respect to any real policy or implementation.
+This is an **axiomatic stipulation** for this experiment. It does not assert that any deployed system conforms.
 
 ---
 
-## 4. Artifact Identity
+## 3. Claim Boundary
 
-**S0 artifact:** This document.
-**Admitted state after S0:** C1 (stipulated biconditional definition). All other claims deferred.
+### 3.1 What is in scope for this experiment
+
+- **Claim target:** A necessary-and-sufficient logical characterization of `ALLOW` in terms of `GBP`, `BD`, `OC`, under S-DEF.
+- **Lean 4 artifact target:** A candidate formalization of the logical core (to be produced in a later stage).
+
+### 3.2 What is explicitly out of scope
+
+| Out-of-scope item | Reason |
+|---|---|
+| Conformance of any deployed GCAT/BCAT system | Not asserted; governance prohibition |
+| Soundness of any compiled Lean 4 artifact | Implementation validity not claimed |
+| Semantic content proven by any artifact hash | Hash proves identity only, per governance |
+| Properties of `GBP`, `BD`, `OC` beyond their role in S-DEF | Not stipulated here |
+
+### 3.3 Claim tier structure (for subsequent stages)
+
+| Tier | Label | Content |
+|------|-------|---------|
+| T0 | Stipulation | S-DEF as above |
+| T1 | Generated claim | Necessary-and-sufficient statement derived from S-DEF |
+| T2 | Lean 4 candidate | Formalization of T1; validity not asserted |
+| T3 | Verified claim | Would require external proof-checker confirmation; not reached in this experiment |
 
 ---
 
-*Ready to proceed to S1: Necessary-and-sufficient proof of C2 and C3 from C1.*
+## 4. Stage S0 Deliverable: Parsed Task Record
+
+```
+TASK-RECORD-S0
+  experiment    : SV-COST-STAGED-001
+  capability    : SV-COMPACT-PROGRESS-001
+  stage         : S0
+  admitted      : [none]
+  stipulations  : [S-DEF]
+  generated     : [none]
+  verified      : [none]
+  unresolved    : [Lean 4 candidate validity; deployed system conformance]
+  next-stage    : S1 — Necessary-and-sufficient characterization (claim generation)
+```
+
+---
+
+## 5. Governance Confirmations
+
+- ✔ Task identity preserved
+- ✔ Stipulations separated from generated claims
+- ✔ No implementation validity claimed
+- ✔ No deployed GCAT/BCAT conformance asserted
+- ✔ No stage skipped
+- ✔ Admitted state: none (consistent with input)
+
+---
+
+**S0

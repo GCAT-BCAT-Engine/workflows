@@ -2,9 +2,9 @@
   {
     "artifact_id": "stegverse-openai-full:S0",
     "stage_id": "S0",
-    "sha256": "sha256:6f85e28b6fc7c508fc3105931f1ee3224ee155eef8448723329afea42a3a97c6",
+    "sha256": "sha256:522320dd8fac562f6c3dfa959aa83df723f00ddef8a50c82eb1843817bfcfd53",
     "admitted": false,
-    "claims": "S0: Task parsing and claim boundary.\n- Let `ALLOW \u03c4` mean that the abstract evaluator returns `ALLOW` for `\u03c4`.\n- The evaluator specification stipulates that it returns `ALLOW` exactly when all three predicates hold.\n\\forall \\tau,\\quad ALLOW(\\tau) \\leftrightarrow\n- **Necessity:** `ALLOW \u03c4 \u2192 GBP \u03c4 \u2227 BD \u03c4 \u2227 OC \u03c4`.\n- **Sufficiency:** `GBP \u03c4 \u2227 BD \u03c4 \u2227 OC \u03c4 \u2192 ALLOW \u03c4`.\n## Claim boundary\n- conformity of any deployed or concr",
+    "claims": "S0: Task parsing and claim boundary.\n- The abstract evaluator returns `ALLOW` exactly when all three propositions hold.\n\\operatorname{ALLOW}(t) \\iff GBP(t)\\land BD(t)\\land OC(t).\n- **Necessity:** `ALLOW t` implies `GBP t \u2227 BD t \u2227 OC t`.\n- **Sufficiency:** `GBP t \u2227 BD t \u2227 OC t` implies `ALLOW t`.\n### Claim boundary\n- correctness or conformity of any deployed GCAT/BCAT implementation;\n- **Unresolved implementation evid",
     "definitions": "reference prior definitions",
     "unresolved": "implementation binding remains unresolved",
     "next_stage": "S1"

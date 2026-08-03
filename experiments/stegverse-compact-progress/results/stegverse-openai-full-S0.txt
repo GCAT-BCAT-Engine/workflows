@@ -1,41 +1,39 @@
 S0: Task parsing and claim boundary.
 
-## Stipulations
+**Task identity:** `SV-COST-STAGED-001`  
+**Capability test:** `SV-COMPACT-PROGRESS-001`
 
-- Let `τ` range over candidate transitions.
-- `GBP τ`, `BD τ`, and `OC τ` are predicates.
-- Let `ALLOW τ` mean that the abstract evaluator returns `ALLOW` for `τ`.
-- The evaluator specification stipulates that it returns `ALLOW` exactly when all three predicates hold.
+### Stipulated model
+For an arbitrary candidate transition `t`:
 
-## Target generated claim
+- `GBP t`, `BD t`, and `OC t` are propositions.
+- The abstract evaluator returns `ALLOW` exactly when all three propositions hold.
 
-The logical characterization to be established in a later stage is:
+Formally, the governing stipulation is:
 
 \[
-\forall \tau,\quad ALLOW(\tau) \leftrightarrow
-\bigl(GBP(\tau)\land BD(\tau)\land OC(\tau)\bigr).
+\operatorname{ALLOW}(t) \iff GBP(t)\land BD(t)\land OC(t).
 \]
 
-This comprises:
+### Required result
+Establish the necessary-and-sufficient characterization:
 
-- **Necessity:** `ALLOW τ → GBP τ ∧ BD τ ∧ OC τ`.
-- **Sufficiency:** `GBP τ ∧ BD τ ∧ OC τ → ALLOW τ`.
+- **Necessity:** `ALLOW t` implies `GBP t ∧ BD t ∧ OC t`.
+- **Sufficiency:** `GBP t ∧ BD t ∧ OC t` implies `ALLOW t`.
 
-A later Lean 4 candidate should encode only this abstract propositional core, parameterized by a transition type and the four predicates.
+A later stage may encode this logical core as a Lean 4 candidate.
 
-## Claim boundary
+### Claim boundary
+The result concerns only the stipulated abstract evaluator and its predicates. It does **not** establish:
 
-The intended claim concerns only the stipulated abstract evaluator relation. It does not establish:
+- correctness or conformity of any deployed GCAT/BCAT implementation;
+- correspondence between `GBP`, `BD`, or `OC` and implementation checks;
+- soundness of predicate computation;
+- validity of a Lean 4 artifact before type-checking in a specified environment.
 
-- conformity of any deployed or concrete GCAT/BCAT implementation;
-- correctness of implementations of `GBP`, `BD`, or `OC`;
-- any operational, security, performance, decidability, or termination property;
-- correspondence between the abstract predicates and external system behavior;
-- successful Lean parsing, elaboration, compilation, or proof checking.
-
-## Verification status
-
-- No prior artifacts are admitted.
-- No proof has been supplied or checked at this stage.
-- No Lean 4 candidate has yet been produced or type-checked.
-- Implementation validity and implementation-to-specification correspondence remain unresolved.
+### Status
+- **Stipulations recorded:** yes.
+- **Generated mathematical claims:** none beyond restating the target characterization.
+- **Verified claims:** none.
+- **Admitted artifacts reused:** none.
+- **Unresolved implementation evidence:** all implementation-conformance and Lean-validation evidence.

@@ -2,31 +2,11 @@
   {
     "artifact_id": "stegverse-openai-compact:S0",
     "stage_id": "S0",
-    "sha256": "sha256:170db6a03dbf055b9971d0173c74f4504d130134c6c631b3d729c359f51e38bc",
-    "admitted": true,
-    "claims": "S0: Task parsing and claim boundary.\n- The abstract evaluator returns `ALLOW` exactly when all three predicates hold.\n`ALLOW(t) \u2194 (GBP(t) \u2227 BD(t) \u2227 OC(t))`.\n- Equivalently, necessity is `ALLOW(t) \u2192 GBP(t) \u2227 BD(t) \u2227 OC(t)`, and sufficiency is the converse.\n**Claim boundary**\n- It does not establish that any deployed or concrete GCAT/BCAT implementation uses these predicates, computes them correctly, or conforms to thi",
+    "sha256": "sha256:deafeaf4af6f071a5a20ec514983927db028b328d8f304c82c8d31f358268fff",
+    "admitted": false,
+    "claims": "S0: Task parsing and claim boundary.\nFor an abstract candidate transition \\(t\\), let \\(GBP(t)\\), \\(BD(t)\\), and \\(OC(t)\\) be predicates. The evaluator returns `ALLOW` exactly when all three predicates hold.\n\\operatorname{ALLOW}(t)\\iff GBP(t)\\land BD(t)\\land OC(t).\nEquivalently, `ALLOW` is admissible precisely when each of `GBP`, `BD`, and `OC` holds; failure of any one makes `ALLOW` inadmissible.\n**Claim boundary**\nT",
     "definitions": "reference prior definitions",
     "unresolved": "implementation binding remains unresolved",
     "next_stage": "S1"
-  },
-  {
-    "artifact_id": "stegverse-openai-compact:S1",
-    "stage_id": "S1",
-    "sha256": "sha256:6b088c57866dd4bb97d279fede78d09ab2895361e4aea21f6bb86efaa51592e2",
-    "admitted": true,
-    "claims": "- Let `GBP BD OC : Transition \u2192 Prop` be predicates.\n- Let `ALLOW : Transition \u2192 Prop` denote the abstract evaluator\u2019s ALLOW outcome.\n\\forall t,\\; ALLOW(t) \\leftrightarrow (GBP(t)\\land BD(t)\\land OC(t)).\n\\forall t,\\; ALLOW(t)\\to GBP(t)\\land BD(t)\\land OC(t).\n\\forall t,\\; GBP(t)\\land BD(t)\\land OC(t)\\to ALLOW(t).\nvariable (GBP BD OC ALLOW : Transition \u2192 Prop)\n\u2200 t, ALLOW t \u2194 (GBP t \u2227 BD t \u2227 OC t)\n\u2200 t, ALLOW t \u2192 (GBP t ",
-    "definitions": "- Let `GBP BD OC : Transition \u2192 Prop` be predicates.\n- Let `ALLOW : Transition \u2192 Prop` denote the abstract evaluator\u2019s ALLOW outcome.\n\\forall t,\\; ALLOW(t) \\leftrightarrow (GBP(t)\\land BD(t)\\land OC(t)).\n\\forall t,\\; ALLOW(t)\\to GBP(t)\\land BD(t)\\land OC(t).\n\\forall t,\\; GBP(t)\\land BD(t)\\land OC(t)\\to ALLOW(t).\nvariable (GBP BD OC ALLOW : Transition \u2192 Prop)\n\u2200 t, ALLOW t \u2194 (GBP t \u2227 BD t \u2227 OC t)\n\u2200 t, ALLOW t \u2192 (GBP t ",
-    "unresolved": "implementation binding remains unresolved",
-    "next_stage": "S2"
-  },
-  {
-    "artifact_id": "stegverse-openai-compact:S2",
-    "stage_id": "S2",
-    "sha256": "sha256:bc6ad6bd980cb8f7c0efc99b4c12fcface4a30bbf91c794c6301d62d71c53a90",
-    "admitted": false,
-    "claims": "S2: Theorem formulation.",
-    "definitions": "reference prior definitions",
-    "unresolved": "implementation binding remains unresolved",
-    "next_stage": "S3"
   }
 ]

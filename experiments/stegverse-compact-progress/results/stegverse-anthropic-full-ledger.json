@@ -2,9 +2,9 @@
   {
     "artifact_id": "stegverse-anthropic-full:S0",
     "stage_id": "S0",
-    "sha256": "sha256:5e7d482b91dacdf18fd6ff52a5f2598b1b9201fd3086066fcf0a1c4f70427e16",
+    "sha256": "sha256:a10b971c8d67e3cffe1867cc1bc0b7e0db6276e62e93c39c639afe253fe2c21e",
     "admitted": false,
-    "claims": "S0: Task parsing and claim boundary.\nCharacterize ALLOW admissibility for an abstract GCAT/BCAT evaluator. Let GBP, BD, and OC be predicates on a candidate transition. The evaluator returns ALLOW exactly when GBP and BD and OC all hold. Establish the necessary-and-sufficient characterization, state the claim boundary, and prepare a Lean 4 candidate for the logical core.\n| `ALLOW : T \u2192 Prop` | Target admissibility pre",
+    "claims": "S0: Task parsing and claim boundary.\n**Subject of characterization:** An *abstract* GCAT/BCAT evaluator \u2014 a formal object defined solely by the stipulations below. No deployed implementation is referenced.\n> `ALLOW(t)` holds **if and only if** `GBP(t) \u2227 BD(t) \u2227 OC(t)`.\n## 2. Claim Boundary\n| C1 | The *necessary condition* for ALLOW: `ALLOW(t) \u2192 GBP(t) \u2227 BD(t) \u2227 OC(t)` | To be proved from stipulation |\n| C2 | The *suf",
     "definitions": "reference prior definitions",
     "unresolved": "implementation binding remains unresolved",
     "next_stage": "S1"

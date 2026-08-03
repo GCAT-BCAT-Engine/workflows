@@ -2,9 +2,9 @@
   {
     "artifact_id": "stegverse-anthropic-compact:S0",
     "stage_id": "S0",
-    "sha256": "sha256:77440705fc32ede8c3192c51adddc018e761d6a6dd865bf2a527746e8d59ceb2",
+    "sha256": "sha256:ea05ec268474265dd5ccd0540d658fd6464cd5f53292e7c301f411e6d49be1a7",
     "admitted": true,
-    "claims": "S0: Task parsing and claim boundary\nThe problem concerns an *abstract* evaluator, notionally labeled GCAT/BCAT. No claim is made that any deployed GCAT/BCAT system is described or constrained by what follows. All predicates and the ALLOW relation are abstract symbols.\n| `ALLOW` | predicate on candidate transitions | Output relation of the evaluator |\n> The evaluator returns ALLOW exactly when GBP and BD and OC all ho",
+    "claims": "S0: Task parsing and claim boundary\n**Stage:** S0 \u2014 Task parsing and claim boundary\n| `ALLOW` | Predicate `C \u2192 Prop` | The evaluator's admit decision |\n> The abstract GCAT/BCAT evaluator returns ALLOW on candidate `c` if and only if `GBP(c)`, `BD(c)`, and `OC(c)` all hold.\nThis is an **axiomatic stipulation** for this experiment. It does not assert that any deployed system conforms.\n## 3. Claim Boundary\n- **Claim tar",
     "definitions": "reference prior definitions",
     "unresolved": "implementation binding remains unresolved",
     "next_stage": "S1"
@@ -12,19 +12,19 @@
   {
     "artifact_id": "stegverse-anthropic-compact:S1",
     "stage_id": "S1",
-    "sha256": "sha256:53b49be015948cc5c330dc9ae58787d3ce6c26f54b2c0529cb98a5d05c650bba",
+    "sha256": "sha256:ba7aff1e81a6b2118b4a12c01ea4f78b78b3c369b4b06a12fc9a694158017340",
     "admitted": true,
-    "claims": "| `GBP` | `T \u2192 Prop` | \"Good-Behavior Predicate\" \u2014 abstract condition on `t` |\n| `BD` | `T \u2192 Prop` | \"Boundary/Domain\" \u2014 abstract condition on `t` |\n| `OC` | `T \u2192 Prop` | \"Output Condition\" \u2014 abstract condition on `t` |\n`GBP`, `BD`, and `OC` are total predicates on `T`. For every `t : T`, each of `GBP t`, `BD t`, `OC t` is a well-formed proposition (possibly false, possibly true; no default is assumed).\n## 3. The ALL",
-    "definitions": "| `GBP` | `T \u2192 Prop` | \"Good-Behavior Predicate\" \u2014 abstract condition on `t` |\n| `BD` | `T \u2192 Prop` | \"Boundary/Domain\" \u2014 abstract condition on `t` |\n| `OC` | `T \u2192 Prop` | \"Output Condition\" \u2014 abstract condition on `t` |\n`GBP`, `BD`, and `OC` are total predicates on `T`. For every `t : T`, each of `GBP t`, `BD t`, `OC t` is a well-formed proposition (possibly false, possibly true; no default is assumed).\n## 3. The ALL",
+    "claims": "This artifact establishes the formal definitions and assumptions required to support the necessary-and-sufficient characterization of `ALLOW` in Stage S2. All items below are **stipulations** for this experiment. No item asserts conformance of any deployed system.\n| `GBP` | `C \u2192 Prop` | \"Governed Boundary Predicate holds on c\" |\n| `BD` | `C \u2192 Prop` | \"Boundary Determination holds on c\" |\n| `OC` | `C \u2192 Prop` | \"Operat",
+    "definitions": "This artifact establishes the formal definitions and assumptions required to support the necessary-and-sufficient characterization of `ALLOW` in Stage S2. All items below are **stipulations** for this experiment. No item asserts conformance of any deployed system.\n| `GBP` | `C \u2192 Prop` | \"Governed Boundary Predicate holds on c\" |\n| `BD` | `C \u2192 Prop` | \"Boundary Determination holds on c\" |\n| `OC` | `C \u2192 Prop` | \"Operat",
     "unresolved": "implementation binding remains unresolved",
     "next_stage": "S2"
   },
   {
     "artifact_id": "stegverse-anthropic-compact:S2",
     "stage_id": "S2",
-    "sha256": "sha256:a4a513a9fb2eb2c95c4b6a2c3ebaeebb750f36ffa493d07df0c87715fdc2af59",
+    "sha256": "sha256:7f8dec22c9051057f9d28390c606bb328f525cd9ed6ce775bf0f3bc4d26069e8",
     "admitted": true,
-    "claims": "S2: Theorem formulation\n**Stage:** S2 \u2014 Theorem formulation\n$$\\forall\\, t : T,\\quad \\mathrm{ALLOW}(t) \\;\\iff\\; \\mathrm{GBP}(t) \\;\\land\\; \\mathrm{BD}(t) \\;\\land\\; \\mathrm{OC}(t)$$\n## 2. Theorem Statement\n**Theorem T-ALLOW-NAS** *(Necessary-and-Sufficient Characterization of ALLOW)*\n$$\\mathrm{ALLOW}(t) \\;\\iff\\; \\mathrm{GBP}(t) \\;\\land\\; \\mathrm{BD}(t) \\;\\land\\; \\mathrm{OC}(t)$$\n- C1. `\u00acALLOW(t) \u2194 \u00acGBP(t) \u2228 \u00acBD(t) \u2228 \u00acOC",
+    "claims": "S2: Theorem formulation\n## 2. Theorem Statement\n**THM-ALLOW-IFF (S2-MAIN).**\n> `ALLOW(c) \u2194 GBP(c) \u2227 BD(c) \u2227 OC(c)`\nThis is the necessary-and-sufficient characterization of `ALLOW` admissibility. It follows directly from DEF-ALLOW (S-DEF) by definitional unfolding; no additional premises are required.\n**Status:** *Stipulated theorem* \u2014 provable by reflexivity of `\u2194` under the given definition. Not an empirical claim a",
     "definitions": "reference prior definitions",
     "unresolved": "implementation binding remains unresolved",
     "next_stage": "S3"
@@ -32,9 +32,9 @@
   {
     "artifact_id": "stegverse-anthropic-compact:S3",
     "stage_id": "S3",
-    "sha256": "sha256:0ab825ee33c6c972516044f5b842e2f6cf6d5ea14cf8009c95ee455b77390051",
+    "sha256": "sha256:317ac7f2c0f581a9d4e1a0b80410410114b4a1a6d66ae37eb6c90e50db88bc1a",
     "admitted": true,
-    "claims": "S3: Proof strategy and lemma decomposition\n**Stage:** S3 \u2014 Proof strategy and lemma decomposition\n**Forward direction (necessity):**\n**Backward direction (sufficiency):**\nThe Lean 4 candidate (Stage S4) will treat both cases; here we record the lemma decomposition only.\n## 4. Lemma Decomposition\n### L1 \u2014 Forward (Necessity)\n**Lemma L1-ALLOW-Nec**",
+    "claims": "# S3: Proof strategy and lemma decomposition\n**Stage:** S3 \u2014 Proof strategy and lemma decomposition\n## 3. Lemma Decomposition\nAlthough the main theorem requires no non-trivial lemmas, we decompose the biconditional into its two directional components for explicitness and for use as named sub-lemmas in the Lean 4 candidate (S4).\n### LEM-FWD (Necessity)\n**Status:** Stipulated sub-lemma. Provable by `intro h; exact h` a",
     "definitions": "reference prior definitions",
     "unresolved": "implementation binding remains unresolved",
     "next_stage": "S4"
@@ -42,11 +42,31 @@
   {
     "artifact_id": "stegverse-anthropic-compact:S4",
     "stage_id": "S4",
-    "sha256": "sha256:1ce76dd91386db46b1f35abbf3b10563a300c37986d35e8c7dbfa81b69eed565",
-    "admitted": false,
-    "claims": "S4: Complete informal proof.\n## Stage S4 \u2014 Complete Informal Proof\n**Stage:** S4 \u2014 Complete informal proof\n### 3. Informal Proof\nBy STI-ALLOW (the defining stipulation of the evaluator), `ALLOW t` holds if and only if `GBP t \u2227 BD t \u2227 OC t`. Since `ALLOW t` is assumed, the right-hand side of the biconditional must hold. Therefore `GBP t \u2227 BD t \u2227 OC t` holds, which is to say:",
+    "sha256": "sha256:ad99bd46c6966fb76e5d7f936bf6327df8bdcac86b1f3f851e498df3d76cc730",
+    "admitted": true,
+    "claims": "S4: Complete informal proof\n## Stage S4 \u2014 Complete Informal Proof\n**Status:** Stipulated informal proof. No claim of implementation conformance.\n### 3. Proof of the Forward Direction (LEM-FWD: Necessity)\n**Proof.**\nAssume `ALLOW(c)` holds. By DEF-ALLOW, `ALLOW(c)` is *identical by definition* to `GBP(c) \u2227 BD(c) \u2227 OC(c)`. Therefore the assumption directly yields `GBP(c) \u2227 BD(c) \u2227 OC(c)`. The hypothesis is discharged w",
     "definitions": "reference prior definitions",
     "unresolved": "implementation binding remains unresolved",
     "next_stage": "S5"
+  },
+  {
+    "artifact_id": "stegverse-anthropic-compact:S5",
+    "stage_id": "S5",
+    "sha256": "sha256:0fb77d2d678699209cd3b608a3bb782cb172a0780553c47ab794709fa9faabd0",
+    "admitted": true,
+    "claims": "**Status:** Candidate only. Not claimed to compile in any specific Lean 4 toolchain version. Not claimed to reflect any deployed GCAT/BCAT implementation. Artifact identity is established by the hash below; semantic validity is unverified.\n- Proof strategy (definitional unfolding, `intro`/`exact`, `Iff.intro`) is carried forward from S3 and S4.\n```lean4\n- All definitions and theorems are stipulations for this experim",
+    "definitions": "reference prior definitions",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S6"
+  },
+  {
+    "artifact_id": "stegverse-anthropic-compact:S6",
+    "stage_id": "S6",
+    "sha256": "sha256:d01f3e254d993e359f78f7f9cf581eae3301d6c9a5fc37ad71207f0cdac1598d",
+    "admitted": true,
+    "claims": "This artifact constitutes the verification ledger for EXPERIMENT SV-COST-STAGED-001 / CAPABILITY TEST SV-COMPACT-PROGRESS-001. It collects, in one place, the full chain of admitted artifacts (S0\u2013S5), records the verification status of each claim, separates stipulations from generated claims, and records all unresolved implementation evidence. No new mathematical content is introduced here.\n| **THM-ALLOW-IFF** | `\u2200 c ",
+    "definitions": "reference prior definitions",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "complete"
   }
 ]
