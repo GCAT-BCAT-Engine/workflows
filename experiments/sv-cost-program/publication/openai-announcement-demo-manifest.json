@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "publication_id": "SV-COST-OPENAI-ANNOUNCEMENT-DEMO-001",
+  "status": "READY_FOR_HUMAN_POSTING",
+  "title": "We stopped testing AI governance as a prompt wrapper — and started testing it as a state-transition lane",
+  "canonical_copy": "docs/OPENAI_ANNOUNCEMENT_STREAM_GOVERNANCE_DEMO.md",
+  "hero_visual": {
+    "description": "The Cost of State Transitions graphic supplied in the originating session",
+    "repository_status": "NOT_YET_COMMITTED_AS_REPOSITORY_ASSET",
+    "posting_instruction": "Attach the supplied graphic to the announcement post. Do not imply that the graphic's 10,000,000x statement is established by the current pilot."
+  },
+  "evidence": {
+    "protocol": "experiments/sv-cost-program/cost-model/stream-governance-protocol.json",
+    "runner": "experiments/sv-cost-program/stream-governance/run_stream_pilot.py",
+    "workflow": ".github/workflows/sv-cost-stream-governance-pilot.yml",
+    "workflow_run_id": 30857399034,
+    "result_commit": "78a7f5b7d82fc2db1e9560164a2ac8bc2640fbe5",
+    "decision_receipt": "experiments/sv-cost-program/stream-governance/results/stream_governance_decision.json",
+    "lane_costs": "experiments/sv-cost-program/stream-governance/results/lane_costs.json",
+    "break_even_surface": "experiments/sv-cost-program/stream-governance/results/break_even_surface.json"
+  },
+  "headline_metrics": {
+    "event_count": 10000,
+    "successful_outcomes_each_primary_lane": 7344,
+    "native_synthetic_cost_usd": 302.38,
+    "governed_synthetic_cost_usd": 74.24636,
+    "native_to_governed_ratio": 4.072658,
+    "governed_savings_percent": 75.446008,
+    "replay_to_reexecution_ratio": 500.0
+  },
+  "evidence_class": "SYNTHETIC_DETERMINISTIC_CALIBRATION",
+  "required_disclosure": "The run demonstrates an executable mechanism and accounting path using explicit synthetic unit-cost assumptions. It does not establish observed OpenAI savings or production ROI.",
+  "next_stage": "Bind the identical event stream and deterministic oracle to live provider-native and provider-plus-StegVerse adapters and meter observed provider and StegVerse runtime costs.",
+  "publication_gates": {
+    "all_lanes_visible": true,
+    "synthetic_disclosure_prominent": true,
+    "workflow_run_referenced": true,
+    "result_commit_referenced": true,
+    "decision_receipt_referenced": true,
+    "no_live_openai_savings_claim": true,
+    "no_general_roi_claim": true,
+    "no_token_compute_equivalence_claim": true
+  },
+  "human_authority_boundary": "A human must perform the final posting action and attach the visual on the selected OpenAI announcement surface."
+}
