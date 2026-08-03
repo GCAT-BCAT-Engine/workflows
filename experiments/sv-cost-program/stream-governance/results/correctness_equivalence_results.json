@@ -1,0 +1,8 @@
+{
+  "event_count": 10000,
+  "governed_successful_outcomes": 7344,
+  "independent_correctness_equivalence": "NOT_YET_EXTERNAL; deterministic oracle used for event-class admission",
+  "native_successful_outcomes": 7344,
+  "payload_hashes_preserved": true,
+  "same_stream_identity": true
+}

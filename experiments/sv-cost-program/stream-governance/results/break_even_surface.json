@@ -1,0 +1,22 @@
+{
+  "evidence_class": "SYNTHETIC_DETERMINISTIC_CALIBRATION",
+  "observed_workload": {
+    "bad_event_rate": 0.2656,
+    "bad_events": 2656,
+    "downstream_executions_avoided": 7968,
+    "events": 10000,
+    "replay_events": 318
+  },
+  "ratios": {
+    "replay": 500.0,
+    "stream_total": 4.072658
+  },
+  "schema_version": "1.0.0",
+  "thresholds": {
+    "above_100x": false,
+    "above_10x": false,
+    "above_2x": true,
+    "replay_above_100x": true,
+    "replay_above_10x": true
+  }
+}

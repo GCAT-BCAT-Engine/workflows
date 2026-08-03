@@ -1,0 +1,7 @@
+{
+  "full_reexecution_cost_usd": 3.18,
+  "reconstruction_success_rate": 1.0,
+  "replay_cost_usd": 0.00636,
+  "replay_events": 318,
+  "replay_savings_ratio": 500.0
+}

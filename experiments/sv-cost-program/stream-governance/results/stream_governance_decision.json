@@ -1,0 +1,10 @@
+{
+  "claim": "MECHANISM_DEMONSTRATED_SYNTHETICALLY; LIVE_PROVIDER_AND_ENTERPRISE_COST_VALIDATION_REQUIRED",
+  "generated_at": "2026-08-03T22:06:54.419500+00:00",
+  "next_executable_action": "Bind identical event stream to live provider-native and provider-plus-StegVerse adapters while retaining this deterministic oracle and cost ledger.",
+  "protocol_id": "SV-COST-STREAM-GOVERNANCE-001",
+  "replay_cost_ratio": 500.0,
+  "schema_version": "1.0.0",
+  "status": "SYNTHETIC_PILOT_COMPLETE",
+  "stream_cost_ratio": 4.072658
+}

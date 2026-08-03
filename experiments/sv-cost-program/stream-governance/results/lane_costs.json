@@ -1,0 +1,37 @@
+{
+  "assumptions_usd_per_event": {
+    "cascade_child": 0.01,
+    "correction": 0.025,
+    "human_review": 0.05,
+    "provider_execution": 0.01,
+    "receipt": 1e-05,
+    "replay": 2e-05,
+    "stegverse_admission": 5e-05,
+    "verification": 2e-05
+  },
+  "claim_boundary": "Validates protocol mechanics only; does not prove provider billing, production loss avoidance, or general ROI.",
+  "comparison": {
+    "governed_savings_percent": 75.446008,
+    "native_to_governed_cost_ratio": 4.072658,
+    "replay_savings_ratio": 500.0
+  },
+  "evidence_class": "SYNTHETIC_DETERMINISTIC_CALIBRATION",
+  "lanes": [
+    {
+      "lane_id": "PROVIDER_NATIVE_STREAM",
+      "successful_outcomes": 7344,
+      "total_cost_usd": 302.38
+    },
+    {
+      "lane_id": "PROVIDER_STEGVERSE_GOVERNED_STREAM",
+      "successful_outcomes": 7344,
+      "total_cost_usd": 74.24636
+    },
+    {
+      "lane_id": "STEGVERSE_REPLAY_RECOVERY",
+      "replay_events": 318,
+      "total_cost_usd": 0.00636
+    }
+  ],
+  "schema_version": "1.0.0"
+}
