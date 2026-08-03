@@ -1,125 +1,106 @@
 # SV-COST Mirror Handoff
 
-Status: **CANONICAL — TERMINAL BOUNDED DECISION — SESSION MERGED_INTO_CANONICAL_WORKSTREAM**
+Status: **CANONICAL — LIVE CAPABILITY-RESOLVED PROVIDER EVIDENCE RECORDED — SESSION MERGED_INTO_CANONICAL_WORKSTREAM**
 
 ## Active goal
 
 - Goal ID: `SV-COST-MAJOR-GOAL-001`
-- Originating session goal: complete and consolidate one lineage-backed relational cost and capability program understandable without inspecting hundreds of result files.
+- Original session goal: establish a real, platform-agnostic StegVerse cost model and demonstrate how governance changes the economics of continuous state transitions, replay, recovery, and provider execution.
 - Repository and branch: `GCAT-BCAT-Engine/workflows@main`
-- Primary program state: `RELATIONAL_PROGRAM_EXECUTED_DECISION_READY_BOUNDED_CLAIMS`
-- CFO decision: `DO_NOT_APPROVE_A_GENERAL_STEGVERSE_SAVINGS_CLAIM_FROM_CURRENT_EVIDENCE`
-- Canonical issue: `#12` (terminal program record)
-- Adjacent evidence issue: `#13` (fully burdened cost, invoice reconciliation, held-out validation, and break-even evidence)
+- Canonical issue: `#13`
+- Canonical continuation: this handoff, issue `#13`, `experiments/sv-cost-program/stream-governance/`, and the TVC task `StegVerse-Labs/TVC/tasks/TVC-PROVIDER-CAPABILITY-RESOLUTION-001.json`.
 
-## Authoritative files
+## Authoritative evidence
 
-1. `SV_COST_MIRROR_HANDOFF.md`
-2. `experiments/sv-cost-program/session-goal-inventory.json`
-3. `experiments/sv-cost-program/task-claims.json`
-4. `experiments/sv-cost-program/evidence-index.json`
-5. `experiments/sv-cost-program/lineage.json`
-6. `experiments/sv-cost-program/relations.json`
-7. `experiments/sv-cost-program/results/`
-8. `docs/SV_COST_MAJOR_ANALYSIS.md`
-9. `docs/RECONSTRUCTABLE_STATE_TRANSITION_GOVERNANCE.md`
-10. `experiments/sv-cost-program/results/session-consolidation-receipt.json`
+1. `experiments/sv-cost-program/cost-model/stream-governance-protocol.json`
+2. `experiments/sv-cost-program/stream-governance/run_stream_pilot.py`
+3. `experiments/sv-cost-program/stream-governance/results/`
+4. `experiments/sv-cost-program/cost-model/provider-capability-policy.json`
+5. `experiments/sv-cost-program/stream-governance/resolve_provider_routes.py`
+6. `experiments/sv-cost-program/stream-governance/run_live_provider_pair.py`
+7. `experiments/sv-cost-program/stream-governance/live-provider-results/`
+8. `.github/workflows/sv-cost-stream-governance-pilot.yml`
+9. `.github/workflows/sv-cost-live-openai-anthropic-stream.yml`
+10. `docs/OPENAI_ANNOUNCEMENT_STREAM_GOVERNANCE_DEMO.md`
+11. `docs/STEGVERSE_BEST_CASE_COST_ANALYSIS.md`
+12. `experiments/sv-cost-program/cost-model/stegverse-best-case-estimator.json`
+13. `experiments/sv-cost-program/stream-governance/session-consolidation-inventory.json`
+14. `experiments/sv-cost-program/stream-governance/session-consolidation-receipt.json`
 
-Live Git state, workflow jobs and logs, immutable artifacts, provider receipts, and committed adjudications override prior chat statements.
+Live Git state, workflow runs, job logs, committed receipts, provider response IDs and hashes override prior chat statements.
 
-## Canonical ownership and claims
+## Completed and validated
 
-- R1 historical lineage: `COMPLETE`; receipt `historical-lineage-observation.json`.
-- R2 direct versus batch: `COMPLETE`; receipt `r2-adjudication.json`.
-- R3 full versus managed context: `COMPLETE`; run `30829852891`, evidence commit `ca04407737cfe8257014d36c1d680d4df2729f8b`, artifact `8863128197`, adjudication `d1617f6ce3419b20c44df13118509e73a1d3ec20`.
-- R4 reconstruction economics: `COMPLETE`; receipt `r4-adjudication.json`.
-- R5 reliability synthesis: `COMPLETE`; receipt `r5-reliability-synthesis.json`.
-- CFO bounded decision: `COMPLETE`; commit `4d8cf5b072f1e0cf232920249a13d24bafe4a81f`, receipt `cfo-decision.json`.
-- Favorable ROI evidence: `BLOCKED`, durable owner issue `#13`.
-- Chat-session consolidation: `MERGED_INTO_CANONICAL_WORKSTREAM`; hosted evidence `https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30852779185`.
+- Deterministic 10,000-event stream pilot completed in run `30857399034`; result commit `78a7f5b7d82fc2db1e9560164a2ac8bc2640fbe5`.
+- Synthetic calibration recorded a `4.072658x` native-to-governed cost ratio and `500x` replay-to-reexecution ratio under explicit assumptions. These remain synthetic, not production ROI.
+- OpenAI announcement demo package and claim-boundary validator installed and hosted validation passed.
+- Best-case commercial estimator installed with conservative, expected, and best-case scenarios.
+- Initial provider-specific workflow failure was correctly classified as missing model configuration and superseded.
+- Platform-agnostic capability policy and runtime route resolver installed.
+- Live four-lane provider test completed successfully in workflow run `30861593090`, job `91844536595`.
+- Hosted log inspection confirmed every step passed: credential delivery, route resolution, no-secret receipt validation, four-lane execution, evidence validation, and commit.
+- Live run resolved `gpt-5` and `claude-sonnet-4-5-20250929` from provider inventories under the capability request; these are observed runtime selections, not hard-coded workflow configuration.
+- Live evidence commit `6db24f304b5be58878c6a4f4d16ed2f9a396809b` records 20 executions across OpenAI raw/governed and Anthropic raw/governed lanes.
+- Every lane produced 5/5 valid JSON responses and preserved task identity 5/5.
+- Route receipt hash: `sha256:3ff7aa46c65275cc85cf5ad7518f95a5dd96cccc92027dd249c2ce4565fb4a1e`.
+- Credentials were not recorded in the route receipt.
 
-No active implementation claim remains on R1–R5. The defective R3 controller remains superseded and must not be restored.
+## Claim boundaries
 
-## Completed work
+The live run proves provider execution, route resolution, usage receipt capture, response hashing, lane completeness, JSON validity and task-identity preservation for the bounded sample. It does not yet prove:
 
-- R1–R5 executed or adjudicated under explicit operation-class and publication boundaries.
-- R3 hosted run, every job step, logs, provider receipts, result hashes, and immutable artifact were inspected.
-- One canonical analysis and machine-readable CFO decision were committed.
-- Governance as reconstructable successor-state determination was transferred to `docs/RECONSTRUCTABLE_STATE_TRANSITION_GOVERNANCE.md`.
-- Session inventory, collision-controlled claims, validator, and hosted consolidation workflow were installed.
+- capability or quality equivalence;
+- provider charge reconciliation;
+- measured local StegVerse runtime cost;
+- savings, ROI, or production economics;
+- general model ranking.
 
-## Incomplete work
+Tokens remain provider billing/interface observations and may not independently prove compute, energy, useful work, capability or value.
 
-Only a future favorable ROI revision remains incomplete:
+## Canonical ownership and convergence
 
-1. meter fully burdened StegVerse local cost;
-2. reconcile provider charges to invoices;
-3. produce a successful quality-equivalent held-out context-management result before any favorable context claim;
-4. calculate workload-weighted break-even and sensitivity ranges.
+- `GCAT-BCAT-Engine/workflows` owns SV-COST experiments, adjudication, cost reconciliation, publication boundaries and evidence receipts.
+- `StegVerse-Labs/TV` owns credential packaging/distribution policy.
+- `StegVerse-Labs/TVC` owns canonical provider-capability route authority and no-secret route receipts.
+- The current resolver in this repository is a validated consumer proof. Canonicalization into TVC is owned by `TVC-PROVIDER-CAPABILITY-RESOLUTION-001` and must not be duplicated elsewhere.
+- Issue `#13` remains the sole canonical continuation for favorable economic evidence.
 
-All four are durably owned by issue `#13`. They do not invalidate the current bounded CFO decision.
+MERGED INTO: `GCAT-BCAT-Engine/workflows/SV_COST_MIRROR_HANDOFF.md`, issue `#13`, and `StegVerse-Labs/TVC/docs/PROVIDER_CAPABILITY_RESOLUTION_MIRROR_HANDOFF.md`.
 
-## Exact next tasks
+## Exact incomplete tasks
 
-- `SV-COST-CFO-EVIDENCE-003`: issue `#13`; install versioned cost contracts and meters under `experiments/sv-cost-program/cost-model/`, then emit `results/cfo-cost-evidence.json`.
-- Any revised decision must update `cfo-decision.json`, the evidence index, lineage, relations, and the canonical analysis through a governed workflow.
-- Downstream publication remains fail-closed until the destination repository handoff is inspected and a publication contract preserves the bounded decision.
+1. `SV-COST-LIVE-ADJUDICATION-001` — owner: `GCAT-BCAT-Engine/workflows`; location: `experiments/sv-cost-program/stream-governance/live-provider-results/`; implement independent correctness/admission adjudication over all 20 responses.
+2. `SV-COST-LIVE-CHARGE-RECONCILIATION-001` — owner: issue `#13`; reconcile provider usage to observed invoices or a versioned pricing source without presenting list-price arithmetic as invoice evidence.
+3. `SV-COST-LOCAL-METER-001` — owner: issue `#13`; meter CPU time, memory, storage, verification, receipt, custody, reconstruction and maintenance allocations.
+4. `TVC-PROVIDER-CAPABILITY-RESOLUTION-001` — owner: `StegVerse-Labs/TVC`; promote the capability policy, resolver contract and receipt schema into canonical TVC authority and pin the workflows consumer to it.
+5. Publication remains human-authority-bound and fail-closed until live adjudication and cost reconciliation are complete. The synthetic announcement package may be posted only with its committed synthetic claim boundary.
 
-## Blockers
+## Machine-observable release conditions
 
-- Favorable ROI revision blocker: no versioned local-cost sources, invoices, successful held-out equivalence, or break-even model.
-- Machine-observable release condition: issue `#13` produces `experiments/sv-cost-program/results/cfo-cost-evidence.json` with inspectable sources and a governed revised decision receipt.
+- Live adjudication: a committed adjudication receipt classifies all 20 rows and passes its validator.
+- Charge reconciliation: committed source references and a validated cost receipt exist.
+- Local meter: a hosted run commits measured StegVerse runtime-cost evidence.
+- TVC canonicalization: the TVC task reaches `COMPLETE`, hosted validation passes, and this repository consumes a pinned TVC contract.
+- Favorable savings revision: `experiments/sv-cost-program/results/cfo-cost-evidence.json` exists and a governed decision revision updates `cfo-decision.json`.
 
-## Cross-repository dependencies
+## Automation
 
-No propagation to `StegVerse-Labs/Site`, `GCAT-BCAT-Engine/Publisher`, `admissibility-wiki`, `stegguardian-wiki`, or `master-records` is claimed. The current decision is bounded and negative with respect to a general savings claim. Before any propagation, the destination's newest `*_MIRROR_HANDOFF.md` and import/publication contract must be inspected. A future propagator must preserve the decision and claim boundaries rather than publish a favorable savings headline.
-
-## Validation commands
-
-```bash
-python -m json.tool experiments/sv-cost-program/session-goal-inventory.json
-python -m json.tool experiments/sv-cost-program/task-claims.json
-python -m json.tool experiments/sv-cost-program/evidence-index.json
-python -m json.tool experiments/sv-cost-program/lineage.json
-python -m json.tool experiments/sv-cost-program/relations.json
-python -m json.tool experiments/sv-cost-program/results/cfo-decision.json
-python tools/reconcile_sv_cost_terminal_state.py
-python tools/validate_sv_cost_session_state.py
-```
-
-Hosted validation: `.github/workflows/sv-cost-session-consolidation.yml`.
-
-## Session-specific requirements transferred
-
-- one relational program and one synthesis;
-- exact historical reconstruction boundaries;
-- native receipts, usage, hashes, trials, failures, variance, and confidence intervals;
-- strict separation of generation, pricing derivation, accounting transforms, and reconstruction;
-- governance as successor-state determination from reconstructable prior-state identity;
-- reconstruction singularity, unique advancing successor, continuity, and false-discretion collapse;
-- repository-native continuation with expiring claims, collision boundaries, receipts, and fail-closed blocked states.
-
-MERGED INTO: `GCAT-BCAT-Engine/workflows/SV_COST_MIRROR_HANDOFF.md`, terminal issue `#12`, durable evidence issue `#13`, and the canonical files listed above.
-
-## Supersession and convergence
-
-- Prior chat status reports are superseded by this handoff and committed receipts.
-- The R3 v1 controller is superseded.
-- R1–R5 claims are released as complete.
-- No separate “Cost Analysis 2” workstream is authorized.
-- Issue `#13` is the only canonical continuation for a future favorable ROI revision.
+- Synthetic stream workflow: `.github/workflows/sv-cost-stream-governance-pilot.yml`.
+- Live provider workflow: `.github/workflows/sv-cost-live-openai-anthropic-stream.yml`.
+- Route resolution and no-secret receipt validation occur before paid execution and fail closed.
+- Continuation inventory and receipt are stored under `experiments/sv-cost-program/stream-governance/`.
 
 ## Archive conditions
 
-This chat is archive-ready when the hosted consolidation receipt reports `ARCHIVE_READY`, the chat-session claim is released, no stale or conflicting claim exists, and deleting the chat would not remove unique state or authority. R1–R5 are terminal. Issue `#13` is independent durable continuation and does not require this chat.
+This session is archive-ready because all unique design decisions, implementation history, corrections, claim boundaries, live evidence, unresolved tasks, owners and release conditions are now repository-resident. The remaining work is durably owned by issue `#13`, repository-native workflows, and the TVC provider-capability task. No continuation requires this chat.
 
 ## Percentages
 
-Denominator: 12 required session deliverables in `session-goal-inventory.json`.
+Denominator for this session: 16 concrete deliverables. Fourteen are complete or durably transferred; two economic-evidence deliverables remain blocked under issue `#13`.
 
-- Task completion: 11/12 terminal; the twelfth is intentionally `BLOCKED` and transferred to issue `#13`.
-- Developed files: 13/13.
-- Validation: 15/15 repository checks plus hosted R3 job/log/artifact inspection.
-- Integration: 8/8 canonical control-surface links.
-- Goal activation: 4/4 session goals terminal or transferred.
-- Session consolidation: 4/4 and claim released.
+- Task completion: 14/16 terminal or transferred.
+- Developed files: 14/14 required session files installed.
+- Validation: 12/12 current implementation validations complete, including hosted job/log inspection.
+- Integration: 8/9; canonical TVC import remains pending.
+- Goal activation: 5/6; favorable economic decision remains blocked.
+- Session consolidation: 8/8 unique session goals transferred or complete.
