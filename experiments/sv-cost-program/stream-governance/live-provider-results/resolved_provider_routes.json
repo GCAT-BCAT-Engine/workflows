@@ -1,0 +1,522 @@
+{
+  "authority_boundary": "Credentials were supplied by TV/TVC to the execution environment; this receipt contains no credential values and does not independently grant execution authority.",
+  "capability_request": {
+    "capability_class": "general_reasoning",
+    "cost_posture": "balanced",
+    "quality_tier": "production",
+    "required_providers": [
+      "openai",
+      "anthropic"
+    ]
+  },
+  "credentials_recorded": false,
+  "generated_at": "2026-08-03T23:14:59.000616+00:00",
+  "policy_hash": "sha256:0ae2de2e7a958df1197b49382467fd059cb19e11981cede9d4c1520a52ac667b",
+  "policy_path": "experiments/sv-cost-program/cost-model/provider-capability-policy.json",
+  "receipt_type": "TV_TVC_NO_SECRET_MODEL_ROUTE_RESOLUTION",
+  "resolution_hash": "sha256:3ff7aa46c65275cc85cf5ad7518f95a5dd96cccc92027dd249c2ce4565fb4a1e",
+  "routes": [
+    {
+      "discovered_model_count": 124,
+      "eligible_candidates": [
+        "gpt-4.1",
+        "gpt-4.1-2025-04-14",
+        "gpt-5",
+        "gpt-5-2025-08-07",
+        "gpt-5-chat-latest",
+        "gpt-5-codex",
+        "gpt-5.1",
+        "gpt-5.1-2025-11-13",
+        "gpt-5.1-chat-latest",
+        "gpt-5.1-codex",
+        "gpt-5.1-codex-max",
+        "gpt-5.2",
+        "gpt-5.2-2025-12-11",
+        "gpt-5.2-chat-latest",
+        "gpt-5.2-codex",
+        "gpt-5.3-chat-latest",
+        "gpt-5.3-codex",
+        "gpt-5.4",
+        "gpt-5.4-2026-03-05",
+        "gpt-5.5",
+        "gpt-5.5-2026-04-23",
+        "gpt-5.6-luna",
+        "gpt-5.6-sol",
+        "gpt-5.6-terra",
+        "o1",
+        "o1-2024-12-17",
+        "o3",
+        "o3-2025-04-16"
+      ],
+      "excluded_candidates": [
+        {
+          "model_id": "babbage-002",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "chat-latest",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "chatgpt-image-latest",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "davinci-002",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-3.5-turbo",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-3.5-turbo-0125",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-3.5-turbo-1106",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-3.5-turbo-16k",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-3.5-turbo-instruct",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-3.5-turbo-instruct-0914",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4-0613",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4-turbo",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4-turbo-2024-04-09",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4.1-mini",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4.1-mini-2025-04-14",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4.1-nano",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4.1-nano-2025-04-14",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4o",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4o-2024-05-13",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4o-2024-08-06",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4o-2024-11-20",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4o-mini",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4o-mini-2024-07-18",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4o-mini-search-preview",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4o-mini-search-preview-2025-03-11",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4o-mini-transcribe",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4o-mini-transcribe-2025-03-20",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4o-mini-transcribe-2025-12-15",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4o-mini-tts",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4o-mini-tts-2025-03-20",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4o-mini-tts-2025-12-15",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4o-search-preview",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4o-search-preview-2025-03-11",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4o-transcribe",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-4o-transcribe-diarize",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5-mini",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5-mini-2025-08-07",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5-nano",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5-nano-2025-08-07",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5-pro",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5-pro-2025-10-06",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5-search-api",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5-search-api-2025-10-14",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5.1-codex-mini",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5.2-pro",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5.2-pro-2025-12-11",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5.4-mini",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5.4-mini-2026-03-17",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5.4-nano",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5.4-nano-2026-03-17",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5.4-pro",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5.4-pro-2026-03-05",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5.5-pro",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-5.5-pro-2026-04-23",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-audio",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-audio-1.5",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-audio-2025-08-28",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-audio-mini",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-audio-mini-2025-10-06",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-audio-mini-2025-12-15",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-image-1",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-image-1-mini",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-image-1.5",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-image-2",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-image-2-2026-04-21",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-live-transcribe",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-realtime",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-realtime-1.5",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-realtime-2",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-realtime-2.1",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-realtime-2.1-mini",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-realtime-2025-08-28",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-realtime-mini",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-realtime-mini-2025-12-15",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-realtime-translate",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-realtime-whisper",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "gpt-transcribe",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "o1-pro",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "o1-pro-2025-03-19",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "o3-mini",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "o3-mini-2025-01-31",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "o4-mini",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "o4-mini-2025-04-16",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "omni-moderation-2024-09-26",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "omni-moderation-latest",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "sora-2",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "sora-2-pro",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "text-embedding-3-large",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "text-embedding-3-small",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "text-embedding-ada-002",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "tts-1",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "tts-1-1106",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "tts-1-hd",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "tts-1-hd-1106",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "whisper-1",
+          "reason": "NO_INCLUDE_PATTERN_MATCH"
+        }
+      ],
+      "provider": "openai",
+      "selected_model_id": "gpt-5",
+      "selection_basis": {
+        "exclude_patterns": [
+          "audio",
+          "image",
+          "realtime",
+          "transcribe",
+          "tts",
+          "embedding",
+          "moderation",
+          "search",
+          "mini",
+          "nano",
+          "pro"
+        ],
+        "include_patterns": [
+          "^gpt-5",
+          "^o[0-9]",
+          "^gpt-4\\.1"
+        ],
+        "preference_patterns": [
+          "^gpt-5$",
+          "^gpt-5-",
+          "^o3$",
+          "^gpt-4\\.1$"
+        ]
+      }
+    },
+    {
+      "discovered_model_count": 11,
+      "eligible_candidates": [
+        "claude-fable-5",
+        "claude-sonnet-4-5-20250929",
+        "claude-sonnet-4-6",
+        "claude-sonnet-5"
+      ],
+      "excluded_candidates": [
+        {
+          "model_id": "claude-haiku-4-5-20251001",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "claude-opus-4-1-20250805",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "claude-opus-4-5-20251101",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "claude-opus-4-6",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "claude-opus-4-7",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "claude-opus-4-8",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        },
+        {
+          "model_id": "claude-opus-5",
+          "reason": "EXCLUDE_PATTERN_MATCH"
+        }
+      ],
+      "provider": "anthropic",
+      "selected_model_id": "claude-sonnet-4-5-20250929",
+      "selection_basis": {
+        "exclude_patterns": [
+          "haiku",
+          "opus"
+        ],
+        "include_patterns": [
+          "claude"
+        ],
+        "preference_patterns": [
+          "sonnet-4",
+          "sonnet"
+        ]
+      }
+    }
+  ],
+  "schema_version": "1.0.0"
+}

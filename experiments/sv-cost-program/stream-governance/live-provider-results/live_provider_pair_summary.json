@@ -1,0 +1,310 @@
+{
+  "capability_request": {
+    "capability_class": "general_reasoning",
+    "cost_posture": "balanced",
+    "quality_tier": "production",
+    "required_providers": [
+      "openai",
+      "anthropic"
+    ]
+  },
+  "claim_boundary": "Live provider execution and usage evidence only. Route discovery does not establish capability equivalence. No savings, equivalence, or ROI claim until independent correctness and provider charge reconciliation are complete.",
+  "experiment_id": "SV-COST-LIVE-PROVIDER-PAIR-001",
+  "generated_at": "2026-08-03T23:19:40.230257+00:00",
+  "lanes": [
+    {
+      "events": 5,
+      "json_valid": 5,
+      "lane_id": "anthropic-governed",
+      "pricing_status": "NOT_INFERRED; RECONCILE TO PROVIDER BILLING OR VERSIONED PRICE SOURCE",
+      "provider": "anthropic",
+      "resolved_model": "claude-sonnet-4-5-20250929",
+      "task_identity_preserved": 5,
+      "total_latency_seconds": 30.329405,
+      "usage": [
+        {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 207,
+          "output_tokens": 162,
+          "service_tier": "standard"
+        },
+        {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 213,
+          "output_tokens": 255,
+          "service_tier": "standard"
+        },
+        {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 209,
+          "output_tokens": 249,
+          "service_tier": "standard"
+        },
+        {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 210,
+          "output_tokens": 241,
+          "service_tier": "standard"
+        },
+        {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 214,
+          "output_tokens": 239,
+          "service_tier": "standard"
+        }
+      ]
+    },
+    {
+      "events": 5,
+      "json_valid": 5,
+      "lane_id": "anthropic-raw",
+      "pricing_status": "NOT_INFERRED; RECONCILE TO PROVIDER BILLING OR VERSIONED PRICE SOURCE",
+      "provider": "anthropic",
+      "resolved_model": "claude-sonnet-4-5-20250929",
+      "task_identity_preserved": 5,
+      "total_latency_seconds": 16.708715,
+      "usage": [
+        {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 147,
+          "output_tokens": 135,
+          "service_tier": "standard"
+        },
+        {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 153,
+          "output_tokens": 131,
+          "service_tier": "standard"
+        },
+        {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 149,
+          "output_tokens": 115,
+          "service_tier": "standard"
+        },
+        {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 150,
+          "output_tokens": 84,
+          "service_tier": "standard"
+        },
+        {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 154,
+          "output_tokens": 133,
+          "service_tier": "standard"
+        }
+      ]
+    },
+    {
+      "events": 5,
+      "json_valid": 5,
+      "lane_id": "openai-governed",
+      "pricing_status": "NOT_INFERRED; RECONCILE TO PROVIDER BILLING OR VERSIONED PRICE SOURCE",
+      "provider": "openai",
+      "resolved_model": "gpt-5",
+      "task_identity_preserved": 5,
+      "total_latency_seconds": 147.494688,
+      "usage": [
+        {
+          "input_tokens": 188,
+          "input_tokens_details": {
+            "cache_write_tokens": 0,
+            "cached_tokens": 0
+          },
+          "output_tokens": 1385,
+          "output_tokens_details": {
+            "reasoning_tokens": 1152
+          },
+          "total_tokens": 1573
+        },
+        {
+          "input_tokens": 195,
+          "input_tokens_details": {
+            "cache_write_tokens": 0,
+            "cached_tokens": 0
+          },
+          "output_tokens": 1631,
+          "output_tokens_details": {
+            "reasoning_tokens": 1344
+          },
+          "total_tokens": 1826
+        },
+        {
+          "input_tokens": 195,
+          "input_tokens_details": {
+            "cache_write_tokens": 0,
+            "cached_tokens": 0
+          },
+          "output_tokens": 1958,
+          "output_tokens_details": {
+            "reasoning_tokens": 1664
+          },
+          "total_tokens": 2153
+        },
+        {
+          "input_tokens": 192,
+          "input_tokens_details": {
+            "cache_write_tokens": 0,
+            "cached_tokens": 0
+          },
+          "output_tokens": 2048,
+          "output_tokens_details": {
+            "reasoning_tokens": 1792
+          },
+          "total_tokens": 2240
+        },
+        {
+          "input_tokens": 196,
+          "input_tokens_details": {
+            "cache_write_tokens": 0,
+            "cached_tokens": 0
+          },
+          "output_tokens": 1920,
+          "output_tokens_details": {
+            "reasoning_tokens": 1664
+          },
+          "total_tokens": 2116
+        }
+      ]
+    },
+    {
+      "events": 5,
+      "json_valid": 5,
+      "lane_id": "openai-raw",
+      "pricing_status": "NOT_INFERRED; RECONCILE TO PROVIDER BILLING OR VERSIONED PRICE SOURCE",
+      "provider": "openai",
+      "resolved_model": "gpt-5",
+      "task_identity_preserved": 5,
+      "total_latency_seconds": 86.519704,
+      "usage": [
+        {
+          "input_tokens": 134,
+          "input_tokens_details": {
+            "cache_write_tokens": 0,
+            "cached_tokens": 0
+          },
+          "output_tokens": 1031,
+          "output_tokens_details": {
+            "reasoning_tokens": 832
+          },
+          "total_tokens": 1165
+        },
+        {
+          "input_tokens": 141,
+          "input_tokens_details": {
+            "cache_write_tokens": 0,
+            "cached_tokens": 0
+          },
+          "output_tokens": 921,
+          "output_tokens_details": {
+            "reasoning_tokens": 768
+          },
+          "total_tokens": 1062
+        },
+        {
+          "input_tokens": 141,
+          "input_tokens_details": {
+            "cache_write_tokens": 0,
+            "cached_tokens": 0
+          },
+          "output_tokens": 1244,
+          "output_tokens_details": {
+            "reasoning_tokens": 1088
+          },
+          "total_tokens": 1385
+        },
+        {
+          "input_tokens": 138,
+          "input_tokens_details": {
+            "cache_write_tokens": 0,
+            "cached_tokens": 0
+          },
+          "output_tokens": 939,
+          "output_tokens_details": {
+            "reasoning_tokens": 832
+          },
+          "total_tokens": 1077
+        },
+        {
+          "input_tokens": 142,
+          "input_tokens_details": {
+            "cache_write_tokens": 0,
+            "cached_tokens": 0
+          },
+          "output_tokens": 729,
+          "output_tokens_details": {
+            "reasoning_tokens": 640
+          },
+          "total_tokens": 871
+        }
+      ]
+    }
+  ],
+  "next_executable_action": "Run independent admission/correctness adjudication and reconcile usage to observed provider charges.",
+  "route_resolution_hash": "sha256:3ff7aa46c65275cc85cf5ad7518f95a5dd96cccc92027dd249c2ce4565fb4a1e",
+  "route_resolution_receipt": "experiments/sv-cost-program/stream-governance/live-provider-results/resolved_provider_routes.json",
+  "sample_size_per_lane": 5,
+  "schema_version": "1.1.0",
+  "source_event_ledger": "experiments/sv-cost-program/stream-governance/results/event_ledger.jsonl"
+}
