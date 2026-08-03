@@ -1,0 +1,53 @@
+name: SV-COST Cross-Model Governance Adjudication
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - experiments/five-lane-calibration/results/calibration.json
+      - experiments/sv-cost-program/cost-model/governance-vs-no-governance-contract.json
+      - experiments/sv-cost-program/tools/adjudicate_cross_model_governance.py
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sv-cost-cross-model-adjudication
+  cancel-in-progress: false
+
+jobs:
+  adjudicate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run cross-model adjudicator
+        run: python experiments/sv-cost-program/tools/adjudicate_cross_model_governance.py
+
+      - name: Validate generated JSON
+        run: python -m json.tool experiments/sv-cost-program/results/governance-cross-model-matrix.json >/dev/null
+
+      - name: Commit governed matrix and report
+        run: |
+          if git diff --quiet -- experiments/sv-cost-program/results/governance-cross-model-matrix.json reports/governance-cross-model-matrix.md; then
+            echo "No adjudication changes to commit."
+            exit 0
+          fi
+          git config user.name "stegverse-governance-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add experiments/sv-cost-program/results/governance-cross-model-matrix.json reports/governance-cross-model-matrix.md
+          git commit -m "Adjudicate cross-model governance cost matrix"
+          git push
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## SV-COST Cross-Model Governance Adjudication" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Selection rule: compare price only after task, output, execution, and receipt gates pass." >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          cat reports/governance-cross-model-matrix.md >> "$GITHUB_STEP_SUMMARY"
