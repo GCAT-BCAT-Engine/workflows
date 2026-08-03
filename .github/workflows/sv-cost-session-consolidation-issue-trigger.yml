@@ -41,6 +41,8 @@ jobs:
           paths = [
               Path('tools/reconcile_sv_cost_terminal_state.py'),
               Path('tools/validate_sv_cost_session_state.py'),
+              Path('experiments/sv-cost-program/session-goal-inventory.json'),
+              Path('experiments/sv-cost-program/task-claims.json'),
           ]
           for path in paths:
               text = path.read_text().replace(wrong, correct)
@@ -98,6 +100,11 @@ jobs:
             python -m json.tool "$path" >/dev/null
           done
           test -s .github/workflows/sv-cost-finalize.yml
+          ! grep -Fq '.github/workflows/sv-cost-finalize-relational-program.yml' \
+            experiments/sv-cost-program/session-goal-inventory.json \
+            experiments/sv-cost-program/task-claims.json \
+            tools/reconcile_sv_cost_terminal_state.py \
+            tools/validate_sv_cost_session_state.py
           grep -q 'TERMINAL BOUNDED DECISION' SV_COST_MIRROR_HANDOFF.md
           grep -q 'MERGED_INTO_CANONICAL_WORKSTREAM' SV_COST_MIRROR_HANDOFF.md
           grep -q 'DO_NOT_APPROVE_A_GENERAL_STEGVERSE_SAVINGS_CLAIM_FROM_CURRENT_EVIDENCE' docs/SV_COST_MAJOR_ANALYSIS.md
@@ -163,6 +170,10 @@ jobs:
         run: |
           set -euo pipefail
           gh issue comment 12 --repo "$GITHUB_REPOSITORY" --body "SV-COST terminal state and session transfer were reconciled and validated. Receipt: \`experiments/sv-cost-program/results/session-consolidation-receipt.json\`. Hosted evidence: $RUN_URL. Issue #13 exclusively owns any future favorable ROI revision."
-          gh issue close 11 --repo "$GITHUB_REPOSITORY" --reason completed --comment "Historical lineage is terminal, validated, and integrated into the canonical program."
-          gh issue close 12 --repo "$GITHUB_REPOSITORY" --reason completed --comment "R1-R5, the bounded CFO decision, canonical synthesis, handoff, task claims, and archive-readiness receipt are terminal and validated. Issue #13 remains the durable continuation for future favorable ROI evidence."
-          gh issue comment 13 --repo "$GITHUB_REPOSITORY" --body "Canonical session consolidation completed. This issue remains open and blocked as the sole continuation for fully burdened cost, invoice reconciliation, successful held-out equivalence, and break-even evidence. Trigger receipt: \`experiments/sv-cost-program/results/session-consolidation-receipt.json\`."
+          if [[ "$(gh issue view 11 --repo "$GITHUB_REPOSITORY" --json state --jq .state)" == OPEN ]]; then
+            gh issue close 11 --repo "$GITHUB_REPOSITORY" --reason completed --comment "Historical lineage is terminal, validated, and integrated into the canonical program."
+          fi
+          if [[ "$(gh issue view 12 --repo "$GITHUB_REPOSITORY" --json state --jq .state)" == OPEN ]]; then
+            gh issue close 12 --repo "$GITHUB_REPOSITORY" --reason completed --comment "R1-R5, the bounded CFO decision, canonical synthesis, handoff, task claims, and archive-readiness receipt are terminal and validated. Issue #13 remains the durable continuation for future favorable ROI evidence."
+          fi
+          gh issue comment 13 --repo "$GITHUB_REPOSITORY" --body "Canonical session consolidation remains complete after stale-path reconciliation. This issue stays open and blocked as the sole continuation for fully burdened cost, invoice reconciliation, successful held-out equivalence, and break-even evidence. Receipt: \`experiments/sv-cost-program/results/session-consolidation-receipt.json\`."
