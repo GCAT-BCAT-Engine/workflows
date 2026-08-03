@@ -1,0 +1,99 @@
+name: SV-COST Live OpenAI Anthropic Stream
+
+on:
+  workflow_dispatch:
+    inputs:
+      sample_size:
+        description: Events per lane (5-200)
+        required: false
+        default: '20'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sv-cost-live-openai-anthropic-stream
+  cancel-in-progress: false
+
+jobs:
+  live-provider-pair:
+    runs-on: ubuntu-latest
+    environment: sv-cost-live-provider-test
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+      ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
+      LIVE_STREAM_SAMPLE_SIZE: ${{ github.event.inputs.sample_size || '20' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fail closed if provider configuration is missing
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$OPENAI_API_KEY" || { echo 'OPENAI_API_KEY missing' >&2; exit 2; }
+          test -n "$ANTHROPIC_API_KEY" || { echo 'ANTHROPIC_API_KEY missing' >&2; exit 2; }
+          test -n "$OPENAI_MODEL" || { echo 'OPENAI_MODEL repository/environment variable missing' >&2; exit 2; }
+          test -n "$ANTHROPIC_MODEL" || { echo 'ANTHROPIC_MODEL repository/environment variable missing' >&2; exit 2; }
+          if ! [[ "$LIVE_STREAM_SAMPLE_SIZE" =~ ^[0-9]+$ ]] || [ "$LIVE_STREAM_SAMPLE_SIZE" -lt 5 ] || [ "$LIVE_STREAM_SAMPLE_SIZE" -gt 200 ]; then
+            echo 'sample_size must be an integer from 5 through 200' >&2
+            exit 2
+          fi
+
+      - name: Run identical stream sample through four lanes
+        run: python experiments/sv-cost-program/stream-governance/run_live_provider_pair.py
+
+      - name: Validate live evidence surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          base=experiments/sv-cost-program/stream-governance/live-provider-results
+          test -s "$base/live_provider_pair_results.jsonl"
+          test -s "$base/live_provider_pair_summary.json"
+          python -m json.tool "$base/live_provider_pair_summary.json" >/dev/null
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          b=Path('experiments/sv-cost-program/stream-governance/live-provider-results')
+          rows=[json.loads(x) for x in (b/'live_provider_pair_results.jsonl').read_text().splitlines() if x.strip()]
+          summary=json.loads((b/'live_provider_pair_summary.json').read_text())
+          expected={'openai-raw','openai-governed','anthropic-raw','anthropic-governed'}
+          lanes={r['lane_id'] for r in rows}
+          assert lanes == expected, (lanes, expected)
+          assert {x['lane_id'] for x in summary['lanes']} == expected
+          assert all('usage' in r for r in rows)
+          assert all(r['response_hash'].startswith('sha256:') for r in rows)
+          print(json.dumps({'valid': True, 'rows': len(rows), 'lanes': sorted(lanes)}))
+          PY
+
+      - name: Commit live receipts
+        run: |
+          set -euo pipefail
+          git config user.name 'stegverse-governance-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add experiments/sv-cost-program/stream-governance/live-provider-results/
+          if git diff --cached --quiet; then
+            echo 'No live provider output changes.'
+            exit 0
+          fi
+          git commit -m "Record live OpenAI Anthropic stream comparison [run $GITHUB_RUN_ID]"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Summary
+        if: always()
+        run: |
+          echo '## Live OpenAI + Anthropic stream comparison' >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Four required lanes: OpenAI raw/governed and Anthropic raw/governed.' >> "$GITHUB_STEP_SUMMARY"
+          if [ -f experiments/sv-cost-program/stream-governance/live-provider-results/live_provider_pair_summary.json ]; then
+            echo '```json' >> "$GITHUB_STEP_SUMMARY"
+            cat experiments/sv-cost-program/stream-governance/live-provider-results/live_provider_pair_summary.json >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'No live summary produced.' >> "$GITHUB_STEP_SUMMARY"
+          fi
