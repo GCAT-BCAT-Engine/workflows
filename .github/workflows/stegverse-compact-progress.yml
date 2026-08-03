@@ -5,7 +5,13 @@ on:
   push:
     branches: [main]
     paths:
-      - 'experiments/stegverse-compact-progress/**'
+      - 'experiments/stegverse-compact-progress/protocol.json'
+      - 'experiments/stegverse-compact-progress/run.py'
+      - 'experiments/stegverse-compact-progress/run_semantic.py'
+      - 'experiments/stegverse-compact-progress/semantic_validator.py'
+      - 'experiments/stegverse-compact-progress/adjudicate_existing.py'
+      - 'experiments/stegverse-compact-progress/economic_report.py'
+      - 'experiments/staged-math-progress/stage_contract.json'
       - '.github/workflows/stegverse-compact-progress.yml'
 
 permissions:
@@ -27,6 +33,8 @@ jobs:
       MAX_STAGE_OUTPUT: '900'
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -56,15 +64,34 @@ jobs:
       - name: Commit results safely
         shell: bash
         run: |
+          set -euo pipefail
+          RESULTS='experiments/stegverse-compact-progress/results'
+          SNAPSHOT="$(mktemp -d)"
+          cp -a "$RESULTS" "$SNAPSHOT/results"
+
           git config user.name 'stegverse-compact-progress-bot'
           git config user.email 'actions@users.noreply.github.com'
-          git add experiments/stegverse-compact-progress/results
-          git diff --cached --quiet && exit 0
-          git commit -m 'Record semantically adjudicated StegVerse compact benchmark'
+
           for attempt in 1 2 3; do
             git fetch origin main
-            git rebase origin/main && git push origin HEAD:main && exit 0
-            git rebase --abort || true
+            git reset --hard origin/main
+            rm -rf "$RESULTS"
+            mkdir -p "$(dirname "$RESULTS")"
+            cp -a "$SNAPSHOT/results" "$RESULTS"
+            git add "$RESULTS"
+
+            if git diff --cached --quiet; then
+              echo 'No result changes to commit.'
+              exit 0
+            fi
+
+            git commit -m 'Record semantically adjudicated StegVerse compact benchmark'
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+
             sleep $((attempt * 3))
           done
+
+          echo 'Unable to publish results after three fresh-base attempts.' >&2
           exit 1
