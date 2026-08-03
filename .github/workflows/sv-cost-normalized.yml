@@ -1,0 +1,82 @@
+name: SV Cost Normalized Three-Platform Harness
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/sv-cost-normalized/task_contract.json'
+      - 'experiments/sv-cost-normalized/harness.py'
+      - 'experiments/sv-cost-normalized/test_harness.py'
+      - '.github/workflows/sv-cost-normalized.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sv-cost-normalized
+  cancel-in-progress: false
+
+jobs:
+  test-and-run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      OPENAI_MODEL: gpt-5.6
+      ANTHROPIC_MODEL: claude-sonnet-4-6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run deterministic contract tests
+        run: python -m unittest experiments/sv-cost-normalized/test_harness.py -v
+
+      - name: Run closed three-platform normalized harness
+        run: python experiments/sv-cost-normalized/harness.py
+
+      - name: Upload immutable evidence bundle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sv-cost-normalized-results
+          path: experiments/sv-cost-normalized/results/
+
+      - name: Publish results without retrigger or rebase conflicts
+        if: success()
+        shell: bash
+        run: |
+          set -euo pipefail
+          RESULTS='experiments/sv-cost-normalized/results'
+          SNAPSHOT="$(mktemp -d)"
+          cp -a "$RESULTS" "$SNAPSHOT/results"
+
+          git config user.name 'sv-cost-normalized-bot'
+          git config user.email 'actions@users.noreply.github.com'
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            rm -rf "$RESULTS"
+            mkdir -p "$(dirname "$RESULTS")"
+            cp -a "$SNAPSHOT/results" "$RESULTS"
+            git add "$RESULTS"
+
+            if git diff --cached --quiet; then
+              echo 'No normalized result changes to commit.'
+              exit 0
+            fi
+
+            git commit -m 'Record SV-COST-NORMALIZED-001 three-platform results'
+            git push origin HEAD:main && exit 0
+            sleep $((attempt * 3))
+          done
+
+          echo 'Unable to publish normalized results after three attempts.' >&2
+          exit 1
