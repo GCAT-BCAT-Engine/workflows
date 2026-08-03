@@ -1,0 +1,32 @@
+{
+  "test_id": "VAL-001-RERUN",
+  "method_status": "BEST_AVAILABLE_RECONSTRUCTION",
+  "model_requested": "claude-sonnet-4-6",
+  "model_returned": "claude-sonnet-4-6",
+  "provider_message_id": "msg_011CdfLVspVvycHi83a2bq7T",
+  "provider_stop_reason": "end_turn",
+  "max_output_tokens": 256,
+  "native_input_tokens": 59,
+  "native_output_tokens": 62,
+  "native_total_tokens": 121,
+  "observed_api_cost_usd": 0.0011070000000000001,
+  "pricing_assumption": {
+    "input_usd_per_million": 3.0,
+    "output_usd_per_million": 15.0
+  },
+  "latency_seconds": 2.833714943999997,
+  "request_payload_sha256": "sha256:e864596c26af99c2bb613e93065285c7bc6beac8b643d091725b04c5b98e6a82",
+  "prompt_sha256": "sha256:8c09b90597dc57777798a5ad83aad1fe99ae1d761d406bcb8f3ad29795e6d760",
+  "raw_response_sha256": "sha256:8b792c73091dd9bd7151e1698085128b110934b7cc71e2f3239622c54d198aef",
+  "output_sha256": "sha256:e560ba9284f1465d59724226a758f0e6114be34d0afb5dcab6ec466893453e9e",
+  "validation": {
+    "checks": {
+      "connected_marker": false,
+      "model_path_marker": false,
+      "provider_message_id": true,
+      "model_identity": true
+    },
+    "valid": false
+  },
+  "reconstruction_boundary": "The exact historical request payload and exact connectivity prompt were not retained in the repository evidence currently available. This rerun preserves the known provider, model, output ceiling, task identity, output class, usage capture, latency capture, raw response retention, and receipt hashing. Results must be labeled control-envelope reproduction, not byte-identical replay."
+}

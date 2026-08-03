@@ -1,0 +1,91 @@
+{
+  "experiment_id": "SV-COST-HISTORICAL-RERUN-001",
+  "method_status": "BEST_AVAILABLE_RECONSTRUCTION",
+  "historical": {
+    "provider": "anthropic",
+    "model": "claude-sonnet-4-6",
+    "baseline_max_output_tokens": 4096,
+    "historical_val_cost_usd": 0.015,
+    "historical_bl_observed_tokens": 4169,
+    "historical_bl_cost_usd": 0.061659,
+    "historical_bl_latency_seconds_approx": 52.5
+  },
+  "rerun_receipts": [
+    {
+      "test_id": "VAL-001-RERUN",
+      "method_status": "BEST_AVAILABLE_RECONSTRUCTION",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "provider_message_id": "msg_011CdfLVspVvycHi83a2bq7T",
+      "provider_stop_reason": "end_turn",
+      "max_output_tokens": 256,
+      "native_input_tokens": 59,
+      "native_output_tokens": 62,
+      "native_total_tokens": 121,
+      "observed_api_cost_usd": 0.0011070000000000001,
+      "pricing_assumption": {
+        "input_usd_per_million": 3.0,
+        "output_usd_per_million": 15.0
+      },
+      "latency_seconds": 2.833714943999997,
+      "request_payload_sha256": "sha256:e864596c26af99c2bb613e93065285c7bc6beac8b643d091725b04c5b98e6a82",
+      "prompt_sha256": "sha256:8c09b90597dc57777798a5ad83aad1fe99ae1d761d406bcb8f3ad29795e6d760",
+      "raw_response_sha256": "sha256:8b792c73091dd9bd7151e1698085128b110934b7cc71e2f3239622c54d198aef",
+      "output_sha256": "sha256:e560ba9284f1465d59724226a758f0e6114be34d0afb5dcab6ec466893453e9e",
+      "validation": {
+        "checks": {
+          "connected_marker": false,
+          "model_path_marker": false,
+          "provider_message_id": true,
+          "model_identity": true
+        },
+        "valid": false
+      },
+      "reconstruction_boundary": "The exact historical request payload and exact connectivity prompt were not retained in the repository evidence currently available. This rerun preserves the known provider, model, output ceiling, task identity, output class, usage capture, latency capture, raw response retention, and receipt hashing. Results must be labeled control-envelope reproduction, not byte-identical replay."
+    },
+    {
+      "test_id": "BL-001-RERUN",
+      "method_status": "BEST_AVAILABLE_RECONSTRUCTION",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "provider_message_id": "msg_011CdfLW42R8YuqNRsVwSJqp",
+      "provider_stop_reason": "max_tokens",
+      "max_output_tokens": 4096,
+      "native_input_tokens": 152,
+      "native_output_tokens": 4096,
+      "native_total_tokens": 4248,
+      "observed_api_cost_usd": 0.06189599999999999,
+      "pricing_assumption": {
+        "input_usd_per_million": 3.0,
+        "output_usd_per_million": 15.0
+      },
+      "latency_seconds": 61.130965505,
+      "request_payload_sha256": "sha256:ed7510c77e97f0348f35f89dda12d5dafa92623315b3fcbfc65b76276ddf8ee2",
+      "prompt_sha256": "sha256:91e552d37cad48942d1c8457cc17e78ab0be9118133b81fc664eaafb6643753b",
+      "raw_response_sha256": "sha256:adec8750dc6e9c4e35f073f3ac35259ad96571af12b90a59b531fd12702d1071",
+      "output_sha256": "sha256:5d243da6d859b0ae1177a358f5887ebf65aca739acb60c67a1c906b09a447078",
+      "validation": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": true,
+          "forward_direction": true,
+          "reverse_direction": false,
+          "lean_candidate": false,
+          "claim_boundary": true,
+          "not_meta_only": true
+        },
+        "valid": false
+      },
+      "reconstruction_boundary": "The exact historical request payload and exact connectivity prompt were not retained in the repository evidence currently available. This rerun preserves the known provider, model, output ceiling, task identity, output class, usage capture, latency capture, raw response retention, and receipt hashing. Results must be labeled control-envelope reproduction, not byte-identical replay."
+    }
+  ],
+  "bl_deltas": {
+    "tokens_absolute": 79,
+    "tokens_percent": 1.894938834252824,
+    "cost_usd_absolute": 0.00023699999999999416,
+    "cost_percent": 0.38437211112731795,
+    "latency_seconds_absolute_vs_approx": 8.630965504999999
+  },
+  "claim_boundary": "This is a best-available control-envelope reproduction. It is not a byte-identical replay because the exact historical prompts and payload were not retained."
+}
