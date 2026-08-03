@@ -1,0 +1,53 @@
+name: StegVerse Token-Equivalent Baseline
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/stegverse-token-baseline/**'
+      - 'docs/STEGVERSE_TOKEN_EQUIVALENT_ACCOUNTING.md'
+      - 'docs/PREVIOUS_COST_TEST_METHOD_RECONSTRUCTION.md'
+      - 'math_solver/problem_spec_sv_math_001.yml'
+      - '.github/workflows/stegverse-token-baseline.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stegverse-token-equivalent-baseline
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned tokenizer
+        run: pip install 'tiktoken==0.12.0'
+      - name: Run provider-denied token-equivalent evaluation
+        run: python experiments/stegverse-token-baseline/run.py
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: stegverse-token-equivalent-baseline
+          path: experiments/stegverse-token-baseline/results/
+      - name: Commit results safely
+        shell: bash
+        run: |
+          git config user.name 'stegverse-token-baseline-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add experiments/stegverse-token-baseline/results
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record StegVerse token-equivalent baseline'
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main && git push origin HEAD:main && exit 0
+            git rebase --abort || true
+            sleep $((attempt * 3))
+          done
+          exit 1
