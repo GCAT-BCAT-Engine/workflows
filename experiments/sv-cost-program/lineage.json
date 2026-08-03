@@ -1,0 +1,126 @@
+{
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "status": "R3_REPAIRED_GENERATION_ACTIVE",
+  "governing_issue": 12,
+  "claim_model": {
+    "observed_execution": "Provider or repository execution supported by retained native receipts, hashes, and run identity.",
+    "accounting_transform": "A deterministic calculation applied to observed or historical values without a distinct execution receipt.",
+    "reconstruction": "Reuse of admitted repository state; not fresh provider inference.",
+    "publication_rule": "No economic headline may combine these operation classes without naming the class boundary."
+  },
+  "nodes": [
+    {
+      "id": "CONTROL-SURFACES",
+      "state": "COMMITTED",
+      "artifacts": [
+        "experiments/sv-cost-program/evidence-index.json",
+        "experiments/sv-cost-program/relations.json",
+        "experiments/sv-cost-program/lineage.json",
+        "docs/SV_COST_MAJOR_ANALYSIS.md"
+      ],
+      "commits": {
+        "evidence_index_initial": "790c9cca75b125d10b1aa5046f7ac34b3996c4ab",
+        "relations_initial": "89c5f7fdbede79db1b2819f21c7fb90d9df30cab",
+        "analysis_initial": "4f2e1dc53f48271143e6f857d9e78c5313c00cc1"
+      }
+    },
+    {
+      "id": "R1-HISTORICAL-REPEAT",
+      "state": "OBSERVED_AND_VALIDATED_WITH_RECONSTRUCTION_BOUNDARY",
+      "operation_class": "observed_execution_plus_historical_reconstruction",
+      "artifacts": [
+        "experiments/sv-cost-historical-rerun/lineage_manifest.json",
+        "experiments/sv-cost-historical-rerun/results/BL-001-RERUN-receipt.json",
+        "experiments/sv-cost-historical-rerun/results/comparison.json",
+        "experiments/sv-cost-historical-rerun/results/OP-002-accounting-replay.json",
+        "experiments/sv-cost-program/results/historical-lineage-observation.json"
+      ],
+      "commits": {
+        "lineage_manifest": "b63007a9fde7fa91716647ea45be89260efc376f",
+        "op002_accounting_replay": "baf741e7d73326c6afbe88efc1975748fddf99f1",
+        "lineage_report": "5d9dc4b258616842c2b9068f751b0f88f7d817f5",
+        "hosted_execution": "1b0e5ff0b72ca13fa708308ca0de54fc6f818333",
+        "observation_receipt": "0526420dd5d239100e6f2898785c1ecbd23626dd"
+      },
+      "run": {
+        "id": 30821086433,
+        "attempt": 1
+      },
+      "boundary": "The BL-001 control envelope is closely reproduced, but the exact historical prompt and request payload were not retained. OP-002 remains an accounting replay rather than an observed optimized-route execution."
+    },
+    {
+      "id": "R2-DIRECT-VS-BATCH",
+      "state": "R2_ADJUDICATED",
+      "operation_class": "paired_observed_provider_execution",
+      "artifacts": [
+        "experiments/sv-cost-program/r2-direct-vs-batch/governance.json",
+        "experiments/sv-cost-program/r2-direct-vs-batch/protocol.json",
+        "experiments/sv-cost-program/r2-direct-vs-batch/results/result.json",
+        "experiments/sv-cost-program/results/r2-adjudication.json"
+      ],
+      "commits": {
+        "governance": "c2aa0b696159cf314ae83360e915d5f92f995cc3",
+        "protocol": "0020aa515a7d97a9d0fda9faeea924d94de7fa1f",
+        "runner": "26d2e464fb0bfb0c112fa3b15332b0dd5a8e7060",
+        "workflow": "317e88e5b2feb0005940faf60615698b443e6158",
+        "observed_evidence": "30a7d55deeb4d751177cd20aeffa4a14e2a5bfac",
+        "adjudication": "e728da4be3ce4ff290849f92c4ce66092a406923"
+      },
+      "run": {
+        "id": 30825311249,
+        "attempt": 1,
+        "native_batch_id": "msgbatch_01HL3iB57s9Z7TNtHYj3LtxG"
+      },
+      "verdict": "ROUTE_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
+      "boundary": "The batch route and pricing effect were observed, but neither lane established successful equivalent outputs. Pricing-derived values are not invoice evidence."
+    },
+    {
+      "id": "R3-FULL-VS-STEGVERSE-CONTEXT",
+      "state": "REPAIRED_GENERATION_DISPATCHED",
+      "operation_class": "paired_observed_provider_execution",
+      "generation": "r3-gen-20260803-fix1",
+      "artifacts": [
+        "experiments/sv-cost-program/r3-full-vs-managed/governance.json",
+        "experiments/sv-cost-program/r3-full-vs-managed/protocol.json",
+        "experiments/sv-cost-program/r3-full-vs-managed/run.py",
+        ".github/workflows/sv-cost-r3-full-vs-managed.yml",
+        ".github/workflows/sv-cost-r3-controller-v2.yml"
+      ],
+      "commits": {
+        "governance": "6c8d286c14131bbfdfd0f49b5735279270761905",
+        "protocol": "22806761820c4e2d4c822d44d9e089b2a2807b04",
+        "runner_initial": "2bf1f523cd108da7dc4be809e3fad1148aeac314",
+        "workflow_initial": "cc866f9239f003dab092764a4a1d260f397bb035",
+        "defective_controller_retired": "bbf3335610d47e7448089dc7951dc17d8683ee10",
+        "repaired_execution_dispatch": "b122112501d7fc744066e9ad53e9f73e16f8b496",
+        "generation_aware_controller": "f2bd2c28aa0778a2074deed3955d1a17d297f502"
+      },
+      "required_terminal_artifacts": [
+        "experiments/sv-cost-program/r3-full-vs-managed/results/result.json",
+        "experiments/sv-cost-program/results/r3-adjudication.json"
+      ],
+      "boundary": "No R3 cost, token, latency, or quality conclusion is admitted until generation-bound evidence and adjudication are committed."
+    },
+    {
+      "id": "R4-GENERATION-VS-RECONSTRUCTION",
+      "state": "EXECUTED_DIFFERENT_OPERATION_PENDING_CANONICAL_ADJUDICATION",
+      "operation_class": "provider_generation_vs_governed_reconstruction",
+      "artifacts": [
+        "experiments/sv-cost-normalized/task_contract.json",
+        "experiments/sv-cost-normalized/results/result.json",
+        "experiments/sv-cost-normalized/results/native/openai.json",
+        "experiments/sv-cost-normalized/results/native/anthropic.json",
+        "experiments/sv-cost-normalized/results/native/stegverse-only.json"
+      ],
+      "current_result_blob_sha": "a500441a5a9f3a486b56f013016b1fa4ef8969c0",
+      "boundary": "Repository reconstruction can avoid external provider generation for already admitted work, but local compute, storage, verification, and maintenance cost remain unmeasured. It is not a like-for-like inference comparison."
+    }
+  ],
+  "unresolved": [
+    "R3 generation-bound result and adjudication",
+    "canonical R4 adjudication outside like-for-like provider tables",
+    "local StegVerse compute, storage, verification, and maintenance cost",
+    "invoice reconciliation for provider charges",
+    "final CFO decision synthesis and sensitivity analysis"
+  ]
+}
