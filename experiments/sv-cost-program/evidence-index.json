@@ -1,13 +1,16 @@
 {
   "program_id": "SV-COST-MAJOR-GOAL-001",
-  "status": "ACTIVE_CONSOLIDATION",
+  "status": "R3_REPAIRED_GENERATION_ACTIVE",
   "governing_issue": 12,
   "operator_review_surface": "docs/SV_COST_MAJOR_ANALYSIS.md",
+  "lineage_manifest": "experiments/sv-cost-program/lineage.json",
   "rules": {
     "standalone_narrative_reports_allowed": false,
-    "new_experiments_allowed_before_lineage_lock": false,
     "headline_requires_relational_pair": true,
-    "preserve_original_artifacts": true
+    "preserve_original_artifacts": true,
+    "observed_execution_must_be_separated_from_accounting_transform": true,
+    "reconstruction_must_be_separated_from_fresh_generation": true,
+    "pricing_derived_cost_is_invoice_evidence": false
   },
   "families": [
     {
@@ -15,28 +18,69 @@
       "classification": "original_evidence",
       "canonical_claim": "BL-001 and OP-002 historical anchors",
       "known_values": {
-        "BL-001": {"tokens": 4169, "cost_usd": 0.061659},
-        "OP-002": {"tokens": 4169, "cost_usd": 0.0308295, "reported_reduction_percent": 50}
+        "BL-001": {
+          "tokens": 4169,
+          "cost_usd": 0.061659
+        },
+        "OP-002": {
+          "tokens": 4169,
+          "cost_usd": 0.0308295,
+          "reported_reduction_percent": 50
+        }
       },
       "evidence_status": "PARTIAL",
-      "boundary": "Exact original prompts, request payloads, and an observed OP-002 route receipt have not been located."
+      "boundary": "Exact original prompts and request payloads were not retained. OP-002 has no retained distinct optimized-route receipt."
     },
     {
       "id": "historical-rerun",
       "classification": "repeat_evidence",
       "root": "experiments/sv-cost-historical-rerun/",
       "canonical_files": [
+        "lineage_manifest.json",
         "protocol.json",
         "results/comparison.json",
         "results/report.md",
-        "results/BL-001-RERUN-receipt.json"
+        "results/BL-001-RERUN-receipt.json",
+        "results/OP-002-accounting-replay.json",
+        "../sv-cost-program/results/historical-lineage-observation.json"
       ],
-      "relation": "historical-original",
-      "status": "BEST_AVAILABLE_CONTROL_ENVELOPE_REPRODUCTION"
+      "relation": "R1-HISTORICAL-REPEAT",
+      "status": "OBSERVED_AND_VALIDATED_WITH_RECONSTRUCTION_BOUNDARY"
+    },
+    {
+      "id": "r2-direct-vs-batch",
+      "classification": "paired_route_evidence",
+      "root": "experiments/sv-cost-program/r2-direct-vs-batch/",
+      "canonical_files": [
+        "governance.json",
+        "protocol.json",
+        "results/result.json",
+        "../results/r2-adjudication.json"
+      ],
+      "relation": "R2-DIRECT-VS-BATCH",
+      "status": "TERMINAL_ADJUDICATED",
+      "verdict": "ROUTE_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
+      "boundary": "A native provider batch route was observed, but successful equivalent outputs were not established."
+    },
+    {
+      "id": "r3-full-vs-managed-context",
+      "classification": "paired_context_evidence",
+      "root": "experiments/sv-cost-program/r3-full-vs-managed/",
+      "canonical_files": [
+        "governance.json",
+        "protocol.json",
+        "run.py",
+        "results/result.json",
+        "../results/r3-adjudication.json"
+      ],
+      "relation": "R3-FULL-VS-STEGVERSE-CONTEXT",
+      "status": "REPAIRED_GENERATION_DISPATCHED",
+      "generation": "r3-gen-20260803-fix1",
+      "boundary": "No R3 finding is admitted until generation-bound evidence and adjudication are committed."
     },
     {
       "id": "normalized-three-platform",
-      "classification": "reconstruction_and_normalization_evidence",
+      "classification": "generation_and_reconstruction_evidence",
       "root": "experiments/sv-cost-normalized/",
       "canonical_files": [
         "task_contract.json",
@@ -49,27 +93,36 @@
         "results/normalized/anthropic.json",
         "results/normalized/stegverse-only.json"
       ],
-      "relation": null,
-      "status": "VALID_DIFFERENT_OPERATION",
-      "boundary": "Not eligible to be called Cost Analysis 2 because provider generation and deterministic reconstruction are different operations."
+      "relation": "R4-GENERATION-VS-RECONSTRUCTION",
+      "status": "VALID_DIFFERENT_OPERATION_PENDING_CANONICAL_ADJUDICATION",
+      "boundary": "Provider generation and deterministic repository reconstruction are different operations. External provider cost can be reported separately from unmeasured local runtime cost."
     },
     {
       "id": "staged-math-progress",
-      "classification": "route_and_progress_evidence",
+      "classification": "supporting_stage_contract_and_progress_evidence",
       "root": "experiments/staged-math-progress/",
-      "canonical_files": [],
-      "relation": null,
-      "status": "INVENTORY_REQUIRED",
-      "boundary": "Stage outputs must be indexed and paired before any cost or capability claim is admitted."
+      "canonical_files": [
+        "stage_contract.json"
+      ],
+      "relation": "R3-FULL-VS-STEGVERSE-CONTEXT",
+      "status": "SUBORDINATE_TO_R3",
+      "boundary": "Stage artifacts are not independent economic conclusions."
     }
   ],
-  "required_next_state": {
-    "lineage_issue": 11,
-    "block_new_routes_until": [
-      "historical evidence fields classified",
-      "BL-001 repeat accepted",
-      "OP-002 identified as observed route or accounting-only",
-      "relational matrix committed"
-    ]
-  }
+  "terminal_relations": [
+    "R1-HISTORICAL-REPEAT",
+    "R2-DIRECT-VS-BATCH"
+  ],
+  "active_relation": "R3-FULL-VS-STEGVERSE-CONTEXT",
+  "blocked_until_r3_terminal": [
+    "canonical R4 adjudication",
+    "R5 cross-relation reliability synthesis",
+    "final CFO decision synthesis"
+  ],
+  "remaining_evidence_gaps": [
+    "R3 generation-bound result and adjudication",
+    "local StegVerse compute, storage, verification, and maintenance cost",
+    "provider invoice reconciliation",
+    "final sensitivity and break-even analysis"
+  ]
 }
