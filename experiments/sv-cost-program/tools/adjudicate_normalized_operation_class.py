@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+# Activation generation: 2026-08-03T19:54Z
 import hashlib
 import json
 from pathlib import Path
