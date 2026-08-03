@@ -1,0 +1,74 @@
+# S1: Definitions and assumptions
+
+## Universe and Primitive Sorts
+
+Let **T** be an arbitrary non-empty type (the set of *candidate transitions*). No further structure on **T** is assumed.
+
+## Predicate Definitions (by stipulation)
+
+All three predicates are *primitive*: they are given names and types but no internal structure. Their extensions are arbitrary subsets of **T**.
+
+| Symbol | Type | Reading |
+|--------|------|---------|
+| `GBP` | `T → Prop` | "Good Basis Property holds for t" |
+| `BD` | `T → Prop` | "Boundary Disposition holds for t" |
+| `OC` | `T → Prop` | "Operational Condition holds for t" |
+
+No relationship among `GBP`, `BD`, `OC` is assumed. They may overlap arbitrarily or be mutually exclusive; the characterization holds in either case.
+
+## Admissibility Definition (ALLOW)
+
+`ALLOW` is introduced as a *defined* predicate, not a primitive:
+
+```
+ALLOW : T → Prop
+ALLOW(t)  :=  GBP(t) ∧ BD(t) ∧ OC(t)
+```
+
+This definition is exhaustive and closed: the right-hand side contains every conjunct; no implicit additional condition exists.
+
+## Assumptions in Force
+
+| # | Assumption | Justification |
+|---|-----------|---------------|
+| A1 | Classical propositional logic (LEM admitted) | Lean 4 with `Classical` suffices; biconditional proof needs no excluded middle here, but admitted for generality |
+| A2 | `T` is non-empty | Prevents vacuous universal quantification from obscuring the biconditional structure |
+| A3 | `GBP`, `BD`, `OC` are uninterpreted | No binding to any concrete system; purely abstract |
+| A4 | No hidden conjuncts | The stipulation in S0 is taken as definitionally complete |
+
+## Intended Necessary-and-Sufficient Claim (preview, not yet proved)
+
+For all `t : T`:
+
+```
+ALLOW(t)  ↔  GBP(t) ∧ BD(t) ∧ OC(t)
+```
+
+Because `ALLOW` is *defined* as the right-hand side, both directions hold by definitional unfolding (no non-trivial proof obligation). The Lean 4 artifact (forthcoming, S2) will make this explicit via `Iff.intro` with `id` on each direction after `unfold ALLOW`.
+
+## Lean 4 Skeleton (definitions only — no proof, per stage scope)
+
+```lean4
+-- S1: Definitions only
+variable (T : Type*) [Nonempty T]
+
+-- Uninterpreted predicates (A3)
+variable (GBP BD OC : T → Prop)
+
+-- ALLOW defined by stipulation (A4)
+def ALLOW (t : T) : Prop := GBP t ∧ BD t ∧ OC t
+
+-- Target statement (proof deferred to S2)
+#check @ALLOW  -- confirms the definition is well-formed
+```
+
+## Stage S1 Evidence Checklist
+
+| Required evidence item | Status |
+|------------------------|--------|
+| GBP definition | ✓ Primitive predicate on T, uninterpreted |
+| BD definition | ✓ Primitive predicate on T, uninterpreted |
+| OC definition | ✓ Primitive predicate on T, uninterpreted |
+| ALLOW / Admissible definition | ✓ Defined as `GBP t ∧ BD t ∧ OC t` |
+
+**S1 complete.

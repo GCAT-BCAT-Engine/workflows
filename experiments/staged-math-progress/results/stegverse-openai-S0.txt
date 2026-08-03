@@ -1,0 +1,14 @@
+# S0: Task parsing and claim boundary
+
+- **Task identity:** `SV-COST-STAGED-001`
+- **Stipulated abstract evaluator:** For any candidate transition `t`,  
+  `ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)`.
+- **Requested result:** Establish the necessary-and-sufficient characterization above and later prepare a Lean 4 candidate for its logical core.
+- **Claim boundary:** The characterization concerns only the stipulated abstract evaluator and predicates. It does not specify, model, verify, or validate any deployed GCAT/BCAT engine.
+- **Unresolved implementation binding:** No evidence currently binds `GBP`, `BD`, `OC`, or `ALLOW` to deployed implementation behavior.
+
+**STAGE_STATUS:** COMPLETE  
+**REUSED_ARTIFACTS:** none  
+**NEW_CLAIMS:** none beyond the stipulated abstract evaluator  
+**UNRESOLVED:** implementation definitions, correspondence, and conformance evidence  
+**NEXT_STAGE:** formulate the abstract necessary-and-sufficient claim without asserting implementation validity

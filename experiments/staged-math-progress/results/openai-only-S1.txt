@@ -1,0 +1,23 @@
+S1: Definitions and assumptions.
+
+Let `Transition` be an abstract type of candidate transitions. Define predicates:
+
+- `GBP : Transition → Prop` — `GBP(t)` means candidate `t` satisfies the abstract GBP condition.
+- `BD : Transition → Prop` — `BD(t)` means candidate `t` satisfies the abstract BD condition.
+- `OC : Transition → Prop` — `OC(t)` means candidate `t` satisfies the abstract OC condition.
+- `ALLOW : Transition → Prop` — `ALLOW(t)` means the stipulated abstract evaluator returns ALLOW for `t`.
+- `Admissible : Transition → Prop` — define `Admissible(t) := GBP(t) ∧ BD(t) ∧ OC(t)`.
+
+Assumption defining the evaluator:
+
+\[
+\forall t : Transition,\quad ALLOW(t) \leftrightarrow Admissible(t).
+\]
+
+Equivalently:
+
+\[
+\forall t,\quad ALLOW(t) \leftrightarrow \bigl(GBP(t)\land BD(t)\land OC(t)\bigr).
+\]
+
+These predicates are abstract and otherwise uninterpreted; no binding to or validity claim about any deployed GCAT/BCAT implementation is assumed.

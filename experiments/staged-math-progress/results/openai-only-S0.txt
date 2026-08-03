@@ -1,0 +1,7 @@
+S0: Task parsing and claim boundary.
+
+- **Task identity:** EXPERIMENT `SV-COST-STAGED-001`; characterize ALLOW admissibility for an abstract GCAT/BCAT evaluator and later prepare a Lean 4 logical-core candidate.
+- **Stipulated abstract evaluator:** For any candidate transition `t`, `ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
+- **Claim boundary:** The necessary-and-sufficient result concerns only this stipulated abstract evaluator.
+- **No deployed-engine claim:** No specification, behavior, correctness, or implementation validity is asserted for any deployed GCAT/BCAT engine.
+- **Unresolved implementation binding:** No correspondence between `GBP`, `BD`, `OC`, `ALLOW`, or the abstract evaluator and any concrete implementation has been established.

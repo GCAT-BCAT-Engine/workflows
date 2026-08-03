@@ -1,0 +1,50 @@
+# S0: Task parsing and claim boundary
+
+## Task Identity
+
+**Experiment:** SV-COST-STAGED-001
+**Goal:** Characterize the ALLOW admissibility predicate for an *abstract* GCAT/BCAT evaluator defined solely by the stipulation below.
+
+## Stipulated Abstract Evaluator
+
+Let the universe of discourse be a set **T** of *candidate transitions*. Three predicates are given by stipulation (not derived from any deployed engine):
+
+| Symbol | Reading |
+|--------|---------|
+| `GBP : T → Prop` | "Good Basis Property holds" |
+| `BD : T → Prop` | "Boundary Disposition holds" |
+| `OC : T → Prop` | "Operational Condition holds" |
+
+**Stipulated rule:**
+
+> `ALLOW(t)` iff `GBP(t) ∧ BD(t) ∧ OC(t)`
+
+This is a *definition by stipulation*; it has no additional hidden clauses.
+
+## Claim Boundary
+
+**What is claimed (in-scope):**
+
+1. The necessary-and-sufficient characterization of `ALLOW` follows tautologically from the stipulation: `ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)`.
+2. A Lean 4 statement encoding this biconditional (forthcoming in a later stage) will be a purely logical artifact about the abstract predicates.
+
+**What is NOT claimed (out-of-scope):**
+
+- No claim is made about any deployed GCAT/BCAT engine, implementation, or runtime.
+- The predicates `GBP`, `BD`, `OC` are *uninterpreted*; no binding to concrete system behavior is asserted or implied.
+- Proof of correctness of any software system is outside scope.
+
+## Unresolved Implementation Binding
+
+The mapping from `{GBP, BD, OC}` to any concrete evaluator internals is **explicitly unresolved and out of scope**. Any such binding would require a separate, empirically grounded specification artifact not present here.
+
+## Stage S0 Status
+
+| Evidence item | Status |
+|---|---|
+| Task identity | ✓ Recorded |
+| Stipulated abstract evaluator | ✓ Recorded |
+| No deployed-engine claim | ✓ Affirmed |
+| Unresolved implementation binding | ✓ Affirmed |
+
+**S0 complete. Ready to advance to S1 (necessary-and-sufficient characterization proof sketch).**
