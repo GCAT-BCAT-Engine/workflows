@@ -1,0 +1,10 @@
+{
+  "trigger_id": "SV-COST-LIVE-CAPABILITY-ROUTE-001",
+  "requested_at": "2026-08-03T23:14:30Z",
+  "capability_class": "general_reasoning",
+  "quality_tier": "production",
+  "cost_posture": "balanced",
+  "sample_size_per_lane": 5,
+  "credential_authority": "TV_TVC",
+  "manual_model_ids_required": false
+}
