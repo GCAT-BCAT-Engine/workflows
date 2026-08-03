@@ -1,0 +1,127 @@
+{
+  "schema_version": "1.0.0",
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "experiment_id": "SV-COST-GOVERNANCE-CROSS-MODEL-001",
+  "title": "Cross-model cost and admissibility comparison with and without StegVerse governance",
+  "objective": "Compare every admitted provider model against the same model operating through StegVerse governance, and compare eligible admitted-state reconstruction against fresh model execution, using preserved task identity and outcome quality as the primary boundary.",
+  "source_findings": {
+    "validated_batch_savings": {
+      "baseline_usd": 0.061659,
+      "validated_direct_batch_usd": 0.0308295,
+      "validated_savings_percent": 50,
+      "quality_boundary": "Formal-proof task identity and required structural output were preserved."
+    },
+    "recommended_tiered_route": {
+      "cost_usd": 0.0333,
+      "savings_percent": 46,
+      "reason": "Added routing intelligence while preserving proof quality and auditability."
+    },
+    "rejected_cheapest_route": {
+      "cost_usd": 0.003,
+      "apparent_savings_percent": 95,
+      "reason": "The route changed the semantic task and produced meta-analysis instead of the requested proof."
+    },
+    "governing_principle": "The cheapest admissible run is not the cheapest observed run."
+  },
+  "comparison_unit": "successful equivalent admissible outcome",
+  "required_lanes_per_model": [
+    {
+      "lane_type": "MODEL_NATIVE",
+      "description": "Provider model executes the canonical task without StegVerse governance."
+    },
+    {
+      "lane_type": "MODEL_WITH_STEGVERSE_GOVERNANCE",
+      "description": "The same provider model executes the same canonical task through StegVerse context, admissibility, evidence, continuity, receipt, and reconstruction controls."
+    }
+  ],
+  "conditional_lanes": [
+    {
+      "lane_type": "MODEL_NATIVE_BATCH",
+      "condition": "Provider exposes an actual batch route and a native batch receipt can be retained."
+    },
+    {
+      "lane_type": "STEGVERSE_RECONSTRUCTION",
+      "condition": "The requested outcome is already admitted and reconstruction is the same operation class required by the task."
+    },
+    {
+      "lane_type": "STEGVERSE_TIERED_ROUTING",
+      "condition": "A governed router can select among admitted models without changing task identity or output obligations."
+    }
+  ],
+  "model_registry_policy": {
+    "scope": "All models for which authorized credentials, immutable model identity, native usage receipts, and lawful test authority are available.",
+    "required_fields": [
+      "provider",
+      "model_id",
+      "model_version_or_snapshot",
+      "route",
+      "tokenizer_or_accounting_version_if_reported",
+      "pricing_source_if_used",
+      "receipt_capability",
+      "batch_capability",
+      "context_window",
+      "test_authority"
+    ],
+    "dynamic": true,
+    "no_hard_coded_winner": true
+  },
+  "canonical_task_requirements": {
+    "same_task_contract": true,
+    "same_input_evidence": true,
+    "same_output_obligations": true,
+    "same_success_gate": true,
+    "same_admissibility_gate": true,
+    "same_retry_budget": true,
+    "same_time_window_where_practicable": true,
+    "provider_specific_prompt_translation_allowed": true,
+    "translation_must_preserve_semantics": true
+  },
+  "primary_measures": [
+    "task_identity_preserved",
+    "successful_completion",
+    "quality_equivalence",
+    "admissibility_result",
+    "required_output_structure_present",
+    "auditability",
+    "reconstructability",
+    "human_interventions_after_dispatch",
+    "retries",
+    "observed_provider_charge",
+    "measured_local_governance_cost",
+    "total_observed_cost_per_successful_admissible_outcome"
+  ],
+  "secondary_interface_observations": [
+    "provider_reported_input_tokens",
+    "provider_reported_output_tokens",
+    "provider_reported_cached_tokens",
+    "latency_seconds",
+    "provider_list_price_projection"
+  ],
+  "token_boundary": "Token observations may explain provider billing and interface behavior but may not establish compute, energy, useful work, capability, governance value, or profitability.",
+  "decision_order": [
+    "Reject any lane that changes task identity.",
+    "Reject any lane that fails required output or quality obligations.",
+    "Reject any lane lacking required evidence or auditability.",
+    "Among admissible successful lanes, compare total observed cost.",
+    "Prefer the lowest-cost admissible lane only when capability, quality, and operational obligations remain satisfied.",
+    "Where a slightly higher-cost lane adds routing, auditability, reconstruction, or reusable governed state, report that value separately rather than declaring the absolute cheapest lane the winner."
+  ],
+  "required_outputs": {
+    "model_registry": "experiments/sv-cost-program/cost-model/model-registry.json",
+    "task_set": "experiments/sv-cost-program/cost-model/canonical-task-set.json",
+    "observations": "experiments/sv-cost-program/cost-model/observations.jsonl",
+    "cross_model_matrix": "experiments/sv-cost-program/results/governance-cross-model-matrix.json",
+    "cfo_evidence": "experiments/sv-cost-program/results/cfo-cost-evidence.json",
+    "human_synthesis": "docs/SV_COST_MAJOR_ANALYSIS.md"
+  },
+  "minimum_publication_claim": "For each tested model, report whether StegVerse governance preserved or improved admissible outcome quality, changed total observed cost, enabled reconstruction or routing value, and whether the cheapest observed route was also the cheapest admissible route.",
+  "prohibited_claims": [
+    "All models are cheaper with StegVerse without model-specific successful evidence.",
+    "Token reduction proves compute or energy reduction.",
+    "A lower-cost failed or semantically different output is a savings result.",
+    "StegVerse-only reconstruction is equivalent to fresh inference when the task requires new inference.",
+    "List-price arithmetic is invoice evidence."
+  ],
+  "status": "ACTIVE_CONTRACT_INSTALLED",
+  "next_executable_action": "Populate model-registry.json with every currently authorized model and execute the canonical task set through MODEL_NATIVE and MODEL_WITH_STEGVERSE_GOVERNANCE lanes."
+}
