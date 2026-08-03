@@ -1,0 +1,69 @@
+{
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "status": "DESIGN_LOCKED_EXECUTION_PENDING",
+  "relations": [
+    {
+      "id": "R1-HISTORICAL-REPEAT",
+      "question": "Does the original BL-001 control envelope reproduce?",
+      "left": "historical BL-001",
+      "right": "BL-001-RERUN",
+      "invariants": ["provider", "model", "direct unoptimized task class", "4096 output-token ceiling", "pricing basis"],
+      "changed_variable": "execution time and reconstructed prompt payload",
+      "interpretation": "reproducibility and historical drift only",
+      "status": "PARTIALLY_EXECUTED",
+      "publication_gate": "state exact prompt/payload loss and completion-criterion variance"
+    },
+    {
+      "id": "R2-DIRECT-VS-BATCH",
+      "question": "What cost changes when only the eligible execution route changes?",
+      "left": "direct synchronous execution",
+      "right": "actual provider batch execution",
+      "invariants": ["provider", "model", "task payload", "completion criterion", "quality verifier", "trial set"],
+      "changed_variable": "execution route",
+      "interpretation": "route-attributable cost and latency effect",
+      "status": "BLOCKED_NO_OBSERVED_BATCH_RECEIPT",
+      "publication_gate": "both lanes must retain native provider route and billing receipts"
+    },
+    {
+      "id": "R3-FULL-VS-STEGVERSE-CONTEXT",
+      "question": "What changes when StegVerse manages context for the same provider execution?",
+      "left": "same provider/model with full context",
+      "right": "same provider/model with StegVerse-managed context",
+      "invariants": ["provider", "model", "task", "route", "output obligations", "verifier", "trial set"],
+      "changed_variable": "context representation and transfer",
+      "interpretation": "StegVerse-attributable token, cost, latency, and quality effect",
+      "status": "DESIGNED_NOT_EXECUTED",
+      "publication_gate": "paired outputs must pass the same independent verifier"
+    },
+    {
+      "id": "R4-GENERATION-VS-RECONSTRUCTION",
+      "question": "What provider cost is avoided when admitted work is reconstructed instead of regenerated?",
+      "left": "fresh provider generation",
+      "right": "governed repository reconstruction",
+      "invariants": ["task identity", "required obligations", "admitted artifact version"],
+      "changed_variable": "operation class",
+      "interpretation": "reuse economics, not platform inference equivalence",
+      "status": "EXECUTED_DIFFERENT_OPERATION",
+      "publication_gate": "must appear outside like-for-like platform tables"
+    },
+    {
+      "id": "R5-REPEATED-TRIALS",
+      "question": "How reliable are the measured effects?",
+      "left": "single-run estimates",
+      "right": "repeated paired trials",
+      "invariants": ["relation contract", "models", "price card", "verifier"],
+      "changed_variable": "trial instance",
+      "interpretation": "variance, failure rate, retry burden, and confidence",
+      "status": "BLOCKED_UNTIL_R2_OR_R3_EXECUTABLE",
+      "publication_gate": "report distributions and failures, not only averages"
+    }
+  ],
+  "execution_order": [
+    "R1-HISTORICAL-REPEAT",
+    "R2-DIRECT-VS-BATCH",
+    "R3-FULL-VS-STEGVERSE-CONTEXT",
+    "R5-REPEATED-TRIALS",
+    "R4-GENERATION-VS-RECONSTRUCTION"
+  ],
+  "scope_lock": "No additional experiment family may be introduced until the active relation reaches a terminal evidence state."
+}
