@@ -1,177 +1,125 @@
 # SV-COST Mirror Handoff
 
-Status: **CANONICAL — CROSS-MODEL GOVERNANCE INTEGRATION ACTIVE**
+Status: **CANONICAL — TERMINAL BOUNDED DECISION — SESSION MERGED_INTO_CANONICAL_WORKSTREAM**
 
 ## Active goal
 
 - Goal ID: `SV-COST-MAJOR-GOAL-001`
-- Current subgoal: `SV-COST-CROSS-MODEL-SESSION-001`
-- Originating goal: compare every model and route under the same task, outcome, admissibility, evidence, and cost rules so governance is demonstrated by refusing the cheapest invalid result.
+- Originating session goal: complete and consolidate one lineage-backed relational cost and capability program understandable without inspecting hundreds of result files.
 - Repository and branch: `GCAT-BCAT-Engine/workflows@main`
-- Canonical issue: `#13`
-- Canonical continuation: this handoff, issue `#13`, and `experiments/sv-cost-program/cross-model-session-inventory.json`.
-
-The earlier R1–R5 relational program remains terminal. The current work does not amend its receipts. It installs a reusable cross-model admission-and-cost review layer on top of existing observed evidence.
+- Primary program state: `RELATIONAL_PROGRAM_EXECUTED_DECISION_READY_BOUNDED_CLAIMS`
+- CFO decision: `DO_NOT_APPROVE_A_GENERAL_STEGVERSE_SAVINGS_CLAIM_FROM_CURRENT_EVIDENCE`
+- Canonical issue: `#12` (terminal program record)
+- Adjacent evidence issue: `#13` (fully burdened cost, invoice reconciliation, held-out validation, and break-even evidence)
 
 ## Authoritative files
 
 1. `SV_COST_MIRROR_HANDOFF.md`
 2. `experiments/sv-cost-program/session-goal-inventory.json`
-3. `experiments/sv-cost-program/cross-model-session-inventory.json`
-4. `experiments/sv-cost-program/task-claims.json`
-5. `experiments/sv-cost-program/cost-model/governance-vs-no-governance-contract.json`
-6. `experiments/sv-cost-program/cost-model/model-registry.json`
-7. `experiments/sv-cost-program/cost-model/canonical-task-set.json`
-8. `experiments/sv-cost-program/results/governance-cross-model-matrix.json`
-9. `experiments/sv-cost-program/results/normalized-operation-class-matrix.json`
-10. `experiments/sv-cost-program/results/cross-model-session-receipt.json`
-11. `docs/SV_COST_MAJOR_ANALYSIS.md`
-12. issue `#13`
+3. `experiments/sv-cost-program/task-claims.json`
+4. `experiments/sv-cost-program/evidence-index.json`
+5. `experiments/sv-cost-program/lineage.json`
+6. `experiments/sv-cost-program/relations.json`
+7. `experiments/sv-cost-program/results/`
+8. `docs/SV_COST_MAJOR_ANALYSIS.md`
+9. `docs/RECONSTRUCTABLE_STATE_TRANSITION_GOVERNANCE.md`
+10. `experiments/sv-cost-program/results/session-consolidation-receipt.json`
 
-Live Git state, workflow jobs and logs, committed matrices, provider receipts, and immutable artifacts override prior chat statements.
-
-## Session goal inventory
-
-### Primary goal
-
-Install a standard model-review method whose comparison unit is `successful equivalent admissible outcome` and whose selection order is:
-
-1. preserve task identity;
-2. complete the required operation;
-3. satisfy output and quality obligations;
-4. satisfy evidence, auditability, and admissibility gates;
-5. compare cost only among passing lanes;
-6. accept a justified premium when it purchases required capability or production obligations.
-
-### Adjacent goals
-
-- preserve the first cost-analysis finding that the cheapest admissible run is not the cheapest observed run;
-- compare native and StegVerse-governed lanes for each registered model;
-- separate fresh inference, admitted reconstruction, and prospective estimation into distinct operation and evidence classes;
-- retain token data only as provider-interface metadata, not as compute, energy, useful-work, or profitability evidence;
-- demonstrate governance through explicit refusal of zero-cost, lower-cost, failed, incomplete, or task-changing lanes;
-- automate matrix generation, invariants, receipts, and continuation without chat supervision;
-- durably transfer all unique requirements and execution authority so this session can close when the repository receipt reports `ARCHIVE_READY`.
+Live Git state, workflow jobs and logs, immutable artifacts, provider receipts, and committed adjudications override prior chat statements.
 
 ## Canonical ownership and claims
 
-- R1–R5 relational program: `COMPLETE`; terminal issue `#12` and existing receipts remain authoritative.
-- Cross-model comparison contract: `COMPLETE`; commit `03fb4a7621f84879be8353f94bbda10ca85968c7`.
-- Model registry: `COMPLETE`; commit `c53c0ddb68de7115eec14ea74de3f9176bc6a3e2`.
-- Canonical task classes: `COMPLETE`; commit `8f6b12453fd585c663236fcc187e128d3d467dea`.
-- Fresh formal-proof calibration matrix: `COMPLETE`; commit `ce9c8e59a3541f939a59584a47f7506196c084f8`.
-- Fresh matrix invariant validation: `COMPLETE`; workflow commit `47c9f5eebd7af5a2dddea31395bdd03e17f682e7` and green hosted run.
-- Normalized reconstruction/characterization matrix: `MACHINE_OWNED`; owner `.github/workflows/sv-cost-normalized-operation-adjudication.yml`.
-- Cross-model session consolidation: `MACHINE_OWNED`; owner `.github/workflows/sv-cost-cross-model-session-consolidation.yml`.
-- Favorable general ROI evidence: `BLOCKED`; durable owner issue `#13`.
+- R1 historical lineage: `COMPLETE`; receipt `historical-lineage-observation.json`.
+- R2 direct versus batch: `COMPLETE`; receipt `r2-adjudication.json`.
+- R3 full versus managed context: `COMPLETE`; run `30829852891`, evidence commit `ca04407737cfe8257014d36c1d680d4df2729f8b`, artifact `8863128197`, adjudication `d1617f6ce3419b20c44df13118509e73a1d3ec20`.
+- R4 reconstruction economics: `COMPLETE`; receipt `r4-adjudication.json`.
+- R5 reliability synthesis: `COMPLETE`; receipt `r5-reliability-synthesis.json`.
+- CFO bounded decision: `COMPLETE`; commit `4d8cf5b072f1e0cf232920249a13d24bafe4a81f`, receipt `cfo-decision.json`.
+- Favorable ROI evidence: `BLOCKED`, durable owner issue `#13`.
+- Chat-session consolidation: `MERGED_INTO_CANONICAL_WORKSTREAM`; hosted evidence `https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30847589259`.
 
-No alternate cost-analysis family is authorized. No chat session is an implementation authority. Repository workflows, issue `#13`, and this handoff are the coordination layer.
+No active implementation claim remains on R1–R5. The defective R3 controller remains superseded and must not be restored.
 
-## Completed implementation
+## Completed work
 
-- Installed `governance-vs-no-governance-contract.json` with the original 50% validated batch finding, the rejected 95% apparent saving, and the rule that price is considered only after admissibility.
-- Installed `model-registry.json` and `canonical-task-set.json`.
-- Installed `adjudicate_cross_model_governance.py` and its hosted workflow.
-- Corrected untracked-output commit detection and added machine-enforced invariants.
-- Committed `governance-cross-model-matrix.json` and `reports/governance-cross-model-matrix.md`.
-- The observed calibration rejected `openai-raw` for task-identity failure and `stegverse-only` for no execution and no required output, despite the latter's zero provider charge.
-- The bounded structurally admissible selection was `anthropic-raw` at `$0.061713`.
-- Installed `adjudicate_normalized_operation_class.py` and a hosted workflow for the distinct reconstruction/characterization operation class.
-- Corrected the normalized workflow's push-race handling and added failure diagnostics in commit `c975b393762e792b205ba5a610c8ee790c5f42cf`.
-- Installed `cross-model-session-inventory.json` and `tools/validate_sv_cost_cross_model_session.py`.
+- R1–R5 executed or adjudicated under explicit operation-class and publication boundaries.
+- R3 hosted run, every job step, logs, provider receipts, result hashes, and immutable artifact were inspected.
+- One canonical analysis and machine-readable CFO decision were committed.
+- Governance as reconstructable successor-state determination was transferred to `docs/RECONSTRUCTABLE_STATE_TRANSITION_GOVERNANCE.md`.
+- Session inventory, collision-controlled claims, validator, and hosted consolidation workflow were installed.
 
 ## Incomplete work
 
-### Machine-owned completion required for this session
+Only a future favorable ROI revision remains incomplete:
 
-1. `.github/workflows/sv-cost-normalized-operation-adjudication.yml` must commit:
-   - `experiments/sv-cost-program/results/normalized-operation-class-matrix.json`
-   - `reports/normalized-operation-class-matrix.md`
-2. `.github/workflows/sv-cost-cross-model-session-consolidation.yml` must validate both matrices and commit:
-   - `experiments/sv-cost-program/results/cross-model-session-receipt.json`
-3. The receipt must report `ARCHIVE_READY` before this session may be archived.
+1. meter fully burdened StegVerse local cost;
+2. reconcile provider charges to invoices;
+3. produce a successful quality-equivalent held-out context-management result before any favorable context claim;
+4. calculate workload-weighted break-even and sensitivity ranges.
 
-### Independent future evidence work
-
-Issue `#13` owns additional observed models, held-out quality-equivalent tasks, fully burdened local cost, invoice reconciliation, and break-even analysis. That continuation does not require this chat once the cross-model session receipt is archive-ready.
+All four are durably owned by issue `#13`. They do not invalidate the current bounded CFO decision.
 
 ## Exact next tasks
 
-- Observe the normalized adjudication workflow triggered by commit `c975b393762e792b205ba5a610c8ee790c5f42cf`.
-- If it fails, inspect its job logs and repair the exact failing step; do not infer the cause from the workflow status alone.
-- After its output is committed, run the cross-model session consolidation workflow.
-- Future model additions must update `model-registry.json`, use a canonical task from `canonical-task-set.json`, and pass the same admission-before-cost validators.
+- `SV-COST-CFO-EVIDENCE-003`: issue `#13`; install versioned cost contracts and meters under `experiments/sv-cost-program/cost-model/`, then emit `results/cfo-cost-evidence.json`.
+- Any revised decision must update `cfo-decision.json`, the evidence index, lineage, relations, and the canonical analysis through a governed workflow.
+- Downstream publication remains fail-closed until the destination repository handoff is inspected and a publication contract preserves the bounded decision.
 
-## Blockers and release conditions
+## Blockers
 
-- Current archival blocker: `normalized-operation-class-matrix.json` is not yet committed.
-- Owner: `.github/workflows/sv-cost-normalized-operation-adjudication.yml`.
-- Machine-observable release condition: the workflow commits the matrix and report after all operation-class assertions pass.
-- Final archival release condition: `cross-model-session-receipt.json.status == ARCHIVE_READY`.
-- Favorable ROI blocker remains independent: issue `#13` must produce inspectable cost sources, meters, invoices, held-out equivalence, and break-even evidence before a favorable general economic claim.
+- Favorable ROI revision blocker: no versioned local-cost sources, invoices, successful held-out equivalence, or break-even model.
+- Machine-observable release condition: issue `#13` produces `experiments/sv-cost-program/results/cfo-cost-evidence.json` with inspectable sources and a governed revised decision receipt.
 
 ## Cross-repository dependencies
 
-The bounded negative/general-claim decision was previously mirrored to `StegVerse-Labs/Site`, but live deployment was not established by repository mutation alone. No new propagation to Publisher, admissibility-wiki, stegguardian-wiki, or master-records is claimed in this continuation. Any future propagator must inspect the destination's newest mirror handoff and preserve operation-class and claim boundaries.
+No propagation to `StegVerse-Labs/Site`, `GCAT-BCAT-Engine/Publisher`, `admissibility-wiki`, `stegguardian-wiki`, or `master-records` is claimed. The current decision is bounded and negative with respect to a general savings claim. Before any propagation, the destination's newest `*_MIRROR_HANDOFF.md` and import/publication contract must be inspected. A future propagator must preserve the decision and claim boundaries rather than publish a favorable savings headline.
 
 ## Validation commands
 
 ```bash
-python -m json.tool experiments/sv-cost-program/cross-model-session-inventory.json
-python -m json.tool experiments/sv-cost-program/cost-model/governance-vs-no-governance-contract.json
-python -m json.tool experiments/sv-cost-program/cost-model/model-registry.json
-python -m json.tool experiments/sv-cost-program/cost-model/canonical-task-set.json
-python experiments/sv-cost-program/tools/adjudicate_cross_model_governance.py
-python experiments/sv-cost-program/tools/validate_cross_model_matrix.py
-python experiments/sv-cost-program/tools/adjudicate_normalized_operation_class.py
-python tools/validate_sv_cost_cross_model_session.py
+python -m json.tool experiments/sv-cost-program/session-goal-inventory.json
+python -m json.tool experiments/sv-cost-program/task-claims.json
+python -m json.tool experiments/sv-cost-program/evidence-index.json
+python -m json.tool experiments/sv-cost-program/lineage.json
+python -m json.tool experiments/sv-cost-program/relations.json
+python -m json.tool experiments/sv-cost-program/results/cfo-decision.json
+python tools/reconcile_sv_cost_terminal_state.py
+python tools/validate_sv_cost_session_state.py
 ```
 
-Hosted validation:
+Hosted validation: `.github/workflows/sv-cost-session-consolidation.yml`.
 
-- `.github/workflows/sv-cost-cross-model-adjudication.yml`
-- `.github/workflows/sv-cost-normalized-operation-adjudication.yml`
-- `.github/workflows/sv-cost-cross-model-session-consolidation.yml`
+## Session-specific requirements transferred
 
-## Requirements transferred from this session
+- one relational program and one synthesis;
+- exact historical reconstruction boundaries;
+- native receipts, usage, hashes, trials, failures, variance, and confidence intervals;
+- strict separation of generation, pricing derivation, accounting transforms, and reconstruction;
+- governance as successor-state determination from reconstructable prior-state identity;
+- reconstruction singularity, unique advancing successor, continuity, and false-discretion collapse;
+- repository-native continuation with expiring claims, collision boundaries, receipts, and fail-closed blocked states.
 
-- all models reviewed under the same task and output obligations;
-- cost differences allowed only when the capability or production difference is explicit;
-- cheapest observed output cannot win merely because it is cheapest;
-- governance is demonstrated by refusal at the selection boundary;
-- tokens are not a physical or useful-work unit and cannot determine the winner;
-- pricing contains unknown margin and is not provider-resource evidence;
-- fresh inference and reconstruction cannot silently compete as equivalent operations;
-- estimates cannot be pooled with observed execution;
-- repository-native automation owns continuation and archival determination.
-
-MERGED INTO: `GCAT-BCAT-Engine/workflows/SV_COST_MIRROR_HANDOFF.md`, `experiments/sv-cost-program/cross-model-session-inventory.json`, issue `#13`, and the workflows and result locations named above.
+MERGED INTO: `GCAT-BCAT-Engine/workflows/SV_COST_MIRROR_HANDOFF.md`, terminal issue `#12`, durable evidence issue `#13`, and the canonical files listed above.
 
 ## Supersession and convergence
 
-- Prior chat interpretations that centered token reduction as the main efficiency result are superseded.
-- Prior framing that reduced the objective to fear-based mistake prevention is superseded.
-- The canonical objective is an evidence-visible, admission-first comparison across models and StegVerse governance.
-- Existing R1–R5 receipts remain unchanged.
-- This continuation is merged into issue `#13`; no duplicate issue or experiment family should be created.
+- Prior chat status reports are superseded by this handoff and committed receipts.
+- The R3 v1 controller is superseded.
+- R1–R5 claims are released as complete.
+- No separate “Cost Analysis 2” workstream is authorized.
+- Issue `#13` is the only canonical continuation for a future favorable ROI revision.
 
 ## Archive conditions
 
-This session is archive-ready only when:
-
-1. the normalized operation-class matrix and report are committed;
-2. both cross-model matrices pass their repository validators;
-3. `cross-model-session-receipt.json` reports `ARCHIVE_READY`;
-4. no active chat-owned claim remains;
-5. issue `#13` is recorded as the independent durable continuation for future model expansion and economic evidence.
+This chat is archive-ready when the hosted consolidation receipt reports `ARCHIVE_READY`, the chat-session claim is released, no stale or conflicting claim exists, and deleting the chat would not remove unique state or authority. R1–R5 are terminal. Issue `#13` is independent durable continuation and does not require this chat.
 
 ## Percentages
 
-Denominator for this continuation: 6 required tasks in `cross-model-session-inventory.json`.
+Denominator: 12 required session deliverables in `session-goal-inventory.json`.
 
-- Task completion: 4/6 complete; 2/6 machine-owned.
-- Developed files: 9/10 installed; normalized matrix/report count as one required output group.
-- Validation: 4/6 validated.
-- Integration: 5/6 linked into canonical controls.
-- Goal activation: 5/6.
-- Session consolidation: 5/6 unique goal groups transferred or complete.
+- Task completion: 11/12 terminal; the twelfth is intentionally `BLOCKED` and transferred to issue `#13`.
+- Developed files: 13/13.
+- Validation: 15/15 repository checks plus hosted R3 job/log/artifact inspection.
+- Integration: 8/8 canonical control-surface links.
+- Goal activation: 4/4 session goals terminal or transferred.
+- Session consolidation: 4/4 and claim released.
