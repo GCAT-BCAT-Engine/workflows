@@ -3,6 +3,7 @@
 
 This first integration consumes the existing observed five-lane calibration and
 preserves the ten-advances estimates as a separate, non-observed evidence class.
+The workflow is activated by changes to this governed adjudication surface.
 """
 from __future__ import annotations
 
