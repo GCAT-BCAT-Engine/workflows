@@ -6,7 +6,11 @@ on:
       sample_size:
         description: Events per lane (5-200)
         required: false
-        default: '20'
+        default: '5'
+  push:
+    branches: [main]
+    paths:
+      - experiments/sv-cost-program/stream-governance/live-provider-test-trigger.json
 
 permissions:
   contents: write
@@ -24,7 +28,7 @@ jobs:
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
       ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
-      LIVE_STREAM_SAMPLE_SIZE: ${{ github.event.inputs.sample_size || '20' }}
+      LIVE_STREAM_SAMPLE_SIZE: ${{ github.event.inputs.sample_size || '5' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
