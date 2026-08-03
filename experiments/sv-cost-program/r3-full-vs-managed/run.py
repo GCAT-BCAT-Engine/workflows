@@ -286,7 +286,7 @@ result = {
     "publication_gate": {
         "quality_equivalent": quality_equivalent,
         "headline_context_savings_admissible": quality_equivalent and mean(cost_deltas) < 0,
-        "pricing_is_invoice_evidence": false,
+        "pricing_is_invoice_evidence": False,
         "claim_boundary": PROTOCOL["success_criteria"]["claim_boundary"],
     },
 }
