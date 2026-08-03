@@ -1,0 +1,12 @@
+{
+  "budget_currency":"USD",
+  "default_budget_ceiling":2000,
+  "lanes":[
+    {"lane_id":"openai-raw","provider":"openai","governed":false,"mode":"estimate_only"},
+    {"lane_id":"openai-governed","provider":"openai","governed":true,"mode":"estimate_only"},
+    {"lane_id":"anthropic-raw","provider":"anthropic","governed":false,"mode":"estimate_only"},
+    {"lane_id":"anthropic-governed","provider":"anthropic","governed":true,"mode":"estimate_only"},
+    {"lane_id":"stegverse-only","provider":"stegverse","governed":true,"mode":"local_feasibility_only"}
+  ],
+  "governance_controls":["problem_identity_hash","fixed_budget","branch_receipts","assumption_capture","uncertainty_bounds","independent_verification_plan","undeclared-provider-deny"]
+}
