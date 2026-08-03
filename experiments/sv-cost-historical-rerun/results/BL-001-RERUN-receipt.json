@@ -3,7 +3,7 @@
   "method_status": "BEST_AVAILABLE_CONTROL_ENVELOPE_REPRODUCTION",
   "model_requested": "claude-sonnet-4-6",
   "model_returned": "claude-sonnet-4-6",
-  "provider_message_id": "msg_011CdfZ4JqSKgshM639noBku",
+  "provider_message_id": "msg_011CdfwhWmseZ23BBSRbDDvw",
   "provider_stop_reason": "max_tokens",
   "http_status": 200,
   "max_output_tokens": 4096,
@@ -15,11 +15,11 @@
     "input_usd_per_million": 3.0,
     "output_usd_per_million": 15.0
   },
-  "latency_seconds": 55.940335722,
+  "latency_seconds": 61.869008238,
   "request_payload_sha256": "sha256:37412d4b246665be219d5c3120b7f12827711f50016f16781ec0af97cd37cad2",
   "prompt_sha256": "sha256:654d0fd161a30c9ac4765c4eddc7f374dd110d1afb6c78de1877e510d8c12880",
-  "raw_response_sha256": "sha256:640b3d1f6485d28fbd3f56100c9041332580fd809ac2a3f78522554cb3d36dee",
-  "output_sha256": "sha256:312c7736038ca83bcad53e66752d7bac525d51cf2fefa74c1c75ce18d043c4c7",
+  "raw_response_sha256": "sha256:f348335cb95129f33a6f6603ee34b3baca96e8a6c48f4ef22ec336e1f2e9bca7",
+  "output_sha256": "sha256:186d8e2de7acf4d0342d05c003d29abf7f274cfa85e2377072e7c3dba50537c5",
   "validation": {
     "transport_checks": {
       "http_2xx": true,
@@ -32,7 +32,7 @@
     "output_class_checks": {
       "direct_artifact": true,
       "definitions": true,
-      "necessary_and_sufficient": false,
+      "necessary_and_sufficient": true,
       "forward_direction": true,
       "reverse_direction": true,
       "claim_boundary": false,

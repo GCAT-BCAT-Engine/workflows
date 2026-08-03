@@ -4,8 +4,8 @@ Method status: BEST_AVAILABLE_CONTROL_ENVELOPE_REPRODUCTION
 
 | Test | Transport | Output class | Complete | Native tokens | Observed cost | Latency s | Stop reason |
 |---|---:|---:|---:|---:|---:|---:|---|
-| VAL-001-RERUN | TRUE | N/A | TRUE | 33 | $0.000207 | 1.10 | end_turn |
-| BL-001-RERUN | TRUE | FALSE | FALSE | 4,239 | $0.061869 | 55.94 | max_tokens |
+| VAL-001-RERUN | TRUE | N/A | TRUE | 33 | $0.000207 | 1.30 | end_turn |
+| BL-001-RERUN | TRUE | FALSE | FALSE | 4,239 | $0.061869 | 61.87 | max_tokens |
 
 ## BL-001 historical comparison
 
@@ -16,7 +16,7 @@ Method status: BEST_AVAILABLE_CONTROL_ENVELOPE_REPRODUCTION
 - Rerun observed cost: $0.061869
 - Cost delta: $+0.000210 (+0.34%)
 - Historical latency: approximately 52.5s
-- Rerun latency: 55.94s
+- Rerun latency: 61.87s
 
 ## Interpretation
 

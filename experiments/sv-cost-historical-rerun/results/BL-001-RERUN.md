@@ -2,123 +2,145 @@
 
 ---
 
-## §1. Primitive Definitions and Abstract Framework
+## §1. Primitive Vocabulary and Definitions
 
-**Definition 1.1 (Policy Space).** Let $\mathcal{P}$ be a compact metric space of policy configurations with metric $d_\mathcal{P}$. A *policy trajectory* is a continuous map $\gamma: [0,1] \to \mathcal{P}$.
+**Definition 1.1 (Semantic Space).** Let $\mathcal{U}$ be a fixed countable universe of *discourse tokens*. A *semantic space* is a metric space $(S, d_S)$ together with a measurable map $\phi : \mathcal{U}^* \to S$ called the *embedding functor*, where $\mathcal{U}^*$ denotes finite strings over $\mathcal{U}$.
 
-**Definition 1.2 (Semantic Domain).** Let $\mathcal{S}$ be a complete separable metric space of semantic states. Define the *semantic evaluation map* $\Phi: \mathcal{P} \to \mathcal{M}(\mathcal{S})$, where $\mathcal{M}(\mathcal{S})$ denotes the space of Borel probability measures on $\mathcal{S}$, equipped with the Wasserstein-1 metric $W_1$.
+**Definition 1.2 (Ontological Region).** An *ontological region* is a pair $\mathcal{O} = (R, \partial R)$ where $R \subseteq S$ is a compact connected subset and $\partial R$ is its topological boundary in $S$. The *interior* is $\text{int}(R) = R \setminus \partial R$.
 
-**Definition 1.3 (Admissibility Boundary).** The *admissibility boundary* is a closed set $\partial\mathcal{A} \subset \mathcal{P}$ such that:
-- The *interior admissible region* is $\mathcal{A}^\circ = \mathcal{P} \setminus \partial\mathcal{A}$ (open).
-- The *inadmissible region* is $\mathcal{I} = \mathcal{P} \setminus \overline{\mathcal{A}}$ where $\overline{\mathcal{A}} = \mathcal{A}^\circ \cup \partial\mathcal{A}$.
+**Definition 1.3 (Policy Boundary System).** A *policy boundary system* is a triple $\mathcal{B} = (S, \{\mathcal{O}_i\}_{i \in I}, \mathcal{F})$ where:
+- $\{R_i\}_{i \in I}$ is a locally finite cover of $S$ by ontological regions with $I$ a countable index set,
+- $\mathcal{F} = \{f_j : S \to \mathbb{R}\}_{j \in J}$ is a finite family of *boundary functionals*, each $f_j$ Lipschitz continuous with constant $L_j < \infty$,
+- The *admissible region* is $\mathcal{A} = \bigcap_{j \in J} f_j^{-1}((-\infty, 0])$.
 
-**Definition 1.4 (Geometric Boundary Preservation — GBP).** A policy map $f: \mathcal{P} \to \mathcal{P}$ satisfies *Geometric Boundary Preservation* if:
+**Definition 1.4 (Response Map).** A *response map* is a measurable function $\rho : \mathcal{U}^* \to \mathcal{U}^*$. Its *semantic image* is $\hat{\rho} = \phi \circ \rho : \mathcal{U}^* \to S$.
 
-$$\text{GBP}(f) \;\equiv\; f(\partial\mathcal{A}) \subseteq \partial\mathcal{A} \;\land\; f(\mathcal{A}^\circ) \subseteq \overline{\mathcal{A}}$$
+**Definition 1.5 (Geometric Boundary Preservation — GBP).** A response map $\rho$ satisfies *GBP* with respect to $\mathcal{B}$ if for every input $u \in \mathcal{U}^*$:
 
-That is, $f$ maps boundary points to boundary points and interior admissible points to the closed admissible region. Equivalently, $f$ does not map any admissible point into $\mathcal{I}$.
+$$\phi(u) \in \mathcal{A} \implies \hat{\rho}(u) \in \mathcal{A}$$
 
-**Definition 1.5 (Divergence Functional).** For measures $\mu, \nu \in \mathcal{M}(\mathcal{S})$, define the *semantic divergence* $\Delta: \mathcal{M}(\mathcal{S}) \times \mathcal{M}(\mathcal{S}) \to [0, \infty]$ by:
+and moreover the map $\hat{\rho}$ does not map the boundary $\partial \mathcal{A} = \bigcup_{j \in J} f_j^{-1}(\{0\})$ to $\text{ext}(\mathcal{A}) = S \setminus \mathcal{A}$:
 
-$$\Delta(\mu, \nu) = W_1(\mu, \nu) + \text{KL}(\mu \| \nu)$$
+$$\forall u : \phi(u) \in \partial\mathcal{A} \implies \hat{\rho}(u) \in \mathcal{A}.$$
 
-where $\text{KL}(\mu \| \nu) = \int \log\frac{d\mu}{d\nu} \, d\mu$ when $\mu \ll \nu$, and $+\infty$ otherwise.
+*Remark.* GBP is a one-directional closure condition. It is not required that $\phi(u) \notin \mathcal{A}$ forces $\hat{\rho}(u) \notin \mathcal{A}$; inadmissible inputs may receive admissible responses (refusals, corrections).
 
-**Definition 1.6 (Bounded Divergence — BD).** A policy $p \in \mathcal{P}$ has *Bounded Divergence* with constant $K > 0$ relative to a reference measure $\mu_0 = \Phi(p_0)$ for a designated $p_0 \in \mathcal{A}^\circ$ if:
+**Definition 1.6 (Divergence Measure).** Let $\mu$ be a reference probability measure on $S$ (e.g., induced by empirical distribution over $\mathcal{U}^*$). For a response map $\rho$, define the *semantic divergence* as:
 
-$$\text{BD}(p, K) \;\equiv\; \Delta(\Phi(p), \mu_0) \leq K$$
+$$D(\rho) = \sup_{u \in \mathcal{U}^*} d_S\!\left(\phi(u),\, \hat{\rho}(u)\right).$$
 
-**Definition 1.7 (Ontological Frame).** An *ontological frame* is a tuple $\mathcal{O} = (E, R, V, \models)$ where:
-- $E$ is a set of entities (the *ontology*),
-- $R \subseteq E \times E$ is a binary relation (the *commitment relation*),
-- $V: E \to \{0,1\}$ is a valuation,
-- $\models\; \subseteq \mathcal{P} \times \mathcal{O}$ is the *satisfaction relation*: $p \models \mathcal{O}$ means policy $p$ is consistent with frame $\mathcal{O}$.
+**Definition 1.7 (Bounded Divergence — BD).** A response map $\rho$ satisfies *BD* with bound $\delta > 0$ if:
 
-**Definition 1.8 (Ontological Consistency — OC).** A policy $p \in \mathcal{P}$ is *Ontologically Consistent* with respect to a fixed frame $\mathcal{O}_0$ if:
+$$D(\rho) \leq \delta.$$
 
-$$\text{OC}(p) \;\equiv\; p \models \mathcal{O}_0 \;\land\; \forall e \in E,\; \bigl[(p \models \mathcal{O}_0) \Rightarrow \neg(p \models \mathcal{O}_0[V(e) \mapsto \neg V(e)])\bigr]$$
+**Definition 1.8 (Ontological Consistency — OC).** For each ontological region $\mathcal{O}_i = (R_i, \partial R_i)$, define the *ontological assignment* $\omega : S \to 2^I$ by $\omega(x) = \{i \in I : x \in R_i\}$. A response map $\rho$ satisfies *OC* if:
 
-The second conjunct states that $p$ does not simultaneously satisfy $\mathcal{O}_0$ under complementary valuations — no internal ontological contradiction is induced by $p$.
+$$\forall u \in \mathcal{U}^*, \quad \omega(\phi(u)) \cap \omega(\hat{\rho}(u)) \neq \emptyset$$
 
-**Definition 1.9 (ALLOW Admissibility).** A policy $p \in \mathcal{P}$ is *ALLOW-admissible* — written $\text{ALLOW}(p)$ — if there exists a policy map $f_p: \mathcal{P} \to \mathcal{P}$ and constant $K_p > 0$ such that:
+and additionally, for every $i \in I$:
 
-$$\text{ALLOW}(p) \;\equiv\; \text{GBP}(f_p) \;\land\; \text{BD}(p, K_p) \;\land\; \text{OC}(p) \;\land\; f_p(p) \in \overline{\mathcal{A}}$$
+$$\phi(u) \in R_i \implies \hat{\rho}(u) \notin \bigcup_{k \in \mathcal{E}(i)} R_k$$
 
----
+where $\mathcal{E}(i) \subseteq I$ is the *exclusion set* of region $i$, a given parameter of $\mathcal{B}$ encoding mutually incompatible ontological categories (e.g., "factual" vs "fabrication", "safe" vs "harmful").
 
-## §2. Auxiliary Lemmas
-
-**Lemma 2.1 (GBP Closure under Composition).** If $f, g: \mathcal{P} \to \mathcal{P}$ both satisfy GBP, then $f \circ g$ satisfies GBP.
-
-*Proof.* Let $q \in \partial\mathcal{A}$. By $\text{GBP}(g)$: $g(q) \in \partial\mathcal{A}$. By $\text{GBP}(f)$: $f(g(q)) \in \partial\mathcal{A}$. Hence $(f \circ g)(\partial\mathcal{A}) \subseteq \partial\mathcal{A}$. Let $q \in \mathcal{A}^\circ$. By $\text{GBP}(g)$: $g(q) \in \overline{\mathcal{A}}$. If $g(q) \in \mathcal{A}^\circ$, then $f(g(q)) \in \overline{\mathcal{A}}$ by $\text{GBP}(f)$. If $g(q) \in \partial\mathcal{A}$, then $f(g(q)) \in \partial\mathcal{A} \subseteq \overline{\mathcal{A}}$. Thus $(f \circ g)(\mathcal{A}^\circ) \subseteq \overline{\mathcal{A}}$. $\square$
-
-**Lemma 2.2 (BD Transitivity via Triangle Inequality).** If $\text{BD}(p, K_1)$ and $\text{BD}(q, K_2)$ hold with the same reference $\mu_0$, then $W_1(\Phi(p), \Phi(q)) \leq K_1 + K_2$.
-
-*Proof.* By the triangle inequality of $W_1$:
-$$W_1(\Phi(p), \Phi(q)) \leq W_1(\Phi(p), \mu_0) + W_1(\mu_0, \Phi(q)) \leq K_1 + K_2$$
-since $W_1(\mu, \nu) \leq \Delta(\mu,\nu)$ for all $\mu, \nu$. $\square$
-
-**Lemma 2.3 (OC Excludes Inadmissibility via Valuation Stability).** Suppose the ontological frame $\mathcal{O}_0$ encodes the admissibility predicate — i.e., for all $p \in \mathcal{P}$: $p \models \mathcal{O}_0 \Rightarrow p \in \overline{\mathcal{A}}$. Then $\text{OC}(p) \Rightarrow p \in \overline{\mathcal{A}}$.
-
-*Proof.* By hypothesis, $\text{OC}(p)$ includes $p \models \mathcal{O}_0$, which by the encoding assumption gives $p \in \overline{\mathcal{A}}$. $\square$
-
-**Lemma 2.4 (Compactness of Admissible Sublevel Sets).** For any $K > 0$, the set
-
-$$\mathcal{B}_K = \{p \in \overline{\mathcal{A}} : \Delta(\Phi(p), \mu_0) \leq K\}$$
-
-is compact when $\Phi$ is continuous and $\overline{\mathcal{A}}$ is closed in the compact space $\mathcal{P}$.
-
-*Proof.* Since $\mathcal{P}$ is compact and $\overline{\mathcal{A}}$ is closed, $\overline{\mathcal{A}}$ is compact. The map $p \mapsto \Delta(\Phi(p), \mu_0)$ is lower semicontinuous (as $\Delta$ includes KL divergence, which is lower semicontinuous in the weak topology, and $W_1$ is continuous). Hence the sublevel set $\{p : \Delta(\Phi(p),\mu_0) \leq K\}$ is closed, and its intersection with the compact set $\overline{\mathcal{A}}$ is compact. $\square$
+**Definition 1.9 (ALLOW Admissibility).** A response map $\rho$ is *ALLOW-admissible* with respect to $(\mathcal{B}, \delta)$ if and only if $\rho$ satisfies GBP, BD with bound $\delta$, and OC simultaneously. We write $\rho \in \text{ALLOW}(\mathcal{B}, \delta)$.
 
 ---
 
-## §3. Main Theorem
+## §2. Auxiliary Constructions
 
-### Theorem 3.1 (Complete Invariant Characterization of ALLOW Admissibility)
+**Definition 2.1 (GBP Tube).** For $\delta > 0$, define the *$\delta$-tube* around $\mathcal{A}$:
 
-**Assumptions (A):**
-- (A1) $\mathcal{P}$ is a compact metric space; $\overline{\mathcal{A}}$ is closed, $\mathcal{A}^\circ$ is open, $\partial\mathcal{A}$ is closed.
-- (A2) $\Phi: \mathcal{P} \to \mathcal{M}(\mathcal{S})$ is continuous in the $W_1$ topology.
-- (A3) The ontological frame $\mathcal{O}_0$ is *admissibility-encoding*: $\forall p \in \mathcal{P},\; p \models \mathcal{O}_0 \Rightarrow p \in \overline{\mathcal{A}}$.
-- (A4) The admissibility boundary $\partial\mathcal{A}$ is *non-vacuous*: $\partial\mathcal{A} \neq \emptyset$.
-- (A5) The identity map $\text{id}_\mathcal{P}$ satisfies $\text{GBP}(\text{id}_\mathcal{P})$ — i.e., $\text{id}$ preserves all regions (trivially verified).
+$$\mathcal{T}_\delta(\mathcal{A}) = \{x \in S : d_S(x, \mathcal{A}) \leq \delta\}.$$
 
-**Statement.** Under assumptions (A1)–(A5), for any policy $p \in \mathcal{P}$:
+**Definition 2.2 (Ontological Compatibility Graph).** Define the directed graph $G_\mathcal{O} = (I, E_\mathcal{O})$ where $(i, k) \in E_\mathcal{O}$ iff $k \notin \mathcal{E}(i)$ (i.e., $k$ is ontologically compatible as a target when source is $i$).
 
-$$\boxed{\text{ALLOW}(p) \;\iff\; p \in \overline{\mathcal{A}} \;\land\; \exists K > 0,\; \Delta(\Phi(p), \mu_0) \leq K \;\land\; \text{OC}(p)}$$
+**Definition 2.3 (Combined Admissibility Kernel).** Define:
+
+$$\mathcal{K}(\mathcal{B}, \delta) = \left\{(x, y) \in S \times S \;\middle|\; \begin{array}{l} \bigl(x \in \mathcal{A} \implies y \in \mathcal{A}\bigr) \\ \wedge\; d_S(x, y) \leq \delta \\ \wedge\; \omega(x) \cap \omega(y) \neq \emptyset \\ \wedge\; \forall i \in \omega(x),\, \omega(y) \cap \mathcal{E}(i) = \emptyset \end{array}\right\}.$$
 
 ---
 
-### Proof of the Forward Direction ($\Rightarrow$)
+## §3. Assumptions (Clearly Separated)
 
-**Claim:** $\text{ALLOW}(p) \Rightarrow p \in \overline{\mathcal{A}} \land \exists K > 0,\, \Delta(\Phi(p), \mu_0) \leq K \land \text{OC}(p)$.
+The following are **assumed** as axiomatic conditions on the instantiation; they are not proved here.
 
-Assume $\text{ALLOW}(p)$. By Definition 1.9, there exists $f_p$ and $K_p > 0$ such that:
-
-**(i) $p \in \overline{\mathcal{A}}$:** We have $\text{GBP}(f_p)$ and $f_p(p) \in \overline{\mathcal{A}}$. We need $p \in \overline{\mathcal{A}}$. Suppose for contradiction $p \in \mathcal{I} = \mathcal{P} \setminus \overline{\mathcal{A}}$. Since $\mathcal{I}$ is open (complement of closed $\overline{\mathcal{A}}$) and $\mathcal{I} \cap \mathcal{A}^\circ = \emptyset$, $\mathcal{I} \cap \partial\mathcal{A} = \emptyset$, we have $p \notin \mathcal{A}^\circ$ and $p \notin \partial\mathcal{A}$. But also $\text{OC}(p)$ holds by assumption, and by Lemma 2.3 under (A3), $\text{OC}(p) \Rightarrow p \in \overline{\mathcal{A}}$, contradicting $p \in \mathcal{I}$. Therefore $p \in \overline{\mathcal{A}}$.
-
-**(ii) $\Delta(\Phi(p), \mu_0) \leq K_p$:** This is $\text{BD}(p, K_p)$, which is directly a conjunct of $\text{ALLOW}(p)$ by Definition 1.9. Since $K_p > 0$ exists by assumption, $\exists K > 0$ such that $\Delta(\Phi(p), \mu_0) \leq K$. $\square_{\text{(ii)}}$
-
-**(iii) $\text{OC}(p)$:** Directly a conjunct of $\text{ALLOW}(p)$. $\square_{\text{(iii)}}$
-
-Forward direction established. $\square_\Rightarrow$
+> **A1.** $(S, d_S)$ is a complete separable metric space.
+>
+> **A2.** The embedding functor $\phi$ is measurable and has bounded image on any finite input length class.
+>
+> **A3.** Each boundary functional $f_j$ is Lipschitz with constant $L_j < \infty$; in particular $\mathcal{A}$ is closed (hence compact when $S$ is locally compact).
+>
+> **A4.** Each ontological region $R_i$ is a closed set; the cover $\{R_i\}$ is locally finite.
+>
+> **A5.** The exclusion sets $\mathcal{E}(i)$ are given parameters of $\mathcal{B}$ and are assumed to be reflexively consistent: $i \notin \mathcal{E}(i)$ for all $i$ (a region does not exclude itself).
+>
+> **A6.** The bound $\delta > 0$ is chosen such that $\mathcal{T}_\delta(\mathcal{A}) \cap \bigcup_{j \in J} f_j^{-1}((0, \infty))$ is nonempty, i.e., the tube is non-trivially larger than $\mathcal{A}$ in at least one direction. (Ensures BD is not vacuously equivalent to GBP.)
+>
+> **A7.** The response map $\rho$ is given; its measurability is assumed.
 
 ---
 
-### Proof of the Reverse Direction ($\Leftarrow$)
+## §4. Main Theorem (Necessary and Sufficient Characterization)
 
-**Claim:** $p \in \overline{\mathcal{A}} \land \exists K > 0,\, \Delta(\Phi(p), \mu_0) \leq K \land \text{OC}(p) \Rightarrow \text{ALLOW}(p)$.
+**Theorem 4.1 (Complete Invariant Characterization of ALLOW Admissibility).**
 
-Assume the right-hand side. We must produce $f_p$ and $K_p > 0$ witnessing Definition 1.9.
+*Under assumptions A1–A7, a response map $\rho$ is ALLOW-admissible, i.e., $\rho \in \text{ALLOW}(\mathcal{B}, \delta)$, if and only if:*
 
-**(Construction of $f_p$):** Define $f_p = \text{id}_\mathcal{P}$. By (A5), $\text{id}_\mathcal{P}$ satisfies $\text{GBP}(\text{id}_\mathcal{P})$:
-- $\text{id}(\partial\mathcal{A}) = \partial\mathcal{A} \subseteq \partial\mathcal{A}$. ✓
-- $\text{id}(\mathcal{A}^\circ) = \mathcal{A}^\circ \subseteq \overline{\mathcal{A}}$. ✓
+$$\forall u \in \mathcal{U}^*,\quad \bigl(\phi(u),\, \hat{\rho}(u)\bigr) \in \mathcal{K}(\mathcal{B}, \delta). \tag{$\star$}$$
 
-So $\text{GBP}(f_p)$ holds. $\square_{\text{GBP}}$
+---
 
-**(BD holds):** By assumption, $\exists K > 0$ with $\Delta(\Phi(p), \mu_0) \leq K$. Set $K_p = K$. Then $\text{BD}(p, K_p)$ holds. $\square_{\text{BD}}$
+### §4.1 Proof: Forward Direction ($\Rightarrow$)
 
-**(OC holds):** By assumption directly. $\square_{\text{OC}}$
+**Claim.** If $\rho \in \text{ALLOW}(\mathcal{B}, \delta)$ then $(\star)$ holds.
 
-**(Final conjunct $f_p(p) \in \overline{\mathcal{A}}$):** Since $f
+*Proof.* Assume $\rho \in \text{ALLOW}(\mathcal{B}, \delta)$. Fix arbitrary $u \in \mathcal{U}^*$. Let $x = \phi(u)$ and $y = \hat{\rho}(u)$. We verify each conjunct of $\mathcal{K}(\mathcal{B}, \delta)$.
+
+**(K1)** $x \in \mathcal{A} \implies y \in \mathcal{A}$: This is exactly GBP (Definition 1.5, first clause). Since $\rho$ satisfies GBP, the implication holds for all $u$. $\checkmark$
+
+**(K2)** $d_S(x, y) \leq \delta$: By BD (Definition 1.7), $D(\rho) = \sup_{u'} d_S(\phi(u'), \hat{\rho}(u')) \leq \delta$. Since the supremum is bounded by $\delta$, every pointwise value satisfies $d_S(x, y) \leq \delta$. $\checkmark$
+
+**(K3)** $\omega(x) \cap \omega(y) \neq \emptyset$: By OC (Definition 1.8, first clause), for all $u$, $\omega(\phi(u)) \cap \omega(\hat{\rho}(u)) \neq \emptyset$, i.e., $\omega(x) \cap \omega(y) \neq \emptyset$. $\checkmark$
+
+**(K4)** $\forall i \in \omega(x),\, \omega(y) \cap \mathcal{E}(i) = \emptyset$: By OC (Definition 1.8, second clause), for every $i \in I$ with $x \in R_i$ (equivalently, $i \in \omega(x)$), we have $y \notin \bigcup_{k \in \mathcal{E}(i)} R_k$. Since $y \notin \bigcup_{k \in \mathcal{E}(i)} R_k$ means $y \notin R_k$ for all $k \in \mathcal{E}(i)$, equivalently $k \notin \omega(y)$ for all $k \in \mathcal{E}(i)$, we get $\omega(y) \cap \mathcal{E}(i) = \emptyset$. $\checkmark$
+
+Since all four conjuncts hold, $(x, y) \in \mathcal{K}(\mathcal{B}, \delta)$. Since $u$ was arbitrary, $(\star)$ holds. $\blacksquare$
+
+---
+
+### §4.2 Proof: Reverse Direction ($\Leftarrow$)
+
+**Claim.** If $(\star)$ holds then $\rho \in \text{ALLOW}(\mathcal{B}, \delta)$.
+
+*Proof.* Assume $(\star)$: for all $u \in \mathcal{U}^*$, $(\phi(u), \hat{\rho}(u)) \in \mathcal{K}(\mathcal{B}, \delta)$. We verify GBP, BD, and OC.
+
+**GBP:** Let $u \in \mathcal{U}^*$ be arbitrary.
+
+*First clause:* Suppose $\phi(u) \in \mathcal{A}$. By $(\star)$, (K1) applies: $\phi(u) \in \mathcal{A} \implies \hat{\rho}(u) \in \mathcal{A}$. Hence $\hat{\rho}(u) \in \mathcal{A}$. $\checkmark$
+
+*Second clause (boundary):* Suppose $\phi(u) \in \partial\mathcal{A}$. Since $\partial\mathcal{A} \subseteq \mathcal{A}$ (as $\mathcal{A}$ is closed by A3), we have $\phi(u) \in \mathcal{A}$. By (K1), $\hat{\rho}(u) \in \mathcal{A}$, satisfying the boundary condition of Definition 1.5. $\checkmark$
+
+Since $u$ was arbitrary, GBP holds.
+
+**BD:** For all $u \in \mathcal{U}^*$, $(\star)$ gives (K2): $d_S(\phi(u), \hat{\rho}(u)) \leq \delta$. Taking the supremum over all $u$:
+
+$$D(\rho) = \sup_{u \in \mathcal{U}^*} d_S(\phi(u), \hat{\rho}(u)) \leq \delta.$$
+
+Hence BD holds with bound $\delta$. $\checkmark$
+
+**OC:**
+
+*First clause:* For all $u$, $(\star)$ gives (K3): $\omega(\phi(u)) \cap \omega(\hat{\rho}(u)) \neq \emptyset$. This is exactly the first clause of OC. $\checkmark$
+
+*Second clause:* Fix $u$ and $i \in I$ with $\phi(u) \in R_i$, i.e., $i \in \omega(\phi(u))$. By $(\star)$, (K4) gives $\omega(\hat{\rho}(u)) \cap \mathcal{E}(i) = \emptyset$. This means for all $k \in \mathcal{E}(i)$, $k \notin \omega(\hat{\rho}(u))$, i.e., $\hat{\rho}(u) \notin R_k$ for all $k \in \mathcal{E}(i)$. Hence $\hat{\rho}(u) \notin \bigcup_{k \in \mathcal{E}(i)} R_k$, which is exactly the second clause of OC. $\checkmark$
+
+Since GBP, BD, and OC all hold, $\rho \in \text{ALLOW}(\mathcal{B}, \delta)$. $\blacksquare$
+
+---
+
+### §4.3 Biconditional Synthesis
+
+Combining §4.1 and §4.2:
+
+$$\rho \in \text{ALLOW}(\mathcal{B}, \delta) \iff \forall u \in \mathcal{U}^*,\; \bi
