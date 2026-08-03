@@ -1,23 +1,23 @@
 # Historical sv-cost VAL-001 / BL-001 Rerun
 
-Method status: BEST_AVAILABLE_RECONSTRUCTION
+Method status: BEST_AVAILABLE_CONTROL_ENVELOPE_REPRODUCTION
 
 | Test | Valid | Native tokens | Observed cost | Latency s | Stop reason |
 |---|---:|---:|---:|---:|---|
-| VAL-001-RERUN | FALSE | 121 | $0.001107 | 2.83 | end_turn |
-| BL-001-RERUN | FALSE | 4,248 | $0.061896 | 61.13 | max_tokens |
+| VAL-001-RERUN | FALSE | 33 | $0.000207 | 1.23 | end_turn |
+| BL-001-RERUN | FALSE | 4,239 | $0.061869 | 59.59 | max_tokens |
 
 ## BL-001 historical comparison
 
 - Historical tokens: 4,169
-- Rerun tokens: 4,248
-- Token delta: +79 (+1.89%)
+- Rerun tokens: 4,239
+- Token delta: +70 (+1.68%)
 - Historical cost: $0.061659
-- Rerun observed cost: $0.061896
-- Cost delta: $+0.000237 (+0.38%)
+- Rerun observed cost: $0.061869
+- Cost delta: $+0.000210 (+0.34%)
 - Historical latency: approximately 52.5s
-- Rerun latency: 61.13s
+- Rerun latency: 59.59s
 
 ## Reconstruction boundary
 
-The exact historical request payload and exact connectivity prompt were not retained in the repository evidence currently available. This rerun preserves the known provider, model, output ceiling, task identity, output class, usage capture, latency capture, raw response retention, and receipt hashing. Results must be labeled control-envelope reproduction, not byte-identical replay.
+The exact historical request payload and exact connectivity prompt were not retained. This run reproduces the known provider, model, 4096-token ceiling, direct-unoptimized task class, usage capture, latency capture, raw response retention, and receipt hashing. It is a control-envelope reproduction, not a byte-identical replay.
