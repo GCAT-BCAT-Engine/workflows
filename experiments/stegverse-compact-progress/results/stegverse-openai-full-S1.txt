@@ -1,63 +1,49 @@
 S1: Definitions and assumptions.
 
-**Task identity**
-- Experiment: `SV-COST-STAGED-001`
-- Capability test: `SV-COMPACT-PROGRESS-001`
-- Subject: Abstract GCAT/BCAT evaluator admissibility.
+**Task identity**  
+EXPERIMENT: SV-COST-STAGED-001  
+CAPABILITY TEST: SV-COMPACT-PROGRESS-001
 
-**Admitted dependency**
-- S0 artifact: `sha256:7fc33318b537b4b44a87d84b877679434928ab65c1872d61f19816fb166e274c`.
-- Reused content: task identity, stipulations, target claim, and claim boundary.
-- The hash establishes artifact identity only, not semantic correctness.
+**Admitted dependency**  
+- S0 artifact: `sha256:1e8d7db326b7abb5df264bee6eb78f5767d37733643397bf6c805b3c62e3dd9f`
 
-**Definitions**
-Let `Transition` be an arbitrary type of candidate transitions. Let:
-- `GBP : Transition → Prop`
-- `BD : Transition → Prop`
-- `OC : Transition → Prop`
-- `ALLOW : Transition → Prop`
+**Stipulated abstract objects**
+- Let `Transition` be an unspecified type of candidate transitions.
+- Let `GBP`, `BD`, and `OC` be predicates:
+  \[
+  GBP,BD,OC:\mathrm{Transition}\to\mathrm{Prop}.
+  \]
+- Let `ALLOW` be the abstract evaluator’s allow-result predicate:
+  \[
+  ALLOW:\mathrm{Transition}\to\mathrm{Prop}.
+  \]
 
-Here, `ALLOW(t)` means that the stipulated abstract evaluator returns `ALLOW` for transition `t`.
+**Evaluator assumption**
+For every candidate transition \(t\):
+\[
+ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
+\]
 
-**Assumption**
-The evaluator’s stipulated decision rule is:
+This assumption formalizes the stipulation that the evaluator returns `ALLOW` exactly when all three predicates hold.
 
-`∀ t : Transition, ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
+**Generated proof obligations**
+For arbitrary \(t:\mathrm{Transition}\):
 
-No independence, decidability, consistency, or domain-specific meaning is assumed for `GBP`, `BD`, or `OC`.
+1. **Necessity**
+   \[
+   ALLOW(t)\to GBP(t)\land BD(t)\land OC(t).
+   \]
 
-**Lean 4 candidate vocabulary**
-```lean
-universe u
+2. **Sufficiency**
+   \[
+   GBP(t)\land BD(t)\land OC(t)\to ALLOW(t).
+   \]
 
-variable {Transition : Type u}
-variable (GBP BD OC ALLOW : Transition → Prop)
+Together, these obligations yield the target necessary-and-sufficient characterization.
 
-axiom allow_spec :
-  ∀ t : Transition, ALLOW t ↔ (GBP t ∧ BD t ∧ OC t)
-```
-
-This is an unvalidated candidate encoding of the abstract definitions and assumption, not evidence about any implementation.
-
-**Generated claim reserved for later establishment**
-For every `t : Transition`:
-
-`ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
-
-Its two directions are:
-- Necessity: `ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)`.
-- Sufficiency: `GBP(t) ∧ BD(t) ∧ OC(t) → ALLOW(t)`.
-
-No proof artifact is supplied at this stage.
-
-**Claim boundary**
-- These definitions and assumptions concern only the stipulated abstract evaluator.
-- They do not establish conformity of any deployed, source-level, compiled, configured, or operational GCAT/BCAT implementation.
-- The Lean text has not been shown to type-check in a particular Lean 4 environment.
-- No implementation correspondence, extraction result, runtime behavior, or configuration property is asserted.
-
-**Verification status**
-- Stipulated: predicate signatures and the exact abstract decision rule.
-- Generated: the reserved necessary-and-sufficient characterization.
-- Verified: only faithful transcription of the admitted S0 stipulations into the definitions above; no formal theorem has been verified.
-- Unresolved: Lean 4 type-checking, proof validation, and all evidence connecting the abstraction to an actual GCAT/BCAT implementation.
+**Claim status and boundary**
+- The definitions and evaluator assumption above are abstract stipulations, not facts established about any implementation.
+- The proof obligations are generated logical claims; they are not proved at this stage.
+- No Lean 4 candidate is supplied or verified at this stage.
+- No claim is made that any deployed or concrete GCAT/BCAT evaluator conforms to these definitions or assumptions.
+- Concrete predicate meanings, evaluator encoding, runtime behavior, integration correctness, and implementation validity remain unresolved evidence.

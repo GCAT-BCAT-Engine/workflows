@@ -1,0 +1,109 @@
+{
+  "experiment_id": "SV-COMPACT-PROGRESS-002-ECONOMIC",
+  "source_experiment": "SV-COMPACT-PROGRESS-001",
+  "rows": [
+    {
+      "lane_id": "stegverse-openai-full",
+      "provider": "openai",
+      "workload_mode": "full",
+      "execution_mode_observed": "synchronous",
+      "batch_eligible": false,
+      "highest_admitted_stage": "S3",
+      "canonical_input_tokens": 6115,
+      "canonical_total_tokens": 8903,
+      "observed_synchronous_cost_usd": 0.130425,
+      "batch_normalized_remaining_work_cost_usd": 0.130425,
+      "batch_multiplier": 1.0,
+      "cost_status": "OBSERVED_SYNCHRONOUS"
+    },
+    {
+      "lane_id": "stegverse-openai-compact",
+      "provider": "openai",
+      "workload_mode": "compact",
+      "execution_mode_observed": "synchronous",
+      "batch_eligible": true,
+      "highest_admitted_stage": "NONE",
+      "canonical_input_tokens": 222,
+      "canonical_total_tokens": 495,
+      "observed_synchronous_cost_usd": 0.010750000000000001,
+      "batch_normalized_remaining_work_cost_usd": 0.0053750000000000004,
+      "batch_multiplier": 0.5,
+      "cost_status": "BATCH_NORMALIZED_NOT_BATCH_RECEIPTED"
+    },
+    {
+      "lane_id": "stegverse-anthropic-full",
+      "provider": "anthropic",
+      "workload_mode": "full",
+      "execution_mode_observed": "synchronous",
+      "batch_eligible": false,
+      "highest_admitted_stage": "NONE",
+      "canonical_input_tokens": 222,
+      "canonical_total_tokens": 949,
+      "observed_synchronous_cost_usd": 0.014301,
+      "batch_normalized_remaining_work_cost_usd": 0.014301,
+      "batch_multiplier": 1.0,
+      "cost_status": "OBSERVED_SYNCHRONOUS"
+    },
+    {
+      "lane_id": "stegverse-anthropic-compact",
+      "provider": "anthropic",
+      "workload_mode": "compact",
+      "execution_mode_observed": "synchronous",
+      "batch_eligible": true,
+      "highest_admitted_stage": "NONE",
+      "canonical_input_tokens": 222,
+      "canonical_total_tokens": 866,
+      "observed_synchronous_cost_usd": 0.012726,
+      "batch_normalized_remaining_work_cost_usd": 0.006363,
+      "batch_multiplier": 0.5,
+      "cost_status": "BATCH_NORMALIZED_NOT_BATCH_RECEIPTED"
+    }
+  ],
+  "comparisons": [
+    {
+      "provider": "openai",
+      "same_highest_stage": false,
+      "baseline_full_sync_cost_usd": 0.130425,
+      "compact_sync_cost_usd": 0.010750000000000001,
+      "combined_compact_batch_normalized_cost_usd": 0.0053750000000000004,
+      "workload_reduction_percent": 91.75771516197048,
+      "combined_net_reduction_percent": 95.87885758098524,
+      "governance_and_verification_external_cost_included": true,
+      "batch_execution_receipt_present": false
+    },
+    {
+      "provider": "anthropic",
+      "same_highest_stage": true,
+      "baseline_full_sync_cost_usd": 0.014301,
+      "compact_sync_cost_usd": 0.012726,
+      "combined_compact_batch_normalized_cost_usd": 0.006363,
+      "workload_reduction_percent": 11.013215859030833,
+      "combined_net_reduction_percent": 55.50660792951542,
+      "governance_and_verification_external_cost_included": true,
+      "batch_execution_receipt_present": false
+    }
+  ],
+  "stegverse_only": {
+    "lane_id": "stegverse-only",
+    "external_inference": "DENIED",
+    "external_inference_cost_usd": 0.0,
+    "batch_applicable": false,
+    "capability": [
+      "resolve exact or governed-equivalent task identity",
+      "retrieve admitted artifacts by hash",
+      "reconstruct accepted state",
+      "run deterministic validation and installed formal verification",
+      "issue a fresh continuity receipt"
+    ],
+    "novel_unsolved_stage_behavior": "BLOCKED unless an installed local inference or theorem-discovery engine can perform the unresolved work",
+    "economic_effect": "Artifact reuse can reduce external inference to zero for exact still-admissible repetitions. Batch pricing does not apply when no provider call occurs.",
+    "unmeasured_local_costs": [
+      "GitHub Actions runtime",
+      "storage",
+      "hashing",
+      "retrieval",
+      "deterministic verification"
+    ]
+  },
+  "claim_boundary": "Observed synchronous costs are provider receipts from the four-lane rerun. Combined costs apply the documented 50% batch rate only to the remaining compact workload and are labeled batch-normalized until an actual Batch API receipt is retained."
+}

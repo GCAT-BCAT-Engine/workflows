@@ -2,9 +2,9 @@
   {
     "artifact_id": "stegverse-anthropic-full:S0",
     "stage_id": "S0",
-    "sha256": "sha256:acc732ad0eb7acf73eeb466856e5e5bee83422a068f3980dc02c876fd512e8d0",
+    "sha256": "sha256:7a8246d4256cf007e9eba329fd4edbcb4a28542cc0d2c4e60c4536987f0ac069",
     "admitted": false,
-    "claims": "S0: Task parsing and claim boundary\nAn abstract evaluator (referred to as a GCAT/BCAT evaluator) that operates on candidate transitions. The evaluator produces a binary output: ALLOW or (implicitly) DENY.\n> The evaluator returns ALLOW on a candidate transition `t` if and only if `GBP(t) \u2227 BD(t) \u2227 OC(t)`.\nThis is a *stipulation* introduced by the task. It is not a claim about any deployed system.\n## 2. Claim Boundary\n",
+    "claims": "S0: Task parsing and claim boundary\n> The evaluator returns ALLOW exactly when GBP and BD and OC all hold.\n| `ALLOW` | Output predicate on a candidate transition | `T \u2192 Prop` |\n> For all candidate transitions `t`: `ALLOW(t)` holds **if and only if** `GBP(t)` holds **and** `BD(t)` holds **and** `OC(t)` holds.\n**S2.** `GBP`, `BD`, `OC`, and `ALLOW` are predicates of type `T \u2192 Prop`. They are abstract; no computational ",
     "definitions": "reference prior definitions",
     "unresolved": "implementation binding remains unresolved",
     "next_stage": "S1"

@@ -2,9 +2,9 @@
   {
     "artifact_id": "stegverse-anthropic-compact:S0",
     "stage_id": "S0",
-    "sha256": "sha256:bc458e30e7b6a426e1ec5eda4489f5130b7a41ea1dea00136d67981afa65295a",
+    "sha256": "sha256:420f2701b1ab2d630d0483afd8d41cfb9d5632521b75ee2d1df691b0fcc2070b",
     "admitted": false,
-    "claims": "S0: Task parsing and claim boundary\n- **Domain:** An abstract evaluator, stipulated to behave as a GCAT/BCAT evaluator for the purpose of this experiment. No claim is made that any deployed GCAT/BCAT system conforms to this abstraction.\n- **Evaluator semantics (stipulated):** `ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)`\n1. Characterize ALLOW-admissibility (necessary and sufficient condition).\n2. State the claim boundary.\n## 2",
+    "claims": "S0: Task parsing and claim boundary\nThe evaluator returns `ALLOW` exactly when all three hold simultaneously.\nE(t) = ALLOW  \u27fa  GBP(t) \u2227 BD(t) \u2227 OC(t)\n## 2. Claim Boundary\n| C1 | The biconditional `E(t) = ALLOW \u27fa GBP(t) \u2227 BD(t) \u2227 OC(t)` is the necessary-and-sufficient characterization of ALLOW admissibility under the stated abstract evaluator. | **Stipulated \u2014 to be formalized** |\n| C2 | Each of GBP, BD, OC is individ",
     "definitions": "reference prior definitions",
     "unresolved": "implementation binding remains unresolved",
     "next_stage": "S1"

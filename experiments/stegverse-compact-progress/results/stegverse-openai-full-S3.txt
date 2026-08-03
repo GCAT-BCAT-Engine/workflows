@@ -1,79 +1,102 @@
 S3: Proof strategy and lemma decomposition.
 
-**Task identity**
-- Experiment: `SV-COST-STAGED-001`
-- Capability test: `SV-COMPACT-PROGRESS-001`
-- Subject: Abstract GCAT/BCAT evaluator admissibility.
+**Task identity**  
+EXPERIMENT: SV-COST-STAGED-001  
+CAPABILITY TEST: SV-COMPACT-PROGRESS-001
 
 **Admitted dependencies**
-- S0 artifact: `sha256:7fc33318b537b4b44a87d84b877679434928ab65c1872d61f19816fb166e274c`
-- S1 artifact: `sha256:1f9d28c1b9383fdcc9e009097b6b07851224fbe71eb65ff25837069e2ef7d9c8`
-- S2 artifact: `sha256:a9d48ce81beba8d7f299a2726ba3d0e6e4d2beb38b6a65b27023027389fdd018`
-- Reused content: task identity, predicate signatures, stipulated evaluator rule, theorem formulation, and claim boundary.
-- These hashes establish artifact identity only, not semantic correctness.
+- S0 artifact: `sha256:1e8d7db326b7abb5df264bee6eb78f5767d37733643397bf6c805b3c62e3dd9f`
+- S1 artifact: `sha256:e6686035db5096ddfa61d6ed6f4487901f7b57efbe09873629d5c085ad060467`
+- S2 artifact: `sha256:7f1c18762e95ee6e345bb608bd5bff1ea0dabe0fb78b90cd061c966c1b423de7`
 
-**Stipulated setting**
-Let `Transition` be an arbitrary type, with predicates:
+**Stipulated context**
+- `Transition` is an unspecified type.
+- `GBP`, `BD`, `OC`, and `ALLOW` have type `Transition → Prop`.
+- The evaluator specification is:
+  \[
+  \forall t:\mathrm{Transition},\quad
+  ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
+  \]
 
-- `GBP : Transition → Prop`
-- `BD : Transition → Prop`
-- `OC : Transition → Prop`
-- `ALLOW : Transition → Prop`
+**Proof strategy**
 
-Assume:
+Fix an arbitrary transition \(t\), then specialize the evaluator specification at \(t\):
+\[
+ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
+\]
 
-`allow_spec : ∀ t : Transition, ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
+Use its two directions separately:
 
-**Generated proof strategy**
-For an arbitrary `t : Transition`, instantiate `allow_spec` at `t`. The resulting equivalence directly supplies both required directions:
+1. Apply the forward implication to derive necessity:
+   \[
+   ALLOW(t)\to GBP(t)\land BD(t)\land OC(t).
+   \]
 
-1. **Necessity lemma**
-   - Input: `hAllow : ALLOW(t)`.
-   - Use the forward implication of `allow_spec t`.
-   - Output: `GBP(t) ∧ BD(t) ∧ OC(t)`.
+2. Apply the reverse implication to derive sufficiency:
+   \[
+   GBP(t)\land BD(t)\land OC(t)\to ALLOW(t).
+   \]
 
-2. **Sufficiency lemma**
-   - Input: `hConditions : GBP(t) ∧ BD(t) ∧ OC(t)`.
-   - Use the reverse implication of `allow_spec t`.
-   - Output: `ALLOW(t)`.
+3. Combine those implications with biconditional introduction to recover the characterization:
+   \[
+   ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
+   \]
 
-3. **Characterization theorem**
-   - Construct the biconditional from the necessity and sufficiency lemmas.
-   - Alternatively, return `allow_spec t` directly because its instantiated type is exactly the target theorem.
-
-No auxiliary assumptions such as decidability, predicate independence, excluded middle, or domain-specific GCAT/BCAT semantics are needed.
+Because \(t\) is arbitrary, generalize each result over all transitions.
 
 **Lemma decomposition**
-The logical dependency structure is:
 
-```text
-allow_spec t
- ├─ forward direction ─→ allow_necessity t
- └─ reverse direction ─→ allow_sufficiency t
+1. **Necessity lemma**
+   \[
+   \forall t,\quad ALLOW(t)\to GBP(t)\land BD(t)\land OC(t).
+   \]
 
-allow_necessity t + allow_sufficiency t
- └─→ allow_admissible_iff t
-```
+2. **Optional component projections**
+   \[
+   \forall t,\quad ALLOW(t)\to GBP(t),
+   \]
+   \[
+   \forall t,\quad ALLOW(t)\to BD(t),
+   \]
+   \[
+   \forall t,\quad ALLOW(t)\to OC(t).
+   \]
+   These follow by projecting the conjunction produced by the necessity lemma. They are not required to prove the main equivalence.
 
-The conjunction is parsed as:
+3. **Sufficiency lemma**
+   \[
+   \forall t,\quad GBP(t)\land BD(t)\land OC(t)\to ALLOW(t).
+   \]
 
-`GBP t ∧ (BD t ∧ OC t)`,
+4. **Characterization theorem**
+   \[
+   \forall t,\quad ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
+   \]
+   This follows by combining the necessity and sufficiency lemmas. It also follows directly from the stipulated evaluator specification.
 
-which is Lean’s standard right-associative interpretation of `GBP t ∧ BD t ∧ OC t`. No reassociation is required because the assumption and conclusions use the same expression.
+**Lean 4 candidate for the decomposed logical core**
 
-**Lean 4 candidate for the logical core**
 ```lean
-universe u
-
-variable {Transition : Type u}
+variable {Transition : Type}
 variable (GBP BD OC ALLOW : Transition → Prop)
 
-variable (allow_spec :
-  ∀ t : Transition, ALLOW t ↔ (GBP t ∧ BD t ∧ OC t))
+theorem allow_necessity
+    (evaluator_spec :
+      ∀ t, ALLOW t ↔ GBP t ∧ BD t ∧ OC t) :
+    ∀ t, ALLOW t → GBP t ∧ BD t ∧ OC t := by
+  intro t hAllow
+  exact (evaluator_spec t).mp hAllow
 
-theorem allow_necessity (t : Transition) :
-    ALLOW t → (GBP t ∧ BD t ∧ OC t) :=
-  (allow_spec t).mp
+theorem allow_implies_gbp
+    (evaluator_spec :
+      ∀ t, ALLOW t ↔ GBP t ∧ BD t ∧ OC t) :
+    ∀ t, ALLOW t → GBP t := by
+  intro t hAllow
+  exact ((evaluator_spec t).mp hAllow).1
 
-theorem allow_sufficiency (t : Transition) :
-    (GBP t ∧ BD t ∧ OC t
+theorem allow_implies_bd
+    (evaluator_spec :
+      ∀ t, ALLOW t ↔ GBP t ∧ BD t ∧ OC t) :
+    ∀ t, ALLOW t → BD t := by
+  intro t hAllow
+  exact ((evaluator_spec t).mp h

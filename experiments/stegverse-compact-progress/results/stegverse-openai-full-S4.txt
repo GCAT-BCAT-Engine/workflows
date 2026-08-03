@@ -1,61 +1,68 @@
 S4: Complete informal proof.
 
-**Task identity**
-- Experiment: `SV-COST-STAGED-001`
-- Capability test: `SV-COMPACT-PROGRESS-001`
-- Subject: Abstract GCAT/BCAT evaluator admissibility.
+**Task identity**  
+EXPERIMENT: SV-COST-STAGED-001  
+CAPABILITY TEST: SV-COMPACT-PROGRESS-001
 
 **Admitted dependencies**
-- S0: `sha256:7fc33318b537b4b44a87d84b877679434928ab65c1872d61f19816fb166e274c`
-- S1: `sha256:1f9d28c1b9383fdcc9e009097b6b07851224fbe71eb65ff25837069e2ef7d9c8`
-- S2: `sha256:a9d48ce81beba8d7f299a2726ba3d0e6e4d2beb38b6a65b27023027389fdd018`
-- S3: `sha256:bb26b2da4c10103637580e5ffb56e36c464bd13bf47099a73f39431acae4fbc0`
-- Reused content: task identity, abstract predicate signatures, stipulated evaluator rule, theorem formulation, proof strategy, and claim boundary.
-- These hashes establish artifact identity only, not semantic correctness.
+- S0: `sha256:1e8d7db326b7abb5df264bee6eb78f5767d37733643397bf6c805b3c62e3dd9f`
+- S1: `sha256:e6686035db5096ddfa61d6ed6f4487901f7b57efbe09873629d5c085ad060467`
+- S2: `sha256:7f1c18762e95ee6e345bb608bd5bff1ea0dabe0fb78b90cd061c966c1b423de7`
+- S3: `sha256:5736e3f4fc76c44fa9aa0de95b7b42d4cf1828640220f88980400530d036744d`
 
-**Stipulated setting**
+## Stipulations
 
-Let `Transition` be an arbitrary type. Let:
+Let `Transition` be an unspecified type, and let
+\[
+GBP,BD,OC,ALLOW:\mathrm{Transition}\to\mathrm{Prop}.
+\]
 
-- `GBP : Transition → Prop`
-- `BD : Transition → Prop`
-- `OC : Transition → Prop`
-- `ALLOW : Transition → Prop`
+Assume the abstract evaluator specification:
+\[
+\forall t:\mathrm{Transition},\quad
+ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
+\]
 
-The stipulated abstract evaluator rule is:
+## Generated claim
 
-`∀ t : Transition, ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
+For every candidate transition \(t\),
+\[
+ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
+\]
 
-No decidability, independence, consistency, or domain-specific interpretation of these predicates is assumed.
+Equivalently:
 
-**Generated claim — exact admissibility characterization**
+- **Necessity**
+  \[
+  ALLOW(t)\to GBP(t)\land BD(t)\land OC(t).
+  \]
 
-For every candidate transition `t`:
+- **Sufficiency**
+  \[
+  GBP(t)\land BD(t)\land OC(t)\to ALLOW(t).
+  \]
 
-`ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
+## Complete informal proof
 
-Thus:
+Fix an arbitrary transition \(t\).
 
-1. **Necessity:**  
-   `ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)`.
+By specializing the evaluator specification at \(t\), obtain:
+\[
+ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
+\]
 
-2. **Sufficiency:**  
-   `GBP(t) ∧ BD(t) ∧ OC(t) → ALLOW(t)`.
+For necessity, suppose \(ALLOW(t)\). Apply the forward direction of the specialized equivalence. It follows that
+\[
+GBP(t)\land BD(t)\land OC(t).
+\]
+Consequently, each condition \(GBP(t)\), \(BD(t)\), and \(OC(t)\) holds.
 
-**Complete informal proof**
+For sufficiency, suppose
+\[
+GBP(t)\land BD(t)\land OC(t).
+\]
+Apply the reverse direction of the specialized equivalence. It follows that \(ALLOW(t)\).
 
-Fix an arbitrary candidate transition `t`.
-
-By instantiating the stipulated evaluator rule at `t`, we obtain:
-
-`ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
-
-For necessity, suppose `ALLOW(t)` holds. The forward direction of this instantiated biconditional yields:
-
-`GBP(t) ∧ BD(t) ∧ OC(t)`.
-
-Hence every allowed transition satisfies all three predicates.
-
-For sufficiency, suppose:
-
-`GBP(t) ∧ BD(t) ∧ OC(t
+Thus both implications hold, so:
+\[
+ALLOW(t)\iff GBP(t)\land BD(t)\land

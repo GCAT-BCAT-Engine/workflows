@@ -1,31 +1,27 @@
 S0: Task parsing and claim boundary.
 
-**Task identity**
-- Experiment: `SV-COST-STAGED-001`
-- Capability test: `SV-COMPACT-PROGRESS-001`
-- Subject: Abstract GCAT/BCAT evaluator admissibility.
+**Task identity**  
+EXPERIMENT: SV-COST-STAGED-001  
+CAPABILITY TEST: SV-COMPACT-PROGRESS-001
 
 **Stipulations**
 - `GBP`, `BD`, and `OC` are predicates on a candidate transition.
 - The abstract evaluator returns `ALLOW` exactly when `GBP`, `BD`, and `OC` all hold.
-- No artifacts are admitted from prior stages.
+- No prior artifacts are admitted.
 
-**Target claim**
-For every candidate transition `t`:
+**Target characterization**
+For any candidate transition `t`:
+\[
+\operatorname{ALLOW}(t)\iff GBP(t)\land BD(t)\land OC(t).
+\]
 
-`ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
+This states both:
+- **Necessity:** `ALLOW(t)` implies each of `GBP(t)`, `BD(t)`, and `OC(t)`.
+- **Sufficiency:** their conjunction implies `ALLOW(t)`.
 
-This is the intended necessary-and-sufficient characterization:
-- Necessity: `ALLOW(t)` implies all three predicates.
-- Sufficiency: all three predicates imply `ALLOW(t)`.
-
-**Claim boundary**
-- The target concerns only the stipulated abstract evaluator.
-- It does not establish that any deployed, source-level, compiled, configured, or operational GCAT/BCAT implementation has this behavior.
-- A later Lean 4 candidate may encode the logical core, but type-checking and implementation validity require separate evidence.
-- Artifact identity, including any hash, would not establish semantic correctness.
-
-**Verification status**
-- Generated claim: the equivalence above.
-- Verified claims: none at this stage.
-- Unresolved evidence: formal Lean validation and any connection to an actual GCAT/BCAT implementation.
+**Claim status**
+- The equivalence above is the logical claim to be established from the evaluator stipulation.
+- No mathematical proof or Lean 4 verification is claimed at this stage.
+- No deployed or concrete GCAT/BCAT implementation is claimed to satisfy the stipulation.
+- Implementation details, predicate definitions, evaluator encoding, and integration correctness remain unresolved evidence.
+- A later Lean 4 candidate may encode only this abstract propositional core; its implementation validity must be assessed separately.

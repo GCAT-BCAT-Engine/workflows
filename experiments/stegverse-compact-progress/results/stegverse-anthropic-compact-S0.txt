@@ -2,53 +2,70 @@ S0: Task parsing and claim boundary
 
 ---
 
-## 1. Task Parsing
+## 1. Task Decomposition
 
-**Problem statement (restated verbatim in structured form):**
+**Problem statement (parsed):**
+Define an abstract evaluator `E` with three boolean predicates over a candidate transition `t`:
 
-- **Domain:** An abstract evaluator, stipulated to behave as a GCAT/BCAT evaluator for the purpose of this experiment. No claim is made that any deployed GCAT/BCAT system conforms to this abstraction.
-- **Primitives:** Three uninterpreted predicates on a candidate transition `t`:
-  - `GBP(t)` — "Good Base Predicate"
-  - `BD(t)` — "Base Disposition"
-  - `OC(t)` — "Outcome Condition"
-- **Evaluator semantics (stipulated):** `ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)`
-- **Tasks:**
-  1. Characterize ALLOW-admissibility (necessary and sufficient condition).
-  2. State the claim boundary.
-  3. Prepare a Lean 4 candidate for the logical core.
-  4. Do not claim implementation validity.
+- `GBP(t)` — "Good Block Predicate"
+- `BD(t)` — "Block Data" (predicate)
+- `OC(t)` — "Other Condition" (predicate)
+
+The evaluator returns `ALLOW` exactly when all three hold simultaneously.
+
+**Formal reading:**
+```
+E(t) = ALLOW  ⟺  GBP(t) ∧ BD(t) ∧ OC(t)
+```
+
+This is a **stipulated definition**, not a theorem derived from external system behavior.
 
 ---
 
 ## 2. Claim Boundary
 
-**What is stipulated (not derived):**
-- The evaluator rule `ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)` is a **definition by fiat** for this experiment. It is not inferred from any external system.
-- `GBP`, `BD`, `OC`, and `ALLOW` are abstract predicates with no further semantic content beyond what is stipulated here.
+### 2.1 What is being claimed (in scope)
 
-**What will be claimed (in subsequent stages):**
-- The necessary-and-sufficient characterization is: `ALLOW(t)` holds **if and only if** all three of `GBP(t)`, `BD(t)`, and `OC(t)` hold.
-- Lean 4 logical core will be a **candidate** — syntactic plausibility only; no claim of compilation or proof-checker acceptance.
+| # | Claim | Status |
+|---|-------|--------|
+| C1 | The biconditional `E(t) = ALLOW ⟺ GBP(t) ∧ BD(t) ∧ OC(t)` is the necessary-and-sufficient characterization of ALLOW admissibility under the stated abstract evaluator. | **Stipulated — to be formalized** |
+| C2 | Each of GBP, BD, OC is individually necessary for ALLOW. | **Derivable from C1** |
+| C3 | GBP ∧ BD ∧ OC jointly sufficient for ALLOW. | **Derivable from C1** |
 
-**What is explicitly not claimed:**
-- No conformance of any real GCAT/BCAT implementation.
-- No semantic content for GBP, BD, OC beyond the stipulation.
-- No claim that the Lean 4 artifact compiles or that its proof terms are complete.
+### 2.2 What is NOT being claimed (out of scope)
 
----
-
-## 3. Stage S0 Output Artifact
-
-| Field | Content |
-|---|---|
-| Experiment ID | SV-COST-STAGED-001 |
-| Capability Test | SV-COMPACT-PROGRESS-001 |
-| Stage | S0 |
-| Admitted state in | none |
-| Admitted state out | Parsed task; claim boundary established |
-| Next stage | S1 — Necessary-and-sufficient characterization |
-| Implementation validity claimed | No |
+| Excluded claim | Reason |
+|----------------|--------|
+| Any deployed GCAT/BCAT implementation satisfies C1 | Governance prohibition; no implementation evidence admitted |
+| GBP, BD, OC have any specific computational definitions | Not stipulated; they are abstract predicates |
+| The Lean 4 artifact constitutes a verified proof of a real system | Explicitly disclaimed per governance |
 
 ---
 
-**S0 complete. Awaiting authorization to proceed to S1.**
+## 3. Stipulations Admitted at S0
+
+**S-001:** `GBP`, `BD`, `OC` are uninterpreted boolean predicates over an abstract type `Transition`.
+
+**S-002:** `ALLOW` is one value of an abstract return type `Verdict` (at minimum `{ALLOW, DENY}`).
+
+**S-003:** The evaluator `E : Transition → Verdict` is defined by the conjunction rule in C1. This is definitional, not empirical.
+
+**S-004:** No claim is made that any concrete GCAT/BCAT system conforms to this abstract model.
+
+---
+
+## 4. Artifact Identity Record
+
+```
+STAGE:    S0
+ARTIFACT: Task parsing and claim boundary
+ADMITS:   S-001, S-002, S-003, S-004
+CLAIMS:   C1 (stipulated), C2 (pending), C3 (pending)
+VERIFIED: none
+UNRESOLVED: Lean 4 formalization (deferred to later stage)
+NEXT STAGE: S1 — Necessary-and-sufficient characterization (mathematical statement)
+```
+
+---
+
+*No implementation validity is claimed. No stages have been skipped. Admitted artifacts: none prior; S-001–S-004 admitted here.*

@@ -4,71 +4,64 @@ S0: Task parsing and claim boundary
 
 ## 1. Task Parsing
 
-**Experiment identifier:** SV-COST-STAGED-001
-**Capability test:** SV-COMPACT-PROGRESS-001
+**Source problem (verbatim core):**
+> The evaluator returns ALLOW exactly when GBP and BD and OC all hold.
 
-**Object of study:**
-An abstract evaluator (referred to as a GCAT/BCAT evaluator) that operates on candidate transitions. The evaluator produces a binary output: ALLOW or (implicitly) DENY.
+**Entities identified:**
 
-**Given predicates (stipulated, not derived):**
-- `GBP` — a predicate on a candidate transition
-- `BD` — a predicate on a candidate transition
-- `OC` — a predicate on a candidate transition
+| Symbol | Role | Type |
+|--------|------|------|
+| `GBP` | Predicate on a candidate transition | `T → Prop` |
+| `BD` | Predicate on a candidate transition | `T → Prop` |
+| `OC` | Predicate on a candidate transition | `T → Prop` |
+| `ALLOW` | Output predicate on a candidate transition | `T → Prop` |
+| `t` | Candidate transition (universally quantified) | `T` |
 
-**Stipulated semantics of the evaluator:**
-> The evaluator returns ALLOW on a candidate transition `t` if and only if `GBP(t) ∧ BD(t) ∧ OC(t)`.
+**Logical reading of the problem statement:**
 
-This is a *stipulation* introduced by the task. It is not a claim about any deployed system.
+The evaluator's behaviour is fully specified by the single biconditional:
 
----
+> For all candidate transitions `t`: `ALLOW(t)` holds **if and only if** `GBP(t)` holds **and** `BD(t)` holds **and** `OC(t)` holds.
 
-## 2. Claim Boundary
-
-The following distinctions are enforced throughout all stages:
-
-| Category | Status |
-|---|---|
-| The conjunction `GBP ∧ BD ∧ OC ↔ ALLOW` as a characterization of the *abstract evaluator defined here* | **Stipulated definition** — analytically true by construction |
-| Any claim that a deployed GCAT/BCAT system satisfies this characterization | **Not admitted** — outside scope; no conformance claimed |
-| The logical equivalence `ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)` as a formal proposition | **Target of stages S1–S3** — to be stated precisely and proved |
-| Implementation validity of any Lean 4 artifact | **Not claimed** — Lean 4 candidate is a candidate only |
+This is a **necessary-and-sufficient characterisation** (biconditional, not merely a sufficient condition or necessary condition alone).
 
 ---
 
-## 3. Necessary and Sufficient Form (Pre-formal Statement)
+## 2. Stipulations (Given, Not Derived)
 
-The characterization to be established across subsequent stages is:
+**S1.** `T` is an arbitrary type representing candidate transitions. No further structure on `T` is assumed.
 
-> **Claim C1 (informal):** For the abstract evaluator defined above, a candidate transition `t` satisfies `ALLOW(t)` if and only if all three of `GBP(t)`, `BD(t)`, and `OC(t)` hold.
+**S2.** `GBP`, `BD`, `OC`, and `ALLOW` are predicates of type `T → Prop`. They are abstract; no computational definition is supplied or assumed.
 
-- **Necessary direction:** If `ALLOW(t)`, then `GBP(t) ∧ BD(t) ∧ OC(t)`.
-- **Sufficient direction:** If `GBP(t) ∧ BD(t) ∧ OC(t)`, then `ALLOW(t)`.
+**S3.** The evaluator specification is taken as axiomatic for this experiment: `ALLOW t ↔ GBP t ∧ BD t ∧ OC t`.
 
-Both directions follow directly from the stipulated definition. The logical work in subsequent stages is to make this precise in a formal language (Lean 4) and to separate definitional from derived content.
+**S4.** No claim is made that any deployed GCAT/BCAT implementation satisfies S3. The characterisation is of an *abstract evaluator* defined solely by S3.
 
----
-
-## 4. Stage Boundary Declaration
-
-**S0 delivers:**
-- Parsed task identity ✓
-- Identified predicates and their roles ✓
-- Claim boundary table ✓
-- Pre-formal statement of Claim C1 ✓
-- Explicit non-conformance disclaimer ✓
-
-**S0 does not deliver:**
-- Formal Lean 4 syntax (deferred to S2/S3)
-- Proof of Claim C1 (deferred to S1/S2)
-- Any admitted artifact beyond this parsing record
+**S5.** The Lean 4 artifact targets only the logical core (the biconditional and its immediate consequences). It does not target any runtime system.
 
 ---
 
-## 5. Admitted Artifacts This Stage
+## 3. Claim Boundary
 
-| Artifact ID | Content | Status |
-|---|---|---|
-| `S0-PARSE-001` | This document | Admitted as task parse record |
-| `C1-INFORMAL` | Pre-formal biconditional statement above | Admitted as claim target |
+The following table separates claim categories. Nothing is promoted to "verified" at S0.
 
-**No prior admitted state exists. This document initializes the admitted state.**
+| ID | Claim | Status |
+|----|-------|--------|
+| C1 | `∀ t, ALLOW t ↔ GBP t ∧ BD t ∧ OC t` | **Stipulated** (definitional, from problem) |
+| C2 | `∀ t, ALLOW t → GBP t` | **Generated, unverified** (follows from C1 by `And.left ∘ Iff.mp`) |
+| C3 | `∀ t, ALLOW t → BD t` | **Generated, unverified** |
+| C4 | `∀ t, ALLOW t → OC t` | **Generated, unverified** |
+| C5 | `∀ t, GBP t → BD t → OC t → ALLOW t` | **Generated, unverified** (follows from C1 by `Iff.mpr`) |
+| C6 | `∀ t, ¬GBP t ∨ ¬BD t ∨ ¬OC t → ¬ALLOW t` | **Generated, unverified** (contrapositive of C5) |
+| C7 | Any deployed GCAT/BCAT system satisfies C1 | **Explicitly out of scope** — not claimed |
+
+---
+
+## 4. Unresolved Implementation Evidence
+
+- None admitted.
+- No evidence, proof, or artifact has been admitted prior to this stage.
+
+---
+
+## 

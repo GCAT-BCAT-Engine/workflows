@@ -3,27 +3,26 @@ S0: Task parsing and claim boundary.
 **Task identity**  
 Characterize ALLOW admissibility for an abstract GCAT/BCAT evaluator using predicates `GBP`, `BD`, and `OC` on a candidate transition.
 
-**Stipulated semantics**  
-For every candidate transition `t`, the abstract evaluator returns `ALLOW` exactly when all three predicates hold:
-- `GBP t`
-- `BD t`
-- `OC t`
+**Stipulations**
+- A candidate transition is evaluated by three predicates: `GBP`, `BD`, and `OC`.
+- The abstract evaluator returns `ALLOW` exactly when all three predicates hold.
+- No admitted artifacts are available.
 
-**Target logical claim**  
-\[
-\operatorname{ALLOW}(t)\iff GBP(t)\land BD(t)\land OC(t).
-\]
+**Target claim**
+For every candidate transition `t`:
 
-This is the required necessary-and-sufficient characterization:
-- Necessity: `ALLOW t → GBP t ∧ BD t ∧ OC t`.
-- Sufficiency: `GBP t ∧ BD t ∧ OC t → ALLOW t`.
+`ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
 
-**Claim boundary**  
-The claim concerns only the stipulated abstract evaluator and its logical specification. It does not establish that any deployed or concrete GCAT/BCAT implementation computes these predicates correctly, uses this decision rule, or conforms to the characterization.
+This is the intended necessary-and-sufficient characterization:
+- Necessity: `ALLOW(t)` implies `GBP(t)`, `BD(t)`, and `OC(t)`.
+- Sufficiency: their conjunction implies `ALLOW(t)`.
+
+**Claim boundary**
+- The claim concerns only the stipulated abstract evaluator.
+- It does not establish that any deployed or concrete GCAT/BCAT implementation uses these predicates, computes them correctly, or conforms to this characterization.
+- A later Lean 4 candidate may encode only the logical core; compilation and implementation validity remain separate evidence obligations.
 
 **Status**
-- Stipulations: recorded above.
-- Generated claims: target equivalence and its two directions.
-- Verified claims: none at S0.
-- Unresolved implementation evidence: all implementation validity and conformance questions.
-- Lean 4 candidate: deferred to a later stage.
+- Task parsed.
+- Target characterization identified.
+- No mathematical proof, Lean artifact, compilation result, or implementation-conformance claim is established at this stage.

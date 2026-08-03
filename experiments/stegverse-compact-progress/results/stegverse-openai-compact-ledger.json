@@ -2,71 +2,11 @@
   {
     "artifact_id": "stegverse-openai-compact:S0",
     "stage_id": "S0",
-    "sha256": "sha256:316630b83e845b10caaeb4d6fe853e2a3060143ee5cb82a1b41731ad4d569b3b",
-    "admitted": true,
-    "claims": "S0: Task parsing and claim boundary.\nCharacterize ALLOW admissibility for an abstract GCAT/BCAT evaluator using predicates `GBP`, `BD`, and `OC` on a candidate transition.\nFor every candidate transition `t`, the abstract evaluator returns `ALLOW` exactly when all three predicates hold:\n\\operatorname{ALLOW}(t)\\iff GBP(t)\\land BD(t)\\land OC(t).\n- Necessity: `ALLOW t \u2192 GBP t \u2227 BD t \u2227 OC t`.\n- Sufficiency: `GBP t \u2227 BD t ",
+    "sha256": "sha256:c74ecf7a17ca6bc1a54f661065564f220fafed3354e4021ea08d02741322a487",
+    "admitted": false,
+    "claims": "S0: Task parsing and claim boundary.\nCharacterize ALLOW admissibility for an abstract GCAT/BCAT evaluator using predicates `GBP`, `BD`, and `OC` on a candidate transition.\n- The abstract evaluator returns `ALLOW` exactly when all three predicates hold.\n`ALLOW(t) \u2194 (GBP(t) \u2227 BD(t) \u2227 OC(t))`.\n- Necessity: `ALLOW(t)` implies `GBP(t)`, `BD(t)`, and `OC(t)`.\n- Sufficiency: their conjunction implies `ALLOW(t)`.\n**Claim bou",
     "definitions": "reference prior definitions",
     "unresolved": "implementation binding remains unresolved",
     "next_stage": "S1"
-  },
-  {
-    "artifact_id": "stegverse-openai-compact:S1",
-    "stage_id": "S1",
-    "sha256": "sha256:b901a2a803b8a65a58afb03212f1922528c66b84131f654bda8fd28d49ee0acd",
-    "admitted": true,
-    "claims": "- `GBP : Transition \u2192 Prop`,\n- `BD : Transition \u2192 Prop`,\n- `OC : Transition \u2192 Prop`\n\\operatorname{ALLOW}(t) \\;:\\!\\iff\\; GBP(t)\\land BD(t)\\land OC(t).\nNo further properties of `Transition`, `GBP`, `BD`, or `OC` are assumed.\nvariable (GBP BD OC : Transition \u2192 Prop)\ndef ALLOW (t : Transition) : Prop :=\nGBP t \u2227 BD t \u2227 OC t",
-    "definitions": "- `GBP : Transition \u2192 Prop`,\n- `BD : Transition \u2192 Prop`,\n- `OC : Transition \u2192 Prop`\n\\operatorname{ALLOW}(t) \\;:\\!\\iff\\; GBP(t)\\land BD(t)\\land OC(t).\nNo further properties of `Transition`, `GBP`, `BD`, or `OC` are assumed.\nvariable (GBP BD OC : Transition \u2192 Prop)\ndef ALLOW (t : Transition) : Prop :=\nGBP t \u2227 BD t \u2227 OC t",
-    "unresolved": "implementation binding remains unresolved",
-    "next_stage": "S2"
-  },
-  {
-    "artifact_id": "stegverse-openai-compact:S2",
-    "stage_id": "S2",
-    "sha256": "sha256:9d661f85ca5b4cace2edd8199ac4a750df4a40bf04276bdd4666c22c10a84cb7",
-    "admitted": true,
-    "claims": "S2: Theorem formulation.\n\\operatorname{ALLOW}(t) \\;:\\!\\iff\\; GBP(t)\\land BD(t)\\land OC(t).\n**Generated theorem claim**\n\\operatorname{ALLOW}(t)\\iff GBP(t)\\land BD(t)\\land OC(t).\ntheorem allow_iff (t : Transition) :\nALLOW GBP BD OC t \u2194 GBP t \u2227 BD t \u2227 OC t := by\ntheorem allow_necessary (t : Transition) :\ntheorem allow_sufficient (t : Transition) :",
-    "definitions": "reference prior definitions",
-    "unresolved": "implementation binding remains unresolved",
-    "next_stage": "S3"
-  },
-  {
-    "artifact_id": "stegverse-openai-compact:S3",
-    "stage_id": "S3",
-    "sha256": "sha256:7f26232a75c0fa46a74ab4651cb18f00250fb14f40670e8432c0b2c798932375",
-    "admitted": true,
-    "claims": "S3: Proof strategy and lemma decomposition.\n1. **Necessity:** unfold `ALLOW`; an `ALLOW t` proof is already a proof of `GBP t \u2227 BD t \u2227 OC t`.\n2. **Sufficiency:** unfold `ALLOW`; a proof of `GBP t \u2227 BD t \u2227 OC t` directly proves `ALLOW t`.\n3. **Characterization:** combine necessity and sufficiency to obtain\n**Lemma decomposition**",
-    "definitions": "reference prior definitions",
-    "unresolved": "implementation binding remains unresolved",
-    "next_stage": "S4"
-  },
-  {
-    "artifact_id": "stegverse-openai-compact:S4",
-    "stage_id": "S4",
-    "sha256": "sha256:2b090cce1fd32b8520ae229dbab0b4e1b0ad139f3181e4265cbbf7529b65cc60",
-    "admitted": true,
-    "claims": "S4: Complete informal proof.\n**Complete informal proof**\nFor necessity, assume \\(\\operatorname{ALLOW}(t)\\). By the definition of `ALLOW`, this assumption is exactly a proof of\nTherefore all three predicates hold.\nBy the definition of `ALLOW`, this conjunction is exactly the condition required for \\(\\operatorname{ALLOW}(t)\\). Therefore the evaluator admits \\(t\\).\nThe proof establishes only the logical characterization",
-    "definitions": "reference prior definitions",
-    "unresolved": "implementation binding remains unresolved",
-    "next_stage": "S5"
-  },
-  {
-    "artifact_id": "stegverse-openai-compact:S5",
-    "stage_id": "S5",
-    "sha256": "sha256:0f9c0cb4268d56093e074e6783009de8a0d46e3d1fdb199a3d88545cb622d0ea",
-    "admitted": true,
-    "claims": "```lean\ndef ALLOW (t : Transition) : Prop :=\ntheorem allow_necessary (t : Transition) :\nALLOW GBP BD OC t \u2192 GBP t \u2227 BD t \u2227 OC t := by\ntheorem allow_sufficient (t : Transition) :\nGBP t \u2227 BD t \u2227 OC t \u2192 ALLOW GBP BD OC t := by\ntheorem allow_iff (t : Transition) :\nALLOW GBP BD OC t \u2194 GBP t \u2227 BD t \u2227 OC t := by",
-    "definitions": "reference prior definitions",
-    "unresolved": "implementation binding remains unresolved",
-    "next_stage": "S6"
-  },
-  {
-    "artifact_id": "stegverse-openai-compact:S6",
-    "stage_id": "S6",
-    "sha256": "sha256:79bed540a52adc3167b46331d656030c6fd6ab9eb185839b7f71acb6b86e186f",
-    "admitted": true,
-    "claims": "| Item | Classification | Status | Evidence / boundary |\n| Necessity: `ALLOW t \u2192 GBP t \u2227 BD t \u2227 OC t` | Generated claim | Verified informally | Follows by unfolding the stipulated definition of `ALLOW`. |\n| Sufficiency: `GBP t \u2227 BD t \u2227 OC t \u2192 ALLOW t` | Generated claim | Verified informally | Follows directly from the stipulated definition of `ALLOW`. |\n| Characterization: `ALLOW t \u2194 GBP t \u2227 BD t \u2227 OC t` | Generated ",
-    "definitions": "reference prior definitions",
-    "unresolved": "implementation binding remains unresolved",
-    "next_stage": "complete"
   }
 ]

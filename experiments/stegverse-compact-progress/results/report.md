@@ -2,15 +2,15 @@
 
 | Lane | Stage | Canonical input | Canonical total | Cost | Latency s |
 |---|---:|---:|---:|---:|---:|
-| stegverse-openai-full | S4 | 9,330 | 12,387 | $0.195070 | 93.88 |
-| stegverse-openai-compact | S6 | 8,067 | 10,971 | $0.154830 | 65.91 |
-| stegverse-anthropic-full | NONE | 222 | 937 | $0.014211 | 18.75 |
-| stegverse-anthropic-compact | NONE | 222 | 765 | $0.011151 | 12.89 |
+| stegverse-openai-full | S3 | 6,115 | 8,903 | $0.130425 | 64.44 |
+| stegverse-openai-compact | NONE | 222 | 495 | $0.010750 | 5.69 |
+| stegverse-anthropic-full | NONE | 222 | 949 | $0.014301 | 16.19 |
+| stegverse-anthropic-compact | NONE | 222 | 866 | $0.012726 | 15.14 |
 
 ## Full versus compact
 
-- openai: same stage=False; canonical input reduction=13.54%; cost reduction=20.63%
-- anthropic: same stage=True; canonical input reduction=0.00%; cost reduction=21.53%
+- openai: same stage=False; canonical input reduction=96.37%; cost reduction=91.76%
+- anthropic: same stage=True; canonical input reduction=0.00%; cost reduction=11.01%
 
 ## Boundary
 

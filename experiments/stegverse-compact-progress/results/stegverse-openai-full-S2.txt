@@ -1,54 +1,75 @@
 S2: Theorem formulation.
 
-**Task identity**
-- Experiment: `SV-COST-STAGED-001`
-- Capability test: `SV-COMPACT-PROGRESS-001`
-- Subject: Abstract GCAT/BCAT evaluator admissibility.
+**Task identity**  
+EXPERIMENT: SV-COST-STAGED-001  
+CAPABILITY TEST: SV-COMPACT-PROGRESS-001
 
 **Admitted dependencies**
-- S0 artifact: `sha256:7fc33318b537b4b44a87d84b877679434928ab65c1872d61f19816fb166e274c`.
-- S1 artifact: `sha256:1f9d28c1b9383fdcc9e009097b6b07851224fbe71eb65ff25837069e2ef7d9c8`.
-- Reused content: task identity, abstract predicate signatures, stipulated decision rule, target claim, and claim boundary.
-- These hashes establish artifact identity only, not semantic correctness.
+- S0 artifact: `sha256:1e8d7db326b7abb5df264bee6eb78f5767d37733643397bf6c805b3c62e3dd9f`
+- S1 artifact: `sha256:e6686035db5096ddfa61d6ed6f4487901f7b57efbe09873629d5c085ad060467`
 
-**Stipulated setting**
-Let `Transition` be an arbitrary type, with predicates:
+**Stipulated context**
+- `Transition` is an unspecified type.
+- `GBP`, `BD`, `OC`, and `ALLOW` have type `Transition → Prop`.
+- Evaluator assumption:
+  \[
+  \forall t:\mathrm{Transition},\quad
+  ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
+  \]
 
-- `GBP : Transition → Prop`
-- `BD : Transition → Prop`
-- `OC : Transition → Prop`
-- `ALLOW : Transition → Prop`
+**Theorem formulation**
 
-Assume the abstract evaluator specification:
+For every candidate transition \(t\):
+\[
+ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
+\]
 
-`∀ t : Transition, ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
-
-**Theorem formulation — exact admissibility characterization**
-For every candidate transition `t`:
-
-`ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
-
-Equivalently, admissibility has both directions:
+Equivalently, the characterization consists of:
 
 1. **Necessity**
-
-   `ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)`.
+   \[
+   \forall t,\quad ALLOW(t)\to GBP(t)\land BD(t)\land OC(t).
+   \]
 
 2. **Sufficiency**
+   \[
+   \forall t,\quad GBP(t)\land BD(t)\land OC(t)\to ALLOW(t).
+   \]
 
-   `GBP(t) ∧ BD(t) ∧ OC(t) → ALLOW(t)`.
+Under the stipulated evaluator assumption, both directions are respectively the forward and reverse implications of that assumption.
 
-Thus, under the stipulated abstract decision rule, a transition is allowed if and only if all three predicates hold.
+**Lean 4 candidate for the logical core**
 
-**Lean 4 candidate theorem signatures**
 ```lean
-universe u
+theorem allow_iff_conditions
+    {Transition : Type}
+    (GBP BD OC ALLOW : Transition → Prop)
+    (evaluator_spec :
+      ∀ t, ALLOW t ↔ GBP t ∧ BD t ∧ OC t) :
+    ∀ t, ALLOW t ↔ GBP t ∧ BD t ∧ OC t :=
+  evaluator_spec
+```
 
-variable {Transition : Type u}
-variable (GBP BD OC ALLOW : Transition → Prop)
+A direction-explicit candidate is:
 
-variable (allow_spec :
-  ∀ t : Transition, ALLOW t ↔ (GBP t ∧ BD t ∧ OC t))
+```lean
+theorem allow_necessity_and_sufficiency
+    {Transition : Type}
+    (GBP BD OC ALLOW : Transition → Prop)
+    (evaluator_spec :
+      ∀ t, ALLOW t ↔ GBP t ∧ BD t ∧ OC t) :
+    (∀ t, ALLOW t → GBP t ∧ BD t ∧ OC t) ∧
+    (∀ t, GBP t ∧ BD t ∧ OC t → ALLOW t) := by
+  constructor
+  · intro t hAllow
+    exact (evaluator_spec t).mp hAllow
+  · intro t hConditions
+    exact (evaluator_spec t).mpr hConditions
+```
 
-theorem allow_admissible_iff (t : Transition) :
-    ALLOW t ↔ (GBP t
+**Claim status and boundary**
+- **Stipulated:** the abstract types, predicates, and evaluator equivalence.
+- **Generated claim:** the necessity-and-sufficiency theorem and its two directional formulations.
+- **Verified claim:** none at this stage; the Lean 4 text is only a candidate and has not been reported as compiled or kernel-checked.
+- **Unresolved implementation evidence:** concrete predicate definitions, evaluator encoding, build compatibility, runtime behavior, integration correctness, and conformance of any deployed or concrete GCAT/BCAT evaluator.
+- No implementation validity or deployed GCAT/BCAT conformance is claimed.
