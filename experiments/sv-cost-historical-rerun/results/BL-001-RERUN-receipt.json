@@ -3,8 +3,9 @@
   "method_status": "BEST_AVAILABLE_CONTROL_ENVELOPE_REPRODUCTION",
   "model_requested": "claude-sonnet-4-6",
   "model_returned": "claude-sonnet-4-6",
-  "provider_message_id": "msg_011CdfM9rujcsDPkkLPB2yHq",
+  "provider_message_id": "msg_011CdfZ4JqSKgshM639noBku",
   "provider_stop_reason": "max_tokens",
+  "http_status": 200,
   "max_output_tokens": 4096,
   "native_input_tokens": 143,
   "native_output_tokens": 4096,
@@ -14,23 +15,36 @@
     "input_usd_per_million": 3.0,
     "output_usd_per_million": 15.0
   },
-  "latency_seconds": 59.588793587,
+  "latency_seconds": 55.940335722,
   "request_payload_sha256": "sha256:37412d4b246665be219d5c3120b7f12827711f50016f16781ec0af97cd37cad2",
   "prompt_sha256": "sha256:654d0fd161a30c9ac4765c4eddc7f374dd110d1afb6c78de1877e510d8c12880",
-  "raw_response_sha256": "sha256:0035d6002d4e60548868e531c8eda715335e15356dd355f5a6e43b445adbfb9b",
-  "output_sha256": "sha256:f607294690495e9419f9750b0c77d56a2c3365af5df3181c8ec471564681ff65",
+  "raw_response_sha256": "sha256:640b3d1f6485d28fbd3f56100c9041332580fd809ac2a3f78522554cb3d36dee",
+  "output_sha256": "sha256:312c7736038ca83bcad53e66752d7bac525d51cf2fefa74c1c75ce18d043c4c7",
   "validation": {
-    "checks": {
+    "transport_checks": {
+      "http_2xx": true,
+      "provider_message_id": true,
+      "returned_model": true,
+      "usage_present": true,
+      "raw_response_nonempty": true
+    },
+    "transport_valid": true,
+    "output_class_checks": {
       "direct_artifact": true,
       "definitions": true,
-      "necessary_and_sufficient": true,
+      "necessary_and_sufficient": false,
       "forward_direction": true,
       "reverse_direction": true,
-      "lean_candidate": false,
       "claim_boundary": false,
       "not_meta_only": true
     },
-    "valid": false
+    "output_class_valid": false,
+    "lean_candidate_present": false,
+    "ceiling_saturated": true,
+    "refusal_detected": false,
+    "complete": false,
+    "overall_valid": false,
+    "interpretation": "Historical output-class validity is separated from completion. Lean presence and ceiling saturation are reported independently."
   },
   "reconstruction_boundary": "The exact historical request payload and exact connectivity prompt were not retained. This run reproduces the known provider, model, 4096-token ceiling, direct-unoptimized task class, usage capture, latency capture, raw response retention, and receipt hashing. It is a control-envelope reproduction, not a byte-identical replay."
 }

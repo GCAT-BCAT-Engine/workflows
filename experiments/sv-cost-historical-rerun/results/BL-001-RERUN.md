@@ -2,122 +2,123 @@
 
 ---
 
-## Part I — Primitive Definitions
+## §1. Primitive Definitions and Abstract Framework
 
-**Definition 1.1 (Semantic Space).** Let $\Omega$ be a compact metric space $(\Omega, d)$ called the *semantic space*, equipped with a $\sigma$-algebra $\mathcal{F}$ and a reference probability measure $\mu \in \mathcal{P}(\Omega)$.
+**Definition 1.1 (Policy Space).** Let $\mathcal{P}$ be a compact metric space of policy configurations with metric $d_\mathcal{P}$. A *policy trajectory* is a continuous map $\gamma: [0,1] \to \mathcal{P}$.
 
-**Definition 1.2 (Policy Manifold).** A *policy* is a measurable function $\pi : \mathcal{X} \to \mathcal{P}(\Omega)$, where $\mathcal{X}$ is a measurable input space. The set of all policies is $\Pi$.
+**Definition 1.2 (Semantic Domain).** Let $\mathcal{S}$ be a complete separable metric space of semantic states. Define the *semantic evaluation map* $\Phi: \mathcal{P} \to \mathcal{M}(\mathcal{S})$, where $\mathcal{M}(\mathcal{S})$ denotes the space of Borel probability measures on $\mathcal{S}$, equipped with the Wasserstein-1 metric $W_1$.
 
-**Definition 1.3 (Boundary Structure).** The *normative boundary* is a closed set $\partial \mathcal{B} \subset \Omega$ with the property that $\mu(\partial \mathcal{B}) = 0$ and $\Omega \setminus \partial \mathcal{B}$ decomposes as $\mathcal{A} \sqcup \mathcal{H}$, where:
-- $\mathcal{A}$ is the *admissible interior* (open, $\mu$-positive),
-- $\mathcal{H}$ is the *prohibited interior* (open, $\mu$-positive).
+**Definition 1.3 (Admissibility Boundary).** The *admissibility boundary* is a closed set $\partial\mathcal{A} \subset \mathcal{P}$ such that:
+- The *interior admissible region* is $\mathcal{A}^\circ = \mathcal{P} \setminus \partial\mathcal{A}$ (open).
+- The *inadmissible region* is $\mathcal{I} = \mathcal{P} \setminus \overline{\mathcal{A}}$ where $\overline{\mathcal{A}} = \mathcal{A}^\circ \cup \partial\mathcal{A}$.
 
-**Definition 1.4 (Geometric Boundary Preservation — GBP).** A policy $\pi$ satisfies *geometric boundary preservation* if for every $x \in \mathcal{X}$:
-$$\pi(x)(\partial \mathcal{B}) = 0$$
-and the support map $x \mapsto \mathrm{supp}(\pi(x))$ is upper-hemicontinuous with $\mathrm{supp}(\pi(x)) \subseteq \overline{\mathcal{A}}$ for all $x$.
+**Definition 1.4 (Geometric Boundary Preservation — GBP).** A policy map $f: \mathcal{P} \to \mathcal{P}$ satisfies *Geometric Boundary Preservation* if:
 
-**Definition 1.5 (Divergence Functional).** For $\nu, \mu \in \mathcal{P}(\Omega)$ with $\nu \ll \mu$, define the *policy divergence*:
-$$D_\phi(\nu \| \mu) = \int_\Omega \phi\!\left(\frac{d\nu}{d\mu}\right) d\mu$$
-where $\phi : [0,\infty) \to \mathbb{R}$ is a convex function with $\phi(1) = 0$ (an $f$-divergence generator). The canonical choice is $\phi(t) = t \log t$ (KL divergence).
+$$\text{GBP}(f) \;\equiv\; f(\partial\mathcal{A}) \subseteq \partial\mathcal{A} \;\land\; f(\mathcal{A}^\circ) \subseteq \overline{\mathcal{A}}$$
 
-**Definition 1.6 (Bounded Divergence — BD).** Fix a *reference admissible policy* $\pi^* \in \Pi$ satisfying GBP. A policy $\pi$ satisfies *bounded divergence* with constant $\delta > 0$ if:
-$$\sup_{x \in \mathcal{X}} D_\phi(\pi(x) \| \pi^*(x)) \leq \delta$$
+That is, $f$ maps boundary points to boundary points and interior admissible points to the closed admissible region. Equivalently, $f$ does not map any admissible point into $\mathcal{I}$.
 
-**Definition 1.7 (Ontological Type System).** Let $\mathcal{T}$ be a finite set of *semantic types* with a partial order $\leq_\mathcal{T}$ (a join-semilattice). Each $\omega \in \Omega$ carries a type assignment $\tau : \Omega \to \mathcal{T}$, assumed measurable. Define the *prohibited type set* $\mathcal{T}_{\mathcal{H}} = \{\tau(\omega) : \omega \in \mathcal{H}\}$ and the *admissible type ceiling* $T^* = \bigvee \{\tau(\omega) : \omega \in \mathcal{A}\}$ (join in $\mathcal{T}$).
+**Definition 1.5 (Divergence Functional).** For measures $\mu, \nu \in \mathcal{M}(\mathcal{S})$, define the *semantic divergence* $\Delta: \mathcal{M}(\mathcal{S}) \times \mathcal{M}(\mathcal{S}) \to [0, \infty]$ by:
 
-**Definition 1.8 (Ontological Consistency — OC).** A policy $\pi$ satisfies *ontological consistency* if for every $x \in \mathcal{X}$ and every measurable $S \subseteq \Omega$:
-$$\tau(S) \cap \mathcal{T}_{\mathcal{H}} \neq \emptyset \implies \pi(x)(S) = 0$$
-where $\tau(S) = \{\tau(\omega) : \omega \in S\}$.
+$$\Delta(\mu, \nu) = W_1(\mu, \nu) + \text{KL}(\mu \| \nu)$$
 
-**Definition 1.9 (ALLOW Admissibility).** A policy $\pi \in \Pi$ is *ALLOW-admissible*, written $\pi \in \mathsf{ALLOW}$, if it satisfies all three of (GBP), (BD), and (OC).
+where $\text{KL}(\mu \| \nu) = \int \log\frac{d\mu}{d\nu} \, d\mu$ when $\mu \ll \nu$, and $+\infty$ otherwise.
 
----
+**Definition 1.6 (Bounded Divergence — BD).** A policy $p \in \mathcal{P}$ has *Bounded Divergence* with constant $K > 0$ relative to a reference measure $\mu_0 = \Phi(p_0)$ for a designated $p_0 \in \mathcal{A}^\circ$ if:
 
-## Part II — Auxiliary Lemmas
+$$\text{BD}(p, K) \;\equiv\; \Delta(\Phi(p), \mu_0) \leq K$$
 
-**Lemma 2.1 (GBP–OC Consistency).** If $\pi$ satisfies OC, then $\pi$ satisfies the mass condition of GBP, i.e., $\pi(x)(\mathcal{H}) = 0$ for all $x$.
+**Definition 1.7 (Ontological Frame).** An *ontological frame* is a tuple $\mathcal{O} = (E, R, V, \models)$ where:
+- $E$ is a set of entities (the *ontology*),
+- $R \subseteq E \times E$ is a binary relation (the *commitment relation*),
+- $V: E \to \{0,1\}$ is a valuation,
+- $\models\; \subseteq \mathcal{P} \times \mathcal{O}$ is the *satisfaction relation*: $p \models \mathcal{O}$ means policy $p$ is consistent with frame $\mathcal{O}$.
 
-*Proof.* Take $S = \mathcal{H}$. Then $\tau(S) \supseteq \mathcal{T}_{\mathcal{H}}$, so $\tau(S) \cap \mathcal{T}_{\mathcal{H}} \neq \emptyset$. OC gives $\pi(x)(\mathcal{H}) = 0$. Since $\mu(\partial\mathcal{B}) = 0$ and the decomposition $\Omega = \mathcal{A} \sqcup \partial\mathcal{B} \sqcup \mathcal{H}$ is disjoint, $\pi(x)(\mathcal{A}) = 1$. ∎
+**Definition 1.8 (Ontological Consistency — OC).** A policy $p \in \mathcal{P}$ is *Ontologically Consistent* with respect to a fixed frame $\mathcal{O}_0$ if:
 
-**Lemma 2.2 (GBP Closure Under Convex Combination).** If $\pi_1, \pi_2$ both satisfy GBP and $\lambda \in [0,1]$, then $\pi_\lambda(x) = \lambda \pi_1(x) + (1-\lambda)\pi_2(x)$ satisfies GBP.
+$$\text{OC}(p) \;\equiv\; p \models \mathcal{O}_0 \;\land\; \forall e \in E,\; \bigl[(p \models \mathcal{O}_0) \Rightarrow \neg(p \models \mathcal{O}_0[V(e) \mapsto \neg V(e)])\bigr]$$
 
-*Proof.* $\pi_\lambda(x)(\partial\mathcal{B}) = \lambda \cdot 0 + (1-\lambda)\cdot 0 = 0$. Upper-hemicontinuity of the support map is preserved under convex combination with fixed closed support $\overline{\mathcal{A}}$. ∎
+The second conjunct states that $p$ does not simultaneously satisfy $\mathcal{O}_0$ under complementary valuations — no internal ontological contradiction is induced by $p$.
 
-**Lemma 2.3 (BD Is a Metric Ball).** The set $\{\pi : D_\phi(\pi(x)\|\pi^*(x)) \leq \delta\}$ is convex and $\mathcal{F}$-measurable for each fixed $x$, by convexity of $\phi$ and measurability of the Radon-Nikodym derivative.
+**Definition 1.9 (ALLOW Admissibility).** A policy $p \in \mathcal{P}$ is *ALLOW-admissible* — written $\text{ALLOW}(p)$ — if there exists a policy map $f_p: \mathcal{P} \to \mathcal{P}$ and constant $K_p > 0$ such that:
 
-*Proof.* Convexity follows from the joint convexity of $f$-divergences. Measurability follows from Fubini and the fact that $\phi \circ (d\pi/d\pi^*)$ is measurable when $\pi$ is measurable. ∎
-
-**Lemma 2.4 (OC Implies Absolute Continuity on $\mathcal{A}$).** If $\pi$ satisfies OC and $\pi^*$ satisfies GBP with $\mathrm{supp}(\pi^*(x)) = \overline{\mathcal{A}}$ for all $x$, then $\pi(x)|_{\mathcal{A}} \ll \pi^*(x)|_{\mathcal{A}}$.
-
-*Proof.* Let $N \subseteq \mathcal{A}$ with $\pi^*(x)(N) = 0$. Since $N \subseteq \mathcal{A}$ and $\pi^*$ dominates $\mu|_{\mathcal{A}}$ (by full support), $\mu(N) = 0$. OC restricts all mass of $\pi(x)$ to $\mathcal{A}$, and within $\mathcal{A}$ the measure $\pi(x)|_{\mathcal{A}}$ is absolutely continuous with respect to $\mu|_{\mathcal{A}}$ (since $\pi$ is defined via a measurable density). Hence $\pi(x)(N) = 0$. ∎
+$$\text{ALLOW}(p) \;\equiv\; \text{GBP}(f_p) \;\land\; \text{BD}(p, K_p) \;\land\; \text{OC}(p) \;\land\; f_p(p) \in \overline{\mathcal{A}}$$
 
 ---
 
-## Part III — Main Theorem
+## §2. Auxiliary Lemmas
 
-**Theorem 3.1 (Necessary and Sufficient Characterization of ALLOW Admissibility).**
+**Lemma 2.1 (GBP Closure under Composition).** If $f, g: \mathcal{P} \to \mathcal{P}$ both satisfy GBP, then $f \circ g$ satisfies GBP.
 
-*Let $(\Omega, d, \mu)$, $\mathcal{B}$, $\mathcal{T}$, $\pi^*$, and $\delta > 0$ be as defined above, with $\pi^*$ fixed and $\mathrm{supp}(\pi^*(x)) = \overline{\mathcal{A}}$ for all $x$. Then:*
+*Proof.* Let $q \in \partial\mathcal{A}$. By $\text{GBP}(g)$: $g(q) \in \partial\mathcal{A}$. By $\text{GBP}(f)$: $f(g(q)) \in \partial\mathcal{A}$. Hence $(f \circ g)(\partial\mathcal{A}) \subseteq \partial\mathcal{A}$. Let $q \in \mathcal{A}^\circ$. By $\text{GBP}(g)$: $g(q) \in \overline{\mathcal{A}}$. If $g(q) \in \mathcal{A}^\circ$, then $f(g(q)) \in \overline{\mathcal{A}}$ by $\text{GBP}(f)$. If $g(q) \in \partial\mathcal{A}$, then $f(g(q)) \in \partial\mathcal{A} \subseteq \overline{\mathcal{A}}$. Thus $(f \circ g)(\mathcal{A}^\circ) \subseteq \overline{\mathcal{A}}$. $\square$
 
-$$\pi \in \mathsf{ALLOW} \iff [\text{GBP}(\pi)] \;\wedge\; [\text{BD}(\pi, \delta)] \;\wedge\; [\text{OC}(\pi)]$$
+**Lemma 2.2 (BD Transitivity via Triangle Inequality).** If $\text{BD}(p, K_1)$ and $\text{BD}(q, K_2)$ hold with the same reference $\mu_0$, then $W_1(\Phi(p), \Phi(q)) \leq K_1 + K_2$.
 
-*Furthermore, $\mathsf{ALLOW}$ is:*
-1. *Non-empty (contains $\pi^*$).*
-2. *Convex in the space of policies under pointwise mixture.*
-3. *Closed under uniform limits in the total-variation topology.*
-4. *Characterized by the joint constraint:*
+*Proof.* By the triangle inequality of $W_1$:
+$$W_1(\Phi(p), \Phi(q)) \leq W_1(\Phi(p), \mu_0) + W_1(\mu_0, \Phi(q)) \leq K_1 + K_2$$
+since $W_1(\mu, \nu) \leq \Delta(\mu,\nu)$ for all $\mu, \nu$. $\square$
 
-$$\pi \in \mathsf{ALLOW} \iff \sup_{x \in \mathcal{X}}\left[D_\phi(\pi(x)\|\pi^*(x)) + \mathbf{1}_{\pi(x)(\mathcal{H})>0} \cdot \infty + \mathbf{1}_{\pi(x)(\partial\mathcal{B})>0} \cdot \infty\right] \leq \delta$$
+**Lemma 2.3 (OC Excludes Inadmissibility via Valuation Stability).** Suppose the ontological frame $\mathcal{O}_0$ encodes the admissibility predicate — i.e., for all $p \in \mathcal{P}$: $p \models \mathcal{O}_0 \Rightarrow p \in \overline{\mathcal{A}}$. Then $\text{OC}(p) \Rightarrow p \in \overline{\mathcal{A}}$.
 
-where the indicator penalties enforce GBP and OC by convention that $\infty > \delta$.
+*Proof.* By hypothesis, $\text{OC}(p)$ includes $p \models \mathcal{O}_0$, which by the encoding assumption gives $p \in \overline{\mathcal{A}}$. $\square$
+
+**Lemma 2.4 (Compactness of Admissible Sublevel Sets).** For any $K > 0$, the set
+
+$$\mathcal{B}_K = \{p \in \overline{\mathcal{A}} : \Delta(\Phi(p), \mu_0) \leq K\}$$
+
+is compact when $\Phi$ is continuous and $\overline{\mathcal{A}}$ is closed in the compact space $\mathcal{P}$.
+
+*Proof.* Since $\mathcal{P}$ is compact and $\overline{\mathcal{A}}$ is closed, $\overline{\mathcal{A}}$ is compact. The map $p \mapsto \Delta(\Phi(p), \mu_0)$ is lower semicontinuous (as $\Delta$ includes KL divergence, which is lower semicontinuous in the weak topology, and $W_1$ is continuous). Hence the sublevel set $\{p : \Delta(\Phi(p),\mu_0) \leq K\}$ is closed, and its intersection with the compact set $\overline{\mathcal{A}}$ is compact. $\square$
 
 ---
 
-## Part IV — Proof
+## §3. Main Theorem
 
-### 4.1 Forward Direction ($\pi \in \mathsf{ALLOW} \Rightarrow$ GBP $\wedge$ BD $\wedge$ OC)
+### Theorem 3.1 (Complete Invariant Characterization of ALLOW Admissibility)
 
-This direction is immediate by Definition 1.9, which defines $\mathsf{ALLOW}$ as the conjunction. ∎
+**Assumptions (A):**
+- (A1) $\mathcal{P}$ is a compact metric space; $\overline{\mathcal{A}}$ is closed, $\mathcal{A}^\circ$ is open, $\partial\mathcal{A}$ is closed.
+- (A2) $\Phi: \mathcal{P} \to \mathcal{M}(\mathcal{S})$ is continuous in the $W_1$ topology.
+- (A3) The ontological frame $\mathcal{O}_0$ is *admissibility-encoding*: $\forall p \in \mathcal{P},\; p \models \mathcal{O}_0 \Rightarrow p \in \overline{\mathcal{A}}$.
+- (A4) The admissibility boundary $\partial\mathcal{A}$ is *non-vacuous*: $\partial\mathcal{A} \neq \emptyset$.
+- (A5) The identity map $\text{id}_\mathcal{P}$ satisfies $\text{GBP}(\text{id}_\mathcal{P})$ — i.e., $\text{id}$ preserves all regions (trivially verified).
 
-### 4.2 Reverse Direction (GBP $\wedge$ BD $\wedge$ OC $\Rightarrow \pi \in \mathsf{ALLOW}$)
+**Statement.** Under assumptions (A1)–(A5), for any policy $p \in \mathcal{P}$:
 
-This direction is also immediate by Definition 1.9. The content of the theorem lies in the structural claims (1)–(4) and the equivalence with the penalized functional in claim (4).
+$$\boxed{\text{ALLOW}(p) \;\iff\; p \in \overline{\mathcal{A}} \;\land\; \exists K > 0,\; \Delta(\Phi(p), \mu_0) \leq K \;\land\; \text{OC}(p)}$$
 
-### 4.3 Non-emptiness (Claim 1)
+---
 
-We verify $\pi^* \in \mathsf{ALLOW}$:
-- **GBP**: $\pi^*$ satisfies GBP by assumption.
-- **BD**: $D_\phi(\pi^*(x)\|\pi^*(x)) = \phi(1) \cdot \mu(\Omega) = 0 \leq \delta$. ✓
-- **OC**: Since $\mathrm{supp}(\pi^*(x)) = \overline{\mathcal{A}}$ and $\overline{\mathcal{A}} \cap \mathcal{H} = \emptyset$ (as $\mathcal{A}$ and $\mathcal{H}$ are disjoint open sets with $\partial\mathcal{B}$ separating them), for any $S$ with $\tau(S) \cap \mathcal{T}_\mathcal{H} \neq \emptyset$ we have $S \cap \mathcal{H} \neq \emptyset$, but $\pi^*(x)(S \cap \mathcal{H}) = 0$ since $\mathcal{H} \cap \overline{\mathcal{A}} = \emptyset$ and $\pi^*$ has no mass outside $\overline{\mathcal{A}}$. Hence $\pi^*(x)(S) = 0$. ✓
+### Proof of the Forward Direction ($\Rightarrow$)
 
-Therefore $\pi^* \in \mathsf{ALLOW}$. ∎
+**Claim:** $\text{ALLOW}(p) \Rightarrow p \in \overline{\mathcal{A}} \land \exists K > 0,\, \Delta(\Phi(p), \mu_0) \leq K \land \text{OC}(p)$.
 
-### 4.4 Convexity (Claim 2)
+Assume $\text{ALLOW}(p)$. By Definition 1.9, there exists $f_p$ and $K_p > 0$ such that:
 
-Let $\pi_1, \pi_2 \in \mathsf{ALLOW}$ and $\lambda \in [0,1]$. Set $\pi_\lambda(x) = \lambda\pi_1(x) + (1-\lambda)\pi_2(x)$.
+**(i) $p \in \overline{\mathcal{A}}$:** We have $\text{GBP}(f_p)$ and $f_p(p) \in \overline{\mathcal{A}}$. We need $p \in \overline{\mathcal{A}}$. Suppose for contradiction $p \in \mathcal{I} = \mathcal{P} \setminus \overline{\mathcal{A}}$. Since $\mathcal{I}$ is open (complement of closed $\overline{\mathcal{A}}$) and $\mathcal{I} \cap \mathcal{A}^\circ = \emptyset$, $\mathcal{I} \cap \partial\mathcal{A} = \emptyset$, we have $p \notin \mathcal{A}^\circ$ and $p \notin \partial\mathcal{A}$. But also $\text{OC}(p)$ holds by assumption, and by Lemma 2.3 under (A3), $\text{OC}(p) \Rightarrow p \in \overline{\mathcal{A}}$, contradicting $p \in \mathcal{I}$. Therefore $p \in \overline{\mathcal{A}}$.
 
-- **GBP**: By Lemma 2.2. ✓
-- **BD**: By joint convexity of $f$-divergences:
-$$D_\phi(\pi_\lambda(x)\|\pi^*(x)) \leq \lambda D_\phi(\pi_1(x)\|\pi^*(x)) + (1-\lambda)D_\phi(\pi_2(x)\|\pi^*(x)) \leq \lambda\delta + (1-\lambda)\delta = \delta$$
-✓
-- **OC**: For any $S$ with $\tau(S) \cap \mathcal{T}_\mathcal{H} \neq \emptyset$: $\pi_\lambda(x)(S) = \lambda\pi_1(x)(S) + (1-\lambda)\pi_2(x)(S) = \lambda \cdot 0 + (1-\lambda)\cdot 0 = 0$. ✓
+**(ii) $\Delta(\Phi(p), \mu_0) \leq K_p$:** This is $\text{BD}(p, K_p)$, which is directly a conjunct of $\text{ALLOW}(p)$ by Definition 1.9. Since $K_p > 0$ exists by assumption, $\exists K > 0$ such that $\Delta(\Phi(p), \mu_0) \leq K$. $\square_{\text{(ii)}}$
 
-Hence $\pi_\lambda \in \mathsf{ALLOW}$. ∎
+**(iii) $\text{OC}(p)$:** Directly a conjunct of $\text{ALLOW}(p)$. $\square_{\text{(iii)}}$
 
-### 4.5 Closure Under TV Limits (Claim 3)
+Forward direction established. $\square_\Rightarrow$
 
-Let $\{\pi_n\}_{n\geq 1} \subseteq \mathsf{ALLOW}$ with $\sup_x \|\pi_n(x) - \pi_\infty(x)\|_{\mathrm{TV}} \to 0$ as $n \to \infty$.
+---
 
-- **GBP**: For each $x$, $|\pi_\infty(x)(\partial\mathcal{B})| \leq |\pi_\infty(x)(\partial\mathcal{B}) - \pi_n(x)(\partial\mathcal{B})| + 0 \leq \|\pi_n(x)-\pi_\infty(x)\|_{\mathrm{TV}} \to 0$. Hence $\pi_\infty(x)(\partial\mathcal{B})=0$. Upper-hemicontinuity of the support map is preserved in the TV limit since $\mathrm{supp}(\pi_\infty(x)) \subseteq \overline{\mathcal{A}}$ follows from $\pi_\infty(x)(\mathcal{H})=0$ (by same argument) and $\pi_\infty(x)(\partial\mathcal{B})=0$. ✓
+### Proof of the Reverse Direction ($\Leftarrow$)
 
-- **BD**: Lower semicontinuity of $f$-divergences in the weak topology (and hence TV topology) gives:
-$$D_\phi(\pi_\infty(x)\|\pi^*(x)) \leq \liminf_{n\to\infty} D_\phi(\pi_n(x)\|\pi^*(x)) \leq \delta$$
-✓
+**Claim:** $p \in \overline{\mathcal{A}} \land \exists K > 0,\, \Delta(\Phi(p), \mu_0) \leq K \land \text{OC}(p) \Rightarrow \text{ALLOW}(p)$.
 
-- **OC**: For any $S$ with $\tau(S)\cap\mathcal{T}_\mathcal{H}\neq\emptyset$: $\pi_\infty(x)(S) = \lim_{n\to\infty}\pi_n(x)(S) = 0$ (since $|\pi_\infty(x)(S) - \pi_n(x)(S)| \leq \|\pi_n(x)-\pi_\infty(x)\|_{\mathrm{TV}} \to 0$ and each $\pi_n(x)(S)=0$). ✓
+Assume the right-hand side. We must produce $f_p$ and $K_p > 0$ witnessing Definition 1.9.
 
-Hence $\pi_\infty \in \mathsf{ALLOW}$. ∎
+**(Construction of $f_p$):** Define $f_p = \text{id}_\mathcal{P}$. By (A5), $\text{id}_\mathcal{P}$ satisfies $\text{GBP}(\text{id}_\mathcal{P})$:
+- $\text{id}(\partial\mathcal{A}) = \partial\mathcal{A} \subseteq \partial\mathcal{A}$. ✓
+- $\text{id}(\mathcal{A}^\circ) = \mathcal{A}^\circ \subseteq \overline{\mathcal{A}}$. ✓
 
-### 4.6 Penalized Functional Equivalence (Claim 4)
+So $\text{GBP}(f_p)$ holds. $\square_{\text{GBP}}$
 
-Define $F(\pi, x) = D_\phi(\pi(x)\|\pi^*(x)) + \mathbf{1}_{\pi(x)(\mathcal{H})>0}\cdot\infty + \mathbf{1}_{\pi(x)(\partial\
+**(BD holds):** By assumption, $\exists K > 0$ with $\Delta(\Phi(p), \mu_0) \leq K$. Set $K_p = K$. Then $\text{BD}(p, K_p)$ holds. $\square_{\text{BD}}$
+
+**(OC holds):** By assumption directly. $\square_{\text{OC}}$
+
+**(Final conjunct $f_p(p) \in \overline{\mathcal{A}}$):** Since $f

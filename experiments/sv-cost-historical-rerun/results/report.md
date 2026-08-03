@@ -2,10 +2,10 @@
 
 Method status: BEST_AVAILABLE_CONTROL_ENVELOPE_REPRODUCTION
 
-| Test | Valid | Native tokens | Observed cost | Latency s | Stop reason |
-|---|---:|---:|---:|---:|---|
-| VAL-001-RERUN | FALSE | 33 | $0.000207 | 1.23 | end_turn |
-| BL-001-RERUN | FALSE | 4,239 | $0.061869 | 59.59 | max_tokens |
+| Test | Transport | Output class | Complete | Native tokens | Observed cost | Latency s | Stop reason |
+|---|---:|---:|---:|---:|---:|---:|---|
+| VAL-001-RERUN | TRUE | N/A | TRUE | 33 | $0.000207 | 1.10 | end_turn |
+| BL-001-RERUN | TRUE | FALSE | FALSE | 4,239 | $0.061869 | 55.94 | max_tokens |
 
 ## BL-001 historical comparison
 
@@ -16,7 +16,11 @@ Method status: BEST_AVAILABLE_CONTROL_ENVELOPE_REPRODUCTION
 - Rerun observed cost: $0.061869
 - Cost delta: $+0.000210 (+0.34%)
 - Historical latency: approximately 52.5s
-- Rerun latency: 59.59s
+- Rerun latency: 55.94s
+
+## Interpretation
+
+Transport success, historical output-class validity, and full completion are separate measurements. A max-token stop does not erase a valid cost-envelope observation, but it cannot be represented as a complete artifact.
 
 ## Reconstruction boundary
 
