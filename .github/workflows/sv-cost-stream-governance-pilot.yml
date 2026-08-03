@@ -1,0 +1,97 @@
+name: SV-COST Stream Governance Pilot
+
+on:
+  workflow_dispatch:
+    inputs:
+      events:
+        description: Synthetic stream event count
+        required: false
+        default: '10000'
+  push:
+    branches: [main]
+    paths:
+      - experiments/sv-cost-program/cost-model/stream-governance-protocol.json
+      - experiments/sv-cost-program/stream-governance/run_stream_pilot.py
+      - .github/workflows/sv-cost-stream-governance-pilot.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sv-cost-stream-governance-pilot
+  cancel-in-progress: false
+
+jobs:
+  pilot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve event count
+        id: config
+        shell: bash
+        run: |
+          set -euo pipefail
+          EVENTS="${{ github.event.inputs.events }}"
+          if [ -z "$EVENTS" ]; then EVENTS=10000; fi
+          if ! [[ "$EVENTS" =~ ^[0-9]+$ ]] || [ "$EVENTS" -lt 10000 ]; then
+            echo "events must be an integer >= 10000" >&2
+            exit 2
+          fi
+          echo "events=$EVENTS" >> "$GITHUB_OUTPUT"
+
+      - name: Run deterministic stream pilot
+        run: python experiments/sv-cost-program/stream-governance/run_stream_pilot.py --events "${{ steps.config.outputs.events }}"
+
+      - name: Validate required outputs
+        run: |
+          set -euo pipefail
+          base=experiments/sv-cost-program/stream-governance/results
+          for f in event_ledger.jsonl transition_receipts.jsonl lane_costs.json failure_and_retry_ledger.json replay_recovery_results.json correctness_equivalence_results.json break_even_surface.json stream_governance_decision.json; do
+            test -s "$base/$f" || { echo "missing or empty: $base/$f" >&2; exit 3; }
+          done
+          for f in lane_costs.json failure_and_retry_ledger.json replay_recovery_results.json correctness_equivalence_results.json break_even_surface.json stream_governance_decision.json; do
+            python -m json.tool "$base/$f" >/dev/null
+          done
+          test "$(wc -l < "$base/event_ledger.jsonl")" -ge 10000
+          test "$(wc -l < "$base/transition_receipts.jsonl")" -ge 10000
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          b=Path('experiments/sv-cost-program/stream-governance/results')
+          d=json.loads((b/'stream_governance_decision.json').read_text())
+          assert d['status']=='SYNTHETIC_PILOT_COMPLETE'
+          assert d['claim']=='MECHANISM_DEMONSTRATED_SYNTHETICALLY; LIVE_PROVIDER_AND_ENTERPRISE_COST_VALIDATION_REQUIRED'
+          c=json.loads((b/'correctness_equivalence_results.json').read_text())
+          assert c['same_stream_identity'] is True
+          assert c['payload_hashes_preserved'] is True
+          print(json.dumps({'valid': True, 'status': d['status'], 'stream_cost_ratio': d['stream_cost_ratio'], 'replay_cost_ratio': d['replay_cost_ratio']}))
+          PY
+
+      - name: Commit pilot receipts
+        run: |
+          set -euo pipefail
+          git config user.name "stegverse-governance-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add experiments/sv-cost-program/stream-governance/results/
+          if git diff --cached --quiet; then
+            echo "No pilot output changes."
+            exit 0
+          fi
+          git commit -m "Record deterministic stream governance pilot [run $GITHUB_RUN_ID]"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Publish summary
+        if: always()
+        run: |
+          echo "## SV-COST Stream Governance Pilot" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f experiments/sv-cost-program/stream-governance/results/stream_governance_decision.json ]; then
+            cat experiments/sv-cost-program/stream-governance/results/stream_governance_decision.json >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Decision receipt missing." >> "$GITHUB_STEP_SUMMARY"
+          fi
