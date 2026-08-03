@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -41,18 +42,27 @@ def main() -> int:
             errors.append("zero provider charge was improperly selected")
         if gd.get("stegverse_zero_provider_charge_rejected_from_cost_ranking") is not True:
             errors.append("unmeasured local-cost exclusion missing")
+
     for required in [
         "cross-model-session-inventory.json",
         "governance-cross-model-matrix.json",
         "normalized-operation-class-matrix.json",
-        "issue #13",
     ]:
         if required not in handoff:
             errors.append(f"handoff missing reference: {required}")
 
+    # Canonical handoffs commonly render issue numbers in backticks. Accept
+    # `issue #13`, `issue `#13``, or an adjacent/canonical issue label with #13.
+    issue_13_patterns = [
+        r"issue\s+`?#13`?",
+        r"(?:adjacent|canonical)\s+evidence\s+issue:\s+`?#13`?",
+    ]
+    if not any(re.search(pattern, handoff, flags=re.IGNORECASE) for pattern in issue_13_patterns):
+        errors.append("handoff missing reference: issue #13")
+
     status = "ARCHIVE_READY" if not errors else "BLOCKED"
     receipt = {
-        "schema_version": "1.0.0",
+        "schema_version": "1.0.1",
         "program_id": "SV-COST-MAJOR-GOAL-001",
         "session_goal_id": "SV-COST-CROSS-MODEL-SESSION-001",
         "generated_at": datetime.now(timezone.utc).isoformat(),
