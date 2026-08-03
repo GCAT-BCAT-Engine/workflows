@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "experiment_id": "SV-COST-GOVERNANCE-CROSS-MODEL-001",
+  "updated_at": "2026-08-03T18:36:00Z",
+  "models": [
+    {
+      "provider": "openai",
+      "model_id": "gpt-5.6",
+      "model_version_or_snapshot": "provider-resolved-at-observation-time",
+      "routes_observed": ["synchronous"],
+      "governed_and_raw_pair_available": true,
+      "native_usage_receipt_available": true,
+      "batch_capability_observed": false,
+      "test_authority": "authorized repository secret and hosted workflow",
+      "status": "ACTIVE_OBSERVED"
+    },
+    {
+      "provider": "anthropic",
+      "model_id": "claude-sonnet-4-6",
+      "model_version_or_snapshot": "provider-resolved-at-observation-time",
+      "routes_observed": ["synchronous"],
+      "governed_and_raw_pair_available": true,
+      "native_usage_receipt_available": true,
+      "batch_capability_observed": true,
+      "test_authority": "authorized repository secret and hosted workflow",
+      "status": "ACTIVE_OBSERVED"
+    },
+    {
+      "provider": "stegverse",
+      "model_id": "stegverse-only",
+      "model_version_or_snapshot": "repository-native-runtime",
+      "routes_observed": ["local_feasibility_only", "deterministic_reconstruction"],
+      "governed_and_raw_pair_available": false,
+      "native_usage_receipt_available": true,
+      "batch_capability_observed": false,
+      "test_authority": "repository-native execution",
+      "status": "CONDITIONAL_BY_OPERATION_CLASS"
+    }
+  ],
+  "admission_rule": "A model or runtime enters comparative ranking only when immutable identity, authorized execution, native receipt evidence, task-equivalent output obligations, and the applicable quality gate are available.",
+  "dynamic_extension_rule": "Add every newly authorized provider model before execution; never hard-code a preferred winner."
+}
