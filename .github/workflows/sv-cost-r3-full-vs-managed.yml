@@ -1,5 +1,6 @@
 name: SV-COST R3 Full vs Managed Context
 
+# Dispatch marker: 2026-08-03T15:20Z
 on:
   workflow_dispatch:
   push:
