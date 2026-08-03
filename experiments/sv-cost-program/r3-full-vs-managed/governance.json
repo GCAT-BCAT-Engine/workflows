@@ -1,0 +1,58 @@
+{
+  "governance_id": "SV-COST-R3-GOV-001",
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "relation_id": "R3-FULL-VS-STEGVERSE-CONTEXT",
+  "prior_state": {
+    "required_program_status": "R2_ADJUDICATED_R3_NEXT",
+    "required_receipt": "experiments/sv-cost-program/results/r2-adjudication.json",
+    "required_r2_status": "R2_ADJUDICATED"
+  },
+  "admissible_transition": {
+    "from": "R2_ADJUDICATED_R3_NEXT",
+    "to_one_of": [
+      "R3_OBSERVED_AND_VALIDATED",
+      "R3_EVIDENCE_INCOMPLETE",
+      "R3_QUALITY_DIVERGENCE"
+    ],
+    "unique_next_relation": "R3-FULL-VS-STEGVERSE-CONTEXT"
+  },
+  "invariants": [
+    "provider",
+    "model",
+    "direct synchronous route",
+    "task identity",
+    "stage contract",
+    "stage order",
+    "output-token ceiling",
+    "temperature",
+    "quality verifier",
+    "trial identifiers",
+    "pricing basis"
+  ],
+  "single_changed_variable": "context representation supplied to each stage: full admitted prior outputs versus StegVerse-managed ledger plus selected retrieval",
+  "constraints": {
+    "provider": "anthropic",
+    "model": "claude-sonnet-4-6",
+    "route": "messages",
+    "paired_trials": 5,
+    "stages_per_trial": 7,
+    "max_output_tokens_per_stage": 1400,
+    "temperature": 0,
+    "failures_are_evidence": true,
+    "same_verifier_required": true,
+    "no_lane_substitution": true,
+    "no_reconstruction_lane": true,
+    "no_headline_savings_without_quality_equivalence": true
+  },
+  "publication_gate": {
+    "required": [
+      "all provider request and response receipts retained",
+      "one request-contract hash per stage and trial pair except context payload",
+      "paired completion and verifier outcomes reported",
+      "cost and token distributions reported",
+      "quality equivalence established before savings claim",
+      "pricing-derived estimates identified as non-invoice evidence"
+    ],
+    "claim_boundary": "This relation measures the effect of context representation for the same provider, model, route, staged task, and verifier. It does not compare provider inference with deterministic reconstruction and does not establish enterprise-wide savings."
+  }
+}
