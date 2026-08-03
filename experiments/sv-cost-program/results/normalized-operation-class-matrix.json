@@ -1,11 +1,12 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.0.1",
   "experiment_id": "SV-COST-NORMALIZED-001",
   "task_id": "SV-COST-NORMALIZED-001",
   "operation_class": "bounded_abstract_characterization_or_admitted_reconstruction",
   "evidence_class": "OBSERVED",
   "source_path": "experiments/sv-cost-normalized/results/result.json",
-  "source_sha256": "sha256:6d7fe0b3b1a96b019f9b0ea4ce07c1fa7fc71688da3b0c48c6a109caa4f0a80d",
+  "source_blob_sha": "a500441a5a9f3a486b56f013016b1fa4ef8969c0",
+  "source_sha256_status": "NOT_RECOMPUTED_BY_MANUAL_INTEGRATION; CANONICAL GENERATOR RECOMPUTES ON NEXT RUN",
   "rows": [
     {
       "lane_id": "openai",
@@ -25,9 +26,6 @@
       "batch_normalized_cost_usd": 0.019405,
       "price_card_version": "2026-08-03-local-declared",
       "local_cost_status": null,
-      "task_id": "SV-COST-NORMALIZED-001",
-      "operation_class": "bounded_abstract_characterization_or_admitted_reconstruction",
-      "evidence_class": "OBSERVED",
       "comparable_within_operation_class": true,
       "fully_burdened_cost_known": true,
       "eligible_for_observed_cost_selection": true,
@@ -51,9 +49,6 @@
       "batch_normalized_cost_usd": 0.011475,
       "price_card_version": "2026-08-03-local-declared",
       "local_cost_status": null,
-      "task_id": "SV-COST-NORMALIZED-001",
-      "operation_class": "bounded_abstract_characterization_or_admitted_reconstruction",
-      "evidence_class": "OBSERVED",
       "comparable_within_operation_class": true,
       "fully_burdened_cost_known": true,
       "eligible_for_observed_cost_selection": true,
@@ -77,15 +72,10 @@
       "batch_normalized_cost_usd": null,
       "price_card_version": null,
       "local_cost_status": "UNMEASURED_LOCAL_RUNTIME",
-      "task_id": "SV-COST-NORMALIZED-001",
-      "operation_class": "bounded_abstract_characterization_or_admitted_reconstruction",
-      "evidence_class": "OBSERVED",
       "comparable_within_operation_class": true,
       "fully_burdened_cost_known": false,
       "eligible_for_observed_cost_selection": false,
-      "selection_exclusions": [
-        "LOCAL_RUNTIME_COST_UNMEASURED"
-      ]
+      "selection_exclusions": ["LOCAL_RUNTIME_COST_UNMEASURED"]
     }
   ],
   "bounded_selection": {
