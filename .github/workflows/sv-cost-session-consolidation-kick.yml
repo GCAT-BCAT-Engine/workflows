@@ -1,0 +1,24 @@
+name: SV-COST Session Consolidation Kick
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sv-cost-session-consolidation-kick.yml'
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch-consolidation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch canonical session consolidation
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh workflow run sv-cost-session-consolidation.yml --repo "$GITHUB_REPOSITORY" --ref main
