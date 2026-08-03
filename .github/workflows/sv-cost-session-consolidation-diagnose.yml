@@ -1,0 +1,62 @@
+name: SV-COST Session Consolidation Diagnose
+
+on:
+  issues:
+    types: [edited]
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    if: github.event.issue.number == 13 && contains(github.event.issue.body, 'DIAGNOSE_SV_COST_CONSOLIDATION_20260803')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Reconcile in workspace and capture every validator check
+        shell: bash
+        env:
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          python tools/reconcile_sv_cost_terminal_state.py --release-session --workflow-run-url "$RUN_URL" > /tmp/reconcile.json
+          set +e
+          python tools/validate_sv_cost_session_state.py --write-receipt --workflow-run-url "$RUN_URL" > /tmp/validate.json
+          validator_exit=$?
+          set -e
+          jq --argjson validator_exit "$validator_exit" '. + {validator_exit:$validator_exit,failing_checks:[.checks[]|select(.pass==false)]}' \
+            experiments/sv-cost-program/results/session-consolidation-receipt.json \
+            > experiments/sv-cost-program/results/session-consolidation-diagnostic.json
+          git restore SV_COST_MIRROR_HANDOFF.md
+          git restore experiments/sv-cost-program/session-goal-inventory.json
+          git restore experiments/sv-cost-program/task-claims.json
+          git restore experiments/sv-cost-program/evidence-index.json
+          git restore experiments/sv-cost-program/lineage.json
+          git restore experiments/sv-cost-program/relations.json
+          git restore docs/SV_COST_MAJOR_ANALYSIS.md
+          rm -f experiments/sv-cost-program/results/session-consolidation-receipt.json
+
+      - name: Commit diagnostic receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'sv-cost-session-diagnostician'
+          git config user.email 'actions@users.noreply.github.com'
+          git add experiments/sv-cost-program/results/session-consolidation-diagnostic.json
+          git commit -m "Diagnose SV-COST session consolidation validation [run $GITHUB_RUN_ID]"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if git rebase origin/main && git push origin HEAD:main; then exit 0; fi
+            git rebase --abort || true
+            sleep $((attempt * 3))
+          done
+          exit 1
