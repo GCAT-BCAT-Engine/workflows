@@ -1,0 +1,50 @@
+{
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "relation_id": "R2-DIRECT-VS-BATCH",
+  "status": "R2_ADJUDICATED",
+  "verdict": "ROUTE_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
+  "governance_interpretation": "The prior state admitted R2 as the next relation. This adjudication reconstructs whether the observed transition satisfies the locked invariants and publication gate; worker identity is not treated as free-standing authority.",
+  "evidence": {
+    "result_sha256": "sha256:00cfd7b2e582212bf39bc6d0d08b316bbed36e54a8b78e61cb2057801431ff9b",
+    "governance_sha256": "sha256:e3209990e6e27d52c1ff614cb8f1f514e3658c44831e4b3672420159f619d5d5",
+    "protocol_sha256": "sha256:bf295c2b6d79ea5359f1b9205566baa087a37227d0f2dbed430582852ee72dbb",
+    "batch_id": "msgbatch_01HL3iB57s9Z7TNtHYj3LtxG",
+    "paired_n": 10,
+    "single_request_hash": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976"
+  },
+  "direct": {
+    "mean_tokens": 4239.0,
+    "mean_pricing_derived_cost_usd": 0.06186899999999999,
+    "mean_latency_seconds": 64.6254426644,
+    "completion_rate": 0.0,
+    "verifier_pass_rate": 0.0
+  },
+  "batch": {
+    "mean_tokens": 4239.0,
+    "mean_pricing_derived_cost_usd": 0.030934499999999997,
+    "mean_latency_seconds": 181.95182198461816,
+    "completion_rate": 0.0,
+    "verifier_pass_rate": 0.1
+  },
+  "paired_effect": {
+    "mean_cost_delta_usd_batch_minus_direct": -0.030934499999999997,
+    "cost_delta_variance": 0.0,
+    "cost_delta_ci95": [
+      -0.030934499999999997,
+      -0.030934499999999997
+    ],
+    "mean_latency_delta_seconds_batch_minus_direct": 117.32637932021817,
+    "latency_delta_variance": 7.1724860589528125,
+    "latency_delta_ci95": [
+      115.41067950660893,
+      119.2420791338274
+    ]
+  },
+  "publication_gate": {
+    "quality_equivalent": false,
+    "successful_quality_equivalent": false,
+    "headline_cost_savings_admissible": false,
+    "pricing_is_invoice_evidence": false,
+    "claim_boundary": "The route and pricing effect is observed, but a CFO-grade savings claim requires successful equivalent outputs. Pricing-derived cost is not an invoice receipt."
+  }
+}

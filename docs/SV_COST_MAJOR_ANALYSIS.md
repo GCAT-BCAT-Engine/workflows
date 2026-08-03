@@ -65,3 +65,20 @@ This document becomes publication-ready only when:
 ## Operator boundary
 
 The operator is not required to interpret individual result files. New evidence must update the canonical index, relational matrix, and this document. No standalone narrative result document may redefine the program or create a new goal.
+
+## R2 — Direct synchronous versus provider batch
+
+**Governed verdict:** `ROUTE_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE`
+
+- Paired trials: 10
+- Direct mean pricing-derived cost: $0.061869
+- Batch mean pricing-derived cost: $0.030934
+- Direct completion rate: 0%
+- Batch completion rate: 0%
+- Direct verifier pass rate: 0%
+- Batch verifier pass rate: 10%
+- Mean batch-minus-direct latency: 117.33 seconds
+
+The provider batch route and its native batch identifier were observed. The calculated route-price effect is retained as pricing-derived evidence. It is not presented as a CFO-grade successful-output savings claim unless both lanes produce equivalent successful outputs under the shared verifier.
+
+Canonical adjudication: `experiments/sv-cost-program/results/r2-adjudication.json`

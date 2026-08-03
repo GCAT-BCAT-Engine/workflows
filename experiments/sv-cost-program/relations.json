@@ -1,13 +1,19 @@
 {
   "program_id": "SV-COST-MAJOR-GOAL-001",
-  "status": "R2_EXECUTION_DISPATCHED",
+  "status": "R2_ADJUDICATED_R3_NEXT",
   "relations": [
     {
       "id": "R1-HISTORICAL-REPEAT",
       "question": "Does the original BL-001 control envelope reproduce?",
       "left": "historical BL-001",
       "right": "BL-001-RERUN",
-      "invariants": ["provider", "model", "direct unoptimized task class", "4096 output-token ceiling", "pricing basis"],
+      "invariants": [
+        "provider",
+        "model",
+        "direct unoptimized task class",
+        "4096 output-token ceiling",
+        "pricing basis"
+      ],
       "changed_variable": "execution time and reconstructed prompt payload",
       "interpretation": "reproducibility and historical drift only",
       "status": "OBSERVED_AND_VALIDATED_WITH_RECONSTRUCTION_BOUNDARY",
@@ -19,24 +25,40 @@
       "question": "What cost changes when only the eligible execution route changes?",
       "left": "direct synchronous execution",
       "right": "actual provider batch execution",
-      "invariants": ["provider", "model", "task payload", "completion criterion", "quality verifier", "trial set"],
+      "invariants": [
+        "provider",
+        "model",
+        "task payload",
+        "completion criterion",
+        "quality verifier",
+        "trial set"
+      ],
       "changed_variable": "execution route",
       "interpretation": "route-attributable cost and latency effect",
-      "status": "GOVERNED_EXECUTION_DISPATCHED",
+      "status": "ROUTE_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
       "governance": "experiments/sv-cost-program/r2-direct-vs-batch/governance.json",
       "protocol": "experiments/sv-cost-program/r2-direct-vs-batch/protocol.json",
       "workflow": ".github/workflows/sv-cost-r2-direct-vs-batch.yml",
-      "publication_gate": "both lanes must retain native provider route and usage receipts; pricing-derived cost is not an invoice"
+      "publication_gate": "both lanes must retain native provider route and usage receipts; pricing-derived cost is not an invoice",
+      "adjudication_ref": "experiments/sv-cost-program/results/r2-adjudication.json"
     },
     {
       "id": "R3-FULL-VS-STEGVERSE-CONTEXT",
       "question": "What changes when StegVerse manages context for the same provider execution?",
       "left": "same provider/model with full context",
       "right": "same provider/model with StegVerse-managed context",
-      "invariants": ["provider", "model", "task", "route", "output obligations", "verifier", "trial set"],
+      "invariants": [
+        "provider",
+        "model",
+        "task",
+        "route",
+        "output obligations",
+        "verifier",
+        "trial set"
+      ],
       "changed_variable": "context representation and transfer",
       "interpretation": "StegVerse-attributable token, cost, latency, and quality effect",
-      "status": "BLOCKED_UNTIL_R2_TERMINAL",
+      "status": "NEXT_ADMISSIBLE_RELATION_DESIGN_REQUIRED",
       "publication_gate": "paired outputs must pass the same independent verifier"
     },
     {
@@ -44,7 +66,11 @@
       "question": "What provider cost is avoided when admitted work is reconstructed instead of regenerated?",
       "left": "fresh provider generation",
       "right": "governed repository reconstruction",
-      "invariants": ["task identity", "required obligations", "admitted artifact version"],
+      "invariants": [
+        "task identity",
+        "required obligations",
+        "admitted artifact version"
+      ],
       "changed_variable": "operation class",
       "interpretation": "reuse economics, not platform inference equivalence",
       "status": "EXECUTED_DIFFERENT_OPERATION",
@@ -55,7 +81,12 @@
       "question": "How reliable are the measured effects?",
       "left": "single-run estimates",
       "right": "repeated paired trials",
-      "invariants": ["relation contract", "models", "price card", "verifier"],
+      "invariants": [
+        "relation contract",
+        "models",
+        "price card",
+        "verifier"
+      ],
       "changed_variable": "trial instance",
       "interpretation": "variance, failure rate, retry burden, and confidence",
       "status": "ACTIVE_WITHIN_R2_TEN_PAIRED_TRIALS",
