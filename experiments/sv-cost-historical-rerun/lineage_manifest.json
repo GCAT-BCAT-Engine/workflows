@@ -1,0 +1,46 @@
+{
+  "lineage_id": "SV-COST-LINEAGE-002",
+  "status": "PARTIALLY_REPRODUCIBLE_PENDING_OP002_EXECUTION_PROOF",
+  "historical_runs": {
+    "BL-001": {
+      "role": "direct-unoptimized baseline",
+      "provider": {"value": "anthropic", "provenance": "reconstructed"},
+      "model": {"value": "claude-sonnet-4-6", "provenance": "reconstructed"},
+      "native_total_tokens": {"value": 4169, "provenance": "exact-retained-summary"},
+      "observed_cost_usd": {"value": 0.061659, "provenance": "exact-retained-summary"},
+      "latency_seconds": {"value": 52.5, "provenance": "approximate-retained-summary"},
+      "exact_request_payload": {"value": null, "provenance": "unknown"},
+      "exact_prompt": {"value": null, "provenance": "unknown"},
+      "max_output_tokens": {"value": 4096, "provenance": "reconstructed"}
+    },
+    "OP-002": {
+      "role": "optimized-route comparison",
+      "native_total_tokens": {"value": 4169, "provenance": "exact-retained-summary"},
+      "reported_cost_usd": {"value": 0.0308295, "provenance": "exact-retained-summary"},
+      "reported_reduction_percent": {"value": 50.0, "provenance": "exact-arithmetic-from-retained-summary"},
+      "actual_batch_request_receipt": {"value": null, "provenance": "not-found"},
+      "actual_route_execution_receipt": {"value": null, "provenance": "not-found"},
+      "classification": {"value": "ROUTE_ACCOUNTING_RESULT_UNLESS_EXECUTION_RECEIPT_IS_FOUND", "provenance": "evidence-bounded-inference"}
+    }
+  },
+  "rerun": {
+    "BL-001-RERUN": {
+      "native_total_tokens": 4239,
+      "observed_cost_usd": 0.061869,
+      "latency_seconds": 59.588793587,
+      "stop_reason": "max_tokens",
+      "validation": "output-class incomplete",
+      "method_status": "BEST_AVAILABLE_CONTROL_ENVELOPE_REPRODUCTION"
+    },
+    "OP-002-RERUN": {
+      "status": "NOT_YET_EXECUTED_AS_A_DISTINCT_PROVIDER_ROUTE",
+      "permitted_interim_operation": "Apply the historical 50-percent route factor to BL-001-RERUN only as a labeled accounting replay.",
+      "prohibited_claim": "Do not describe the accounting replay as observed batch or observed optimized-route execution."
+    }
+  },
+  "gates": {
+    "new_route_tests_allowed": false,
+    "condition_to_open": "Complete OP-002 lineage as either observed execution with receipt, or formally classify the historical value as accounting-only and publish that boundary.",
+    "cost_analysis_2_allowed": false
+  }
+}
