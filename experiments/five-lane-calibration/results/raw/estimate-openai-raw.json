@@ -1,0 +1,108 @@
+{
+  "id": "resp_00da446be831683b006a701e4ee4d881998df09cf1973f494c",
+  "object": "response",
+  "created_at": 1785732686,
+  "status": "completed",
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1785732703,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 2500,
+  "max_tool_calls": null,
+  "model": "gpt-5.6-sol",
+  "moderation": null,
+  "output": [
+    {
+      "id": "rs_00da446be831683b006a701e5018488199aec010e9b40dd861",
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": "gAAAAABqcB5fj5IFPv30c-6-pGsD7lqmgZHjJ_88YtPEiXzfaUwU4rCfV-1neyg-GFtgtkF4213ti6iN5mlhtEypjex9_9ihd7DhfMWCUwuwdBpwC3kCsvTEH2jG2rX8-5ur1dzE0pMc3snq_dWP2BXoAEPqUAjQQavkLflfyCQhaFp9q-Av83xRJvG5XAN-2Ug8ZtRqHFYKwrdWEoOa-7iQa4Xx31QAKQC9YZW9GjN5Bg9pjB5bRbGIFhOcGJpeO_nHjzmtILAI5rPegebQvh5bjy8_yTpldW-lrP1R2w-mhBymMREP3lu_tfRHzsMAGg4KVelJSZIXGvOFbGHl7dsMaVTqXl3GbN5faYjqYBZYO5lAHlzgY3K6SXWw4gPh8LLADGz1O0p-mjktGibwfvy4On5hPjdloZtV0-nYe4vQhMemcx0BwzhgxX212TIYpNNRqBrsSsZ7RzwOGTgCMsBRRfKGcr2zFq18atOZ7sufAxL_McLeEgPZAzxq7jI171MakJIg4j1rq5s4BoedjqkCsf74d7GkNHqF57uHuB0y-EZUerLbio6OlQoY1u9x0DjRBrwKCR3Me3UNM_9F-bGHmORdThAqETY6MrdD49zl9lvYAS7NXogHaQpNwke8VxTS5OBLGKCRWzdvj5FLXA59xIGkyWm2E3hf2P293_8jrCz4ysH9akVi7qMPveQU09jjMv5SWC_Jcy91Bz5DFddtBi33e9NXd7sjB69FnoA3VoJ7yHVRh80RO6XE7poYxU-u52_SnUHqB6PB51tYYtOobiM8LUpjS21DEAR_yjmN7IfNiTz7bm4nHlVeWX5uhDVJ6tAsSIyPNyqysbK3DPJVcE3NsxLssWhi9Q1n76sZR5W0fuJQwyb80Dte38OoZeIs_cwO1rNr6jYg_TBZN0Zj6aQhheQ59HM8bgsMwujJFvV7rjvU0QrUSueDgAA4IsCH4HVhJMPzwHNLljV2qR1kNiTLbs3pCMtMhsV_EhuoTUyh2YkM8Oj_Z2fPNLWK0mfaDT15herfgIpk4g_xaE8kG2edz2rVxkH7vtiV-L2DQaHd6zm0oCUbbvOe_7fWpld9qL6koFanIXlMIiPAjSkqMEH5B4ag4jiTPf9f1ZWbfJdb2L3-4fK4csj5Bo2WXJAAhjxlOJznnfvd7OgS5YiDZYwTB42D_6XH5NpEvhrWWYJYoPb1ndv4YZO4KsfHQUBi5s-wzncbgcfmPDaNvvep-lvdWYrJ3XLXWlT9zJUa2etdNgo47wmho1lad73gfBWdKFYghYn_k6KXhJan818FqZ0ZPGmsL-aknkTFtXSJCsQayXJ2hDwXhta7WOXXmH5y6AfsgVkhwtKKEFVb2wNzvd0gBa-pzeIlchBzECj108ryP6-nj8JywqImJhPOUODp5gLMkBHGE-hAWGUoOr9kG5mkva2D234vZLpqxC4pZoiV2P65LdBSAlH4DOj3KgbKCu0JPrzVfzgtFAY8DvWGD3isNPwVLVX3AkbP7HkecDj7fHmxx8hVLwFBqUAWozfLBj6NiOrn0QozlJj20BIACaUqIYjk0zBB5uKjc4QoCyU7ajHSDx_CtDeEZaKXQIAF3byfZLP0wMc68LKrNnWh93JyAnN1S50EecljqTjnJJcDJfjfb6q_iE2lAzu3FVEvOw8r30tTs45toqrcPkNQnsFtlOnrjynCG72xLspuXl0GaUVm3PeJfmEt7jA5ElFDQsJnnt5swcwnh94_osqVbQJACRbDMclkVOvLVW-3tAkjmcPvVLCKApiWRqjpTkYEp1wdTe_lDaGFvmY0YZP0WImyqA9DPPqqylxfMedstGnCD9enpqQf8zzua3e4SFsl-9mMYKhhaCSRT4m5cY-uGrQwFwe6u6k8fwcMFh8C7QHSVBhlMVUawlKbqh6_hemxOG3GJZ62WAUzapRfgM19JZBxXYA2_ggwz-XhRl-PpBrXRG1l0DKeW20vHi-hrB-NYUO3oq8sQMI0dscMjQDFX2Q06XYuzhjE1cLUH48U3RcpJ5krZjv1TrrOwpROyHZt_TztzUfPGjh3WBRyXvhQcy_Ts8uBJkVn2JYc1fel236Tqa6ZQQGzctEOSAzRAQ1-3t2b9ZSk8S0B1966k-eSWcOWTJHjYU5aSXtzrTBAblAgrzZ6f7oflL382Hn19_7mwlAXC_FQ7-YH5v-7mwIIcKDhpn1Ej--kfBpq0k1_a9_tSmCsTRwZ0z_OcmxnajQMpZk9JM2DncgOejVLIW5NEoJz-UDafKck8dwnWiGfAFnxsrEqWBpJ_vPGy3X8jz4Tf_QetqVUtoSj9qn9pzxKIuughiuCyVM0buSz-64JiLmSBG-sXEc1Li__qkm3w4EegYcGqx78sjgDD7GWytXCBhaHuECCuwcm5pMARdWTGSfzL5Tf-Xq-U_qYddVzUKr8k-KZdeF37m83yP7LtSr-8KqThs1oQTeFHNdGLxgHGgSqQ0QBGYCY1nkUh_mcmXrZbpKBedLn7Pe8D5UjnnKvApweMBGlFo_EzFz66vBc3VSVqK_TjMKMLlBC0Bbwe0P-FHLnmqUnKus9nDwvqhpjyRwMsprBqPP5ediJHh8QsBx9yBItLYamujrdhICqzbCwfM8n1K2Xk1DEL78pW5yxpOlIHHrDPzzkd4ftA4E2JNWEkbfrzNlGpMKAw5reiXAmCOQ5_dwNDk6udQfGdFDef7_9uCMwOdeiTQgncHVlEwuwItMfBGwQfgGSoX8wnx5Nee_H3Y4kxfReel4UKn2MYd5_wnEqDinHS03ddxGtOPMoogp0ehWoz3FYadrnUu9DeUK51SuXpG-4b5xtE04zerka3vJAfDjPm0EZI7NzDRoeyF1OCooP9KzAlr-7zj-ygfVI7_jlE_yebq1bY-wlP2jpDzslEmNifCAT4i43oJslYZ9jD8W_pIb6XsxdFfKs9MsmyFd2exZt7dNaCodQIdqgiasR6xlB226OByN5BETaJY895f1kLM0kvLZowXFEC4BHK1BRreaCDfWXvxOc27lcCcFZB0Y9d4DnYAzB8TkgqKuV4fUjoLdUo8iQPKcBZ9IDG3-anizN51sXINCJJiMXEX1CQE3Op_crgc2WxxB4oLX7R5FGux3Kw1j9dHkH-IREHxP4i0BSWZMV1Bsb3_lhrZvKbN3kTydNizx4kLQCj5-imRsAUP_WnXJ5dmLjQA__H7KoEXlQr3urj9IxdOxmfTFzogKSNnS-LkFSAj4Ho5z_BzCv6O_JBsElndoFQbbdo5B9qkn931lkr61uttIzpSAGLjBKrpqyZMJPbV4xPNsHywuYVZxuWKXvEY2mtBqtywttiiQJPHKgNGG9ekuDuic8Bb0d8kJT8Ta6QUXyvXmDiedRHv-w1UpRCun2WllQ_LjrtcO2xBxAJoYWhE-FfYWlvTgCfOdmjHQbh5ApbKouze5yKpULpkA4rYB5YjjlB_NHmTsPiOYr0qhPXlT2phdC7NDM5NMDaMJjV8PPFVF-dAO0543oLnM52AG_nqPfQTXdRhftVJ8BA0DLFLDKlYr_EvJ735P0xNJxGR_AqTfYGmLyO97sbCQyE19KxV452mfZ-5DZ4ZrQv91QenQL6JQgKSDZ93na5zf1YIuadAwyFPepHzwY0gldtWkE6-FEIeHfWsTNxMQiEE8W1ae5aR9HLjHaAAZ40Bz8Fa2rRxLVY1ilh0CC4s-JcKNBLsYVaqlVnMQGVYCknrF5N537plYkMCieuh-zJ1CkE9yzqwIWn8x0gRbN5_fXprFUyjEfjD4uhM6a5e1IZYnr05aXmy7RZH6N-QLQbaFTXDQqwEYT6ohRIWofVyLGrMGp0Exh_wv5BZPqXaP8ABjlhIeP4JMVVcniWOaj4qmlxgECPNoIj3jyYWx9DYOwDPgD3qv6Dh8IuJw88U2As3n3XUjWCssCk2ge9D6cdA74neHk46B-VI4lBgO4uU0xZ2uJaYO8DlOQHMZ7a2YWtAVUsalWtjzNkn50KWkXMrfirLOAXKV7RPGcnfuycdgCSKExy2Hg_T7rcxGG-l3gzMfb1G4yXi491lU-aE0vh6LZRr-WFT2ynesmf5AlaH4FYzS8KhO_jsHEQZYidflENFSTAaJjh62NHAEQjrDzl2QwpvjAemP1cAVNfUxvpTg9jku5qT4JqntX",
+      "summary": []
+    },
+    {
+      "id": "rs_00da446be831683b006a701e577d5081998c938aa2b9bc330d",
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": "gAAAAABqcB5fxlcPeFNYwls9U8AbJM7RJWq016SUfeHyf0DkOswYzUUFQAZcKNpY9_0iZEujD7rBlwyPAYGQXE3YEQLrfm87JIPxFaUjhrDR_hgyhFYwqe-RgvcJnmw3zC_31_rNV-De99WWBrm4x5w8KvyZ2g60OQ5q0uts5aLBmaX2BmQ3pNw6b2ogvtPQJQ2o5Slb57hZHR97id_LhvSJW1RJF1tvy6_bdRa1CMQP89NLBvYFusMfAlegAZe5G9nFmD3njlBoty6VVnMz46uZrOZA-taG6iXHCTIjoMlRsAUept5zCrbIVLrznXWW4OgY92hK9dRiXkE8lUupErcZlNXjlA1_3lXdn82jG8CKGUS-UxgcG8IavEkj1oN0oOvoGCGnqAuV9qixhuC_QElDAmR1lonH2jMAjMkp3jwb9gFnzr0kBPabCKWGe4HJYvGmflL66-6D-btOCNgUc5QGIu2FEf4kzDL4LuEKN-M0plFmPE4rkVa_Vf9QB1aNbwYhpO3vyM-SvEJNLJniPCBG_mTVzyyGxi-OBfRjfJ3w9lIyo6d9NQKJPN04Y0NH_rahlwDZtbNiOdpY28Kmwy1cKcpVhf0hmF717Ocz3Si7IWIak2eZh63eVaM2pzkGy87oUDNeJlHxKFoEQPdw7VE_WSRE7ZnqgJS4uXK79UEFFRLrtZHVGDYr_LD2TzWh6QhD8KNlNyTe0axjyIhlLtrU9TGRZuMkfwCo0hvIvy4k4NAUas7SCSEyJn-S4JD_yDfkii6WxTMzSQJZ1e81nHgb2F1B6Yh07y5EcfGo1idpAFZDQVQmWRuloOFiAUUVvUE82ouqwsvSgkjW0orqHDAVlcOHXcangLimBpZhFdhhzP19TUmUwelzkxuOMLYCOW3XsdQTvh2mR0VOM0JHrxsKIBgUz4leUToMG3Vro3L0GSZnCi6wM9v-5gnJ9pKbmt3pVnAp5xK_TUCG47upwgHto3-z73sGAQkPmiHhn3ZAtNq2N2FZvhjNDac8lGzkOwWPtsuGwVpTxNcMV7qY0B41FiwsI6-upea-zgnZtLxCsuy2tpj2GW8o1MIrD-1OL8kVh_sSle2WeByaAlo_N8NKzSdlWxdQvswe5EK3JZ5L0754ONnReps-PvZP9X6Fi-j-tyTROzjyK2vqKqBAOiskxZUzuokm8whQamkDbCxYZC51PrUEWkke1b_n2jQLAPx9hqA6BuuC_-uqZxgvhDl7FNFgNkyWnNFc176MEexxrJhngvxrSWsrx1s-m5fpo2LxKUzsA6veNP4m3__x_71j-fayuRLzh8mMRzxWsmjD8hLIpbAAU_ZnBpsgb0LOIRmmBaDsXgNT6vaCtVrGDnrAyNeEPDcAQzTgpWGAZComP7XlxXgoGC_7RoF0Ot01G9e8MW_6ib5Jqs1DP-P7hVmM8baL7lm-Ia7O9N52IPKYLifY0D4czBIDzQJVqShfXaaTsP2IbotwDa3h3nhEaMdAh3wqS_Hyr3ILxDVomBQL5QKxb0FJixX8k_ny0s-BJtL8tP7m5cWQKcPs1wMDb8OS7EMXWJ5KeVtLoZJrXciWcS5ZWTLexmAx8-KJxQLv9Dtc6jkFUsrt02bu93AT63-wxzY-M3gyPrgP3Bf3ShLCCQ6RIFsPRPeYWtiaLjb29eOSvz05COizBO8l2a3X4DDxl6GGHlsIZzf6OWpNiPhrSiFIuvbrQy3-Pn3BEtZTOLLcF32JzysD3-pUdkWOc3vZgfpz2lj4NQ==",
+      "summary": []
+    },
+    {
+      "id": "msg_00da446be831683b006a701e59592481999c8327d818eaac67",
+      "type": "message",
+      "status": "completed",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"estimated_input_tokens\": 10000000,\n  \"estimated_output_tokens\": 1500000,\n  \"estimated_reasoning_tokens\": 8000000,\n  \"estimated_branches\": 32,\n  \"estimated_retries\": 12,\n  \"cost_low_usd\": 500,\n  \"cost_central_usd\": 1800,\n  \"cost_high_usd\": 7000,\n  \"elapsed_hours_low\": 12,\n  \"elapsed_hours_central\": 48,\n  \"elapsed_hours_high\": 168,\n  \"success_probability\": 0.04,\n  \"assumptions\": [\n    \"One bounded autonomous attempt lasting no more than seven wall-clock days.\",\n    \"Up to 32 proof-strategy branches, with 12 recovery or revision retries across the run.\",\n    \"Token estimates are aggregate across planning, literature/context ingestion, proof search, critique, and verification.\",\n    \"Reasoning tokens are reported separately from visible output tokens for accounting purposes.\",\n    \"The attempt uses frontier reasoning models, retrieval over an already accessible technical corpus, symbolic algebra, and proof-consistency checks.\",\n    \"No new experiments, bespoke software infrastructure, paid data acquisition, or human mathematical labor are included.\",\n    \"Cost estimates cover model inference, search/tool calls, automated verification, and minimal automated governance logging only.\",\n    \"Verification and governance amounts are components of the total cost estimates, not additions to them.\",\n    \"Success means producing a substantially complete candidate proof that survives the bounded automated verification pass, not publication-level peer-review acceptance.\"\n  ],\n  \"uncertainty_drivers\": [\n    \"Whether TA-006 requires a genuinely new quantum-information argument rather than recombination of known techniques.\",\n    \"Length and quality of the available formal problem statement and reference corpus.\",\n    \"Frontier-model pricing and the treatment of hidden reasoning tokens.\",\n    \"Context duplication across branches and retries.\",\n    \"Availability of machine-checkable intermediate lemmas.\",\n    \"Difficulty detecting subtle errors involving entanglement, operator inequalities, asymptotic parameters, or quantifier order.\",\n    \"Parallel execution limits and external tool latency.\",\n    \"The operational standard used to classify a candidate proof as successful.\"\n  ],\n  \"verification_cost_usd\": 450,\n  \"governance_overhead_usd\": 50\n}"
+        }
+      ],
+      "phase": "final_answer",
+      "role": "assistant"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "context": "all_turns",
+    "effort": "medium",
+    "mode": "standard",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "type": "text"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tool_usage": {
+    "image_gen": {
+      "input_tokens": 0,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "output_tokens": 0,
+      "output_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "total_tokens": 0
+    },
+    "web_search": {
+      "num_requests": 0
+    }
+  },
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 131,
+    "input_tokens_details": {
+      "cache_write_tokens": 0,
+      "cached_tokens": 0
+    },
+    "output_tokens": 1136,
+    "output_tokens_details": {
+      "reasoning_tokens": 657
+    },
+    "total_tokens": 1267
+  },
+  "user": null,
+  "metadata": {}
+}

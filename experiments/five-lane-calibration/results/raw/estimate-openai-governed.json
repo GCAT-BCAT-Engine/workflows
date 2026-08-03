@@ -1,0 +1,101 @@
+{
+  "id": "resp_0b25e119015169f0006a701ea357a4819888ac1a3d84b007e5",
+  "object": "response",
+  "created_at": 1785732771,
+  "status": "completed",
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1785732790,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 2500,
+  "max_tool_calls": null,
+  "model": "gpt-5.6-sol",
+  "moderation": null,
+  "output": [
+    {
+      "id": "rs_0b25e119015169f0006a701ea3fb1c8198a42cb70591e7ce61",
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": "gAAAAABqcB62huQFamNK3U6cT3XZ8v0igPIOPHyQC825huW9pom3Dhe-Z2QfAz4oTAag_ZSWyxMAuiieMxvxIK4QtnXXZ8_HHPRUwsTy8oz5ngyKtgbUUTj0TUBMq8UJsv6SDn-dwoRuKY3hGWkCHlEE4V-UXrx8X5v8_sorrPbSBSh4Ub2dNNpHpIpWgKQAT2U_Oz65ifEntXKAzuArXB3VvAWEQuG0U2lWiWLP-CqRS0kSyINRudXf0KSrR5cjTAONPZTQF_XGjRsEW3ypYCkrRqyQWNW238CFohcKXp2WcZ1FwreELq73ujiI-rQnce0-yOUduFrPcat0eZVuNQjVij6G-gCIyFC_CgWZK_kIu_9fnewd_fEOO_dBJGQpuLYqU9RsD5Ckm_0cRjY-YJv3K7XTpX_P5s8QhbsXpuw3D_3SiwkRsKGHEsK7tHNNdz2L-oBEiBGM51KwwH2YLH9D0-tnlPL5iyB210lq7zV0JNORkcSgrCz7bMW8e_ghSI2lCXR5bsW45ls5mrCB_gEP2q-r8Q7Pcm26oq0Bk_TlD8HxaatVyhx_Wzl6elYdyg3h3N7IJjd9VzdekmRiF1Io0oDGTtXNKpLA1Rj1JOr2Bdb6_LWsjIwOGqiYGBABI82jvbtFzjnrkYCtFoRKPj1HeuYgw_MGUauXKFsjFPjwh4UYNwInNSle1p59Ii_8ZaFrSic9wJfQ98_BsuoedecNwn1Bsn4QMtSTtrMfMvYARDHizeOhXDl5K43SDryyaXrpqqvRNV2FFqUAgOauIY6vWlvJQS_kM5painQ4hLuyvfRIbVCytL8yOkobejuxZJ2uqk0svJJlW_t7UnwmIeOEYkrJqj6fT5JiZXqP27qS7uE5JQaJS0WCf8RRbkWm_hW7mAKATY6ng-ZE4efSJgfCziLagEgWd4XloGtT2Zu8ixguzSywCYyDQGN1IAy4wtdNGRpixezpBwlb2Z8qecyaKVivPMvS1Td5oL3u8GXe0tmWk3b9zwl1llq9X0v8fDa1sh6XdTQLzpXn9alOTIgk4_VxmhvgJwnHztdjOkI8zqWzHEMDHXounKIDUUmVzc7jga2CZvdMxb__kdPs-1t7zguCD4PyfGg9tnnRIeYQOWAyPthG5H3yb_cg6y4BKxIVaVEdYyUVCNF95hV38rM3C-3DHO0UMD4ZKpJDG08HNmYRUo6K6Y7iU_4EdGvcmJZrAQMWdVzEABwHffN4aNS3S9YmfAU7_sD8Dd0Nc5xsLYrXzFquGtd8q9bHr1cY_rn73P_WOjiZA478S_HCCbA-L37YhHmHEnhClL8q8fsEDaR0lnVDVdNbwyYxRk5r725vTNCkkedTDsPycR6Nt6einEwu18g2X9u9jPnKJJoP_u1BnQlAbO4LHtmkPBVEl2jFOVqtaR_tAcekkPLMSSkj7NqmnzC3rSkF97GIKf3k95UYOk-Tu1Ay1Id7bzIQcUi123ZIk4wuKG1tl_2arrCRPgoQgwaRJpytPonRG9949nvzoC0D2rLDDZ_DQfXWdfRTbMp9Gh2O-zWqgXpSkpGxLS8Bq_u0Vh8mZbonqoJv67C3HwWRTR25CeYEIN3S-JF0c5uTi7C92SuBoLFxwHVNSbVhlaDYuMHL71T2GX-MT-u3DbVamFZ2IfqiWHKOdKBXLYpWPz4hKK7wFPybLKzNIJaaR01WTeBmNvO6Ouo4YRjf9BHh4uG7kaynBwVJaMZl1UUk8hqRyr_GuRSVvTJptBBUuPmgp8jnlrcPKr_XEZiOQo9knAU7oJgSc3X9O0bnJIRnEB1_x1BtrsGJEldzaMX-if9ZGCv7ruMqdZntS6yTiK0xR3TSupgFPijmjOvJNuvvHzL7aXY4Xm8Pq1aOu_Yd4ql-5SrTsbl9LnWABwftyOM9W3G0gDbOkX8hVyWsU3gvRqGrqcuB-x-Lvr4D4u5sVAYU7nZzLB_tb0PzIVlkm1coZzy-W_eGw4IUqNxO-uIvMjI5iAN3Lw-cfjdf26zWZdClTkj_wliLGAdEW2_Mb-vXdel5CXU_-27Q82riJA4FDVuqwknNG1hMTHuQTj9Zj9LhYJU888-kKhEtIBvRlyiLzdMYX7Dh7k1snOpzFnuO58Yzt-yy1NZq4ymD7_GxrXhoQHE3rz342O3DpwdkfXQsSPPHhUpl1NhWPpKxmJqScRR1ANvQ4zorPiWEBIJxP7E5kZlYRwzcjPUvsMqEripuNEtmVJbLCvUGY_LkkNbPz-1eLHSyMh-L5bEIgFc5lL3_XO2fWMmNxSnd6w_y52ZVViYnKQ770a11EYmlxk8bcmpP7nSIDhNiMgZH7JxlmfxEStdH4u6K2V92XUb4qz7Ebr5YqMRnxo_Gbs3VOXtvIyC05hutDvc3EYECqgbNdv4aD62XJ3U8pOgWHTxZKZfj8RbMBfb9PpfFTwuddSyZVxbgitYfiiZOjlinKdqhzxbU8XCZwCNrpYYQ2VFcsklCCKFCTAlxbCirbOvMfzk9B6faSUsT-nsCTqjAtYv_pIG_k_FOoukHGJJcbBs_8v_W0VC5Qr95PiSidhTPIvX654uxl4vzWZpl9WkUwdnM1-lgDhsrehljTE527GuIawcQ9Jpo5Xaw87db0gSDy2l0LY4ljs7v98NF2txCkMEpGq51AWHNSU1M2liScGDLjJLAGaITWo7VNUxLfJW2eIQ1qdaqbl8lbhlb1nSUJcnp0sL3XKlryAD7u13dqUbxcpmH3moz4m9hsvEbVbeZZS0pYsBmwBbqQqd8NwNp3o54kJ-oV2Db23S1_zasH3WJP39agL5ju97sUKaW5zh7jxqtDsU0neRZl0Ky90f9PG7Cml5izzkYEN9nn8ZwcCXwv8t4CCfweT5SIBB6xYLQlASu05yN_g4_s8DtRVesZf9RxaXl1HBcLvDIqM12Gc_ipfepk3fDkyMDDCPS0CF4XzNcTC1j6VzTFuTiFVDmo57SwDRdk5dhs26zAQHo0oebFCU0R12G0OxNQ1T0udt-5mCpt_GDPv7pCTVE6Jbryw_MOTLLgJRMmWATxT_qfjYVOBD5267E4OeKp9iEV1WHZMQuA0pV-dSfVwdlAwGkUmY9kc2dVLpeue2TyDA7LAekGySj6p_nuoodajLgCNetiS8hNN63nz1SJrjvkUsUgFMTR2PQdK0_u7rqxmCD_oR7sXqLn-aIokckBH23nWj0Rw2JVOw15pJdnb7XIz580Pg2s1Lv1x37yCn9lgPbCtJjjHufKklw_L5jecka3TPc9fxJNPRB35gqqxVB2P688wwNjWjuTZJdQDKMm7xRvLUQVDJynQ6wtOgIPqYCLJ9EdMRhSP2tp0S5BsecNzAc-0m_0Q7h-ZEjQlL3T_yzddSwd7Wtk9NF2ORaXmlUnLmNtuHLmbZCqh3N8hVD-ES2lYRGmSYx_nPJRFIPeYKnvR7JZOljTHWrvP5BRz_bsqRxz6OTfenhJlqAcZLUyzCfU5x5Hpe1-iS6eCWZRlPWLt-yzlsUiXWH95fVuq9Fj5TOU2Vj6GYCueb5D3ebeoPXh17VHOKigoZnmmxLjazfYF6oTPAC3z63UMteN98TGAA-gU7jd-kcGD9PLzKCZt8bjWagnGo424FBGJhNquTl6A7AkNQEs9d01Ho9y8QT9gr0P8XOEVlNKYim89XOaBauIV7BiONW8DSrLQrdfCKUhM1Zb0yO4S4RPQy8f0Tsc209DZC8Q0aKJ4hBaWOmrX7yFhnSQnsne6oad_dvVCk53eRCDtmkLWGIRQa4mFvSJ66yYGkc54lqARsjKerRWDxlmv-VOXv-7BLAZeGPRXG3HXIiZpn3udNRG6ZCH-JCZkt66eaFvX8_",
+      "summary": []
+    },
+    {
+      "id": "msg_0b25e119015169f0006a701eacb8d481989cd777599cda0353",
+      "type": "message",
+      "status": "completed",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"estimated_input_tokens\": 12000000,\n  \"estimated_output_tokens\": 3500000,\n  \"estimated_reasoning_tokens\": 18000000,\n  \"estimated_branches\": 64,\n  \"estimated_retries\": 3,\n  \"cost_low_usd\": 900,\n  \"cost_central_usd\": 2800,\n  \"cost_high_usd\": 8500,\n  \"elapsed_hours_low\": 36,\n  \"elapsed_hours_central\": 120,\n  \"elapsed_hours_high\": 336,\n  \"success_probability\": 0.03,\n  \"assumptions\": [\n    \"This is a generated planning estimate, not a verified measurement or a claim that TA-006 has been proved.\",\n    \"The bounded attempt targets one fixed, precisely stated quantum parallel repetition theorem and does not include broader research-program development.\",\n    \"The attempt may search mathematical arguments, test formalization strategies, and construct Lean 4 proof candidates, but terminates at the stated token, branch, retry, time, or cost bounds.\",\n    \"Token estimates are aggregate across all branches and retries; reasoning tokens denote internal search or deliberation tokens where separately metered.\",\n    \"A pinned Lean 4 toolchain, theorem statement, dependency manifest, and relevant finite-dimensional quantum-information definitions are assumed to exist before the attempt.\",\n    \"Costs cover model inference, metered sandbox compute, automated checking, and bounded governance instrumentation only. Salaries, institutional overhead, procurement, and unspecified research-program costs are excluded.\",\n    \"The success probability means production of a complete candidate that independently passes the stipulated Lean checks within the bounded attempt; partial lemmas or an informal proof do not count.\",\n    \"No Lean execution, proof replay, dependency audit, or independent mathematical review was performed for this estimate.\",\n    \"Lean verification would require the complete source tree, pinned Lean and Mathlib revisions, reproducible build commands, successful clean-build logs, absence or explicit audit of sorry, admit, unsafe shortcuts, and undeclared axioms, plus confirmation that the encoded theorem matches TA-006.\",\n    \"The cost totals include the separately reported verification and governance components rather than treating them as additional charges.\"\n  ],\n  \"uncertainty_drivers\": [\n    \"Exact strength and formulation of TA-006, including whether it is known, open, false as stated, or requires additional hypotheses\",\n    \"Availability and maturity of Lean libraries for operator algebras, tensor products, quantum strategies, norms, and probabilistic inequalities\",\n    \"Gap between an informal quantum-information argument and a kernel-checkable Lean proof\",\n    \"Context-window size, inference pricing, hidden-reasoning metering, caching, and branch-parallelism limits\",\n    \"Quality of theorem decomposition, retrieval, lemma reuse, and automated proof repair\",\n    \"Need to formalize missing analytic infrastructure before addressing the target theorem\",\n    \"Risk that the formal statement fails to preserve the intended mathematical meaning\",\n    \"Frequency of nonproductive branches and correlated failures across retries\",\n    \"Hardware queueing and wall-clock variability for parallel inference and Lean builds\"\n  ],\n  \"verification_cost_usd\": 450,\n  \"governance_overhead_usd\": 180\n}"
+        }
+      ],
+      "phase": "final_answer",
+      "role": "assistant"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "context": "all_turns",
+    "effort": "medium",
+    "mode": "standard",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "type": "text"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tool_usage": {
+    "image_gen": {
+      "input_tokens": 0,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "output_tokens": 0,
+      "output_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "total_tokens": 0
+    },
+    "web_search": {
+      "num_requests": 0
+    }
+  },
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 178,
+    "input_tokens_details": {
+      "cache_write_tokens": 0,
+      "cached_tokens": 0
+    },
+    "output_tokens": 1136,
+    "output_tokens_details": {
+      "reasoning_tokens": 473
+    },
+    "total_tokens": 1314
+  },
+  "user": null,
+  "metadata": {}
+}

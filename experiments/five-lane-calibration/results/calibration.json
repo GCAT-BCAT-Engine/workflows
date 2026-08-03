@@ -1,0 +1,66 @@
+[
+  {
+    "lane_id": "openai-raw",
+    "provider": "openai",
+    "model": "gpt-5.6",
+    "status": "EXECUTED",
+    "input_tokens": 82,
+    "output_tokens": 4096,
+    "latency_seconds": 100.98938703536987,
+    "observed_cost_usd": 0.12329,
+    "task_identity_preserved": false,
+    "output_type": "formal_proof_candidate",
+    "receipt_hash": "sha256:5ff867c1efd47eb7630cfefdfc4ef822467ab7bdaab479c8dc46ee47646aaf8c"
+  },
+  {
+    "lane_id": "openai-governed",
+    "provider": "openai",
+    "model": "gpt-5.6",
+    "status": "EXECUTED",
+    "input_tokens": 129,
+    "output_tokens": 4096,
+    "latency_seconds": 66.37639737129211,
+    "observed_cost_usd": 0.123525,
+    "task_identity_preserved": true,
+    "output_type": "formal_proof_candidate",
+    "receipt_hash": "sha256:f99a24b45b2c30a02bbc4bb7e210356a58b82e4c2830acd99d6e58f7314285de"
+  },
+  {
+    "lane_id": "anthropic-raw",
+    "provider": "anthropic",
+    "model": "claude-sonnet-4-6",
+    "status": "EXECUTED",
+    "input_tokens": 91,
+    "output_tokens": 4096,
+    "latency_seconds": 63.6347975730896,
+    "observed_cost_usd": 0.061713,
+    "task_identity_preserved": true,
+    "output_type": "formal_proof_candidate",
+    "receipt_hash": "sha256:3d87f75dda3b61ba268fa4493f7846cef0164dcb7108c8988a2fac17b169ac45"
+  },
+  {
+    "lane_id": "anthropic-governed",
+    "provider": "anthropic",
+    "model": "claude-sonnet-4-6",
+    "status": "EXECUTED",
+    "input_tokens": 142,
+    "output_tokens": 4096,
+    "latency_seconds": 68.3713686466217,
+    "observed_cost_usd": 0.061866,
+    "task_identity_preserved": true,
+    "output_type": "formal_proof_candidate",
+    "receipt_hash": "sha256:2294672c2d2f3c8298323fd2a24ef5c9563c91196bb9e5c91f71f653a703c842"
+  },
+  {
+    "lane_id": "stegverse-only",
+    "provider": "stegverse",
+    "status": "BLOCKED_NO_LOCAL_INFERENCE",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "latency_seconds": 0,
+    "observed_cost_usd": 0,
+    "task_identity_preserved": true,
+    "output_type": "no_generated_proof",
+    "receipt_hash": "sha256:55b74da90d71c94533fa91d06fa1ddc09fdc8188e213bf22ae9fcaed66e95d5b"
+  }
+]

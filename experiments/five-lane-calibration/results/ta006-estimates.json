@@ -1,0 +1,262 @@
+[
+  {
+    "estimated_input_tokens": 10000000,
+    "estimated_output_tokens": 1500000,
+    "estimated_reasoning_tokens": 8000000,
+    "estimated_branches": 32,
+    "estimated_retries": 12,
+    "cost_low_usd": 500,
+    "cost_central_usd": 1800,
+    "cost_high_usd": 7000,
+    "elapsed_hours_low": 12,
+    "elapsed_hours_central": 48,
+    "elapsed_hours_high": 168,
+    "success_probability": 0.04,
+    "assumptions": [
+      "One bounded autonomous attempt lasting no more than seven wall-clock days.",
+      "Up to 32 proof-strategy branches, with 12 recovery or revision retries across the run.",
+      "Token estimates are aggregate across planning, literature/context ingestion, proof search, critique, and verification.",
+      "Reasoning tokens are reported separately from visible output tokens for accounting purposes.",
+      "The attempt uses frontier reasoning models, retrieval over an already accessible technical corpus, symbolic algebra, and proof-consistency checks.",
+      "No new experiments, bespoke software infrastructure, paid data acquisition, or human mathematical labor are included.",
+      "Cost estimates cover model inference, search/tool calls, automated verification, and minimal automated governance logging only.",
+      "Verification and governance amounts are components of the total cost estimates, not additions to them.",
+      "Success means producing a substantially complete candidate proof that survives the bounded automated verification pass, not publication-level peer-review acceptance."
+    ],
+    "uncertainty_drivers": [
+      "Whether TA-006 requires a genuinely new quantum-information argument rather than recombination of known techniques.",
+      "Length and quality of the available formal problem statement and reference corpus.",
+      "Frontier-model pricing and the treatment of hidden reasoning tokens.",
+      "Context duplication across branches and retries.",
+      "Availability of machine-checkable intermediate lemmas.",
+      "Difficulty detecting subtle errors involving entanglement, operator inequalities, asymptotic parameters, or quantifier order.",
+      "Parallel execution limits and external tool latency.",
+      "The operational standard used to classify a candidate proof as successful."
+    ],
+    "verification_cost_usd": 450,
+    "governance_overhead_usd": 50,
+    "lane_id": "openai-raw",
+    "provider": "openai",
+    "model": "gpt-5.6",
+    "observed_estimation_call_cost_usd": 0.034735,
+    "observed_estimation_latency_seconds": 17.11666464805603,
+    "receipt_hash": "sha256:d15d4370f1e4d99504da88fe3a7b5a596b6e43cfcf57a6d3cc7cefc68758cef0"
+  },
+  {
+    "estimated_input_tokens": 12000000,
+    "estimated_output_tokens": 3500000,
+    "estimated_reasoning_tokens": 18000000,
+    "estimated_branches": 64,
+    "estimated_retries": 3,
+    "cost_low_usd": 900,
+    "cost_central_usd": 2800,
+    "cost_high_usd": 8500,
+    "elapsed_hours_low": 36,
+    "elapsed_hours_central": 120,
+    "elapsed_hours_high": 336,
+    "success_probability": 0.03,
+    "assumptions": [
+      "This is a generated planning estimate, not a verified measurement or a claim that TA-006 has been proved.",
+      "The bounded attempt targets one fixed, precisely stated quantum parallel repetition theorem and does not include broader research-program development.",
+      "The attempt may search mathematical arguments, test formalization strategies, and construct Lean 4 proof candidates, but terminates at the stated token, branch, retry, time, or cost bounds.",
+      "Token estimates are aggregate across all branches and retries; reasoning tokens denote internal search or deliberation tokens where separately metered.",
+      "A pinned Lean 4 toolchain, theorem statement, dependency manifest, and relevant finite-dimensional quantum-information definitions are assumed to exist before the attempt.",
+      "Costs cover model inference, metered sandbox compute, automated checking, and bounded governance instrumentation only. Salaries, institutional overhead, procurement, and unspecified research-program costs are excluded.",
+      "The success probability means production of a complete candidate that independently passes the stipulated Lean checks within the bounded attempt; partial lemmas or an informal proof do not count.",
+      "No Lean execution, proof replay, dependency audit, or independent mathematical review was performed for this estimate.",
+      "Lean verification would require the complete source tree, pinned Lean and Mathlib revisions, reproducible build commands, successful clean-build logs, absence or explicit audit of sorry, admit, unsafe shortcuts, and undeclared axioms, plus confirmation that the encoded theorem matches TA-006.",
+      "The cost totals include the separately reported verification and governance components rather than treating them as additional charges."
+    ],
+    "uncertainty_drivers": [
+      "Exact strength and formulation of TA-006, including whether it is known, open, false as stated, or requires additional hypotheses",
+      "Availability and maturity of Lean libraries for operator algebras, tensor products, quantum strategies, norms, and probabilistic inequalities",
+      "Gap between an informal quantum-information argument and a kernel-checkable Lean proof",
+      "Context-window size, inference pricing, hidden-reasoning metering, caching, and branch-parallelism limits",
+      "Quality of theorem decomposition, retrieval, lemma reuse, and automated proof repair",
+      "Need to formalize missing analytic infrastructure before addressing the target theorem",
+      "Risk that the formal statement fails to preserve the intended mathematical meaning",
+      "Frequency of nonproductive branches and correlated failures across retries",
+      "Hardware queueing and wall-clock variability for parallel inference and Lean builds"
+    ],
+    "verification_cost_usd": 450,
+    "governance_overhead_usd": 180,
+    "lane_id": "openai-governed",
+    "provider": "openai",
+    "model": "gpt-5.6",
+    "observed_estimation_call_cost_usd": 0.03497,
+    "observed_estimation_latency_seconds": 19.705182313919067,
+    "receipt_hash": "sha256:5fb026b96cb67378f87b7518cd5cfe7779cfa0ed02e0859cb364ca93a1c4fd8a"
+  },
+  {
+    "task": "TA-006: Quantum Parallel Repetition Theorem \u2013 Bounded Autonomous Inference/Search Effort Estimate",
+    "scope_note": "Model inference and search only. No salaries, overhead, procurement, or program costs. Single bounded autonomous attempt.",
+    "estimated_input_tokens": 2800000,
+    "estimated_output_tokens": 420000,
+    "estimated_reasoning_tokens": 3500000,
+    "estimated_branches": 38,
+    "estimated_retries": 14,
+    "cost_low_usd": 210,
+    "cost_central_usd": 580,
+    "cost_high_usd": 1450,
+    "elapsed_hours_low": 6,
+    "elapsed_hours_central": 18,
+    "elapsed_hours_high": 52,
+    "success_probability": 0.09,
+    "token_cost_assumptions": {
+      "input_token_rate_usd_per_1M": 15,
+      "output_token_rate_usd_per_1M": 60,
+      "reasoning_token_rate_usd_per_1M": 20,
+      "model_class": "frontier-reasoning (o3-class or equivalent)",
+      "context_window_utilization": "high; frequent long-context reloads of prior proof attempts"
+    },
+    "cost_breakdown_central_usd": {
+      "input_tokens": 42,
+      "output_tokens": 25,
+      "reasoning_tokens": 70,
+      "tool_calls_search_api": 180,
+      "verification_calls_lean_isabelle": 110,
+      "orchestration_retry_overhead": 153,
+      "subtotal": 580
+    },
+    "assumptions": [
+      "Frontier reasoning model (\u2265o3 capability tier) used throughout.",
+      "Autonomous agent loop: hypothesis generation \u2192 proof sketch \u2192 verification \u2192 retry.",
+      "Access to symbolic math tools (Lean 4 / Coq checker) as external calls; API costs included in verification_cost_usd.",
+      "ArXiv/semantic-scholar search API calls priced at flat $0.002/call, ~900 calls total.",
+      "No human review cycles within the bounded attempt.",
+      "Parallel repetition for quantum games is treated as an open/partially-open research problem; existing Dinur-Steurer, Holenstein, Bavarian-Vidick results are in context.",
+      "Context reload penalty applied: long reasoning traces require re-ingestion across branches.",
+      "Branch count (38) reflects distinct proof strategy families explored: information-theoretic, tensor-product, compression-based, operator-algebraic.",
+      "Retry count (14) reflects full strategy restarts after verification failure, not minor edits.",
+      "Elapsed hours assume single-threaded wall-clock for central; low assumes aggressive parallelism across branches; high assumes sequential with long verification waits.",
+      "Token counts are order-of-magnitude estimates; \u00b160% plausible."
+    ],
+    "uncertainty_drivers": [
+      "Problem hardness: quantum parallel repetition is technically unsettled in full generality; model may exhaust tractable strategies quickly.",
+      "Verification latency: Lean/Coq checker wall-time dominates elapsed hours more than inference time.",
+      "Context window management: whether long proofs fit without lossy summarization is a major fork.",
+      "Tool-call success rate: symbolic math tools reject malformed quantum-operator expressions at high rate (~40% estimated), driving retry cost.",
+      "Model capability cliff: reasoning models may plateau on non-commutative operator algebra without domain-specific fine-tuning.",
+      "Literature coverage: if key recent preprints are behind paywalls or not indexed, search quality degrades significantly.",
+      "Parallelism efficiency: branch independence is partial; correlated failures cluster cost toward high end."
+    ],
+    "verification_cost_usd": 95,
+    "governance_overhead_usd": 0,
+    "meta": {
+      "estimate_basis": "Analogous automated theorem-proving benchmarks (FrontierMath, miniF2F-hard), published API pricing (2024-Q4), and structural complexity comparison to Raz parallel repetition / Bavarian-Vidick quantum results.",
+      "confidence_interval": "80% credible interval on cost: [$210, $1450]; on elapsed hours: [6h, 52h].",
+      "what_is_excluded": "Human mathematician time, GPU cluster rental for fine-tuning, institutional compute credits, paper-writing, peer review."
+    },
+    "lane_id": "anthropic-raw",
+    "provider": "anthropic",
+    "model": "claude-sonnet-4-6",
+    "observed_estimation_call_cost_usd": 0.0171,
+    "observed_estimation_latency_seconds": 24.745852947235107,
+    "receipt_hash": "sha256:705f99bd70072190812f6b76f4cbd5a51585834603eb25609a10b39aafba41fb"
+  },
+  {
+    "task_id": "TA-006",
+    "task_description": "Quantum parallel repetition theorem \u2014 bounded autonomous Lean 4 proof attempt",
+    "output_type": "cost_and_effort_estimate",
+    "task_identity_preserved": true,
+    "assumptions": [
+      "A1: Single autonomous model instance (e.g., frontier LLM with tool use); no human mathematician in loop.",
+      "A2: Model has access to Lean 4 + Mathlib4 REPL with tactic feedback; each compilation counts as one retry unit.",
+      "A3: 'Bounded attempt' = wall-clock cap of 72 hours or cost cap of ~$5,000 USD, whichever binds first.",
+      "A4: Quantum parallel repetition here refers to the Jain-Pereszlenyi-Yao / Dinur-Steurer style result: entangled-prover parallel repetition decreases soundness exponentially. Formal statement assumed to be pre-specified in Lean 4 skeleton.",
+      "A5: Mathlib4 does NOT currently contain quantum information primitives (density matrices, channels, semidefinite programming duality) needed; model must build or import these from scratch or from a partial library.",
+      "A6: Token pricing: input $3/1M, output $15/1M, reasoning $6/1M (frontier model mid-2025 approximate rates).",
+      "A7: Branch = a distinct proof strategy tree the model pursues before backtracking.",
+      "A8: Retry = a Lean compilation attempt (tactic block submitted to REPL).",
+      "A9: No salaries, overhead, procurement, or unspecified research costs included.",
+      "A10: The theorem is NOT solved by this estimate; this is effort estimation only."
+    ],
+    "generated_claims": [
+      "Token and cost figures are model-derived estimates, not empirically measured.",
+      "Success probability reflects model judgment about current frontier capability on novel quantum-information Lean formalization.",
+      "Branch and retry counts are rough analogues from comparable hard formalization attempts (e.g., IMO-hard problems, novel complexity results).",
+      "Elapsed hours assume continuous autonomous operation without human interruption."
+    ],
+    "verified_claims": [],
+    "verification_note": "No Lean 4 verification was performed. No empirical benchmarks for this specific theorem were consulted. All figures are bounded estimates under stated assumptions.",
+    "evidence_needed_for_lean4_verification": [
+      "EV-1: Existence of Lean 4 / Mathlib4 definitions for: quantum states (density matrices over \u2102), quantum channels (CPTP maps), entangled strategies, and value of a two-prover quantum game.",
+      "EV-2: Lean 4 formalization of semidefinite programming duality sufficient to reason about quantum game values.",
+      "EV-3: Prior Lean 4 proof of classical parallel repetition (as a structural template).",
+      "EV-4: Lean 4 proof of Cauchy-Schwarz / operator-norm variants needed in the repetition bound.",
+      "EV-5: Compilation success rate data for similarly novel quantum-information results in Lean 4 (currently near zero published examples)."
+    ],
+    "effort_estimates": {
+      "estimated_input_tokens": 28000000,
+      "estimated_output_tokens": 9000000,
+      "estimated_reasoning_tokens": 18000000,
+      "estimated_branches": 40,
+      "estimated_retries": 3200,
+      "cost_low_usd": 420,
+      "cost_central_usd": 1100,
+      "cost_high_usd": 4800,
+      "elapsed_hours_low": 18,
+      "elapsed_hours_central": 48,
+      "elapsed_hours_high": 72,
+      "success_probability": 0.04
+    },
+    "cost_breakdown_note": {
+      "input_cost_usd": 84.0,
+      "output_cost_usd": 135.0,
+      "reasoning_cost_usd": 108.0,
+      "subtotal_token_cost_usd": 327.0,
+      "contingency_multiplier_central": 3.4,
+      "contingency_multiplier_high": 14.7,
+      "contingency_rationale": "High contingency reflects: (a) repeated dead-end branches requiring restart, (b) missing Mathlib primitives forcing auxiliary lemma chains, (c) REPL error loops consuming tokens without progress, (d) model self-correction cycles on type-universe errors."
+    },
+    "verification_cost_usd": 0,
+    "verification_note_inline": "No verification was performed; this line reflects actual spend on verification, not projected cost of future verification.",
+    "governance_overhead_usd": 0,
+    "governance_note": "Excluded per task specification (no institutional overhead).",
+    "uncertainty_drivers": [
+      "UD-1 (HIGH): Absence of quantum information library in Mathlib4 \u2014 single largest cost driver; model may spend majority of budget building prerequisites that ultimately fail to compose.",
+      "UD-2 (HIGH): Success probability is very low; most budget is consumed on failed attempts.",
+      "UD-3 (MEDIUM): Frontier model tactic reasoning quality on operator-algebraic arguments is uncharacterized.",
+      "UD-4 (MEDIUM): REPL latency and context-window pressure at long proof depths could force expensive restarts.",
+      "UD-5 (LOW): Token pricing uncertainty \u00b130% depending on model version active at attempt time."
+    ],
+    "bounded_claim_boundary": {
+      "scope": "Single autonomous model instance, one bounded attempt, cost-capped at ~$5,000 USD, time-capped at 72 hours.",
+      "out_of_scope": [
+        "Multi-agent pipelines",
+        "Human mathematician collaboration",
+        "Research institution overhead",
+        "Theorem solution or proof correctness",
+        "Costs beyond the bounded attempt cap"
+      ]
+    },
+    "meta": {
+      "stegverse_governance": "applied",
+      "task_identity": "TA-006 quantum parallel repetition Lean 4 estimation",
+      "claim_separation": "generated vs verified distinguished throughout",
+      "verification_claimed": false
+    },
+    "lane_id": "anthropic-governed",
+    "provider": "anthropic",
+    "model": "claude-sonnet-4-6",
+    "observed_estimation_call_cost_usd": 0.023943,
+    "observed_estimation_latency_seconds": 31.76966428756714,
+    "receipt_hash": "sha256:c2ec86416a136b2870fce1255d84365150bf1b3ce27affe2cab3c6535a2763bb"
+  },
+  {
+    "lane_id": "stegverse-only",
+    "provider": "stegverse",
+    "status": "BLOCKED_CAPABILITY_INVENTORY",
+    "cost_low_usd": 0,
+    "cost_central_usd": 0,
+    "cost_high_usd": 0,
+    "success_probability": 0,
+    "assumptions": [
+      "No undeclared provider inference"
+    ],
+    "uncertainty_drivers": [
+      "Installed local theorem-generation capability not established"
+    ],
+    "receipt_hash": "sha256:55b74da90d71c94533fa91d06fa1ddc09fdc8188e213bf22ae9fcaed66e95d5b"
+  }
+]
