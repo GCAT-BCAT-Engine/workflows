@@ -1,57 +1,52 @@
 S1: Definitions and assumptions.
 
-### Stipulated abstract model
+**Admitted artifact**
+- Reuse `stegverse-openai-compact:S0` (`sha256:170db6a03dbf055b9971d0173c74f4504d130134c6c631b3d729c359f51e38bc`).
 
-Let `Transition` be an arbitrary type of candidate transitions. Let
+**Stipulations**
+- Let `Transition` be an abstract type of candidate transitions.
+- Let `GBP BD OC : Transition → Prop` be predicates.
+- Let `ALLOW : Transition → Prop` denote the abstract evaluator’s ALLOW outcome.
+- Evaluator specification:
+  \[
+  \forall t,\; ALLOW(t) \leftrightarrow (GBP(t)\land BD(t)\land OC(t)).
+  \]
 
-- `GBP : Transition → Prop`,
-- `BD : Transition → Prop`,
-- `OC : Transition → Prop`
+**Generated claim target**
+- Necessity:
+  \[
+  \forall t,\; ALLOW(t)\to GBP(t)\land BD(t)\land OC(t).
+  \]
+- Sufficiency:
+  \[
+  \forall t,\; GBP(t)\land BD(t)\land OC(t)\to ALLOW(t).
+  \]
+- Together these constitute the necessary-and-sufficient characterization.
 
-be predicates on candidate transitions.
-
-Define abstract admissibility by
-
-\[
-\operatorname{ALLOW}(t) \;:\!\iff\; GBP(t)\land BD(t)\land OC(t).
-\]
-
-No further properties of `Transition`, `GBP`, `BD`, or `OC` are assumed.
-
-### Lean 4 definition candidate
-
+**Lean 4 logical-core definitions and assumptions**
 ```lean
 universe u
 
 variable {Transition : Type u}
+variable (GBP BD OC ALLOW : Transition → Prop)
 
-variable (GBP BD OC : Transition → Prop)
+def EvaluatorSpec : Prop :=
+  ∀ t, ALLOW t ↔ (GBP t ∧ BD t ∧ OC t)
 
-def ALLOW (t : Transition) : Prop :=
-  GBP t ∧ BD t ∧ OC t
+def Necessity : Prop :=
+  ∀ t, ALLOW t → (GBP t ∧ BD t ∧ OC t)
+
+def Sufficiency : Prop :=
+  ∀ t, (GBP t ∧ BD t ∧ OC t) → ALLOW t
 ```
 
-This is an unverified logical-core candidate, not evidence about any concrete implementation.
+**Verified claims**
+- None at this stage; only definitions, stipulations, and proof targets are recorded.
 
-### Generated claim target
+**Claim boundary**
+- These statements concern only the stipulated abstract evaluator.
+- No claim is made that any deployed or concrete GCAT/BCAT implementation uses these predicates, evaluates them correctly, or conforms to this specification.
+- The Lean text is an unverified candidate and is not evidence of implementation validity.
 
-For every `t : Transition`, the intended necessary-and-sufficient characterization is
-
-\[
-\operatorname{ALLOW}(t)\iff GBP(t)\land BD(t)\land OC(t).
-\]
-
-Its two directions are:
-
-- Necessity: `ALLOW t → GBP t ∧ BD t ∧ OC t`.
-- Sufficiency: `GBP t ∧ BD t ∧ OC t → ALLOW t`.
-
-No proof or Lean verification is asserted at this stage.
-
-### Claim boundary
-
-The definitions concern only the stipulated abstract evaluator. They do not establish that any deployed or concrete GCAT/BCAT implementation computes these predicates correctly, applies this decision rule, or conforms to the characterization.
-
-### Unresolved implementation evidence
-
-No concrete evaluator source, predicate binding, execution evidence, or implementation-conformance proof has been provided.
+**Unresolved implementation evidence**
+- Concrete GCAT/BCAT definitions, predicate bindings, evaluator behavior, Lean compilation, and implementation conformance remain unresolved.

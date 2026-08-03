@@ -1,0 +1,73 @@
+S4: Complete informal proof.
+
+---
+
+## Stage S4 — Complete Informal Proof
+
+**Experiment:** SV-COST-STAGED-001
+**Capability Test:** SV-COMPACT-PROGRESS-001
+**Stage:** S4 — Complete informal proof
+**Admitted prior artifacts:** S0, S1, S2, S3 (see ledger)
+**Selected retrieval:** S2 (sha256:a4a513a9fb2eb2c95c4b6a2c3ebaeebb750f36ffa493d07df0c87715fdc2af59), S3 (sha256:0ab825ee33c6c972516044f5b842e2f6cf6d5ea14cf8009c95ee455b77390051)
+
+---
+
+### 1. Setup and Recollection of Definitions
+
+Let `T` be an arbitrary type (the type of candidate transitions). Let the following be total predicates on `T`:
+
+- `GBP : T → Prop`
+- `BD : T → Prop`
+- `OC : T → Prop`
+- `ALLOW : T → Prop`
+
+The evaluator stipulation (from S0/S1) is:
+
+> **Stipulation (STI-ALLOW):** For all `t : T`, `ALLOW t` holds if and only if `GBP t`, `BD t`, and `OC t` all hold.
+
+This stipulation is the *sole* definition of `ALLOW` in this abstract setting. It is not a claim about any deployed system.
+
+---
+
+### 2. Theorem to be Proved
+
+**Theorem T-ALLOW-NAS** (from S2):
+
+> For all `t : T`:
+> $$\mathrm{ALLOW}(t) \;\iff\; \mathrm{GBP}(t) \;\land\; \mathrm{BD}(t) \;\land\; \mathrm{OC}(t)$$
+
+---
+
+### 3. Informal Proof
+
+Fix an arbitrary `t : T`. We prove both directions.
+
+---
+
+#### 3.1 Forward Direction (Necessity): `ALLOW t → GBP t ∧ BD t ∧ OC t`
+
+**Lemma L1-ALLOW-Nec** (from S3):
+
+*Assume* `ALLOW t` holds.
+
+By STI-ALLOW (the defining stipulation of the evaluator), `ALLOW t` holds if and only if `GBP t ∧ BD t ∧ OC t`. Since `ALLOW t` is assumed, the right-hand side of the biconditional must hold. Therefore `GBP t ∧ BD t ∧ OC t` holds, which is to say:
+
+- `GBP t` holds, and
+- `BD t` holds, and
+- `OC t` holds.
+
+This establishes the forward direction. Each of `GBP`, `BD`, `OC` is individually *necessary* for `ALLOW` (Corollary C2 from S2): if any one failed, `ALLOW t` could not hold under STI-ALLOW.
+
+---
+
+#### 3.2 Backward Direction (Sufficiency): `GBP t ∧ BD t ∧ OC t → ALLOW t`
+
+**Lemma L2-ALLOW-Suf** (from S3):
+
+*Assume* `GBP t ∧ BD t ∧ OC t` holds, i.e., assume:
+
+- `GBP t` holds,
+- `BD t` holds,
+- `OC t` holds.
+
+By STI-ALLOW, `ALLOW t` holds if and only if `GBP t 

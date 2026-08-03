@@ -1,0 +1,70 @@
+S1: Definitions and assumptions
+
+---
+
+## 1. Universe and Primitive Sorts
+
+**Sort.**
+Let `T` be an arbitrary non-empty type, whose elements are called *candidate transitions*. No structure is placed on `T` beyond its being a type; in particular, no topology, ordering, or algebraic operations are assumed.
+
+**Variables.**
+Throughout, `t : T` ranges over candidate transitions.
+
+---
+
+## 2. Primitive Predicates
+
+The following three predicates are introduced as **abstract symbols**. They carry no definition beyond their types; all semantic content is supplied by the problem statement and by C1 below.
+
+| Symbol | Type | Informal gloss |
+|--------|------|----------------|
+| `GBP` | `T → Prop` | "Good-Behavior Predicate" — abstract condition on `t` |
+| `BD` | `T → Prop` | "Boundary/Domain" — abstract condition on `t` |
+| `OC` | `T → Prop` | "Output Condition" — abstract condition on `t` |
+
+**Assumption A-Pred.**
+`GBP`, `BD`, and `OC` are total predicates on `T`. For every `t : T`, each of `GBP t`, `BD t`, `OC t` is a well-formed proposition (possibly false, possibly true; no default is assumed).
+
+---
+
+## 3. The ALLOW Relation
+
+**Definition D-ALLOW (stipulated).**
+`ALLOW : T → Prop` is defined by the biconditional
+
+$$\forall t : T,\quad \mathrm{ALLOW}(t) \;\iff\; \mathrm{GBP}(t) \;\land\; \mathrm{BD}(t) \;\land\; \mathrm{OC}(t)$$
+
+This is **definitional**, not derived. It records the problem statement as a formal stipulation. No proof obligation arises from it beyond admitting it as an axiom within the abstract theory.
+
+---
+
+## 4. Derived Directions (admitted, not yet proved)
+
+From D-ALLOW, two directions are immediately named for downstream use:
+
+| Label | Statement | Status |
+|-------|-----------|--------|
+| **C1** | `∀ t, ALLOW t ↔ GBP t ∧ BD t ∧ OC t` | **Stipulated** — definitional |
+| **C2 (necessity)** | `∀ t, ALLOW t → GBP t ∧ BD t ∧ OC t` | Admitted; follows from C1 by `Iff.mp` |
+| **C3 (sufficiency)** | `∀ t, GBP t ∧ BD t ∧ OC t → ALLOW t` | Admitted; follows from C1 by `Iff.mpr` |
+
+C2 and C3 are **not independently verified** at this stage; they are marked *admitted pending S2 proof obligations*.
+
+---
+
+## 5. Explicit Non-Assumptions
+
+The following are **not** assumed and must not be introduced in later stages without explicit admission:
+
+- `GBP`, `BD`, `OC` are not assumed independent of one another.
+- No implication among `GBP`, `BD`, `OC` is assumed (e.g., `GBP t → BD t` is not stipulated).
+- `T` is not assumed finite, countable, or inhabited by any particular element.
+- No claim is made that any deployed GCAT/BCAT system satisfies D-ALLOW.
+
+---
+
+## 6. Lean 4 Preamble (fragment, not validated)
+
+```lean4
+-- S1: Definitions and assumptions
+-- STATUS: candidate fragment; implementation

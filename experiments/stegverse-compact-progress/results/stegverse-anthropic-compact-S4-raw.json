@@ -1,0 +1,27 @@
+{
+  "model": "claude-sonnet-4-6",
+  "id": "msg_011CdfRZweP7udaMbq3Bcf3B",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "text",
+      "text": "S4: Complete informal proof.\n\n---\n\n## Stage S4 \u2014 Complete Informal Proof\n\n**Experiment:** SV-COST-STAGED-001\n**Capability Test:** SV-COMPACT-PROGRESS-001\n**Stage:** S4 \u2014 Complete informal proof\n**Admitted prior artifacts:** S0, S1, S2, S3 (see ledger)\n**Selected retrieval:** S2 (sha256:a4a513a9fb2eb2c95c4b6a2c3ebaeebb750f36ffa493d07df0c87715fdc2af59), S3 (sha256:0ab825ee33c6c972516044f5b842e2f6cf6d5ea14cf8009c95ee455b77390051)\n\n---\n\n### 1. Setup and Recollection of Definitions\n\nLet `T` be an arbitrary type (the type of candidate transitions). Let the following be total predicates on `T`:\n\n- `GBP : T \u2192 Prop`\n- `BD : T \u2192 Prop`\n- `OC : T \u2192 Prop`\n- `ALLOW : T \u2192 Prop`\n\nThe evaluator stipulation (from S0/S1) is:\n\n> **Stipulation (STI-ALLOW):** For all `t : T`, `ALLOW t` holds if and only if `GBP t`, `BD t`, and `OC t` all hold.\n\nThis stipulation is the *sole* definition of `ALLOW` in this abstract setting. It is not a claim about any deployed system.\n\n---\n\n### 2. Theorem to be Proved\n\n**Theorem T-ALLOW-NAS** (from S2):\n\n> For all `t : T`:\n> $$\\mathrm{ALLOW}(t) \\;\\iff\\; \\mathrm{GBP}(t) \\;\\land\\; \\mathrm{BD}(t) \\;\\land\\; \\mathrm{OC}(t)$$\n\n---\n\n### 3. Informal Proof\n\nFix an arbitrary `t : T`. We prove both directions.\n\n---\n\n#### 3.1 Forward Direction (Necessity): `ALLOW t \u2192 GBP t \u2227 BD t \u2227 OC t`\n\n**Lemma L1-ALLOW-Nec** (from S3):\n\n*Assume* `ALLOW t` holds.\n\nBy STI-ALLOW (the defining stipulation of the evaluator), `ALLOW t` holds if and only if `GBP t \u2227 BD t \u2227 OC t`. Since `ALLOW t` is assumed, the right-hand side of the biconditional must hold. Therefore `GBP t \u2227 BD t \u2227 OC t` holds, which is to say:\n\n- `GBP t` holds, and\n- `BD t` holds, and\n- `OC t` holds.\n\nThis establishes the forward direction. Each of `GBP`, `BD`, `OC` is individually *necessary* for `ALLOW` (Corollary C2 from S2): if any one failed, `ALLOW t` could not hold under STI-ALLOW.\n\n---\n\n#### 3.2 Backward Direction (Sufficiency): `GBP t \u2227 BD t \u2227 OC t \u2192 ALLOW t`\n\n**Lemma L2-ALLOW-Suf** (from S3):\n\n*Assume* `GBP t \u2227 BD t \u2227 OC t` holds, i.e., assume:\n\n- `GBP t` holds,\n- `BD t` holds,\n- `OC t` holds.\n\nBy STI-ALLOW, `ALLOW t` holds if and only if `GBP t "
+    }
+  ],
+  "stop_reason": "max_tokens",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 1957,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 900,
+    "service_tier": "standard",
+    "inference_geo": "global"
+  }
+}

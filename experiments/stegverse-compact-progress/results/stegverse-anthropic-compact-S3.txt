@@ -1,0 +1,77 @@
+S3: Proof strategy and lemma decomposition
+
+---
+
+## 1. Stage Identity
+
+**Experiment:** SV-COST-STAGED-001
+**Capability Test:** SV-COMPACT-PROGRESS-001
+**Stage:** S3 — Proof strategy and lemma decomposition
+**Admitted dependencies:** S0, S1, S2 (ledger above)
+**Claim boundary:** All claims are about abstract predicates only. No deployed GCAT/BCAT implementation is described or constrained.
+
+---
+
+## 2. Proof Context Recall
+
+From S1 (retrieved, sha256:53b49be…):
+- `T` : an arbitrary type
+- `GBP BD OC : T → Prop` : total abstract predicates
+- `ALLOW : T → Prop` is **stipulated** by the biconditional `D-ALLOW`
+
+From S2 (retrieved, sha256:a4a513a9…):
+- **T-ALLOW-NAS:** `∀ t : T, ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)`
+- Corollaries C1, C2 depend on T-ALLOW-NAS
+
+Because `ALLOW` is **defined** (not axiomatized independently) by exactly the right-hand conjunction, T-ALLOW-NAS is a **definitional unfolding**. The proof structure is therefore trivially reflexive at the logical level, but must be made explicit for the Lean 4 candidate.
+
+---
+
+## 3. Proof Strategy
+
+### 3.1 High-Level Approach
+
+T-ALLOW-NAS asserts a biconditional. The canonical strategy is:
+
+> Prove (→) and (←) separately, then combine with `Iff.intro`.
+
+Because `ALLOW` is stipulated as the conjunction (D-ALLOW), both directions reduce to unfolding the definition and applying the identity of the conjunction.
+
+**Forward direction (necessity):**
+`ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)`
+Unfold D-ALLOW; the hypothesis immediately yields the conjunction.
+
+**Backward direction (sufficiency):**
+`GBP(t) ∧ BD(t) ∧ OC(t) → ALLOW(t)`
+Fold D-ALLOW; the conjunction is exactly the definiens.
+
+### 3.2 Proof Mode
+
+In Lean 4, if `ALLOW` is introduced via `def` or `abbrev` equating it to the conjunction, `simp` / `exact` / `constructor` suffice. If introduced via an `axiom` or `opaque` plus a separate axiom schema, we need to cite that axiom explicitly.
+
+The Lean 4 candidate (Stage S4) will treat both cases; here we record the lemma decomposition only.
+
+---
+
+## 4. Lemma Decomposition
+
+### L1 — Forward (Necessity)
+
+**Lemma L1-ALLOW-Nec**
+```
+∀ t : T, ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)
+```
+*Proof sketch:*
+Fix `t`. Assume `h : ALLOW(t)`.
+Apply definitional unfolding of `ALLOW` (D-ALLOW) to obtain `h' : GBP(t) ∧ BD(t) ∧ OC(t)`.
+Return `h'`. ∎
+
+*Dependencies:* D-ALLOW (S1).
+
+---
+
+### L2 — Backward (Sufficiency)
+
+**Lemma L2-ALLOW-Suf**
+```
+∀ t

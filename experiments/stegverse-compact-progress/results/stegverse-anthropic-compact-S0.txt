@@ -2,70 +2,61 @@ S0: Task parsing and claim boundary
 
 ---
 
-## 1. Task Decomposition
+## 1. Task Parsing
 
-**Problem statement (parsed):**
-Define an abstract evaluator `E` with three boolean predicates over a candidate transition `t`:
+**Experiment / Capability identifiers (stipulated, not verified):**
+- Experiment: SV-COST-STAGED-001
+- Capability test: SV-COMPACT-PROGRESS-001
 
-- `GBP(t)` — "Good Block Predicate"
-- `BD(t)` — "Block Data" (predicate)
-- `OC(t)` — "Other Condition" (predicate)
+**Domain framing (stipulated):**
+The problem concerns an *abstract* evaluator, notionally labeled GCAT/BCAT. No claim is made that any deployed GCAT/BCAT system is described or constrained by what follows. All predicates and the ALLOW relation are abstract symbols.
 
-The evaluator returns `ALLOW` exactly when all three hold simultaneously.
+**Given primitives (stipulated definitions, this stage only):**
 
-**Formal reading:**
-```
-E(t) = ALLOW  ⟺  GBP(t) ∧ BD(t) ∧ OC(t)
-```
+| Symbol | Type | Role |
+|--------|------|------|
+| `GBP` | predicate on candidate transitions | "Good-basis predicate" (name stipulated) |
+| `BD` | predicate on candidate transitions | "Boundary predicate" (name stipulated) |
+| `OC` | predicate on candidate transitions | "Other condition" (name stipulated) |
+| `ALLOW` | predicate on candidate transitions | Output relation of the evaluator |
 
-This is a **stipulated definition**, not a theorem derived from external system behavior.
+**Evaluator rule (stipulated, source: problem statement):**
+
+> The evaluator returns ALLOW exactly when GBP and BD and OC all hold.
+
+This is a biconditional specification:
+
+$$\forall t,\quad \mathrm{ALLOW}(t) \iff \mathrm{GBP}(t) \land \mathrm{BD}(t) \land \mathrm{OC}(t)$$
 
 ---
 
 ## 2. Claim Boundary
 
-### 2.1 What is being claimed (in scope)
+The following table partitions all claims for the full task.
 
-| # | Claim | Status |
-|---|-------|--------|
-| C1 | The biconditional `E(t) = ALLOW ⟺ GBP(t) ∧ BD(t) ∧ OC(t)` is the necessary-and-sufficient characterization of ALLOW admissibility under the stated abstract evaluator. | **Stipulated — to be formalized** |
-| C2 | Each of GBP, BD, OC is individually necessary for ALLOW. | **Derivable from C1** |
-| C3 | GBP ∧ BD ∧ OC jointly sufficient for ALLOW. | **Derivable from C1** |
-
-### 2.2 What is NOT being claimed (out of scope)
-
-| Excluded claim | Reason |
-|----------------|--------|
-| Any deployed GCAT/BCAT implementation satisfies C1 | Governance prohibition; no implementation evidence admitted |
-| GBP, BD, OC have any specific computational definitions | Not stipulated; they are abstract predicates |
-| The Lean 4 artifact constitutes a verified proof of a real system | Explicitly disclaimed per governance |
+| # | Claim | Status at S0 | Requires |
+|---|-------|-------------|---------|
+| C1 | The biconditional above is the necessary-and-sufficient characterization of ALLOW | **Stipulated (definitional)** — follows directly from the problem statement by semantic fiat; no proof burden beyond recording the definition | Nothing further |
+| C2 | The necessity direction: `ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)` | Follows from C1; proof is trivial by biconditional elimination | Admitted at S1 |
+| C3 | The sufficiency direction: `GBP(t) ∧ BD(t) ∧ OC(t) → ALLOW(t)` | Follows from C1; proof is trivial by biconditional elimination | Admitted at S1 |
+| C4 | A Lean 4 candidate encodes C1–C3 correctly | **Not yet assessed** — candidate to be produced at S2; no implementation validity claimed | S2 artifact + review |
+| C5 | Any deployed GCAT/BCAT system conforms to this characterization | **Explicitly out of scope** — not claimed at any stage | — |
 
 ---
 
-## 3. Stipulations Admitted at S0
+## 3. Boundary Statements (explicit)
 
-**S-001:** `GBP`, `BD`, `OC` are uninterpreted boolean predicates over an abstract type `Transition`.
-
-**S-002:** `ALLOW` is one value of an abstract return type `Verdict` (at minimum `{ALLOW, DENY}`).
-
-**S-003:** The evaluator `E : Transition → Verdict` is defined by the conjunction rule in C1. This is definitional, not empirical.
-
-**S-004:** No claim is made that any concrete GCAT/BCAT system conforms to this abstract model.
+- **In scope:** Logical structure of the abstract evaluator; formal biconditional; Lean 4 encoding of that logic.
+- **Out of scope:** Semantic correctness of any running system; runtime behavior; soundness of any GCAT/BCAT deployment; anything beyond the symbolic predicates as given.
+- **No claim is made** that this characterization is complete with respect to any real policy or implementation.
 
 ---
 
-## 4. Artifact Identity Record
+## 4. Artifact Identity
 
-```
-STAGE:    S0
-ARTIFACT: Task parsing and claim boundary
-ADMITS:   S-001, S-002, S-003, S-004
-CLAIMS:   C1 (stipulated), C2 (pending), C3 (pending)
-VERIFIED: none
-UNRESOLVED: Lean 4 formalization (deferred to later stage)
-NEXT STAGE: S1 — Necessary-and-sufficient characterization (mathematical statement)
-```
+**S0 artifact:** This document.
+**Admitted state after S0:** C1 (stipulated biconditional definition). All other claims deferred.
 
 ---
 
-*No implementation validity is claimed. No stages have been skipped. Admitted artifacts: none prior; S-001–S-004 admitted here.*
+*Ready to proceed to S1: Necessary-and-sufficient proof of C2 and C3 from C1.*

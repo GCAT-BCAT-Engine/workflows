@@ -1,28 +1,24 @@
 S0: Task parsing and claim boundary.
 
-**Task identity**  
-Characterize ALLOW admissibility for an abstract GCAT/BCAT evaluator using predicates `GBP`, `BD`, and `OC` on a candidate transition.
+**Task identity:** SV-COST-STAGED-001 / SV-COMPACT-PROGRESS-001
 
 **Stipulations**
-- A candidate transition is evaluated by three predicates: `GBP`, `BD`, and `OC`.
+- For a candidate transition `t`, `GBP t`, `BD t`, and `OC t` are predicates.
 - The abstract evaluator returns `ALLOW` exactly when all three predicates hold.
-- No admitted artifacts are available.
+- No artifacts are admitted from prior stages.
 
 **Target claim**
-For every candidate transition `t`:
-
-`ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
-
-This is the intended necessary-and-sufficient characterization:
-- Necessity: `ALLOW(t)` implies `GBP(t)`, `BD(t)`, and `OC(t)`.
-- Sufficiency: their conjunction implies `ALLOW(t)`.
+- Necessary and sufficient condition:
+  `ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
+- Equivalently, necessity is `ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)`, and sufficiency is the converse.
 
 **Claim boundary**
-- The claim concerns only the stipulated abstract evaluator.
+- The target concerns only the stipulated abstract evaluator.
 - It does not establish that any deployed or concrete GCAT/BCAT implementation uses these predicates, computes them correctly, or conforms to this characterization.
-- A later Lean 4 candidate may encode only the logical core; compilation and implementation validity remain separate evidence obligations.
+- No implementation validity, refinement, or correspondence claim is in scope.
+- A Lean 4 candidate for the logical core belongs to a later stage and is not supplied here.
 
-**Status**
-- Task parsed.
-- Target characterization identified.
-- No mathematical proof, Lean artifact, compilation result, or implementation-conformance claim is established at this stage.
+**Verification status**
+- Generated target claim: identified but not yet formally derived.
+- Verified claims: none.
+- Unresolved evidence: all implementation-level definitions, behavior, and conformance.

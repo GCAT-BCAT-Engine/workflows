@@ -1,0 +1,27 @@
+{
+  "model": "claude-sonnet-4-6",
+  "id": "msg_011CdfRYXBSLtNAue5gmVWpK",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "text",
+      "text": "S3: Proof strategy and lemma decomposition\n\n---\n\n## 1. Stage Identity\n\n**Experiment:** SV-COST-STAGED-001\n**Capability Test:** SV-COMPACT-PROGRESS-001\n**Stage:** S3 \u2014 Proof strategy and lemma decomposition\n**Admitted dependencies:** S0, S1, S2 (ledger above)\n**Claim boundary:** All claims are about abstract predicates only. No deployed GCAT/BCAT implementation is described or constrained.\n\n---\n\n## 2. Proof Context Recall\n\nFrom S1 (retrieved, sha256:53b49be\u2026):\n- `T` : an arbitrary type\n- `GBP BD OC : T \u2192 Prop` : total abstract predicates\n- `ALLOW : T \u2192 Prop` is **stipulated** by the biconditional `D-ALLOW`\n\nFrom S2 (retrieved, sha256:a4a513a9\u2026):\n- **T-ALLOW-NAS:** `\u2200 t : T, ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)`\n- Corollaries C1, C2 depend on T-ALLOW-NAS\n\nBecause `ALLOW` is **defined** (not axiomatized independently) by exactly the right-hand conjunction, T-ALLOW-NAS is a **definitional unfolding**. The proof structure is therefore trivially reflexive at the logical level, but must be made explicit for the Lean 4 candidate.\n\n---\n\n## 3. Proof Strategy\n\n### 3.1 High-Level Approach\n\nT-ALLOW-NAS asserts a biconditional. The canonical strategy is:\n\n> Prove (\u2192) and (\u2190) separately, then combine with `Iff.intro`.\n\nBecause `ALLOW` is stipulated as the conjunction (D-ALLOW), both directions reduce to unfolding the definition and applying the identity of the conjunction.\n\n**Forward direction (necessity):**\n`ALLOW(t) \u2192 GBP(t) \u2227 BD(t) \u2227 OC(t)`\nUnfold D-ALLOW; the hypothesis immediately yields the conjunction.\n\n**Backward direction (sufficiency):**\n`GBP(t) \u2227 BD(t) \u2227 OC(t) \u2192 ALLOW(t)`\nFold D-ALLOW; the conjunction is exactly the definiens.\n\n### 3.2 Proof Mode\n\nIn Lean 4, if `ALLOW` is introduced via `def` or `abbrev` equating it to the conjunction, `simp` / `exact` / `constructor` suffice. If introduced via an `axiom` or `opaque` plus a separate axiom schema, we need to cite that axiom explicitly.\n\nThe Lean 4 candidate (Stage S4) will treat both cases; here we record the lemma decomposition only.\n\n---\n\n## 4. Lemma Decomposition\n\n### L1 \u2014 Forward (Necessity)\n\n**Lemma L1-ALLOW-Nec**\n```\n\u2200 t : T, ALLOW(t) \u2192 GBP(t) \u2227 BD(t) \u2227 OC(t)\n```\n*Proof sketch:*\nFix `t`. Assume `h : ALLOW(t)`.\nApply definitional unfolding of `ALLOW` (D-ALLOW) to obtain `h' : GBP(t) \u2227 BD(t) \u2227 OC(t)`.\nReturn `h'`. \u220e\n\n*Dependencies:* D-ALLOW (S1).\n\n---\n\n### L2 \u2014 Backward (Sufficiency)\n\n**Lemma L2-ALLOW-Suf**\n```\n\u2200 t"
+    }
+  ],
+  "stop_reason": "max_tokens",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 1907,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 900,
+    "service_tier": "standard",
+    "inference_geo": "global"
+  }
+}

@@ -2,9 +2,9 @@
   {
     "artifact_id": "stegverse-anthropic-full:S0",
     "stage_id": "S0",
-    "sha256": "sha256:7a8246d4256cf007e9eba329fd4edbcb4a28542cc0d2c4e60c4536987f0ac069",
+    "sha256": "sha256:5e7d482b91dacdf18fd6ff52a5f2598b1b9201fd3086066fcf0a1c4f70427e16",
     "admitted": false,
-    "claims": "S0: Task parsing and claim boundary\n> The evaluator returns ALLOW exactly when GBP and BD and OC all hold.\n| `ALLOW` | Output predicate on a candidate transition | `T \u2192 Prop` |\n> For all candidate transitions `t`: `ALLOW(t)` holds **if and only if** `GBP(t)` holds **and** `BD(t)` holds **and** `OC(t)` holds.\n**S2.** `GBP`, `BD`, `OC`, and `ALLOW` are predicates of type `T \u2192 Prop`. They are abstract; no computational ",
+    "claims": "S0: Task parsing and claim boundary.\nCharacterize ALLOW admissibility for an abstract GCAT/BCAT evaluator. Let GBP, BD, and OC be predicates on a candidate transition. The evaluator returns ALLOW exactly when GBP and BD and OC all hold. Establish the necessary-and-sufficient characterization, state the claim boundary, and prepare a Lean 4 candidate for the logical core.\n| `ALLOW : T \u2192 Prop` | Target admissibility pre",
     "definitions": "reference prior definitions",
     "unresolved": "implementation binding remains unresolved",
     "next_stage": "S1"
