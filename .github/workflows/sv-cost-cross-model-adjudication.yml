@@ -8,6 +8,7 @@ on:
       - experiments/five-lane-calibration/results/calibration.json
       - experiments/sv-cost-program/cost-model/governance-vs-no-governance-contract.json
       - experiments/sv-cost-program/tools/adjudicate_cross_model_governance.py
+      - .github/workflows/sv-cost-cross-model-adjudication.yml
 
 permissions:
   contents: write
@@ -33,13 +34,13 @@ jobs:
 
       - name: Commit governed matrix and report
         run: |
-          if git diff --quiet -- experiments/sv-cost-program/results/governance-cross-model-matrix.json reports/governance-cross-model-matrix.md; then
-            echo "No adjudication changes to commit."
-            exit 0
-          fi
           git config user.name "stegverse-governance-bot"
           git config user.email "actions@users.noreply.github.com"
           git add experiments/sv-cost-program/results/governance-cross-model-matrix.json reports/governance-cross-model-matrix.md
+          if git diff --cached --quiet; then
+            echo "No adjudication changes to commit."
+            exit 0
+          fi
           git commit -m "Adjudicate cross-model governance cost matrix"
           git push
 
