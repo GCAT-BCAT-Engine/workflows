@@ -1,0 +1,101 @@
+{
+  "id": "resp_02000d1da4d5aeab006a7015684d2c81908394ddd31dbd4782",
+  "object": "response",
+  "created_at": 1785730408,
+  "status": "completed",
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1785730443,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "model": "gpt-5.6-sol",
+  "moderation": null,
+  "output": [
+    {
+      "id": "rs_02000d1da4d5aeab006a7015691370819086dd09019913918d",
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": "gAAAAABqcBWLmP2IHX86sMHbFZ9sSPMnkZkay3VwkvDbsqz81xMjksy7ewRlb9B0ulLSYrEEQUKth6iOAp1qCSrfiEVtSMkgzuHfFZ7IfHK3U_5nqUsUXH0YXcGjQJj3GRxVpJx0FEl1a3JXj_dZiwqa2sE1obTEH5NThb8zx8qeSIz9JvzarQNwDXD8RF-4o8X05XF2tRAXMuULsCYU00RwDSyljsYmaVqEXZUUF7TNx_YG1xkTpDfmUxL2h8tpdinuhwtAGvDWpaOfUQMCaD82jxFYSai20VdRwDq53gdt41tc6XPwqXtXFz07Gbh23pNyNnVhuaZRVkqr2xh1KARJ6Z6UADCqhPPqam1Y5979DPiwa6upgab_oKXLV2XhRciuuxGz_r2g3WQNoVRm5HnQeVpJIoxkSLQjmXwmmiAw_IxYa8D4ajL9hqKoeXIyaFHq6leVxpZdHSv5yom343hMipE9GXRT6TIBzhe-YByAs34pB4HqMzmQBfOleJYgB8zHuuaIa9ZLwPfa2ECfPTaZk4QMLdcjjIm4cPmvbPGbYcOecM75FUv3uhgSlOyVBZ-Pv_5ATci-0R1wV37d20vN8XeLbQYoBzwE6p-0TzuQS-HleweIReUxz2P5pVGAtCbXL9GCcs3v4HN5HrLfATbldKYRSG_vsbT-fd35T2DRfR05n7j9rqD2SpHMLww_tEil2luN_n6nkjv-1baJd6lVf5Bkm-1ewFkFEWIJDSHEMGD9sHePsjcOIS4v470ROTfUbejqPDe-LXsVT40Vp33aDqB_dOjrlWDZX2HRhfCks7GaDLpvyN11UDmgTFWSaZHGhUwL_uDBrIzxmoOo_NIFutJa_RGji5F1ioIE-3H4woQoTcZBHMLA93IpR78QIlHWMqCv6f0n3B54qtyXypK4hP6gOzV5SDNUO61cOHiKB3DOviWbMIUAu6dPGxPyff_rhTjvRc69_3srawrsDx9WMfIHWNnw7PO-YD1GLUMib1PMVFb1pxHkYJGeVATboEpiwP3w1Rib0mtrZ5OzvT6K2V-JX8N7F0FFGk3qiQ0pkk2IoyKAgVIZRU-HytKNYv8Hjr7SIVfNnOvN32yBxyEArTfR3uYnG2gNoeSDtG8OvIaeU-9HtF29B_N10IwbyqtQeqtpjDdbVg3zGJhGi3JuVVQha9VLnueTGuJ1J1h1RWhSW8NOLOoHflHQBa0bCMzXYwHUuvxokopxLcO97AEU-wZBbkdxgHeDWcARkGzW5wbOzJ6u0R4Ty8cilNMR_S5k3rMkS7wZzQbkVg9bf-3Ffr18U7S-UIJ4RxPZP66Pjw7c_ZgbD8IPgKjlqlJjpsNLMsgadrPq9brF6YiVkpFAI5rqipH07BqfAIIs32hCVYN_mFR3jjo60UoobqSBo3YbtDFc7I7Lc7vQep-cgerkPnsF4LDDrL1ogeJF_0L-dNfPpi3gzSwEtSb8tyRd5-4ueMoRahmxJhqX7flL6CLdZnY6wPV8I6saS_K7xFHuaC_-UPWcWYJgqM1ish6VbCZ9qxubwCnwmHlQvPFcIsI2kG7-ePzxTFdng12EY_wtT1SZ8Z5SdI3Ge3FtR1_2zXrFwZtYROhiMQ4uhsuBH21hu0OozI-7hDRx5KomE0qYMjkBsH6RtZ-Vd9RRN2ErNGwvUpLkBwr6K6R8YVxzvFhubPgLWBVmPiLUonYaLh8utPvSbHwpRKw1b_Ai5I5tTRlbM4TxqWFhgyYLfOq4dzjJpXalGFBDHv-bVKBa7j33OcV2PYBtMgWbUvOtn2HWF2NHH4Iyj_khBGFxgmgJXV_I1ew_6aNtAjRJmfvAuDOydZixfpNgx-48jGO09-rbwtkFWarOTsqzloi4wUlu3cBJvIdnrdXVtST1EbJeW7lPN5TUgBbcZUwZ-8OrLgq9yiJnEVmpBJIDMbneKPFeq2X1nM3lW53s1At68pf_o3bX5TWXpr4W_y7rCmqMMbIVqt66zsHkk1w8p45PdHdPmWwnn9zAcoDtLypG0u7DtjD-vOSU8_oVrevDf4ghb2ANNOXa7fVaBEvWJkhs6lQ3Mv_rCD-60HLkAVPe5ial1-7kUVjmyExOmGR_EaWAZ5BGR8V8EUr7s84wM16r8sCQ4lhYs-Rs3G52DOlTl0HQDWUkshWL_Di6GRVL_abcbbahqIU2LHopsE_nlBEjd4yZ-cZFaBmVap7vyL-0QpsnirmCe5_ANG9dgjXljCKISWw6QN4TNZAbS8wiejktI9nnDuCQlT6_rOf3jPc-ErUEm_C17L6g3dlGd0EoXLZ-jQoAPiNHIyLYTRY4UarbYlr07dPiRgFKI9EFV5juEnG0XSDtizqWOjmMRiDBVD76CLExMGX2oBeszQDwrCCDe3FflZeEGvKxlnm6jUeXin6Po2iSBRwRpClWGJmpZ-l7Yz3AYNIEsQB_faL4DuVGSxDW1DKmvqJifPdyDwYNZbTWS03Vk-5CEZI3ZcGhHj2P6nLtW-3YfH3ju2BAsbbq01OJPN8Q5hHgYfJkTTbZdXc_Uy0jbTr4A3whNnt5rU9xbTfGyrm7CLqWQ1LlL1i3MAEwdYCmdmFV2rJi8ODLQDPc2CHTOOKnddTpvg6Qhgvo_DcLp7ynzS_iBSABsu6nDwnfstERoNJDSG0Ep-2aSstr80cpCL4bnqrRcqhaXOaXk6lX42wOffVrLDkALeYknHnUooL9jw2c9tGLJsU5aT-4gxNqWqLpZHdN29BuJXDMIW6xsJwn7ent7g853KtOQel57F1UrpSbRltf0wHoGl9TCXtKU8PAuyH0WW17-ZAUsiiKmXq8Cy9hiwMcbVjtYYgeX_3PZugTK_z5C2ehTK8GhXbiXByFSTNsUAbWHkr7mEwsh_tB9QMwYjXyFVc1_BKDvrgVn008nCUGvMh10LzMyyieTyojXQt3231F-9e65dbuZJUb30P-6d3UmRxah074Th9hM0hkAkxqXaTZI-Yg6kXFVbtj_Za0rHdKXdnlDoL-Wzxi7NJnD4llqTy7bp2K2FHe7E8Vde0FfI5g8GsWTKdYfd2Gq5lBagYMJy3BL3WEnqW67zjr_b4O-iX-nUt73KSdgAgAGQLp7GREoeckOYDKou2yRdwFzigDdP9t6WtsRFG2zdKNxSCyu6IDhsBWN0sQ4YGwTQD3cXoX_Fsl8AftAIcnCiqG3ile2C_eREY3Ht6OewiRD_0aV3vyFtyPhVvIutnFUwycFJoBsfQKn1rGPtEkt8WS3AlInOZ8Qn75fgwRc--mo0rsc8XOWzv8vpHDEs2o_f0A4fUjkhpzh8Hjq8VYtPRbLxuStuE_mJYq134GgMLzTE3oEn1T-8zR-6yPUOL_JQuqnlZ6wiVvR4wCi908uvVUEvYupseFhsAFRJ6AxT-rAt3XsZuVqjVzs20KGOXRA4roVoWBWv79kWptvkIDeevzQ9U2qlYirpxKO7mP-wR6AAuvF0Gq03bDU-PsNvIrGKTotG_VHH7AF-vuiTeQQQIXE3G-GqBNUc6XbMta5YKivpHJLi-xnsXSiNOPtaMtrf9qW2n4WlIDMWD7yFxrHuyhiXe8dOxlv_OpbvZR25AToFB5nTBA7JSUegpnrUxatXakFCRPH5sC_djffDZgKK9pLMqdSNGogag1XhwzdVmK65ZxNt4JLalEUfQD0HzeTjglYxhP9Qh2LWqKJR2w_6qjZL_hYv2XVgCAAD3sX3t0zCYpN0Uh49iSnOKcMmdvE3o6IZmXTtswibcoucE0z6MVJDV9m8Bi3-jtsUkKA_fCh07HOse2j0kvYL1_r1_G98e85A1evmGkpT6_Vr-20ybifdvKbxoOcYIFwQ_DsaTMXHWXUaAVkhJiZZY6z8xNYAIeoRLxnIZVp9WmzKAV2OOaq5tTCFi0H85B_Q5aHIFx3HiF6Ej-DnTG99SV0nC8RVxKICtIZ9uXbHON1WCqk6db4njpwG-hcnAgqn-xHdxWSfdqQ0vq1_ElCTNPckuqaoKKjdPd485arur-lfYU1Ip1llYxjgIryDA5gqIL3C9pwV-JjOBvmIe5DmUo5fEyl9lfODGcgCJHhdhlOOywLLtGJZKJRTRGEowQgLau_CgoAbw9Pkmof0wfzDaXUWIkOEjP-zqi9JvsNslvydk4M9putNAh-jGy5nPyAFBqArvQKX6DRG1OiUXiwDqkfEVHMpgnbQ9bBY53-5KbVJVtXFIv2NMoLzoTGyzDW77LvicC-BNSzD96tG0Sx6j3JOtLRfA8jenF5bQAI2mNA39MLIJ2zlrNLsjrTzjboDQ9eVx5oiPxNB6_uYYWcYKWVxgUrGKlzQ==",
+      "summary": []
+    },
+    {
+      "id": "msg_02000d1da4d5aeab006a701573371081909ae92cab5c601b02",
+      "type": "message",
+      "status": "completed",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"problem_id\": \"TA-002\",\n  \"lane_id\": \"openai-raw\",\n  \"provider\": \"openai\",\n  \"model_or_runtime\": \"OpenAI frontier reasoning models in a tool-using multi-agent runtime with retrieval, symbolic mathematics, code execution, theorem-prover interfaces, and long-horizon state management\",\n  \"execution_posture\": \"non_governed\",\n  \"estimated_input_tokens\": 3200000000,\n  \"estimated_output_tokens\": 520000000,\n  \"estimated_reasoning_tokens\": 9400000000,\n  \"estimated_candidate_branches\": 14000,\n  \"estimated_failed_branches\": 12600,\n  \"estimated_retries\": 5200,\n  \"estimated_search_cost\": 110000,\n  \"estimated_governance_overhead\": 0,\n  \"estimated_verification_cost\": 320000,\n  \"estimated_total_cost_low\": 550000,\n  \"estimated_total_cost_central\": 2100000,\n  \"estimated_total_cost_high\": 9500000,\n  \"estimated_elapsed_hours_low\": 3000,\n  \"estimated_elapsed_hours_central\": 11000,\n  \"estimated_elapsed_hours_high\": 36000,\n  \"estimated_success_probability\": 0.17,\n  \"estimated_reproduction_probability\": 0.58,\n  \"estimated_independent_result_probability\": 0.045,\n  \"confidence\": 0.24,\n  \"assumptions\": [\n    \"Estimates are prospective engineering judgments, not claims of observed feasibility and not derived from any published aggregate cost estimate.\",\n    \"The central scenario uses many parallel agents but reports elapsed wall-clock time after accounting for sequential mathematical dependencies, critic cycles, and verification bottlenecks.\",\n    \"Literature ingestion covers coding theory, harmonic analysis, probability, optimization, additive combinatorics, asymptotic geometry, and relevant proof techniques, with licensed search and document access.\",\n    \"Reproduction probability means reconstructing and independently checking a known published argument after access to the target literature; it does not imply independent rediscovery.\",\n    \"Independent-result probability means reaching a publishable bound of comparable asymptotic strength without using the target proof or target-specific explanatory material during discovery.\",\n    \"Success probability includes either a verified reproduction or a genuinely independent derivation that matches the stated target, conditional on the central resource envelope.\",\n    \"Token counts are aggregate central-case volumes across generators, critics, retrieval agents, experiment agents, proof reconstructors, formalization agents, and manuscript agents.\",\n    \"Reasoning-token volume is reported separately from ordinary generated output and may overlap with provider-billed output depending on the selected model.\",\n    \"The system has access to substantial parallel compute for numerical optimization, asymptotic experiments, exact arithmetic, symbolic manipulation, and small-instance code searches.\",\n    \"Human mathematical authorship is not assumed, but limited operational support for infrastructure failures, document licensing, and submission mechanics is included in total cost.\",\n    \"Because the lane is non-governed, identity hashing, budget enforcement, branch receipts, evidence-preservation controls, and policy-check overhead are priced at zero; publication-grade mathematical verification remains included.\",\n    \"The cost range allows for model-price changes, context-management inefficiency, repeated long proofs, and escalation to stronger models or larger computational experiments.\"\n  ],\n  \"uncertainty_drivers\": [\n    \"Whether the decisive idea is discoverable by incremental synthesis or requires a rare conceptual leap.\",\n    \"Difficulty translating finite-dimensional computational patterns into uniform asymptotic inequalities.\",\n    \"Unknown effectiveness of current models at maintaining consistency across long chains of coding-theoretic and analytic lemmas.\",\n    \"Sensitivity of the target exponential improvement to constants, limiting regimes, and hidden regularity assumptions.\",\n    \"Potential need for new auxiliary functions, probabilistic constructions, geometric decompositions, or optimization dualities.\",\n    \"Rate of false-positive branches that appear numerically promising but fail under asymptotic or adversarial checking.\",\n    \"Availability and machine readability of older literature, notation variants, and prerequisite results.\",\n    \"Amount of formalization required to expose subtle quantifier, normalization, and limit-order errors.\",\n    \"Independence criteria: excluding target-specific literature materially lowers the probability of rediscovery.\",\n    \"Provider pricing, model availability, rate limits, context-window behavior, and tool-call reliability over a long campaign.\"\n  ],\n  \"minimum_evidence\": [\n    \"A precise theorem statement specifying distance regimes, asymptotic normalization, and the meaning of exponential improvement for binary codes.\",\n    \"An analogous precise high-dimensional spherical-code theorem with all dimension, angle, and limiting assumptions stated.\",\n    \"A complete proof with every imported lemma traced to a verified source or reproved.\",\n    \"Machine-checkable numerical or symbolic certificates for any optimized constants, auxiliary functions, or finite-dimensional inequalities.\",\n    \"Independent derivations of the main asymptotic estimates by at least two critic pipelines using different decompositions or implementations.\",\n    \"Automated searches for boundary cases, normalization mistakes, reversed inequalities, nonuniform error terms, and invalid interchange of limits.\",\n    \"Replication of computational experiments from clean environments with fixed seeds, exact configurations, source code, and retained outputs.\",\n    \"Partial formalization of the most fragile lemmas in a proof assistant, plus line-by-line expert-style verification of the remaining argument.\",\n    \"A comparison against established benchmark bounds demonstrating a strict exponential improvement in the claimed parameter range.\",\n    \"A manuscript containing reproducible appendices, explicit dependency graphs, computational artifacts, and a clear disclosure of which portions are reproduction versus independent derivation.\"\n  ],\n  \"blockers\": [\n    \"No reliable mechanism for generating the necessary new conceptual invariant or auxiliary construction.\",\n    \"A proof gap involving nonuniform asymptotics, concentration estimates, or an optimization duality that numerical evidence cannot repair.\",\n    \"Failure to transfer the binary-code argument to spherical geometry without losing the exponential gain.\",\n    \"Inability to certify large optimization problems or rule out numerical artifacts.\",\n    \"Context and memory failures that cause agents to repeatedly rediscover invalid branches.\",\n    \"Insufficiently independent verification, especially if all critic agents inherit the same model-level blind spot.\",\n    \"Ambiguous overlap with the known target proof, preventing a defensible claim of independent rediscovery.\",\n    \"Formalization costs expanding beyond the high-case budget because prerequisites are absent from available theorem-prover libraries.\",\n    \"Publication rejection due to novelty, attribution, reproducibility, or unresolved proof-correctness concerns.\"\n  ]\n}"
+        }
+      ],
+      "phase": "final_answer",
+      "role": "assistant"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "context": "all_turns",
+    "effort": "medium",
+    "mode": "standard",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "type": "text"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tool_usage": {
+    "image_gen": {
+      "input_tokens": 0,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "output_tokens": 0,
+      "output_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "total_tokens": 0
+    },
+    "web_search": {
+      "num_requests": 0
+    }
+  },
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 375,
+    "input_tokens_details": {
+      "cache_write_tokens": 0,
+      "cached_tokens": 0
+    },
+    "output_tokens": 1847,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 2222
+  },
+  "user": null,
+  "metadata": {}
+}

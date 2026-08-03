@@ -1,0 +1,108 @@
+{
+  "id": "resp_0997b3f4e9965638006a70192eb4408194a25179bc03bd33ff",
+  "object": "response",
+  "created_at": 1785731374,
+  "status": "completed",
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1785731420,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "model": "gpt-5.6-sol",
+  "moderation": null,
+  "output": [
+    {
+      "id": "rs_0997b3f4e9965638006a70192fee608194a2ff03c0f60a5127",
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": "gAAAAABqcBlcJmFKZ9tqSGkjP0S5wfEI8hJJLM10ZhEOtRZ3xPMXZJzf81cmaOHZBZAx4WM1CCjMmUNH-6589VLFGMT6ZsSBVptq0ZdefCMCQ-y9DCrMobwWQxaVAHYlKfM67hW1wJ5tqPWMmVUFfMPugQyEsB11dXRBDlBAagYMOa-HSgkstKe9klWuCE9MctmA3BwY882fW7IDWgTcGYES6Ucf4oWtTJZ8iXTGYRQkZiLFb53xuQV-8SbWxHB9KAF3L-crah-M0o7sqtFrPvo_bcHqKsrfwYJ4UHDUPUJTE4JoGWZe3UGVzy399dU3T7G1Ny_WbEVZ6vN3SMnD8ukzHbABH-Aunxu_XKeWRw8a8RASzq4bQt_vziTjpvAi47GLuipestdAe2nRQT6HfbrCCNDnxL-Gf4tVlI69TiyCT2Xwhj9E3eUQk5yRn0KG1J5uCWzcYRkfM34DVXXc636HFYin6g6uVX6IuP7M24ZvfRuhGbG3rzBt62_WW0Ewyds0P-r6TTTm9lxTfjuqvqE_Edw8PVbP2ZmAyzFcMo1z3b1rnKKLiRimC8nIiBkM38RPlESKaZp6o65h6pxI79o-Ag1Peo34ZqfFTFG3U77P8KROcK6PaPoSMj4c_zsBgR6C2UkQNTKzZHD39gZhcrqu76Q9K4P3oltMVnyryWnmYl_EvKBF-7Dii3t_n4CQ39XAaE1mwTc29HKzuoJMQ0W_aWyCZ08SHf_oDLfk7ifguuJVEsz22W181rnigrguIAy9-Q3535zlaik0HWUa12bFihp5y1wDUrlhWCFuMFXo9tIln52KrLuuEb_ZJpSbgfI0WaU6t88VhTacQs4NSGs117C4T-AGpMGc0SC1pwLZlXBfIbQ-HWyQEvQm94_rssn0iH8hVFqX9BalBay950QTJeD0HY5OYENVkOwD3vj_s9HQ1SQYEX-nHApG0db2bhKVG9RjyIe8yOQB0po8sbqWKjV4-jlXvKN6i0WNaOgKb5rfIwppYp2FrtIGq8AAsDbkqA1KgfF0iuwDT6L36EQ_yL3TKAnxGBs7JpgJS_juh5ChXIL_ID3yrUG80yRBZLojkR5cuWNmAD9RhuHnHWdxcad74h60KeOSGF1SGE3VebznjlYHBEPZukFiN5IW0akK6EcULlNIGKb8JK_ameSrLAvE8opFoNcgcXEnsXvTKOMLulX99nxDqPo7eKnzPqiP4YlIJ7cy9DxYGwlX7jvoyrvNwE65d5k-9WeDzzbijm1crIV5CnYXNDdTjSW0leItTfYFMINEwOLl-b-X0xsRVnVjzQfbkHHONidv1qSMqRgUeEI_ucAQ9fTXG3PbbNYG5zE63OnsyejMkU9_iKbJytRYRVzwd0WpFioMYxRKgnaEV3nW2B_oAm-Gd15FU06dBlyYBI2S4bNjRZJqNogpDWWhZLBiKeaDFyLCRGMqgMu0Q6dATZi2ninkRod_KE1CyfNp5a_GO8oZ5miQBQKRskG8tBtoatW-j0DRuRh4MNhgR2s5ZipWgdQD_VjygS2NN7oiKAi-wzjFbTIramDPT1jbGKxe3TuRrZ2JHKeoIc4ZOT1w5qQvG90YGEwZO7_E4O_Xt4a0EvCcVn-sI813OmTck3b6OSnyoHTIZ-08v1-jdbDhhMo7QQYj9gbK4nCxI-IKRwFNbkVfripgh4GOc-J_0cIHBXw10bNvw9sNTgiaSXoBRcrh4gutjzPAaH3YZvzuvljd3bBNgdPDlbNkIrICXriNiq7usaGzetmGdpSeuEAGAA8nMkKAbVeljFdL_wDzClzpvjC-MZBguU6AJBqlmzKhF6g44IAqV-TGs-Jsfe-FwrI1KdqW0_gcro5TfuOWRSh8RmRwYnPg5tONTbWT2a2vE78Oh20l1ErlOSYV1VEabvSRi1KS4s4P29bYUEibj0Gb_g_3zSb8-dFnytGQQu-kDLEVBHmK0o2tKt6RRRaarel9BUW650kKDFQaDSUz_Eh6ISYMayqOTYjE6Wn8LfcTk8w7avLaL7dxLYNlRBU2izrVPjSS_3eUBn5YckrYj5_bd3FFFZworalkGjGui-0csIjOpB_9o7V3QtvO3u1_G1ZfyW2A0Z849nmCuuAp9MtXmALbn8FFhbx0s4QArSqf_1uvWi6zGC_1xzASPOR4dJBHZnHvfBxDmxoEufEaPg9_hAF8iNX3xmrf0mOR-dPGpOWff6aWQhpHMvQGbOGMrbEitrlKzRMpQ5kXaumxIXEPDLxb0SGVKA2t58nLFSj3ESeYOnTSSmQF1MAGSyPMs4biXyj1fEW8aXn3M-XrIG12TZumYFfvLvqL4V4TQXkXwK6F0NEKUXdJaYixAiK07za0RHVvRpEK6oe4sKZO0tUiPxFQU6pbm2y5goJau9Zt8XOUcgAKeXaz2d9Hl1dBlQ00fiWNtLiCBjtN2GUnBzxpF6NSsMzG55ghLINNVwoVrnxB5v4Jv1NZkjatCldkVNR7b18PLeUFZJQTslEs20qVxYoBPOCm-HmybzX9FN8bfUxqgXslyst77uB9xnZ1kHit0LBEw-05XQtQeuyu-JUlzTJX7PAW007H7kRsSs_LAKhAB_rqdh3mrAINyUu4atm4n6cQGKukYWkpFxWKEvIasj9ztGQzxxsYT1Hx0TmSPNjbol2n8ZRpWk-gHQJrKVkCnivqsXQJUnfuoQkYIF0N9caegyIMunnIIIttmzSYx5MUh6G_A0dkgxkA4M96wcEvf50J7dVHjyzmhN_7BqDL82uk1eKn0Iv8FZhjEh-8ZNDjdrbH-YBRdCDaN6RrcNHVwR269mWdLyHr8EcZKKD4vOYby4w4Ca6BIzRFfPVKg4wKZ_7PGVM6RjSR_bj2hKVES5gYsDbgGr4QqCVCJ6W1lpa_shOpMWZP8oYNABF6fkPByrponN-lj3j4-lKqnmFhtDx7Ba3-WSYLnqFh0L_-bSpf7kKPVPfn2HUoon1bKxaHEgs7_dKJt2LEdQC60YWdsMzqync1lbC_T24Ysek17BjWk5xfGPfO2w77p5a0rP9efgsa9or_f4ZcSoXX7wl__xgI7JDNKlxdUW9Q8QWIONCIcWD68wvMuHiwl9g79o-gKQWhSBPhFYok1jG-D51V1nXIWFQLTU46nyw6AQtJtnkp1xpYMCmxXV-5ue0U_f2Lu8x79OiQOxSroB-imgmM47ZFRch6OTsiYUC9XBfS6ut5vE1W0Xp3wbM69GYG0swRWLvQmLa2MFBim3TodgmiazAduZSVg9pkue6oS2GGcFfnrwDj5WOL1ph2uSjoIhFpDiQAmY-_K8KgcubNvh2m2vProFyXeM-hlN-ARmvLTkDd3MfqOo1F7s3y41uPiWx09KI7vLL1p-6sbfRJFgEk4TnsABpbbUPwgFM9T7w7zF9iQIUxxYnVHUOGopmQPBqxKfXqEEHd8AEHvU48XcrQjrNqn5g-K_SU-D_l1eJMctZMJ5yVE8vWQS5hf3q9zA1l-PnWQDksq01YnpHCV8cKIrtEUWb5MdQxToIfJ7Ecig4NmwF6vjEk0vyP65azMbx26iGMAHupKylxz_8oXIU8jrhpojYiZUIgdmYpcETDlHm4QDgf6LJgRvMfsTAC4KXhgwMMt4R8Ohyj-YsMsNqyNFGiUvj1t1bw6jTWBeE-FFlJ2aI-StuuDNpW820kyJN9ycCskl2oH6P3r4rYfqHN2MCUXoX5oV75IfT_ivjTLPYPi0QJOhsMcuXMIBXHzXPEeZ7O9zqs6oyjECvjkcinEDOO-ma-mIgqDTYWyRudT8gGwo9WBMlrAVqAkMDMZftfHgkFACIt84a8o_ogwKcQQBZQDD-5oS7rzOThmLtFCbG2KCp9Mf0ODOu9tgFh4zHiaWpJFkPXmWmP9hgnaKd4mz9g6x2Kz_efqY40PRUiv4-DRZ72-yLV69SB-odxz9AaVSHWN8-xSEdVMPoadhiUrMJYbHitlsMGkdfZpN2PhBw2cpxKwgVfjE16E6HgILwpsmKAUaOtxpBReVGwoB96MSkaGaXK_X_l6pECHv0Zh6rhLtVSWVueXurPMwSAvMbJAbiGJutu7OD4t0k1ZMgHzcJIW4r7WulHwxHbaedKoy4vVfEFzX4Cu9ElLHPm_NlP7Tgc3-Ws-dyi1hxyPZ2qd-xIDd24wOog4dRDamL1",
+      "summary": []
+    },
+    {
+      "id": "rs_0997b3f4e9965638006a70193a917481949c375a3f501a6b74",
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": "gAAAAABqcBlc6bsLVVSh-e_xswLYBK_P-hsWdUzKMm8pzuwHoBC6mvVqzLuspcYDxe5Y7Anoqk6-Sb31Wnb8TU1ec3OAX9fuQgOx3_JSUdXGFI1QGpj5sdyOVWagGuWdx8-UPzcz5TBkLT8mkNJ5-jIfXLCVo17aXP8EL2xF1wTyQAGvJu5rwudR4ckdQ8o2P_r_qFNiZrv8PeXIXtGfZk2qwj9hL_q0iUNdUJNyL64_0qhxvUuN_wzbGIBGU3bVewuxrozAFI54dv5Cg5Ciflqv_cVTdCPIDi1HHy3bwYCWFsCSi6Ao6Tj6lcsVl3BOFnw48RYcvQuWGqA_KTKZXuLM0k7XLsWreh_vzonFwmH3fAhQawIq0-dsWe_ldl24acH98aG8CDfLVlyXMKtSm-ruGP6BIFy0qAf-W12HDbRIML0kMbg90CaWQ67Hvhk9yzxDhcZHhXjDkemMTooxbnH1_I9fysfkhvebjXXKciy9VFKbllC-knd0ZlcJzMYiIwR_4vTVU8isG_AB1yeESaNFaEJ4uOBYKgpU8aIirw6a5abEF9CUrvf-oh6I6aEWSMe_41rkHgaYGulcHdyRqjVsn_7VUXisseWVWk0PX3TUWc5o847GzErzk1aHrQ4fCkgh-yj4tNVJcjeW87Nk1lu9gi2bbiPBt1plSBMqfTZGqAcJBy3v-b2KX6XufymtsVSnFnCNXp1K89x55NdnVfNt_oNJKBtwFP1cl0hdrwgub7pc5_q6xJ-VKQyO6flMgZfGPOexvMEusuDOKzQwjiNVNFPvTCoGBRT_cOXTVEzf-qTMijxMYEnXRqpcp4dYfHCi8ShGXc20GVYyvez1fWkyaOO76MckXNbXa9UCh_JOrix-38dSxerk3vRUH4ptvViGxo252wyPTyHJtq9obkShEX-TZGFA7sjETZcLEFqUses86SeSm8BQwL3RJbqI7S02sEff17SkB3dETpItrwq8tO5239GpcCBAG3Y7VV_cKAHnEv6wGm6mS-mUpCixP_2ytolJ-bSkApYAwYXq9sAPMDE0dqsAxhcCs-YxGc3E50UpIoX_F5IrvSIiBgSBQg1ml_AKcbdEHcAOGsjvy-TDrGQ0FT1yC7Y8G8a4K6KfzknyR-Y5JG9jZrH3CHwHgPhubDeKgX3RlkdlyLJLdIV0GVFuNXJzcfjf7wybaHYJvRGsHcLYkKgzBk9xJsdd5kaXyguxFmlr-MO6bysB7MuDOHE7CbvAr_rKxLJMxueeAJ-RaYzQA6y-P6CGYT-mvsGnkXHTEu-u27zl4UloZ101y0COZLFDcAsR3K-hMBNDjDoyHpZYzymjlLOzS418uaY0XMF2spLvutIQov6QzpY4GcuGpjGrf2V4ajsMvN0rJFnmw6ejDkbC_TK9Cyzmyq2OyiGzXUyvdbk0r_v21DjOnYYFCtb-XVO8JZ1zYcxM3-pqklTNx2XHL4S_oR8mM-kZ9t2YxRh7i3TujT4u4R9EJ3O1Q3FkbxzvG_hZ1sCfvAMSvPBaKZrZGSPNNIsUT-SZF9OP1rE3OnvOclnxjK6ZaBY4V1DQYZXMEgOcRWXh-wkiHk0PazBoZaz-CAF5LOIAQvD6owp5uXJivqsAB24UtS0ZpEBwHYqUbwTWwnuCNRj6txHyKSxqyXhl8kgP1TquHmig6AzndHKHhDAGZOSU3xxHMHIu0-uQa2FQk-AhnVUu9nSQdSPsgA8rXInU4MQlaHI4wBSLXX5aT17nz79kWmCaMVu9cB1B5cZjfMAYd6Wp9wsujl7KlR3SJHajJ6IFdkhBH2HDGtxWuEEOvHY7HIS80DB0YRhnLhMfcMV8oNlH2lGgKJpv_rDC2bmPBG6Zdyl-BfwOU8U6jIOwlsWKSQR4LdSixRHNyE2s2hKxHgKBctTNvYMbSzOk7oItrKVY5ey_1JhLAJuQ8_QxmQhPUay8O2S2tm13WY8jKgbd3pI1NYNdCNtO_1ezKkozhIVcqQ2SI2mNKW9nyxZe5IGSJfDSJOLJA3qcnq6sug_pHG2K_lXRzkpDP5VMSz_Ndj7rjBQWu5S-4bm60ut8_1EgvD9EGdJifZhCqOTkQIai21NOOn7CU03pVIVbfANgCB24oOSEHlGp8MaZ3sZODQ9sXYcSKjTlgcwrA84gdZgbipF2RmmaD9lyA6dUGQNwiG_jOKJbE2h2ELclWjQHAZZzoEuuPN0pEN40U8ubOkR40kIV2PmBFxdbAzK0gdGxX0E7rvnyeFzLfpxiNaVf61DDUHeDKh5hnlX4HIFjAt4J681I7b_nZSI4yLjzb1UCrT4oXdaq27aqXFWcRaXJJ52B45j_aCxmzYWArYtCOTVl3edpBxR1XonWdeh6aDGDmVKiA8H9uF9LZ15U-2K0if0rk-B1qHTql6aO13jmrWzmmoUim8grO0tdXOW_Rv6NqtmzHpoP68lXKgz1TXdCrw-vb3YqdYn9c14zyfA7vPJy2hJb5CLbe-XaGqbfZTOLzK-414f9B5ZzxGV-NMR7okM2maOgq3qI48o5FAj544PXus5tRfpbpR4XDNN_1re2yayjSrjRFRKJ8aaTf_nRIudp_8q3Wn6B3ZjhJrceVNe4k1C59XSli5YaOrapY8vPr8hEe2wK-hGuMRvKgqT9YD0ic42J_A4EaLg8Awd4ndCPnI_05mLLSAQmM8Fqi4-kmkEeAdh1C-mdblIqA2FrSIAD5CgPYbTtwHJDroa6DMoQX1pIkxgRhs79SK-2y6lUARbepjzM8CmAJD3xdbFu6m_9OT2EC8eRPLwammpIFGMsYAyXg8WDOY9dsR_9HZiRsqxl4uvZ4TxlE05XKHXJylrDwiima8aPAZEy44qgzzMHNhakoWalazUMcbLYK2cBMmtVKsCfHcgaZp4R4KJZGof3MKbKfPF67zQDXk8IC97UWg-HcYhRSfLIpvJQRe_xiEZq_ubU4N-qafZmv8FdQecwHbV2E04ZB4_LWocJZn8FxuZWP2GIGp668rqFCllo0fcapHdkK3z_RoiqRSVV6rSkCVkOLUSl_JOhu0q45rZNVqpnctzMeS6PnU5Fe1oCZ-BwcrMJbhzZXf8kzJFfVQNe7hwyrgkQ67YLiAmSqp0tfEJ4qD2kPjO5pPZXLviDoKWcPMjbm1_vz470gybENghRc7fCi6kdi8iIOXQxUum8VuKzvjAEnq8VL21zI7kWh7WQeFAkTbTXwnO8fJ1i0-ySjA-I7f9wH1RKidNuBXNOWlS2OSt6iG1VxKAnySNPbh3vBeZY45UG0jG4Hww8h9tlprgRno5BBxDPYDy38JamMdmS3MYWy6d2Rrswl3mQ06xUMwoL3fFFoZltVeEhn4dtqe7YDJyO9iMjfZr0VuKBCyZlpiguI1LWiOU5SZhs8D_RdnF3xKWQNGtLOG77F0YVJZ8MJu1cBY2uyw2MTuR1LK902WXJwywvDHCNFBKG28E_EafnXlRUvJsuSRRybzGtuh7Z23TDpisdviWCWWcHtwMTW7EQmklzsAGQbW7KHXhGznFV8IT4AWOJs51P-zdH7nitZutRjgW9NjzqX8AWDzxNrnY21dnHdH22C1QHwTy1Xk4tQzWTLA-keHV_Z3uR_uMf2lZVuT7bBDphr8qX_EDUyIpJ6E4wcn9DFgIKFb9y0hBczghCd2RjtgZa-1lvELT_gOvlTs0Sk7VAupmSBQQC5pu9-D-8MMZYxITILd3e1FjXpoTPalujj_DlGqiNYfjQHK1fXcOP6GKPVleI0AxR8AAMvRhmewWXKIuZZPhLBlEX2Q55BON-JzyPv84Vv0Y_WwSy6C7p5sUXktWoIr-Lu8xeJV8Z00d47Y4bUCKeiH_6YF88Hhu2Gbc4frNRvaiWkMae9VKJVZkUTQPzvHxuw8v7S64C1dRPLW02tIcPw8VT66Jqr-wWc5X3Cor9ltgoXS4D7YtkxCmDQ8_Pjiu9m4E7eykEblmVKBVdYb6A5px4H043B95agA1mlkotrt8LRgARksAfJ3jECPLyVx4rm29eU8VaYxfgGhAPHmR1VFiYgb5V",
+      "summary": []
+    },
+    {
+      "id": "msg_0997b3f4e9965638006a7019442954819496d5a37cc95c44cf",
+      "type": "message",
+      "status": "completed",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"problem_id\": \"TA-007\",\n  \"lane_id\": \"openai-governed\",\n  \"provider\": \"openai\",\n  \"model_or_runtime\": \"Frontier OpenAI reasoning-model ensemble with long-context retrieval, code execution, theorem-prover interfaces, and isolated critic agents\",\n  \"execution_posture\": \"governed\",\n  \"estimated_input_tokens\": 120000000000,\n  \"estimated_output_tokens\": 18000000000,\n  \"estimated_reasoning_tokens\": 75000000000,\n  \"estimated_candidate_branches\": 1800,\n  \"estimated_failed_branches\": 1620,\n  \"estimated_retries\": 450,\n  \"estimated_search_cost\": 140000,\n  \"estimated_governance_overhead\": 350000,\n  \"estimated_verification_cost\": 800000,\n  \"estimated_total_cost_low\": 1300000,\n  \"estimated_total_cost_central\": 3800000,\n  \"estimated_total_cost_high\": 12000000,\n  \"estimated_elapsed_hours_low\": 4000,\n  \"estimated_elapsed_hours_central\": 10000,\n  \"estimated_elapsed_hours_high\": 30000,\n  \"estimated_success_probability\": 0.24,\n  \"estimated_reproduction_probability\": 0.46,\n  \"estimated_independent_result_probability\": 0.025,\n  \"confidence\": 0.22,\n  \"assumptions\": {\n    \"scope\": \"A publishable, end-to-end hardness-of-approximation result for closest vector problem, including precise complexity assumptions, parameter tracking, reduction correctness, and handling of the relevant norm and dimension regime.\",\n    \"cost_basis\": \"Bottom-up estimate from model inference, retrieval, computational experiments, theorem-prover work, orchestration, storage, verification, and governance; it is not based on a published aggregate estimate.\",\n    \"token_accounting\": \"Input, visible output, and internal reasoning tokens are reported separately. Actual provider billing may combine or price these categories differently.\",\n    \"research_program\": \"The run includes literature ingestion, prerequisite reconstruction, clean-room exploratory work, reduction design, parameter optimization, failed branches, adversarial critic passes, computational sanity checks, proof repair, manuscript preparation, and archival replication.\",\n    \"parallelism\": \"Elapsed hours are wall-clock hours for a substantially parallel program rather than the sum of agent-hours.\",\n    \"reproduction_definition\": \"Reproduction means reconstructing and independently checking a known published proof after literature access, possibly yielding a verified exposition or formalized replication, but not claiming rediscovery.\",\n    \"independent_result_definition\": \"Independent result means a clean-room derivation in which the target proof and its distinctive construction are withheld from the discovery agents until after a timestamped candidate proof is complete.\",\n    \"success_definition\": \"Success requires a complete manuscript-quality argument matching the target, surviving independent adversarial review and replication. A literature summary or incomplete proof sketch does not count.\",\n    \"model_cost_allowance\": \"The central estimate allows roughly 2500000 USD for model inference and orchestration and about 210000 USD for non-search experimental compute, proof-assistant infrastructure, storage, and manuscript tooling, in addition to separately listed search, governance, and verification costs.\",\n    \"governance_breakdown_usd\": {\n      \"identity_hashing_and_agent_attestation\": 35000,\n      \"budget_enforcement_and_rate_controls\": 40000,\n      \"branch_receipts_and_provenance_logs\": 100000,\n      \"evidence_preservation_and_immutable_storage\": 75000,\n      \"policy_and_contamination_checks\": 40000,\n      \"governance_audit_and_reconciliation\": 60000\n    },\n    \"verification_breakdown_usd\": {\n      \"independent_model_reviewer_ensembles\": 300000,\n      \"proof_assistant_formalization_and_kernel_checks\": 300000,\n      \"clean_environment_replication\": 120000,\n      \"citation_parameter_and_claim_audit\": 80000\n    },\n    \"probability_conditioning\": \"Probabilities are prospective estimates conditional on funding the central-scale governed run, maintaining tool availability, and defining the target precisely before execution. They are not claims of observed feasibility.\",\n    \"publication_assumption\": \"Publication readiness includes a clear novelty or replication contribution, complete citations, explicit limitations, and release of machine-checkable artifacts where feasible; editorial acceptance is not guaranteed.\"\n  },\n  \"uncertainty_drivers\": [\n    \"Ambiguity in the intended polynomial approximation factor, norm, dimension convention, and complexity assumption\",\n    \"Whether matching the target requires a historically specific reduction architecture or permits a different theorem with comparable parameters\",\n    \"Long-horizon coherence of autonomous agents across many dependent lemmas and reductions\",\n    \"Difficulty detecting small parameter losses, promise violations, and quantifier errors that invalidate hardness proofs\",\n    \"Availability and usability of prerequisite literature, including notation-heavy or poorly digitized sources\",\n    \"Extent to which the proof can be formalized in existing theorem-prover libraries without building large new foundations\",\n    \"Unknown future API pricing, context limits, reasoning-token accounting, rate limits, and model capability\",\n    \"Branch correlation: many apparently independent approaches may fail for the same structural reason\",\n    \"Risk that successful reconstruction is not independently novel enough for publication\",\n    \"Risk of literature contamination in branches intended to measure independent rediscovery\"\n  ],\n  \"minimum_evidence\": [\n    \"A precise theorem statement specifying approximation factor, norm, dimensional regime, reduction type, randomness, and complexity assumptions\",\n    \"A complete reduction with every parameter transformation and polynomial-time bound checked\",\n    \"Machine-readable dependency graph connecting all lemmas to the final hardness theorem\",\n    \"Adversarial reviews specifically targeting completeness, soundness, promise preservation, and approximation-gap amplification\",\n    \"Independent reconstruction by agents isolated from the primary proof trace\",\n    \"Computational tests on small instances for gadgets and intermediate claims, clearly labeled as sanity checks rather than proof\",\n    \"Formal or kernel-checked verification of the most fragile combinatorial, algebraic, and parameter-tracking components\",\n    \"Citation audit distinguishing imported results from newly proved claims\",\n    \"Clean-room comparison showing whether the result is reproduction of known work or an independently derived construction\",\n    \"A reproducible artifact bundle containing prompts, branch receipts, source snapshots, code, proof files, critic reports, and manuscript\"\n  ],\n  \"blockers\": [\n    \"Failure to fix an unambiguous target theorem before search begins\",\n    \"No reliable method for maintaining clean-room separation between reproduction and rediscovery lanes\",\n    \"Inability to formalize or independently verify the reduction's most delicate gap and parameter arguments\",\n    \"Context or orchestration limits that prevent consistent reasoning across a proof with hundreds of dependencies\",\n    \"Discovery that essential prerequisite claims require unavailable assumptions or do not compose in the intended regime\",\n    \"Insufficient novelty for publication if the output only restates an existing proof\",\n    \"Provider rate limits, model changes, or tool deprecations during the multi-month run\",\n    \"Budget exhaustion caused by correlated failed branches or repeated proof-repair cycles\"\n  ]\n}"
+        }
+      ],
+      "phase": "final_answer",
+      "role": "assistant"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "context": "all_turns",
+    "effort": "medium",
+    "mode": "standard",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "type": "text"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tool_usage": {
+    "image_gen": {
+      "input_tokens": 0,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "output_tokens": 0,
+      "output_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "total_tokens": 0
+    },
+    "web_search": {
+      "num_requests": 0
+    }
+  },
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 363,
+    "input_tokens_details": {
+      "cache_write_tokens": 0,
+      "cached_tokens": 0
+    },
+    "output_tokens": 2506,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 2869
+  },
+  "user": null,
+  "metadata": {}
+}

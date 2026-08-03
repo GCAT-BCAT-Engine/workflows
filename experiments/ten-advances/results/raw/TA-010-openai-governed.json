@@ -1,0 +1,115 @@
+{
+  "id": "resp_060b0a08df490032006a701b3bb5048193a424a79dac09346c",
+  "object": "response",
+  "created_at": 1785731899,
+  "status": "completed",
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1785731942,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "model": "gpt-5.6-sol",
+  "moderation": null,
+  "output": [
+    {
+      "id": "rs_060b0a08df490032006a701b3c727081939ef35d818c04406a",
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": "gAAAAABqcBtm2yNuonkIvUXDCPHefk8dKSoLHjZrE6Fzv67KKT-H3Q-L1TgAUClW_U-6LEsDt_5uexeutcKkK4KIqiOM4F_dllB4N8HpvPu6LcF-_fUaGbDWs8Mb6SeSX_TAX6FEiExlXEKTy4fJh6QQI1y0SVwc5PF8r6qn_pXPb-2WqAOjgWkwJoVL7pEZxVS1S4CI9JsWAcXSVJqCqhloM1OwffLfyafK7yRIBYBPIY6h4jbIRUr3ELyekVx3f_n8zAqpVTZlgAm-SAr-VnqYUYk8QQEADt1zPLhXXROO43-B44y57XCwxMDYHwM1Jrpw5ieXux4VbtMZgSsLIesA1yLySr4R6qAG3v1SZp3hwC9Lam70n461ZtgO0GYSz25rDqkNXlWNvR37tV86hNwlxjGIo3e_4CpW0gZogc6tRAwzqhOsAjeYw7MVUJUX02TEyn2ygZ5CyHrYxvGi2IEPFDEVE885qmCyq7UNz6GtQplBNpYN4LhVVkq3iBL-m9F5EiunDMUhdc-ehetIZLPuCai7SJ-pxqpXzhUQj-UrQK840JZ-HLk_EZvdgXtEB3iYShPdczttiq4-nsEghd-IXgTEl_2wQWnUwdzrr-ookQPs2OeQT8IOMP6qQVgvq45bh4cQPuVMw5h7jCK8LcF6_bsYpX8l41s-zFSeGAoFhQxMbvJKnIu8PR39I8NQIGC3VRUL-CL_AqBS_tCxqVjCOBeqAc0tIQC2jxq63-fy8rxjJsKIk-NWF-4RFBHizL2ZthZTjhIJAuUqrSqqSx6pWpcZYkwZYmzc2psBdeIWwUqol5R1aabSimd6PWDogNCvRxs7Ftj_FAtKZ-EdCoTapKndpNUXh5UY3rz3yvTosfZDrIPIfpJTHObxY6gegCIwCwAYARqtycRP_WXIdXXmQm2j1s2ZXbOLxisLKG7D0TxJfMm2Msg-Y-vA-MAgaP9fDsAO1KymTGuHkUvfK4VDI5UTvG6YtgQv6rcGgcHP6UEkuuMSHh-VkwCk118XmpbS6IVKKZbx_zkHfpKjPh4ZhFu2oeGWF4-XqtgJt7sJzIS9j3e5jy8aF3EgN3DfOD98ZLBQC7_uVMkK3Sf92p2cvytP6AqWnBQEp-kgSZivAhEPuS4y3ryXyAH9ImxWDeWXh_--1WmNKdnNxIUjMRFNqJHXHJGsVGpjPggNXxe8rWwjsnsOfqTHPkEaL_9hFw5mA_AKcwGBiKXBwbxpENaXLr27oRfXJtCvAIbjyGkTQefcNm48wmgAwBlNfOVSvgFZBsNQXsToJTN8UO7u6t8WhedaD2ALZkwM0tfYu6agumpDj5tC06yDA-J-vW0srL_H7le0DEfnhaTv7b00XxvYUuN0PB2l1xSVyDdPwzLd2Szc8GC6SUOG-7do9nWCkyPBJl-OgCKtis4luXL2X94RY-cPi4-Wm11m_zjmXETnDNfCD88AoFp9l3rGIXtwsS68tfeXFZg2mlOFy_r-n3fwQPjTHHE1lyBqQDozWwpu9oidKiwRvUS-1VCTI84glEsHVL6SQMedpX3VftlEIPuose83WqACn6qnKcppzrMTzEzhaSuRBN2ojH19kVEK2jFZxBzPie3UlFjP3QRMXBysAPQWWmdLfKna4fFYwBc6m5RT78uA36B-1uOJgXSxkbVHWJJlL7PBndeeEl9Ocp5WpzyNfTXRGNq03_-rURSRjjuAVdClsJEoJLXCWacYounr-C_x991txn-xHUPAEK6b2-p57jNIt7xASa-Ddn9zAGHDwbV1WVPlbo00Vvu3mDTYCX-bP1HkeZTgeVXBdcVrAYerOdWwzXHHNPKbVCBzHlp0orSOKWIW12-Uijzva-zrdRy7dpfuelQVPi-QGC9oQPhLugoU4Mzf5DcD0kyzfZW_8dQNroQKpfZBKEXuCUAL_jgcjiRZu6Zi49ZeImSEeggzWLKuaBYzFZrFQP-tJI4-7N4knQ-xiaguhWYp044RLKfXD_n8mdYs8pbi6Fx8qoAjG1nQTgkLqZ2p4WVHhiXizOP0jgDF33CoRwbeEIwgPLnLSX7m51kWbEAJ5hE-RABwN1cOF-KKIwbwE3EjbRdDG8pIO6Zc5cb63a7LeKGUps4UiGIsE5IQsa_PoQUybQk2CfOSV8sZOiDJn5HWIm94JY2woCv4pig-MaF-ZlqI-yzmYH69D-8oNv4j9Oq08agj-2B2QRkZKZr_WSVzIeMasUZBYiWrCb_ASa_sir_5hQPyc-XtVZOWUbdmiQBqDDKOKPtWUtMNA8Jlhe_PJr0_8Swp9PjrSP3CemA5_XTsO-1umNP2wGELPi_jo8WM0ppTCxLEmL4n9iUZrzP8VBGpLuMPGUmJGVxMLhyP_HcIWHhPlW1k60tME3thk-4jL_mhsQnNhiM91D55LxndCy45ciwJflavjddXYaqRPiP56ln3PXx2Duv5kpwJ5csWp4Cx1RVEVVVcNpF9bOPAY-25JAGOwk4WTpErJ7G9nxpYSLVFlxsNlj8MBW8fVDt9XFt_JACoNBjm_aYaq7o0oG4PvgIuw8n8_MINWga8BZW4t_6k-AN2HYy4LsHnpTTg_n42219fUxx6KT8G_Y55BSU7iZFab11EA7ukVbPxKWpqTo-HnxLi6xHVIlsW9bNM9CAybsQzYYyaME8wWWnahTQPdZ95rjGSFWYrXt8RACKHa30sL3jhYFjpBLjnpLGtQqDkpG_JJ9YGrDqqna2G50I-2xA--l_ym-FBEEfi0-73haP-KeL4jiSwb9SxzmM3mbUNHNzsJGykoh2CcRCpi3X_ydTnoIieLJ8js6szkZPzrglxvycg5RFPwez3gx2-F0FYxf90UKAYgeQKvXDIPlHmRSmKXJ7ECY2-XfK38kNmmQiXTNwoRJ4lPlAkSyp4AithXkXjWfNLyyVRPoIcHZIPgz1rV2n-0ibWdbq_Fgx6kAWbW-Xj_vtL71r9AZz1sCeupo76GIA1a6bNe4CcVx1Uu5BxU4_M9CCMUWB_11ZfYnv1BNvZ4iWw4RIgSnrqMfJZ6aI8uG29RoORJH0r5E7i3agksjR4z8sO_4npqLF4yhuZyiVpbFwqOCgzIWX4SSSnuAIS_Vuv8P2IMHI2g6JgOZ7Zm1g1Uovu7yAjAd__uNoLzEiaX21mtzU4vM3CqGUIkQYNyJpAAKAJslSzq3rVeTn99k50mShc7GuTgtJUzPnii3hidcvoe39nH8eY_mmTAAk7zHbc9IPCEGREpITvu9YcdsLHg-etxxtoAB4EGL2qUTD0AFmeZPi5SDtnatjz_VnJct3Bcce1eLX9lgfq9wDU6XC_ElcsVfDUKLzjJs3ZB3O05JP5d4xoSBFJOwqV1qjH8d0tT0IS6OnAF10MDejIkKea9feSPAaozESoqZqCE85BXqX03kGFpxUq4PockIP5aPABMb5SUbxDm0MI15Xg2wO2pIALsqVGWVvBZRy_Z_t9b0dJ-FBJa74Lbn3jXSO__9Syrm57q1XllNNC76KzskKs0oGwCLrS2Pcbtvn8kJ1yAwNeQpylETf5Xz1pS5oV-NOc4gGDel_MfcJD-kLBQdrm5YOacnTeFVymBPMgii3CY5sjiNpgN1AoxUCNOPC_NQY_CmyvmKtZZOq-6t_nfDXCAfuNQZy9xTxiLNp6f2zLfL0i370gMsamVNLbFzpAQIvgGnc2KsuoE40DdIBNzXT9SRo2gHw9ON2Dgq24vq0ZP8-8ZhRIH4Vpd6_UaILOtTuKcs0BIeaqhCc2SQUihDPgvGUDSyAqyCCdwDTd7wm47k07vyWwxHlQMc70765dVOFI6XWazGEJKWyp1dAGbNuBFeD1g2B5WtB-TIaFEjnoOkR98xKecRA35-tWiix9pzu-vcgnKPH3S-Wx9wuRBNUGKO3jILMhKprL9PHd-_K5JoLF81JhOuQmVSSKfHpUZ3modpDqKhvdI7v8cOUY-MEcGfSYP2aDQLkjsZ4-wxyxt_0yOwkSI-KjcnZ3E5H1s7LPfMvqvSwcMHjcQwSSj4YiFQ1f2R5St5_U9DxYVxrTWoufWfmezAFhM8cvB0PuhsPkqVOecSKm-R7ElQogXe-JOZjEehj_7h39rtOiXo2dx5gIsX8NKiYe7Uwa0mupVPD9Cj_D9UyLO2iKDz0ChbBNWj7-e4EUn58YVgHm6hTR",
+      "summary": []
+    },
+    {
+      "id": "rs_060b0a08df490032006a701b45a3fc81939638139339fb6072",
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": "gAAAAABqcBtmy_7XKBfD4b72TlvW-j1Idi0dCEgKJ3k4LpMHj-I2l4Etz0VC5UBZvWnf3DUFEIVa3uQJNqfHaVw0aE49og0cn1BpfD9TPDvjdsav2aXAVCzKeHXLy4n-qiRTKKWsF53t4nvJ6nBnQJcXCbW_eada2zC8sQ52Hp4t72uL_guaaD37tXqEGEPJSMy62HvrDwCPV4KjqWvtXszbZVeRJQBBOHABfyloTTEgsQsdUJTV1NWweT8MY0SyxynfSdv0j66vs6qPZnb0ZIg4ymkTR0TZdUF1LHOl-5xb3ZNB5LSDHpYSB1RyjxPryXgLuuN0DHMZpqMuJTgFuXSgTcNIhIMol6Fsv2MBJSJi5s0co3jZ9AWdpQV3zNAoCbvD_u15sVLCbamc3FinB8qul-2L5hJlXBjziIIxCKKWp_e5ZZJhyQdgHuTDBBss2UQgB5tuSEBUeUN1AwEhxavTq-t-iX-UKsKCaa4C2HI4KrG95mz7ziGQvIHSMOCgEPdUUcLByEmZwvrICqnjIWUGC-ozM8u9jf2vceJ6x0Rhe1yaOzDgpHzMnlSVNjjdMyZrsrNgYTJoFDNq0zL8EQuGTyJxrb0IIpwcPQNZVxcVvoY3c5udTfwuACF5CT_vLmpwHE9w7PgrN-8G-uAv8AeN7N44namUX6J1SMqcxS9v5emf1zGVmHe6vPOodQ2ZxuDuPRnV9Sn7cjHgNVWcHGxV0l6hUKt9mNO0xJE6mcMZ8qTjENiUFDxMd_pYCH1vxMpy92SlC7mXOMk2onzfWJ68ZOSP-V6SZ37B_FvIBIMPhGclLDolnpkX9eHjz5PfROYdI8S05ng45tgMK-UsFUnZZCEnz-d1z46wuhOCt5AjXJOSAXpfQ7SHgLUIe8aP2ud0aoUTliLP_DXtjZ8CC3ykEtM-uQzWCA12FLnxkmeOTxI2YYrPosG0nEjGQPGVobvo-4e8BiHv-lOGfGoWiJBxyALhQybeDoYpWPE6mcwmZ15oxIgyOg8t1d3RressINyPMkFYOWcTd1X329_8L-ORv3Sy8lKKb6xhetpbz9QtKjl-HpprI-RxHk14hY7wNWTP5fv5w64IUVqsPm2qfNLHJd-H1h1MhrbSgP-41ZcQVVscbR2EvZ4vZX1La_NRXzqehIJfdX-qNgqL0C_dQdgNuRhfP7-ECSHHzOKjzipbPsp0NeQ5fyoyqrBDbk-MhRE5rY6CjOY3Jdur5ca5JGLiSIn6ZVjdFEdb2R2uHQtuhH7GYMRaT4mZHI1RnvZKqy02Krh7BE9puXuTHldrodtQU77olMpVsMjJkPUDmuV-hxn5hDrHvr-zSz4LSIVlXvSoTSjlof7iUYiNovtEFszD30I1xrLSmufYNNz9fSohdJZq9-h-pq2BgDTICB0EzPVK9ZhJ7WUDI6088WI9xUNtjnOLkzEaOUrJ2QFO7-f-hsNwCd4NJsuoRxNd7J7dYJEseiUQWhoPypxLVv8jkyUaEjBAPlOp0sXIypHiOwr-r1yZZ0lEEgzEx_L6UjBgp5PuXkzMRQj7nQWmV0WF33LZOjEurd80ebcftS40R4pgNitBtGFhkowuSNqZrceDKm_CRwj0SHPkBzT1xdl2_umUwCxC0CbCOLGgEMThWUjC3iF10qQf06s7GTIceLRu1wU7VyQoE0b7lcTl4U40TrWSsydnJY7ofis7nOu_Bs3yhQetXKtr7eCoGWDbUIiJgsSfbrOuLdNNISI1I7rmuB1K23w5WL5If42mmBLHpS1f4zJf1DZ60kTMxsGQonoJJ1CLa2sBqeGF9D3hyhDWbFIA_bF0nmkBc6vFZA0YAffqike1jHe5t4OTBN6KuckHT34ScUCo7r7KUk1yE64V6i0CzLxnTv4fOUiXBGD0NE6jNdfzeXnX27C3LDwrWrCjT07sj_YELPV3H0BEo5FqTBzF247ZPuSpqRZGNeS82PhUCJoafQuWhq7XHk_Ir2LDWWgIqDT4RTzZniO9IH9dlBI6aABBegNcqzJqEots5933Fzu81wtttanZqeH8l-qK8jFUoIATrCS04mwUTF5iEJUFerBag1ijyJ8Ap03jWmOJ63yLumr9aTqKkswrrf9jxx5GUjFSHMDHC7lCh1pQpZEARf2UPZKqMtD5BsSH_GNq_0wh-htltJd0lEunLL37zOqmuumC7gxSRyRfrFwyx3oO-tzmqE_qS7b8YuveM_s1XQZ0uTGcNiUpD_X52c7S2j4Zip7H3POncQPGdw3F9-skEvhiHYMaCCn35AohmGhx7iNvI3jyWD1JNKM6Db9wJmVqYHsPH_d1jP-r-pYeOtd25P_qif_aU68ODt_R7Bu0w04kDG1WL2Y4vKsSq1WNF3LFopc9aPkLeBaFBLF1KnfAAThtzql7ZFHScxm3Jz4B8dvA2I2wedovYtZBhvw8NE2tnbRKQkYgJXBs1J1BwnWqQf261iAimukYXwAwZfKb84cBXWfeJM5WOTSKcAXJBezHlrXwvxGfxRPSeK13skSioh_HVs51cYGPQdmuL0kyMM-1z5gNNvvled6PVyxLhW1FF6FHlBhkz7imFnA20NcM6L8c38_6558B-rRPPxOaLX_UtE-M-wncSQIaNZt4trWTgjRLtixp2ERwkoDG7G_xMuXMAbCGUrYn4tluVUEpK9FfwCqdHDNcnutjLdjLEiFhrnkiJQ32Hbt_9Dj8JBuStwVtb_dZeWH2VGtMiXjtLt-jYXANJGRX_-iIF7lJtdDqWyLfE9H97CnoLFDdXi3yvhW7h5BO7D5mEEXftSFz7jDKOH10_su7GwFsG5Eh2rVxLfuuGoEBtxt7e7gEI3D1yY_Vm0TTKMEGmJ8ynf2_ZPwSAfkkY9109esefwg3jX4a2leLgfPjYsbpKibjCuPQbUTLG6FO8mzdSMdYBKaG-BExC_SrWgFZNqaYh7P7Rclla_6mSVaQ_1D1GgEq5aCfJxk4hCp3RRbQpYnJjQqzFfyLe6GUP783B3HlhspnFUZ3WWZuuxu7pZgB1Kc5ofUWcjHA3GtbHrbtMuf9O5I6a1QhnxhWh3BiqwwjRVRGxSsysAIH2pBzX3WKpuIbM5pOUuWV4joZ3lKTZwHKnZkiCEBUIli7ysuHDoeFc9xnH5s1GG_XpZK-voJDBPNCHVxfhYoldrnaU6IkzvbGnZI3qYs5fZKQTHQ76JG13w_6I12LV_bMCmcnzzCQWZrj2BE3KVaziCpdIUORWRxj2rt8sJzZWgfEpdCAT7UK8mhVQFIHvTLHHMsAVv7Hn4ZV_QnMcUwZPTzETXDxE6j3JX5fxSPgVQ-7k3y2qWQkJ6j08iI5xxCBNRD1i5X0X1JeoDKVbuYKdCVe6JPlmR0N5NK7ffwHk8F2lO6rkN90x43RXJtL9C-xoAkOqyh6yEd20GziUmLwaArRoopdsudS89-bo5E90iZau_LI7VNCxlm3eFTz7DguRDWdqzf66bEyV1earnnclQcPn483aIJ2X9bs10oGFR6h5HZuCOvK8nP0Who02KWeCuEcDnxbxW72gB31eW6nb7smedZky7miJxZWyk09IpfDUjA4tX2Do5RXXVtNWUBJCjq7vIz5TwrzL23Gdyh0wEDE7Nl5DqGg71lkzxCF71Cstt_rmYeBjv-Ij9rf3XtsAG-d5x7AxX0eK2pLEKYQJgwhQJtNiCYMxdcvSd9nZPUbhw4dZtop3Yv3Vfq86IkZf6IIHGPJZTa5TDXmKhDf0PUXN68GfzYxKncNsM6sjLMt1UFAflJ_us-ulhHxvpchqOPdfoq2jrDZMN_Qn12dZx57E5dd9YM7SftKe9WOnyta1tZD7N-R778pSi-tPiY6pk3YXno4KbCSwxGMIUfwcZG52UzlvSPtOlL-x9IhQRNCQwdcpFxPxIiaZtIU0r_eEfmpgGhaRbeFI7EgsFgP4zZT5Aqdm6sEhdIvBjS1UpLyC4pXQUyBGbqhUQWoaeIRAkIbJW10sxEUl0QMrLJaG0rY2pxlFkohNGlw1SWbEYGKyVZZCY1gugDZ2FU0HGTSPwOA0STrhecOTpN3mvZoPF7btCNYHjacBhdlqpM9E5VPJDQ=",
+      "summary": []
+    },
+    {
+      "id": "rs_060b0a08df490032006a701b4f5aa881938e003a5f85d9acf7",
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": "gAAAAABqcBtmR1c3gtIZycAwcrvIJ-iCOsqkQlSXYGhnVqJvSAxD6VVkrWY1Ixk_GF5rEsegPuLmA3H-ZIYFt5jZY4Z_0BQMi-toR2ixiOJTxHKPKTnMZSKL4tvn_JS85Tl6X1DlwQXcp1KroyNWDRhXqP2FByO-vfpY4WkIGauUzm0-rgJ7oZhWNJ_5VECKt8HViZLBIeE3c9Y7VV1RRpLnpFniHoEYkKF0uDBpZ5JMcJ5L9O77dxmP-JooV8poCJdfQ8MA3rQqO0zL3nnVKZWa9RQkhd-dv7iZRGLcT-fg9lXEmQHDN1__qqZroKh8yCFLRG_zCkN-PXOmHeXcHc_I4zfDTm5QKtDEpLoed7UM5JAcbekyRfknDR6uBT1Z4zXzWbpdNiZKnMdjvpfesQvOjQHfo4fppEgJbM6wmQzNiso7sixfsrYwZ7mw3gKrJwtb1MiGr7S3RMPcsKSr-ltz2R0ImtO_LPtiLqEN-2lHf9fw1MhMP66cgT1Xk-E0BWc1Ag54aD-vWw-yyvisoD_wg3L9EOGCeZfBRvce260U2sZIA6VP3DMuq0iYUAo5Lyg47rqxLfaieWIat9cl-YzC_BeXmObh3BVRUpa1UBXoHURdSjakMSzVx8UFFHb8baYWZqYM_-shpUaSc_ggQrtPZXDfFl3m3bRuAMjolazYax-i2B7u_mPX7VHhV6dXFQ2JqAKHH8Eij3RpqfzTRlNSa3R7NmstXIcIa8SEMmz5dnM2FWwXakPQHaT82axP1glD90KtEJEbRlT5u0QO7YON3xvUtZ9gefEcONzN9O5VtrUFryD5c1tttKJz09o0nT8xxfDBMgcc6f2mJu7utHej9drnQkh4bM_ONPNEInPCdp8-TtiwDqUHAJ6TS1QeQgLlLzV--20r3jx9W0q_fkV7jhXiXxZRTa81JWvHzjZdYq5GMGE1Ys51D_wFKmlYBwGBJ5g-5gA2XidGlbLQNzoAiZPYlbl2b9RgrmtpQcwXj_r4jqzraywx-3D3VtfSewn16EDDV4zzw38fkweII0IQ6aiccHKv2EzC9JfqIhXqgUfCQg6e-UuNY6ThTqbKkMJnY4YHyZqEQrKPUkieUtGCkwVWWRD8G5OTsfs2l-tf9F8wa1r3ktYjxQq7zIl-mSKADon_BlqD6y837oNnOssYO2mLqhyAKPGfy_BXrnj_WlarB8e5L7dIpDrq1c9F-dkFzp9uaOwMSbz-EhE9s6z_QarEJ6HOop51M839OsHwORz5ujbuyTLzk2ycLUW1jALGiKfc1S-bJ4jre1cHd3tSWazGKFeNd4VCFBcSSngdDi639S5-zgbUkZ8vTvuath2Ut7BeRczKPZOtYkKMuOpLBtxx_QTqvkvyALWFkh61qK2igvB3akJ39700m8lH2_OFv8ZAzUbUvjwpR4hqI9CdsxEInEpX4PwqrNBoQ7WL6AOkQUqIrS2gyAe_q0CfEq0OKVvcQSOTowSA4Y-d7zy1Rp-0dNUh59VBIUPzYKKlICK7TemKSjpOHhbvjVy8p_F-JjGH_f4YNIsvQFWxI2Uhbb6OAsIKufI8UJoAWhBe7oho3k-B07lBdPUjh-_4IqBRJLXPHnKpdBNURgru-iT8CCfvNHsxdRu6oSFRhf3ucOU-gpG795I=",
+      "summary": []
+    },
+    {
+      "id": "msg_060b0a08df490032006a701b5121408193a4a42824ad4f08dc",
+      "type": "message",
+      "status": "completed",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"problem_id\": \"TA-010\",\n  \"lane_id\": \"openai-governed\",\n  \"provider\": \"openai\",\n  \"model_or_runtime\": \"OpenAI frontier reasoning-model ensemble with long-context retrieval, tool-using research agents, theorem-proving agents, Lean-compatible formalization, graph-enumeration software, SAT/SMT solvers, symbolic algebra, and isolated reproducible compute\",\n  \"execution_posture\": \"governed\",\n  \"estimated_input_tokens\": 18000000000,\n  \"estimated_output_tokens\": 4000000000,\n  \"estimated_reasoning_tokens\": 12000000000,\n  \"estimated_candidate_branches\": 6000,\n  \"estimated_failed_branches\": 5550,\n  \"estimated_retries\": 1800,\n  \"estimated_search_cost\": 600000,\n  \"estimated_governance_overhead\": 900000,\n  \"estimated_verification_cost\": 2000000,\n  \"estimated_total_cost_low\": 2500000,\n  \"estimated_total_cost_central\": 11500000,\n  \"estimated_total_cost_high\": 40000000,\n  \"estimated_elapsed_hours_low\": 8760,\n  \"estimated_elapsed_hours_central\": 35040,\n  \"estimated_elapsed_hours_high\": 87600,\n  \"estimated_success_probability\": 0.1,\n  \"estimated_reproduction_probability\": 0.62,\n  \"estimated_independent_result_probability\": 0.08,\n  \"confidence\": 0.18,\n  \"assumptions\": [\n    \"The target is a complete, publishable resolution of both named conjectures, not a restricted special case, numerical evidence, or an incremental bound.\",\n    \"The conjectures are first disambiguated into precise contemporary formulations; materially different formulations require separate proof programs.\",\n    \"Token estimates are central aggregate totals across literature agents, exploratory branches, critics, proof reconstruction, formalization, replication, and manuscript agents; reasoning tokens may be metered differently from visible output by the selected model.\",\n    \"The system runs many branches in parallel, so elapsed hours are wall-clock program duration rather than the sum of agent-hours.\",\n    \"The cost range includes model inference, retrieval infrastructure, experiment compute, proof-assistant workloads, archival storage, and expert-level independent review required for publication.\",\n    \"The central search cost covers literature acquisition and parsing, citation-graph construction, theorem and notation normalization, nearest-result mapping, and repeated novelty searches.\",\n    \"The central governance overhead comprises 80000 USD for identity and artifact hashing, 120000 USD for budget enforcement, 220000 USD for branch receipts and provenance, 250000 USD for evidence preservation, 110000 USD for policy checks, and 120000 USD for governance audits.\",\n    \"The central verification cost covers adversarial proof review, independent proof reconstruction, computational replication, formal checking of critical lemmas, dependency auditing, and referee-style review.\",\n    \"The reproduction probability is conditional on a correct published proof becoming accessible to the system and measures faithful reconstruction and verification of that known proof.\",\n    \"The independent-result probability is unconditional for a literature-isolated proof-search track and measures genuinely independent derivation of a publishable resolution.\",\n    \"The success probability is an unconditional forecast for producing an accepted-resolution-quality result during the central program; it is not a claim of observed feasibility.\",\n    \"Cost estimates are bottom-up operational forecasts and are not based on any published aggregate estimate.\"\n  ],\n  \"uncertainty_drivers\": [\n    \"Ambiguity in which compactness and degeneracy conjecture formulations are intended\",\n    \"Unknown distance from existing extremal graph theory techniques to a complete resolution\",\n    \"Possibility that either conjecture is false, requiring discovery and certification of a counterexample\",\n    \"Need for a new structural theory rather than refinement of known regularity, stability, embedding, or probabilistic methods\",\n    \"Difficulty converting heuristic or computational insights into uniform asymptotic proofs\",\n    \"Model reliability over long dependency chains and resistance to subtle quantifier, limit, and parameter-order errors\",\n    \"Extent to which proof assistants can represent the required asymptotic combinatorics without prohibitive library development\",\n    \"Availability, licensing, and machine readability of relevant literature and unpublished dependencies\",\n    \"Novelty risk from concurrent human research\",\n    \"Variance in frontier-model pricing, context limits, tool reliability, and useful scaling from parallel search\"\n  ],\n  \"minimum_evidence\": [\n    \"A precise statement and scope table for each conjecture, including parameter order, asymptotic conventions, and equivalence to the literature formulation\",\n    \"A complete proof or explicit counterexample for each conjecture with every external theorem dependency identified\",\n    \"At least two independently generated proof reconstructions with reconciled dependency graphs\",\n    \"Adversarial critic passes focused on quantifier order, hidden regularity assumptions, limiting arguments, exceptional cases, and circular dependencies\",\n    \"Machine-checkable formalization of the principal structural lemmas and all fragile finite or algebraic reductions\",\n    \"Reproducible code, fixed environments, seeds, certificates, and exhaustive checks for every computational claim\",\n    \"Independent replication of computational experiments and certificate validation on a separate runtime\",\n    \"A novelty and precedence review against the complete accessible literature immediately before submission\",\n    \"A publication-ready manuscript with explicit comparison to prior bounds and methods, plus simulated referee reports and resolved objections\",\n    \"Archived branch receipts, model and tool identities, budgets, evidence hashes, and immutable final artifacts\"\n  ],\n  \"blockers\": [\n    \"No stable, unambiguous formal statement of one or both conjectures\",\n    \"A resolution requiring mathematical concepts absent from current literature and not discoverable through available search methods\",\n    \"Systematic generation of plausible but invalid long combinatorial arguments\",\n    \"Inability to independently verify a key structural lemma\",\n    \"Formalization costs exceeding the high budget because foundational libraries are missing\",\n    \"Computational evidence that cannot be converted into a finite certificate or uniform proof\",\n    \"Restricted access to essential papers, data, or unpublished arguments\",\n    \"A result that resolves only special cases while leaving the stated conjectures open\",\n    \"Failure of external experts or referees to validate novelty, correctness, or completeness\"\n  ]\n}"
+        }
+      ],
+      "phase": "final_answer",
+      "role": "assistant"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "context": "all_turns",
+    "effort": "medium",
+    "mode": "standard",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "type": "text"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tool_usage": {
+    "image_gen": {
+      "input_tokens": 0,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "output_tokens": 0,
+      "output_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "total_tokens": 0
+    },
+    "web_search": {
+      "num_requests": 0
+    }
+  },
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 367,
+    "input_tokens_details": {
+      "cache_write_tokens": 0,
+      "cached_tokens": 0
+    },
+    "output_tokens": 2424,
+    "output_tokens_details": {
+      "reasoning_tokens": 1132
+    },
+    "total_tokens": 2791
+  },
+  "user": null,
+  "metadata": {}
+}
