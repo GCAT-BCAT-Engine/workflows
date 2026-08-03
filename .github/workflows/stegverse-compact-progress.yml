@@ -1,4 +1,5 @@
 name: StegVerse Compact-Context Capability Benchmark
+# rerun-request: 2026-08-03T02:37:00-05:00
 
 on:
   workflow_dispatch:
