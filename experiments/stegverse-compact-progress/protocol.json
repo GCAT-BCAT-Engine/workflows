@@ -1,0 +1,38 @@
+{
+  "experiment_id": "SV-COMPACT-PROGRESS-001",
+  "source_experiment": "SV-COST-STAGED-001",
+  "purpose": "Test whether StegVerse can preserve governed mathematical continuity while replacing repeated full-artifact prompt replay with hashed artifact references, a compact accepted-state ledger, and stage-specific selective retrieval.",
+  "canonical_tokenizer": "cl100k_base",
+  "max_stage_output_tokens": 900,
+  "models": {
+    "openai": "gpt-5.6",
+    "anthropic": "claude-sonnet-4-6"
+  },
+  "lanes": [
+    {"id": "stegverse-openai-full", "provider": "openai", "context_mode": "full"},
+    {"id": "stegverse-openai-compact", "provider": "openai", "context_mode": "compact"},
+    {"id": "stegverse-anthropic-full", "provider": "anthropic", "context_mode": "full"},
+    {"id": "stegverse-anthropic-compact", "provider": "anthropic", "context_mode": "compact"}
+  ],
+  "compact_context_contract": {
+    "always_include": ["experiment identity", "canonical problem", "current stage", "claim boundary", "artifact ledger"],
+    "ledger_fields": ["artifact_id", "stage_id", "sha256", "admitted", "claims", "definitions", "unresolved", "next_stage"],
+    "selective_retrieval": {
+      "S0": [],
+      "S1": ["S0 claim boundary"],
+      "S2": ["S1 definitions"],
+      "S3": ["S2 theorem statement", "S1 definitions"],
+      "S4": ["S3 proof plan", "S2 theorem statement"],
+      "S5": ["S4 proof core", "S1 definitions", "S2 theorem statement"],
+      "S6": ["S5 Lean candidate", "S4 proof conclusion", "all artifact hashes"]
+    },
+    "full_artifacts_remain_durable": true,
+    "hash_reference_is_not_semantic_substitution": true
+  },
+  "success_criteria": {
+    "continuity": "Compact lane reaches the same highest admitted stage as the corresponding full-context lane.",
+    "cost": "Compact lane uses fewer canonical input tokens and lower observed provider cost.",
+    "integrity": "All full artifacts, hashes, validation decisions, and ledger entries remain reconstructable.",
+    "claim_boundary": "This tests governed context compression and selective retrieval. It does not establish independent theorem discovery by StegVerse."
+  }
+}
