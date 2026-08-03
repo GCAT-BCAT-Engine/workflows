@@ -1,0 +1,43 @@
+{
+  "experiment_id": "SV-COST-NORMALIZED-001",
+  "task_version": "1.0.0",
+  "lane_id": "openai",
+  "native_output_hash": "sha256:30fc47731df4bae2ea7660fdc3642dec66e40c5a409a570178b055e503c325a4",
+  "task_identity": "EXPERIMENT: SV-COST-NORMALIZED-001; TASK VERSION: 1.0.0",
+  "conclusion": "For every abstract target t, ALLOW(t) iff GBP(t) and BD(t) and OC(t). Thus GBP(t), BD(t), and OC(t) are each necessary for ALLOW(t), and their conjunction is sufficient for ALLOW(t).",
+  "claims": [
+    "Necessity: If ALLOW(t) holds, then GBP(t), BD(t), and OC(t) all hold.",
+    "Sufficiency: If GBP(t), BD(t), and OC(t) all hold, then ALLOW(t) holds.",
+    "Exact characterization: ALLOW(t) iff GBP(t) and BD(t) and OC(t).",
+    "Failure of any one of GBP(t), BD(t), or OC(t) entails that ALLOW(t) does not hold under the stipulated abstract semantics."
+  ],
+  "evidence": [
+    "The task stipulates the abstract equivalence ALLOW(t) iff GBP(t) and BD(t) and OC(t).",
+    "Necessity follows by conjunction elimination from the forward direction of the equivalence.",
+    "Sufficiency follows by conjunction introduction and the reverse direction of the equivalence.",
+    "The Lean candidate encodes ALLOW as the conjunction and proves only this abstract logical core by definitional equality."
+  ],
+  "unresolved": [
+    "No source code, configuration, specification mapping, execution trace, test result, or formal refinement proof for any deployed GCAT/BCAT evaluator was provided.",
+    "It is unresolved whether any deployed implementation computes GBP, BD, OC, and ALLOW according to the stipulated abstract predicates.",
+    "It is unresolved whether implementation details such as errors, partiality, state, ordering, defaults, or version-specific behavior introduce outcomes not represented by the abstract model.",
+    "No deployed GCAT/BCAT implementation is claimed to be verified."
+  ],
+  "boundary": [
+    "The characterization is valid only for the stipulated abstract evaluator semantics.",
+    "The claim does not establish that GBP, BD, or OC correctly model any external policy, cost rule, safety property, or real system requirement.",
+    "The claim does not establish soundness, completeness, correctness, or conformance of a deployed GCAT/BCAT implementation.",
+    "The Lean candidate proves no implementation-level facts and contains no connection to executable evaluator code."
+  ],
+  "lean_candidate": "def allow {T : Type} (GBP BD OC : T \u2192 Prop) (t : T) : Prop :=\n  GBP t \u2227 BD t \u2227 OC t\n\ntheorem allow_iff {T : Type} (GBP BD OC : T \u2192 Prop) (t : T) :\n    allow GBP BD OC t \u2194 GBP t \u2227 BD t \u2227 OC t :=\n  Iff.rfl\n\ntheorem allow_necessity {T : Type} (GBP BD OC : T \u2192 Prop) (t : T)\n    (h : allow GBP BD OC t) : GBP t \u2227 BD t \u2227 OC t :=\n  h\n\ntheorem allow_sufficiency {T : Type} (GBP BD OC : T \u2192 Prop) (t : T)\n    (h : GBP t \u2227 BD t \u2227 OC t) : allow GBP BD OC t :=\n  h",
+  "obligations": {
+    "allow_iff": true,
+    "necessity": true,
+    "sufficiency": true,
+    "claim_boundary": true,
+    "unresolved_implementation": true,
+    "lean_candidate": true
+  },
+  "normalized_hash": "sha256:aed7bf43eb6bf45e0e28c20321f6c38678a0aebac299fed5ae272ee596cbd341",
+  "normalized_content_bytes": 3019
+}

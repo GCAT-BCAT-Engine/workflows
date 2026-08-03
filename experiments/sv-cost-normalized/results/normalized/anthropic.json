@@ -1,0 +1,49 @@
+{
+  "experiment_id": "SV-COST-NORMALIZED-001",
+  "task_version": "1.0.0",
+  "lane_id": "anthropic",
+  "native_output_hash": "sha256:602a3876cc39874538d62338282f7b527966a29933f8a8fd67196daf37661c68",
+  "task_identity": "SV-COST-NORMALIZED-001 / TASK VERSION 1.0.0",
+  "conclusion": "Under the stipulated abstract definition, ALLOW(t) holds if and only if GBP(t), BD(t), and OC(t) all hold simultaneously. This is a pure logical characterization; no claim is made about any deployed GCAT/BCAT implementation.",
+  "claims": [
+    "NECESSITY: If ALLOW(t) then GBP(t). Proof: by definition, ALLOW(t) := GBP(t) \u2227 BD(t) \u2227 OC(t); conjunction elimination gives GBP(t).",
+    "NECESSITY: If ALLOW(t) then BD(t). Same justification via conjunction elimination.",
+    "NECESSITY: If ALLOW(t) then OC(t). Same justification via conjunction elimination.",
+    "SUFFICIENCY: If GBP(t) and BD(t) and OC(t) then ALLOW(t). By conjunction introduction and the defining equivalence.",
+    "BICONDITIONAL (allow_iff): ALLOW(t) \u2194 (GBP(t) \u2227 BD(t) \u2227 OC(t)). This is the stipulated definition rewritten as an explicit iff.",
+    "Each of GBP, BD, OC is individually necessary but not individually sufficient for ALLOW.",
+    "Any pair {GBP,BD}, {GBP,OC}, {BD,OC} is jointly necessary but not sufficient for ALLOW without the third conjunct.",
+    "The conjunction of all three is both necessary and sufficient."
+  ],
+  "evidence": [
+    "The task statement stipulates ALLOW(t) holds exactly when GBP(t), BD(t), and OC(t) all hold \u2014 this is a definitional axiom, not an empirical claim.",
+    "Standard propositional logic (conjunction introduction and elimination) is sufficient to derive all necessity and sufficiency directions.",
+    "No external empirical evidence is required or available for the abstract logical core.",
+    "The Lean 4 candidate below formalizes the abstract iff as a theorem derivable from a local definition, constituting machine-checkable evidence for the logical core only."
+  ],
+  "unresolved": [
+    "The concrete semantics of GBP (Good Bid Price), BD (Budget), and OC (Other Condition) in any deployed GCAT/BCAT system are not specified and remain unresolved.",
+    "Whether any real implementation correctly computes each of GBP(t), BD(t), OC(t) and composes them with strict conjunction is unverified.",
+    "Edge cases such as undefined/null token states, floating-point price comparison semantics, and concurrency effects on budget state are unresolved implementation concerns.",
+    "The mapping from abstract token type t to concrete auction/campaign objects in any live system is unspecified.",
+    "No formal verification of any deployed GCAT/BCAT codebase against this specification exists or is claimed."
+  ],
+  "boundary": [
+    "All claims are scoped strictly to the abstract propositional model where ALLOW, GBP, BD, OC are uninterpreted predicates over an abstract type T.",
+    "The Lean candidate proves only the abstract logical core; it does not and cannot verify any implementation.",
+    "No claim is made that ALLOW as defined captures the full business logic of any real ad-serving system.",
+    "The characterization does not address probabilistic, temporal, or resource-bounded variants of admissibility.",
+    "Results do not extend to partial or fuzzy logic interpretations without additional stipulation."
+  ],
+  "lean_candidate": "-- Lean 4 candidate: abstract logical core only\n-- No implementation is verified by this code.\n\nsection AllowAdmissibility\n\nvariable {T : Type*}\n\n-- Abstract uninterpreted predicates\nvariable (GBP BD OC : T \u2192 Prop)\n\n-- Stipulated definition\ndef ALLOW (t : T) : Prop := GBP t \u2227 BD t \u2227 OC t\n\n-- Core biconditional theorem\ntheorem allow_iff (t : T) :\n    ALLOW GBP BD OC t \u2194 (GBP t \u2227 BD t \u2227 OC t) :=\n  Iff.rfl\n\n-- Necessity: ALLOW \u2192 GBP\ntheorem allow_implies_gbp (t : T) (h : ALLOW GBP BD OC t) : GBP t :=\n  h.1\n\n-- Necessity: ALLOW \u2192 BD\ntheorem allow_implies_bd (t : T) (h : ALLOW GBP BD OC t) : BD t :=\n  h.2.1\n\n-- Necessity: ALLOW \u2192 OC\ntheorem allow_implies_oc (t : T) (h : ALLOW GBP BD OC t) : OC t :=\n  h.2.2\n\n-- Sufficiency: GBP \u2227 BD \u2227 OC \u2192 ALLOW\ntheorem gbp_bd_oc_implies_allow (t : T)\n    (hg : GBP t) (hb : BD t) (ho : OC t) :\n    ALLOW GBP BD OC t :=\n  \u27e8hg, hb, ho\u27e9\n\n-- Individual necessity, not sufficiency (demonstrated by lack of proof without all three)\n-- (No theorem claimed that GBP alone suffices \u2014 such a theorem would be unprovable.)\n\nend AllowAdmissibility",
+  "obligations": {
+    "allow_iff": true,
+    "necessity": true,
+    "sufficiency": true,
+    "claim_boundary": true,
+    "unresolved_implementation": true,
+    "lean_candidate": true
+  },
+  "normalized_hash": "sha256:87e6cd84a58d2fdc332f9161fc150ac1f30b3736598693dc77756259b9c29970",
+  "normalized_content_bytes": 4594
+}

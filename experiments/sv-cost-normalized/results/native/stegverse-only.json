@@ -1,0 +1,24 @@
+{
+  "lane_id": "stegverse-only",
+  "platform": "stegverse-only",
+  "route": "repository-native",
+  "model": "deterministic-contract-reconstructor-v1",
+  "attempt": 1,
+  "started_at_epoch": 1785746421.2803636,
+  "latency_seconds": 2.3814999991600416e-05,
+  "request_id": null,
+  "status": "completed",
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "cached_input_tokens": 0,
+  "native_text": "{\"boundary\":[\"The result establishes only the stipulated abstract logical core, not implementation validity.\"],\"claims\":[\"ALLOW(t) implies GBP(t), BD(t), and OC(t).\",\"GBP(t), BD(t), and OC(t) together imply ALLOW(t).\"],\"conclusion\":\"For every transition t, ALLOW(t) iff GBP(t) and BD(t) and OC(t).\",\"evidence\":[\"The abstract evaluator equivalence is stipulated by the task contract.\"],\"lean_candidate\":\"theorem allow_iff_conditions {T : Type} (GBP BD OC ALLOW : T \u2192 Prop) (spec : \u2200 t, ALLOW t \u2194 GBP t \u2227 BD t \u2227 OC t) : \u2200 t, ALLOW t \u2194 GBP t \u2227 BD t \u2227 OC t := spec\",\"obligations\":{\"allow_iff\":true,\"claim_boundary\":true,\"lean_candidate\":true,\"necessity\":true,\"sufficiency\":true,\"unresolved_implementation\":true},\"task_identity\":\"SV-COST-NORMALIZED-001:1.0.0\",\"unresolved\":[\"No evidence binds the abstract predicates or theorem to a deployed GCAT/BCAT implementation.\"]}",
+  "native_payload": {
+    "kind": "repository_native_deterministic_reconstruction",
+    "source": "task_contract.json",
+    "contract_hash": "sha256:0cb92e9c34742994e2b1fde980bd05763b64a267f33cbd89d6202b1483b871ae",
+    "external_provider_request": false
+  },
+  "prompt_hash": "sha256:827ce05b607642ae5b3ac23d731d424b5a5e4c0d2edd53de1d8544b678c0bf41",
+  "output_hash": "sha256:09f82bd5ace6112f5865b447fd0b17a2b51a736d1935a1d0f7352dc16f765a29",
+  "error": null
+}

@@ -1,0 +1,94 @@
+{
+  "experiment_id": "SV-COST-NORMALIZED-001",
+  "task_version": "1.0.0",
+  "task_contract_hash": "sha256:0cb92e9c34742994e2b1fde980bd05763b64a267f33cbd89d6202b1483b871ae",
+  "lanes": [
+    {
+      "lane_id": "openai",
+      "platform": "openai",
+      "route": "synchronous",
+      "model": "gpt-5.6",
+      "classification": "comparable",
+      "attempt_count": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "native_output_hash": "sha256:30fc47731df4bae2ea7660fdc3642dec66e40c5a409a570178b055e503c325a4",
+          "classification": "comparable",
+          "missing_obligations": [],
+          "structural_errors": []
+        }
+      ],
+      "input_tokens": 310,
+      "output_tokens": 1242,
+      "cached_input_tokens": 0,
+      "latency_seconds": 22.383179929,
+      "native_output_hash": "sha256:30fc47731df4bae2ea7660fdc3642dec66e40c5a409a570178b055e503c325a4",
+      "normalized_hash": "sha256:aed7bf43eb6bf45e0e28c20321f6c38678a0aebac299fed5ae272ee596cbd341",
+      "normalized_content_bytes": 3019,
+      "observed_provider_cost_usd": 0.03881,
+      "batch_normalized_cost_usd": 0.019405,
+      "price_card_version": "2026-08-03-local-declared",
+      "local_cost_status": null
+    },
+    {
+      "lane_id": "anthropic",
+      "platform": "anthropic",
+      "route": "synchronous",
+      "model": "claude-sonnet-4-6",
+      "classification": "comparable",
+      "attempt_count": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "native_output_hash": "sha256:602a3876cc39874538d62338282f7b527966a29933f8a8fd67196daf37661c68",
+          "classification": "comparable",
+          "missing_obligations": [],
+          "structural_errors": []
+        }
+      ],
+      "input_tokens": 375,
+      "output_tokens": 1455,
+      "cached_input_tokens": 0,
+      "latency_seconds": 24.725828696000008,
+      "native_output_hash": "sha256:602a3876cc39874538d62338282f7b527966a29933f8a8fd67196daf37661c68",
+      "normalized_hash": "sha256:87e6cd84a58d2fdc332f9161fc150ac1f30b3736598693dc77756259b9c29970",
+      "normalized_content_bytes": 4594,
+      "observed_provider_cost_usd": 0.02295,
+      "batch_normalized_cost_usd": 0.011475,
+      "price_card_version": "2026-08-03-local-declared",
+      "local_cost_status": null
+    },
+    {
+      "lane_id": "stegverse-only",
+      "platform": "stegverse-only",
+      "route": "repository-native",
+      "model": "deterministic-contract-reconstructor-v1",
+      "classification": "comparable",
+      "attempt_count": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "native_output_hash": "sha256:09f82bd5ace6112f5865b447fd0b17a2b51a736d1935a1d0f7352dc16f765a29",
+          "classification": "comparable",
+          "missing_obligations": [],
+          "structural_errors": []
+        }
+      ],
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cached_input_tokens": 0,
+      "latency_seconds": 2.3814999991600416e-05,
+      "native_output_hash": "sha256:09f82bd5ace6112f5865b447fd0b17a2b51a736d1935a1d0f7352dc16f765a29",
+      "normalized_hash": "sha256:6372e200af90cd88625c880bc57fbc8598feb14667a87a4cae9cafdb4017456d",
+      "normalized_content_bytes": 1161,
+      "observed_provider_cost_usd": 0.0,
+      "batch_normalized_cost_usd": null,
+      "price_card_version": null,
+      "local_cost_status": "UNMEASURED_LOCAL_RUNTIME"
+    }
+  ],
+  "all_three_comparable": true,
+  "human_intervention_count_after_dispatch": 0,
+  "claim_boundary": "Observed provider costs are reconstructed from retained native usage receipts and the versioned local price card. Batch-normalized values are counterfactual unless an actual batch receipt is retained. StegVerse-only external provider cost is zero while local runtime cost remains separately unmeasured."
+}

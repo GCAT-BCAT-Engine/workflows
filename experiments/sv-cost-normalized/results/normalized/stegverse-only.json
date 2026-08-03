@@ -1,0 +1,32 @@
+{
+  "experiment_id": "SV-COST-NORMALIZED-001",
+  "task_version": "1.0.0",
+  "lane_id": "stegverse-only",
+  "native_output_hash": "sha256:09f82bd5ace6112f5865b447fd0b17a2b51a736d1935a1d0f7352dc16f765a29",
+  "task_identity": "SV-COST-NORMALIZED-001:1.0.0",
+  "conclusion": "For every transition t, ALLOW(t) iff GBP(t) and BD(t) and OC(t).",
+  "claims": [
+    "ALLOW(t) implies GBP(t), BD(t), and OC(t).",
+    "GBP(t), BD(t), and OC(t) together imply ALLOW(t)."
+  ],
+  "evidence": [
+    "The abstract evaluator equivalence is stipulated by the task contract."
+  ],
+  "unresolved": [
+    "No evidence binds the abstract predicates or theorem to a deployed GCAT/BCAT implementation."
+  ],
+  "boundary": [
+    "The result establishes only the stipulated abstract logical core, not implementation validity."
+  ],
+  "lean_candidate": "theorem allow_iff_conditions {T : Type} (GBP BD OC ALLOW : T \u2192 Prop) (spec : \u2200 t, ALLOW t \u2194 GBP t \u2227 BD t \u2227 OC t) : \u2200 t, ALLOW t \u2194 GBP t \u2227 BD t \u2227 OC t := spec",
+  "obligations": {
+    "allow_iff": true,
+    "necessity": true,
+    "sufficiency": true,
+    "claim_boundary": true,
+    "unresolved_implementation": true,
+    "lean_candidate": true
+  },
+  "normalized_hash": "sha256:6372e200af90cd88625c880bc57fbc8598feb14667a87a4cae9cafdb4017456d",
+  "normalized_content_bytes": 1161
+}

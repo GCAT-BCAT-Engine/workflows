@@ -1,0 +1,119 @@
+{
+  "lane_id": "openai",
+  "platform": "openai",
+  "route": "synchronous",
+  "model": "gpt-5.6",
+  "attempt": 1,
+  "started_at_epoch": 1785746374.1695771,
+  "latency_seconds": 22.383179929,
+  "request_id": "resp_059374f549648786006a7053c72860819e981422cd13fe9983",
+  "status": "completed",
+  "input_tokens": 310,
+  "output_tokens": 1242,
+  "cached_input_tokens": 0,
+  "native_text": "{\n  \"task_identity\": \"EXPERIMENT: SV-COST-NORMALIZED-001; TASK VERSION: 1.0.0\",\n  \"conclusion\": \"For every abstract target t, ALLOW(t) iff GBP(t) and BD(t) and OC(t). Thus GBP(t), BD(t), and OC(t) are each necessary for ALLOW(t), and their conjunction is sufficient for ALLOW(t).\",\n  \"claims\": [\n    \"Necessity: If ALLOW(t) holds, then GBP(t), BD(t), and OC(t) all hold.\",\n    \"Sufficiency: If GBP(t), BD(t), and OC(t) all hold, then ALLOW(t) holds.\",\n    \"Exact characterization: ALLOW(t) iff GBP(t) and BD(t) and OC(t).\",\n    \"Failure of any one of GBP(t), BD(t), or OC(t) entails that ALLOW(t) does not hold under the stipulated abstract semantics.\"\n  ],\n  \"evidence\": [\n    \"The task stipulates the abstract equivalence ALLOW(t) iff GBP(t) and BD(t) and OC(t).\",\n    \"Necessity follows by conjunction elimination from the forward direction of the equivalence.\",\n    \"Sufficiency follows by conjunction introduction and the reverse direction of the equivalence.\",\n    \"The Lean candidate encodes ALLOW as the conjunction and proves only this abstract logical core by definitional equality.\"\n  ],\n  \"unresolved\": [\n    \"No source code, configuration, specification mapping, execution trace, test result, or formal refinement proof for any deployed GCAT/BCAT evaluator was provided.\",\n    \"It is unresolved whether any deployed implementation computes GBP, BD, OC, and ALLOW according to the stipulated abstract predicates.\",\n    \"It is unresolved whether implementation details such as errors, partiality, state, ordering, defaults, or version-specific behavior introduce outcomes not represented by the abstract model.\",\n    \"No deployed GCAT/BCAT implementation is claimed to be verified.\"\n  ],\n  \"boundary\": [\n    \"The characterization is valid only for the stipulated abstract evaluator semantics.\",\n    \"The claim does not establish that GBP, BD, or OC correctly model any external policy, cost rule, safety property, or real system requirement.\",\n    \"The claim does not establish soundness, completeness, correctness, or conformance of a deployed GCAT/BCAT implementation.\",\n    \"The Lean candidate proves no implementation-level facts and contains no connection to executable evaluator code.\"\n  ],\n  \"lean_candidate\": \"def allow {T : Type} (GBP BD OC : T \u2192 Prop) (t : T) : Prop :=\\n  GBP t \u2227 BD t \u2227 OC t\\n\\ntheorem allow_iff {T : Type} (GBP BD OC : T \u2192 Prop) (t : T) :\\n    allow GBP BD OC t \u2194 GBP t \u2227 BD t \u2227 OC t :=\\n  Iff.rfl\\n\\ntheorem allow_necessity {T : Type} (GBP BD OC : T \u2192 Prop) (t : T)\\n    (h : allow GBP BD OC t) : GBP t \u2227 BD t \u2227 OC t :=\\n  h\\n\\ntheorem allow_sufficiency {T : Type} (GBP BD OC : T \u2192 Prop) (t : T)\\n    (h : GBP t \u2227 BD t \u2227 OC t) : allow GBP BD OC t :=\\n  h\",\n  \"obligations\": {\n    \"allow_iff\": true,\n    \"necessity\": true,\n    \"sufficiency\": true,\n    \"claim_boundary\": true,\n    \"unresolved_implementation\": true,\n    \"lean_candidate\": true\n  }\n}",
+  "native_payload": {
+    "id": "resp_059374f549648786006a7053c72860819e981422cd13fe9983",
+    "object": "response",
+    "created_at": 1785746375,
+    "status": "completed",
+    "background": false,
+    "billing": {
+      "payer": "developer"
+    },
+    "completed_at": 1785746396,
+    "error": null,
+    "frequency_penalty": 0.0,
+    "incomplete_details": null,
+    "instructions": null,
+    "max_output_tokens": 1800,
+    "max_tool_calls": null,
+    "model": "gpt-5.6-sol",
+    "moderation": null,
+    "output": [
+      {
+        "id": "rs_059374f549648786006a7053c9c6b4819ebdaa7f3b46624847",
+        "type": "reasoning",
+        "content": [],
+        "encrypted_content": "gAAAAABqcFPczS2Q5St0fIW5d-QinGYMlx6mdX3EJ_CQ62LMMGXwwc8VMOhxDmnNbnp6LSeqLtqWefW2-twOFa2dvY3hySo4q6fmEs5fu5zj3GCePiQZgD5ARogBr3Wc4F1tdzIm3TyzVQCUvqWyB8YowTxw1uxO5OIkVSMJzqQ-iGkw8lYG80ekxEYU05AnSeMmmeqI0jKy5wNi2wnAdPOU-viT1kmLAnhsm8cLY0pBLXVvJT8CdHtyLcmRdfIBNqF6ZkmFt4eL0gw5pbcZe-dF_cJxvHG_OMImpQZGbZ6NFLsx8FFvSSehV-ZP2K7_AJogesMJLaGuYXvt6RzjNT2P9_symc5a_vb3o6IHeTLpEr2_3uHo9GbOpDaym6zmyUERAj3IQ8UoDg125MyPUsL0FmK-MfxmLFrO7RRqoo7GOYawtJ4Qp4oVvCIr8hWX9pQiinZFh8v6wbr9EtZIHfLULgMNFEiBjOhkAzKNTxiac24V7Qbn_gavybiCV9eeuvvb5yEDhOXCrpXgmDeUZ7cB1K7fN9Rdsu0tePVPLJ2MQN2dznKG5h5r5XKOT_neBX5sWLFgRmTpUtLLQnVepvVaKpHXbKlAI5Qh9UjnA6NCEv00pC5z--Zq0FC02TzR8fzPfLXyn5O6IBumao7dLEn9crhz6h7PPRX19Se1Z3afKkGlykTrVUBfYethMXGS08KNPlyZkppE2Zyt8JxEA6eSelcT1wQCdoGBIPO79KW02yIovXx0q423tjbEF6hMQmCtBxjDH4HGMFj8WppX5npfi1nr0_xNrSsTMhBAUrPL4r3dq4Y_7bHw_5ismE8RiL_Jy7-wn-jVzlZjtokgOkD5hwyXfePEDWVQNlToufhhNCII-l-yQpvgvie-F76LsLU5rUf9X2gL7llYKqkKBR6wBB4yCujS8Tk3Mi9UeV-TVdOt4eclLv3ikWtk0QXQv2_q5Z_1c2U2XgaMPcRz6DoD4MnWfbN-biEZTW3_Us3ddk_Q0kDYsvtxHBT5tcvxzecAwWgq_0-kGPoQVIR-J0wua8uE057gLhK_Q16ZW9mAOOhTXcLWqzOgeDldY_werYtrAcBS5q9UkhcVa6kNx7WxBTw0H1ffvlnlhhGS3Zri_ct9fCcdeoVhNGoae9sFA6O_UGA65DjRKw2Uxxn-A7jNkUUx6jyJjZma_OeqBcsDgubjTs_sWHDkNyNfS7bYpaafTJ7b4idOUR-Zb0_9IT1nXyZf5U8nDt-P8Lz4llHsRU5Ohzs5iE2ZD8mAWat9mLUoxrvWlcx_G_O_FAPzyxgoA_-evYqXEE5WlQdvYv4QPgLc2fE1xKf3ScGSIgfCRexaZyP0eV1q9l_dYH7gKS5UyWTTtcxeNxnzuLdYje09CtujTG1NE5-h81aVOfoZox1ocQR1EWlRpnnu4b5wZzvfnm2bS4Lbe7hWccTIUwJNShbUOdDPHls0kmdAhfRFFwzz_dFX2lGVKSMIE_kGGP0Pr5A3tnCXrUB2KFxkVZzOq4xPsRvVazzDmVtWk3n1gc8DXT8hf4bFUeUT508goMPWqp0j3BWLL_S4JsCtAIpilxBkGmCKetdkl7-QwqQoUhqJ0fc4rFV4d3ca4Fv0YwVdttlQhpoALwk_dF2wKttmIszkPKWAcnzkBhPkbeMFEjJq9AgEKz-leVBW-niVwa44Zo_JIu4zccuzhpbPBY0DN0OwJswlOpDDqOhRbPKdeA7WG52ZqnAdgRUGDaXhEnx96JbE0szDjcF3pIPn2a1z0F04b4qHfG490HnyRR8ImRVN5jzKqHswrHb1AA3_FbrXT9Vb-6ilZt-UvqrKbeke6gG1ybiOqQ5fU4TDR_E3Z4O6mmhAINhPYn8Fz3K1qKNRRTtjVZ_BPq03oCVLoV2epE__YIEzUTpqNIAjtMUu6cHd2hL6bZKZaL4vVSTyoYnQwg3GLWSSXAs7EqQJq6G2giY8gwpXMaDzdVvIC0pff4Q9hP1f7s2wUw3J9U6UXAljPUFgL-oqrkhMQbhfTrsF5znoB6_7lHrO31xZPxbsjNJBiBmraTiKjVbvaTpzdPl9zKOr_FxGA0vj-lFXpx5EomD2EncQymCZEE6P_R5yzF5Ci7YC-YIoFY-Bg9el58BPOElvGu0m2bb1R9_foNuWwBw8uRcefVqslZPtDiTyO2ktWdSA7fsX5ZOtiHQuROl2ZqaT4PyDF4il5DKfNCkAGdKEEEszUHy2oVYbwfVF5fZxs38chAr-hV7ZsrBuZ6IDs3Un9P7r9bdUmWeZTraMYjuYA0dCTjDfIHAk6xqfvT4cgBczYjQX3j45ov4X4s4Ch9DLab6PKPZ42rL9_h63E_AX-6E1U43aPpv2t-TY0gwvBaapjFhCr4UhmmJD5DvhChwtcJPYW5g1CzINj5IEegDexUiMtEn6H00vLFqUUC9zGiHOnCaOdQ08-yeqPHPFMWBmSUpFEGhgFQ02b_XItmlvp9-alKgSvapcl-wxFmHcjbj-VQQcHfm5asse5Teg8D_dsDy_az0TDEb3i-pHZoyxIP6ad9Ewff9lLSMVPmTp3rgtMBmCJe93zCLaxwarYt2jiJtcEZPO-ryIDI77a2I59yrOZNyC1BZ4WPY8yqv_mMW4e_6vNGCzvC6TI811Ix2L-TrUse2Ae7EohjiFO9ry6kOzVAr1ENVIBAQ3tEJEyFtm8DcUnYsxUGEWNQE23oI5RmhQTrZGu7_cCIePK6H4OtsE_En0w6i9A2jbEncJWDyoJ4ULHkGo9EUI5MwYftxLNwiwoLIMupZLBvbnt170NEqvEChOZvJ_WUZzHelCpQNQPEUSb6XFjaUy03KUZA4fjvwJm1ZLn0U30dbEgBVeJsU0no34L_ZgYK8tqK_zeQz4KEWRLccLpKXPWYjk8KkAx-0p8KCXR72qg5OqIKVOyLZt88UPVTlP3h4t7xTWpFrh264S4XKI1k5gYLFVTmgvVi_2Zx2lk4A0FLilW6mHiXFZRmPqKncO-YlAhgTZTgFrzfJ3bV6Pg2-vY5-CMpxNjzVyJHz0tu5F5raXWW21HULwQ1jMmU_RvEpCEK-60LFVwAjGFlKj_7Fe4wKxuw9ojn56V1UtxILFmkEYrzgkkA5JJnQvYB2epEZxQGl97ZCZZPyTzD5bRPmCEg7r5-A_pQ5Ic8YD_T3hJ2TONvZI77kZbfxuYAvx6yWxaIiScuzgr54sQXFKcuF8ywvXdTo5gtSNNGTHmS1LWudmIJrZxgMUPH1sIbp8yiGrLmxpmlVycelwQaS92TT_rEj1_fxQmBSdztJ5Cy6SqY75MIo4bsp53f7SqqCyyu4LMPCKbc_mH2mbT_xHQqB19EiYp2c4-bJDmWjn18qK7sfbZQGcaWsHBFlil_87LyWjAocqncYTpNDkD98Y6H6vzAUDyAkviliCfLcUWt1f_E8JZ4Ip8zOH7RRr9qwRxhN9Co9waf90MWlhI2Ca_VMZIcRj8ySo4Tp2ED0wzPlQWhkB3ELinZA5k9-336z4x4AruGqU1rvP9u9II_EiuUu-rRc9ibEBodZldvMZstgajD0r4_MQtRCp3mGVRBlt0qSZto4ks5yNHMGfFRNYCnjmw5ZBqCO1m4Ca8w==",
+        "summary": []
+      },
+      {
+        "id": "msg_059374f549648786006a7053d33078819ea025d1c62ba76314",
+        "type": "message",
+        "status": "completed",
+        "content": [
+          {
+            "type": "output_text",
+            "annotations": [],
+            "logprobs": [],
+            "text": "{\n  \"task_identity\": \"EXPERIMENT: SV-COST-NORMALIZED-001; TASK VERSION: 1.0.0\",\n  \"conclusion\": \"For every abstract target t, ALLOW(t) iff GBP(t) and BD(t) and OC(t). Thus GBP(t), BD(t), and OC(t) are each necessary for ALLOW(t), and their conjunction is sufficient for ALLOW(t).\",\n  \"claims\": [\n    \"Necessity: If ALLOW(t) holds, then GBP(t), BD(t), and OC(t) all hold.\",\n    \"Sufficiency: If GBP(t), BD(t), and OC(t) all hold, then ALLOW(t) holds.\",\n    \"Exact characterization: ALLOW(t) iff GBP(t) and BD(t) and OC(t).\",\n    \"Failure of any one of GBP(t), BD(t), or OC(t) entails that ALLOW(t) does not hold under the stipulated abstract semantics.\"\n  ],\n  \"evidence\": [\n    \"The task stipulates the abstract equivalence ALLOW(t) iff GBP(t) and BD(t) and OC(t).\",\n    \"Necessity follows by conjunction elimination from the forward direction of the equivalence.\",\n    \"Sufficiency follows by conjunction introduction and the reverse direction of the equivalence.\",\n    \"The Lean candidate encodes ALLOW as the conjunction and proves only this abstract logical core by definitional equality.\"\n  ],\n  \"unresolved\": [\n    \"No source code, configuration, specification mapping, execution trace, test result, or formal refinement proof for any deployed GCAT/BCAT evaluator was provided.\",\n    \"It is unresolved whether any deployed implementation computes GBP, BD, OC, and ALLOW according to the stipulated abstract predicates.\",\n    \"It is unresolved whether implementation details such as errors, partiality, state, ordering, defaults, or version-specific behavior introduce outcomes not represented by the abstract model.\",\n    \"No deployed GCAT/BCAT implementation is claimed to be verified.\"\n  ],\n  \"boundary\": [\n    \"The characterization is valid only for the stipulated abstract evaluator semantics.\",\n    \"The claim does not establish that GBP, BD, or OC correctly model any external policy, cost rule, safety property, or real system requirement.\",\n    \"The claim does not establish soundness, completeness, correctness, or conformance of a deployed GCAT/BCAT implementation.\",\n    \"The Lean candidate proves no implementation-level facts and contains no connection to executable evaluator code.\"\n  ],\n  \"lean_candidate\": \"def allow {T : Type} (GBP BD OC : T \u2192 Prop) (t : T) : Prop :=\\n  GBP t \u2227 BD t \u2227 OC t\\n\\ntheorem allow_iff {T : Type} (GBP BD OC : T \u2192 Prop) (t : T) :\\n    allow GBP BD OC t \u2194 GBP t \u2227 BD t \u2227 OC t :=\\n  Iff.rfl\\n\\ntheorem allow_necessity {T : Type} (GBP BD OC : T \u2192 Prop) (t : T)\\n    (h : allow GBP BD OC t) : GBP t \u2227 BD t \u2227 OC t :=\\n  h\\n\\ntheorem allow_sufficiency {T : Type} (GBP BD OC : T \u2192 Prop) (t : T)\\n    (h : GBP t \u2227 BD t \u2227 OC t) : allow GBP BD OC t :=\\n  h\",\n  \"obligations\": {\n    \"allow_iff\": true,\n    \"necessity\": true,\n    \"sufficiency\": true,\n    \"claim_boundary\": true,\n    \"unresolved_implementation\": true,\n    \"lean_candidate\": true\n  }\n}"
+          }
+        ],
+        "phase": "final_answer",
+        "role": "assistant"
+      }
+    ],
+    "parallel_tool_calls": true,
+    "presence_penalty": 0.0,
+    "previous_response_id": null,
+    "prompt_cache_key": null,
+    "prompt_cache_retention": "24h",
+    "reasoning": {
+      "context": "all_turns",
+      "effort": "medium",
+      "mode": "standard",
+      "summary": null
+    },
+    "safety_identifier": null,
+    "service_tier": "default",
+    "store": true,
+    "temperature": 1.0,
+    "text": {
+      "format": {
+        "type": "text"
+      },
+      "verbosity": "medium"
+    },
+    "tool_choice": "auto",
+    "tool_usage": {
+      "image_gen": {
+        "input_tokens": 0,
+        "input_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 0
+        },
+        "output_tokens": 0,
+        "output_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 0
+        },
+        "total_tokens": 0
+      },
+      "web_search": {
+        "num_requests": 0
+      }
+    },
+    "tools": [],
+    "top_logprobs": 0,
+    "top_p": 0.98,
+    "truncation": "disabled",
+    "usage": {
+      "input_tokens": 310,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "output_tokens": 1242,
+      "output_tokens_details": {
+        "reasoning_tokens": 457
+      },
+      "total_tokens": 1552
+    },
+    "user": null,
+    "metadata": {}
+  },
+  "prompt_hash": "sha256:827ce05b607642ae5b3ac23d731d424b5a5e4c0d2edd53de1d8544b678c0bf41",
+  "output_hash": "sha256:30fc47731df4bae2ea7660fdc3642dec66e40c5a409a570178b055e503c325a4",
+  "error": null
+}
