@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0.0",
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "session_goal_id": "SV-COST-CROSS-MODEL-SESSION-001",
+  "originating_session_goal": "Review every model and route by the same task, outcome, admissibility, evidence, and cost rules so governance is demonstrated by refusing the cheapest invalid result.",
+  "canonical_repository": "GCAT-BCAT-Engine/workflows",
+  "branch": "main",
+  "canonical_handoff": "SV_COST_MIRROR_HANDOFF.md",
+  "canonical_issue": 13,
+  "role": "integration_and_validation",
+  "state": "ACTIVE_DISTINCT_SUPPORT_ROLE",
+  "items": [
+    {
+      "task_id": "SV-COST-XM-001-CONTRACT",
+      "location": "experiments/sv-cost-program/cost-model/governance-vs-no-governance-contract.json",
+      "claim_state": "COMPLETE",
+      "evidence": "commit 03fb4a7621f84879be8353f94bbda10ca85968c7"
+    },
+    {
+      "task_id": "SV-COST-XM-002-MODEL-REGISTRY",
+      "location": "experiments/sv-cost-program/cost-model/model-registry.json",
+      "claim_state": "COMPLETE",
+      "evidence": "commit c53c0ddb68de7115eec14ea74de3f9176bc6a3e2"
+    },
+    {
+      "task_id": "SV-COST-XM-003-CANONICAL-TASKS",
+      "location": "experiments/sv-cost-program/cost-model/canonical-task-set.json",
+      "claim_state": "COMPLETE",
+      "evidence": "commit 8f6b12453fd585c663236fcc187e128d3d467dea"
+    },
+    {
+      "task_id": "SV-COST-XM-004-FRESH-INFERENCE-MATRIX",
+      "location": "experiments/sv-cost-program/results/governance-cross-model-matrix.json",
+      "claim_state": "COMPLETE",
+      "validation_state": "HOSTED_WORKFLOW_GREEN_AND_INVARIANTS_ENFORCED",
+      "evidence": "commit ce9c8e59a3541f939a59584a47f7506196c084f8"
+    },
+    {
+      "task_id": "SV-COST-XM-005-NORMALIZED-OPERATION-MATRIX",
+      "location": "experiments/sv-cost-program/results/normalized-operation-class-matrix.json",
+      "claim_state": "MACHINE_OWNED",
+      "owner": ".github/workflows/sv-cost-normalized-operation-adjudication.yml",
+      "release_condition": "The workflow commits the matrix and report after operation-class invariants pass.",
+      "current_evidence": "workflow commit c975b393762e792b205ba5a610c8ee790c5f42cf; output not yet committed",
+      "next_executable_action": "Observe the workflow result; on failure inspect job logs and repair the exact failing step."
+    },
+    {
+      "task_id": "SV-COST-XM-006-SESSION-CONSOLIDATION",
+      "location": "experiments/sv-cost-program/results/cross-model-session-receipt.json",
+      "claim_state": "MACHINE_OWNED",
+      "owner": ".github/workflows/sv-cost-cross-model-session-consolidation.yml",
+      "release_condition": "Both matrices exist, validate, and the handoff references this inventory and receipt."
+    }
+  ],
+  "unique_requirements_transferred": [
+    "Compare cost only after task identity, output, quality, evidence, and admissibility gates pass.",
+    "Do not select the cheapest observed route when it fails or changes the task.",
+    "Allow a higher-cost route when the premium is justified by capability or production obligations.",
+    "Keep fresh inference, reconstruction, and prospective estimates in separate operation and evidence classes.",
+    "Treat provider tokens as interface metadata, not compute, energy, useful-work, or profitability evidence.",
+    "Use cost per successful equivalent admissible outcome as the comparison unit."
+  ],
+  "archive_condition": "The normalized operation-class matrix is committed and the cross-model session consolidation receipt reports ARCHIVE_READY.",
+  "counts": {
+    "required_tasks": 6,
+    "complete": 4,
+    "machine_owned": 2,
+    "blocked": 0
+  }
+}
