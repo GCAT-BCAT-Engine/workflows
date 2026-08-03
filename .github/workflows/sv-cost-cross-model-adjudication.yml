@@ -7,7 +7,10 @@ on:
     paths:
       - experiments/five-lane-calibration/results/calibration.json
       - experiments/sv-cost-program/cost-model/governance-vs-no-governance-contract.json
+      - experiments/sv-cost-program/cost-model/model-registry.json
+      - experiments/sv-cost-program/cost-model/canonical-task-set.json
       - experiments/sv-cost-program/tools/adjudicate_cross_model_governance.py
+      - experiments/sv-cost-program/tools/validate_cross_model_matrix.py
       - .github/workflows/sv-cost-cross-model-adjudication.yml
 
 permissions:
@@ -32,6 +35,9 @@ jobs:
       - name: Validate generated JSON
         run: python -m json.tool experiments/sv-cost-program/results/governance-cross-model-matrix.json >/dev/null
 
+      - name: Validate governance invariants
+        run: python experiments/sv-cost-program/tools/validate_cross_model_matrix.py
+
       - name: Commit governed matrix and report
         run: |
           git config user.name "stegverse-governance-bot"
@@ -49,6 +55,6 @@ jobs:
         run: |
           echo "## SV-COST Cross-Model Governance Adjudication" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "Selection rule: compare price only after task, output, execution, and receipt gates pass." >> "$GITHUB_STEP_SUMMARY"
+          echo "Selection rule: compare price only after task, output, execution, receipt, registry, and task-class gates pass." >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
           cat reports/governance-cross-model-matrix.md >> "$GITHUB_STEP_SUMMARY"
