@@ -36,7 +36,7 @@ Live Git state, workflow jobs and logs, immutable artifacts, provider receipts, 
 - R5 reliability synthesis: `COMPLETE`; receipt `r5-reliability-synthesis.json`.
 - CFO bounded decision: `COMPLETE`; commit `4d8cf5b072f1e0cf232920249a13d24bafe4a81f`, receipt `cfo-decision.json`.
 - Favorable ROI evidence: `BLOCKED`, durable owner issue `#13`.
-- Chat-session consolidation: `MERGED_INTO_CANONICAL_WORKSTREAM`; hosted evidence `https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30835001225`.
+- Chat-session consolidation: `MERGED_INTO_CANONICAL_WORKSTREAM`; hosted evidence `https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30839255402`.
 
 No active implementation claim remains on R1–R5. The defective R3 controller remains superseded and must not be restored.
 
