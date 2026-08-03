@@ -1,0 +1,60 @@
+{
+  "result": {
+    "trial_id": "T03",
+    "lane": "direct",
+    "provider": "anthropic",
+    "model_requested": "claude-sonnet-4-6",
+    "model_returned": "claude-sonnet-4-6",
+    "route_id": "messages",
+    "provider_message_id": "msg_011Cdg1jxo5F9t6gNfdH4aaa",
+    "stop_reason": "max_tokens",
+    "input_tokens": 143,
+    "output_tokens": 4096,
+    "total_tokens": 4239,
+    "pricing_derived_cost_usd": 0.06186899999999999,
+    "latency_seconds": 58.491864029,
+    "complete": false,
+    "verifier": {
+      "checks": {
+        "direct_artifact": true,
+        "definitions": true,
+        "necessary_and_sufficient": true,
+        "forward_direction": true,
+        "reverse_direction": true,
+        "implementation_claim_boundary": false,
+        "not_meta_only": true
+      },
+      "pass": false
+    },
+    "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+    "response_sha256": "sha256:1c716185b03d9885c00b1639cc3222244183c113521f6fab8c93db2cc6a5c012",
+    "output_sha256": "sha256:67e7a7b023eb717901fa1e9cddc60ba2dee959af7c4d55deba58635148d590b1"
+  },
+  "raw": {
+    "model": "claude-sonnet-4-6",
+    "id": "msg_011Cdg1jxo5F9t6gNfdH4aaa",
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "text",
+        "text": "# SV-MATH-001: Complete Invariant Characterization of ALLOW Admissibility\n\n---\n\n## Part I: Primitive Definitions\n\n**Definition 1.1 (Semantic Space).** Let $\\Omega$ be a complete metric space $(\\Omega, d)$ whose points represent *response-content states*. A *policy boundary* is a closed set $\\mathcal{B} \\subset \\Omega$ partitioning $\\Omega$ into the *admissible interior* $\\mathcal{A} = \\Omega \\setminus \\mathcal{B}$ and the *inadmissible exterior* $\\mathcal{I} \\subset \\Omega$, with $\\mathcal{A} \\cap \\mathcal{I} = \\emptyset$, $\\mathcal{A} \\cup \\mathcal{B} \\cup \\mathcal{I} = \\Omega$.\n\n**Definition 1.2 (Response Map).** A *response map* is a measurable function $f : \\mathcal{X} \\to \\mathcal{P}(\\Omega)$, where $\\mathcal{X}$ is the space of input contexts and $\\mathcal{P}(\\Omega)$ is the space of Borel probability measures on $\\Omega$. For input $x \\in \\mathcal{X}$, write $\\mu_x = f(x)$.\n\n**Definition 1.3 (Geometric Boundary Preservation \u2014 GBP).** The map $f$ satisfies *geometric boundary preservation* with tolerance $\\varepsilon \\geq 0$ if for every $x \\in \\mathcal{X}$:\n\n$$\\mu_x(\\mathcal{I}) = 0 \\quad \\text{and} \\quad \\mu_x(\\mathcal{B}_\\varepsilon) \\leq \\varepsilon,$$\n\nwhere $\\mathcal{B}_\\varepsilon = \\{\\omega \\in \\Omega : d(\\omega, \\mathcal{B}) \\leq \\varepsilon\\}$ is the $\\varepsilon$-thickening of $\\mathcal{B}$. When $\\varepsilon = 0$ this reduces to *strict* GBP: $\\mu_x(\\Omega \\setminus \\mathcal{A}) = 0$.\n\n**Definition 1.4 (Reference Measure and Divergence).** Fix a *reference admissible measure* $\\nu \\in \\mathcal{P}(\\mathcal{A})$ representing a baseline safe-response distribution. The *policy divergence* of $f$ at $x$ is\n\n$$D_f(x) = D_{\\mathrm{KL}}(\\mu_x \\,\\|\\, \\nu),$$\n\nwhere $D_{\\mathrm{KL}}$ is the Kullback\u2013Leibler divergence extended to $+\\infty$ when $\\mu_x \\not\\ll \\nu$.\n\n**Definition 1.5 (Bounded Divergence \u2014 BD).** The map $f$ satisfies *bounded divergence* with constant $\\Delta \\geq 0$ if\n\n$$\\sup_{x \\in \\mathcal{X}} D_f(x) \\leq \\Delta < +\\infty.$$\n\n**Definition 1.6 (Ontological Consistency \u2014 OC).** Let $\\mathcal{L}$ be a first-order language with a distinguished predicate $\\mathsf{Safe}(\\cdot)$ and a set of *policy axioms* $\\Sigma \\subset \\mathcal{L}$. An *interpretation* $\\mathfrak{I}_x$ is induced by $\\mu_x$ by assigning to each sentence $\\phi \\in \\mathcal{L}$ the truth value\n\n$$[\\![\\phi]\\!]_x = \\mathbf{1}\\!\\left[\\mu_x\\!\\left(\\{\\omega : \\omega \\models \\phi\\}\\right) > \\tfrac{1}{2}\\right].$$\n\nThe map $f$ satisfies *ontological consistency* if for every $x \\in \\mathcal{X}$ and every $\\sigma \\in \\Sigma$:\n\n$$[\\![\\sigma]\\!]_x = \\top.$$\n\n**Definition 1.7 (ALLOW Admissibility).** The response map $f$ is *ALLOW-admissible* if it satisfies GBP (Definition 1.3), BD (Definition 1.5), and OC (Definition 1.6) simultaneously. Write $f \\in \\mathsf{ALLOW}(\\varepsilon, \\Delta, \\Sigma)$.\n\n---\n\n## Part II: Auxiliary Lemmas\n\n**Lemma 2.1 (Measure-Theoretic Consistency Bridge).** If $f$ satisfies strict GBP ($\\varepsilon = 0$), then for every $\\sigma \\in \\Sigma$ whose model set $M_\\sigma = \\{\\omega : \\omega \\models \\sigma\\}$ satisfies $M_\\sigma \\supseteq \\mathcal{A}$, we have $[\\![\\sigma]\\!]_x = \\top$ for all $x$.\n\n*Proof.* Strict GBP gives $\\mu_x(\\mathcal{A}) = 1$. Since $M_\\sigma \\supseteq \\mathcal{A}$, we have $\\mu_x(M_\\sigma) \\geq \\mu_x(\\mathcal{A}) = 1 > \\tfrac{1}{2}$, so $[\\![\\sigma]\\!]_x = \\top$. $\\square$\n\n**Lemma 2.2 (Divergence Finiteness Implies Absolute Continuity).** If $D_f(x) < +\\infty$ for all $x$, then $\\mu_x \\ll \\nu$ for all $x$.\n\n*Proof.* Standard: $D_{\\mathrm{KL}}(\\mu \\| \\nu) < \\infty$ requires $\\mu \\ll \\nu$ by definition of the extended KL divergence. $\\square$\n\n**Lemma 2.3 (Support Containment from Absolute Continuity).** If $\\mu_x \\ll \\nu$ and $\\nu \\in \\mathcal{P}(\\mathcal{A})$, then $\\mu_x(\\Omega \\setminus \\mathcal{A}) = 0$.\n\n*Proof.* $\\nu(\\Omega \\setminus \\mathcal{A}) = 0$ since $\\nu$ is supported on $\\mathcal{A}$. Absolute continuity gives $\\mu_x(\\Omega \\setminus \\mathcal{A}) = 0$. $\\square$\n\n**Lemma 2.4 (Boundary Proximity from Support Containment).** If $\\mu_x(\\Omega \\setminus \\mathcal{A}) = 0$ and $\\mathcal{A}$ is open, then for every $\\varepsilon > 0$ there exists a compact $K_\\varepsilon \\subset \\mathcal{A}$ with $d(K_\\varepsilon, \\mathcal{B}) > 0$ and $\\mu_x(K_\\varepsilon) \\geq 1 - \\varepsilon$.\n\n*Proof.* Since $\\mathcal{A}$ is open and $\\mu_x$ is a Borel probability measure on the complete metric space $\\Omega$, it is inner regular. For any $\\varepsilon > 0$, there exists compact $K \\subset \\mathcal{A}$ with $\\mu_x(K) \\geq 1 - \\varepsilon$. Compactness of $K$ and openness of $\\mathcal{A}$ give $d(K, \\mathcal{B}) = d(K, \\Omega \\setminus \\mathcal{A}) > 0$. $\\square$\n\n---\n\n## Part III: Main Theorem\n\n**Theorem 3.1 (Necessary and Sufficient Characterization of ALLOW Admissibility).**\n\n*Assumptions (fixed throughout):*\n- $(\\Omega, d)$ is a complete separable metric space.\n- $\\mathcal{A}$ is open and $\\mathcal{B} = \\partial \\mathcal{A}$ is closed.\n- $\\nu \\in \\mathcal{P}(\\mathcal{A})$ is a fixed reference measure with full support on $\\mathcal{A}$.\n- $\\Sigma$ is a consistent set of sentences in $\\mathcal{L}$ such that every $\\sigma \\in \\Sigma$ has $M_\\sigma \\supseteq \\mathcal{A}$ (the admissible region is a model of all policy axioms).\n- $f : \\mathcal{X} \\to \\mathcal{P}(\\Omega)$ is a measurable response map.\n\n*Claim:* $f \\in \\mathsf{ALLOW}(\\varepsilon, \\Delta, \\Sigma)$ for some $\\varepsilon \\geq 0$ and $\\Delta < +\\infty$ **if and only if** the following three conditions hold jointly:\n\n$$\\text{(C1)} \\quad \\sup_{x \\in \\mathcal{X}} D_{\\mathrm{KL}}(\\mu_x \\| \\nu) \\leq \\Delta < +\\infty,$$\n\n$$\\text{(C2)} \\quad \\forall x \\in \\mathcal{X}: \\mu_x(\\mathcal{I}) = 0,$$\n\n$$\\text{(C3)} \\quad \\forall x \\in \\mathcal{X},\\, \\forall \\sigma \\in \\Sigma: [\\![\\sigma]\\!]_x = \\top.$$\n\n---\n\n### Proof (Forward Direction: $f \\in \\mathsf{ALLOW} \\Rightarrow$ C1, C2, C3)\n\nAssume $f \\in \\mathsf{ALLOW}(\\varepsilon, \\Delta, \\Sigma)$.\n\n**C1:** By Definition 1.5 (BD), $\\sup_x D_f(x) \\leq \\Delta < +\\infty$. This is exactly C1. $\\checkmark$\n\n**C2:** By Definition 1.3 (GBP), $\\mu_x(\\mathcal{I}) = 0$ for all $x$. This is exactly C2. $\\checkmark$\n\n**C3:** By Definition 1.6 (OC), $[\\![\\sigma]\\!]_x = \\top$ for all $x \\in \\mathcal{X}$ and $\\sigma \\in \\Sigma$. This is exactly C3. $\\checkmark$\n\n$\\square$ (Forward direction complete.)\n\n---\n\n### Proof (Reverse Direction: C1, C2, C3 $\\Rightarrow$ $f \\in \\mathsf{ALLOW}$)\n\nAssume C1, C2, C3 hold.\n\n**Verifying BD:** C1 directly gives $\\sup_x D_f(x) \\leq \\Delta < +\\infty$, which is Definition 1.5. $\\checkmark$\n\n**Verifying GBP:** We must show $\\mu_x(\\mathcal{I}) = 0$ and $\\mu_x(\\mathcal{B}_\\varepsilon) \\leq \\varepsilon$ for some $\\varepsilon$.\n\n- C2 gives $\\mu_x(\\mathcal{I}) = 0$ directly.\n- From C1 and Lemma 2.2, $\\mu_x \\ll \\nu$ for all $x$.\n- From Lemma 2.3, $\\mu_x(\\Omega \\setminus \\mathcal{A}) = 0$, so $\\mu_x(\\mathcal{B}) = 0$ (since $\\mathcal{B} \\subset \\Omega \\setminus \\mathcal{A}$).\n- For the $\\varepsilon$-thickening: since $\\mu_x \\ll \\nu$ and $\\nu$ has full support on $\\mathcal{A}$, for any $\\varepsilon > 0$:\n\n$$\\mu_x(\\mathcal{B}_\\varepsilon) = \\int_{\\mathcal{B}_\\varepsilon} \\frac{d\\mu_x}{d\\nu}\\, d\\nu.$$\n\nLet $r_x = d\\mu_x/d\\nu$ be the Radon\u2013Nikodym derivative. By the Cauchy\u2013Schwarz inequality and the definition of KL divergence:\n\n$$\\mu_x(\\mathcal{B}_\\varepsilon) = \\int_{\\mathcal{B}_\\varepsilon} r_x\\, d\\nu \\leq \\sqrt{\\nu(\\mathcal{B}_\\varepsilon)} \\cdot \\sqrt{\\int r_x^2\\, d\\nu}.$$\n\nBy the log-sum inequality, $\\int r_x^2\\, d\\nu \\leq e^{D_{\\mathrm{KL}}(\\mu_x \\| \\nu)} \\cdot \\|r_x\\|_{L^1(\\nu)} = e^{\\Delta}$ (using $\\|r_x\\|_{L^1} = 1$ and the standard bound $\\chi^2 \\leq e^{D_{\\mathrm{KL}}} - 1 + 1$).\n\nMore precisely, by Pinsker's inequality:\n\n$$\\|\\mu_x - \\nu\\|_{\\mathrm{TV}} \\leq \\sqrt{\\tfrac{1}{2} D_{\\mathrm{KL}}(\\mu_x \\| \\nu)} \\leq \\sqrt{\\tfrac{\\Delta}{2}}.$$\n\nTherefore:\n\n$$\\mu_x(\\mathcal{B}_\\varepsilon) \\leq \\nu(\\mathcal{B}_\\varepsilon) + \\|\\mu_x - \\nu\\|_{\\mathrm{TV}} \\leq \\nu(\\mathcal{B}_\\varepsilon) + \\sqrt{\\tfrac{\\Delta}{2}}.$$\n\nSince $\\nu$ has full support on $\\mathcal{A}$ and $\\mathcal{B}$ has $\\nu$-measure zero (as $\\nu \\in \\mathcal{P}(\\mathcal{A})$), we have $\\nu(\\mathcal{B}_\\varepsilon) \\to 0$ as $\\varepsilon \\to 0$ by continuity of measure. Choose $\\varepsilon^* > 0$ small enough that $\\nu(\\mathcal{B}_{\\varepsilon^*}) \\leq \\varepsilon^*/2$; then\n\n$$\\mu_x(\\mathcal{B}_{\\varepsilon^*}) \\leq \\tfrac{\\varepsilon^*}{2} + \\sqrt{\\tfrac{\\Delta}{2}}.$$\n\nSetting $\\varepsilon = \\tfrac{\\varepsilon^*}{2} + \\sqrt{\\tfrac{\\Delta}{2}}$ gives $\\mu_x(\\mathcal{B}_{\\varepsilon^*}) \\leq \\varepsilon$, establishing GBP at tolerance $\\varepsilon$. $\\checkmark$\n\n**Verifying OC:** C3 directly gives $[\\![\\sigma]\\!]_x = \\top$ for all $x, \\sigma$, which is Definition 1.6. $\\checkmark$\n\nSince BD, GBP, and OC all hold, $f \\in \\mathsf{ALLOW}(\\varepsilon, \\Delta, \\Sigma)$. $\\square$ (Reverse direction complete.)\n\n---\n\n## Part IV: Corollaries\n\n**Corollary 4.1 (Strict Admissibility at Zero Tolerance).** If $\\Delta = 0$, then $\\mu_x = \\nu$ for all $x$, and $f$ is trivially ALLOW-admissible with $\\varepsilon = 0$.\n\n*Proof.* $D_{\\mathrm{KL}}(\\mu_x \\| \\nu) = 0$ iff $\\mu_x = \\nu$ $\\nu$-a.e. Then $\\mu_x(\\mathcal{B}_0) = \\nu(\\mathcal{B}) = 0$. $\\square$\n\n**Corollary 4.2 (Monotonicity in $\\Delta$).** If $f \\in \\mathsf{ALLOW}(\\varepsilon, \\Delta, \\Sigma)$ and $\\Delta' \\geq \\Delta$, then $f \\in \\mathsf{ALLOW}(\\varepsilon', \\Delta', \\Sigma)$ for $\\varepsilon' = \\varepsilon + \\sqrt{(\\Delta' - \\"
+      }
+    ],
+    "stop_reason": "max_tokens",
+    "stop_sequence": null,
+    "stop_details": null,
+    "usage": {
+      "input_tokens": 143,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 4096,
+      "service_tier": "standard",
+      "inference_geo": "global"
+    }
+  }
+}

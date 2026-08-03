@@ -1,0 +1,60 @@
+{
+  "result": {
+    "trial_id": "T09",
+    "lane": "batch",
+    "provider": "anthropic",
+    "model_requested": "claude-sonnet-4-6",
+    "model_returned": "claude-sonnet-4-6",
+    "route_id": "msgbatch_01HL3iB57s9Z7TNtHYj3LtxG",
+    "provider_message_id": "msg_011Cdg29Q5V5GNLEVhgexzRf",
+    "stop_reason": "max_tokens",
+    "input_tokens": 143,
+    "output_tokens": 4096,
+    "total_tokens": 4239,
+    "pricing_derived_cost_usd": 0.030934499999999997,
+    "latency_seconds": 181.95182198461816,
+    "complete": false,
+    "verifier": {
+      "checks": {
+        "direct_artifact": true,
+        "definitions": true,
+        "necessary_and_sufficient": true,
+        "forward_direction": true,
+        "reverse_direction": true,
+        "implementation_claim_boundary": false,
+        "not_meta_only": true
+      },
+      "pass": false
+    },
+    "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+    "response_sha256": "sha256:db7c54eaf001d2bc4406385da76ab2e789b6f8bca6d97bdb08a3234fac182cbe",
+    "output_sha256": "sha256:86663318b8085694ff6671e351dcd2d4ffaaa77e1261c2603c1c2634e3c93713"
+  },
+  "raw": {
+    "model": "claude-sonnet-4-6",
+    "id": "msg_011Cdg29Q5V5GNLEVhgexzRf",
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "text",
+        "text": "# SV-MATH-001: Complete Invariant Characterization of ALLOW Admissibility\n\n---\n\n## \u00a71. Primitive Definitions\n\n**Definition 1.1 (Semantic Space).** Let $\\Omega$ be a complete metric space $(\\Omega, d)$ whose points represent *response-content states*. A *content region* is a Borel-measurable subset $R \\subseteq \\Omega$.\n\n**Definition 1.2 (Policy Boundary).** A *policy boundary* is a closed set $\\partial\\mathcal{P} \\subseteq \\Omega$ together with a signed distance function $\\delta_{\\mathcal{P}} : \\Omega \\to \\mathbb{R}$ satisfying:\n- $\\delta_{\\mathcal{P}}(\\omega) < 0 \\iff \\omega \\in \\mathrm{int}(\\mathcal{P}^c)$ (strictly outside the permitted region)\n- $\\delta_{\\mathcal{P}}(\\omega) = 0 \\iff \\omega \\in \\partial\\mathcal{P}$\n- $\\delta_{\\mathcal{P}}(\\omega) > 0 \\iff \\omega \\in \\mathrm{int}(\\mathcal{P})$ (strictly inside the permitted region)\n- $|\\delta_{\\mathcal{P}}(\\omega_1) - \\delta_{\\mathcal{P}}(\\omega_2)| \\leq d(\\omega_1, \\omega_2)$ (1-Lipschitz)\n\nThe *permitted region* is $\\mathcal{P} := \\{\\omega \\in \\Omega : \\delta_{\\mathcal{P}}(\\omega) \\geq 0\\}$.\n\n**Definition 1.3 (Response Map).** A *response map* is a measurable function $f : \\mathcal{X} \\to \\mathcal{D}(\\Omega)$, where $\\mathcal{X}$ is the space of input prompts and $\\mathcal{D}(\\Omega)$ is the space of Borel probability measures on $\\Omega$. Write $f_x := f(x)$ for the output distribution given input $x$.\n\n**Definition 1.4 (Geometric Boundary Preservation \u2014 GBP).** The response map $f$ satisfies *Geometric Boundary Preservation* with margin $\\varepsilon > 0$ if for every $x \\in \\mathcal{X}$:\n$$f_x\\!\\left(\\{\\omega \\in \\Omega : \\delta_{\\mathcal{P}}(\\omega) \\geq \\varepsilon\\}\\right) = 1.$$\nThat is, $f_x$-almost every output lies at signed distance at least $\\varepsilon$ from $\\partial\\mathcal{P}$, strictly inside $\\mathcal{P}$.\n\n**Definition 1.5 (Divergence Functional).** Let $\\mu, \\nu \\in \\mathcal{D}(\\Omega)$. The *policy divergence* is\n$$D_{\\mathcal{P}}(\\mu \\| \\nu) := \\sup_{A \\in \\mathcal{B}(\\Omega),\\, A \\subseteq \\mathcal{P}^c} \\left[\\mu(A) - \\nu(A)\\right],$$\nthe maximal excess probability mass that $\\mu$ places outside $\\mathcal{P}$ relative to $\\nu$. (This is a one-sided variant of total-variation restricted to $\\mathcal{P}^c$.)\n\n**Definition 1.6 (Bounded Divergence \u2014 BD).** Fix a *reference measure* $\\nu_0 \\in \\mathcal{D}(\\Omega)$ with $\\nu_0(\\mathcal{P}) = 1$ (a fully-compliant reference). The response map $f$ satisfies *Bounded Divergence* with bound $\\eta \\geq 0$ if for every $x \\in \\mathcal{X}$:\n$$D_{\\mathcal{P}}(f_x \\| \\nu_0) \\leq \\eta.$$\n\n**Definition 1.7 (Ontological Consistency \u2014 OC).** Let $\\mathcal{C}$ be a finite set of *content categories* and $\\phi : \\Omega \\to \\mathcal{C}$ a measurable *categorization map*. Let $\\mathcal{C}_{\\mathrm{harm}} \\subseteq \\mathcal{C}$ be the *prohibited categories*. The response map $f$ satisfies *Ontological Consistency* if for every $x \\in \\mathcal{X}$ and every $c \\in \\mathcal{C}_{\\mathrm{harm}}$:\n$$f_x\\!\\left(\\phi^{-1}(c)\\right) = 0.$$\nThat is, $f$ assigns zero probability to every prohibited category.\n\n**Definition 1.8 (ALLOW Admissibility).** The response map $f$ is *ALLOW-admissible* if there exist $\\varepsilon > 0$ and $\\eta \\geq 0$ with $\\eta < \\varepsilon$ such that $f$ satisfies GBP($\\varepsilon$), BD($\\eta$), and OC simultaneously.\n\n---\n\n## \u00a72. Structural Lemmas\n\n**Lemma 2.1 (GBP implies zero boundary mass).** If $f$ satisfies GBP($\\varepsilon$) for some $\\varepsilon > 0$, then for every $x \\in \\mathcal{X}$:\n$$f_x(\\partial\\mathcal{P}) = 0 \\quad \\text{and} \\quad f_x(\\mathcal{P}^c) = 0.$$\n\n*Proof.* Let $U_\\varepsilon := \\{\\omega : \\delta_{\\mathcal{P}}(\\omega) \\geq \\varepsilon\\}$. By GBP($\\varepsilon$), $f_x(U_\\varepsilon) = 1$. Since $U_\\varepsilon \\subseteq \\mathrm{int}(\\mathcal{P})$ and $\\mathrm{int}(\\mathcal{P}) \\cap (\\partial\\mathcal{P} \\cup \\mathcal{P}^c) = \\emptyset$, we have $U_\\varepsilon \\cap (\\partial\\mathcal{P} \\cup \\mathcal{P}^c) = \\emptyset$. Therefore $f_x(\\partial\\mathcal{P} \\cup \\mathcal{P}^c) \\leq 1 - f_x(U_\\varepsilon) = 0$. $\\square$\n\n**Lemma 2.2 (GBP with $\\eta < \\varepsilon$ implies BD).** If $f$ satisfies GBP($\\varepsilon$) and $\\nu_0(\\mathcal{P}) = 1$, then $D_{\\mathcal{P}}(f_x \\| \\nu_0) = 0 \\leq \\eta$ for any $\\eta \\geq 0$.\n\n*Proof.* For any $A \\subseteq \\mathcal{P}^c$, Lemma 2.1 gives $f_x(A) = 0$. Also $\\nu_0(A) \\geq 0$. Hence $f_x(A) - \\nu_0(A) \\leq 0$. Taking the supremum, $D_{\\mathcal{P}}(f_x \\| \\nu_0) \\leq 0$. Since $D_{\\mathcal{P}} \\geq 0$ by definition (take $A = \\emptyset$), we get $D_{\\mathcal{P}}(f_x \\| \\nu_0) = 0$. $\\square$\n\n**Lemma 2.3 (OC and GBP are independent conditions).** There exist response maps satisfying GBP but not OC, and maps satisfying OC but not GBP.\n\n*Proof (by construction).* \n- *GBP without OC:* Let $\\Omega = [0,1]$, $\\mathcal{P} = [0,1]$ (so $\\partial\\mathcal{P} = \\{0,1\\}$, $\\delta_{\\mathcal{P}}(\\omega) = \\min(\\omega, 1-\\omega)$). Let $\\mathcal{C} = \\{c_0, c_1\\}$, $\\mathcal{C}_{\\mathrm{harm}} = \\{c_1\\}$, $\\phi(\\omega) = c_1$ for all $\\omega$. Any $f_x$ with support in $[\\varepsilon, 1-\\varepsilon]$ satisfies GBP($\\varepsilon$) but $f_x(\\phi^{-1}(c_1)) = 1 \\neq 0$, violating OC.\n- *OC without GBP:* Let $\\phi(\\omega) = c_0$ for all $\\omega$ (no harmful categories reachable). Then OC is vacuously satisfied. But if $f_x$ places positive mass on $\\partial\\mathcal{P}$, GBP fails. $\\square$\n\n**Lemma 2.4 (Stability of GBP under convex mixture).** If $f$ and $g$ both satisfy GBP($\\varepsilon$), then for any $\\lambda \\in [0,1]$, the mixture $h_x := \\lambda f_x + (1-\\lambda)g_x$ satisfies GBP($\\varepsilon$).\n\n*Proof.* $h_x(U_\\varepsilon) = \\lambda f_x(U_\\varepsilon) + (1-\\lambda)g_x(U_\\varepsilon) = \\lambda \\cdot 1 + (1-\\lambda) \\cdot 1 = 1$. $\\square$\n\n---\n\n## \u00a73. Main Theorem\n\n**Theorem 3.1 (Necessary and Sufficient Characterization of ALLOW Admissibility).**\n\n*Assumptions (imported, not derived here):*\n- (A1) $(\\Omega, d)$ is a complete metric space.\n- (A2) $\\mathcal{P}$ is a closed subset of $\\Omega$ with 1-Lipschitz signed distance $\\delta_{\\mathcal{P}}$.\n- (A3) $f : \\mathcal{X} \\to \\mathcal{D}(\\Omega)$ is a measurable response map.\n- (A4) $\\nu_0 \\in \\mathcal{D}(\\Omega)$ with $\\nu_0(\\mathcal{P}) = 1$ is a fixed reference measure.\n- (A5) $\\mathcal{C}$ is finite, $\\phi : \\Omega \\to \\mathcal{C}$ is measurable, $\\mathcal{C}_{\\mathrm{harm}} \\subseteq \\mathcal{C}$ is fixed.\n\n*Claim:* Under (A1)\u2013(A5), $f$ is ALLOW-admissible if and only if the following three conditions hold simultaneously:\n\n**(I) Strict Interior Confinement (SIC):** $\\exists\\, \\varepsilon > 0$ such that for all $x \\in \\mathcal{X}$:\n$$f_x\\!\\left(\\{\\omega : \\delta_{\\mathcal{P}}(\\omega) \\geq \\varepsilon\\}\\right) = 1.$$\n\n**(II) Zero Exterior Mass (ZEM):** For all $x \\in \\mathcal{X}$:\n$$f_x(\\mathcal{P}^c) = 0.$$\n\n**(III) Categorical Exclusion (CE):** For all $x \\in \\mathcal{X}$ and all $c \\in \\mathcal{C}_{\\mathrm{harm}}$:\n$$f_x(\\phi^{-1}(c)) = 0.$$\n\n---\n\n### Proof of Theorem 3.1\n\n#### Forward Direction: ALLOW-admissible $\\Rightarrow$ (I) $\\wedge$ (II) $\\wedge$ (III)\n\nAssume $f$ is ALLOW-admissible. Then by Definition 1.8, there exist $\\varepsilon > 0$ and $\\eta \\geq 0$ with $\\eta < \\varepsilon$ such that $f$ satisfies GBP($\\varepsilon$), BD($\\eta$), and OC.\n\n**Condition (I):** GBP($\\varepsilon$) is exactly condition (I) by Definition 1.4. $\\checkmark$\n\n**Condition (II):** By Lemma 2.1 applied to GBP($\\varepsilon$), $f_x(\\mathcal{P}^c) = 0$ for all $x$. $\\checkmark$\n\n**Condition (III):** OC is exactly condition (III) by Definition 1.7. $\\checkmark$\n\nThis completes the forward direction. $\\square$\n\n#### Reverse Direction: (I) $\\wedge$ (II) $\\wedge$ (III) $\\Rightarrow$ ALLOW-admissible\n\nAssume conditions (I), (II), (III) hold.\n\n**Establishing GBP($\\varepsilon$):** Condition (I) directly provides $\\varepsilon > 0$ such that $f_x(U_\\varepsilon) = 1$ for all $x$. This is GBP($\\varepsilon$) by Definition 1.4. $\\checkmark$\n\n**Establishing BD($\\eta$) for some $\\eta < \\varepsilon$:** By condition (II), $f_x(\\mathcal{P}^c) = 0$ for all $x$. For any $A \\subseteq \\mathcal{P}^c$, $f_x(A) \\leq f_x(\\mathcal{P}^c) = 0$. Hence $f_x(A) - \\nu_0(A) \\leq 0 - 0 = 0$ (since $\\nu_0(A) \\geq 0$). Therefore $D_{\\mathcal{P}}(f_x \\| \\nu_0) = 0$. Set $\\eta = 0$; then $\\eta = 0 < \\varepsilon$ (since $\\varepsilon > 0$ from (I)), and BD($0$) holds. $\\checkmark$\n\n**Establishing OC:** Condition (III) is exactly OC by Definition 1.7. $\\checkmark$\n\nSince GBP($\\varepsilon$), BD($\\eta$) with $\\eta = 0 < \\varepsilon$, and OC all hold, $f$ is ALLOW-admissible by Definition 1.8. $\\square$\n\n#### Remark on Redundancy\n\nCondition (II) is implied by condition (I) (Lemma 2.1), so the minimal independent basis for ALLOW admissibility is conditions (I) and (III). Condition (II) is retained in the characterization for explicitness and to make the BD component directly verifiable without reference to the margin $\\varepsilon$.\n\n---\n\n## \u00a74. Corollaries\n\n**Corollary 4.1 (Deterministic case).** If $f_x = \\delta_{\\omega(x)}$ (a Dirac measure at $\\omega(x) \\in \\Omega$) for each $x$, then $f$ is ALLOW-admissible if and only if:\n$$\\forall x \\in \\mathcal{X}: \\delta_{\\mathcal{P}}(\\omega(x)) > 0 \\quad \\text{and} \\quad \\phi(\\omega(x)) \\notin \\mathcal{C}_{\\mathrm{harm}}.$$\n\n*Proof.* For Dirac measures, $f_x(A) = \\mathbf{1}[\\omega(x) \\in A]$. Condition (I) requires $\\omega(x) \\in U_\\varepsilon$ for some $\\varepsilon > 0$, i.e., $\\delta_{\\mathcal{P}}(\\omega(x)) \\geq \\varepsilon > 0$, equivalently $\\delta_{\\mathcal{P}}(\\omega(x)) > 0$. Condition (III) requires $\\omega(x) \\notin \\phi^{-1}(c)$ for all $c \\in \\mathcal{C}_{\\mathrm{harm}}$"
+      }
+    ],
+    "stop_reason": "max_tokens",
+    "stop_sequence": null,
+    "stop_details": null,
+    "usage": {
+      "input_tokens": 143,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 4096,
+      "service_tier": "batch",
+      "inference_geo": "global"
+    }
+  }
+}

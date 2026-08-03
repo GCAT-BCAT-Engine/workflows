@@ -1,0 +1,780 @@
+{
+  "experiment_id": "SV-COST-R2-DIRECT-VS-BATCH-001",
+  "relation_id": "R2-DIRECT-VS-BATCH",
+  "governance_id": "SV-COST-R2-GOV-001",
+  "transition_status": "R2_OBSERVED_AND_VALIDATED",
+  "provider": "anthropic",
+  "model": "claude-sonnet-4-6",
+  "trial_count_requested_per_lane": 10,
+  "direct_results": [
+    {
+      "trial_id": "T01",
+      "lane": "direct",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "messages",
+      "provider_message_id": "msg_011Cdg1jxCMagF4hNdSVUDdJ",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.06186899999999999,
+      "latency_seconds": 66.443025591,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": false,
+          "forward_direction": true,
+          "reverse_direction": true,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:994b313e4e4f263c95c2e524ca2a1a0c618f07fbc00c84cefdcac1a9d166088b",
+      "output_sha256": "sha256:2c0deeb7d555538b317c49b275054920cf5cda412c3acd2b8665d0969fdb9653"
+    },
+    {
+      "trial_id": "T02",
+      "lane": "direct",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "messages",
+      "provider_message_id": "msg_011Cdg1jwjKqRpZkH9GfF9kk",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.06186899999999999,
+      "latency_seconds": 62.85764544199999,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": true,
+          "forward_direction": true,
+          "reverse_direction": true,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:db2609834246f1510097b3008f7c2123907b6fb074f72e8323a95dc570855cc5",
+      "output_sha256": "sha256:67e7a7b023eb717901fa1e9cddc60ba2dee959af7c4d55deba58635148d590b1"
+    },
+    {
+      "trial_id": "T03",
+      "lane": "direct",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "messages",
+      "provider_message_id": "msg_011Cdg1jxo5F9t6gNfdH4aaa",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.06186899999999999,
+      "latency_seconds": 58.491864029,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": true,
+          "forward_direction": true,
+          "reverse_direction": true,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:1c716185b03d9885c00b1639cc3222244183c113521f6fab8c93db2cc6a5c012",
+      "output_sha256": "sha256:67e7a7b023eb717901fa1e9cddc60ba2dee959af7c4d55deba58635148d590b1"
+    },
+    {
+      "trial_id": "T04",
+      "lane": "direct",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "messages",
+      "provider_message_id": "msg_011Cdg1pFKbzmMhcaoXdGT1Q",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.06186899999999999,
+      "latency_seconds": 64.275328704,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": false,
+          "forward_direction": true,
+          "reverse_direction": true,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:d215d8241d3ec03db0eeaf6061ecc31ea173d33e30727c3d5df3fbfcee171644",
+      "output_sha256": "sha256:180215bb2ab18dff4eecef4983261cb1a1ca07be57e05d0fd3588f6265875c70"
+    },
+    {
+      "trial_id": "T05",
+      "lane": "direct",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "messages",
+      "provider_message_id": "msg_011Cdg1pZtJxUfjkXK6b24Yu",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.06186899999999999,
+      "latency_seconds": 66.382662614,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": false,
+          "forward_direction": true,
+          "reverse_direction": true,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:15f6325c57e7e1e1f0fe7972d157e983105e0aeba249fc654a0155e0b49c7ec1",
+      "output_sha256": "sha256:0e01822a736183b0c73d53f4d820995afac8c4dfa1f0b2e4aeb5469800646fe4"
+    },
+    {
+      "trial_id": "T06",
+      "lane": "direct",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "messages",
+      "provider_message_id": "msg_011Cdg1pqEHxJKgdDFHeE82i",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.06186899999999999,
+      "latency_seconds": 66.263400273,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": false,
+          "forward_direction": true,
+          "reverse_direction": false,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:b429e1981bb4d4e23662c71459f9102045b476a24174b85347ca2ab71ed4feaf",
+      "output_sha256": "sha256:30fdf54665be287cdc1e4f4791a88d65936826dd97399bf3164d98dada43d5d1"
+    },
+    {
+      "trial_id": "T07",
+      "lane": "direct",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "messages",
+      "provider_message_id": "msg_011Cdg1tywn3bhMrZtoiTozv",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.06186899999999999,
+      "latency_seconds": 63.29826503699999,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": false,
+          "forward_direction": true,
+          "reverse_direction": true,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:a1e23f0fa643bfba1c7ba436c5e64173823e6afb0e10a8e53155021103a67179",
+      "output_sha256": "sha256:000f1fe4a3f1c3ecae7148f6f0846f07dbcb7908d9756dabd768baa1ccd395a0"
+    },
+    {
+      "trial_id": "T08",
+      "lane": "direct",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "messages",
+      "provider_message_id": "msg_011Cdg1uUUGZgei3iSDCbNzi",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.06186899999999999,
+      "latency_seconds": 66.40731621699999,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": false,
+          "forward_direction": true,
+          "reverse_direction": true,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:5ca1346e7aabad1bc2bffd22a77bc2042fc40585043d9c5c619581159e44b444",
+      "output_sha256": "sha256:2c0deeb7d555538b317c49b275054920cf5cda412c3acd2b8665d0969fdb9653"
+    },
+    {
+      "trial_id": "T09",
+      "lane": "direct",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "messages",
+      "provider_message_id": "msg_011Cdg1unMJFbhzM9G8yJ81v",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.06186899999999999,
+      "latency_seconds": 67.69713320599999,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": false,
+          "forward_direction": true,
+          "reverse_direction": true,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:5cceceb99d495b215ffe16eaf75ff994dbc2fb3906d83e8f11621d2ca950cd60",
+      "output_sha256": "sha256:d7d9d94e10bcd4de4e8fde5909967c5ce2a847d10910287472ee21ea2df954b4"
+    },
+    {
+      "trial_id": "T10",
+      "lane": "direct",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "messages",
+      "provider_message_id": "msg_011Cdg1yiaSetZ1yZ8y2CrKs",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.06186899999999999,
+      "latency_seconds": 64.13778553099999,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": false,
+          "forward_direction": false,
+          "reverse_direction": false,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:f10e603fa0fb9fe86415c4358cee68e2cc05661d8c7d0524e76b34afb42635ab",
+      "output_sha256": "sha256:3c58c71c421170f6237bd9fb0524754dfcd8fc663275dd6fa17d03450642d42e"
+    }
+  ],
+  "batch_results": [
+    {
+      "trial_id": "T03",
+      "lane": "batch",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "msgbatch_01HL3iB57s9Z7TNtHYj3LtxG",
+      "provider_message_id": "msg_011Cdg29ZntFDEkZmRQpu4cn",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.030934499999999997,
+      "latency_seconds": 181.95182198461816,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": true,
+          "forward_direction": true,
+          "reverse_direction": true,
+          "implementation_claim_boundary": true,
+          "not_meta_only": true
+        },
+        "pass": true
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:2acc689c0cc861511cd7746486520de15d57cdecd15422dd975a041e46e01145",
+      "output_sha256": "sha256:aa16b7c04a8a650529daa250f9753ef8a470a481bef50ae1275fd7d799e5630e"
+    },
+    {
+      "trial_id": "T06",
+      "lane": "batch",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "msgbatch_01HL3iB57s9Z7TNtHYj3LtxG",
+      "provider_message_id": "msg_011Cdg28Pfu6pRjzD8oFtDpp",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.030934499999999997,
+      "latency_seconds": 181.95182198461816,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": false,
+          "forward_direction": true,
+          "reverse_direction": true,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:690df286425e872c2db47c88d8d9d6b94cf5e2d238bf5f6afdfda3192f222c33",
+      "output_sha256": "sha256:000f1fe4a3f1c3ecae7148f6f0846f07dbcb7908d9756dabd768baa1ccd395a0"
+    },
+    {
+      "trial_id": "T05",
+      "lane": "batch",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "msgbatch_01HL3iB57s9Z7TNtHYj3LtxG",
+      "provider_message_id": "msg_011Cdg26ut3AEJUL9V4Z4sZ3",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.030934499999999997,
+      "latency_seconds": 181.95182198461816,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": false,
+          "forward_direction": true,
+          "reverse_direction": true,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:d65863f0cd621e9510beca65dbcb49dfa115ee46a37465a495730d1f65961c91",
+      "output_sha256": "sha256:1dea9f6606d4d0a8110d8cbed7c0a48d88c4a58d9eab14b8b11ba50d75c9b0a3"
+    },
+    {
+      "trial_id": "T10",
+      "lane": "batch",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "msgbatch_01HL3iB57s9Z7TNtHYj3LtxG",
+      "provider_message_id": "msg_011Cdg27dGBfYTZyZxSuZU2n",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.030934499999999997,
+      "latency_seconds": 181.95182198461816,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": false,
+          "forward_direction": false,
+          "reverse_direction": false,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:4bc5052e306da79577e9137afd55dfdca1d0de273c87776158793ef9079ee029",
+      "output_sha256": "sha256:3c58c71c421170f6237bd9fb0524754dfcd8fc663275dd6fa17d03450642d42e"
+    },
+    {
+      "trial_id": "T02",
+      "lane": "batch",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "msgbatch_01HL3iB57s9Z7TNtHYj3LtxG",
+      "provider_message_id": "msg_011Cdg27wMsBwYkNJtkRcL1z",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.030934499999999997,
+      "latency_seconds": 181.95182198461816,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": false,
+          "forward_direction": true,
+          "reverse_direction": true,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:94168f4e2c75d78136c99b124fd0054af8561f2b626f8ce9dc796e44e2c483f7",
+      "output_sha256": "sha256:96cedf94773bd69df4ae9e5a140ec57332b407492d102dbbc1d328068cdea5b7"
+    },
+    {
+      "trial_id": "T01",
+      "lane": "batch",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "msgbatch_01HL3iB57s9Z7TNtHYj3LtxG",
+      "provider_message_id": "msg_011Cdg291Tx7BVpmowo7gexU",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.030934499999999997,
+      "latency_seconds": 181.95182198461816,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": false,
+          "forward_direction": true,
+          "reverse_direction": true,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:bbb941cbb5160dac90b790a248b5e348a4d85fc43201ef3b4552ec0e86d7787f",
+      "output_sha256": "sha256:000f1fe4a3f1c3ecae7148f6f0846f07dbcb7908d9756dabd768baa1ccd395a0"
+    },
+    {
+      "trial_id": "T04",
+      "lane": "batch",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "msgbatch_01HL3iB57s9Z7TNtHYj3LtxG",
+      "provider_message_id": "msg_011Cdg27Pf8cyEDPaoW9mgEj",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.030934499999999997,
+      "latency_seconds": 181.95182198461816,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": true,
+          "forward_direction": true,
+          "reverse_direction": true,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:80b510c2f6f896d10ffe9762f0f0c067d98d8c5706d8faca3bbc2220b45d9394",
+      "output_sha256": "sha256:9b518c3886f702aee6d8a1c2daf71925c7525e17e2cb404cd17fab56624623b5"
+    },
+    {
+      "trial_id": "T07",
+      "lane": "batch",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "msgbatch_01HL3iB57s9Z7TNtHYj3LtxG",
+      "provider_message_id": "msg_011Cdg27xmCXLm11LZ2a8nec",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.030934499999999997,
+      "latency_seconds": 181.95182198461816,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": false,
+          "forward_direction": true,
+          "reverse_direction": true,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:ec8fdcf84cdfc2103d1eea292f8d7b8cbafee1f30240ea16b19dae07988c2183",
+      "output_sha256": "sha256:54c6a6e33495b83c7c0db490552bb7a5f3eb75ef846103acd91939e1689070b9"
+    },
+    {
+      "trial_id": "T08",
+      "lane": "batch",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "msgbatch_01HL3iB57s9Z7TNtHYj3LtxG",
+      "provider_message_id": "msg_011Cdg28VCn8kAUu4DNFuRqM",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.030934499999999997,
+      "latency_seconds": 181.95182198461816,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": false,
+          "forward_direction": true,
+          "reverse_direction": true,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:09e13e6f7a066eb1ae7e52f3a5eb9aa97976f4b04a89f4ed23fbb3513bbdd156",
+      "output_sha256": "sha256:011d6c0558cbc3942d0bf0a3400c80f9fcb33eff673188b0c6cf6dd1410d2ee6"
+    },
+    {
+      "trial_id": "T09",
+      "lane": "batch",
+      "provider": "anthropic",
+      "model_requested": "claude-sonnet-4-6",
+      "model_returned": "claude-sonnet-4-6",
+      "route_id": "msgbatch_01HL3iB57s9Z7TNtHYj3LtxG",
+      "provider_message_id": "msg_011Cdg29Q5V5GNLEVhgexzRf",
+      "stop_reason": "max_tokens",
+      "input_tokens": 143,
+      "output_tokens": 4096,
+      "total_tokens": 4239,
+      "pricing_derived_cost_usd": 0.030934499999999997,
+      "latency_seconds": 181.95182198461816,
+      "complete": false,
+      "verifier": {
+        "checks": {
+          "direct_artifact": true,
+          "definitions": true,
+          "necessary_and_sufficient": true,
+          "forward_direction": true,
+          "reverse_direction": true,
+          "implementation_claim_boundary": false,
+          "not_meta_only": true
+        },
+        "pass": false
+      },
+      "request_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+      "response_sha256": "sha256:db7c54eaf001d2bc4406385da76ab2e789b6f8bca6d97bdb08a3234fac182cbe",
+      "output_sha256": "sha256:86663318b8085694ff6671e351dcd2d4ffaaa77e1261c2603c1c2634e3c93713"
+    }
+  ],
+  "batch_id": "msgbatch_01HL3iB57s9Z7TNtHYj3LtxG",
+  "request_contract_sha256": "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976",
+  "all_observed_request_hashes": [
+    "sha256:cce4f41475ae6c5c65eec0e45131b83cf1163d4af4bde0e3768189968072e976"
+  ],
+  "paired_trials": [
+    {
+      "trial_id": "T01",
+      "direct_cost_usd": 0.06186899999999999,
+      "batch_cost_usd": 0.030934499999999997,
+      "cost_delta_usd": -0.030934499999999997,
+      "cost_reduction_percent": 50.0,
+      "token_delta": 0,
+      "direct_verifier_pass": false,
+      "batch_verifier_pass": false,
+      "direct_complete": false,
+      "batch_complete": false
+    },
+    {
+      "trial_id": "T02",
+      "direct_cost_usd": 0.06186899999999999,
+      "batch_cost_usd": 0.030934499999999997,
+      "cost_delta_usd": -0.030934499999999997,
+      "cost_reduction_percent": 50.0,
+      "token_delta": 0,
+      "direct_verifier_pass": false,
+      "batch_verifier_pass": false,
+      "direct_complete": false,
+      "batch_complete": false
+    },
+    {
+      "trial_id": "T03",
+      "direct_cost_usd": 0.06186899999999999,
+      "batch_cost_usd": 0.030934499999999997,
+      "cost_delta_usd": -0.030934499999999997,
+      "cost_reduction_percent": 50.0,
+      "token_delta": 0,
+      "direct_verifier_pass": false,
+      "batch_verifier_pass": true,
+      "direct_complete": false,
+      "batch_complete": false
+    },
+    {
+      "trial_id": "T04",
+      "direct_cost_usd": 0.06186899999999999,
+      "batch_cost_usd": 0.030934499999999997,
+      "cost_delta_usd": -0.030934499999999997,
+      "cost_reduction_percent": 50.0,
+      "token_delta": 0,
+      "direct_verifier_pass": false,
+      "batch_verifier_pass": false,
+      "direct_complete": false,
+      "batch_complete": false
+    },
+    {
+      "trial_id": "T05",
+      "direct_cost_usd": 0.06186899999999999,
+      "batch_cost_usd": 0.030934499999999997,
+      "cost_delta_usd": -0.030934499999999997,
+      "cost_reduction_percent": 50.0,
+      "token_delta": 0,
+      "direct_verifier_pass": false,
+      "batch_verifier_pass": false,
+      "direct_complete": false,
+      "batch_complete": false
+    },
+    {
+      "trial_id": "T06",
+      "direct_cost_usd": 0.06186899999999999,
+      "batch_cost_usd": 0.030934499999999997,
+      "cost_delta_usd": -0.030934499999999997,
+      "cost_reduction_percent": 50.0,
+      "token_delta": 0,
+      "direct_verifier_pass": false,
+      "batch_verifier_pass": false,
+      "direct_complete": false,
+      "batch_complete": false
+    },
+    {
+      "trial_id": "T07",
+      "direct_cost_usd": 0.06186899999999999,
+      "batch_cost_usd": 0.030934499999999997,
+      "cost_delta_usd": -0.030934499999999997,
+      "cost_reduction_percent": 50.0,
+      "token_delta": 0,
+      "direct_verifier_pass": false,
+      "batch_verifier_pass": false,
+      "direct_complete": false,
+      "batch_complete": false
+    },
+    {
+      "trial_id": "T08",
+      "direct_cost_usd": 0.06186899999999999,
+      "batch_cost_usd": 0.030934499999999997,
+      "cost_delta_usd": -0.030934499999999997,
+      "cost_reduction_percent": 50.0,
+      "token_delta": 0,
+      "direct_verifier_pass": false,
+      "batch_verifier_pass": false,
+      "direct_complete": false,
+      "batch_complete": false
+    },
+    {
+      "trial_id": "T09",
+      "direct_cost_usd": 0.06186899999999999,
+      "batch_cost_usd": 0.030934499999999997,
+      "cost_delta_usd": -0.030934499999999997,
+      "cost_reduction_percent": 50.0,
+      "token_delta": 0,
+      "direct_verifier_pass": false,
+      "batch_verifier_pass": false,
+      "direct_complete": false,
+      "batch_complete": false
+    },
+    {
+      "trial_id": "T10",
+      "direct_cost_usd": 0.06186899999999999,
+      "batch_cost_usd": 0.030934499999999997,
+      "cost_delta_usd": -0.030934499999999997,
+      "cost_reduction_percent": 50.0,
+      "token_delta": 0,
+      "direct_verifier_pass": false,
+      "batch_verifier_pass": false,
+      "direct_complete": false,
+      "batch_complete": false
+    }
+  ],
+  "statistics": {
+    "paired_n": 10,
+    "mean_cost_delta_usd": -0.030934499999999997,
+    "sample_sd_cost_delta_usd": 0.0,
+    "paired_cost_delta_95pct_ci_usd": [
+      -0.030934499999999997,
+      -0.030934499999999997
+    ],
+    "mean_cost_reduction_percent": 50.0,
+    "direct_verifier_pass_rate": 0,
+    "batch_verifier_pass_rate": 0.1,
+    "direct_completion_rate": 0,
+    "batch_completion_rate": 0
+  },
+  "claim_boundary": "This test measures provider-observed synchronous and batch routes under an identical request contract. Pricing-derived costs use the locked public price card and are not represented as an invoice or negotiated enterprise rate.",
+  "workflow": {
+    "run_id": "30825311249",
+    "run_attempt": "1",
+    "commit_sha": "317e88e5b2feb0005940faf60615698b443e6158"
+  }
+}
