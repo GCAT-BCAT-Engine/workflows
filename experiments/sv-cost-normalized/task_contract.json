@@ -1,0 +1,46 @@
+{
+  "experiment_id": "SV-COST-NORMALIZED-001",
+  "task_version": "1.0.0",
+  "task": "Characterize ALLOW admissibility for an abstract GCAT/BCAT evaluator where ALLOW(t) holds exactly when GBP(t), BD(t), and OC(t) all hold. State necessity, sufficiency, claim boundaries, unresolved implementation evidence, and provide a Lean 4 candidate for the logical core.",
+  "required_obligations": [
+    "allow_iff",
+    "necessity",
+    "sufficiency",
+    "claim_boundary",
+    "unresolved_implementation",
+    "lean_candidate"
+  ],
+  "canonical_schema": {
+    "task_identity": "string",
+    "conclusion": "string",
+    "claims": ["string"],
+    "evidence": ["string"],
+    "unresolved": ["string"],
+    "boundary": ["string"],
+    "lean_candidate": "string",
+    "obligations": {
+      "allow_iff": "boolean",
+      "necessity": "boolean",
+      "sufficiency": "boolean",
+      "claim_boundary": "boolean",
+      "unresolved_implementation": "boolean",
+      "lean_candidate": "boolean"
+    }
+  },
+  "retry_policy": {
+    "max_attempts_per_lane": 3,
+    "retry_only_missing_obligations": true
+  },
+  "pricing": {
+    "openai": {
+      "input_usd_per_million": 5.0,
+      "output_usd_per_million": 30.0,
+      "price_card_version": "2026-08-03-local-declared"
+    },
+    "anthropic": {
+      "input_usd_per_million": 3.0,
+      "output_usd_per_million": 15.0,
+      "price_card_version": "2026-08-03-local-declared"
+    }
+  }
+}
