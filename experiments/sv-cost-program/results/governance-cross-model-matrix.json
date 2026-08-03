@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "experiment_id": "SV-COST-GOVERNANCE-CROSS-MODEL-001",
-  "generated_at": "2026-08-03T18:29:41.180838+00:00",
+  "generated_at": "2026-08-03T18:39:12.182141+00:00",
   "comparison_unit": "successful equivalent admissible outcome",
   "source_evidence": {
     "calibration_path": "experiments/five-lane-calibration/results/calibration.json",
