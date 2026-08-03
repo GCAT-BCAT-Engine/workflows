@@ -1,0 +1,100 @@
+name: SV-COST R2 Direct vs Batch
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/sv-cost-program/r2-direct-vs-batch/run.py'
+      - 'experiments/sv-cost-program/r2-direct-vs-batch/protocol.json'
+      - 'experiments/sv-cost-program/r2-direct-vs-batch/governance.json'
+      - '.github/workflows/sv-cost-r2-direct-vs-batch.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sv-cost-r2-direct-vs-batch-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  execute:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify prior state and secret
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$ANTHROPIC_API_KEY" || { echo 'ANTHROPIC_API_KEY is missing' >&2; exit 1; }
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('experiments/sv-cost-program/results/historical-lineage-observation.json')
+          assert p.exists(), 'historical lineage observation is missing'
+          assert json.loads(p.read_text())['status'] == 'OBSERVED_AND_VALIDATED'
+          PY
+
+      - name: Validate governance, protocol, and runner
+        run: |
+          python -m json.tool experiments/sv-cost-program/r2-direct-vs-batch/governance.json >/dev/null
+          python -m json.tool experiments/sv-cost-program/r2-direct-vs-batch/protocol.json >/dev/null
+          python -m py_compile experiments/sv-cost-program/r2-direct-vs-batch/run.py
+
+      - name: Execute governed paired trials
+        run: python experiments/sv-cost-program/r2-direct-vs-batch/run.py
+
+      - name: Validate terminal evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='experiments/sv-cost-program/r2-direct-vs-batch/results'
+          test -s "$base/result.json"
+          test -s "$base/batch-results.jsonl"
+          test -s "$base/batch-metadata.json"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('experiments/sv-cost-program/r2-direct-vs-batch/results/result.json')
+          r = json.loads(p.read_text())
+          assert r['transition_status'] == 'R2_OBSERVED_AND_VALIDATED'
+          assert r['statistics']['paired_n'] > 0
+          assert len(r['all_observed_request_hashes']) == 1
+          assert r['batch_id']
+          PY
+
+      - name: Upload immutable evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: sv-cost-r2-direct-vs-batch-${{ github.run_id }}-${{ github.run_attempt }}
+          path: experiments/sv-cost-program/r2-direct-vs-batch/results/
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Commit governed R2 evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'sv-cost-r2-worker'
+          git config user.email 'actions@users.noreply.github.com'
+          git add experiments/sv-cost-program/r2-direct-vs-batch/results
+          git diff --cached --quiet && exit 0
+          git commit -m "Record governed R2 direct-vs-batch evidence [run $GITHUB_RUN_ID attempt $GITHUB_RUN_ATTEMPT]"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if git rebase origin/main && git push origin HEAD:main; then exit 0; fi
+            git rebase --abort || true
+            sleep $((attempt * 3))
+          done
+          exit 1
