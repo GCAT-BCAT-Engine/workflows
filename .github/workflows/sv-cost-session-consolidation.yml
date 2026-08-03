@@ -1,0 +1,216 @@
+name: SV-COST Session Consolidation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'SV_COST_MIRROR_HANDOFF.md'
+      - 'experiments/sv-cost-program/session-goal-inventory.json'
+      - 'experiments/sv-cost-program/task-claims.json'
+      - 'docs/RECONSTRUCTABLE_STATE_TRANSITION_GOVERNANCE.md'
+      - 'tools/validate_sv_cost_session_state.py'
+      - '.github/workflows/sv-cost-session-consolidation.yml'
+
+permissions:
+  contents: write
+  issues: write
+
+env:
+  RECEIPT: experiments/sv-cost-program/results/session-consolidation-receipt.json
+
+concurrency:
+  group: sv-cost-session-consolidation
+  cancel-in-progress: false
+
+jobs:
+  validate-transfer-release-and-receipt:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate canonical transfer before claim release
+        shell: bash
+        run: |
+          set -euo pipefail
+          NOW="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          python tools/validate_sv_cost_session_state.py --write-receipt --now "$NOW" > /tmp/sv-cost-session-pre.json
+          status="$(jq -r .status "$RECEIPT")"
+          test "$status" = READY_TO_RELEASE_SESSION_CLAIM -o "$status" = ARCHIVE_READY
+
+      - name: Release chat-session claim into canonical workstream
+        shell: bash
+        env:
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          if [[ "$(jq -r .status "$RECEIPT")" == ARCHIVE_READY ]]; then
+            echo 'Session claim already released.'
+            exit 0
+          fi
+          python - <<'PY'
+          import datetime as dt
+          import json
+          import os
+          from pathlib import Path
+
+          now = dt.datetime.now(dt.timezone.utc).isoformat().replace('+00:00', 'Z')
+          run_url = os.environ['RUN_URL']
+          claims_path = Path('experiments/sv-cost-program/task-claims.json')
+          inventory_path = Path('experiments/sv-cost-program/session-goal-inventory.json')
+          handoff_path = Path('SV_COST_MIRROR_HANDOFF.md')
+          receipt_path = Path('experiments/sv-cost-program/results/session-consolidation-receipt.json')
+
+          claims = json.loads(claims_path.read_text())
+          claims['updated_at'] = now
+          found = False
+          for claim in claims['claims']:
+              if claim['task_id'] == 'SV-COST-SESSION-CONSOLIDATE':
+                  found = True
+                  claim['state'] = 'MERGED_INTO_CANONICAL_WORKSTREAM'
+                  claim['released_at'] = now
+                  claim['release_evidence'] = {
+                      'workflow_run': run_url,
+                      'receipt': str(receipt_path),
+                      'canonical_handoff': str(handoff_path),
+                  }
+          assert found
+          claims_path.write_text(json.dumps(claims, indent=2) + '\n')
+
+          inventory = json.loads(inventory_path.read_text())
+          inventory['updated_at'] = now
+          for goal in inventory['session_goals']:
+              if goal['goal_id'] in {'SESSION-GOAL-GOVERNANCE', 'SESSION-GOAL-CONSOLIDATION'}:
+                  goal['state'] = 'MERGED_INTO_CANONICAL_WORKSTREAM'
+          terminal_updates = {
+              'SV-COST-009-GOVERNANCE-FORMALISM': (
+                  'COMPLETE',
+                  'committed_design_record_and_validator_cross_reference',
+                  'docs/RECONSTRUCTABLE_STATE_TRANSITION_GOVERNANCE.md',
+              ),
+              'SV-COST-010-SESSION-HANDOFF-INVENTORY-CLAIMS': (
+                  'COMPLETE',
+                  'canonical_handoff_inventory_and_claim_registry_committed',
+                  'SV_COST_MIRROR_HANDOFF.md; experiments/sv-cost-program/session-goal-inventory.json; experiments/sv-cost-program/task-claims.json',
+              ),
+              'SV-COST-011-SESSION-CONSOLIDATION-AUTOMATION': (
+                  'COMPLETE',
+                  'hosted_validator_executed_and_receipt_committed',
+                  run_url,
+              ),
+          }
+          for item in inventory['items']:
+              if item['task_id'] in terminal_updates:
+                  state, completion, evidence = terminal_updates[item['task_id']]
+                  item['claim_state'] = state
+                  item['completion_state'] = completion
+                  item['validation_state'] = 'hosted_validation_passed'
+                  item['integration_state'] = 'merged_into_canonical_workstream'
+                  item['evidence_location'] = evidence
+                  item['next_executable_action'] = 'None for this chat session; repository-native continuation owns remaining program work.'
+          terminal_states = {'COMPLETE', 'SUPERSEDED', 'MERGED_INTO_CANONICAL_WORKSTREAM'}
+          inventory['counts'] = {
+              'required_deliverables': len(inventory['items']),
+              'complete_or_terminal': sum(1 for item in inventory['items'] if item['claim_state'] in terminal_states),
+              'machine_owned_active': sum(1 for item in inventory['items'] if item['claim_state'] == 'MACHINE_OWNED'),
+              'blocked_with_release_condition': sum(1 for item in inventory['items'] if item['claim_state'] == 'BLOCKED'),
+              'claimed_for_session_consolidation': 0,
+              'missing_required_files': 0,
+          }
+          inventory_path.write_text(json.dumps(inventory, indent=2) + '\n')
+
+          handoff = handoff_path.read_text()
+          handoff = handoff.replace(
+              'Status: **CANONICAL — ACTIVE MACHINE-OWNED R3 / SESSION CONSOLIDATION IN PROGRESS**',
+              'Status: **CANONICAL — SESSION MERGED; MACHINE-OWNED PROGRAM CONTINUATION ACTIVE**',
+          )
+          start = handoff.index('## Archive conditions')
+          end = handoff.index('## Percentages')
+          archive_section = '''## Archive conditions
+
+This chat session is archive-safe when the consolidation validator confirms all of the following:
+
+1. every unique session requirement is committed in the handoff, inventory, claims registry, governance record, issue, or machine workflow;
+2. the chat-session consolidation claim is released as `MERGED_INTO_CANONICAL_WORKSTREAM`;
+3. active R3 and finalizer work is repository-native, collision-bounded, expiring, evidence-producing, and has machine-observable release conditions;
+4. no stale or conflicting implementation claim exists;
+5. the consolidation receipt reports `ARCHIVE_READY`;
+6. deleting the chat would not remove unique information or execution authority.
+
+R3 itself does not need to finish inside this chat after its machine-owned continuation and fail-closed terminal paths are validated. The canonical continuation remains issue `#12`, this handoff, and the named workflows. Fully burdened cost and held-out validation remain durably owned by issue `#13`.
+
+'''
+          handoff = handoff[:start] + archive_section + handoff[end:]
+          marker = '## Session consolidation state'
+          state_section = f'''\n## Session consolidation state\n\n- State: `MERGED_INTO_CANONICAL_WORKSTREAM`\n- Released at: `{now}`\n- Hosted validation: `{run_url}`\n- Receipt: `experiments/sv-cost-program/results/session-consolidation-receipt.json`\n- Canonical continuation: `GCAT-BCAT-Engine/workflows/SV_COST_MIRROR_HANDOFF.md`, issue `#12`, R3 controller v2, and the gated finalizer.\n- Financial evidence continuation: issue `#13`.\n'''
+          if marker in handoff:
+              handoff = handoff.split(marker)[0].rstrip() + state_section
+          else:
+              handoff = handoff.rstrip() + state_section
+          handoff_path.write_text(handoff + '\n')
+          PY
+
+      - name: Validate archive-ready canonical state
+        shell: bash
+        run: |
+          set -euo pipefail
+          NOW="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          python tools/validate_sv_cost_session_state.py --write-receipt --now "$NOW" > /tmp/sv-cost-session-final.json
+          test "$(jq -r .status "$RECEIPT")" = ARCHIVE_READY
+          test "$(jq -r .archive_readiness.ready "$RECEIPT")" = true
+          python -m json.tool experiments/sv-cost-program/session-goal-inventory.json >/dev/null
+          python -m json.tool experiments/sv-cost-program/task-claims.json >/dev/null
+          python -m json.tool "$RECEIPT" >/dev/null
+          grep -q 'SESSION MERGED' SV_COST_MIRROR_HANDOFF.md
+          grep -q 'MERGED_INTO_CANONICAL_WORKSTREAM' SV_COST_MIRROR_HANDOFF.md
+
+      - name: Upload immutable consolidation evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: sv-cost-session-consolidation-${{ github.run_id }}
+          path: |
+            SV_COST_MIRROR_HANDOFF.md
+            experiments/sv-cost-program/session-goal-inventory.json
+            experiments/sv-cost-program/task-claims.json
+            experiments/sv-cost-program/results/session-consolidation-receipt.json
+            docs/RECONSTRUCTABLE_STATE_TRANSITION_GOVERNANCE.md
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Commit consolidation receipt and released claim
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          git config user.name 'sv-cost-session-consolidator'
+          git config user.email 'actions@users.noreply.github.com'
+          git add SV_COST_MIRROR_HANDOFF.md
+          git add experiments/sv-cost-program/session-goal-inventory.json
+          git add experiments/sv-cost-program/task-claims.json
+          git add experiments/sv-cost-program/results/session-consolidation-receipt.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Release SV-COST chat session into canonical repository continuation [run $GITHUB_RUN_ID]"
+            pushed=false
+            for attempt in 1 2 3; do
+              git fetch origin main
+              if git rebase origin/main && git push origin HEAD:main; then
+                pushed=true
+                break
+              fi
+              git rebase --abort || true
+              sleep $((attempt * 3))
+            done
+            test "$pushed" = true
+          fi
+          gh issue comment 12 --repo "$GITHUB_REPOSITORY" --body "Session-specific SV-COST state and execution authority were consolidated and released into the canonical workstream. Receipt: \`experiments/sv-cost-program/results/session-consolidation-receipt.json\`. Handoff: \`SV_COST_MIRROR_HANDOFF.md\`. Hosted evidence: $RUN_URL. Remaining R3/R4/R5 work is machine-owned; fully burdened financial evidence is owned by issue #13."
