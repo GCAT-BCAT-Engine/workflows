@@ -58,8 +58,15 @@
       ],
       "changed_variable": "context representation and transfer",
       "interpretation": "StegVerse-attributable token, cost, latency, and quality effect",
-      "status": "NEXT_ADMISSIBLE_RELATION_DESIGN_REQUIRED",
-      "publication_gate": "paired outputs must pass the same independent verifier"
+      "status": "REPAIRED_GENERATION_DISPATCHED",
+      "generation": "r3-gen-20260803-fix1",
+      "governance": "experiments/sv-cost-program/r3-full-vs-managed/governance.json",
+      "protocol": "experiments/sv-cost-program/r3-full-vs-managed/protocol.json",
+      "workflow": ".github/workflows/sv-cost-r3-full-vs-managed.yml",
+      "controller": ".github/workflows/sv-cost-r3-controller-v2.yml",
+      "required_result": "experiments/sv-cost-program/r3-full-vs-managed/results/result.json",
+      "required_adjudication": "experiments/sv-cost-program/results/r3-adjudication.json",
+      "publication_gate": "both lanes must complete the full governed S0-S6 path and pass the same verifier; pricing-derived cost is not invoice evidence"
     },
     {
       "id": "R4-GENERATION-VS-RECONSTRUCTION",
@@ -73,8 +80,9 @@
       ],
       "changed_variable": "operation class",
       "interpretation": "reuse economics, not platform inference equivalence",
-      "status": "EXECUTED_DIFFERENT_OPERATION",
-      "publication_gate": "must appear outside like-for-like platform tables"
+      "status": "EXECUTED_DIFFERENT_OPERATION_PENDING_CANONICAL_ADJUDICATION",
+      "evidence": "experiments/sv-cost-normalized/results/result.json",
+      "publication_gate": "must appear outside like-for-like platform tables and must retain unmeasured local runtime as an explicit gap"
     },
     {
       "id": "R5-REPEATED-TRIALS",
@@ -89,8 +97,8 @@
       ],
       "changed_variable": "trial instance",
       "interpretation": "variance, failure rate, retry burden, and confidence",
-      "status": "ACTIVE_WITHIN_R2_TEN_PAIRED_TRIALS",
-      "publication_gate": "report distributions and failures, not only averages"
+      "status": "ACTIVE_ACROSS_R2_AND_PENDING_R3",
+      "publication_gate": "report distributions, failures, retries, and confidence intervals rather than only averages"
     }
   ],
   "execution_order": [
