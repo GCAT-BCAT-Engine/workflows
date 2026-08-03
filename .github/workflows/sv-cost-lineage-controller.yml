@@ -1,0 +1,186 @@
+name: SV-COST Lineage Controller
+
+on:
+  workflow_run:
+    workflows: ["Historical sv-cost VAL-001 BL-001 Rerun"]
+    types: [completed]
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sv-cost-lineage-controller.yml'
+
+permissions:
+  actions: write
+  contents: write
+  issues: write
+
+concurrency:
+  group: sv-cost-lineage-controller
+  cancel-in-progress: false
+
+jobs:
+  observe-and-continue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve historical rerun
+        id: resolve
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_RUN_ID: ${{ github.event.workflow_run.id }}
+          EVENT_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          EVENT_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          repo="$GITHUB_REPOSITORY"
+          if [[ "$EVENT_NAME" == "workflow_run" ]]; then
+            run_id="$EVENT_RUN_ID"
+            conclusion="$EVENT_CONCLUSION"
+            attempt="$EVENT_ATTEMPT"
+          else
+            latest="$(gh api "repos/$repo/actions/workflows/sv-cost-historical-rerun.yml/runs?branch=main&per_page=1")"
+            run_id="$(jq -r '.workflow_runs[0].id // empty' <<<"$latest")"
+            conclusion="$(jq -r '.workflow_runs[0].conclusion // empty' <<<"$latest")"
+            attempt="$(jq -r '.workflow_runs[0].run_attempt // 1' <<<"$latest")"
+          fi
+
+          if [[ -z "$run_id" ]]; then
+            gh api --method POST "repos/$repo/actions/workflows/sv-cost-historical-rerun.yml/dispatches" -f ref=main
+            echo "dispatched=true" >> "$GITHUB_OUTPUT"
+            echo "run_id=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "dispatched=false" >> "$GITHUB_OUTPUT"
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+          echo "conclusion=$conclusion" >> "$GITHUB_OUTPUT"
+          echo "attempt=$attempt" >> "$GITHUB_OUTPUT"
+          echo "run_url=https://github.com/$repo/actions/runs/$run_id" >> "$GITHUB_OUTPUT"
+
+      - name: Record initial dispatch
+        if: steps.resolve.outputs.dispatched == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue comment 11 --repo "$GITHUB_REPOSITORY" --body "Lineage controller found no historical rerun and dispatched one automatically. It will inspect the completed run, verify the immutable artifact, and continue without operator prompting."
+
+      - name: Retry failed historical run
+        if: steps.resolve.outputs.dispatched != 'true' && steps.resolve.outputs.conclusion != 'success' && fromJSON(steps.resolve.outputs.attempt) < 3
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ steps.resolve.outputs.run_id }}
+          RUN_URL: ${{ steps.resolve.outputs.run_url }}
+          ATTEMPT: ${{ steps.resolve.outputs.attempt }}
+          CONCLUSION: ${{ steps.resolve.outputs.conclusion }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api --method POST "repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID/rerun-failed-jobs"
+          gh issue comment 11 --repo "$GITHUB_REPOSITORY" --body "Historical rerun attempt $ATTEMPT ended with **$CONCLUSION**. The lineage controller automatically requested a failed-job rerun. Evidence: $RUN_URL"
+
+      - name: Fail closed after retry limit
+        if: steps.resolve.outputs.dispatched != 'true' && steps.resolve.outputs.conclusion != 'success' && fromJSON(steps.resolve.outputs.attempt) >= 3
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ steps.resolve.outputs.run_url }}
+          ATTEMPT: ${{ steps.resolve.outputs.attempt }}
+          CONCLUSION: ${{ steps.resolve.outputs.conclusion }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          message="Historical rerun reached attempt $ATTEMPT with conclusion **$CONCLUSION**. Automatic blind retries are stopped. Exact run/job/log evidence must drive a bounded repair before execution continues: $RUN_URL"
+          gh issue comment 11 --repo "$GITHUB_REPOSITORY" --body "$message"
+          gh issue comment 12 --repo "$GITHUB_REPOSITORY" --body "$message"
+          exit 1
+
+      - name: Download immutable evidence
+        if: steps.resolve.outputs.conclusion == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ steps.resolve.outputs.run_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/sv-cost-evidence
+          artifact_id="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID/artifacts" --jq '.artifacts | map(select(.name | startswith("sv-cost-historical-rerun-results-"))) | sort_by(.created_at) | last | .id // empty')"
+          test -n "$artifact_id" || { echo 'No historical rerun artifact found' >&2; exit 1; }
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$artifact_id/zip" > /tmp/sv-cost-evidence.zip
+          unzip -q /tmp/sv-cost-evidence.zip -d /tmp/sv-cost-evidence
+          echo "ARTIFACT_ID=$artifact_id" >> "$GITHUB_ENV"
+
+      - name: Validate CFO-grade lineage evidence
+        if: steps.resolve.outputs.conclusion == 'success'
+        env:
+          RUN_ID: ${{ steps.resolve.outputs.run_id }}
+          RUN_URL: ${{ steps.resolve.outputs.run_url }}
+          RUN_ATTEMPT: ${{ steps.resolve.outputs.attempt }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          base=/tmp/sv-cost-evidence
+          for file in \
+            VAL-001-RERUN-raw.json \
+            VAL-001-RERUN-receipt.json \
+            BL-001-RERUN-raw.json \
+            BL-001-RERUN-receipt.json \
+            comparison.json \
+            report.md; do
+            found="$(find "$base" -name "$file" -type f -size +0c -print -quit)"
+            test -n "$found" || { echo "Missing evidence: $file" >&2; exit 1; }
+          done
+
+          comparison="$(find "$base" -name comparison.json -type f -print -quit)"
+          val_receipt="$(find "$base" -name VAL-001-RERUN-receipt.json -type f -print -quit)"
+          bl_receipt="$(find "$base" -name BL-001-RERUN-receipt.json -type f -print -quit)"
+          jq -e '.rerun_receipts | length == 2' "$comparison" >/dev/null
+          jq -e '.validation.transport_valid == true' "$val_receipt" >/dev/null
+          jq -e '.validation.transport_valid == true' "$bl_receipt" >/dev/null
+          jq -e '.provider_message_id and .request_payload_sha256 and .raw_response_sha256 and .output_sha256' "$bl_receipt" >/dev/null
+
+          mkdir -p experiments/sv-cost-program/results
+          jq -n \
+            --arg status "OBSERVED_AND_VALIDATED" \
+            --arg run_id "$RUN_ID" \
+            --arg run_attempt "$RUN_ATTEMPT" \
+            --arg run_url "$RUN_URL" \
+            --arg artifact_id "$ARTIFACT_ID" \
+            --arg observed_at "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            --slurpfile comparison "$comparison" \
+            '{status:$status, run_id:($run_id|tonumber), run_attempt:($run_attempt|tonumber), run_url:$run_url, artifact_id:($artifact_id|tonumber), observed_at:$observed_at, comparison:$comparison[0], claim_boundary:"Hosted workflow success and immutable artifact contents were observed and validated. This does not convert an accounting-only OP-002 record into observed route execution."}' \
+            > experiments/sv-cost-program/results/historical-lineage-observation.json
+
+      - name: Commit observed lineage receipt
+        if: steps.resolve.outputs.conclusion == 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'sv-cost-lineage-controller'
+          git config user.email 'actions@users.noreply.github.com'
+          git add experiments/sv-cost-program/results/historical-lineage-observation.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Observe validated historical lineage run ${{ steps.resolve.outputs.run_id }}"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if git rebase origin/main && git push origin HEAD:main; then exit 0; fi
+            git rebase --abort || true
+            sleep $((attempt * 3))
+          done
+          exit 1
+
+      - name: Publish observed status
+        if: steps.resolve.outputs.conclusion == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ steps.resolve.outputs.run_url }}
+          RUN_ID: ${{ steps.resolve.outputs.run_id }}
+        run: |
+          message="Historical lineage run **$RUN_ID** succeeded. The controller downloaded and validated the immutable artifact, verified transport receipts and hashes, and committed the canonical observation receipt at \`experiments/sv-cost-program/results/historical-lineage-observation.json\`. Evidence: $RUN_URL"
+          gh issue comment 11 --repo "$GITHUB_REPOSITORY" --body "$message"
+          gh issue comment 12 --repo "$GITHUB_REPOSITORY" --body "$message"
