@@ -1,0 +1,107 @@
+{
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "status": "CONSOLIDATION_OBSERVED_FAILURE",
+  "observed_at": "2026-08-03T16:44:11Z",
+  "run": {
+    "id": 30833485433,
+    "html_url": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30833485433",
+    "status": "completed",
+    "conclusion": "failure",
+    "event": "workflow_dispatch",
+    "run_attempt": 1,
+    "head_sha": "aa637701cf43f030578a405dc2fd78388c8be879",
+    "created_at": "2026-08-03T16:43:50Z",
+    "updated_at": "2026-08-03T16:44:07Z"
+  },
+  "jobs": [
+    {
+      "id": 91752873540,
+      "name": "reconcile-validate-release",
+      "status": "completed",
+      "conclusion": "failure",
+      "started_at": "2026-08-03T16:44:00Z",
+      "completed_at": "2026-08-03T16:44:06Z",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Validate reconciliation code",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Reconcile terminal receipts into canonical state",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Validate archive-ready state and write receipt",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 6
+        },
+        {
+          "name": "Validate every canonical JSON surface",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 7
+        },
+        {
+          "name": "Upload immutable consolidation evidence",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 8
+        },
+        {
+          "name": "Commit reconciled state and archive-readiness receipt",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 9
+        },
+        {
+          "name": "Close terminal program issues and record continuation",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 10
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 19
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21
+        }
+      ]
+    }
+  ],
+  "failed_log_tail": "reconcile-validate-release\tValidate archive-ready state and write receipt\t﻿2026-08-03T16:44:03.8054864Z ##[group]Run set -euo pipefail\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8055356Z ^[[36;1mset -euo pipefail^[[0m\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8055761Z ^[[36;1mNOW=\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"^[[0m\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8056277Z ^[[36;1mpython tools/validate_sv_cost_session_state.py \\^[[0m\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8056747Z ^[[36;1m  --write-receipt \\^[[0m\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8057130Z ^[[36;1m  --now \"$NOW\" \\^[[0m\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8057531Z ^[[36;1m  --workflow-run-url \"$RUN_URL\" \\^[[0m\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8058008Z ^[[36;1m  > /tmp/sv-cost-session-validation.json^[[0m\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8058513Z ^[[36;1mtest \"$(jq -r .status \"$RECEIPT\")\" = ARCHIVE_READY^[[0m\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8059265Z ^[[36;1mtest \"$(jq -r .archive_readiness.ready \"$RECEIPT\")\" = true^[[0m\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8059933Z ^[[36;1mtest \"$(jq -r .archive_readiness.no_active_chat_owned_tasks \"$RECEIPT\")\" = true^[[0m\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8109463Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8109994Z env:\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8110507Z   RECEIPT: experiments/sv-cost-program/results/session-consolidation-receipt.json\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8111303Z   RUN_URL: https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30833485433\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8111918Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.13/x64\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8112479Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib/pkgconfig\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8113035Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8113549Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8114066Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8114592Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8115044Z ##[endgroup]\nreconcile-validate-release\tValidate archive-ready state and write receipt\t2026-08-03T16:44:03.8756854Z ##[error]Process completed with exit code 1."
+}
