@@ -1,6 +1,6 @@
 {
   "program_id": "SV-COST-MAJOR-GOAL-001",
-  "status": "DESIGN_LOCKED_EXECUTION_PENDING",
+  "status": "R2_EXECUTION_DISPATCHED",
   "relations": [
     {
       "id": "R1-HISTORICAL-REPEAT",
@@ -10,7 +10,8 @@
       "invariants": ["provider", "model", "direct unoptimized task class", "4096 output-token ceiling", "pricing basis"],
       "changed_variable": "execution time and reconstructed prompt payload",
       "interpretation": "reproducibility and historical drift only",
-      "status": "PARTIALLY_EXECUTED",
+      "status": "OBSERVED_AND_VALIDATED_WITH_RECONSTRUCTION_BOUNDARY",
+      "receipt": "experiments/sv-cost-program/results/historical-lineage-observation.json",
       "publication_gate": "state exact prompt/payload loss and completion-criterion variance"
     },
     {
@@ -21,8 +22,11 @@
       "invariants": ["provider", "model", "task payload", "completion criterion", "quality verifier", "trial set"],
       "changed_variable": "execution route",
       "interpretation": "route-attributable cost and latency effect",
-      "status": "BLOCKED_NO_OBSERVED_BATCH_RECEIPT",
-      "publication_gate": "both lanes must retain native provider route and billing receipts"
+      "status": "GOVERNED_EXECUTION_DISPATCHED",
+      "governance": "experiments/sv-cost-program/r2-direct-vs-batch/governance.json",
+      "protocol": "experiments/sv-cost-program/r2-direct-vs-batch/protocol.json",
+      "workflow": ".github/workflows/sv-cost-r2-direct-vs-batch.yml",
+      "publication_gate": "both lanes must retain native provider route and usage receipts; pricing-derived cost is not an invoice"
     },
     {
       "id": "R3-FULL-VS-STEGVERSE-CONTEXT",
@@ -32,7 +36,7 @@
       "invariants": ["provider", "model", "task", "route", "output obligations", "verifier", "trial set"],
       "changed_variable": "context representation and transfer",
       "interpretation": "StegVerse-attributable token, cost, latency, and quality effect",
-      "status": "DESIGNED_NOT_EXECUTED",
+      "status": "BLOCKED_UNTIL_R2_TERMINAL",
       "publication_gate": "paired outputs must pass the same independent verifier"
     },
     {
@@ -54,7 +58,7 @@
       "invariants": ["relation contract", "models", "price card", "verifier"],
       "changed_variable": "trial instance",
       "interpretation": "variance, failure rate, retry burden, and confidence",
-      "status": "BLOCKED_UNTIL_R2_OR_R3_EXECUTABLE",
+      "status": "ACTIVE_WITHIN_R2_TEN_PAIRED_TRIALS",
       "publication_gate": "report distributions and failures, not only averages"
     }
   ],
