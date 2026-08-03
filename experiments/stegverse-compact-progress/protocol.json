@@ -1,6 +1,7 @@
 {
   "experiment_id": "SV-COMPACT-PROGRESS-001",
   "source_experiment": "SV-COST-STAGED-001",
+  "run_requested_at": "2026-08-03T02:21:00-05:00",
   "purpose": "Test whether StegVerse can preserve governed mathematical continuity while replacing repeated full-artifact prompt replay with hashed artifact references, a compact accepted-state ledger, and stage-specific selective retrieval.",
   "canonical_tokenizer": "cl100k_base",
   "max_stage_output_tokens": 900,
