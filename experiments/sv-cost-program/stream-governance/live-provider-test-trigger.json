@@ -1,13 +1,20 @@
 {
-  "trigger_id": "SV-COST-LIVE-PROVIDER-PAIR-001",
-  "requested_at": "2026-08-03T22:34:00Z",
+  "trigger_id": "SV-COST-LIVE-CAPABILITY-ROUTE-002",
+  "requested_at": "2026-08-03T23:15:00Z",
   "sample_size_per_lane": 5,
+  "capability_request": {
+    "capability_class": "general_reasoning",
+    "quality_tier": "production",
+    "cost_posture": "balanced"
+  },
+  "credential_authority": "TV_TVC",
+  "manual_model_ids_required": false,
   "required_lanes": [
     "openai-raw",
     "openai-governed",
     "anthropic-raw",
     "anthropic-governed"
   ],
-  "purpose": "Execute the minimum bounded live provider comparison before expanding spend.",
-  "claim_boundary": "No savings or provider-ranking claim is admissible until the hosted run completes and live receipts are validated."
+  "purpose": "Resolve authorized provider routes at runtime and execute the minimum bounded live comparison without manually configured provider model IDs.",
+  "claim_boundary": "No savings, equivalence, or provider-ranking claim is admissible until the hosted run completes, independent correctness is adjudicated, and provider charges are reconciled."
 }
