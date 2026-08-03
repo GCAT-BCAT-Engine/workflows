@@ -1,0 +1,60 @@
+name: Four-Lane Equivalent-Output Benchmark
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/four-lane-equivalent-output/**'
+      - '.github/workflows/four-lane-equivalent-output.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: four-lane-equivalent-output
+  cancel-in-progress: false
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      FOUR_LANE_MAX_OUTPUT_TOKENS: '8192'
+      OPENAI_EQUIVALENT_MODEL: gpt-5.6
+      ANTHROPIC_EQUIVALENT_MODEL: claude-sonnet-4-6
+      OPENAI_INPUT_USD_PER_M: '5'
+      OPENAI_OUTPUT_USD_PER_M: '30'
+      ANTHROPIC_INPUT_USD_PER_M: '3'
+      ANTHROPIC_OUTPUT_USD_PER_M: '15'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned canonical tokenizer
+        run: pip install 'tiktoken==0.12.0'
+      - name: Execute four equivalent-output lanes
+        run: python experiments/four-lane-equivalent-output/run.py
+      - name: Upload complete evidence packet
+        uses: actions/upload-artifact@v4
+        with:
+          name: four-lane-equivalent-output
+          path: experiments/four-lane-equivalent-output/results/
+      - name: Commit result packet safely
+        shell: bash
+        run: |
+          git config user.name 'four-lane-benchmark-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add experiments/four-lane-equivalent-output/results
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record four-lane equivalent-output benchmark'
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main && git push origin HEAD:main && exit 0
+            git rebase --abort || true
+            sleep $((attempt * 3))
+          done
+          exit 1
