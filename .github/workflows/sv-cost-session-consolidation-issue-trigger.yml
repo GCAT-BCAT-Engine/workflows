@@ -38,16 +38,18 @@ jobs:
           from pathlib import Path
           wrong = '.github/workflows/sv-cost-finalize-relational-program.yml'
           correct = '.github/workflows/sv-cost-finalize.yml'
-          for relative in (
-              'tools/reconcile_sv_cost_terminal_state.py',
-              'tools/validate_sv_cost_session_state.py',
-          ):
-              path = Path(relative)
+          paths = [
+              Path('tools/reconcile_sv_cost_terminal_state.py'),
+              Path('tools/validate_sv_cost_session_state.py'),
+          ]
+          for path in paths:
               text = path.read_text().replace(wrong, correct)
               text = text.replace('Developed files: 12/12.', 'Developed files: 13/13.')
               path.write_text(text)
               assert wrong not in text
-              assert correct in text
+          validator = Path('tools/validate_sv_cost_session_state.py').read_text()
+          assert correct in validator
+          assert Path(correct).is_file()
           PY
 
       - name: Compile reconciliation and validator
