@@ -1,0 +1,73 @@
+name: SV-COST R2 Adjudication
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/sv-cost-program/r2-direct-vs-batch/results/result.json'
+      - 'experiments/sv-cost-program/adjudicate_r2.py'
+      - '.github/workflows/sv-cost-r2-adjudicate.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sv-cost-r2-adjudication-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  adjudicate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Reconstruct and adjudicate R2
+        run: python experiments/sv-cost-program/adjudicate_r2.py
+
+      - name: Validate canonical adjudication
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('experiments/sv-cost-program/results/r2-adjudication.json')
+          r = json.loads(p.read_text())
+          assert r['status'] == 'R2_ADJUDICATED'
+          assert r['evidence']['paired_n'] == 10
+          assert r['evidence']['batch_id']
+          assert r['verdict'] in {
+              'ROUTE_EFFECT_ADMISSIBLE_WITH_QUALITY_EQUIVALENCE',
+              'ROUTE_EFFECT_OBSERVED_BUT_BOTH_LANES_FAILED_QUALITY_GATE',
+              'ROUTE_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE'
+          }
+          assert Path('docs/SV_COST_MAJOR_ANALYSIS.md').is_file()
+          PY
+
+      - name: Commit adjudication and advance program state
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'sv-cost-adjudicator'
+          git config user.email 'actions@users.noreply.github.com'
+          git add \
+            experiments/sv-cost-program/results/r2-adjudication.json \
+            experiments/sv-cost-program/relations.json \
+            docs/SV_COST_MAJOR_ANALYSIS.md
+          git diff --cached --quiet && exit 0
+          git commit -m "Adjudicate governed R2 and advance to R3 [run $GITHUB_RUN_ID]"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if git rebase origin/main && git push origin HEAD:main; then exit 0; fi
+            git rebase --abort || true
+            sleep $((attempt * 3))
+          done
+          exit 1
