@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "session_id": "2026-08-03-stream-governance-cost-demo",
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "status": "ARCHIVE_READY",
+  "canonical_handoff": "SV_COST_MIRROR_HANDOFF.md",
+  "canonical_issue": 13,
+  "inventory": "experiments/sv-cost-program/stream-governance/session-consolidation-inventory.json",
+  "validated_live_run": {
+    "workflow_run_id": 30861593090,
+    "job_id": 91844536595,
+    "conclusion": "success",
+    "evidence_commit": "6db24f304b5be58878c6a4f4d16ed2f9a396809b",
+    "rows": 20,
+    "lanes": 4,
+    "route_resolution_hash": "sha256:3ff7aa46c65275cc85cf5ad7518f95a5dd96cccc92027dd249c2ce4565fb4a1e",
+    "credentials_recorded": false
+  },
+  "cross_repository_transfer": {
+    "repository": "StegVerse-Labs/TVC",
+    "task": "tasks/TVC-PROVIDER-CAPABILITY-RESOLUTION-001.json",
+    "handoff": "docs/PROVIDER_CAPABILITY_RESOLUTION_MIRROR_HANDOFF.md",
+    "state": "CLAIMED_FOR_IMPLEMENTATION"
+  },
+  "remaining_work": [
+    "SV-COST-LIVE-ADJUDICATION-001",
+    "SV-COST-LIVE-CHARGE-RECONCILIATION-001",
+    "SV-COST-LOCAL-METER-001",
+    "TVC-PROVIDER-CAPABILITY-RESOLUTION-001"
+  ],
+  "remaining_work_ownership": "All unresolved work has a durable repository owner, exact surface, next action and machine-observable release condition.",
+  "unassigned_tasks": 0,
+  "conflicting_claims": 0,
+  "unique_chat_state_remaining": false,
+  "archive_basis": "All primary and adjacent goals are complete, superseded or durably transferred. Hosted live execution, jobs and logs were inspected. The canonical handoff, inventory, issue and TVC task preserve continuation without this conversation."
+}
