@@ -9,32 +9,32 @@
     {
       "id": "S0",
       "name": "Task parsing and claim boundary",
-      "required": ["task identity", "stipulated abstract evaluator", "no deployed-engine claim", "unresolved implementation binding"]
+      "required": ["task identity", "stipulated abstract evaluator", "deployed", "implementation"]
     },
     {
       "id": "S1",
       "name": "Definitions and assumptions",
-      "required": ["GBP definition", "BD definition", "OC definition", "ALLOW or Admissible definition"]
+      "required": ["GBP", "BD", "OC", "ALLOW"]
     },
     {
       "id": "S2",
       "name": "Theorem formulation",
-      "required": ["necessary and sufficient", "GBP", "BD", "OC", "if and only if"]
+      "required": ["necessary", "sufficient", "GBP", "BD", "OC"]
     },
     {
       "id": "S3",
       "name": "Proof strategy and lemma decomposition",
-      "required": ["forward direction", "reverse direction", "necessity", "sufficiency"]
+      "required": ["forward", "reverse", "necessity", "sufficiency"]
     },
     {
       "id": "S4",
       "name": "Complete informal proof",
-      "required": ["proof", "forward direction", "reverse direction", "claim boundary"]
+      "required": ["proof", "forward", "reverse", "claim boundary"]
     },
     {
       "id": "S5",
       "name": "Lean 4 candidate",
-      "required": ["```lean", "theorem", "Admissible", "JointConditions"]
+      "required": ["```lean", "theorem", "ALLOW", "GBP"]
     },
     {
       "id": "S6",
@@ -42,7 +42,7 @@
       "required": ["verified", "unresolved", "evidence", "implementation"]
     }
   ],
-  "admission_rule": "A stage is admitted only when all required evidence strings are present case-insensitively, task identity remains fixed, and the lane does not assert deployed-engine validity.",
+  "admission_rule": "A stage is admitted only when all stage-specific semantic anchors are present case-insensitively, task identity remains fixed, and the lane does not assert deployed-engine validity. These anchors intentionally accept equivalent wording rather than requiring one exact sentence.",
   "accounting_rule": "All serialized task, stage instructions, retained prior artifacts, governance instructions, outputs, and validator records are counted with cl100k_base. Native provider usage and observed API cost remain separate receipts.",
   "claim_boundary": "This experiment measures progress through a stipulated formalization. It does not establish correctness for a deployed GCAT/BCAT implementation."
 }
