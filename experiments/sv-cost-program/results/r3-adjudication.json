@@ -1,0 +1,63 @@
+{
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "relation_id": "R3-FULL-VS-STEGVERSE-CONTEXT",
+  "status": "R3_ADJUDICATED",
+  "verdict": "CONTEXT_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
+  "governance_interpretation": "The reconstructed prior state admitted R3. This adjudication determines whether managed context supports an admissible successor claim under the locked invariants; worker identity is not treated as free-standing authority.",
+  "execution": {
+    "generation": "r3-gen-20260803-fix1",
+    "run_id": 30829852891,
+    "run_url": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30829852891",
+    "head_sha": "b122112501d7fc744066e9ad53e9f73e16f8b496"
+  },
+  "evidence": {
+    "result_sha256": "sha256:f25075db36d2b1d3f5b2833779f55deb1bac8840a136d79e0a60545d5274ca50",
+    "protocol_sha256": "sha256:e6471f57684b700c1a3408c6ac5967ce06c4fa1afdd26f7789663a16d1eafb6e",
+    "governance_sha256": "sha256:6f690ab40a43aa2f95beaa87147f299e23b2485d09dc4e81ba06a16efdd41120",
+    "paired_n": 5
+  },
+  "full": {
+    "mean_input_tokens": 19238.2,
+    "mean_output_tokens": 7337.2,
+    "mean_cost_usd": 0.1677726,
+    "mean_latency_seconds": 122.54875833679998,
+    "full_path_completion_rate": 0.4,
+    "all_attempted_complete_rate": 0.0,
+    "all_attempted_verified_rate": 0.4,
+    "successful_output_rate": 0.0
+  },
+  "managed": {
+    "mean_input_tokens": 4938.4,
+    "mean_output_tokens": 7707,
+    "mean_cost_usd": 0.13042020000000001,
+    "mean_latency_seconds": 128.29101001060002,
+    "full_path_completion_rate": 0.6,
+    "all_attempted_complete_rate": 0.0,
+    "all_attempted_verified_rate": 0.4,
+    "successful_output_rate": 0.0
+  },
+  "paired_effect": {
+    "mean_input_token_delta_managed_minus_full": -14299.8,
+    "input_token_delta_ci95": [
+      -28320.89480558595,
+      -278.7051944140476
+    ],
+    "mean_cost_delta_usd_managed_minus_full": -0.0373524,
+    "cost_delta_ci95": [
+      -0.13594626127664858,
+      0.06124146127664857
+    ],
+    "mean_latency_delta_seconds_managed_minus_full": 5.742251673800041,
+    "latency_delta_ci95": [
+      -48.887388905274385,
+      60.37189225287447
+    ]
+  },
+  "publication_gate": {
+    "structural_quality_equivalent": false,
+    "successful_quality_equivalent": false,
+    "headline_context_savings_admissible": false,
+    "pricing_is_invoice_evidence": false,
+    "claim_boundary": "Context-management savings are admissible only when both lanes complete the full governed path and satisfy the same verifier requirements. Pricing-derived cost is not invoice evidence."
+  }
+}

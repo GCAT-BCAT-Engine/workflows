@@ -169,3 +169,16 @@ No favorable or unfavorable result may be promoted beyond its evidence class.
 ## Operator boundary
 
 The operator is not required to inspect individual result files. New evidence must update the canonical evidence index, lineage manifest, relational matrix, and this document. No standalone report may redefine the program or introduce a new major goal.
+
+## R3 — Full versus StegVerse-managed context
+
+- Verdict: `CONTEXT_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE`
+- Paired trials: 5
+- Full successful-output rate: 0%
+- Managed successful-output rate: 0%
+- Mean input-token delta, managed minus full: -14299.80
+- Mean pricing-derived cost delta, managed minus full: $-0.037352
+- Mean latency delta, managed minus full: 5.74 seconds
+- Headline savings admissible: false
+
+The finding is bounded by successful full-path quality equivalence and by the distinction between pricing-derived cost and invoice evidence.

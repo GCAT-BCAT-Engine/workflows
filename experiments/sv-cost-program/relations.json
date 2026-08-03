@@ -1,6 +1,6 @@
 {
   "program_id": "SV-COST-MAJOR-GOAL-001",
-  "status": "R2_ADJUDICATED_R3_NEXT",
+  "status": "R3_ADJUDICATED_R4_R5_SYNTHESIS_NEXT",
   "relations": [
     {
       "id": "R1-HISTORICAL-REPEAT",
@@ -58,7 +58,7 @@
       ],
       "changed_variable": "context representation and transfer",
       "interpretation": "StegVerse-attributable token, cost, latency, and quality effect",
-      "status": "REPAIRED_GENERATION_DISPATCHED",
+      "status": "CONTEXT_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
       "generation": "r3-gen-20260803-fix1",
       "governance": "experiments/sv-cost-program/r3-full-vs-managed/governance.json",
       "protocol": "experiments/sv-cost-program/r3-full-vs-managed/protocol.json",
@@ -66,7 +66,8 @@
       "controller": ".github/workflows/sv-cost-r3-controller-v2.yml",
       "required_result": "experiments/sv-cost-program/r3-full-vs-managed/results/result.json",
       "required_adjudication": "experiments/sv-cost-program/results/r3-adjudication.json",
-      "publication_gate": "both lanes must complete the full governed S0-S6 path and pass the same verifier; pricing-derived cost is not invoice evidence"
+      "publication_gate": "both lanes must complete the full governed S0-S6 path and pass the same verifier; pricing-derived cost is not invoice evidence",
+      "adjudication_ref": "experiments/sv-cost-program/results/r3-adjudication.json"
     },
     {
       "id": "R4-GENERATION-VS-RECONSTRUCTION",
@@ -97,7 +98,7 @@
       ],
       "changed_variable": "trial instance",
       "interpretation": "variance, failure rate, retry burden, and confidence",
-      "status": "ACTIVE_ACROSS_R2_AND_PENDING_R3",
+      "status": "ACTIVE_ACROSS_R2_AND_R3_PAIRED_TRIALS",
       "publication_gate": "report distributions, failures, retries, and confidence intervals rather than only averages"
     }
   ],
