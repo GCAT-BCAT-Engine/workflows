@@ -1,0 +1,57 @@
+{
+  "governance_id": "SV-COST-R2-GOV-001",
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "relation_id": "R2-DIRECT-VS-BATCH",
+  "prior_state": {
+    "required_receipt": "experiments/sv-cost-program/results/historical-lineage-observation.json",
+    "required_status": "OBSERVED_AND_VALIDATED",
+    "historical_route_classification": "ACCOUNTING_REPLAY_NOT_OBSERVED_ROUTE_EXECUTION"
+  },
+  "active_constraints": {
+    "provider": "anthropic",
+    "model": "claude-sonnet-4-6",
+    "task_payload_ref": "experiments/sv-cost-historical-rerun/protocol.json#BL-001-RERUN",
+    "max_output_tokens": 4096,
+    "trial_count_per_lane": 10,
+    "invariants": [
+      "provider",
+      "model",
+      "prompt bytes",
+      "max_output_tokens",
+      "completion criterion",
+      "quality verifier",
+      "trial identifiers"
+    ],
+    "only_changed_variable": "provider execution route: synchronous messages versus message batch",
+    "required_routes": ["standard", "batch"],
+    "required_evidence": [
+      "native provider message or batch identifiers",
+      "native usage objects",
+      "raw responses",
+      "request and response hashes",
+      "latency",
+      "stop reason",
+      "identical verifier output",
+      "workflow run identity"
+    ],
+    "forbidden_claims": [
+      "historical OP-002 was observed batch execution",
+      "batch quality is equivalent unless verifier results support it",
+      "pricing-derived cost is an invoice receipt",
+      "single-run results establish reliable savings"
+    ]
+  },
+  "transition_rule": {
+    "from": "R1_OBSERVED_AND_VALIDATED",
+    "to": "R2_OBSERVED_AND_VALIDATED",
+    "admissible_only_if": [
+      "all invariant hashes match across paired lanes",
+      "both native routes are observed",
+      "all required evidence is retained",
+      "at least one completed result exists in each lane",
+      "failures and incomplete outputs remain in the population"
+    ],
+    "otherwise": "R2_EVIDENCE_INCOMPLETE"
+  },
+  "governance_interpretation": "The worker does not possess free-standing authority. The prior state and active constraints determine whether the proposed transition can be written. A different admissibility result requires changed governance or proof that the prior state or constraint implementation was incorrect."
+}
