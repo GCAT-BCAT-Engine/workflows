@@ -1,0 +1,178 @@
+{
+  "schema_version": "1.0.0",
+  "protocol_id": "SV-COST-STREAM-GOVERNANCE-001",
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "objective": "Measure the financial effect of governing continuous enterprise data streams at state-transition boundaries rather than treating an entire workload as one provider call.",
+  "comparison_unit": "successful_equivalent_admissible_stream_outcome",
+  "roles": {
+    "provider_model": "Produces classifications, transformations, recommendations, or candidate actions from stream events.",
+    "stegverse": "Admits, denies, receipts, reconstructs, replays, repairs, and preserves continuity across state transitions.",
+    "verifier": "Determines task correctness, policy compliance, state continuity, and outcome equivalence independently of lane cost."
+  },
+  "required_lanes": [
+    {
+      "lane_id": "PROVIDER_NATIVE_STREAM",
+      "description": "Provider processes the full stream without StegVerse admission controls.",
+      "required": true
+    },
+    {
+      "lane_id": "PROVIDER_STEGVERSE_GOVERNED_STREAM",
+      "description": "The same provider processes the same stream while StegVerse governs each declared commit boundary.",
+      "required": true
+    },
+    {
+      "lane_id": "STEGVERSE_REPLAY_RECOVERY",
+      "description": "Replay, reconstruct, rollback, or repair from committed receipts without repeating the full provider execution where the requested operation permits it.",
+      "required": true
+    }
+  ],
+  "stream_workload": {
+    "minimum_events": 10000,
+    "minimum_commit_boundaries": 1000,
+    "required_event_classes": [
+      "valid_low_risk",
+      "valid_high_value",
+      "policy_violating",
+      "malformed",
+      "duplicate",
+      "out_of_order",
+      "superseding",
+      "adversarial",
+      "recovery_required"
+    ],
+    "required_stream_shapes": [
+      "steady_state",
+      "burst",
+      "dependency_chain",
+      "fan_out",
+      "multi_tenant",
+      "partial_outage",
+      "policy_change_midstream"
+    ]
+  },
+  "state_transition_model": {
+    "event_sequence": [
+      "ingest",
+      "normalize",
+      "classify",
+      "propose_transition",
+      "admit_or_deny",
+      "execute_if_allowed",
+      "commit_receipt",
+      "verify",
+      "replay_or_recover_if_needed"
+    ],
+    "commit_boundary_requirement": "Every economically or operationally meaningful state mutation must have an explicit candidate, policy reference, evidence reference, admission result, execution result, and receipt.",
+    "failure_rule": "Failed, denied, malformed, retried, superseded, and recovered events remain in the financial and operational ledger."
+  },
+  "measurement_layers": [
+    {
+      "layer": "L1_SINGLE_TRANSITION",
+      "metrics": [
+        "provider_cost",
+        "stegverse_admission_cost",
+        "latency",
+        "task_correctness",
+        "admission_accuracy"
+      ]
+    },
+    {
+      "layer": "L2_CHAINED_TRANSITIONS",
+      "metrics": [
+        "cascade_failures_prevented",
+        "downstream_executions_avoided",
+        "retry_cost",
+        "correction_cost",
+        "chain_completion_rate"
+      ]
+    },
+    {
+      "layer": "L3_REPLAY_RECOVERY",
+      "metrics": [
+        "reexecution_cost",
+        "replay_cost",
+        "recovery_time",
+        "reconstruction_success_rate",
+        "rollback_scope"
+      ]
+    },
+    {
+      "layer": "L4_REUSE_AMORTIZATION",
+      "metrics": [
+        "number_of_reuses",
+        "provider_regenerations_avoided",
+        "cost_per_verified_reuse",
+        "break_even_reuse_count"
+      ]
+    },
+    {
+      "layer": "L5_ENTERPRISE_OPERATIONS",
+      "metrics": [
+        "human_review_minutes",
+        "support_cases",
+        "incident_response_cost",
+        "audit_cost",
+        "compliance_remediation_cost",
+        "availability_impact"
+      ]
+    }
+  ],
+  "financial_model": {
+    "native_total_cost": "provider_execution + retries + correction + rework + human_review + incidents + recovery + audit",
+    "governed_total_cost": "provider_execution_if_allowed + stegverse_admission + verification + receipts + storage + reconstruction + maintenance + human_review + incidents + recovery",
+    "cost_per_successful_equivalent_admissible_outcome": "total_lane_cost / successful_equivalent_admissible_outcomes",
+    "governance_displacement_efficiency": "1 - stegverse_attributable_cost / displaced_non_governed_cost",
+    "replay_savings_ratio": "full_reexecution_cost / replay_or_reconstruction_cost",
+    "order_of_magnitude_thresholds": {
+      "ONE_ORDER": 10,
+      "TWO_ORDERS": 100
+    }
+  },
+  "token_and_germane_work_model": {
+    "provider_tokens": "Retain native input, cached, reasoning, and output token observations.",
+    "germane_tokens": "Count only task-relevant instructions, evidence, state, and output needed to produce the required outcome.",
+    "non_germane_tokens": "Record but exclude unrelated verbosity, duplicated context, malformed output, and task drift from the successful-work denominator.",
+    "stegverse_token_equivalent": "stegverse_attributable_cost / matched_provider_cost_per_germane_token",
+    "boundary": "Token-equivalent is an accounting normalization only and must not be represented as literal model tokens, compute equivalence, or energy equivalence."
+  },
+  "required_outputs": [
+    "event_ledger.jsonl",
+    "transition_receipts.jsonl",
+    "lane_costs.json",
+    "failure_and_retry_ledger.json",
+    "replay_recovery_results.json",
+    "correctness_equivalence_results.json",
+    "break_even_surface.json",
+    "stream_governance_decision.json"
+  ],
+  "decision_gates": [
+    "same_stream_identity",
+    "same_required_business_outcome",
+    "independent_correctness_equivalence",
+    "complete_failure_and_retry_accounting",
+    "fully_burdened_stegverse_cost",
+    "provider_charge_reconciliation",
+    "cost_comparison_after_all_prior_gates"
+  ],
+  "reporting_requirements": {
+    "all_lanes_visible": true,
+    "failed_lanes_remain_financial_evidence": true,
+    "stegverse_not_treated_as_foundation_model": true,
+    "present_threshold_crossings": [
+      "first workload point above 2x",
+      "first workload point above 10x",
+      "first workload point above 100x"
+    ],
+    "required_break_even_dimensions": [
+      "event_volume",
+      "commit_boundary_count",
+      "bad_event_rate",
+      "retry_rate",
+      "chain_depth",
+      "reuse_count",
+      "consumer_count",
+      "incident_cost"
+    ]
+  },
+  "claim_boundary": "This protocol can reveal order-of-magnitude savings only when observed stream volume, chain effects, replay, reuse, or avoided operational losses produce them. It does not assume those results in advance."
+}
