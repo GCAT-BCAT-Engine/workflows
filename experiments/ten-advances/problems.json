@@ -1,0 +1,16 @@
+{
+  "experiment_id": "TEN-ADVANCES-DUAL-PROVIDER-ESTIMATION-001",
+  "source": "https://openai.com/index/ten-advances-in-mathematics/",
+  "problems": [
+    {"problem_id":"TA-001","title":"High-dimensional sphere packing","statement":"Estimate the resources required to independently derive new upper bounds on high-dimensional sphere-packing density down to the Cohn–Elkies threshold."},
+    {"problem_id":"TA-002","title":"Binary and spherical codes","statement":"Estimate the resources required to derive exponentially improved bounds on maximum binary-code size at prescribed minimum distance, with analogous high-dimensional spherical-code results."},
+    {"problem_id":"TA-003","title":"Non-sofic groups","statement":"Estimate the resources required to construct and rigorously verify the existence of a non-sofic group."},
+    {"problem_id":"TA-004","title":"Connes rigidity conjecture","statement":"Estimate the resources required to independently derive and verify a counterexample to the conjecture that specified groups are uniquely determined by their von Neumann algebras."},
+    {"problem_id":"TA-005","title":"Arithmetic circuit complexity","statement":"Estimate the resources required to prove new permanent lower bounds for arithmetic circuits and formulas, including an arithmetic-formula lower bound of order n^4/log n."},
+    {"problem_id":"TA-006","title":"Quantum parallel repetition","statement":"Estimate the resources required to prove an exponential parallel-repetition theorem for general two-player quantum games."},
+    {"problem_id":"TA-007","title":"Closest vector problem","statement":"Estimate the resources required to prove polynomial-factor hardness of approximation for the closest vector problem."},
+    {"problem_id":"TA-008","title":"Ehrhart volume conjecture","statement":"Estimate the resources required to determine in every dimension the maximum volume of a convex body whose centroid is its only interior lattice point."},
+    {"problem_id":"TA-009","title":"Multicolor Ramsey numbers","statement":"Estimate the resources required to prove a superexponential lower bound for multicolor triangle Ramsey numbers."},
+    {"problem_id":"TA-010","title":"Extremal number conjectures","statement":"Estimate the resources required to resolve the compactness and degeneracy conjectures in extremal graph theory."}
+  ]
+}
