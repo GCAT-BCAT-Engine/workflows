@@ -1,0 +1,47 @@
+{
+  "capability_id": "SV-NATIVE-EQUIVALENT-OUTPUT-001",
+  "status": "BUILDING",
+  "purpose": "Produce the same SV-MATH-001 artifact contract used by the four provider lanes without an external model call.",
+  "claim_boundary": "The initial implementation is deterministic reconstruction and validation from approved repository-native components. It is not represented as independent machine reasoning until a native inference engine is installed and receipted.",
+  "artifact_contract": [
+    "SECTION 1: ASSUMPTIONS AND CLAIM BOUNDARY",
+    "SECTION 2: DEFINITIONS",
+    "SECTION 3: THEOREM STATEMENT",
+    "SECTION 4: MATHEMATICAL PROOF",
+    "SECTION 5: LEAN 4 CANDIDATE",
+    "SECTION 6: VERIFICATION LEDGER",
+    "SECTION 7: FINAL CLAIM BOUNDARY",
+    "END_OF_ARTIFACT"
+  ],
+  "required_components": {
+    "source_packet": "stegverse_native_solver/source_packet.json",
+    "approved_sections": "stegverse_native_solver/approved_sections/",
+    "assembler": "stegverse_native_solver/build.py",
+    "validator": "stegverse_native_solver/validate.py",
+    "lean_verifier": "stegverse_native_solver/lean/",
+    "receipts": "stegverse_native_solver/results/"
+  },
+  "cost_metrics": [
+    "canonical_input_tokens",
+    "canonical_output_tokens",
+    "repository_bytes_read",
+    "repository_files_read",
+    "deterministic_runtime_seconds",
+    "validation_runtime_seconds",
+    "lean_runtime_seconds",
+    "runner_minutes",
+    "artifact_storage_bytes",
+    "actual_marginal_infrastructure_cost_usd",
+    "counterfactual_openai_token_cost_usd",
+    "counterfactual_anthropic_token_cost_usd"
+  ],
+  "readiness_gates": [
+    "all approved sections present",
+    "all source hashes resolved",
+    "artifact contract complete",
+    "Lean candidate extracted",
+    "Lean verification result recorded",
+    "claim boundary preserved",
+    "receipt chain complete"
+  ]
+}
