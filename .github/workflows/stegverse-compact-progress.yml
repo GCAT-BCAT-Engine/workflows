@@ -35,8 +35,11 @@ jobs:
       - name: Install canonical tokenizer
         run: pip install tiktoken==0.12.0
 
-      - name: Run compact-context capability benchmark
+      - name: Run four-lane compact-context capability benchmark
         run: python experiments/stegverse-compact-progress/run.py
+
+      - name: Calculate workload plus execution-route economics
+        run: python experiments/stegverse-compact-progress/economic_report.py
 
       - name: Upload evidence
         uses: actions/upload-artifact@v4
@@ -51,7 +54,7 @@ jobs:
           git config user.email 'actions@users.noreply.github.com'
           git add experiments/stegverse-compact-progress/results
           git diff --cached --quiet && exit 0
-          git commit -m 'Record StegVerse compact-context capability benchmark'
+          git commit -m 'Record four-lane StegVerse economic capability rerun'
           for attempt in 1 2 3; do
             git fetch origin main
             git rebase origin/main && git push origin HEAD:main && exit 0
