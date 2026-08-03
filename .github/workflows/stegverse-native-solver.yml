@@ -1,0 +1,70 @@
+name: StegVerse Native Equivalent Artifact
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'stegverse_native_solver/**'
+      - '.github/workflows/stegverse-native-solver.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stegverse-native-equivalent-artifact
+  cancel-in-progress: false
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assemble repository-native artifact
+        run: python stegverse_native_solver/build.py
+
+      - name: Extract Lean candidate
+        shell: python
+        run: |
+          import pathlib, re
+          text = pathlib.Path('stegverse_native_solver/results/sv-math-001-native.md').read_text()
+          blocks = re.findall(r'```lean\s*(.*?)```', text, flags=re.S | re.I)
+          if not blocks:
+              raise SystemExit('No Lean candidate found')
+          pathlib.Path('Main.lean').write_text('\n\n'.join(blocks))
+
+      - name: Install and run Lean/Mathlib
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: true
+          build: true
+          test: false
+
+      - name: Validate artifact and record token-equivalent cost
+        run: |
+          python stegverse_native_solver/validate.py
+          python stegverse_native_solver/measure.py
+
+      - name: Upload native evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: stegverse-native-equivalent-artifact
+          path: stegverse_native_solver/results/
+
+      - name: Commit receipts safely
+        shell: bash
+        run: |
+          git config user.name 'stegverse-native-solver-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add stegverse_native_solver/results
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record StegVerse-native equivalent artifact result'
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main && git push origin HEAD:main && exit 0
+            git rebase --abort || true
+            sleep $((attempt * 3))
+          done
+          exit 1
