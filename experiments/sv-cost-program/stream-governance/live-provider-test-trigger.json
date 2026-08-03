@@ -1,0 +1,13 @@
+{
+  "trigger_id": "SV-COST-LIVE-PROVIDER-PAIR-001",
+  "requested_at": "2026-08-03T22:34:00Z",
+  "sample_size_per_lane": 5,
+  "required_lanes": [
+    "openai-raw",
+    "openai-governed",
+    "anthropic-raw",
+    "anthropic-governed"
+  ],
+  "purpose": "Execute the minimum bounded live provider comparison before expanding spend.",
+  "claim_boundary": "No savings or provider-ranking claim is admissible until the hosted run completes and live receipts are validated."
+}
