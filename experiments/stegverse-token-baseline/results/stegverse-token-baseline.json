@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "lane_id": "stegverse-only",
+  "canonical_tokenizer": "cl100k_base",
+  "canonical_input_tokens": 1593,
+  "canonical_output_tokens": 458,
+  "canonical_total_tokens": 2051,
+  "input_bytes": 6905,
+  "output_bytes": 1660,
+  "deterministic_runtime_seconds": 0.48636722564697266,
+  "external_provider_calls": 0,
+  "actual_provider_api_cost_usd": 0.0,
+  "counterfactual_cost_at_openai_rates_usd": 0.021705000000000002,
+  "counterfactual_cost_at_anthropic_rates_usd": 0.011649,
+  "capability_result": {
+    "lane_id": "stegverse-only",
+    "task_id": "SV-MATH-001",
+    "external_provider_calls": 0,
+    "reasoning_source": "installed StegVerse repository, deterministic scripts, declared validators",
+    "status": "BLOCKED_NO_NATIVE_GENERATIVE_REASONING_ENGINE",
+    "task_identity_preserved": true,
+    "proof_generated": false,
+    "solve_cost_usd": null,
+    "block_reason": "No installed StegVerse-native generative reasoning engine is declared capable of producing the required formal proof.",
+    "claim_boundary": "This record measures normalized information flow and deterministic governance overhead; it is not a proof attempt or a zero-cost solution claim.",
+    "required_next_capability": "A declared native reasoning engine with observable inference, search-branch, and verification receipts."
+  },
+  "governance_ledger": {
+    "input_artifacts": [
+      {
+        "path": "math_solver/problem_spec_sv_math_001.yml",
+        "bytes": 1338,
+        "sha256": "067a197682e73dff4e3c9e763085a26e3a4d065d13eb0043d9079c4c5d67ee3f"
+      },
+      {
+        "path": "docs/PREVIOUS_COST_TEST_METHOD_RECONSTRUCTION.md",
+        "bytes": 3098,
+        "sha256": "9f6a6ce3ae1612cde64ac9ff7c9efa2de9f596e46654933f8f419ea1939235c0"
+      },
+      {
+        "path": "docs/STEGVERSE_TOKEN_EQUIVALENT_ACCOUNTING.md",
+        "bytes": 2293,
+        "sha256": "f1cd51a263b6775daea2734f23e1fc4358c9a7bdb101cd5d10242cb4e6ee377b"
+      }
+    ],
+    "checks": [
+      "task specification loaded",
+      "historical methodology loaded",
+      "accounting contract loaded",
+      "external inference denied",
+      "native reasoning capability checked",
+      "claim boundary emitted"
+    ],
+    "receipts_required": [
+      "canonical token counts",
+      "byte counts",
+      "hashes",
+      "runtime",
+      "counterfactual provider pricing"
+    ],
+    "verification_state": "not_attempted_no_proof_candidate"
+  },
+  "input_stream_sha256": "sha256:a906e0e3cac7d6d404340e7323b5055511b6568d80314f11275abc01eeebd74b",
+  "output_stream_sha256": "sha256:55290e464573f13c3c2150cffa6ea072406ab8a1d53cb915cdeddfb76fb2ddae",
+  "accounting_rule": "Compare canonical information flow first; add only externally observable StegVerse overhead not already embedded in provider token prices."
+}
