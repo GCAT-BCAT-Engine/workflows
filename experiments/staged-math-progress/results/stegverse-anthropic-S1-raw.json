@@ -1,0 +1,27 @@
+{
+  "model": "claude-sonnet-4-6",
+  "id": "msg_011CdfL87W9ieVt2yA1S38qN",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "text",
+      "text": "# S1: Definitions and assumptions\n\n---\n\n## 1. Reused Artifacts\n\nFrom S0 (admitted without modification):\n\n- **Abstract evaluator stipulation:**\n  `ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)`\n- **Claim boundary:** No deployed engine; no implementation conformance asserted.\n\n---\n\n## 2. Universe of Discourse\n\nLet `T` be an arbitrary non-empty type whose elements are called **candidate transitions**. The variable `t` ranges over `T`.\n\nNo internal structure is imposed on `T`. No element of `T` is distinguished.\n\n---\n\n## 3. Primitive Predicates\n\nThe following three predicates are **uninterpreted** (opaque). No axioms govern their internal content beyond their type.\n\n| Name | Type | Informal gloss |\n|---|---|---|\n| `GBP` | `T \u2192 Prop` | \"Good-behavior predicate\" |\n| `BD` | `T \u2192 Prop` | \"Boundary-condition predicate\" |\n| `OC` | `T \u2192 Prop` | \"Operational-context predicate\" |\n\n**Assumption A-Opaque:** No relationship among `GBP`, `BD`, `OC` is assumed. In particular, neither pairwise implication nor independence is stipulated.\n\n---\n\n## 4. Defined Predicate\n\n**Definition D-ALLOW** (stipulated; reproduced from S0):\n\n> For all `t : T`,\n> `ALLOW(t)` holds if and only if `GBP(t)` holds **and** `BD(t)` holds **and** `OC(t)` holds.\n\nFormally:\n\n```\n\u2200 t : T,  ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)\n```\n\nThis is the **sole semantic axiom** of the abstract evaluator. It is a definition, not a theorem to be proved.\n\n---\n\n## 5. Status of Each Symbol\n\n| Symbol | Status in S1 |\n|---|---|\n| `T` | Assumed type; no structure. |\n| `GBP`, `BD`, `OC` | Assumed predicates; opaque. |\n| `ALLOW` | **Defined** by D-ALLOW. |\n| N&S theorem | Not yet stated here; target of S2. |\n| Lean 4 candidate | Not yet produced; target of S3. |\n\n---\n\n## 6. What Is Not Assumed\n\n- No completeness, decidability, or computability of any predicate.\n- No relationship between `T` and any concrete transition system.\n- No deployed GCAT/BCAT engine behavior.\n- No claim that `GBP`, `BD`, or `OC` are independent or exhaustive.\n\n---\n\n## 7. Stage Receipt\n\n```\nSTAGE_STATUS     : COMPLETE\nREUSED_ARTIFACTS : [S0: abstract evaluator stipulation, claim boundary]\nNEW_CLAIMS       :\n  - Universe T introduced; no structure assumed.\n  - GBP, BD, OC declared as opaque predicates on T (A-Opaque).\n  - ALLOW defined by biconditional D-ALLOW (restatement of S0 stipulation,\n    now labeled and typed).\n  - Symbol-status table drawn; all symbols accounted for.\nUNRESOLVED       :\n  - N&S characterization theorem (planned S2).\n  - Lean 4 logical-core candidate (planned S3).\n  - Deployed engine conformance: permanently out of scope.\nNEXT_STAGE       : S2 \u2014 Necessary-and-sufficient characterization theorem\n```"
+    }
+  ],
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 1060,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 891,
+    "service_tier": "standard",
+    "inference_geo": "global"
+  }
+}

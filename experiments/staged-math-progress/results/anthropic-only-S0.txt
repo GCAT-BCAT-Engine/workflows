@@ -3,48 +3,38 @@
 ## Task Identity
 
 **Experiment:** SV-COST-STAGED-001
-**Goal:** Characterize the ALLOW admissibility predicate for an *abstract* GCAT/BCAT evaluator defined solely by the stipulation below.
+**Problem class:** Logical characterization of an admissibility predicate for an abstract evaluator.
 
 ## Stipulated Abstract Evaluator
 
-Let the universe of discourse be a set **T** of *candidate transitions*. Three predicates are given by stipulation (not derived from any deployed engine):
+The evaluator is *abstract and stipulated for this experiment only*. It is not derived from, and makes no claims about, any deployed engine or implementation.
 
-| Symbol | Reading |
-|--------|---------|
-| `GBP : T → Prop` | "Good Basis Property holds" |
-| `BD : T → Prop` | "Boundary Disposition holds" |
-| `OC : T → Prop` | "Operational Condition holds" |
+Primitive predicates (opaque, defined only by their names here):
+- `GBP : Transition → Prop`
+- `BD : Transition → Prop`
+- `OC : Transition → Prop`
 
-**Stipulated rule:**
+Evaluator output predicate:
+- `ALLOW : Transition → Prop`
 
-> `ALLOW(t)` iff `GBP(t) ∧ BD(t) ∧ OC(t)`
+Stipulated rule (the *sole* definitional content):
 
-This is a *definition by stipulation*; it has no additional hidden clauses.
+> **Def-ALLOW:** For every candidate transition `t`, `ALLOW t ↔ GBP t ∧ BD t ∧ OC t`.
 
 ## Claim Boundary
 
-**What is claimed (in-scope):**
-
-1. The necessary-and-sufficient characterization of `ALLOW` follows tautologically from the stipulation: `ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)`.
-2. A Lean 4 statement encoding this biconditional (forthcoming in a later stage) will be a purely logical artifact about the abstract predicates.
-
-**What is NOT claimed (out-of-scope):**
-
-- No claim is made about any deployed GCAT/BCAT engine, implementation, or runtime.
-- The predicates `GBP`, `BD`, `OC` are *uninterpreted*; no binding to concrete system behavior is asserted or implied.
-- Proof of correctness of any software system is outside scope.
-
-## Unresolved Implementation Binding
-
-The mapping from `{GBP, BD, OC}` to any concrete evaluator internals is **explicitly unresolved and out of scope**. Any such binding would require a separate, empirically grounded specification artifact not present here.
-
-## Stage S0 Status
-
-| Evidence item | Status |
+| In scope | Out of scope |
 |---|---|
-| Task identity | ✓ Recorded |
-| Stipulated abstract evaluator | ✓ Recorded |
-| No deployed-engine claim | ✓ Affirmed |
-| Unresolved implementation binding | ✓ Affirmed |
+| Logical equivalence derivable from Def-ALLOW alone | Semantics of GBP, BD, OC beyond their types |
+| Necessary and sufficient conditions as a biconditional | Any deployed GCAT/BCAT engine |
+| Lean 4 statement of the logical core | Implementation validity |
+| Abstract Lean 4 proof sketch | Correctness of any real transition system |
 
-**S0 complete. Ready to advance to S1 (necessary-and-sufficient characterization proof sketch).**
+**Boundary statement (explicit):** No artifact in this experiment asserts anything about a deployed system. All claims are *purely logical consequences of Def-ALLOW as stipulated above*.
+
+## What Subsequent Stages Will Produce
+
+- **S1:** N&S characterization statement (mathematical).
+- **S2:** Lean 4 candidate for the logical core.
+
+No prior artifacts admitted; this stage is self-contained.

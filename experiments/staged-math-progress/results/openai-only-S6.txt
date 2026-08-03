@@ -1,0 +1,21 @@
+S6: Verification ledger.
+
+- **verified:** The necessary-and-sufficient characterization is exactly:
+  \[
+  \mathrm{ALLOW}(t)\leftrightarrow(\mathrm{GBP}(t)\land\mathrm{BD}(t)\land\mathrm{OC}(t)).
+  \]
+- **verified:** Necessity follows from `(contract t).mp`; sufficiency follows from `(contract t).mpr`.
+- **evidence:** The S5 Lean 4 candidate is a direct proof from the assumed contract and is syntactically plausible:
+  ```lean
+  theorem allow_admissible
+      {Transition : Type}
+      (GBP BD OC ALLOW : Transition → Prop)
+      (contract : ∀ t, ALLOW t ↔ (GBP t ∧ BD t ∧ OC t))
+      (t : Transition) :
+      ALLOW t ↔ (GBP t ∧ BD t ∧ OC t) := by
+    constructor
+    · exact (contract t).mp
+    · exact (contract t).mpr
+  ```
+- **unresolved:** No Lean toolchain execution or machine-checked compilation evidence is provided.
+- **implementation:** No deployed-engine specification, predicate interpretation, implementation correspondence, or implementation validity is established.

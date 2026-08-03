@@ -1,0 +1,20 @@
+S2: Theorem formulation.
+
+**Theorem (ALLOW admissibility).** For every candidate transition `t`:
+\[
+\mathrm{ALLOW}(t)\iff \bigl(\mathrm{GBP}(t)\land \mathrm{BD}(t)\land \mathrm{OC}(t)\bigr).
+\]
+
+Thus `GBP(t)`, `BD(t)`, and `OC(t)` are jointly **necessary** and jointly **sufficient** for `ALLOW(t)`.
+
+```lean
+theorem allow_admissible
+    {Transition : Type}
+    (GBP BD OC ALLOW : Transition → Prop)
+    (contract : ∀ t, ALLOW t ↔ (GBP t ∧ BD t ∧ OC t))
+    (t : Transition) :
+    ALLOW t ↔ (GBP t ∧ BD t ∧ OC t) :=
+  contract t
+```
+
+**Claim boundary:** This theorem applies only under the stipulated abstract evaluator contract; it neither specifies a deployed engine nor claims implementation validity.

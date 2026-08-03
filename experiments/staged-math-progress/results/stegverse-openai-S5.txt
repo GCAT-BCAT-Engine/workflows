@@ -1,0 +1,24 @@
+S5: Lean 4 candidate
+
+```lean
+inductive Decision where
+  | ALLOW
+  | DENY
+
+theorem allow_iff
+    {T : Type}
+    (GBP BD OC : T → Prop)
+    (Eval : T → Decision)
+    (hEval : ∀ t, Eval t = Decision.ALLOW ↔ GBP t ∧ BD t ∧ OC t) :
+    ∀ t, Eval t = Decision.ALLOW ↔ GBP t ∧ BD t ∧ OC t := by
+  intro t
+  exact Iff.intro (hEval t).mp (hEval t).mpr
+```
+
+This candidate formalizes only the stipulated abstract equivalence; formal type-checking remains pending. It makes no deployed GCAT/BCAT specification, conformance, or implementation-validity claim.
+
+`STAGE_STATUS: COMPLETE`  
+`REUSED_ARTIFACTS: S1 abstract setting and stipulated equivalence; S3 proof decomposition; S4 informal proof`  
+`NEW_CLAIMS: Lean 4 candidate for the abstract ALLOW characterization`  
+`UNRESOLVED: formal Lean 4 type-checking; deployed-engine specification and implementation/conformance evidence`  
+`NEXT_STAGE: type-check or independently verify the Lean 4 candidate`

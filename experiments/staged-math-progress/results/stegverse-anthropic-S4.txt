@@ -1,0 +1,67 @@
+# S4: Complete informal proof
+
+---
+
+## 1. Reused Artifacts
+
+From S0–S3 (admitted without modification):
+
+- **D-ALLOW:** `∀ t : T, ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)`
+- **A-Opaque:** `GBP`, `BD`, `OC` uninterpreted on `T`.
+- **T-NS-S / T-NS-N / T-NS-N-GBP/BD/OC:** directed sub-claims from S2.
+- **L1–L5:** lemma decomposition from S3.
+- **Claim boundary:** abstract evaluator only; no deployed engine; no implementation conformance.
+
+---
+
+## 2. Master Theorem (restated for self-containment)
+
+**Theorem T-NS:**
+For every `t : T`,
+```
+ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t).
+```
+
+---
+
+## 3. Forward Direction (Necessity)
+
+**Claim (T-NS-N / L1):** `∀ t : T, ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)`
+
+**Proof.**
+Let `t : T` be arbitrary. Assume `ALLOW(t)` holds.
+
+By D-ALLOW, `ALLOW(t)` holds if and only if `GBP(t) ∧ BD(t) ∧ OC(t)` holds. Applying the left-to-right direction of this biconditional to the hypothesis `ALLOW(t)` yields `GBP(t) ∧ BD(t) ∧ OC(t)`.
+
+Since `t` was arbitrary, the universal claim holds. ∎
+
+**Corollaries (T-NS-N-GBP/BD/OC):**
+From `GBP(t) ∧ BD(t) ∧ OC(t)`, each conjunct is extracted by conjunction elimination:
+- `GBP(t)` — first conjunct.
+- `BD(t)` — second conjunct.
+- `OC(t)` — third conjunct.
+
+Each necessity corollary holds for all `t : T`. ∎
+
+---
+
+## 4. Reverse Direction (Sufficiency)
+
+**Claim (T-NS-S / L2):** `∀ t : T, GBP(t) ∧ BD(t) ∧ OC(t) → ALLOW(t)`
+
+**Proof.**
+Let `t : T` be arbitrary. Assume `GBP(t)`, `BD(t)`, and `OC(t)` all hold; form their conjunction `GBP(t) ∧ BD(t) ∧ OC(t)`.
+
+By D-ALLOW, `ALLOW(t)` holds if and only if `GBP(t) ∧ BD(t) ∧ OC(t)` holds. Applying the right-to-left direction of this biconditional to the conjunction just formed yields `ALLOW(t)`.
+
+Since `t` was arbitrary, the universal claim holds. ∎
+
+**Curried form (L4 / allow_sufficiency):**
+The same argument with the hypothesis presented as three separate antecedents yields:
+`∀ t : T, GBP(t) → BD(t) → OC(t) → ALLOW(t)`. ∎
+
+---
+
+## 5. Assembly: Biconditional T-NS
+
+**Proof of T-

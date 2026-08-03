@@ -5,70 +5,54 @@
 ## 1. Task Identity
 
 **Experiment:** SV-COST-STAGED-001
-**Goal:** Characterize the ALLOW admissibility predicate for an *abstract* GCAT/BCAT evaluator (not any deployed engine).
-**Scope constraint:** No claim of conformance to any implementation is made or implied. The evaluator is stipulated purely by the definition below.
+**Problem:** Characterize ALLOW admissibility for an *abstract* GCAT/BCAT evaluator.
+**Scope constraint:** No deployed engine is specified; no implementation conformance is claimed.
 
 ---
 
-## 2. Stipulated Abstract Evaluator
+## 2. Stipulated Abstract Evaluator (verbatim restatement)
 
-**Primitive predicates** (opaque; no implementation semantics attached):
+Let `GBP`, `BD`, `OC` be uninterpreted predicates on a candidate transition `t`. The evaluator returns `ALLOW` exactly when all three predicates hold:
 
-| Symbol | Reading |
-|--------|---------|
-| `GBP(t)` | "Good-Behavior Predicate holds for transition t" |
-| `BD(t)` | "Boundary Disposition holds for transition t" |
-| `OC(t)` | "Operational Condition holds for transition t" |
+```
+ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)
+```
 
-**Stipulated evaluation rule (SR):**
-
-> For any candidate transition `t`,
->
-> `ALLOW(t)  :⟺  GBP(t) ∧ BD(t) ∧ OC(t)`
-
-This is a *definition*, not a derived theorem. It is the sole axiom of the abstract evaluator for this experiment.
+This is a **stipulated definition**, not a derived result. It is admitted as the sole semantic axiom of the abstract evaluator.
 
 ---
 
 ## 3. Claim Boundary
 
-### 3.1 Stipulated assumptions (axiomatic; not to be proved)
-
-- **A1.** `GBP`, `BD`, `OC`, and `ALLOW` are predicates on a common type `T` of candidate transitions.
-- **A2.** `ALLOW` is defined by SR (the conjunction above).
-
-### 3.2 Claims to be established in later stages
-
-- **C1 (Necessity).** `ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)`
-- **C2 (Sufficiency).** `GBP(t) ∧ BD(t) ∧ OC(t) → ALLOW(t)`
-- **C3 (Biconditional / N&S).** `ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)`
-
-*Note:* C1–C3 are trivially derivable from SR by unfolding the definition. Their value here is formal explicitness for downstream verification, not mathematical depth.
-
-### 3.3 Generated claims (this stage)
-
-- **G0.** The claim boundary is well-formed: A1–A2 are consistent (the conjunction of three arbitrary propositions is a coherent definition; no contradiction is introduced).
-
-### 3.4 Unresolved implementation binding
-
-- **U1.** Whether any deployed GCAT or BCAT engine satisfies SR is **not asserted and not in scope**. No evidence of conformance has been admitted or sought.
-- **U2.** The semantic content of `GBP`, `BD`, `OC` relative to any real system remains unbound.
+| Category | Content |
+|---|---|
+| **Stipulated assumptions** | The biconditional above; `GBP`, `BD`, `OC` are opaque predicates (no internal structure assumed). |
+| **Generated claims (to be established in later stages)** | Necessary-and-sufficient characterization theorem; Lean 4 statement of the logical core. |
+| **Verified claims** | None yet (S0 is parsing only). |
+| **Unresolved implementation evidence** | Whether any deployed GCAT/BCAT engine satisfies this specification — **explicitly out of scope and not asserted**. |
 
 ---
 
-## 4. Lean 4 Candidate (logical core, current stage: declaration only)
+## 4. Boundary Demarcations
 
-The following states *what will be proved* in S1; no proof is given here, preserving stage discipline.
+- **"Deployed":** No deployed system is referenced. The evaluator is purely abstract.
+- **"Implementation validity":** Not claimed. The Lean 4 artifact (planned for a later stage) will encode only the logical biconditional, not any engine behavior.
+- **Necessary-and-sufficient form:** The target theorem is: *a transition `t` satisfies `ALLOW` if and only if `GBP(t)`, `BD(t)`, and `OC(t)` each hold.* This follows immediately from the stipulated definition; the later stage will make the derivation explicit and formally checked.
 
-```lean4
--- S0: Declaration block only. Proofs deferred to S1.
--- No deployed-engine semantics are encoded.
+---
 
-variable {T : Type*}
-variable (GBP BD OC : T → Prop)
+## 5. Stage Receipt
 
-/-- Stipulated definition of ALLOW (SR). -/
-def ALLOW (t : T) : Prop := GBP t ∧ BD t ∧ OC t
-
-/-- C3: Necessary-and-sufficient characterization (to be proved in S1). -/
-theorem allow_iff (t : T
+```
+STAGE_STATUS   : COMPLETE
+REUSED_ARTIFACTS : [none]
+NEW_CLAIMS     :
+  - Task identity recorded.
+  - Abstract evaluator stipulated: ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t).
+  - Claim boundary drawn; deployed/implementation evidence excluded from scope.
+UNRESOLVED     :
+  - Lean 4 candidate (planned S2).
+  - N&S theorem formal derivation (planned S1).
+  - Deployed engine conformance: permanently out of scope per task constraint.
+NEXT_STAGE     : S1 — Necessary-and-sufficient characterization theorem
+```

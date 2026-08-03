@@ -3,63 +3,182 @@
     "lane_id": "openai-only",
     "provider": "openai",
     "governed": false,
-    "highest_admitted_stage": "S0",
-    "admitted_stage_count": 1,
-    "canonical_input_tokens": 576,
-    "canonical_output_tokens": 402,
-    "canonical_total_tokens": 978,
-    "native_input_tokens": 590,
-    "native_output_tokens": 427,
-    "observed_api_cost_usd": 0.01576,
-    "latency_seconds": 8.158625788999998,
-    "checkpoints": [],
+    "highest_admitted_stage": "S6",
+    "admitted_stage_count": 7,
+    "canonical_input_tokens": 5298,
+    "canonical_output_tokens": 1364,
+    "canonical_total_tokens": 6662,
+    "native_input_tokens": 5452,
+    "native_output_tokens": 1451,
+    "observed_api_cost_usd": 0.07078999999999999,
+    "latency_seconds": 30.62108366400001,
+    "checkpoints": [
+      {
+        "checkpoint": 1000,
+        "highest_admitted_stage": "S2",
+        "actual_canonical_tokens_at_observation": 1578,
+        "cumulative_cost_usd": 0.021355
+      },
+      {
+        "checkpoint": 2000,
+        "highest_admitted_stage": "S3",
+        "actual_canonical_tokens_at_observation": 2518,
+        "cumulative_cost_usd": 0.03235
+      },
+      {
+        "checkpoint": 4000,
+        "highest_admitted_stage": "S5",
+        "actual_canonical_tokens_at_observation": 5072,
+        "cumulative_cost_usd": 0.056025
+      }
+    ],
     "stages": [
       {
         "stage_id": "S0",
         "name": "Task parsing and claim boundary",
         "provider_status": "completed",
-        "native_input_tokens": 213,
-        "native_output_tokens": 172,
-        "canonical_input_tokens": 208,
-        "canonical_output_tokens": 165,
-        "canonical_cumulative_tokens": 373,
-        "observed_api_cost_usd": 0.0062250000000000005,
-        "cumulative_cost_usd": 0.0062250000000000005,
-        "latency_seconds": 3.919431971999998,
+        "native_input_tokens": 208,
+        "native_output_tokens": 174,
+        "canonical_input_tokens": 203,
+        "canonical_output_tokens": 168,
+        "canonical_cumulative_tokens": 371,
+        "observed_api_cost_usd": 0.00626,
+        "cumulative_cost_usd": 0.00626,
+        "latency_seconds": 5.605789252000001,
         "validation": {
           "admitted": true,
           "missing_evidence": [],
           "forbidden_claim": false
         },
-        "prompt_hash": "sha256:90fca9596af5fb3e5b3a6fda2920b2fb85e25b68c0c681b68a1ef1e8f0c35b45",
-        "output_hash": "sha256:723195f9dd180f3d0898384a6f53a148d3ffa76b4363804dc0376fcf5e5166e7",
-        "output": "S0: Task parsing and claim boundary.\n\n- **Task identity:** EXPERIMENT `SV-COST-STAGED-001`; characterize ALLOW admissibility for an abstract GCAT/BCAT evaluator and later prepare a Lean 4 logical-core candidate.\n- **Stipulated abstract evaluator:** For any candidate transition `t`, `ALLOW(t) \u2194 (GBP(t) \u2227 BD(t) \u2227 OC(t))`.\n- **Claim boundary:** The necessary-and-sufficient result concerns only this stipulated abstract evaluator.\n- **No deployed-engine claim:** No specification, behavior, correctness, or implementation validity is asserted for any deployed GCAT/BCAT engine.\n- **Unresolved implementation binding:** No correspondence between `GBP`, `BD`, `OC`, `ALLOW`, or the abstract evaluator and any concrete implementation has been established."
+        "prompt_hash": "sha256:972d7e03439c8065715838df747a0ec6b182176ae4c7860171a6f6298ed7d8eb",
+        "output_hash": "sha256:442ed987b58d5fcac90608dc9d5a90adbb508cd6e5a960aeeb0d142d4b6869aa",
+        "output": "S0: Task parsing and claim boundary.\n\n- **Task identity:** EXPERIMENT `SV-COST-STAGED-001`; characterize ALLOW admissibility for an abstract GCAT/BCAT evaluator.\n- **Stipulated abstract evaluator:** For any candidate transition `t`,\n  \\[\n  \\mathrm{ALLOW}(t) \\iff GBP(t)\\land BD(t)\\land OC(t).\n  \\]\n  Thus the necessary-and-sufficient condition for ALLOW is the conjunction of `GBP`, `BD`, and `OC`.\n- **Planned logical core:** A Lean 4 statement formalizing the displayed equivalence, with predicates treated abstractly.\n- **Claim boundary:** This establishes only a logical characterization under the stipulated abstract evaluator. It does not specify any deployed engine, connect the predicates to deployed behavior, or claim implementation validity."
       },
       {
         "stage_id": "S1",
         "name": "Definitions and assumptions",
         "provider_status": "completed",
-        "native_input_tokens": 377,
-        "native_output_tokens": 255,
-        "canonical_input_tokens": 368,
-        "canonical_output_tokens": 237,
-        "canonical_cumulative_tokens": 978,
-        "observed_api_cost_usd": 0.009535,
-        "cumulative_cost_usd": 0.01576,
-        "latency_seconds": 4.239193817,
+        "native_input_tokens": 371,
+        "native_output_tokens": 142,
+        "canonical_input_tokens": 364,
+        "canonical_output_tokens": 135,
+        "canonical_cumulative_tokens": 870,
+        "observed_api_cost_usd": 0.006115,
+        "cumulative_cost_usd": 0.012375,
+        "latency_seconds": 3.2811401909999987,
         "validation": {
-          "admitted": false,
-          "missing_evidence": [
-            "GBP definition",
-            "BD definition",
-            "OC definition",
-            "ALLOW or Admissible definition"
-          ],
+          "admitted": true,
+          "missing_evidence": [],
           "forbidden_claim": false
         },
-        "prompt_hash": "sha256:06e2878cb63c6dd3da8af6029abfc5d15e68bb39c8aec055343aecaa127e7fb8",
-        "output_hash": "sha256:29aa5710e2cc413866bcf03ccb1c6f0eb3dd9e0d34a73fc3543603c883e2efcf",
-        "output": "S1: Definitions and assumptions.\n\nLet `Transition` be an abstract type of candidate transitions. Define predicates:\n\n- `GBP : Transition \u2192 Prop` \u2014 `GBP(t)` means candidate `t` satisfies the abstract GBP condition.\n- `BD : Transition \u2192 Prop` \u2014 `BD(t)` means candidate `t` satisfies the abstract BD condition.\n- `OC : Transition \u2192 Prop` \u2014 `OC(t)` means candidate `t` satisfies the abstract OC condition.\n- `ALLOW : Transition \u2192 Prop` \u2014 `ALLOW(t)` means the stipulated abstract evaluator returns ALLOW for `t`.\n- `Admissible : Transition \u2192 Prop` \u2014 define `Admissible(t) := GBP(t) \u2227 BD(t) \u2227 OC(t)`.\n\nAssumption defining the evaluator:\n\n\\[\n\\forall t : Transition,\\quad ALLOW(t) \\leftrightarrow Admissible(t).\n\\]\n\nEquivalently:\n\n\\[\n\\forall t,\\quad ALLOW(t) \\leftrightarrow \\bigl(GBP(t)\\land BD(t)\\land OC(t)\\bigr).\n\\]\n\nThese predicates are abstract and otherwise uninterpreted; no binding to or validity claim about any deployed GCAT/BCAT implementation is assumed."
+        "prompt_hash": "sha256:0cb90072514ccc6f71127e93b5bbe764e40c62a40a0b683113059653010919f7",
+        "output_hash": "sha256:6db8e6d8fc50a1efa21e177e77c14728a69e3de308b029906c5fcb502f2b532f",
+        "output": "S1: Definitions and assumptions.\n\n- Let `Transition` be an abstract type of candidate transitions.\n- Let `GBP BD OC ALLOW : Transition \u2192 Prop` be abstract predicates.\n- Assume the evaluator contract:\n  \\[\n  \\forall t,\\ \\mathrm{ALLOW}(t)\\leftrightarrow\\bigl(\\mathrm{GBP}(t)\\land \\mathrm{BD}(t)\\land \\mathrm{OC}(t)\\bigr).\n  \\]\n- No additional properties of `GBP`, `BD`, `OC`, or `ALLOW` are assumed.\n- Scope: this assumption concerns only the stipulated abstract evaluator; it neither specifies a deployed engine nor claims implementation validity."
+      },
+      {
+        "stage_id": "S2",
+        "name": "Theorem formulation",
+        "provider_status": "completed",
+        "native_input_tokens": 518,
+        "native_output_tokens": 213,
+        "canonical_input_tokens": 509,
+        "canonical_output_tokens": 199,
+        "canonical_cumulative_tokens": 1578,
+        "observed_api_cost_usd": 0.00898,
+        "cumulative_cost_usd": 0.021355,
+        "latency_seconds": 3.6721356570000054,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:541473d95694c880e62cfe6a4d06502209c09f9cee7ca4d439bd094c5914a784",
+        "output_hash": "sha256:62b8b8ebc4ac0dac4b13f282fb4a45f6cc1dc54525c80ad8ee67ef6b9865cc52",
+        "output": "S2: Theorem formulation.\n\n**Theorem (ALLOW admissibility).** For every candidate transition `t`:\n\\[\n\\mathrm{ALLOW}(t)\\iff \\bigl(\\mathrm{GBP}(t)\\land \\mathrm{BD}(t)\\land \\mathrm{OC}(t)\\bigr).\n\\]\n\nThus `GBP(t)`, `BD(t)`, and `OC(t)` are jointly **necessary** and jointly **sufficient** for `ALLOW(t)`.\n\n```lean\ntheorem allow_admissible\n    {Transition : Type}\n    (GBP BD OC ALLOW : Transition \u2192 Prop)\n    (contract : \u2200 t, ALLOW t \u2194 (GBP t \u2227 BD t \u2227 OC t))\n    (t : Transition) :\n    ALLOW t \u2194 (GBP t \u2227 BD t \u2227 OC t) :=\n  contract t\n```\n\n**Claim boundary:** This theorem applies only under the stipulated abstract evaluator contract; it neither specifies a deployed engine nor claims implementation validity."
+      },
+      {
+        "stage_id": "S3",
+        "name": "Proof strategy and lemma decomposition",
+        "provider_status": "completed",
+        "native_input_tokens": 735,
+        "native_output_tokens": 244,
+        "canonical_input_tokens": 718,
+        "canonical_output_tokens": 222,
+        "canonical_cumulative_tokens": 2518,
+        "observed_api_cost_usd": 0.010995,
+        "cumulative_cost_usd": 0.03235,
+        "latency_seconds": 3.6879445550000014,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:9167ac88115f37e9ad410a8b08c41fefa6102f39f9399a2aed4f2b48755801ea",
+        "output_hash": "sha256:324c7657976dd6ff92b6aa02f82a8d0e60ada944cd31b716f79260bf3c4094c9",
+        "output": "S3: Proof strategy and lemma decomposition.\n\n- **Forward / necessity:** Assume `hAllow : ALLOW t`. Apply `(contract t).mp` to derive `GBP t \u2227 BD t \u2227 OC t`.\n- **Reverse / sufficiency:** Assume `hChecks : GBP t \u2227 BD t \u2227 OC t`. Apply `(contract t).mpr` to derive `ALLOW t`.\n- Combine both implications with `Iff.intro`.\n\n```lean\ntheorem allow_admissible\n    {Transition : Type}\n    (GBP BD OC ALLOW : Transition \u2192 Prop)\n    (contract : \u2200 t, ALLOW t \u2194 (GBP t \u2227 BD t \u2227 OC t))\n    (t : Transition) :\n    ALLOW t \u2194 (GBP t \u2227 BD t \u2227 OC t) := by\n  apply Iff.intro\n  \u00b7 intro hAllow\n    exact (contract t).mp hAllow\n  \u00b7 intro hChecks\n    exact (contract t).mpr hChecks\n```\n\nThis proves necessity and sufficiency only under the stipulated abstract evaluator contract; it does not specify a deployed engine or establish implementation validity."
+      },
+      {
+        "stage_id": "S4",
+        "name": "Complete informal proof",
+        "provider_status": "completed",
+        "native_input_tokens": 974,
+        "native_output_tokens": 275,
+        "canonical_input_tokens": 939,
+        "canonical_output_tokens": 270,
+        "canonical_cumulative_tokens": 3727,
+        "observed_api_cost_usd": 0.01312,
+        "cumulative_cost_usd": 0.04547,
+        "latency_seconds": 3.6488863599999988,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:1590b254c9d90601816d28164b535bdecaad6942d2574db953a96e924ca8d420",
+        "output_hash": "sha256:e221806caf30b08bbb5afb307a2e041f7f35941a06d77785651085a19ac050fe",
+        "output": "S4: Complete informal proof.\n\nFix an arbitrary candidate transition \\(t\\).\n\n- **Forward (necessity):** Assume \\(\\mathrm{ALLOW}(t)\\). By the stipulated evaluator contract,\n  \\[\n  \\mathrm{ALLOW}(t)\\leftrightarrow\\bigl(\\mathrm{GBP}(t)\\land\\mathrm{BD}(t)\\land\\mathrm{OC}(t)\\bigr).\n  \\]\n  Applying its forward implication yields\n  \\[\n  \\mathrm{GBP}(t)\\land\\mathrm{BD}(t)\\land\\mathrm{OC}(t).\n  \\]\n\n- **Reverse (sufficiency):** Assume\n  \\[\n  \\mathrm{GBP}(t)\\land\\mathrm{BD}(t)\\land\\mathrm{OC}(t).\n  \\]\n  Applying the reverse implication of the evaluator contract yields \\(\\mathrm{ALLOW}(t)\\).\n\nTherefore,\n\\[\n\\mathrm{ALLOW}(t)\\iff\\bigl(\\mathrm{GBP}(t)\\land\\mathrm{BD}(t)\\land\\mathrm{OC}(t)\\bigr).\n\\]\nSince \\(t\\) was arbitrary, this holds for every candidate transition.\n\n**Claim boundary:** The proof establishes only the logical characterization under the stipulated abstract evaluator contract. It neither specifies a deployed engine nor claims implementation validity."
+      },
+      {
+        "stage_id": "S5",
+        "name": "Lean 4 candidate",
+        "provider_status": "completed",
+        "native_input_tokens": 1253,
+        "native_output_tokens": 143,
+        "canonical_input_tokens": 1217,
+        "canonical_output_tokens": 128,
+        "canonical_cumulative_tokens": 5072,
+        "observed_api_cost_usd": 0.010555,
+        "cumulative_cost_usd": 0.056025,
+        "latency_seconds": 2.4662337030000003,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:df3593ae261dd3ed74f949ab4dd819bd675f0f46f91b7017645a9f02bebb11c8",
+        "output_hash": "sha256:bde6d10ebb092adce8545d2d6ee16da52aeb1418b1e3b044a42f34dc0930d912",
+        "output": "S5: Lean 4 candidate.\n\n```lean\ntheorem allow_admissible\n    {Transition : Type}\n    (GBP BD OC ALLOW : Transition \u2192 Prop)\n    (contract : \u2200 t, ALLOW t \u2194 (GBP t \u2227 BD t \u2227 OC t))\n    (t : Transition) :\n    ALLOW t \u2194 (GBP t \u2227 BD t \u2227 OC t) := by\n  constructor\n  \u00b7 exact (contract t).mp\n  \u00b7 exact (contract t).mpr\n```\n\nClaim boundary: This logical core applies only under the stipulated abstract evaluator contract; it does not specify a deployed engine or establish implementation validity."
+      },
+      {
+        "stage_id": "S6",
+        "name": "Verification ledger",
+        "provider_status": "completed",
+        "native_input_tokens": 1393,
+        "native_output_tokens": 260,
+        "canonical_input_tokens": 1348,
+        "canonical_output_tokens": 242,
+        "canonical_cumulative_tokens": 6662,
+        "observed_api_cost_usd": 0.014765,
+        "cumulative_cost_usd": 0.07078999999999999,
+        "latency_seconds": 8.258953946000005,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:6584a15f20a9fbe7c51ff280c606267dd2282bd776a57ad0d62d5d868ffd56fb",
+        "output_hash": "sha256:b1655cce4d4fd1431f9a7c78b3f451eff2531a277fbbb544c0031efc001ec989",
+        "output": "S6: Verification ledger.\n\n- **verified:** The necessary-and-sufficient characterization is exactly:\n  \\[\n  \\mathrm{ALLOW}(t)\\leftrightarrow(\\mathrm{GBP}(t)\\land\\mathrm{BD}(t)\\land\\mathrm{OC}(t)).\n  \\]\n- **verified:** Necessity follows from `(contract t).mp`; sufficiency follows from `(contract t).mpr`.\n- **evidence:** The S5 Lean 4 candidate is a direct proof from the assumed contract and is syntactically plausible:\n  ```lean\n  theorem allow_admissible\n      {Transition : Type}\n      (GBP BD OC ALLOW : Transition \u2192 Prop)\n      (contract : \u2200 t, ALLOW t \u2194 (GBP t \u2227 BD t \u2227 OC t))\n      (t : Transition) :\n      ALLOW t \u2194 (GBP t \u2227 BD t \u2227 OC t) := by\n    constructor\n    \u00b7 exact (contract t).mp\n    \u00b7 exact (contract t).mpr\n  ```\n- **unresolved:** No Lean toolchain execution or machine-checked compilation evidence is provided.\n- **implementation:** No deployed-engine specification, predicate interpretation, implementation correspondence, or implementation validity is established."
       }
     ]
   },
@@ -67,39 +186,188 @@
     "lane_id": "stegverse-openai",
     "provider": "openai",
     "governed": true,
-    "highest_admitted_stage": "NONE",
-    "admitted_stage_count": 0,
-    "canonical_input_tokens": 310,
-    "canonical_output_tokens": 213,
-    "canonical_total_tokens": 523,
-    "native_input_tokens": 311,
-    "native_output_tokens": 218,
-    "observed_api_cost_usd": 0.008095000000000001,
-    "latency_seconds": 4.460328027999999,
-    "checkpoints": [],
+    "highest_admitted_stage": "S6",
+    "admitted_stage_count": 7,
+    "canonical_input_tokens": 8396,
+    "canonical_output_tokens": 2137,
+    "canonical_total_tokens": 10533,
+    "native_input_tokens": 8385,
+    "native_output_tokens": 2542,
+    "observed_api_cost_usd": 0.118185,
+    "latency_seconds": 41.394035952999985,
+    "checkpoints": [
+      {
+        "checkpoint": 1000,
+        "highest_admitted_stage": "S1",
+        "actual_canonical_tokens_at_observation": 1406,
+        "cumulative_cost_usd": 0.022420000000000002
+      },
+      {
+        "checkpoint": 2000,
+        "highest_admitted_stage": "S2",
+        "actual_canonical_tokens_at_observation": 2525,
+        "cumulative_cost_usd": 0.035305
+      },
+      {
+        "checkpoint": 4000,
+        "highest_admitted_stage": "S3",
+        "actual_canonical_tokens_at_observation": 4066,
+        "cumulative_cost_usd": 0.056175
+      },
+      {
+        "checkpoint": 8000,
+        "highest_admitted_stage": "S5",
+        "actual_canonical_tokens_at_observation": 8068,
+        "cumulative_cost_usd": 0.091235
+      }
+    ],
     "stages": [
       {
         "stage_id": "S0",
         "name": "Task parsing and claim boundary",
         "provider_status": "completed",
-        "native_input_tokens": 311,
-        "native_output_tokens": 218,
-        "canonical_input_tokens": 310,
-        "canonical_output_tokens": 213,
-        "canonical_cumulative_tokens": 523,
-        "observed_api_cost_usd": 0.008095000000000001,
-        "cumulative_cost_usd": 0.008095000000000001,
-        "latency_seconds": 4.460328027999999,
+        "native_input_tokens": 306,
+        "native_output_tokens": 283,
+        "canonical_input_tokens": 305,
+        "canonical_output_tokens": 279,
+        "canonical_cumulative_tokens": 584,
+        "observed_api_cost_usd": 0.01002,
+        "cumulative_cost_usd": 0.01002,
+        "latency_seconds": 4.550004678999997,
         "validation": {
-          "admitted": false,
-          "missing_evidence": [
-            "no deployed-engine claim"
-          ],
+          "admitted": true,
+          "missing_evidence": [],
           "forbidden_claim": false
         },
-        "prompt_hash": "sha256:605f664d2c750d9787a2c604d67f211ff6e8ae174eae8e1f2561fff6e415f152",
-        "output_hash": "sha256:01721f170a55bb2c849101f1fbaa3ed363291228b8140a261008d9b6c4cb087d",
-        "output": "# S0: Task parsing and claim boundary\n\n- **Task identity:** `SV-COST-STAGED-001`\n- **Stipulated abstract evaluator:** For any candidate transition `t`,  \n  `ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)`.\n- **Requested result:** Establish the necessary-and-sufficient characterization above and later prepare a Lean 4 candidate for its logical core.\n- **Claim boundary:** The characterization concerns only the stipulated abstract evaluator and predicates. It does not specify, model, verify, or validate any deployed GCAT/BCAT engine.\n- **Unresolved implementation binding:** No evidence currently binds `GBP`, `BD`, `OC`, or `ALLOW` to deployed implementation behavior.\n\n**STAGE_STATUS:** COMPLETE  \n**REUSED_ARTIFACTS:** none  \n**NEW_CLAIMS:** none beyond the stipulated abstract evaluator  \n**UNRESOLVED:** implementation definitions, correspondence, and conformance evidence  \n**NEXT_STAGE:** formulate the abstract necessary-and-sufficient claim without asserting implementation validity"
+        "prompt_hash": "sha256:b0ccf7919c13109a45aa17cfee3962161e9d57ed044b9b56a2447d9e572e17ce",
+        "output_hash": "sha256:607fb844ceb5640e0d64ffeeb213abab3b01a55dcf2befeff37ab4dd4a1f41b4",
+        "output": "S0: Task parsing and claim boundary\n\n**Task identity:** `SV-COST-STAGED-001`\n\n**Stipulated abstract evaluator:** For a candidate transition \\(t\\), with predicates \\(GBP(t)\\), \\(BD(t)\\), and \\(OC(t)\\), the evaluator returns `ALLOW` exactly when:\n\\[\nGBP(t)\\land BD(t)\\land OC(t).\n\\]\n\n**Requested result:** Establish the necessary-and-sufficient characterization of `ALLOW` and later prepare a Lean 4 candidate for this logical core.\n\n**Claim boundary:**\n- In scope: the stipulated abstract evaluator and its propositional characterization.\n- Out of scope: any deployed GCAT/BCAT engine specification, behavior, conformance, or implementation validity.\n- No claim about a deployed implementation is supported without separate implementation evidence.\n\n**Status separation:**\n- Stipulated assumptions: the abstract evaluator definition above.\n- Generated claims: none at S0.\n- Verified claims: none at S0.\n- Unresolved implementation evidence: all evidence connecting the abstraction to any deployed GCAT/BCAT implementation.\n\n`STAGE_STATUS: COMPLETE`  \n`REUSED_ARTIFACTS: none`  \n`NEW_CLAIMS: none`  \n`UNRESOLVED: deployed-engine specification and implementation/conformance evidence`  \n`NEXT_STAGE: formulate the abstract necessary-and-sufficient ALLOW claim`"
+      },
+      {
+        "stage_id": "S1",
+        "name": "Definitions and assumptions",
+        "provider_status": "completed",
+        "native_input_tokens": 578,
+        "native_output_tokens": 317,
+        "canonical_input_tokens": 577,
+        "canonical_output_tokens": 245,
+        "canonical_cumulative_tokens": 1406,
+        "observed_api_cost_usd": 0.012400000000000001,
+        "cumulative_cost_usd": 0.022420000000000002,
+        "latency_seconds": 6.202403130999997,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:f166a81391906bbbf72940986a40e80fa98d597bdff5feef72517ef0e6abc0c7",
+        "output_hash": "sha256:1fbb893efa4845490694c2bfff156e2ae02b369d9707abd1b3ad58076ab34797",
+        "output": "S1: Definitions and assumptions\n\n**Abstract setting**\n- Let \\(T\\) be the type of candidate transitions.\n- Let \\(GBP, BD, OC : T \\to \\mathrm{Prop}\\).\n- Let \\(\\operatorname{Eval} : T \\to \\{\\mathrm{ALLOW},\\mathrm{DENY}\\}\\).\n\n**Stipulated evaluator assumption**\nFor every \\(t : T\\),\n\\[\n\\operatorname{Eval}(t)=\\mathrm{ALLOW}\n\\iff\nGBP(t)\\land BD(t)\\land OC(t).\n\\]\n\nThus `ALLOW` is stipulated exactly when `GBP`, `BD`, and `OC` all hold.\n\n**Claim boundary**\nThese definitions concern only the abstract evaluator. They provide no deployed GCAT/BCAT specification, conformance result, or implementation-validity claim.\n\n`STAGE_STATUS: COMPLETE`  \n`REUSED_ARTIFACTS: S0 task identity, stipulated evaluator, and claim boundary`  \n`NEW_CLAIMS: none; definitions and stipulated assumptions only`  \n`UNRESOLVED: deployed-engine specification and implementation/conformance evidence`  \n`NEXT_STAGE: formulate the abstract necessary-and-sufficient ALLOW claim`"
+      },
+      {
+        "stage_id": "S2",
+        "name": "Theorem formulation",
+        "provider_status": "completed",
+        "native_input_tokens": 831,
+        "native_output_tokens": 291,
+        "canonical_input_tokens": 832,
+        "canonical_output_tokens": 287,
+        "canonical_cumulative_tokens": 2525,
+        "observed_api_cost_usd": 0.012885,
+        "cumulative_cost_usd": 0.035305,
+        "latency_seconds": 4.1470323879999995,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:21108a7055e4dbc7915d86dea0e810226de0338918d717ba9ca67064e85c1fb5",
+        "output_hash": "sha256:d1a66cb70951986c9f9c2c5f82d5571ae3a7471af7583168d358ce333161ed79",
+        "output": "S2: Theorem formulation\n\n**Necessary-and-sufficient claim**\n\nFor every candidate transition \\(t : T\\),\n\\[\n\\operatorname{Eval}(t)=\\mathrm{ALLOW}\n\\iff\nGBP(t)\\land BD(t)\\land OC(t).\n\\]\n\n- **Necessary:** If \\(\\operatorname{Eval}(t)=\\mathrm{ALLOW}\\), then \\(GBP(t)\\), \\(BD(t)\\), and \\(OC(t)\\) all hold.\n- **Sufficient:** If \\(GBP(t)\\), \\(BD(t)\\), and \\(OC(t)\\) all hold, then \\(\\operatorname{Eval}(t)=\\mathrm{ALLOW}\\).\n\n**Status and boundary**\n- Stipulated assumption: the evaluator equivalence admitted at S1.\n- Generated claim: its explicit necessary-and-sufficient formulation above.\n- Verified claim: none at S2.\n- Scope is limited to the abstract evaluator; no deployed GCAT/BCAT specification, conformance, or implementation validity is claimed.\n\n`STAGE_STATUS: COMPLETE`  \n`REUSED_ARTIFACTS: S1 abstract setting, evaluator assumption, and claim boundary`  \n`NEW_CLAIMS: explicit necessary and sufficient directions for ALLOW`  \n`UNRESOLVED: formal Lean 4 candidate; deployed-engine specification and implementation/conformance evidence`  \n`NEXT_STAGE: prepare a Lean 4 candidate for the logical core`"
+      },
+      {
+        "stage_id": "S3",
+        "name": "Proof strategy and lemma decomposition",
+        "provider_status": "completed",
+        "native_input_tokens": 1126,
+        "native_output_tokens": 508,
+        "canonical_input_tokens": 1129,
+        "canonical_output_tokens": 412,
+        "canonical_cumulative_tokens": 4066,
+        "observed_api_cost_usd": 0.02087,
+        "cumulative_cost_usd": 0.056175,
+        "latency_seconds": 7.257770098999998,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:0675efe04f4f53ef7d91be51668a87317b6d621e9fc3fc9c71ef8927455e86b1",
+        "output_hash": "sha256:d942bae4727a5449268c1fa8a45b19f0218497946f34609e0543b146c1b45f96",
+        "output": "S3: Proof strategy and lemma decomposition\n\n**Proof strategy**\n\nFix \\(t : T\\). Instantiate the stipulated evaluator equivalence:\n\\[\n\\operatorname{Eval}(t)=\\mathrm{ALLOW}\n\\iff\nGBP(t)\\land BD(t)\\land OC(t).\n\\]\n\n1. **Forward / necessity lemma**\n   \\[\n   \\operatorname{Eval}(t)=\\mathrm{ALLOW}\n   \\to GBP(t)\\land BD(t)\\land OC(t).\n   \\]\n   Obtain this using the forward implication of the stipulated equivalence.\n\n2. **Reverse / sufficiency lemma**\n   \\[\n   GBP(t)\\land BD(t)\\land OC(t)\n   \\to \\operatorname{Eval}(t)=\\mathrm{ALLOW}.\n   \\]\n   Obtain this using the reverse implication of the stipulated equivalence.\n\n3. **Characterization theorem**\n   Combine the necessity and sufficiency lemmas with biconditional introduction to recover:\n   \\[\n   \\operatorname{Eval}(t)=\\mathrm{ALLOW}\n   \\iff GBP(t)\\land BD(t)\\land OC(t).\n   \\]\n\n**Lean-oriented decomposition**\n\nUse one hypothesis for the stipulated equivalence, derive the two directions via `.mp` and `.mpr`, and construct the final `Iff` with `Iff.intro`. No classical reasoning or deployed-engine assumptions are required.\n\n**Claim boundary**\n\nThis strategy proves only the propositional result for the stipulated abstract evaluator. It establishes no deployed GCAT/BCAT specification, conformance, behavior, or implementation validity.\n\n`STAGE_STATUS: COMPLETE`  \n`REUSED_ARTIFACTS: S1 stipulated evaluator equivalence; S2 necessary-and-sufficient theorem`  \n`NEW_CLAIMS: forward/necessity and reverse/sufficiency lemma decomposition and proof strategy`  \n`UNRESOLVED: Lean 4 candidate and formal type-checking; deployed-engine specification and implementation/conformance evidence`  \n`NEXT_STAGE: prepare the Lean 4 candidate for the logical core`"
+      },
+      {
+        "stage_id": "S4",
+        "name": "Complete informal proof",
+        "provider_status": "completed",
+        "native_input_tokens": 1536,
+        "native_output_tokens": 330,
+        "canonical_input_tokens": 1540,
+        "canonical_output_tokens": 330,
+        "canonical_cumulative_tokens": 5936,
+        "observed_api_cost_usd": 0.01758,
+        "cumulative_cost_usd": 0.073755,
+        "latency_seconds": 5.32078822199999,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:8a6f41bf0bc79923130eb68b1520b0d50bed48ee8a10b2296c1255b9ff5cdd27",
+        "output_hash": "sha256:1631131b4ee25f31f8741d265c1ebd4ec8d80df644e8a309757eaf973cdf972c",
+        "output": "S4: Complete informal proof\n\nFix \\(t : T\\). By the stipulated evaluator assumption,\n\\[\n\\operatorname{Eval}(t)=\\mathrm{ALLOW}\n\\iff\nGBP(t)\\land BD(t)\\land OC(t).\n\\]\n\n**Forward (necessity).** Assume \\(\\operatorname{Eval}(t)=\\mathrm{ALLOW}\\). Applying the forward direction of the stipulated equivalence yields\n\\[\nGBP(t)\\land BD(t)\\land OC(t).\n\\]\n\n**Reverse (sufficiency).** Assume \\(GBP(t)\\land BD(t)\\land OC(t)\\). Applying the reverse direction of the stipulated equivalence yields\n\\[\n\\operatorname{Eval}(t)=\\mathrm{ALLOW}.\n\\]\n\nTherefore, for every \\(t:T\\),\n\\[\n\\operatorname{Eval}(t)=\\mathrm{ALLOW}\n\\iff\nGBP(t)\\land BD(t)\\land OC(t).\n\\]\n\n**Claim boundary.** This proof concerns only the stipulated abstract evaluator. It does not establish any deployed GCAT/BCAT specification, behavior, conformance, or implementation validity.\n\n`STAGE_STATUS: COMPLETE`  \n`REUSED_ARTIFACTS: S1 stipulated evaluator equivalence; S2 theorem formulation; S3 directional proof strategy`  \n`NEW_CLAIMS: informally proved forward necessity, reverse sufficiency, and their biconditional characterization`  \n`UNRESOLVED: Lean 4 candidate and formal type-checking; deployed-engine specification and implementation/conformance evidence`  \n`NEXT_STAGE: prepare the Lean 4 candidate for the logical core`"
+      },
+      {
+        "stage_id": "S5",
+        "name": "Lean 4 candidate",
+        "provider_status": "completed",
+        "native_input_tokens": 1870,
+        "native_output_tokens": 271,
+        "canonical_input_tokens": 1878,
+        "canonical_output_tokens": 254,
+        "canonical_cumulative_tokens": 8068,
+        "observed_api_cost_usd": 0.017479999999999996,
+        "cumulative_cost_usd": 0.091235,
+        "latency_seconds": 4.060272437999998,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:9050a44599444ac12e843e7adda1881123c31a43fae4b2ac43506ed5acf2609d",
+        "output_hash": "sha256:69bb8247fc6e1ee70b91e5c8f564b301bc118eb43b440499ce289ce3a23d9a06",
+        "output": "S5: Lean 4 candidate\n\n```lean\ninductive Decision where\n  | ALLOW\n  | DENY\n\ntheorem allow_iff\n    {T : Type}\n    (GBP BD OC : T \u2192 Prop)\n    (Eval : T \u2192 Decision)\n    (hEval : \u2200 t, Eval t = Decision.ALLOW \u2194 GBP t \u2227 BD t \u2227 OC t) :\n    \u2200 t, Eval t = Decision.ALLOW \u2194 GBP t \u2227 BD t \u2227 OC t := by\n  intro t\n  exact Iff.intro (hEval t).mp (hEval t).mpr\n```\n\nThis candidate formalizes only the stipulated abstract equivalence; formal type-checking remains pending. It makes no deployed GCAT/BCAT specification, conformance, or implementation-validity claim.\n\n`STAGE_STATUS: COMPLETE`  \n`REUSED_ARTIFACTS: S1 abstract setting and stipulated equivalence; S3 proof decomposition; S4 informal proof`  \n`NEW_CLAIMS: Lean 4 candidate for the abstract ALLOW characterization`  \n`UNRESOLVED: formal Lean 4 type-checking; deployed-engine specification and implementation/conformance evidence`  \n`NEXT_STAGE: type-check or independently verify the Lean 4 candidate`"
+      },
+      {
+        "stage_id": "S6",
+        "name": "Verification ledger",
+        "provider_status": "completed",
+        "native_input_tokens": 2138,
+        "native_output_tokens": 542,
+        "canonical_input_tokens": 2135,
+        "canonical_output_tokens": 330,
+        "canonical_cumulative_tokens": 10533,
+        "observed_api_cost_usd": 0.026949999999999998,
+        "cumulative_cost_usd": 0.118185,
+        "latency_seconds": 9.855764996000005,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:b86022871ff69f43feb14c59ad0718f96bfad27d4dba2314f94cb17b670b1921",
+        "output_hash": "sha256:66704827fa2607f528f8de33035796d5ce6f0e2a23885cddfb8c339d32fae909",
+        "output": "# S6: Verification ledger\n\n**Task identity:** `SV-COST-STAGED-001`\n\n| Item | Status | Evidence |\n|---|---|---|\n| Abstract ALLOW characterization | **verified** | Directly follows from the stipulated equivalence: `Eval t = ALLOW \u2194 GBP t \u2227 BD t \u2227 OC t`. |\n| Necessity and sufficiency directions | **verified** | `(hEval t).mp` proves necessity; `(hEval t).mpr` proves sufficiency. |\n| Lean 4 candidate\u2019s logical typing | **verified by inspection** | `Iff.intro (hEval t).mp (hEval t).mpr` has the required biconditional type after `intro t`. |\n| Lean 4 toolchain execution | **unresolved** | No compiler/type-checker execution evidence is supplied. |\n| Deployed-engine correspondence | **unresolved** | No deployed GCAT/BCAT specification or implementation evidence connects the abstraction to an implementation. |\n\n**Claim boundary:** Verification covers only the logical core under the stipulated abstract evaluator assumption. It does not establish deployed-engine behavior, conformance, or implementation validity.\n\n`STAGE_STATUS: COMPLETE`  \n`REUSED_ARTIFACTS: S1 stipulated equivalence; S3 proof decomposition; S4 informal proof; S5 Lean 4 candidate`  \n`NEW_CLAIMS: logical typing of the Lean candidate verified by inspection`  \n`UNRESOLVED: executed Lean 4 type-check evidence; deployed-engine specification and implementation/conformance evidence`  \n`NEXT_STAGE: obtain toolchain type-check evidence if required`"
       }
     ]
   },
@@ -107,60 +375,188 @@
     "lane_id": "anthropic-only",
     "provider": "anthropic",
     "governed": false,
-    "highest_admitted_stage": "S0",
-    "admitted_stage_count": 1,
-    "canonical_input_tokens": 888,
-    "canonical_output_tokens": 1178,
-    "canonical_total_tokens": 2066,
-    "native_input_tokens": 1110,
-    "native_output_tokens": 1512,
-    "observed_api_cost_usd": 0.02601,
-    "latency_seconds": 29.260542047,
-    "checkpoints": [],
+    "highest_admitted_stage": "S6",
+    "admitted_stage_count": 7,
+    "canonical_input_tokens": 13025,
+    "canonical_output_tokens": 4284,
+    "canonical_total_tokens": 17309,
+    "native_input_tokens": 16805,
+    "native_output_tokens": 5557,
+    "observed_api_cost_usd": 0.13377,
+    "latency_seconds": 91.55458966199998,
+    "checkpoints": [
+      {
+        "checkpoint": 1000,
+        "highest_admitted_stage": "S1",
+        "actual_canonical_tokens_at_observation": 1655,
+        "cumulative_cost_usd": 0.019986
+      },
+      {
+        "checkpoint": 2000,
+        "highest_admitted_stage": "S2",
+        "actual_canonical_tokens_at_observation": 3413,
+        "cumulative_cost_usd": 0.037680000000000005
+      },
+      {
+        "checkpoint": 4000,
+        "highest_admitted_stage": "S3",
+        "actual_canonical_tokens_at_observation": 5925,
+        "cumulative_cost_usd": 0.05811000000000001
+      },
+      {
+        "checkpoint": 8000,
+        "highest_admitted_stage": "S4",
+        "actual_canonical_tokens_at_observation": 9035,
+        "cumulative_cost_usd": 0.08005200000000001
+      }
+    ],
     "stages": [
       {
         "stage_id": "S0",
         "name": "Task parsing and claim boundary",
         "provider_status": "end_turn",
-        "native_input_tokens": 249,
-        "native_output_tokens": 612,
-        "canonical_input_tokens": 208,
-        "canonical_output_tokens": 476,
-        "canonical_cumulative_tokens": 684,
-        "observed_api_cost_usd": 0.009927,
-        "cumulative_cost_usd": 0.009927,
-        "latency_seconds": 12.578511237,
+        "native_input_tokens": 241,
+        "native_output_tokens": 431,
+        "canonical_input_tokens": 203,
+        "canonical_output_tokens": 343,
+        "canonical_cumulative_tokens": 546,
+        "observed_api_cost_usd": 0.007188,
+        "cumulative_cost_usd": 0.007188,
+        "latency_seconds": 9.584705598,
         "validation": {
           "admitted": true,
           "missing_evidence": [],
           "forbidden_claim": false
         },
-        "prompt_hash": "sha256:90fca9596af5fb3e5b3a6fda2920b2fb85e25b68c0c681b68a1ef1e8f0c35b45",
-        "output_hash": "sha256:85b00ed9706c4ab8d9ee1a4d385668c2bc1318622b4fd4127200fbb273efb2c5",
-        "output": "# S0: Task parsing and claim boundary\n\n## Task Identity\n\n**Experiment:** SV-COST-STAGED-001\n**Goal:** Characterize the ALLOW admissibility predicate for an *abstract* GCAT/BCAT evaluator defined solely by the stipulation below.\n\n## Stipulated Abstract Evaluator\n\nLet the universe of discourse be a set **T** of *candidate transitions*. Three predicates are given by stipulation (not derived from any deployed engine):\n\n| Symbol | Reading |\n|--------|---------|\n| `GBP : T \u2192 Prop` | \"Good Basis Property holds\" |\n| `BD : T \u2192 Prop` | \"Boundary Disposition holds\" |\n| `OC : T \u2192 Prop` | \"Operational Condition holds\" |\n\n**Stipulated rule:**\n\n> `ALLOW(t)` iff `GBP(t) \u2227 BD(t) \u2227 OC(t)`\n\nThis is a *definition by stipulation*; it has no additional hidden clauses.\n\n## Claim Boundary\n\n**What is claimed (in-scope):**\n\n1. The necessary-and-sufficient characterization of `ALLOW` follows tautologically from the stipulation: `ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)`.\n2. A Lean 4 statement encoding this biconditional (forthcoming in a later stage) will be a purely logical artifact about the abstract predicates.\n\n**What is NOT claimed (out-of-scope):**\n\n- No claim is made about any deployed GCAT/BCAT engine, implementation, or runtime.\n- The predicates `GBP`, `BD`, `OC` are *uninterpreted*; no binding to concrete system behavior is asserted or implied.\n- Proof of correctness of any software system is outside scope.\n\n## Unresolved Implementation Binding\n\nThe mapping from `{GBP, BD, OC}` to any concrete evaluator internals is **explicitly unresolved and out of scope**. Any such binding would require a separate, empirically grounded specification artifact not present here.\n\n## Stage S0 Status\n\n| Evidence item | Status |\n|---|---|\n| Task identity | \u2713 Recorded |\n| Stipulated abstract evaluator | \u2713 Recorded |\n| No deployed-engine claim | \u2713 Affirmed |\n| Unresolved implementation binding | \u2713 Affirmed |\n\n**S0 complete. Ready to advance to S1 (necessary-and-sufficient characterization proof sketch).**"
+        "prompt_hash": "sha256:972d7e03439c8065715838df747a0ec6b182176ae4c7860171a6f6298ed7d8eb",
+        "output_hash": "sha256:3836f57dd8bfa5fb94422e89a60a85f9c72bbc8d5c02f83a17fc688c0a2cb6ee",
+        "output": "# S0: Task parsing and claim boundary\n\n## Task Identity\n\n**Experiment:** SV-COST-STAGED-001\n**Problem class:** Logical characterization of an admissibility predicate for an abstract evaluator.\n\n## Stipulated Abstract Evaluator\n\nThe evaluator is *abstract and stipulated for this experiment only*. It is not derived from, and makes no claims about, any deployed engine or implementation.\n\nPrimitive predicates (opaque, defined only by their names here):\n- `GBP : Transition \u2192 Prop`\n- `BD : Transition \u2192 Prop`\n- `OC : Transition \u2192 Prop`\n\nEvaluator output predicate:\n- `ALLOW : Transition \u2192 Prop`\n\nStipulated rule (the *sole* definitional content):\n\n> **Def-ALLOW:** For every candidate transition `t`, `ALLOW t \u2194 GBP t \u2227 BD t \u2227 OC t`.\n\n## Claim Boundary\n\n| In scope | Out of scope |\n|---|---|\n| Logical equivalence derivable from Def-ALLOW alone | Semantics of GBP, BD, OC beyond their types |\n| Necessary and sufficient conditions as a biconditional | Any deployed GCAT/BCAT engine |\n| Lean 4 statement of the logical core | Implementation validity |\n| Abstract Lean 4 proof sketch | Correctness of any real transition system |\n\n**Boundary statement (explicit):** No artifact in this experiment asserts anything about a deployed system. All claims are *purely logical consequences of Def-ALLOW as stipulated above*.\n\n## What Subsequent Stages Will Produce\n\n- **S1:** N&S characterization statement (mathematical).\n- **S2:** Lean 4 candidate for the logical core.\n\nNo prior artifacts admitted; this stage is self-contained."
       },
       {
         "stage_id": "S1",
         "name": "Definitions and assumptions",
-        "provider_status": "max_tokens",
-        "native_input_tokens": 861,
-        "native_output_tokens": 900,
-        "canonical_input_tokens": 680,
-        "canonical_output_tokens": 702,
-        "canonical_cumulative_tokens": 2066,
-        "observed_api_cost_usd": 0.016083,
-        "cumulative_cost_usd": 0.02601,
-        "latency_seconds": 16.68203081,
+        "provider_status": "end_turn",
+        "native_input_tokens": 671,
+        "native_output_tokens": 719,
+        "canonical_input_tokens": 539,
+        "canonical_output_tokens": 570,
+        "canonical_cumulative_tokens": 1655,
+        "observed_api_cost_usd": 0.012798,
+        "cumulative_cost_usd": 0.019986,
+        "latency_seconds": 12.735203780000006,
         "validation": {
-          "admitted": false,
-          "missing_evidence": [
-            "ALLOW or Admissible definition"
-          ],
+          "admitted": true,
+          "missing_evidence": [],
           "forbidden_claim": false
         },
-        "prompt_hash": "sha256:018f865a3430b136b8fba87c230a5e92c2e5de0326d4c26b8f7e1fcd3b9dfad6",
-        "output_hash": "sha256:e1e232bf75e08f882b967fabd33b8c5c33831913fdcba25604e5d39f2059e3ca",
-        "output": "# S1: Definitions and assumptions\n\n## Universe and Primitive Sorts\n\nLet **T** be an arbitrary non-empty type (the set of *candidate transitions*). No further structure on **T** is assumed.\n\n## Predicate Definitions (by stipulation)\n\nAll three predicates are *primitive*: they are given names and types but no internal structure. Their extensions are arbitrary subsets of **T**.\n\n| Symbol | Type | Reading |\n|--------|------|---------|\n| `GBP` | `T \u2192 Prop` | \"Good Basis Property holds for t\" |\n| `BD` | `T \u2192 Prop` | \"Boundary Disposition holds for t\" |\n| `OC` | `T \u2192 Prop` | \"Operational Condition holds for t\" |\n\nNo relationship among `GBP`, `BD`, `OC` is assumed. They may overlap arbitrarily or be mutually exclusive; the characterization holds in either case.\n\n## Admissibility Definition (ALLOW)\n\n`ALLOW` is introduced as a *defined* predicate, not a primitive:\n\n```\nALLOW : T \u2192 Prop\nALLOW(t)  :=  GBP(t) \u2227 BD(t) \u2227 OC(t)\n```\n\nThis definition is exhaustive and closed: the right-hand side contains every conjunct; no implicit additional condition exists.\n\n## Assumptions in Force\n\n| # | Assumption | Justification |\n|---|-----------|---------------|\n| A1 | Classical propositional logic (LEM admitted) | Lean 4 with `Classical` suffices; biconditional proof needs no excluded middle here, but admitted for generality |\n| A2 | `T` is non-empty | Prevents vacuous universal quantification from obscuring the biconditional structure |\n| A3 | `GBP`, `BD`, `OC` are uninterpreted | No binding to any concrete system; purely abstract |\n| A4 | No hidden conjuncts | The stipulation in S0 is taken as definitionally complete |\n\n## Intended Necessary-and-Sufficient Claim (preview, not yet proved)\n\nFor all `t : T`:\n\n```\nALLOW(t)  \u2194  GBP(t) \u2227 BD(t) \u2227 OC(t)\n```\n\nBecause `ALLOW` is *defined* as the right-hand side, both directions hold by definitional unfolding (no non-trivial proof obligation). The Lean 4 artifact (forthcoming, S2) will make this explicit via `Iff.intro` with `id` on each direction after `unfold ALLOW`.\n\n## Lean 4 Skeleton (definitions only \u2014 no proof, per stage scope)\n\n```lean4\n-- S1: Definitions only\nvariable (T : Type*) [Nonempty T]\n\n-- Uninterpreted predicates (A3)\nvariable (GBP BD OC : T \u2192 Prop)\n\n-- ALLOW defined by stipulation (A4)\ndef ALLOW (t : T) : Prop := GBP t \u2227 BD t \u2227 OC t\n\n-- Target statement (proof deferred to S2)\n#check @ALLOW  -- confirms the definition is well-formed\n```\n\n## Stage S1 Evidence Checklist\n\n| Required evidence item | Status |\n|------------------------|--------|\n| GBP definition | \u2713 Primitive predicate on T, uninterpreted |\n| BD definition | \u2713 Primitive predicate on T, uninterpreted |\n| OC definition | \u2713 Primitive predicate on T, uninterpreted |\n| ALLOW / Admissible definition | \u2713 Defined as `GBP t \u2227 BD t \u2227 OC t` |\n\n**S1 complete."
+        "prompt_hash": "sha256:e792c61dc8ede013953d84139e584f7651c605fc779708b7f8034ea17b8e0bdc",
+        "output_hash": "sha256:000b4299a65486cb63c02187de31616a3c0511d89310154aab214e890a8486a0",
+        "output": "# S1: Definitions and assumptions\n\n## Universe and Types\n\nLet `Transition` be an arbitrary non-empty type (a set of candidate transitions). All predicates below are total functions from `Transition` to `Prop`.\n\n## Primitive Predicates (Opaque)\n\n| Symbol | Type | Meaning |\n|--------|------|---------|\n| `GBP` | `Transition \u2192 Prop` | Opaque predicate 1; no internal structure assumed |\n| `BD` | `Transition \u2192 Prop` | Opaque predicate 2; no internal structure assumed |\n| `OC` | `Transition \u2192 Prop` | Opaque predicate 3; no internal structure assumed |\n\nNo logical relationship among `GBP`, `BD`, `OC` is assumed. In particular, none is assumed to imply, exclude, or overlap with any other.\n\n## Defined Predicate\n\n**Definition (ALLOW).** For all `t : Transition`:\n\n```\nALLOW t  :\u27fa  GBP t \u2227 BD t \u2227 OC t\n```\n\nThis definition is the *sole* content of `ALLOW`. It is stipulated, not derived.\n\n## Assumptions in Force\n\n1. **A1 (Totality).** Every predicate is defined on all elements of `Transition`.\n2. **A2 (Classical logic).** Standard propositional reasoning (LEM, double-negation elimination) is available. The Lean 4 candidate will use `Classical` where needed.\n3. **A3 (No further axioms).** No axioms about `GBP`, `BD`, `OC`, or `ALLOW` beyond Definition ALLOW and A1\u2013A2 are admitted.\n\n## Necessary-and-Sufficient Characterization (Statement)\n\n**Theorem (N&S-ALLOW).** For every `t : Transition`:\n\n```\nALLOW t  \u2194  GBP t \u2227 BD t \u2227 OC t\n```\n\n*Necessity* (`\u2192`): If `ALLOW t` holds, then `GBP t`, `BD t`, and `OC t` each hold individually.\n\n*Sufficiency* (`\u2190`): If `GBP t`, `BD t`, and `OC t` all hold, then `ALLOW t` holds.\n\n**Corollary (failure modes, by contrapositive).** `\u00ac ALLOW t` holds if and only if at least one of `\u00ac GBP t`, `\u00ac BD t`, `\u00ac OC t` holds:\n\n```\n\u00ac ALLOW t  \u2194  \u00ac GBP t \u2228 \u00ac BD t \u2228 \u00ac OC t\n```\n\n## Claim Boundary (Reiterated for This Stage)\n\nAll statements above are logical consequences of Definition ALLOW under A1\u2013A3. No claim is made about any deployed system. The Lean 4 candidate (S2) will formalize exactly this theorem and corollary, nothing more."
+      },
+      {
+        "stage_id": "S2",
+        "name": "Theorem formulation",
+        "provider_status": "max_tokens",
+        "native_input_tokens": 1398,
+        "native_output_tokens": 900,
+        "canonical_input_tokens": 1119,
+        "canonical_output_tokens": 639,
+        "canonical_cumulative_tokens": 3413,
+        "observed_api_cost_usd": 0.017694,
+        "cumulative_cost_usd": 0.037680000000000005,
+        "latency_seconds": 12.575493940000001,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:7ed2b7953e40cb748b4e26ea032e7a497d08e360ee9000a8d9b0bd7545832f60",
+        "output_hash": "sha256:fbc505d11caa7fa0c400c29251730d4d68f3273231358960377238f00f8f6b8a",
+        "output": "# S2: Theorem formulation\n\n## Lean 4 Candidate \u2014 Logical Core\n\n```lean4\n-- SV-COST-STAGED-001 | S2: Theorem formulation\n-- Abstract evaluator admissibility characterization.\n-- No deployed-engine semantics; all content is logical consequence of def_ALLOW.\n\nsection AbstractEvaluator\n\n-- Universe of candidate transitions (arbitrary non-empty type).\nvariable {Transition : Type*}\n\n-- Opaque primitive predicates; no internal structure assumed.\nvariable (GBP BD OC : Transition \u2192 Prop)\n\n-- Stipulated definition: ALLOW is definitionally equal to the conjunction.\ndef ALLOW (t : Transition) : Prop := GBP t \u2227 BD t \u2227 OC t\n\n-- \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n-- Theorem N&S-ALLOW\n-- Necessary and sufficient characterization.\n-- \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ntheorem ns_allow (t : Transition) :\n    ALLOW GBP BD OC t \u2194 GBP t \u2227 BD t \u2227 OC t :=\n  Iff.rfl                          -- holds by definitional unfolding\n\n-- Necessity: ALLOW t \u2192 each conjunct holds individually.\ntheorem allow_necessary_GBP (t : Transition) :\n    ALLOW GBP BD OC t \u2192 GBP t :=\n  fun h => h.1\n\ntheorem allow_necessary_BD (t : Transition) :\n    ALLOW GBP BD OC t \u2192 BD t :=\n  fun h => h.2.1\n\ntheorem allow_necessary_OC (t : Transition) :\n    ALLOW GBP BD OC t \u2192 OC t :=\n  fun h => h.2.2\n\n-- Sufficiency: all three conjuncts \u2192 ALLOW t.\ntheorem allow_sufficient (t : Transition) :\n    GBP t \u2192 BD t \u2192 OC t \u2192 ALLOW GBP BD OC t :=\n  fun hg hb ho => \u27e8hg, hb, ho\u27e9\n\n-- \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n-- Corollary: failure-mode characterization.\n-- \u00ac ALLOW t \u2194 \u00ac GBP t \u2228 \u00ac BD t \u2228 \u00ac OC t\n-- \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ntheorem not_allow_iff (t : Transition) :\n    \u00ac ALLOW GBP BD OC t \u2194 \u00ac GBP t \u2228 \u00ac BD t \u2228 \u00ac OC t := by\n  simp only [ALLOW]\n  constructor\n  \u00b7 intro h\n    by_contra hall\n    push_neg at hall\n    exact h \u27e8hall.1, hall.2.1, hall.2.2\u27e9\n  \u00b7 rintro (hg | hb | ho) \u27e8g, b, o\u27e9\n    \u00b7 exact hg g\n    \u00b7 exact hb b\n    \u00b7 exact ho o\n\nend AbstractEvaluator\n```\n\n## Stage Summary\n\n| Claim | Direction | Lean evidence |\n|---|---|---|\n| `ALLOW t \u2194 GBP t \u2227 BD t \u2227 OC t` | both | `ns_allow` \u2014 `Iff.rfl` |\n| `ALLOW t \u2192 GBP t` | necessary | `allow_necessary_GBP` |\n| `ALLOW t \u2192 BD t` | necessary | `allow_necessary_BD` |\n| `ALLOW t \u2192 OC t` | necessary |"
+      },
+      {
+        "stage_id": "S3",
+        "name": "Proof strategy and lemma decomposition",
+        "provider_status": "max_tokens",
+        "native_input_tokens": 2310,
+        "native_output_tokens": 900,
+        "canonical_input_tokens": 1769,
+        "canonical_output_tokens": 743,
+        "canonical_cumulative_tokens": 5925,
+        "observed_api_cost_usd": 0.02043,
+        "cumulative_cost_usd": 0.05811000000000001,
+        "latency_seconds": 15.68493871199999,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:aa269da31b7df42999c6d6f01866db988bb8b5da0e835e259c56af46a920da47",
+        "output_hash": "sha256:91dad9344ea8a8d464a1b11a54b8187499a16c02a17bac11e70771ada548248a",
+        "output": "# S3: Proof strategy and lemma decomposition\n\n## Overview\n\nThe logical core (S2) is already closed under `Iff.rfl` for the main biconditional, because `ALLOW` is *definitionally equal* to the conjunction. The proof obligations therefore reduce to trivial unfolding plus classical propositional reasoning for the failure-mode corollary. This stage records the strategy and names the micro-lemmas that cover the four required evidence kinds: **forward**, **reverse**, **necessity**, **sufficiency**.\n\n---\n\n## Proof Graph\n\n```\nDef-ALLOW (stipulated)\n\u2502\n\u251c\u2500[unfold]\u2500\u2500\u25ba ns_allow              (Iff.rfl \u2014 covers forward + reverse simultaneously)\n\u2502                \u2502\n\u2502                \u251c\u2500[And.left]\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u25ba allow_necessary_GBP     (necessity, conjunct 1)\n\u2502                \u251c\u2500[And.right.left]\u2500\u25ba allow_necessary_BD      (necessity, conjunct 2)\n\u2502                \u2514\u2500[And.right.right]\u25ba allow_necessary_OC      (necessity, conjunct 3)\n\u2502\n\u2514\u2500[intro]\u2500\u2500\u2500\u25ba allow_sufficient      (sufficiency, all three conjuncts)\n\u2502\n\u2514\u2500[classical push_neg]\u25ba not_allow_iff    (failure-mode corollary)\n```\n\n---\n\n## Lemma Inventory\n\n### L1 \u2014 Definitional unfolding (covers *forward* and *reverse*)\n\n**Statement.**\n```\nns_allow : \u2200 t, ALLOW GBP BD OC t \u2194 GBP t \u2227 BD t \u2227 OC t\n```\n**Strategy.** `Iff.rfl`. No case analysis needed; the iff holds at the definitional level because `ALLOW` is `def`, not `axiom`.\n\n**Evidence kinds satisfied:** forward (\u2192), reverse (\u2190).\n\n---\n\n### L2 \u2014 Necessity, conjunct GBP (*necessity*)\n\n**Statement.**\n```\nallow_necessary_GBP : ALLOW GBP BD OC t \u2192 GBP t\n```\n**Strategy.** Destruct the `And`-triple obtained by unfolding; project `.1`.\n\n**Derivation from L1.**\n```\nns_allow.mp h : GBP t \u2227 BD t \u2227 OC t\n(ns_allow.mp h).1 : GBP t\n```\n\n---\n\n### L3 \u2014 Necessity, conjunct BD (*necessity*)\n\n**Statement.**\n```\nallow_necessary_BD : ALLOW GBP BD OC t \u2192 BD t\n```\n**Strategy.** Same as L2; project `.2.1`.\n\n---\n\n### L4 \u2014 Necessity, conjunct OC (*necessity*)\n\n**Statement.**\n```\nallow_necessary_OC : ALLOW GBP BD OC t \u2192 OC t\n```\n**Strategy.** Same as L2; project `.2.2`.\n\n---\n\n### L5 \u2014 Sufficiency (*sufficiency*)\n\n**Statement.**\n```\nallow_sufficient : GBP t \u2192 BD t \u2192 OC t \u2192 ALLOW GBP BD OC t\n```\n**Strategy.** Fold three hypotheses into an `And`-triple via anonymous constructor `\u27e8hg, hb, ho\u27e9`; this matches the unfolded definition.\n\n**Evidence kind satisfied:** sufficiency (\u2190).\n\n---\n\n### L6 \u2014 Failure-mode corollary (classical, derived)\n\n**Statement.**\n```\nnot_allow_iff : \u00ac ALLOW GBP BD OC t \u2194 \u00ac GBP t \u2228 \u00ac BD t \u2228 \u00ac OC t\n```\n**Strategy.**\n\n| Direction | Method |\n|---|---|\n| (\u2192) neg"
+      },
+      {
+        "stage_id": "S4",
+        "name": "Complete informal proof",
+        "provider_status": "end_turn",
+        "native_input_tokens": 3209,
+        "native_output_tokens": 821,
+        "canonical_input_tokens": 2511,
+        "canonical_output_tokens": 599,
+        "canonical_cumulative_tokens": 9035,
+        "observed_api_cost_usd": 0.021942,
+        "cumulative_cost_usd": 0.08005200000000001,
+        "latency_seconds": 15.129902504,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:8d39877e9ead9db90b7c28aeb635cef50fc8512a4ba4779c6f5ae305131bbb59",
+        "output_hash": "sha256:858aa06c2c9274e1340f9a51cdca23dd9775809b709dac8350783cb4c0bc9d46",
+        "output": "# S4: Complete informal proof\n\n## Theorem (N&S-ALLOW)\n\nFor every `t : Transition`:\n\n```\nALLOW t  \u2194  GBP t \u2227 BD t \u2227 OC t\n```\n\n## Proof\n\n### Preliminary\n\nBy **Def-ALLOW** (the sole stipulated rule), `ALLOW t` is by definition the proposition `GBP t \u2227 BD t \u2227 OC t`. All reasoning below is purely logical unfolding of that definition under standard propositional logic (A1\u2013A3, S1).\n\n---\n\n### Forward direction (Necessity): `ALLOW t \u2192 GBP t \u2227 BD t \u2227 OC t`\n\nAssume `ALLOW t`. By Def-ALLOW, this means exactly `GBP t \u2227 BD t \u2227 OC t`. The conclusion is therefore identical to the hypothesis; no further reasoning is required.\n\nExtracted individually:\n- **GBP t** holds by projecting the first conjunct.\n- **BD t** holds by projecting the second conjunct.\n- **OC t** holds by projecting the third conjunct.\n\nEach of GBP, BD, OC is thus *necessary* for ALLOW. \u25a1 (forward)\n\n---\n\n### Reverse direction (Sufficiency): `GBP t \u2227 BD t \u2227 OC t \u2192 ALLOW t`\n\nAssume `GBP t`, `BD t`, and `OC t` all hold. Form their conjunction `GBP t \u2227 BD t \u2227 OC t`. By Def-ALLOW, this conjunction is exactly `ALLOW t`. Hence `ALLOW t` holds.\n\nThe triple conjunction is thus *sufficient* for ALLOW. \u25a1 (reverse)\n\n---\n\n### Biconditional conclusion\n\nBoth directions are established. Therefore:\n\n```\nALLOW t  \u2194  GBP t \u2227 BD t \u2227 OC t\n```\n\nholds for every `t : Transition`. \u25a1\n\n---\n\n## Corollary (Failure-mode characterization)\n\n**Claim:** `\u00ac ALLOW t  \u2194  \u00ac GBP t \u2228 \u00ac BD t \u2228 \u00ac OC t`\n\n**Proof.**\n\nBy N&S-ALLOW, `\u00ac ALLOW t \u2194 \u00ac(GBP t \u2227 BD t \u2227 OC t)`. By De Morgan's law (classical propositional logic, A2):\n\n```\n\u00ac(GBP t \u2227 BD t \u2227 OC t)  \u2194  \u00ac GBP t \u2228 \u00ac BD t \u2228 \u00ac OC t\n```\n\nChaining the two biconditionals yields the result. \u25a1\n\n---\n\n## Claim Boundary\n\n| What is proved | What is not proved |\n|---|---|\n| Logical equivalence from Def-ALLOW alone | Any property of a deployed GCAT/BCAT engine |\n| N&S biconditional for the abstract evaluator | Semantics of GBP, BD, OC beyond their types |\n| Failure-mode corollary by De Morgan | Implementation validity or real transition correctness |\n\nAll results are purely logical consequences of the stipulated Definition ALLOW under assumptions A1\u2013A3. No deployed-system claim is made or implied."
+      },
+      {
+        "stage_id": "S5",
+        "name": "Lean 4 candidate",
+        "provider_status": "end_turn",
+        "native_input_tokens": 4045,
+        "native_output_tokens": 886,
+        "canonical_input_tokens": 3118,
+        "canonical_output_tokens": 645,
+        "canonical_cumulative_tokens": 12798,
+        "observed_api_cost_usd": 0.025425,
+        "cumulative_cost_usd": 0.10547700000000002,
+        "latency_seconds": 11.547763530999987,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:dc2c5b205d6c61f48104726b3621ca81fcdcd1e13bdb751468a467cab88aadc4",
+        "output_hash": "sha256:8f4d1e211dec82afdc145d86c92033267da95c74baf391d62e5ec68d389b5f78",
+        "output": "# S5: Lean 4 candidate\n\n```lean\n-- SV-COST-STAGED-001 | S5: Lean 4 candidate\n-- Abstract evaluator admissibility characterization.\n-- No deployed-engine semantics; all content is logical consequence of def_ALLOW.\n\nsection AbstractEvaluator\n\nvariable {Transition : Type*}\nvariable (GBP BD OC : Transition \u2192 Prop)\n\n/-- Stipulated definition: ALLOW holds iff all three predicates hold. -/\ndef ALLOW (t : Transition) : Prop := GBP t \u2227 BD t \u2227 OC t\n\n/-- N&S-ALLOW: necessary and sufficient characterization.\n    Holds by definitional unfolding; no case analysis required. -/\ntheorem ns_allow (t : Transition) :\n    ALLOW GBP BD OC t \u2194 GBP t \u2227 BD t \u2227 OC t :=\n  Iff.rfl\n\n-- Necessity: each conjunct is individually necessary.\n\ntheorem allow_necessary_GBP (t : Transition) :\n    ALLOW GBP BD OC t \u2192 GBP t :=\n  fun h => h.1\n\ntheorem allow_necessary_BD (t : Transition) :\n    ALLOW GBP BD OC t \u2192 BD t :=\n  fun h => h.2.1\n\ntheorem allow_necessary_OC (t : Transition) :\n    ALLOW GBP BD OC t \u2192 OC t :=\n  fun h => h.2.2\n\n-- Sufficiency: the triple conjunction is sufficient.\n\ntheorem allow_sufficient (t : Transition) :\n    GBP t \u2192 BD t \u2192 OC t \u2192 ALLOW GBP BD OC t :=\n  fun hg hb ho => \u27e8hg, hb, ho\u27e9\n\n/-- Failure-mode corollary (De Morgan, classical).\n    \u00ac ALLOW t \u2194 \u00ac GBP t \u2228 \u00ac BD t \u2228 \u00ac OC t -/\ntheorem not_allow_iff (t : Transition) :\n    \u00ac ALLOW GBP BD OC t \u2194 \u00ac GBP t \u2228 \u00ac BD t \u2228 \u00ac OC t := by\n  simp only [ALLOW]\n  constructor\n  \u00b7 intro h\n    by_contra hall\n    push_neg at hall\n    exact h \u27e8hall.1, hall.2.1, hall.2.2\u27e9\n  \u00b7 rintro (hg | hb | ho) \u27e8g, b, o\u27e9\n    \u00b7 exact hg g\n    \u00b7 exact hb b\n    \u00b7 exact ho o\n\nend AbstractEvaluator\n```\n\n**Stage summary.**\n\n| Theorem | Direction(s) | Tactic/term |\n|---|---|---|\n| `ns_allow` | forward + reverse | `Iff.rfl` |\n| `allow_necessary_GBP` | necessity (GBP) | `fun h => h.1` |\n| `allow_necessary_BD` | necessity (BD) | `fun h => h.2.1` |\n| `allow_necessary_OC` | necessity (OC) | `fun h => h.2.2` |\n| `allow_sufficient` | sufficiency | anonymous constructor |\n| `not_allow_iff` | failure modes | `push_neg` + `rintro` |\n\nAll proofs are logical consequences of `def ALLOW` under A1\u2013A3. No deployed-system claim is made or implied."
+      },
+      {
+        "stage_id": "S6",
+        "name": "Verification ledger",
+        "provider_status": "max_tokens",
+        "native_input_tokens": 4931,
+        "native_output_tokens": 900,
+        "canonical_input_tokens": 3766,
+        "canonical_output_tokens": 745,
+        "canonical_cumulative_tokens": 17309,
+        "observed_api_cost_usd": 0.028293,
+        "cumulative_cost_usd": 0.13377,
+        "latency_seconds": 14.296581597,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:ba1939a4aefd3fc56cb273e9d34a8236fcdd050d5105af4dd241b34b68c25b5a",
+        "output_hash": "sha256:629af7bf63486ff345b95648fc2eadbf092edf9b3e41b7207f3ceb0ee1530ea4",
+        "output": "# S6: Verification ledger\n\n## Purpose\n\nThis ledger records the verification status of every claim produced in S0\u2013S5 against the four required evidence kinds: **verified**, **unresolved**, **evidence**, **implementation**.\n\n---\n\n## Evidence-Kind Definitions (for this ledger)\n\n| Kind | Meaning in this experiment |\n|---|---|\n| **verified** | Claim follows from Def-ALLOW by logical steps that are complete and checkable |\n| **unresolved** | Claim has a gap, ambiguity, or dependency that is not closed |\n| **evidence** | The specific artifact (theorem name, tactic, or argument) that closes the claim |\n| **implementation** | Whether any claim touches a deployed system (must be \"none\" throughout) |\n\n---\n\n## Claim Registry\n\n### C1 \u2014 Main biconditional (N&S-ALLOW)\n\n| Field | Entry |\n|---|---|\n| **Claim** | `\u2200 t, ALLOW GBP BD OC t \u2194 GBP t \u2227 BD t \u2227 OC t` |\n| **Source** | S1 (statement), S4 (informal proof), S5 (Lean candidate) |\n| **Verified** | YES |\n| **Evidence** | `ns_allow` in S5; proof term `Iff.rfl`; closes because `ALLOW` is `def`, making both sides definitionally equal. Informal argument in S4 \u00a7Forward + \u00a7Reverse confirms both directions. |\n| **Unresolved** | None |\n| **Implementation** | None |\n\n---\n\n### C2 \u2014 Necessity, conjunct GBP\n\n| Field | Entry |\n|---|---|\n| **Claim** | `ALLOW GBP BD OC t \u2192 GBP t` |\n| **Source** | S1 (statement), S3 (L2), S4 (\u00a7Forward), S5 |\n| **Verified** | YES |\n| **Evidence** | `allow_necessary_GBP`; proof term `fun h => h.1`; projects first conjunct of the unfolded `And`-triple. |\n| **Unresolved** | None |\n| **Implementation** | None |\n\n---\n\n### C3 \u2014 Necessity, conjunct BD\n\n| Field | Entry |\n|---|---|\n| **Claim** | `ALLOW GBP BD OC t \u2192 BD t` |\n| **Source** | S1, S3 (L3), S4, S5 |\n| **Verified** | YES |\n| **Evidence** | `allow_necessary_BD`; proof term `fun h => h.2.1`; projects second conjunct. |\n| **Unresolved** | None |\n| **Implementation** | None |\n\n---\n\n### C4 \u2014 Necessity, conjunct OC\n\n| Field | Entry |\n|---|---|\n| **Claim** | `ALLOW GBP BD OC t \u2192 OC t` |\n| **Source** | S1, S3 (L4), S4, S5 |\n| **Verified** | YES |\n| **Evidence** | `allow_necessary_OC`; proof term `fun h => h.2.2`; projects third conjunct. |\n| **Unresolved** | None |\n| **Implementation** | None |\n\n---\n\n### C5 \u2014 Sufficiency\n\n| Field | Entry |\n|---|---|\n| **Claim** | `GBP t \u2192 BD t \u2192 OC t \u2192 ALLOW GBP BD OC t` |\n| **Source** | S1, S3 (L5), S4 (\u00a7Reverse), S5 |\n| **Verified** | YES |\n| **Evidence** | `allow_sufficient`; proof term `fun hg hb ho => "
       }
     ]
   },
@@ -168,39 +564,190 @@
     "lane_id": "stegverse-anthropic",
     "provider": "anthropic",
     "governed": true,
-    "highest_admitted_stage": "NONE",
-    "admitted_stage_count": 0,
-    "canonical_input_tokens": 310,
-    "canonical_output_tokens": 707,
-    "canonical_total_tokens": 1017,
-    "native_input_tokens": 367,
-    "native_output_tokens": 900,
-    "observed_api_cost_usd": 0.014601,
-    "latency_seconds": 17.807967285000004,
-    "checkpoints": [],
+    "highest_admitted_stage": "S5",
+    "admitted_stage_count": 6,
+    "canonical_input_tokens": 15957,
+    "canonical_output_tokens": 4645,
+    "canonical_total_tokens": 20602,
+    "native_input_tokens": 20298,
+    "native_output_tokens": 6093,
+    "observed_api_cost_usd": 0.152289,
+    "latency_seconds": 97.90375913000003,
+    "checkpoints": [
+      {
+        "checkpoint": 1000,
+        "highest_admitted_stage": "S1",
+        "actual_canonical_tokens_at_observation": 2449,
+        "cumulative_cost_usd": 0.028152000000000003
+      },
+      {
+        "checkpoint": 2000,
+        "highest_admitted_stage": "S1",
+        "actual_canonical_tokens_at_observation": 2449,
+        "cumulative_cost_usd": 0.028152000000000003
+      },
+      {
+        "checkpoint": 4000,
+        "highest_admitted_stage": "S2",
+        "actual_canonical_tokens_at_observation": 4716,
+        "cumulative_cost_usd": 0.047529
+      },
+      {
+        "checkpoint": 8000,
+        "highest_admitted_stage": "S4",
+        "actual_canonical_tokens_at_observation": 11342,
+        "cumulative_cost_usd": 0.09445200000000001
+      }
+    ],
     "stages": [
       {
         "stage_id": "S0",
         "name": "Task parsing and claim boundary",
+        "provider_status": "end_turn",
+        "native_input_tokens": 359,
+        "native_output_tokens": 702,
+        "canonical_input_tokens": 305,
+        "canonical_output_tokens": 565,
+        "canonical_cumulative_tokens": 870,
+        "observed_api_cost_usd": 0.011607000000000001,
+        "cumulative_cost_usd": 0.011607000000000001,
+        "latency_seconds": 13.128536405999995,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:b0ccf7919c13109a45aa17cfee3962161e9d57ed044b9b56a2447d9e572e17ce",
+        "output_hash": "sha256:47c6d3182718d5e5771b897932dbe1a601c7261baaa2b86045fc5821cd290a42",
+        "output": "# S0: Task parsing and claim boundary\n\n---\n\n## 1. Task Identity\n\n**Experiment:** SV-COST-STAGED-001\n**Problem:** Characterize ALLOW admissibility for an *abstract* GCAT/BCAT evaluator.\n**Scope constraint:** No deployed engine is specified; no implementation conformance is claimed.\n\n---\n\n## 2. Stipulated Abstract Evaluator (verbatim restatement)\n\nLet `GBP`, `BD`, `OC` be uninterpreted predicates on a candidate transition `t`. The evaluator returns `ALLOW` exactly when all three predicates hold:\n\n```\nALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)\n```\n\nThis is a **stipulated definition**, not a derived result. It is admitted as the sole semantic axiom of the abstract evaluator.\n\n---\n\n## 3. Claim Boundary\n\n| Category | Content |\n|---|---|\n| **Stipulated assumptions** | The biconditional above; `GBP`, `BD`, `OC` are opaque predicates (no internal structure assumed). |\n| **Generated claims (to be established in later stages)** | Necessary-and-sufficient characterization theorem; Lean 4 statement of the logical core. |\n| **Verified claims** | None yet (S0 is parsing only). |\n| **Unresolved implementation evidence** | Whether any deployed GCAT/BCAT engine satisfies this specification \u2014 **explicitly out of scope and not asserted**. |\n\n---\n\n## 4. Boundary Demarcations\n\n- **\"Deployed\":** No deployed system is referenced. The evaluator is purely abstract.\n- **\"Implementation validity\":** Not claimed. The Lean 4 artifact (planned for a later stage) will encode only the logical biconditional, not any engine behavior.\n- **Necessary-and-sufficient form:** The target theorem is: *a transition `t` satisfies `ALLOW` if and only if `GBP(t)`, `BD(t)`, and `OC(t)` each hold.* This follows immediately from the stipulated definition; the later stage will make the derivation explicit and formally checked.\n\n---\n\n## 5. Stage Receipt\n\n```\nSTAGE_STATUS   : COMPLETE\nREUSED_ARTIFACTS : [none]\nNEW_CLAIMS     :\n  - Task identity recorded.\n  - Abstract evaluator stipulated: ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t).\n  - Claim boundary drawn; deployed/implementation evidence excluded from scope.\nUNRESOLVED     :\n  - Lean 4 candidate (planned S2).\n  - N&S theorem formal derivation (planned S1).\n  - Deployed engine conformance: permanently out of scope per task constraint.\nNEXT_STAGE     : S1 \u2014 Necessary-and-sufficient characterization theorem\n```"
+      },
+      {
+        "stage_id": "S1",
+        "name": "Definitions and assumptions",
+        "provider_status": "end_turn",
+        "native_input_tokens": 1060,
+        "native_output_tokens": 891,
+        "canonical_input_tokens": 864,
+        "canonical_output_tokens": 715,
+        "canonical_cumulative_tokens": 2449,
+        "observed_api_cost_usd": 0.016545,
+        "cumulative_cost_usd": 0.028152000000000003,
+        "latency_seconds": 15.921839371000004,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:0d77e80fab02b4569688a41a80101bb4dcee0c6d51246be6e7ecd00822aeead2",
+        "output_hash": "sha256:27d4e68a9bf6b38e32c9aa541a45e7bb3734a0f3273433a768d78056ace435f9",
+        "output": "# S1: Definitions and assumptions\n\n---\n\n## 1. Reused Artifacts\n\nFrom S0 (admitted without modification):\n\n- **Abstract evaluator stipulation:**\n  `ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)`\n- **Claim boundary:** No deployed engine; no implementation conformance asserted.\n\n---\n\n## 2. Universe of Discourse\n\nLet `T` be an arbitrary non-empty type whose elements are called **candidate transitions**. The variable `t` ranges over `T`.\n\nNo internal structure is imposed on `T`. No element of `T` is distinguished.\n\n---\n\n## 3. Primitive Predicates\n\nThe following three predicates are **uninterpreted** (opaque). No axioms govern their internal content beyond their type.\n\n| Name | Type | Informal gloss |\n|---|---|---|\n| `GBP` | `T \u2192 Prop` | \"Good-behavior predicate\" |\n| `BD` | `T \u2192 Prop` | \"Boundary-condition predicate\" |\n| `OC` | `T \u2192 Prop` | \"Operational-context predicate\" |\n\n**Assumption A-Opaque:** No relationship among `GBP`, `BD`, `OC` is assumed. In particular, neither pairwise implication nor independence is stipulated.\n\n---\n\n## 4. Defined Predicate\n\n**Definition D-ALLOW** (stipulated; reproduced from S0):\n\n> For all `t : T`,\n> `ALLOW(t)` holds if and only if `GBP(t)` holds **and** `BD(t)` holds **and** `OC(t)` holds.\n\nFormally:\n\n```\n\u2200 t : T,  ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)\n```\n\nThis is the **sole semantic axiom** of the abstract evaluator. It is a definition, not a theorem to be proved.\n\n---\n\n## 5. Status of Each Symbol\n\n| Symbol | Status in S1 |\n|---|---|\n| `T` | Assumed type; no structure. |\n| `GBP`, `BD`, `OC` | Assumed predicates; opaque. |\n| `ALLOW` | **Defined** by D-ALLOW. |\n| N&S theorem | Not yet stated here; target of S2. |\n| Lean 4 candidate | Not yet produced; target of S3. |\n\n---\n\n## 6. What Is Not Assumed\n\n- No completeness, decidability, or computability of any predicate.\n- No relationship between `T` and any concrete transition system.\n- No deployed GCAT/BCAT engine behavior.\n- No claim that `GBP`, `BD`, or `OC` are independent or exhaustive.\n\n---\n\n## 7. Stage Receipt\n\n```\nSTAGE_STATUS     : COMPLETE\nREUSED_ARTIFACTS : [S0: abstract evaluator stipulation, claim boundary]\nNEW_CLAIMS       :\n  - Universe T introduced; no structure assumed.\n  - GBP, BD, OC declared as opaque predicates on T (A-Opaque).\n  - ALLOW defined by biconditional D-ALLOW (restatement of S0 stipulation,\n    now labeled and typed).\n  - Symbol-status table drawn; all symbols accounted for.\nUNRESOLVED       :\n  - N&S characterization theorem (planned S2).\n  - Lean 4 logical-core candidate (planned S3).\n  - Deployed engine conformance: permanently out of scope.\nNEXT_STAGE       : S2 \u2014 Necessary-and-sufficient characterization theorem\n```"
+      },
+      {
+        "stage_id": "S2",
+        "name": "Theorem formulation",
         "provider_status": "max_tokens",
-        "native_input_tokens": 367,
+        "native_input_tokens": 1959,
         "native_output_tokens": 900,
-        "canonical_input_tokens": 310,
-        "canonical_output_tokens": 707,
-        "canonical_cumulative_tokens": 1017,
-        "observed_api_cost_usd": 0.014601,
-        "cumulative_cost_usd": 0.014601,
-        "latency_seconds": 17.807967285000004,
+        "canonical_input_tokens": 1590,
+        "canonical_output_tokens": 677,
+        "canonical_cumulative_tokens": 4716,
+        "observed_api_cost_usd": 0.019377,
+        "cumulative_cost_usd": 0.047529,
+        "latency_seconds": 12.982495956000008,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:11636f20b2aa689a8568ca04149be7719463716406a6c569498c2b360d5dad9d",
+        "output_hash": "sha256:579b3f507c504f61f394cca903a5a664d8f9ca8eda65322df092f6af1590f3cf",
+        "output": "# S2: Theorem formulation\n\n---\n\n## 1. Reused Artifacts\n\nFrom S0\u2013S1 (admitted without modification):\n\n- **D-ALLOW:** `\u2200 t : T, ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)`\n- **A-Opaque:** `GBP`, `BD`, `OC` are uninterpreted predicates on `T`.\n- **Claim boundary:** Abstract evaluator only; no deployed engine; no implementation conformance.\n\n---\n\n## 2. Target Theorem\n\n**Theorem T-NS (Necessary-and-Sufficient Characterization):**\n\n> For every candidate transition `t : T`, `ALLOW(t)` holds if and only if each of `GBP(t)`, `BD(t)`, and `OC(t)` holds.\n\nFormally:\n\n```\n\u2200 t : T,  ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)\n```\n\n**Remark:** T-NS is *identical in form* to D-ALLOW. Its role here is to make explicit the two directed halves as named sub-claims (below) and to confirm that no hidden premises enter the characterization.\n\n---\n\n## 3. Directed Sub-Claims\n\n### 3.1 Sufficiency (S\u2192)\n\n**Claim T-NS-S (Sufficiency):**\n\n> For all `t : T`, if `GBP(t)` and `BD(t)` and `OC(t)` all hold, then `ALLOW(t)` holds.\n\n```\n\u2200 t : T,  GBP(t) \u2227 BD(t) \u2227 OC(t) \u2192 ALLOW(t)\n```\n\n*Derivation sketch:* Immediate from the right-to-left direction of D-ALLOW. No additional premises are required.\n\n---\n\n### 3.2 Necessity (N\u2190)\n\n**Claim T-NS-N (Necessity):**\n\n> For all `t : T`, if `ALLOW(t)` holds, then `GBP(t)` holds **and** `BD(t)` holds **and** `OC(t)` holds.\n\n```\n\u2200 t : T,  ALLOW(t) \u2192 GBP(t) \u2227 BD(t) \u2227 OC(t)\n```\n\n*Derivation sketch:* Immediate from the left-to-right direction of D-ALLOW. No additional premises are required.\n\n**Corollaries of necessity (named for evidence requirements):**\n\n| Label | Statement |\n|---|---|\n| T-NS-N-GBP | `\u2200 t, ALLOW(t) \u2192 GBP(t)` |\n| T-NS-N-BD | `\u2200 t, ALLOW(t) \u2192 BD(t)` |\n| T-NS-N-OC | `\u2200 t, ALLOW(t) \u2192 OC(t)` |\n\nEach corollary follows by conjunction elimination from T-NS-N.\n\n---\n\n## 4. Proof Structure\n\nBoth directed halves reduce to unpacking D-ALLOW; no lemmas beyond propositional logic are needed.\n\n```\nT-NS\n\u251c\u2500\u2500 T-NS-S  (right-to-left of D-ALLOW; intro \u2227, apply D-ALLOW.mpr)\n\u2514\u2500\u2500 T-NS-N  (left-to-right of D-ALLOW; apply D-ALLOW.mp)\n    \u251c\u2500\u2500 T-NS-N-GBP  (And.left)\n    \u251c\u2500\u2500 T-NS-N-BD   (And.right "
+      },
+      {
+        "stage_id": "S3",
+        "name": "Proof strategy and lemma decomposition",
+        "provider_status": "max_tokens",
+        "native_input_tokens": 2871,
+        "native_output_tokens": 900,
+        "canonical_input_tokens": 2277,
+        "canonical_output_tokens": 708,
+        "canonical_cumulative_tokens": 7701,
+        "observed_api_cost_usd": 0.022113,
+        "cumulative_cost_usd": 0.06964200000000001,
+        "latency_seconds": 13.18042666300002,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:bc0e2226b3b85d4ad1af2fd6ae1e0638fc1ec07c665e2c24df71e0d6c1316069",
+        "output_hash": "sha256:1bccdeec9c1411c6250611e5990e68761f34b66cd538f8c7e2282db62960884e",
+        "output": "# S3: Proof strategy and lemma decomposition\n\n---\n\n## 1. Reused Artifacts\n\nFrom S0\u2013S2 (admitted without modification):\n\n- **D-ALLOW:** `\u2200 t : T, ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)`\n- **A-Opaque:** `GBP`, `BD`, `OC` uninterpreted on `T`.\n- **T-NS-S:** `\u2200 t, GBP(t) \u2227 BD(t) \u2227 OC(t) \u2192 ALLOW(t)`\n- **T-NS-N:** `\u2200 t, ALLOW(t) \u2192 GBP(t) \u2227 BD(t) \u2227 OC(t)`\n- **T-NS-N-GBP/BD/OC:** corollaries by conjunction elimination.\n- **Claim boundary:** abstract evaluator only; no deployed engine; no implementation conformance.\n\n---\n\n## 2. Proof Strategy Overview\n\nT-NS is definitionally transparent: both directions are one-step unfoldings of D-ALLOW followed by propositional rules. The strategy therefore has **zero mathematical content beyond bookkeeping**; its value is to make the Lean 4 tactic script predictable and auditable.\n\nEach required evidence item maps to exactly one lemma or tactic step:\n\n| Evidence item | Lemma | Core move |\n|---|---|---|\n| `forward` | `allow_forward` | `Iff.mp` on D-ALLOW |\n| `reverse` | `allow_reverse` | `Iff.mpr` on D-ALLOW |\n| `necessity` | `allow_necessity` | `allow_forward` + projection |\n| `sufficiency` | `allow_sufficiency` | `allow_reverse` |\n\n---\n\n## 3. Lemma Decomposition\n\n### L1 \u2014 `allow_forward` (forward direction)\n\n**Statement:**\n```\n\u2200 t : T, ALLOW t \u2192 GBP t \u2227 BD t \u2227 OC t\n```\n**Proof move:** Apply `(allow_iff t).mp`.  \n**Evidence satisfied:** `forward`, `necessity`.\n\n---\n\n### L2 \u2014 `allow_reverse` (reverse direction)\n\n**Statement:**\n```\n\u2200 t : T, GBP t \u2227 BD t \u2227 OC t \u2192 ALLOW t\n```\n**Proof move:** Apply `(allow_iff t).mpr`.  \n**Evidence satisfied:** `reverse`, `sufficiency`.\n\n---\n\n### L3 \u2014 `allow_necessity` (necessity, component form)\n\n**Statement:**\n```\n\u2200 t : T, ALLOW t \u2192 GBP t\n\u2200 t : T, ALLOW t \u2192 BD t\n\u2200 t : T, ALLOW t \u2192 OC t\n```\n**Proof move:** `allow_forward` then `And.left` / `And.right.left` / `And.right.right`.  \n**Evidence satisfied:** `necessity` (exhaustive).\n\n---\n\n### L4 \u2014 `allow_sufficiency` (sufficiency, alias)\n\n**Statement:**\n```\n\u2200 t : T, GBP t \u2192 BD t \u2192 OC t \u2192 ALLOW t\n```\n**Proof move:** curry `allow_reverse`.  \n**Evidence satisfied:** `sufficiency`.\n\n---\n\n### L5 \u2014 `allow_characterization` (master biconditional, = T-NS)\n\n**Statement:**\n```\n\u2200 t : T, ALLOW t \u2194 GBP t \u2227 BD t \u2227 OC t\n```\n**Proof move:** `Iff.intro allow_forward allow_"
+      },
+      {
+        "stage_id": "S4",
+        "name": "Complete informal proof",
+        "provider_status": "max_tokens",
+        "native_input_tokens": 3770,
+        "native_output_tokens": 900,
+        "canonical_input_tokens": 2984,
+        "canonical_output_tokens": 657,
+        "canonical_cumulative_tokens": 11342,
+        "observed_api_cost_usd": 0.02481,
+        "cumulative_cost_usd": 0.09445200000000001,
+        "latency_seconds": 12.741645367999979,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:fe6f8c21180e83fee886b608f56b03bc2887a5df27764826ff646043a15e3008",
+        "output_hash": "sha256:1f71325e0ce7072330b4d9ac8cb4f4f1f597a35dabf9a620ad5d46771740ea7e",
+        "output": "# S4: Complete informal proof\n\n---\n\n## 1. Reused Artifacts\n\nFrom S0\u2013S3 (admitted without modification):\n\n- **D-ALLOW:** `\u2200 t : T, ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)`\n- **A-Opaque:** `GBP`, `BD`, `OC` uninterpreted on `T`.\n- **T-NS-S / T-NS-N / T-NS-N-GBP/BD/OC:** directed sub-claims from S2.\n- **L1\u2013L5:** lemma decomposition from S3.\n- **Claim boundary:** abstract evaluator only; no deployed engine; no implementation conformance.\n\n---\n\n## 2. Master Theorem (restated for self-containment)\n\n**Theorem T-NS:**\nFor every `t : T`,\n```\nALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t).\n```\n\n---\n\n## 3. Forward Direction (Necessity)\n\n**Claim (T-NS-N / L1):** `\u2200 t : T, ALLOW(t) \u2192 GBP(t) \u2227 BD(t) \u2227 OC(t)`\n\n**Proof.**\nLet `t : T` be arbitrary. Assume `ALLOW(t)` holds.\n\nBy D-ALLOW, `ALLOW(t)` holds if and only if `GBP(t) \u2227 BD(t) \u2227 OC(t)` holds. Applying the left-to-right direction of this biconditional to the hypothesis `ALLOW(t)` yields `GBP(t) \u2227 BD(t) \u2227 OC(t)`.\n\nSince `t` was arbitrary, the universal claim holds. \u220e\n\n**Corollaries (T-NS-N-GBP/BD/OC):**\nFrom `GBP(t) \u2227 BD(t) \u2227 OC(t)`, each conjunct is extracted by conjunction elimination:\n- `GBP(t)` \u2014 first conjunct.\n- `BD(t)` \u2014 second conjunct.\n- `OC(t)` \u2014 third conjunct.\n\nEach necessity corollary holds for all `t : T`. \u220e\n\n---\n\n## 4. Reverse Direction (Sufficiency)\n\n**Claim (T-NS-S / L2):** `\u2200 t : T, GBP(t) \u2227 BD(t) \u2227 OC(t) \u2192 ALLOW(t)`\n\n**Proof.**\nLet `t : T` be arbitrary. Assume `GBP(t)`, `BD(t)`, and `OC(t)` all hold; form their conjunction `GBP(t) \u2227 BD(t) \u2227 OC(t)`.\n\nBy D-ALLOW, `ALLOW(t)` holds if and only if `GBP(t) \u2227 BD(t) \u2227 OC(t)` holds. Applying the right-to-left direction of this biconditional to the conjunction just formed yields `ALLOW(t)`.\n\nSince `t` was arbitrary, the universal claim holds. \u220e\n\n**Curried form (L4 / allow_sufficiency):**\nThe same argument with the hypothesis presented as three separate antecedents yields:\n`\u2200 t : T, GBP(t) \u2192 BD(t) \u2192 OC(t) \u2192 ALLOW(t)`. \u220e\n\n---\n\n## 5. Assembly: Biconditional T-NS\n\n**Proof of T-"
+      },
+      {
+        "stage_id": "S5",
+        "name": "Lean 4 candidate",
+        "provider_status": "max_tokens",
+        "native_input_tokens": 4688,
+        "native_output_tokens": 900,
+        "canonical_input_tokens": 3649,
+        "canonical_output_tokens": 636,
+        "canonical_cumulative_tokens": 15627,
+        "observed_api_cost_usd": 0.027563999999999998,
+        "cumulative_cost_usd": 0.12201600000000001,
+        "latency_seconds": 11.983938157000011,
+        "validation": {
+          "admitted": true,
+          "missing_evidence": [],
+          "forbidden_claim": false
+        },
+        "prompt_hash": "sha256:04511bc0ff5c9a78cb06933d549d57f5588b2314b5acf85bd874831be6d4ab7c",
+        "output_hash": "sha256:ab6909cb0993c60ad37334380aaedf69c88e4205d1910e52b0064a2e657721a6",
+        "output": "# S5: Lean 4 candidate\n\n---\n\n## 1. Reused Artifacts\n\nFrom S0\u2013S4 (admitted without modification):\n\n- **D-ALLOW:** `\u2200 t : T, ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)`\n- **A-Opaque:** `GBP`, `BD`, `OC` uninterpreted on `T`.\n- **L1\u2013L5:** lemma decomposition from S3.\n- **Claim boundary:** abstract evaluator only; no deployed engine; no implementation conformance.\n\n---\n\n## 2. Lean 4 Candidate\n\n```lean\n-- S5: Lean 4 logical-core candidate for SV-COST-STAGED-001\n-- Scope: abstract GCAT/BCAT evaluator only.\n-- No deployed engine is referenced; no implementation conformance is claimed.\n\nsection AbstractEvaluator\n\nvariable {T : Type*}\nvariable (GBP BD OC : T \u2192 Prop)\n\n/-- D-ALLOW: stipulated definition of the abstract evaluator.\n    ALLOW(t) holds iff GBP(t), BD(t), and OC(t) all hold. -/\ndef ALLOW (t : T) : Prop := GBP t \u2227 BD t \u2227 OC t\n\n/-- allow_iff: the defining biconditional, unfolded explicitly. -/\ntheorem allow_iff (t : T) :\n    ALLOW GBP BD OC t \u2194 GBP t \u2227 BD t \u2227 OC t :=\n  Iff.rfl\n\n/-- L1 / T-NS-N: necessity \u2014 ALLOW implies each conjunct. -/\ntheorem allow_forward (t : T) :\n    ALLOW GBP BD OC t \u2192 GBP t \u2227 BD t \u2227 OC t :=\n  (allow_iff GBP BD OC t).mp\n\n/-- L2 / T-NS-S: sufficiency \u2014 all conjuncts imply ALLOW. -/\ntheorem allow_reverse (t : T) :\n    GBP t \u2227 BD t \u2227 OC t \u2192 ALLOW GBP BD OC t :=\n  (allow_iff GBP BD OC t).mpr\n\n/-- T-NS-N-GBP: necessity, GBP component. -/\ntheorem allow_necessity_GBP (t : T) :\n    ALLOW GBP BD OC t \u2192 GBP t :=\n  fun h => (allow_forward GBP BD OC t h).1\n\n/-- T-NS-N-BD: necessity, BD component. -/\ntheorem allow_necessity_BD (t : T) :\n    ALLOW GBP BD OC t \u2192 BD t :=\n  fun h => (allow_forward GBP BD OC t h).2.1\n\n/-- T-NS-N-OC: necessity, OC component. -/\ntheorem allow_necessity_OC (t : T) :\n    ALLOW GBP BD OC t \u2192 OC t :=\n  fun h => (allow_forward GBP BD OC t h).2.2\n\n/-- L4 / allow_sufficiency: curried sufficiency form. -/\ntheorem allow_sufficiency (t : T) :\n    GBP t \u2192 BD t \u2192 OC t \u2192 ALLOW GBP BD OC t :=\n  fun hg hb ho => allow_reverse GBP BD OC t \u27e8hg, hb, ho\u27e9\n\n/-- L5 / T-NS: master necessary-and-sufficient characterization."
+      },
+      {
+        "stage_id": "S6",
+        "name": "Verification ledger",
+        "provider_status": "max_tokens",
+        "native_input_tokens": 5591,
+        "native_output_tokens": 900,
+        "canonical_input_tokens": 4288,
+        "canonical_output_tokens": 687,
+        "canonical_cumulative_tokens": 20602,
+        "observed_api_cost_usd": 0.030273,
+        "cumulative_cost_usd": 0.152289,
+        "latency_seconds": 17.964877209000008,
         "validation": {
           "admitted": false,
           "missing_evidence": [
-            "no deployed-engine claim"
+            "unresolved"
           ],
           "forbidden_claim": false
         },
-        "prompt_hash": "sha256:605f664d2c750d9787a2c604d67f211ff6e8ae174eae8e1f2561fff6e415f152",
-        "output_hash": "sha256:33964b5a440360667aa0417d00cabeb78e8da21592fb52e8c5109d2a01ecc90d",
-        "output": "# S0: Task parsing and claim boundary\n\n---\n\n## 1. Task Identity\n\n**Experiment:** SV-COST-STAGED-001\n**Goal:** Characterize the ALLOW admissibility predicate for an *abstract* GCAT/BCAT evaluator (not any deployed engine).\n**Scope constraint:** No claim of conformance to any implementation is made or implied. The evaluator is stipulated purely by the definition below.\n\n---\n\n## 2. Stipulated Abstract Evaluator\n\n**Primitive predicates** (opaque; no implementation semantics attached):\n\n| Symbol | Reading |\n|--------|---------|\n| `GBP(t)` | \"Good-Behavior Predicate holds for transition t\" |\n| `BD(t)` | \"Boundary Disposition holds for transition t\" |\n| `OC(t)` | \"Operational Condition holds for transition t\" |\n\n**Stipulated evaluation rule (SR):**\n\n> For any candidate transition `t`,\n>\n> `ALLOW(t)  :\u27fa  GBP(t) \u2227 BD(t) \u2227 OC(t)`\n\nThis is a *definition*, not a derived theorem. It is the sole axiom of the abstract evaluator for this experiment.\n\n---\n\n## 3. Claim Boundary\n\n### 3.1 Stipulated assumptions (axiomatic; not to be proved)\n\n- **A1.** `GBP`, `BD`, `OC`, and `ALLOW` are predicates on a common type `T` of candidate transitions.\n- **A2.** `ALLOW` is defined by SR (the conjunction above).\n\n### 3.2 Claims to be established in later stages\n\n- **C1 (Necessity).** `ALLOW(t) \u2192 GBP(t) \u2227 BD(t) \u2227 OC(t)`\n- **C2 (Sufficiency).** `GBP(t) \u2227 BD(t) \u2227 OC(t) \u2192 ALLOW(t)`\n- **C3 (Biconditional / N&S).** `ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)`\n\n*Note:* C1\u2013C3 are trivially derivable from SR by unfolding the definition. Their value here is formal explicitness for downstream verification, not mathematical depth.\n\n### 3.3 Generated claims (this stage)\n\n- **G0.** The claim boundary is well-formed: A1\u2013A2 are consistent (the conjunction of three arbitrary propositions is a coherent definition; no contradiction is introduced).\n\n### 3.4 Unresolved implementation binding\n\n- **U1.** Whether any deployed GCAT or BCAT engine satisfies SR is **not asserted and not in scope**. No evidence of conformance has been admitted or sought.\n- **U2.** The semantic content of `GBP`, `BD`, `OC` relative to any real system remains unbound.\n\n---\n\n## 4. Lean 4 Candidate (logical core, current stage: declaration only)\n\nThe following states *what will be proved* in S1; no proof is given here, preserving stage discipline.\n\n```lean4\n-- S0: Declaration block only. Proofs deferred to S1.\n-- No deployed-engine semantics are encoded.\n\nvariable {T : Type*}\nvariable (GBP BD OC : T \u2192 Prop)\n\n/-- Stipulated definition of ALLOW (SR). -/\ndef ALLOW (t : T) : Prop := GBP t \u2227 BD t \u2227 OC t\n\n/-- C3: Necessary-and-sufficient characterization (to be proved in S1). -/\ntheorem allow_iff (t : T"
+        "prompt_hash": "sha256:65b3ad0b6fb3bf195b3564db43300eb7f55c14fa21c3f883275b76c237599125",
+        "output_hash": "sha256:62fbaacb2fcf5d70bf09bf778a7a9842067dc36b271ce598bc374bdab330f151",
+        "output": "# S6: Verification ledger\n\n---\n\n## 1. Reused Artifacts\n\nFrom S0\u2013S5 (admitted without modification):\n\n- **D-ALLOW:** `\u2200 t : T, ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)`\n- **A-Opaque:** `GBP`, `BD`, `OC` uninterpreted on `T`.\n- **L1\u2013L5:** lemma decomposition from S3.\n- **S5 Lean 4 candidate:** complete source text admitted in S5.\n- **Claim boundary:** abstract evaluator only; no deployed engine; no implementation conformance.\n\n---\n\n## 2. Verification Ledger\n\nEach row records one claim, its evidence source, and its resolution status.\n\n| ID | Statement | Evidence | Status |\n|---|---|---|---|\n| **D-ALLOW** | `\u2200 t : T, ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)` | Stipulated definition (S0, S1); `def ALLOW` in S5 makes it `Iff.rfl`. | **VERIFIED** \u2014 definitional; no proof obligation. |\n| **allow_iff** | `ALLOW GBP BD OC t \u2194 GBP t \u2227 BD t \u2227 OC t` | S5 theorem; proof term `Iff.rfl`. | **VERIFIED** \u2014 `Iff.rfl` closes the goal by definitional equality. |\n| **L1 / allow_forward** | `\u2200 t, ALLOW GBP BD OC t \u2192 GBP t \u2227 BD t \u2227 OC t` | S5 theorem; proof term `(allow_iff \u2026).mp`. | **VERIFIED** \u2014 one `Iff.mp` application; no further obligations. |\n| **L2 / allow_reverse** | `\u2200 t, GBP t \u2227 BD t \u2227 OC t \u2192 ALLOW GBP BD OC t` | S5 theorem; proof term `(allow_iff \u2026).mpr`. | **VERIFIED** \u2014 one `Iff.mpr` application; no further obligations. |\n| **T-NS-N-GBP / allow_necessity_GBP** | `\u2200 t, ALLOW GBP BD OC t \u2192 GBP t` | S5 theorem; `(allow_forward \u2026 h).1`. | **VERIFIED** \u2014 conjunction projection from L1. |\n| **T-NS-N-BD / allow_necessity_BD** | `\u2200 t, ALLOW GBP BD OC t \u2192 BD t` | S5 theorem; `(allow_forward \u2026 h).2.1`. | **VERIFIED** \u2014 conjunction projection from L1. |\n| **T-NS-N-OC / allow_necessity_OC** | `\u2200 t, ALLOW GBP BD OC t \u2192 OC t` | S5 theorem; `(allow_forward \u2026 h).2.2`. | **VERIFIED** \u2014 conjunction projection from L1. |\n| **L4 / allow_sufficiency** | `\u2200 t, GBP t \u2192 BD t \u2192 OC t \u2192 ALLOW GBP BD OC t` | S5 theorem; `allow_reverse \u2026 \u27e8hg, hb, ho\u27e9`. | **VERIFIED** \u2014 currying of L2; anonymous constructor closes conjunction. |\n| **L5 / T-NS / allow_characterization** | `\u2200 t, ALLOW GBP BD OC t \u2194 GBP t \u2227"
       }
     ]
   }

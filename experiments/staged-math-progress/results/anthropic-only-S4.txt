@@ -1,0 +1,76 @@
+# S4: Complete informal proof
+
+## Theorem (N&S-ALLOW)
+
+For every `t : Transition`:
+
+```
+ALLOW t  ↔  GBP t ∧ BD t ∧ OC t
+```
+
+## Proof
+
+### Preliminary
+
+By **Def-ALLOW** (the sole stipulated rule), `ALLOW t` is by definition the proposition `GBP t ∧ BD t ∧ OC t`. All reasoning below is purely logical unfolding of that definition under standard propositional logic (A1–A3, S1).
+
+---
+
+### Forward direction (Necessity): `ALLOW t → GBP t ∧ BD t ∧ OC t`
+
+Assume `ALLOW t`. By Def-ALLOW, this means exactly `GBP t ∧ BD t ∧ OC t`. The conclusion is therefore identical to the hypothesis; no further reasoning is required.
+
+Extracted individually:
+- **GBP t** holds by projecting the first conjunct.
+- **BD t** holds by projecting the second conjunct.
+- **OC t** holds by projecting the third conjunct.
+
+Each of GBP, BD, OC is thus *necessary* for ALLOW. □ (forward)
+
+---
+
+### Reverse direction (Sufficiency): `GBP t ∧ BD t ∧ OC t → ALLOW t`
+
+Assume `GBP t`, `BD t`, and `OC t` all hold. Form their conjunction `GBP t ∧ BD t ∧ OC t`. By Def-ALLOW, this conjunction is exactly `ALLOW t`. Hence `ALLOW t` holds.
+
+The triple conjunction is thus *sufficient* for ALLOW. □ (reverse)
+
+---
+
+### Biconditional conclusion
+
+Both directions are established. Therefore:
+
+```
+ALLOW t  ↔  GBP t ∧ BD t ∧ OC t
+```
+
+holds for every `t : Transition`. □
+
+---
+
+## Corollary (Failure-mode characterization)
+
+**Claim:** `¬ ALLOW t  ↔  ¬ GBP t ∨ ¬ BD t ∨ ¬ OC t`
+
+**Proof.**
+
+By N&S-ALLOW, `¬ ALLOW t ↔ ¬(GBP t ∧ BD t ∧ OC t)`. By De Morgan's law (classical propositional logic, A2):
+
+```
+¬(GBP t ∧ BD t ∧ OC t)  ↔  ¬ GBP t ∨ ¬ BD t ∨ ¬ OC t
+```
+
+Chaining the two biconditionals yields the result. □
+
+---
+
+## Claim Boundary
+
+| What is proved | What is not proved |
+|---|---|
+| Logical equivalence from Def-ALLOW alone | Any property of a deployed GCAT/BCAT engine |
+| N&S biconditional for the abstract evaluator | Semantics of GBP, BD, OC beyond their types |
+| Failure-mode corollary by De Morgan | Implementation validity or real transition correctness |
+
+All results are purely logical consequences of the stipulated Definition ALLOW under assumptions A1–A3. No deployed-system claim is made or implied.

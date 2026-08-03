@@ -1,0 +1,27 @@
+{
+  "model": "claude-sonnet-4-6",
+  "id": "msg_011CdfL47Ff1FLbgQ1xe1hu2",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "text",
+      "text": "# S4: Complete informal proof\n\n## Theorem (N&S-ALLOW)\n\nFor every `t : Transition`:\n\n```\nALLOW t  \u2194  GBP t \u2227 BD t \u2227 OC t\n```\n\n## Proof\n\n### Preliminary\n\nBy **Def-ALLOW** (the sole stipulated rule), `ALLOW t` is by definition the proposition `GBP t \u2227 BD t \u2227 OC t`. All reasoning below is purely logical unfolding of that definition under standard propositional logic (A1\u2013A3, S1).\n\n---\n\n### Forward direction (Necessity): `ALLOW t \u2192 GBP t \u2227 BD t \u2227 OC t`\n\nAssume `ALLOW t`. By Def-ALLOW, this means exactly `GBP t \u2227 BD t \u2227 OC t`. The conclusion is therefore identical to the hypothesis; no further reasoning is required.\n\nExtracted individually:\n- **GBP t** holds by projecting the first conjunct.\n- **BD t** holds by projecting the second conjunct.\n- **OC t** holds by projecting the third conjunct.\n\nEach of GBP, BD, OC is thus *necessary* for ALLOW. \u25a1 (forward)\n\n---\n\n### Reverse direction (Sufficiency): `GBP t \u2227 BD t \u2227 OC t \u2192 ALLOW t`\n\nAssume `GBP t`, `BD t`, and `OC t` all hold. Form their conjunction `GBP t \u2227 BD t \u2227 OC t`. By Def-ALLOW, this conjunction is exactly `ALLOW t`. Hence `ALLOW t` holds.\n\nThe triple conjunction is thus *sufficient* for ALLOW. \u25a1 (reverse)\n\n---\n\n### Biconditional conclusion\n\nBoth directions are established. Therefore:\n\n```\nALLOW t  \u2194  GBP t \u2227 BD t \u2227 OC t\n```\n\nholds for every `t : Transition`. \u25a1\n\n---\n\n## Corollary (Failure-mode characterization)\n\n**Claim:** `\u00ac ALLOW t  \u2194  \u00ac GBP t \u2228 \u00ac BD t \u2228 \u00ac OC t`\n\n**Proof.**\n\nBy N&S-ALLOW, `\u00ac ALLOW t \u2194 \u00ac(GBP t \u2227 BD t \u2227 OC t)`. By De Morgan's law (classical propositional logic, A2):\n\n```\n\u00ac(GBP t \u2227 BD t \u2227 OC t)  \u2194  \u00ac GBP t \u2228 \u00ac BD t \u2228 \u00ac OC t\n```\n\nChaining the two biconditionals yields the result. \u25a1\n\n---\n\n## Claim Boundary\n\n| What is proved | What is not proved |\n|---|---|\n| Logical equivalence from Def-ALLOW alone | Any property of a deployed GCAT/BCAT engine |\n| N&S biconditional for the abstract evaluator | Semantics of GBP, BD, OC beyond their types |\n| Failure-mode corollary by De Morgan | Implementation validity or real transition correctness |\n\nAll results are purely logical consequences of the stipulated Definition ALLOW under assumptions A1\u2013A3. No deployed-system claim is made or implied."
+    }
+  ],
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 3209,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 821,
+    "service_tier": "standard",
+    "inference_geo": "global"
+  }
+}

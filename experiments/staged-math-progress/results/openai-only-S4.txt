@@ -1,0 +1,26 @@
+S4: Complete informal proof.
+
+Fix an arbitrary candidate transition \(t\).
+
+- **Forward (necessity):** Assume \(\mathrm{ALLOW}(t)\). By the stipulated evaluator contract,
+  \[
+  \mathrm{ALLOW}(t)\leftrightarrow\bigl(\mathrm{GBP}(t)\land\mathrm{BD}(t)\land\mathrm{OC}(t)\bigr).
+  \]
+  Applying its forward implication yields
+  \[
+  \mathrm{GBP}(t)\land\mathrm{BD}(t)\land\mathrm{OC}(t).
+  \]
+
+- **Reverse (sufficiency):** Assume
+  \[
+  \mathrm{GBP}(t)\land\mathrm{BD}(t)\land\mathrm{OC}(t).
+  \]
+  Applying the reverse implication of the evaluator contract yields \(\mathrm{ALLOW}(t)\).
+
+Therefore,
+\[
+\mathrm{ALLOW}(t)\iff\bigl(\mathrm{GBP}(t)\land\mathrm{BD}(t)\land\mathrm{OC}(t)\bigr).
+\]
+Since \(t\) was arbitrary, this holds for every candidate transition.
+
+**Claim boundary:** The proof establishes only the logical characterization under the stipulated abstract evaluator contract. It neither specifies a deployed engine nor claims implementation validity.

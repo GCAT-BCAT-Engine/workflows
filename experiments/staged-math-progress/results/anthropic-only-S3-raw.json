@@ -1,0 +1,27 @@
+{
+  "model": "claude-sonnet-4-6",
+  "id": "msg_011CdfL2wrLPyex3FfDUgy12",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "text",
+      "text": "# S3: Proof strategy and lemma decomposition\n\n## Overview\n\nThe logical core (S2) is already closed under `Iff.rfl` for the main biconditional, because `ALLOW` is *definitionally equal* to the conjunction. The proof obligations therefore reduce to trivial unfolding plus classical propositional reasoning for the failure-mode corollary. This stage records the strategy and names the micro-lemmas that cover the four required evidence kinds: **forward**, **reverse**, **necessity**, **sufficiency**.\n\n---\n\n## Proof Graph\n\n```\nDef-ALLOW (stipulated)\n\u2502\n\u251c\u2500[unfold]\u2500\u2500\u25ba ns_allow              (Iff.rfl \u2014 covers forward + reverse simultaneously)\n\u2502                \u2502\n\u2502                \u251c\u2500[And.left]\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u25ba allow_necessary_GBP     (necessity, conjunct 1)\n\u2502                \u251c\u2500[And.right.left]\u2500\u25ba allow_necessary_BD      (necessity, conjunct 2)\n\u2502                \u2514\u2500[And.right.right]\u25ba allow_necessary_OC      (necessity, conjunct 3)\n\u2502\n\u2514\u2500[intro]\u2500\u2500\u2500\u25ba allow_sufficient      (sufficiency, all three conjuncts)\n\u2502\n\u2514\u2500[classical push_neg]\u25ba not_allow_iff    (failure-mode corollary)\n```\n\n---\n\n## Lemma Inventory\n\n### L1 \u2014 Definitional unfolding (covers *forward* and *reverse*)\n\n**Statement.**\n```\nns_allow : \u2200 t, ALLOW GBP BD OC t \u2194 GBP t \u2227 BD t \u2227 OC t\n```\n**Strategy.** `Iff.rfl`. No case analysis needed; the iff holds at the definitional level because `ALLOW` is `def`, not `axiom`.\n\n**Evidence kinds satisfied:** forward (\u2192), reverse (\u2190).\n\n---\n\n### L2 \u2014 Necessity, conjunct GBP (*necessity*)\n\n**Statement.**\n```\nallow_necessary_GBP : ALLOW GBP BD OC t \u2192 GBP t\n```\n**Strategy.** Destruct the `And`-triple obtained by unfolding; project `.1`.\n\n**Derivation from L1.**\n```\nns_allow.mp h : GBP t \u2227 BD t \u2227 OC t\n(ns_allow.mp h).1 : GBP t\n```\n\n---\n\n### L3 \u2014 Necessity, conjunct BD (*necessity*)\n\n**Statement.**\n```\nallow_necessary_BD : ALLOW GBP BD OC t \u2192 BD t\n```\n**Strategy.** Same as L2; project `.2.1`.\n\n---\n\n### L4 \u2014 Necessity, conjunct OC (*necessity*)\n\n**Statement.**\n```\nallow_necessary_OC : ALLOW GBP BD OC t \u2192 OC t\n```\n**Strategy.** Same as L2; project `.2.2`.\n\n---\n\n### L5 \u2014 Sufficiency (*sufficiency*)\n\n**Statement.**\n```\nallow_sufficient : GBP t \u2192 BD t \u2192 OC t \u2192 ALLOW GBP BD OC t\n```\n**Strategy.** Fold three hypotheses into an `And`-triple via anonymous constructor `\u27e8hg, hb, ho\u27e9`; this matches the unfolded definition.\n\n**Evidence kind satisfied:** sufficiency (\u2190).\n\n---\n\n### L6 \u2014 Failure-mode corollary (classical, derived)\n\n**Statement.**\n```\nnot_allow_iff : \u00ac ALLOW GBP BD OC t \u2194 \u00ac GBP t \u2228 \u00ac BD t \u2228 \u00ac OC t\n```\n**Strategy.**\n\n| Direction | Method |\n|---|---|\n| (\u2192) neg"
+    }
+  ],
+  "stop_reason": "max_tokens",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 2310,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 900,
+    "service_tier": "standard",
+    "inference_geo": "global"
+  }
+}

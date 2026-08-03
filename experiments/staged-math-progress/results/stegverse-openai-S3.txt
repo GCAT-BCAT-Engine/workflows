@@ -1,0 +1,45 @@
+S3: Proof strategy and lemma decomposition
+
+**Proof strategy**
+
+Fix \(t : T\). Instantiate the stipulated evaluator equivalence:
+\[
+\operatorname{Eval}(t)=\mathrm{ALLOW}
+\iff
+GBP(t)\land BD(t)\land OC(t).
+\]
+
+1. **Forward / necessity lemma**
+   \[
+   \operatorname{Eval}(t)=\mathrm{ALLOW}
+   \to GBP(t)\land BD(t)\land OC(t).
+   \]
+   Obtain this using the forward implication of the stipulated equivalence.
+
+2. **Reverse / sufficiency lemma**
+   \[
+   GBP(t)\land BD(t)\land OC(t)
+   \to \operatorname{Eval}(t)=\mathrm{ALLOW}.
+   \]
+   Obtain this using the reverse implication of the stipulated equivalence.
+
+3. **Characterization theorem**
+   Combine the necessity and sufficiency lemmas with biconditional introduction to recover:
+   \[
+   \operatorname{Eval}(t)=\mathrm{ALLOW}
+   \iff GBP(t)\land BD(t)\land OC(t).
+   \]
+
+**Lean-oriented decomposition**
+
+Use one hypothesis for the stipulated equivalence, derive the two directions via `.mp` and `.mpr`, and construct the final `Iff` with `Iff.intro`. No classical reasoning or deployed-engine assumptions are required.
+
+**Claim boundary**
+
+This strategy proves only the propositional result for the stipulated abstract evaluator. It establishes no deployed GCAT/BCAT specification, conformance, behavior, or implementation validity.
+
+`STAGE_STATUS: COMPLETE`  
+`REUSED_ARTIFACTS: S1 stipulated evaluator equivalence; S2 necessary-and-sufficient theorem`  
+`NEW_CLAIMS: forward/necessity and reverse/sufficiency lemma decomposition and proof strategy`  
+`UNRESOLVED: Lean 4 candidate and formal type-checking; deployed-engine specification and implementation/conformance evidence`  
+`NEXT_STAGE: prepare the Lean 4 candidate for the logical core`

@@ -1,0 +1,67 @@
+# S5: Lean 4 candidate
+
+---
+
+## 1. Reused Artifacts
+
+From S0–S4 (admitted without modification):
+
+- **D-ALLOW:** `∀ t : T, ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)`
+- **A-Opaque:** `GBP`, `BD`, `OC` uninterpreted on `T`.
+- **L1–L5:** lemma decomposition from S3.
+- **Claim boundary:** abstract evaluator only; no deployed engine; no implementation conformance.
+
+---
+
+## 2. Lean 4 Candidate
+
+```lean
+-- S5: Lean 4 logical-core candidate for SV-COST-STAGED-001
+-- Scope: abstract GCAT/BCAT evaluator only.
+-- No deployed engine is referenced; no implementation conformance is claimed.
+
+section AbstractEvaluator
+
+variable {T : Type*}
+variable (GBP BD OC : T → Prop)
+
+/-- D-ALLOW: stipulated definition of the abstract evaluator.
+    ALLOW(t) holds iff GBP(t), BD(t), and OC(t) all hold. -/
+def ALLOW (t : T) : Prop := GBP t ∧ BD t ∧ OC t
+
+/-- allow_iff: the defining biconditional, unfolded explicitly. -/
+theorem allow_iff (t : T) :
+    ALLOW GBP BD OC t ↔ GBP t ∧ BD t ∧ OC t :=
+  Iff.rfl
+
+/-- L1 / T-NS-N: necessity — ALLOW implies each conjunct. -/
+theorem allow_forward (t : T) :
+    ALLOW GBP BD OC t → GBP t ∧ BD t ∧ OC t :=
+  (allow_iff GBP BD OC t).mp
+
+/-- L2 / T-NS-S: sufficiency — all conjuncts imply ALLOW. -/
+theorem allow_reverse (t : T) :
+    GBP t ∧ BD t ∧ OC t → ALLOW GBP BD OC t :=
+  (allow_iff GBP BD OC t).mpr
+
+/-- T-NS-N-GBP: necessity, GBP component. -/
+theorem allow_necessity_GBP (t : T) :
+    ALLOW GBP BD OC t → GBP t :=
+  fun h => (allow_forward GBP BD OC t h).1
+
+/-- T-NS-N-BD: necessity, BD component. -/
+theorem allow_necessity_BD (t : T) :
+    ALLOW GBP BD OC t → BD t :=
+  fun h => (allow_forward GBP BD OC t h).2.1
+
+/-- T-NS-N-OC: necessity, OC component. -/
+theorem allow_necessity_OC (t : T) :
+    ALLOW GBP BD OC t → OC t :=
+  fun h => (allow_forward GBP BD OC t h).2.2
+
+/-- L4 / allow_sufficiency: curried sufficiency form. -/
+theorem allow_sufficiency (t : T) :
+    GBP t → BD t → OC t → ALLOW GBP BD OC t :=
+  fun hg hb ho => allow_reverse GBP BD OC t ⟨hg, hb, ho⟩
+
+/-- L5 / T-NS: master necessary-and-sufficient characterization.

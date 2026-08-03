@@ -1,0 +1,71 @@
+# S5: Lean 4 candidate
+
+```lean
+-- SV-COST-STAGED-001 | S5: Lean 4 candidate
+-- Abstract evaluator admissibility characterization.
+-- No deployed-engine semantics; all content is logical consequence of def_ALLOW.
+
+section AbstractEvaluator
+
+variable {Transition : Type*}
+variable (GBP BD OC : Transition → Prop)
+
+/-- Stipulated definition: ALLOW holds iff all three predicates hold. -/
+def ALLOW (t : Transition) : Prop := GBP t ∧ BD t ∧ OC t
+
+/-- N&S-ALLOW: necessary and sufficient characterization.
+    Holds by definitional unfolding; no case analysis required. -/
+theorem ns_allow (t : Transition) :
+    ALLOW GBP BD OC t ↔ GBP t ∧ BD t ∧ OC t :=
+  Iff.rfl
+
+-- Necessity: each conjunct is individually necessary.
+
+theorem allow_necessary_GBP (t : Transition) :
+    ALLOW GBP BD OC t → GBP t :=
+  fun h => h.1
+
+theorem allow_necessary_BD (t : Transition) :
+    ALLOW GBP BD OC t → BD t :=
+  fun h => h.2.1
+
+theorem allow_necessary_OC (t : Transition) :
+    ALLOW GBP BD OC t → OC t :=
+  fun h => h.2.2
+
+-- Sufficiency: the triple conjunction is sufficient.
+
+theorem allow_sufficient (t : Transition) :
+    GBP t → BD t → OC t → ALLOW GBP BD OC t :=
+  fun hg hb ho => ⟨hg, hb, ho⟩
+
+/-- Failure-mode corollary (De Morgan, classical).
+    ¬ ALLOW t ↔ ¬ GBP t ∨ ¬ BD t ∨ ¬ OC t -/
+theorem not_allow_iff (t : Transition) :
+    ¬ ALLOW GBP BD OC t ↔ ¬ GBP t ∨ ¬ BD t ∨ ¬ OC t := by
+  simp only [ALLOW]
+  constructor
+  · intro h
+    by_contra hall
+    push_neg at hall
+    exact h ⟨hall.1, hall.2.1, hall.2.2⟩
+  · rintro (hg | hb | ho) ⟨g, b, o⟩
+    · exact hg g
+    · exact hb b
+    · exact ho o
+
+end AbstractEvaluator
+```
+
+**Stage summary.**
+
+| Theorem | Direction(s) | Tactic/term |
+|---|---|---|
+| `ns_allow` | forward + reverse | `Iff.rfl` |
+| `allow_necessary_GBP` | necessity (GBP) | `fun h => h.1` |
+| `allow_necessary_BD` | necessity (BD) | `fun h => h.2.1` |
+| `allow_necessary_OC` | necessity (OC) | `fun h => h.2.2` |
+| `allow_sufficient` | sufficiency | anonymous constructor |
+| `not_allow_iff` | failure modes | `push_neg` + `rintro` |
+
+All proofs are logical consequences of `def ALLOW` under A1–A3. No deployed-system claim is made or implied.

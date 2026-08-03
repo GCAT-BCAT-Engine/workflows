@@ -1,0 +1,25 @@
+S1: Definitions and assumptions
+
+**Abstract setting**
+- Let \(T\) be the type of candidate transitions.
+- Let \(GBP, BD, OC : T \to \mathrm{Prop}\).
+- Let \(\operatorname{Eval} : T \to \{\mathrm{ALLOW},\mathrm{DENY}\}\).
+
+**Stipulated evaluator assumption**
+For every \(t : T\),
+\[
+\operatorname{Eval}(t)=\mathrm{ALLOW}
+\iff
+GBP(t)\land BD(t)\land OC(t).
+\]
+
+Thus `ALLOW` is stipulated exactly when `GBP`, `BD`, and `OC` all hold.
+
+**Claim boundary**
+These definitions concern only the abstract evaluator. They provide no deployed GCAT/BCAT specification, conformance result, or implementation-validity claim.
+
+`STAGE_STATUS: COMPLETE`  
+`REUSED_ARTIFACTS: S0 task identity, stipulated evaluator, and claim boundary`  
+`NEW_CLAIMS: none; definitions and stipulated assumptions only`  
+`UNRESOLVED: deployed-engine specification and implementation/conformance evidence`  
+`NEXT_STAGE: formulate the abstract necessary-and-sufficient ALLOW claim`

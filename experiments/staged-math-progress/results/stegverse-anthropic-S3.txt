@@ -1,0 +1,87 @@
+# S3: Proof strategy and lemma decomposition
+
+---
+
+## 1. Reused Artifacts
+
+From S0–S2 (admitted without modification):
+
+- **D-ALLOW:** `∀ t : T, ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)`
+- **A-Opaque:** `GBP`, `BD`, `OC` uninterpreted on `T`.
+- **T-NS-S:** `∀ t, GBP(t) ∧ BD(t) ∧ OC(t) → ALLOW(t)`
+- **T-NS-N:** `∀ t, ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)`
+- **T-NS-N-GBP/BD/OC:** corollaries by conjunction elimination.
+- **Claim boundary:** abstract evaluator only; no deployed engine; no implementation conformance.
+
+---
+
+## 2. Proof Strategy Overview
+
+T-NS is definitionally transparent: both directions are one-step unfoldings of D-ALLOW followed by propositional rules. The strategy therefore has **zero mathematical content beyond bookkeeping**; its value is to make the Lean 4 tactic script predictable and auditable.
+
+Each required evidence item maps to exactly one lemma or tactic step:
+
+| Evidence item | Lemma | Core move |
+|---|---|---|
+| `forward` | `allow_forward` | `Iff.mp` on D-ALLOW |
+| `reverse` | `allow_reverse` | `Iff.mpr` on D-ALLOW |
+| `necessity` | `allow_necessity` | `allow_forward` + projection |
+| `sufficiency` | `allow_sufficiency` | `allow_reverse` |
+
+---
+
+## 3. Lemma Decomposition
+
+### L1 — `allow_forward` (forward direction)
+
+**Statement:**
+```
+∀ t : T, ALLOW t → GBP t ∧ BD t ∧ OC t
+```
+**Proof move:** Apply `(allow_iff t).mp`.  
+**Evidence satisfied:** `forward`, `necessity`.
+
+---
+
+### L2 — `allow_reverse` (reverse direction)
+
+**Statement:**
+```
+∀ t : T, GBP t ∧ BD t ∧ OC t → ALLOW t
+```
+**Proof move:** Apply `(allow_iff t).mpr`.  
+**Evidence satisfied:** `reverse`, `sufficiency`.
+
+---
+
+### L3 — `allow_necessity` (necessity, component form)
+
+**Statement:**
+```
+∀ t : T, ALLOW t → GBP t
+∀ t : T, ALLOW t → BD t
+∀ t : T, ALLOW t → OC t
+```
+**Proof move:** `allow_forward` then `And.left` / `And.right.left` / `And.right.right`.  
+**Evidence satisfied:** `necessity` (exhaustive).
+
+---
+
+### L4 — `allow_sufficiency` (sufficiency, alias)
+
+**Statement:**
+```
+∀ t : T, GBP t → BD t → OC t → ALLOW t
+```
+**Proof move:** curry `allow_reverse`.  
+**Evidence satisfied:** `sufficiency`.
+
+---
+
+### L5 — `allow_characterization` (master biconditional, = T-NS)
+
+**Statement:**
+```
+∀ t : T, ALLOW t ↔ GBP t ∧ BD t ∧ OC t
+```
+**Proof move:** `Iff.intro allow_forward allow_

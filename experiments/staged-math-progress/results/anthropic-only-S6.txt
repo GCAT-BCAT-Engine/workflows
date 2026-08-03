@@ -1,0 +1,81 @@
+# S6: Verification ledger
+
+## Purpose
+
+This ledger records the verification status of every claim produced in S0–S5 against the four required evidence kinds: **verified**, **unresolved**, **evidence**, **implementation**.
+
+---
+
+## Evidence-Kind Definitions (for this ledger)
+
+| Kind | Meaning in this experiment |
+|---|---|
+| **verified** | Claim follows from Def-ALLOW by logical steps that are complete and checkable |
+| **unresolved** | Claim has a gap, ambiguity, or dependency that is not closed |
+| **evidence** | The specific artifact (theorem name, tactic, or argument) that closes the claim |
+| **implementation** | Whether any claim touches a deployed system (must be "none" throughout) |
+
+---
+
+## Claim Registry
+
+### C1 — Main biconditional (N&S-ALLOW)
+
+| Field | Entry |
+|---|---|
+| **Claim** | `∀ t, ALLOW GBP BD OC t ↔ GBP t ∧ BD t ∧ OC t` |
+| **Source** | S1 (statement), S4 (informal proof), S5 (Lean candidate) |
+| **Verified** | YES |
+| **Evidence** | `ns_allow` in S5; proof term `Iff.rfl`; closes because `ALLOW` is `def`, making both sides definitionally equal. Informal argument in S4 §Forward + §Reverse confirms both directions. |
+| **Unresolved** | None |
+| **Implementation** | None |
+
+---
+
+### C2 — Necessity, conjunct GBP
+
+| Field | Entry |
+|---|---|
+| **Claim** | `ALLOW GBP BD OC t → GBP t` |
+| **Source** | S1 (statement), S3 (L2), S4 (§Forward), S5 |
+| **Verified** | YES |
+| **Evidence** | `allow_necessary_GBP`; proof term `fun h => h.1`; projects first conjunct of the unfolded `And`-triple. |
+| **Unresolved** | None |
+| **Implementation** | None |
+
+---
+
+### C3 — Necessity, conjunct BD
+
+| Field | Entry |
+|---|---|
+| **Claim** | `ALLOW GBP BD OC t → BD t` |
+| **Source** | S1, S3 (L3), S4, S5 |
+| **Verified** | YES |
+| **Evidence** | `allow_necessary_BD`; proof term `fun h => h.2.1`; projects second conjunct. |
+| **Unresolved** | None |
+| **Implementation** | None |
+
+---
+
+### C4 — Necessity, conjunct OC
+
+| Field | Entry |
+|---|---|
+| **Claim** | `ALLOW GBP BD OC t → OC t` |
+| **Source** | S1, S3 (L4), S4, S5 |
+| **Verified** | YES |
+| **Evidence** | `allow_necessary_OC`; proof term `fun h => h.2.2`; projects third conjunct. |
+| **Unresolved** | None |
+| **Implementation** | None |
+
+---
+
+### C5 — Sufficiency
+
+| Field | Entry |
+|---|---|
+| **Claim** | `GBP t → BD t → OC t → ALLOW GBP BD OC t` |
+| **Source** | S1, S3 (L5), S4 (§Reverse), S5 |
+| **Verified** | YES |
+| **Evidence** | `allow_sufficient`; proof term `fun hg hb ho => 

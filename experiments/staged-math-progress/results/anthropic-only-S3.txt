@@ -1,0 +1,99 @@
+# S3: Proof strategy and lemma decomposition
+
+## Overview
+
+The logical core (S2) is already closed under `Iff.rfl` for the main biconditional, because `ALLOW` is *definitionally equal* to the conjunction. The proof obligations therefore reduce to trivial unfolding plus classical propositional reasoning for the failure-mode corollary. This stage records the strategy and names the micro-lemmas that cover the four required evidence kinds: **forward**, **reverse**, **necessity**, **sufficiency**.
+
+---
+
+## Proof Graph
+
+```
+Def-ALLOW (stipulated)
+│
+├─[unfold]──► ns_allow              (Iff.rfl — covers forward + reverse simultaneously)
+│                │
+│                ├─[And.left]───────► allow_necessary_GBP     (necessity, conjunct 1)
+│                ├─[And.right.left]─► allow_necessary_BD      (necessity, conjunct 2)
+│                └─[And.right.right]► allow_necessary_OC      (necessity, conjunct 3)
+│
+└─[intro]───► allow_sufficient      (sufficiency, all three conjuncts)
+│
+└─[classical push_neg]► not_allow_iff    (failure-mode corollary)
+```
+
+---
+
+## Lemma Inventory
+
+### L1 — Definitional unfolding (covers *forward* and *reverse*)
+
+**Statement.**
+```
+ns_allow : ∀ t, ALLOW GBP BD OC t ↔ GBP t ∧ BD t ∧ OC t
+```
+**Strategy.** `Iff.rfl`. No case analysis needed; the iff holds at the definitional level because `ALLOW` is `def`, not `axiom`.
+
+**Evidence kinds satisfied:** forward (→), reverse (←).
+
+---
+
+### L2 — Necessity, conjunct GBP (*necessity*)
+
+**Statement.**
+```
+allow_necessary_GBP : ALLOW GBP BD OC t → GBP t
+```
+**Strategy.** Destruct the `And`-triple obtained by unfolding; project `.1`.
+
+**Derivation from L1.**
+```
+ns_allow.mp h : GBP t ∧ BD t ∧ OC t
+(ns_allow.mp h).1 : GBP t
+```
+
+---
+
+### L3 — Necessity, conjunct BD (*necessity*)
+
+**Statement.**
+```
+allow_necessary_BD : ALLOW GBP BD OC t → BD t
+```
+**Strategy.** Same as L2; project `.2.1`.
+
+---
+
+### L4 — Necessity, conjunct OC (*necessity*)
+
+**Statement.**
+```
+allow_necessary_OC : ALLOW GBP BD OC t → OC t
+```
+**Strategy.** Same as L2; project `.2.2`.
+
+---
+
+### L5 — Sufficiency (*sufficiency*)
+
+**Statement.**
+```
+allow_sufficient : GBP t → BD t → OC t → ALLOW GBP BD OC t
+```
+**Strategy.** Fold three hypotheses into an `And`-triple via anonymous constructor `⟨hg, hb, ho⟩`; this matches the unfolded definition.
+
+**Evidence kind satisfied:** sufficiency (←).
+
+---
+
+### L6 — Failure-mode corollary (classical, derived)
+
+**Statement.**
+```
+not_allow_iff : ¬ ALLOW GBP BD OC t ↔ ¬ GBP t ∨ ¬ BD t ∨ ¬ OC t
+```
+**Strategy.**
+
+| Direction | Method |
+|---|---|
+| (→) neg

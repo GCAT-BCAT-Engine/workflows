@@ -1,0 +1,101 @@
+{
+  "id": "resp_0b91cc07c07af9fb006a703293eb648197805a1d4f5eb7f77e",
+  "object": "response",
+  "created_at": 1785737875,
+  "status": "completed",
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1785737885,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 900,
+  "max_tool_calls": null,
+  "model": "gpt-5.6-sol",
+  "moderation": null,
+  "output": [
+    {
+      "id": "rs_0b91cc07c07af9fb006a70329515048197a1b4777216c84edd",
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": "gAAAAABqcDKd99_Qa2IfEe9Ip0yW404DPghbYpU_LNkxqNJR6I3pLAjowvqbOcno_WIZIvS0vwNk80ybej657-v1iS_v52svUFn15thTHqZDj4tpN76Jpm7A0-Hpo0Zd7ZE6T-9JxMQJc0l9bIGy6nbGhaJw9O556Xw6T_BT3NTiseky9U-hd7aFVA_OC8RJ3sjq_XNGf99ygKK-DRFr4wL2dqCzAdSVzKPWT_gmq0HuSobaZYnhy7wwIDrukYQtASY_IwlVHGBp3nDS_aIDfKDlhEnkt-sM85iMFXJYELHWTqBeyi-kIYm3cx1xxhYdoY4G_hdX-9AJ6HfXP92htlELgyoF4-DZL9LDvoPBiPN1DfJWo8ClIuRMcnr9DNaGlvC7vR-t4Kh8mAl7y5YOwHx03OMhfK_Kr7qGQjQZO5_SnmgrL3YKwUyjksBjrgon7rP2Cg2X0oHV3W8-clUfxZjWLN4HzmglvWfC-vkZ4J1kJLrA8dQVqPwbXCNQgluKL0z3EbgAj6vz0-u-Y04U9KXIyrNiYf2FNWor02j0deU7Rrzwd14mOJyPEs-sGKpqplbKA9jChuAY3CHiPKBUqoPRuows_j-jF1Xy2O4_btEb-fR4NA3FSZTSVY1uiCOevKLjjvxSn0xqDDPuzRFfj3_1fEwyzfe13BBepUGdo4Rs58e1_osieAIk7Kq9HKzuRt5eSgcnEd0gCJPkAUT7ME07DYytk80ormnORKQ4unE_JQ7eGpNGXl6wKNc5i5gVxT_LSxBZ1-Ymgl5pUosjcI7ci6BC76uNP-UlGPXQpVblmX-AzSoZ6jwN4v-3gBryLUNI56_F56usgokCZD-XkrRiBk9-ZyUpM8OPayXyOraGgToOfd4xSTVgSrSjuk3NExbtVrP8gPWK3_depxnvtMslC9uU6f4ZtwaxC5EmOOZYG5jZOYxsH9cc-qZUXX9Z5b1o2BgBkUHXcdhCekVtaerz1tINVNE51dr4g8MulxsVtnY44rg4nLXDYSqDSjxW8thR2Btxc4Zxb4ZPbxZHsUGNCQ0vZ-nuOQh0iKthmjxs3uFAcFesGWCHuHoDjPCBW5j4UWDiUxMzY9vZqmx0BMpnYo2BYmXaUr9A_E2MJNRcBV-tcLVOsgMDr1-dBpfGjbFlECPJhT5DS_8QZcBC0oPs2RwWorJTRua5Kg1P3FsnMNIz0rF5ItC1zyUU7mMulBP6IXxf9CRad-r-pv17CHVt3bpPVyU_SI8T4UhPBLdVHolf0Usu5Ekhiija9anLUCnmhgsg8R0d9Ef80AaR6YgYE2v3vnjfmT2_iaKoMdFi_H3MdGWea1PT4OE7fKzAQr_XJafx3mz4OW4Z6zOF7Rn0rrQtIlaczVPPsSaOG647hi7DLk2NeSCQ0HJGCgVzP2Q0u_k2lWSQ99NuAvuVVXyfZ-q1O6qBp2WqafU3DKTp4fV-AMME-Rnn_9mSVVxEaGO0GImXw9h-qiEKZmXjFzKGT4Ptiv1I-9IXaAMtw-vjJWnFqL-zJpfFwWYB98gjeARFw-2RjBdKdQOzWWVQXpuBkgQrIgGaD3IT_S2AHHJ2Xtt1mU1mr4uXA4MqHhgTnsBrXKlAzYEylhu-bX8cpO9VanZEcg-CAPNKDUhN_z83SqO6-VXlpq2DoloUV9krpbWgysIvPu2JYJ8JKqcMbAE7RG00m8Dt29jAnmyT3bY6sRIn7C_tKyjbFG6YAJZU2bW5DfR0b3-8cX3ASCnE5YZ1DMG6DBpGOOf8436ed0LHCdu2oq3QqhVd6K7OUGW80UgUYuWuKuaBCnHxwr159Q0AV8L_oiGYYW51D8ioOjUJ9Mu6f_MXf5JvxSST8AHQ6PM3yUlcBj2-kCmPVPRq5pjDrZkxynyp3xfZxFue7W6akA_wp7pJe8gr99FGdGMlpIEJvkKlZx5YWxxPn1fJK7b7wqIvuwEqpQv_VGiwNNF5hT5_YKVeAorgulDk5zw8mbtBw06MXP9BGX8sRZ8k8lF7Biy-L61pIXnuBWFJD9CD1gYwVKosNO50mMD6gV59s1pqdxTiZeN8R9j-Bs5PQnGK0Adz-DbxUnNd9-x7fk9cdNnTGdpgdRe2uTnJAHH2R_s0fDr1VTut5c0tTwo7kW13Fen5ICOtPCL4BvZ1dIhL4p1Ib1oCxHMmoKVkf4CYMGzisvCgIEcAYU9uo2FDDNXMIBt2rD9zLtXbcoT_PC-GUzXwU3PnM9MS6Ab2albNyCQZlNwnUc1fTjRm4xoK9sGSLnGiOSpRlfLriF_ILRM3BYZKw3JSPbLFVdZy8ECNA-F0v25sUsItINM2TXkziZrn4pMIZBhnFcHyXmn7In_6t14un5r-div_Juyivzm4O_2PPCqio_VX",
+      "summary": []
+    },
+    {
+      "id": "msg_0b91cc07c07af9fb006a7032993674819792e1d22bafbf869d",
+      "type": "message",
+      "status": "completed",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "logprobs": [],
+          "text": "# S6: Verification ledger\n\n**Task identity:** `SV-COST-STAGED-001`\n\n| Item | Status | Evidence |\n|---|---|---|\n| Abstract ALLOW characterization | **verified** | Directly follows from the stipulated equivalence: `Eval t = ALLOW \u2194 GBP t \u2227 BD t \u2227 OC t`. |\n| Necessity and sufficiency directions | **verified** | `(hEval t).mp` proves necessity; `(hEval t).mpr` proves sufficiency. |\n| Lean 4 candidate\u2019s logical typing | **verified by inspection** | `Iff.intro (hEval t).mp (hEval t).mpr` has the required biconditional type after `intro t`. |\n| Lean 4 toolchain execution | **unresolved** | No compiler/type-checker execution evidence is supplied. |\n| Deployed-engine correspondence | **unresolved** | No deployed GCAT/BCAT specification or implementation evidence connects the abstraction to an implementation. |\n\n**Claim boundary:** Verification covers only the logical core under the stipulated abstract evaluator assumption. It does not establish deployed-engine behavior, conformance, or implementation validity.\n\n`STAGE_STATUS: COMPLETE`  \n`REUSED_ARTIFACTS: S1 stipulated equivalence; S3 proof decomposition; S4 informal proof; S5 Lean 4 candidate`  \n`NEW_CLAIMS: logical typing of the Lean candidate verified by inspection`  \n`UNRESOLVED: executed Lean 4 type-check evidence; deployed-engine specification and implementation/conformance evidence`  \n`NEXT_STAGE: obtain toolchain type-check evidence if required`"
+        }
+      ],
+      "phase": "final_answer",
+      "role": "assistant"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "context": "all_turns",
+    "effort": "medium",
+    "mode": "standard",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "type": "text"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tool_usage": {
+    "image_gen": {
+      "input_tokens": 0,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "output_tokens": 0,
+      "output_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "total_tokens": 0
+    },
+    "web_search": {
+      "num_requests": 0
+    }
+  },
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 2138,
+    "input_tokens_details": {
+      "cache_write_tokens": 2135,
+      "cached_tokens": 0
+    },
+    "output_tokens": 542,
+    "output_tokens_details": {
+      "reasoning_tokens": 203
+    },
+    "total_tokens": 2680
+  },
+  "user": null,
+  "metadata": {}
+}

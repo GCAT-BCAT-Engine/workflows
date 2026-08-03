@@ -1,0 +1,27 @@
+{
+  "model": "claude-sonnet-4-6",
+  "id": "msg_011CdfL5DYCxyFcLHzktFpBu",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "text",
+      "text": "# S5: Lean 4 candidate\n\n```lean\n-- SV-COST-STAGED-001 | S5: Lean 4 candidate\n-- Abstract evaluator admissibility characterization.\n-- No deployed-engine semantics; all content is logical consequence of def_ALLOW.\n\nsection AbstractEvaluator\n\nvariable {Transition : Type*}\nvariable (GBP BD OC : Transition \u2192 Prop)\n\n/-- Stipulated definition: ALLOW holds iff all three predicates hold. -/\ndef ALLOW (t : Transition) : Prop := GBP t \u2227 BD t \u2227 OC t\n\n/-- N&S-ALLOW: necessary and sufficient characterization.\n    Holds by definitional unfolding; no case analysis required. -/\ntheorem ns_allow (t : Transition) :\n    ALLOW GBP BD OC t \u2194 GBP t \u2227 BD t \u2227 OC t :=\n  Iff.rfl\n\n-- Necessity: each conjunct is individually necessary.\n\ntheorem allow_necessary_GBP (t : Transition) :\n    ALLOW GBP BD OC t \u2192 GBP t :=\n  fun h => h.1\n\ntheorem allow_necessary_BD (t : Transition) :\n    ALLOW GBP BD OC t \u2192 BD t :=\n  fun h => h.2.1\n\ntheorem allow_necessary_OC (t : Transition) :\n    ALLOW GBP BD OC t \u2192 OC t :=\n  fun h => h.2.2\n\n-- Sufficiency: the triple conjunction is sufficient.\n\ntheorem allow_sufficient (t : Transition) :\n    GBP t \u2192 BD t \u2192 OC t \u2192 ALLOW GBP BD OC t :=\n  fun hg hb ho => \u27e8hg, hb, ho\u27e9\n\n/-- Failure-mode corollary (De Morgan, classical).\n    \u00ac ALLOW t \u2194 \u00ac GBP t \u2228 \u00ac BD t \u2228 \u00ac OC t -/\ntheorem not_allow_iff (t : Transition) :\n    \u00ac ALLOW GBP BD OC t \u2194 \u00ac GBP t \u2228 \u00ac BD t \u2228 \u00ac OC t := by\n  simp only [ALLOW]\n  constructor\n  \u00b7 intro h\n    by_contra hall\n    push_neg at hall\n    exact h \u27e8hall.1, hall.2.1, hall.2.2\u27e9\n  \u00b7 rintro (hg | hb | ho) \u27e8g, b, o\u27e9\n    \u00b7 exact hg g\n    \u00b7 exact hb b\n    \u00b7 exact ho o\n\nend AbstractEvaluator\n```\n\n**Stage summary.**\n\n| Theorem | Direction(s) | Tactic/term |\n|---|---|---|\n| `ns_allow` | forward + reverse | `Iff.rfl` |\n| `allow_necessary_GBP` | necessity (GBP) | `fun h => h.1` |\n| `allow_necessary_BD` | necessity (BD) | `fun h => h.2.1` |\n| `allow_necessary_OC` | necessity (OC) | `fun h => h.2.2` |\n| `allow_sufficient` | sufficiency | anonymous constructor |\n| `not_allow_iff` | failure modes | `push_neg` + `rintro` |\n\nAll proofs are logical consequences of `def ALLOW` under A1\u2013A3. No deployed-system claim is made or implied."
+    }
+  ],
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 4045,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 886,
+    "service_tier": "standard",
+    "inference_geo": "global"
+  }
+}

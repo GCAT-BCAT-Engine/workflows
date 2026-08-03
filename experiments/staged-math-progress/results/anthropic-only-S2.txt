@@ -1,0 +1,74 @@
+# S2: Theorem formulation
+
+## Lean 4 Candidate — Logical Core
+
+```lean4
+-- SV-COST-STAGED-001 | S2: Theorem formulation
+-- Abstract evaluator admissibility characterization.
+-- No deployed-engine semantics; all content is logical consequence of def_ALLOW.
+
+section AbstractEvaluator
+
+-- Universe of candidate transitions (arbitrary non-empty type).
+variable {Transition : Type*}
+
+-- Opaque primitive predicates; no internal structure assumed.
+variable (GBP BD OC : Transition → Prop)
+
+-- Stipulated definition: ALLOW is definitionally equal to the conjunction.
+def ALLOW (t : Transition) : Prop := GBP t ∧ BD t ∧ OC t
+
+-- ─────────────────────────────────────────────
+-- Theorem N&S-ALLOW
+-- Necessary and sufficient characterization.
+-- ─────────────────────────────────────────────
+theorem ns_allow (t : Transition) :
+    ALLOW GBP BD OC t ↔ GBP t ∧ BD t ∧ OC t :=
+  Iff.rfl                          -- holds by definitional unfolding
+
+-- Necessity: ALLOW t → each conjunct holds individually.
+theorem allow_necessary_GBP (t : Transition) :
+    ALLOW GBP BD OC t → GBP t :=
+  fun h => h.1
+
+theorem allow_necessary_BD (t : Transition) :
+    ALLOW GBP BD OC t → BD t :=
+  fun h => h.2.1
+
+theorem allow_necessary_OC (t : Transition) :
+    ALLOW GBP BD OC t → OC t :=
+  fun h => h.2.2
+
+-- Sufficiency: all three conjuncts → ALLOW t.
+theorem allow_sufficient (t : Transition) :
+    GBP t → BD t → OC t → ALLOW GBP BD OC t :=
+  fun hg hb ho => ⟨hg, hb, ho⟩
+
+-- ─────────────────────────────────────────────
+-- Corollary: failure-mode characterization.
+-- ¬ ALLOW t ↔ ¬ GBP t ∨ ¬ BD t ∨ ¬ OC t
+-- ─────────────────────────────────────────────
+theorem not_allow_iff (t : Transition) :
+    ¬ ALLOW GBP BD OC t ↔ ¬ GBP t ∨ ¬ BD t ∨ ¬ OC t := by
+  simp only [ALLOW]
+  constructor
+  · intro h
+    by_contra hall
+    push_neg at hall
+    exact h ⟨hall.1, hall.2.1, hall.2.2⟩
+  · rintro (hg | hb | ho) ⟨g, b, o⟩
+    · exact hg g
+    · exact hb b
+    · exact ho o
+
+end AbstractEvaluator
+```
+
+## Stage Summary
+
+| Claim | Direction | Lean evidence |
+|---|---|---|
+| `ALLOW t ↔ GBP t ∧ BD t ∧ OC t` | both | `ns_allow` — `Iff.rfl` |
+| `ALLOW t → GBP t` | necessary | `allow_necessary_GBP` |
+| `ALLOW t → BD t` | necessary | `allow_necessary_BD` |
+| `ALLOW t → OC t` | necessary |

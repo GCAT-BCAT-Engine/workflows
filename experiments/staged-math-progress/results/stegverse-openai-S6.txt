@@ -1,0 +1,19 @@
+# S6: Verification ledger
+
+**Task identity:** `SV-COST-STAGED-001`
+
+| Item | Status | Evidence |
+|---|---|---|
+| Abstract ALLOW characterization | **verified** | Directly follows from the stipulated equivalence: `Eval t = ALLOW ↔ GBP t ∧ BD t ∧ OC t`. |
+| Necessity and sufficiency directions | **verified** | `(hEval t).mp` proves necessity; `(hEval t).mpr` proves sufficiency. |
+| Lean 4 candidate’s logical typing | **verified by inspection** | `Iff.intro (hEval t).mp (hEval t).mpr` has the required biconditional type after `intro t`. |
+| Lean 4 toolchain execution | **unresolved** | No compiler/type-checker execution evidence is supplied. |
+| Deployed-engine correspondence | **unresolved** | No deployed GCAT/BCAT specification or implementation evidence connects the abstraction to an implementation. |
+
+**Claim boundary:** Verification covers only the logical core under the stipulated abstract evaluator assumption. It does not establish deployed-engine behavior, conformance, or implementation validity.
+
+`STAGE_STATUS: COMPLETE`  
+`REUSED_ARTIFACTS: S1 stipulated equivalence; S3 proof decomposition; S4 informal proof; S5 Lean 4 candidate`  
+`NEW_CLAIMS: logical typing of the Lean candidate verified by inspection`  
+`UNRESOLVED: executed Lean 4 type-check evidence; deployed-engine specification and implementation/conformance evidence`  
+`NEXT_STAGE: obtain toolchain type-check evidence if required`

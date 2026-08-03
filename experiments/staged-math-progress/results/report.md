@@ -4,10 +4,10 @@ Status: MEASURED
 
 | Lane | Highest admitted stage | Admitted stages | Canonical tokens | API cost | Latency s |
 |---|---:|---:|---:|---:|---:|
-| openai-only | S0 | 1 | 978 | $0.015760 | 8.16 |
-| stegverse-openai | NONE | 0 | 523 | $0.008095 | 4.46 |
-| anthropic-only | S0 | 1 | 2,066 | $0.026010 | 29.26 |
-| stegverse-anthropic | NONE | 0 | 1,017 | $0.014601 | 17.81 |
+| openai-only | S6 | 7 | 6,662 | $0.070790 | 30.62 |
+| stegverse-openai | S6 | 7 | 10,533 | $0.118185 | 41.39 |
+| anthropic-only | S6 | 7 | 17,309 | $0.133770 | 91.55 |
+| stegverse-anthropic | S5 | 6 | 20,602 | $0.152289 | 97.90 |
 
 ## Boundary
 

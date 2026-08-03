@@ -1,0 +1,27 @@
+{
+  "model": "claude-sonnet-4-6",
+  "id": "msg_011CdfLC8dyRhJQApigNQs9x",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "text",
+      "text": "# S5: Lean 4 candidate\n\n---\n\n## 1. Reused Artifacts\n\nFrom S0\u2013S4 (admitted without modification):\n\n- **D-ALLOW:** `\u2200 t : T, ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)`\n- **A-Opaque:** `GBP`, `BD`, `OC` uninterpreted on `T`.\n- **L1\u2013L5:** lemma decomposition from S3.\n- **Claim boundary:** abstract evaluator only; no deployed engine; no implementation conformance.\n\n---\n\n## 2. Lean 4 Candidate\n\n```lean\n-- S5: Lean 4 logical-core candidate for SV-COST-STAGED-001\n-- Scope: abstract GCAT/BCAT evaluator only.\n-- No deployed engine is referenced; no implementation conformance is claimed.\n\nsection AbstractEvaluator\n\nvariable {T : Type*}\nvariable (GBP BD OC : T \u2192 Prop)\n\n/-- D-ALLOW: stipulated definition of the abstract evaluator.\n    ALLOW(t) holds iff GBP(t), BD(t), and OC(t) all hold. -/\ndef ALLOW (t : T) : Prop := GBP t \u2227 BD t \u2227 OC t\n\n/-- allow_iff: the defining biconditional, unfolded explicitly. -/\ntheorem allow_iff (t : T) :\n    ALLOW GBP BD OC t \u2194 GBP t \u2227 BD t \u2227 OC t :=\n  Iff.rfl\n\n/-- L1 / T-NS-N: necessity \u2014 ALLOW implies each conjunct. -/\ntheorem allow_forward (t : T) :\n    ALLOW GBP BD OC t \u2192 GBP t \u2227 BD t \u2227 OC t :=\n  (allow_iff GBP BD OC t).mp\n\n/-- L2 / T-NS-S: sufficiency \u2014 all conjuncts imply ALLOW. -/\ntheorem allow_reverse (t : T) :\n    GBP t \u2227 BD t \u2227 OC t \u2192 ALLOW GBP BD OC t :=\n  (allow_iff GBP BD OC t).mpr\n\n/-- T-NS-N-GBP: necessity, GBP component. -/\ntheorem allow_necessity_GBP (t : T) :\n    ALLOW GBP BD OC t \u2192 GBP t :=\n  fun h => (allow_forward GBP BD OC t h).1\n\n/-- T-NS-N-BD: necessity, BD component. -/\ntheorem allow_necessity_BD (t : T) :\n    ALLOW GBP BD OC t \u2192 BD t :=\n  fun h => (allow_forward GBP BD OC t h).2.1\n\n/-- T-NS-N-OC: necessity, OC component. -/\ntheorem allow_necessity_OC (t : T) :\n    ALLOW GBP BD OC t \u2192 OC t :=\n  fun h => (allow_forward GBP BD OC t h).2.2\n\n/-- L4 / allow_sufficiency: curried sufficiency form. -/\ntheorem allow_sufficiency (t : T) :\n    GBP t \u2192 BD t \u2192 OC t \u2192 ALLOW GBP BD OC t :=\n  fun hg hb ho => allow_reverse GBP BD OC t \u27e8hg, hb, ho\u27e9\n\n/-- L5 / T-NS: master necessary-and-sufficient characterization."
+    }
+  ],
+  "stop_reason": "max_tokens",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 4688,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 900,
+    "service_tier": "standard",
+    "inference_geo": "global"
+  }
+}

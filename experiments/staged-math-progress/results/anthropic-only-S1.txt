@@ -1,74 +1,53 @@
 # S1: Definitions and assumptions
 
-## Universe and Primitive Sorts
+## Universe and Types
 
-Let **T** be an arbitrary non-empty type (the set of *candidate transitions*). No further structure on **T** is assumed.
+Let `Transition` be an arbitrary non-empty type (a set of candidate transitions). All predicates below are total functions from `Transition` to `Prop`.
 
-## Predicate Definitions (by stipulation)
+## Primitive Predicates (Opaque)
 
-All three predicates are *primitive*: they are given names and types but no internal structure. Their extensions are arbitrary subsets of **T**.
-
-| Symbol | Type | Reading |
+| Symbol | Type | Meaning |
 |--------|------|---------|
-| `GBP` | `T → Prop` | "Good Basis Property holds for t" |
-| `BD` | `T → Prop` | "Boundary Disposition holds for t" |
-| `OC` | `T → Prop` | "Operational Condition holds for t" |
+| `GBP` | `Transition → Prop` | Opaque predicate 1; no internal structure assumed |
+| `BD` | `Transition → Prop` | Opaque predicate 2; no internal structure assumed |
+| `OC` | `Transition → Prop` | Opaque predicate 3; no internal structure assumed |
 
-No relationship among `GBP`, `BD`, `OC` is assumed. They may overlap arbitrarily or be mutually exclusive; the characterization holds in either case.
+No logical relationship among `GBP`, `BD`, `OC` is assumed. In particular, none is assumed to imply, exclude, or overlap with any other.
 
-## Admissibility Definition (ALLOW)
+## Defined Predicate
 
-`ALLOW` is introduced as a *defined* predicate, not a primitive:
+**Definition (ALLOW).** For all `t : Transition`:
 
 ```
-ALLOW : T → Prop
-ALLOW(t)  :=  GBP(t) ∧ BD(t) ∧ OC(t)
+ALLOW t  :⟺  GBP t ∧ BD t ∧ OC t
 ```
 
-This definition is exhaustive and closed: the right-hand side contains every conjunct; no implicit additional condition exists.
+This definition is the *sole* content of `ALLOW`. It is stipulated, not derived.
 
 ## Assumptions in Force
 
-| # | Assumption | Justification |
-|---|-----------|---------------|
-| A1 | Classical propositional logic (LEM admitted) | Lean 4 with `Classical` suffices; biconditional proof needs no excluded middle here, but admitted for generality |
-| A2 | `T` is non-empty | Prevents vacuous universal quantification from obscuring the biconditional structure |
-| A3 | `GBP`, `BD`, `OC` are uninterpreted | No binding to any concrete system; purely abstract |
-| A4 | No hidden conjuncts | The stipulation in S0 is taken as definitionally complete |
+1. **A1 (Totality).** Every predicate is defined on all elements of `Transition`.
+2. **A2 (Classical logic).** Standard propositional reasoning (LEM, double-negation elimination) is available. The Lean 4 candidate will use `Classical` where needed.
+3. **A3 (No further axioms).** No axioms about `GBP`, `BD`, `OC`, or `ALLOW` beyond Definition ALLOW and A1–A2 are admitted.
 
-## Intended Necessary-and-Sufficient Claim (preview, not yet proved)
+## Necessary-and-Sufficient Characterization (Statement)
 
-For all `t : T`:
+**Theorem (N&S-ALLOW).** For every `t : Transition`:
 
 ```
-ALLOW(t)  ↔  GBP(t) ∧ BD(t) ∧ OC(t)
+ALLOW t  ↔  GBP t ∧ BD t ∧ OC t
 ```
 
-Because `ALLOW` is *defined* as the right-hand side, both directions hold by definitional unfolding (no non-trivial proof obligation). The Lean 4 artifact (forthcoming, S2) will make this explicit via `Iff.intro` with `id` on each direction after `unfold ALLOW`.
+*Necessity* (`→`): If `ALLOW t` holds, then `GBP t`, `BD t`, and `OC t` each hold individually.
 
-## Lean 4 Skeleton (definitions only — no proof, per stage scope)
+*Sufficiency* (`←`): If `GBP t`, `BD t`, and `OC t` all hold, then `ALLOW t` holds.
 
-```lean4
--- S1: Definitions only
-variable (T : Type*) [Nonempty T]
+**Corollary (failure modes, by contrapositive).** `¬ ALLOW t` holds if and only if at least one of `¬ GBP t`, `¬ BD t`, `¬ OC t` holds:
 
--- Uninterpreted predicates (A3)
-variable (GBP BD OC : T → Prop)
-
--- ALLOW defined by stipulation (A4)
-def ALLOW (t : T) : Prop := GBP t ∧ BD t ∧ OC t
-
--- Target statement (proof deferred to S2)
-#check @ALLOW  -- confirms the definition is well-formed
+```
+¬ ALLOW t  ↔  ¬ GBP t ∨ ¬ BD t ∨ ¬ OC t
 ```
 
-## Stage S1 Evidence Checklist
+## Claim Boundary (Reiterated for This Stage)
 
-| Required evidence item | Status |
-|------------------------|--------|
-| GBP definition | ✓ Primitive predicate on T, uninterpreted |
-| BD definition | ✓ Primitive predicate on T, uninterpreted |
-| OC definition | ✓ Primitive predicate on T, uninterpreted |
-| ALLOW / Admissible definition | ✓ Defined as `GBP t ∧ BD t ∧ OC t` |
-
-**S1 complete.
+All statements above are logical consequences of Definition ALLOW under A1–A3. No claim is made about any deployed system. The Lean 4 candidate (S2) will formalize exactly this theorem and corollary, nothing more.

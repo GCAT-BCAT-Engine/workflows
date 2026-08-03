@@ -1,0 +1,25 @@
+S2: Theorem formulation
+
+**Necessary-and-sufficient claim**
+
+For every candidate transition \(t : T\),
+\[
+\operatorname{Eval}(t)=\mathrm{ALLOW}
+\iff
+GBP(t)\land BD(t)\land OC(t).
+\]
+
+- **Necessary:** If \(\operatorname{Eval}(t)=\mathrm{ALLOW}\), then \(GBP(t)\), \(BD(t)\), and \(OC(t)\) all hold.
+- **Sufficient:** If \(GBP(t)\), \(BD(t)\), and \(OC(t)\) all hold, then \(\operatorname{Eval}(t)=\mathrm{ALLOW}\).
+
+**Status and boundary**
+- Stipulated assumption: the evaluator equivalence admitted at S1.
+- Generated claim: its explicit necessary-and-sufficient formulation above.
+- Verified claim: none at S2.
+- Scope is limited to the abstract evaluator; no deployed GCAT/BCAT specification, conformance, or implementation validity is claimed.
+
+`STAGE_STATUS: COMPLETE`  
+`REUSED_ARTIFACTS: S1 abstract setting, evaluator assumption, and claim boundary`  
+`NEW_CLAIMS: explicit necessary and sufficient directions for ALLOW`  
+`UNRESOLVED: formal Lean 4 candidate; deployed-engine specification and implementation/conformance evidence`  
+`NEXT_STAGE: prepare a Lean 4 candidate for the logical core`

@@ -1,0 +1,27 @@
+{
+  "model": "claude-sonnet-4-6",
+  "id": "msg_011CdfLAEFG6vUbFy9kFattE",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "text",
+      "text": "# S3: Proof strategy and lemma decomposition\n\n---\n\n## 1. Reused Artifacts\n\nFrom S0\u2013S2 (admitted without modification):\n\n- **D-ALLOW:** `\u2200 t : T, ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)`\n- **A-Opaque:** `GBP`, `BD`, `OC` uninterpreted on `T`.\n- **T-NS-S:** `\u2200 t, GBP(t) \u2227 BD(t) \u2227 OC(t) \u2192 ALLOW(t)`\n- **T-NS-N:** `\u2200 t, ALLOW(t) \u2192 GBP(t) \u2227 BD(t) \u2227 OC(t)`\n- **T-NS-N-GBP/BD/OC:** corollaries by conjunction elimination.\n- **Claim boundary:** abstract evaluator only; no deployed engine; no implementation conformance.\n\n---\n\n## 2. Proof Strategy Overview\n\nT-NS is definitionally transparent: both directions are one-step unfoldings of D-ALLOW followed by propositional rules. The strategy therefore has **zero mathematical content beyond bookkeeping**; its value is to make the Lean 4 tactic script predictable and auditable.\n\nEach required evidence item maps to exactly one lemma or tactic step:\n\n| Evidence item | Lemma | Core move |\n|---|---|---|\n| `forward` | `allow_forward` | `Iff.mp` on D-ALLOW |\n| `reverse` | `allow_reverse` | `Iff.mpr` on D-ALLOW |\n| `necessity` | `allow_necessity` | `allow_forward` + projection |\n| `sufficiency` | `allow_sufficiency` | `allow_reverse` |\n\n---\n\n## 3. Lemma Decomposition\n\n### L1 \u2014 `allow_forward` (forward direction)\n\n**Statement:**\n```\n\u2200 t : T, ALLOW t \u2192 GBP t \u2227 BD t \u2227 OC t\n```\n**Proof move:** Apply `(allow_iff t).mp`.  \n**Evidence satisfied:** `forward`, `necessity`.\n\n---\n\n### L2 \u2014 `allow_reverse` (reverse direction)\n\n**Statement:**\n```\n\u2200 t : T, GBP t \u2227 BD t \u2227 OC t \u2192 ALLOW t\n```\n**Proof move:** Apply `(allow_iff t).mpr`.  \n**Evidence satisfied:** `reverse`, `sufficiency`.\n\n---\n\n### L3 \u2014 `allow_necessity` (necessity, component form)\n\n**Statement:**\n```\n\u2200 t : T, ALLOW t \u2192 GBP t\n\u2200 t : T, ALLOW t \u2192 BD t\n\u2200 t : T, ALLOW t \u2192 OC t\n```\n**Proof move:** `allow_forward` then `And.left` / `And.right.left` / `And.right.right`.  \n**Evidence satisfied:** `necessity` (exhaustive).\n\n---\n\n### L4 \u2014 `allow_sufficiency` (sufficiency, alias)\n\n**Statement:**\n```\n\u2200 t : T, GBP t \u2192 BD t \u2192 OC t \u2192 ALLOW t\n```\n**Proof move:** curry `allow_reverse`.  \n**Evidence satisfied:** `sufficiency`.\n\n---\n\n### L5 \u2014 `allow_characterization` (master biconditional, = T-NS)\n\n**Statement:**\n```\n\u2200 t : T, ALLOW t \u2194 GBP t \u2227 BD t \u2227 OC t\n```\n**Proof move:** `Iff.intro allow_forward allow_"
+    }
+  ],
+  "stop_reason": "max_tokens",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 2871,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 900,
+    "service_tier": "standard",
+    "inference_geo": "global"
+  }
+}

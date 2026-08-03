@@ -1,0 +1,27 @@
+{
+  "model": "claude-sonnet-4-6",
+  "id": "msg_011CdfL9GVvNjCkrKq7hsSG3",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "text",
+      "text": "# S2: Theorem formulation\n\n---\n\n## 1. Reused Artifacts\n\nFrom S0\u2013S1 (admitted without modification):\n\n- **D-ALLOW:** `\u2200 t : T, ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)`\n- **A-Opaque:** `GBP`, `BD`, `OC` are uninterpreted predicates on `T`.\n- **Claim boundary:** Abstract evaluator only; no deployed engine; no implementation conformance.\n\n---\n\n## 2. Target Theorem\n\n**Theorem T-NS (Necessary-and-Sufficient Characterization):**\n\n> For every candidate transition `t : T`, `ALLOW(t)` holds if and only if each of `GBP(t)`, `BD(t)`, and `OC(t)` holds.\n\nFormally:\n\n```\n\u2200 t : T,  ALLOW(t) \u2194 GBP(t) \u2227 BD(t) \u2227 OC(t)\n```\n\n**Remark:** T-NS is *identical in form* to D-ALLOW. Its role here is to make explicit the two directed halves as named sub-claims (below) and to confirm that no hidden premises enter the characterization.\n\n---\n\n## 3. Directed Sub-Claims\n\n### 3.1 Sufficiency (S\u2192)\n\n**Claim T-NS-S (Sufficiency):**\n\n> For all `t : T`, if `GBP(t)` and `BD(t)` and `OC(t)` all hold, then `ALLOW(t)` holds.\n\n```\n\u2200 t : T,  GBP(t) \u2227 BD(t) \u2227 OC(t) \u2192 ALLOW(t)\n```\n\n*Derivation sketch:* Immediate from the right-to-left direction of D-ALLOW. No additional premises are required.\n\n---\n\n### 3.2 Necessity (N\u2190)\n\n**Claim T-NS-N (Necessity):**\n\n> For all `t : T`, if `ALLOW(t)` holds, then `GBP(t)` holds **and** `BD(t)` holds **and** `OC(t)` holds.\n\n```\n\u2200 t : T,  ALLOW(t) \u2192 GBP(t) \u2227 BD(t) \u2227 OC(t)\n```\n\n*Derivation sketch:* Immediate from the left-to-right direction of D-ALLOW. No additional premises are required.\n\n**Corollaries of necessity (named for evidence requirements):**\n\n| Label | Statement |\n|---|---|\n| T-NS-N-GBP | `\u2200 t, ALLOW(t) \u2192 GBP(t)` |\n| T-NS-N-BD | `\u2200 t, ALLOW(t) \u2192 BD(t)` |\n| T-NS-N-OC | `\u2200 t, ALLOW(t) \u2192 OC(t)` |\n\nEach corollary follows by conjunction elimination from T-NS-N.\n\n---\n\n## 4. Proof Structure\n\nBoth directed halves reduce to unpacking D-ALLOW; no lemmas beyond propositional logic are needed.\n\n```\nT-NS\n\u251c\u2500\u2500 T-NS-S  (right-to-left of D-ALLOW; intro \u2227, apply D-ALLOW.mpr)\n\u2514\u2500\u2500 T-NS-N  (left-to-right of D-ALLOW; apply D-ALLOW.mp)\n    \u251c\u2500\u2500 T-NS-N-GBP  (And.left)\n    \u251c\u2500\u2500 T-NS-N-BD   (And.right "
+    }
+  ],
+  "stop_reason": "max_tokens",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 1959,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 900,
+    "service_tier": "standard",
+    "inference_geo": "global"
+  }
+}

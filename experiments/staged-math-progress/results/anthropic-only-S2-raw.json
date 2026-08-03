@@ -1,0 +1,27 @@
+{
+  "model": "claude-sonnet-4-6",
+  "id": "msg_011CdfL223KeSSUgWBWG6aLp",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "text",
+      "text": "# S2: Theorem formulation\n\n## Lean 4 Candidate \u2014 Logical Core\n\n```lean4\n-- SV-COST-STAGED-001 | S2: Theorem formulation\n-- Abstract evaluator admissibility characterization.\n-- No deployed-engine semantics; all content is logical consequence of def_ALLOW.\n\nsection AbstractEvaluator\n\n-- Universe of candidate transitions (arbitrary non-empty type).\nvariable {Transition : Type*}\n\n-- Opaque primitive predicates; no internal structure assumed.\nvariable (GBP BD OC : Transition \u2192 Prop)\n\n-- Stipulated definition: ALLOW is definitionally equal to the conjunction.\ndef ALLOW (t : Transition) : Prop := GBP t \u2227 BD t \u2227 OC t\n\n-- \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n-- Theorem N&S-ALLOW\n-- Necessary and sufficient characterization.\n-- \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ntheorem ns_allow (t : Transition) :\n    ALLOW GBP BD OC t \u2194 GBP t \u2227 BD t \u2227 OC t :=\n  Iff.rfl                          -- holds by definitional unfolding\n\n-- Necessity: ALLOW t \u2192 each conjunct holds individually.\ntheorem allow_necessary_GBP (t : Transition) :\n    ALLOW GBP BD OC t \u2192 GBP t :=\n  fun h => h.1\n\ntheorem allow_necessary_BD (t : Transition) :\n    ALLOW GBP BD OC t \u2192 BD t :=\n  fun h => h.2.1\n\ntheorem allow_necessary_OC (t : Transition) :\n    ALLOW GBP BD OC t \u2192 OC t :=\n  fun h => h.2.2\n\n-- Sufficiency: all three conjuncts \u2192 ALLOW t.\ntheorem allow_sufficient (t : Transition) :\n    GBP t \u2192 BD t \u2192 OC t \u2192 ALLOW GBP BD OC t :=\n  fun hg hb ho => \u27e8hg, hb, ho\u27e9\n\n-- \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n-- Corollary: failure-mode characterization.\n-- \u00ac ALLOW t \u2194 \u00ac GBP t \u2228 \u00ac BD t \u2228 \u00ac OC t\n-- \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ntheorem not_allow_iff (t : Transition) :\n    \u00ac ALLOW GBP BD OC t \u2194 \u00ac GBP t \u2228 \u00ac BD t \u2228 \u00ac OC t := by\n  simp only [ALLOW]\n  constructor\n  \u00b7 intro h\n    by_contra hall\n    push_neg at hall\n    exact h \u27e8hall.1, hall.2.1, hall.2.2\u27e9\n  \u00b7 rintro (hg | hb | ho) \u27e8g, b, o\u27e9\n    \u00b7 exact hg g\n    \u00b7 exact hb b\n    \u00b7 exact ho o\n\nend AbstractEvaluator\n```\n\n## Stage Summary\n\n| Claim | Direction | Lean evidence |\n|---|---|---|\n| `ALLOW t \u2194 GBP t \u2227 BD t \u2227 OC t` | both | `ns_allow` \u2014 `Iff.rfl` |\n| `ALLOW t \u2192 GBP t` | necessary | `allow_necessary_GBP` |\n| `ALLOW t \u2192 BD t` | necessary | `allow_necessary_BD` |\n| `ALLOW t \u2192 OC t` | necessary |"
+    }
+  ],
+  "stop_reason": "max_tokens",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 1398,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 900,
+    "service_tier": "standard",
+    "inference_geo": "global"
+  }
+}

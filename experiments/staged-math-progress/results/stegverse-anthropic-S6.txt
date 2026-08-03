@@ -1,0 +1,31 @@
+# S6: Verification ledger
+
+---
+
+## 1. Reused Artifacts
+
+From S0–S5 (admitted without modification):
+
+- **D-ALLOW:** `∀ t : T, ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)`
+- **A-Opaque:** `GBP`, `BD`, `OC` uninterpreted on `T`.
+- **L1–L5:** lemma decomposition from S3.
+- **S5 Lean 4 candidate:** complete source text admitted in S5.
+- **Claim boundary:** abstract evaluator only; no deployed engine; no implementation conformance.
+
+---
+
+## 2. Verification Ledger
+
+Each row records one claim, its evidence source, and its resolution status.
+
+| ID | Statement | Evidence | Status |
+|---|---|---|---|
+| **D-ALLOW** | `∀ t : T, ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)` | Stipulated definition (S0, S1); `def ALLOW` in S5 makes it `Iff.rfl`. | **VERIFIED** — definitional; no proof obligation. |
+| **allow_iff** | `ALLOW GBP BD OC t ↔ GBP t ∧ BD t ∧ OC t` | S5 theorem; proof term `Iff.rfl`. | **VERIFIED** — `Iff.rfl` closes the goal by definitional equality. |
+| **L1 / allow_forward** | `∀ t, ALLOW GBP BD OC t → GBP t ∧ BD t ∧ OC t` | S5 theorem; proof term `(allow_iff …).mp`. | **VERIFIED** — one `Iff.mp` application; no further obligations. |
+| **L2 / allow_reverse** | `∀ t, GBP t ∧ BD t ∧ OC t → ALLOW GBP BD OC t` | S5 theorem; proof term `(allow_iff …).mpr`. | **VERIFIED** — one `Iff.mpr` application; no further obligations. |
+| **T-NS-N-GBP / allow_necessity_GBP** | `∀ t, ALLOW GBP BD OC t → GBP t` | S5 theorem; `(allow_forward … h).1`. | **VERIFIED** — conjunction projection from L1. |
+| **T-NS-N-BD / allow_necessity_BD** | `∀ t, ALLOW GBP BD OC t → BD t` | S5 theorem; `(allow_forward … h).2.1`. | **VERIFIED** — conjunction projection from L1. |
+| **T-NS-N-OC / allow_necessity_OC** | `∀ t, ALLOW GBP BD OC t → OC t` | S5 theorem; `(allow_forward … h).2.2`. | **VERIFIED** — conjunction projection from L1. |
+| **L4 / allow_sufficiency** | `∀ t, GBP t → BD t → OC t → ALLOW GBP BD OC t` | S5 theorem; `allow_reverse … ⟨hg, hb, ho⟩`. | **VERIFIED** — currying of L2; anonymous constructor closes conjunction. |
+| **L5 / T-NS / allow_characterization** | `∀ t, ALLOW GBP BD OC t ↔ GBP t ∧

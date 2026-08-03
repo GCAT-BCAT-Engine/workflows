@@ -1,0 +1,91 @@
+# S1: Definitions and assumptions
+
+---
+
+## 1. Reused Artifacts
+
+From S0 (admitted without modification):
+
+- **Abstract evaluator stipulation:**
+  `ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)`
+- **Claim boundary:** No deployed engine; no implementation conformance asserted.
+
+---
+
+## 2. Universe of Discourse
+
+Let `T` be an arbitrary non-empty type whose elements are called **candidate transitions**. The variable `t` ranges over `T`.
+
+No internal structure is imposed on `T`. No element of `T` is distinguished.
+
+---
+
+## 3. Primitive Predicates
+
+The following three predicates are **uninterpreted** (opaque). No axioms govern their internal content beyond their type.
+
+| Name | Type | Informal gloss |
+|---|---|---|
+| `GBP` | `T → Prop` | "Good-behavior predicate" |
+| `BD` | `T → Prop` | "Boundary-condition predicate" |
+| `OC` | `T → Prop` | "Operational-context predicate" |
+
+**Assumption A-Opaque:** No relationship among `GBP`, `BD`, `OC` is assumed. In particular, neither pairwise implication nor independence is stipulated.
+
+---
+
+## 4. Defined Predicate
+
+**Definition D-ALLOW** (stipulated; reproduced from S0):
+
+> For all `t : T`,
+> `ALLOW(t)` holds if and only if `GBP(t)` holds **and** `BD(t)` holds **and** `OC(t)` holds.
+
+Formally:
+
+```
+∀ t : T,  ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)
+```
+
+This is the **sole semantic axiom** of the abstract evaluator. It is a definition, not a theorem to be proved.
+
+---
+
+## 5. Status of Each Symbol
+
+| Symbol | Status in S1 |
+|---|---|
+| `T` | Assumed type; no structure. |
+| `GBP`, `BD`, `OC` | Assumed predicates; opaque. |
+| `ALLOW` | **Defined** by D-ALLOW. |
+| N&S theorem | Not yet stated here; target of S2. |
+| Lean 4 candidate | Not yet produced; target of S3. |
+
+---
+
+## 6. What Is Not Assumed
+
+- No completeness, decidability, or computability of any predicate.
+- No relationship between `T` and any concrete transition system.
+- No deployed GCAT/BCAT engine behavior.
+- No claim that `GBP`, `BD`, or `OC` are independent or exhaustive.
+
+---
+
+## 7. Stage Receipt
+
+```
+STAGE_STATUS     : COMPLETE
+REUSED_ARTIFACTS : [S0: abstract evaluator stipulation, claim boundary]
+NEW_CLAIMS       :
+  - Universe T introduced; no structure assumed.
+  - GBP, BD, OC declared as opaque predicates on T (A-Opaque).
+  - ALLOW defined by biconditional D-ALLOW (restatement of S0 stipulation,
+    now labeled and typed).
+  - Symbol-status table drawn; all symbols accounted for.
+UNRESOLVED       :
+  - N&S characterization theorem (planned S2).
+  - Lean 4 logical-core candidate (planned S3).
+  - Deployed engine conformance: permanently out of scope.
+NEXT_STAGE       : S2 — Necessary-and-sufficient characterization theorem
+```

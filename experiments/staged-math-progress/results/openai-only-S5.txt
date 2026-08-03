@@ -1,0 +1,15 @@
+S5: Lean 4 candidate.
+
+```lean
+theorem allow_admissible
+    {Transition : Type}
+    (GBP BD OC ALLOW : Transition → Prop)
+    (contract : ∀ t, ALLOW t ↔ (GBP t ∧ BD t ∧ OC t))
+    (t : Transition) :
+    ALLOW t ↔ (GBP t ∧ BD t ∧ OC t) := by
+  constructor
+  · exact (contract t).mp
+  · exact (contract t).mpr
+```
+
+Claim boundary: This logical core applies only under the stipulated abstract evaluator contract; it does not specify a deployed engine or establish implementation validity.

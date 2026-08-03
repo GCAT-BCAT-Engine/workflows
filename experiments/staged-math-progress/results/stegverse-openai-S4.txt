@@ -1,0 +1,33 @@
+S4: Complete informal proof
+
+Fix \(t : T\). By the stipulated evaluator assumption,
+\[
+\operatorname{Eval}(t)=\mathrm{ALLOW}
+\iff
+GBP(t)\land BD(t)\land OC(t).
+\]
+
+**Forward (necessity).** Assume \(\operatorname{Eval}(t)=\mathrm{ALLOW}\). Applying the forward direction of the stipulated equivalence yields
+\[
+GBP(t)\land BD(t)\land OC(t).
+\]
+
+**Reverse (sufficiency).** Assume \(GBP(t)\land BD(t)\land OC(t)\). Applying the reverse direction of the stipulated equivalence yields
+\[
+\operatorname{Eval}(t)=\mathrm{ALLOW}.
+\]
+
+Therefore, for every \(t:T\),
+\[
+\operatorname{Eval}(t)=\mathrm{ALLOW}
+\iff
+GBP(t)\land BD(t)\land OC(t).
+\]
+
+**Claim boundary.** This proof concerns only the stipulated abstract evaluator. It does not establish any deployed GCAT/BCAT specification, behavior, conformance, or implementation validity.
+
+`STAGE_STATUS: COMPLETE`  
+`REUSED_ARTIFACTS: S1 stipulated evaluator equivalence; S2 theorem formulation; S3 directional proof strategy`  
+`NEW_CLAIMS: informally proved forward necessity, reverse sufficiency, and their biconditional characterization`  
+`UNRESOLVED: Lean 4 candidate and formal type-checking; deployed-engine specification and implementation/conformance evidence`  
+`NEXT_STAGE: prepare the Lean 4 candidate for the logical core`

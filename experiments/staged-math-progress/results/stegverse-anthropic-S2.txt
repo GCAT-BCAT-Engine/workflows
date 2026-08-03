@@ -1,0 +1,80 @@
+# S2: Theorem formulation
+
+---
+
+## 1. Reused Artifacts
+
+From S0–S1 (admitted without modification):
+
+- **D-ALLOW:** `∀ t : T, ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)`
+- **A-Opaque:** `GBP`, `BD`, `OC` are uninterpreted predicates on `T`.
+- **Claim boundary:** Abstract evaluator only; no deployed engine; no implementation conformance.
+
+---
+
+## 2. Target Theorem
+
+**Theorem T-NS (Necessary-and-Sufficient Characterization):**
+
+> For every candidate transition `t : T`, `ALLOW(t)` holds if and only if each of `GBP(t)`, `BD(t)`, and `OC(t)` holds.
+
+Formally:
+
+```
+∀ t : T,  ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)
+```
+
+**Remark:** T-NS is *identical in form* to D-ALLOW. Its role here is to make explicit the two directed halves as named sub-claims (below) and to confirm that no hidden premises enter the characterization.
+
+---
+
+## 3. Directed Sub-Claims
+
+### 3.1 Sufficiency (S→)
+
+**Claim T-NS-S (Sufficiency):**
+
+> For all `t : T`, if `GBP(t)` and `BD(t)` and `OC(t)` all hold, then `ALLOW(t)` holds.
+
+```
+∀ t : T,  GBP(t) ∧ BD(t) ∧ OC(t) → ALLOW(t)
+```
+
+*Derivation sketch:* Immediate from the right-to-left direction of D-ALLOW. No additional premises are required.
+
+---
+
+### 3.2 Necessity (N←)
+
+**Claim T-NS-N (Necessity):**
+
+> For all `t : T`, if `ALLOW(t)` holds, then `GBP(t)` holds **and** `BD(t)` holds **and** `OC(t)` holds.
+
+```
+∀ t : T,  ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)
+```
+
+*Derivation sketch:* Immediate from the left-to-right direction of D-ALLOW. No additional premises are required.
+
+**Corollaries of necessity (named for evidence requirements):**
+
+| Label | Statement |
+|---|---|
+| T-NS-N-GBP | `∀ t, ALLOW(t) → GBP(t)` |
+| T-NS-N-BD | `∀ t, ALLOW(t) → BD(t)` |
+| T-NS-N-OC | `∀ t, ALLOW(t) → OC(t)` |
+
+Each corollary follows by conjunction elimination from T-NS-N.
+
+---
+
+## 4. Proof Structure
+
+Both directed halves reduce to unpacking D-ALLOW; no lemmas beyond propositional logic are needed.
+
+```
+T-NS
+├── T-NS-S  (right-to-left of D-ALLOW; intro ∧, apply D-ALLOW.mpr)
+└── T-NS-N  (left-to-right of D-ALLOW; apply D-ALLOW.mp)
+    ├── T-NS-N-GBP  (And.left)
+    ├── T-NS-N-BD   (And.right 
