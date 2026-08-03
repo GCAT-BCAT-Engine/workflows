@@ -23,6 +23,9 @@ def main() -> int:
 
     if inventory.get("session_goal_id") != "SV-COST-CROSS-MODEL-SESSION-001":
         errors.append("inventory goal ID mismatch")
+    if inventory.get("canonical_handoff") != "SV_COST_MIRROR_HANDOFF.md":
+        errors.append("inventory canonical handoff mismatch")
+
     if fresh is None:
         errors.append("fresh cross-model matrix missing")
     else:
@@ -32,6 +35,7 @@ def main() -> int:
         admitted = {r.get("lane_id") for r in fresh.get("rows", []) if r.get("admissible_for_bounded_cost_comparison")}
         if selected not in admitted:
             errors.append("fresh selected lane is not admitted")
+
     if normalized is None:
         errors.append("normalized operation-class matrix missing")
     else:
@@ -43,16 +47,27 @@ def main() -> int:
         if gd.get("stegverse_zero_provider_charge_rejected_from_cost_ranking") is not True:
             errors.append("unmeasured local-cost exclusion missing")
 
-    for required in [
-        "cross-model-session-inventory.json",
-        "governance-cross-model-matrix.json",
-        "normalized-operation-class-matrix.json",
-    ]:
-        if required not in handoff:
-            errors.append(f"handoff missing reference: {required}")
+    # The terminal reconciler owns the canonical handoff and may collapse exact
+    # result filenames into the authoritative results directory. Accept either
+    # exact cross-model references or the canonical inventory + results surface.
+    exact_refs = all(
+        required in handoff
+        for required in [
+            "cross-model-session-inventory.json",
+            "governance-cross-model-matrix.json",
+            "normalized-operation-class-matrix.json",
+        ]
+    )
+    canonical_surface_refs = (
+        "experiments/sv-cost-program/results/" in handoff
+        and "experiments/sv-cost-program/session-goal-inventory.json" in handoff
+        and INVENTORY.exists()
+        and FRESH.exists()
+        and NORMALIZED.exists()
+    )
+    if not (exact_refs or canonical_surface_refs):
+        errors.append("handoff does not resolve cross-model inventory and result surfaces")
 
-    # Canonical handoffs commonly render issue numbers in backticks. Accept
-    # `issue #13`, `issue `#13``, or an adjacent/canonical issue label with #13.
     issue_13_patterns = [
         r"issue\s+`?#13`?",
         r"(?:adjacent|canonical)\s+evidence\s+issue:\s+`?#13`?",
@@ -62,13 +77,19 @@ def main() -> int:
 
     status = "ARCHIVE_READY" if not errors else "BLOCKED"
     receipt = {
-        "schema_version": "1.0.1",
+        "schema_version": "1.0.2",
         "program_id": "SV-COST-MAJOR-GOAL-001",
         "session_goal_id": "SV-COST-CROSS-MODEL-SESSION-001",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "status": status,
         "errors": errors,
         "canonical_continuation": "GCAT-BCAT-Engine/workflows/SV_COST_MIRROR_HANDOFF.md and issue #13",
+        "resolved_surfaces": {
+            "inventory": str(INVENTORY.relative_to(ROOT)),
+            "fresh_matrix": str(FRESH.relative_to(ROOT)),
+            "normalized_matrix": str(NORMALIZED.relative_to(ROOT)),
+            "handoff": str(HANDOFF.relative_to(ROOT)),
+        },
         "next_executable_action": "None; repository-native workflows own future model additions." if not errors else "Resolve each named error and rerun this validator.",
     }
     RECEIPT.parent.mkdir(parents=True, exist_ok=True)
