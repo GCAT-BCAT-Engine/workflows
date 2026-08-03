@@ -1,0 +1,137 @@
+[
+  {
+    "lane_id": "openai-only",
+    "provider": "openai",
+    "model": "gpt-5.6",
+    "governed": false,
+    "provider_status": "completed",
+    "max_output_tokens": 8192,
+    "native_input_tokens": 160,
+    "native_output_tokens": 4809,
+    "native_total_tokens": 4969,
+    "canonical_shared_task_input_tokens": 155,
+    "canonical_incremental_governance_input_tokens": 0,
+    "canonical_total_input_tokens": 155,
+    "canonical_total_output_tokens": 3719,
+    "canonical_total_tokens": 3874,
+    "observed_api_cost_usd": 0.14507,
+    "pricing_assumption": {
+      "input_usd_per_million": 5.0,
+      "output_usd_per_million": 30.0
+    },
+    "latency_seconds": 65.97703075408936,
+    "validation": {
+      "complete": true,
+      "missing_sections": [],
+      "end_marker": true,
+      "lean_candidate_present": true,
+      "substantive_proof_present": true
+    },
+    "prompt_hash": "sha256:8dfce7031e6e9c1a07a175edf5bed186cb9463a0d3fdddb392cff230b69e681a",
+    "output_hash": "sha256:3275252fae81199c3c2247c80a968060c12f7025296bb3cfaf356b249b62d600",
+    "raw_receipt_hash": "sha256:35c0c9fc43f07d4e367de9bbb085c4a1d0dce9ea09f78352eba8427be4e54f9c"
+  },
+  {
+    "lane_id": "stegverse-openai",
+    "provider": "openai",
+    "model": "gpt-5.6",
+    "governed": true,
+    "provider_status": "completed",
+    "max_output_tokens": 8192,
+    "native_input_tokens": 238,
+    "native_output_tokens": 6264,
+    "native_total_tokens": 6502,
+    "canonical_shared_task_input_tokens": 155,
+    "canonical_incremental_governance_input_tokens": 79,
+    "canonical_total_input_tokens": 234,
+    "canonical_total_output_tokens": 4365,
+    "canonical_total_tokens": 4599,
+    "observed_api_cost_usd": 0.18911,
+    "pricing_assumption": {
+      "input_usd_per_million": 5.0,
+      "output_usd_per_million": 30.0
+    },
+    "latency_seconds": 95.07805967330933,
+    "validation": {
+      "complete": true,
+      "missing_sections": [],
+      "end_marker": true,
+      "lean_candidate_present": true,
+      "substantive_proof_present": true
+    },
+    "prompt_hash": "sha256:daaab94a17b5d2c096a58f0c4b6a89646901c56ec2a963cd5b78ef8218d205b4",
+    "output_hash": "sha256:f053017a9ce3dc9af997e140967bc688f6b3cfaa7707ac09ba41fb85a0bdfef6",
+    "raw_receipt_hash": "sha256:055df2e7ecae2476062db35488dbdb0cd51ef9527d2f2e13866dbaa4b70f3857"
+  },
+  {
+    "lane_id": "anthropic-only",
+    "provider": "anthropic",
+    "model": "claude-sonnet-4-6",
+    "governed": false,
+    "provider_status": "stopped:max_tokens",
+    "max_output_tokens": 8192,
+    "native_input_tokens": 176,
+    "native_output_tokens": 8192,
+    "native_total_tokens": 8368,
+    "canonical_shared_task_input_tokens": 155,
+    "canonical_incremental_governance_input_tokens": 0,
+    "canonical_total_input_tokens": 155,
+    "canonical_total_output_tokens": 6450,
+    "canonical_total_tokens": 6605,
+    "observed_api_cost_usd": 0.123408,
+    "pricing_assumption": {
+      "input_usd_per_million": 3.0,
+      "output_usd_per_million": 15.0
+    },
+    "latency_seconds": 135.9402322769165,
+    "validation": {
+      "complete": false,
+      "missing_sections": [
+        "SECTION 5: LEAN 4 CANDIDATE",
+        "SECTION 6: VERIFICATION LEDGER",
+        "SECTION 7: FINAL CLAIM BOUNDARY"
+      ],
+      "end_marker": false,
+      "lean_candidate_present": false,
+      "substantive_proof_present": true
+    },
+    "prompt_hash": "sha256:8dfce7031e6e9c1a07a175edf5bed186cb9463a0d3fdddb392cff230b69e681a",
+    "output_hash": "sha256:d908241d6e53d0af71f9667f966128cb201fa92ba5ed712f51611c2635f4587f",
+    "raw_receipt_hash": "sha256:6f2acd684a38d41275004d5587f6f879636c73d1cad84dece91d83be373ff042"
+  },
+  {
+    "lane_id": "stegverse-anthropic",
+    "provider": "anthropic",
+    "model": "claude-sonnet-4-6",
+    "governed": true,
+    "provider_status": "stopped:max_tokens",
+    "max_output_tokens": 8192,
+    "native_input_tokens": 269,
+    "native_output_tokens": 8192,
+    "native_total_tokens": 8461,
+    "canonical_shared_task_input_tokens": 155,
+    "canonical_incremental_governance_input_tokens": 79,
+    "canonical_total_input_tokens": 234,
+    "canonical_total_output_tokens": 6104,
+    "canonical_total_tokens": 6338,
+    "observed_api_cost_usd": 0.123687,
+    "pricing_assumption": {
+      "input_usd_per_million": 3.0,
+      "output_usd_per_million": 15.0
+    },
+    "latency_seconds": 125.33336639404297,
+    "validation": {
+      "complete": false,
+      "missing_sections": [
+        "SECTION 6: VERIFICATION LEDGER",
+        "SECTION 7: FINAL CLAIM BOUNDARY"
+      ],
+      "end_marker": false,
+      "lean_candidate_present": true,
+      "substantive_proof_present": true
+    },
+    "prompt_hash": "sha256:daaab94a17b5d2c096a58f0c4b6a89646901c56ec2a963cd5b78ef8218d205b4",
+    "output_hash": "sha256:6b1f49eba9068c73d01815ba4e3835317d52defa8c869804fa712a1ccf3ca597",
+    "raw_receipt_hash": "sha256:8421ab32fde84ef108ff6f1c1736313a7807b84dd968afd4f7bd100bda149c2a"
+  }
+]
