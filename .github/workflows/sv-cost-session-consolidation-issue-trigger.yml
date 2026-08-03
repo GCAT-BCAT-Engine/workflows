@@ -1,0 +1,141 @@
+name: SV-COST Session Consolidation Issue Trigger
+
+on:
+  issues:
+    types: [edited]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: sv-cost-session-consolidation
+  cancel-in-progress: false
+
+jobs:
+  reconcile-validate-release:
+    if: github.event.issue.number == 13 && contains(github.event.issue.body, 'RUN_SV_COST_CONSOLIDATION_20260803')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      RECEIPT: experiments/sv-cost-program/results/session-consolidation-receipt.json
+      RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Compile reconciliation and validator
+        run: |
+          python -m py_compile tools/reconcile_sv_cost_terminal_state.py
+          python -m py_compile tools/validate_sv_cost_session_state.py
+
+      - name: Reconcile terminal receipts and release chat claim
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/reconcile_sv_cost_terminal_state.py \
+            --release-session \
+            --workflow-run-url "$RUN_URL" \
+            > /tmp/reconcile.json
+          test "$(jq -r .status /tmp/reconcile.json)" = RECONCILED
+
+      - name: Validate and write archive-readiness receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          NOW="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          python tools/validate_sv_cost_session_state.py \
+            --write-receipt \
+            --now "$NOW" \
+            --workflow-run-url "$RUN_URL" \
+            > /tmp/validate.json
+          test "$(jq -r .status "$RECEIPT")" = ARCHIVE_READY
+          test "$(jq -r .archive_readiness.ready "$RECEIPT")" = true
+
+      - name: Validate canonical files and stale-state exclusion
+        shell: bash
+        run: |
+          set -euo pipefail
+          for path in \
+            experiments/sv-cost-program/session-goal-inventory.json \
+            experiments/sv-cost-program/task-claims.json \
+            experiments/sv-cost-program/evidence-index.json \
+            experiments/sv-cost-program/lineage.json \
+            experiments/sv-cost-program/relations.json \
+            experiments/sv-cost-program/results/r3-adjudication.json \
+            experiments/sv-cost-program/results/r4-adjudication.json \
+            experiments/sv-cost-program/results/r5-reliability-synthesis.json \
+            experiments/sv-cost-program/results/cfo-decision.json \
+            "$RECEIPT"; do
+            python -m json.tool "$path" >/dev/null
+          done
+          grep -q 'TERMINAL BOUNDED DECISION' SV_COST_MIRROR_HANDOFF.md
+          grep -q 'MERGED_INTO_CANONICAL_WORKSTREAM' SV_COST_MIRROR_HANDOFF.md
+          grep -q 'DO_NOT_APPROVE_A_GENERAL_STEGVERSE_SAVINGS_CLAIM_FROM_CURRENT_EVIDENCE' docs/SV_COST_MAJOR_ANALYSIS.md
+          ! grep -Eqi 'active R3 relation is testing|R3 pending|REPAIRED_GENERATION_DISPATCHED|Remaining governed transitions|SESSION CONSOLIDATION IN PROGRESS' \
+            SV_COST_MIRROR_HANDOFF.md docs/SV_COST_MAJOR_ANALYSIS.md experiments/sv-cost-program/evidence-index.json experiments/sv-cost-program/lineage.json
+
+      - name: Upload immutable session transfer
+        uses: actions/upload-artifact@v4
+        with:
+          name: sv-cost-session-transfer-${{ github.run_id }}
+          path: |
+            SV_COST_MIRROR_HANDOFF.md
+            experiments/sv-cost-program/session-goal-inventory.json
+            experiments/sv-cost-program/task-claims.json
+            experiments/sv-cost-program/evidence-index.json
+            experiments/sv-cost-program/lineage.json
+            experiments/sv-cost-program/relations.json
+            experiments/sv-cost-program/results/r3-adjudication.json
+            experiments/sv-cost-program/results/r4-adjudication.json
+            experiments/sv-cost-program/results/r5-reliability-synthesis.json
+            experiments/sv-cost-program/results/cfo-decision.json
+            experiments/sv-cost-program/results/session-consolidation-receipt.json
+            docs/SV_COST_MAJOR_ANALYSIS.md
+            docs/RECONSTRUCTABLE_STATE_TRANSITION_GOVERNANCE.md
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Commit terminal reconciliation and receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'sv-cost-session-consolidator'
+          git config user.email 'actions@users.noreply.github.com'
+          git add SV_COST_MIRROR_HANDOFF.md
+          git add experiments/sv-cost-program/session-goal-inventory.json
+          git add experiments/sv-cost-program/task-claims.json
+          git add experiments/sv-cost-program/evidence-index.json
+          git add experiments/sv-cost-program/lineage.json
+          git add experiments/sv-cost-program/relations.json
+          git add experiments/sv-cost-program/results/session-consolidation-receipt.json
+          git add docs/SV_COST_MAJOR_ANALYSIS.md
+          git commit -m "Reconcile terminal SV-COST state and release chat session [run $GITHUB_RUN_ID]"
+          pushed=false
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if git rebase origin/main && git push origin HEAD:main; then
+              pushed=true
+              break
+            fi
+            git rebase --abort || true
+            sleep $((attempt * 3))
+          done
+          test "$pushed" = true
+
+      - name: Record closure and preserve issue 13 continuation
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh issue comment 12 --repo "$GITHUB_REPOSITORY" --body "SV-COST terminal state and session transfer were reconciled and validated. Receipt: \`experiments/sv-cost-program/results/session-consolidation-receipt.json\`. Hosted evidence: $RUN_URL. Issue #13 exclusively owns any future favorable ROI revision."
+          gh issue close 11 --repo "$GITHUB_REPOSITORY" --reason completed --comment "Historical lineage is terminal, validated, and integrated into the canonical program."
+          gh issue close 12 --repo "$GITHUB_REPOSITORY" --reason completed --comment "R1-R5, the bounded CFO decision, canonical synthesis, handoff, task claims, and archive-readiness receipt are terminal and validated. Issue #13 remains the durable continuation for future favorable ROI evidence."
+          gh issue comment 13 --repo "$GITHUB_REPOSITORY" --body "Canonical session consolidation completed. This issue remains open and blocked as the sole continuation for fully burdened cost, invoice reconciliation, successful held-out equivalence, and break-even evidence. Trigger receipt: \`experiments/sv-cost-program/results/session-consolidation-receipt.json\`."
