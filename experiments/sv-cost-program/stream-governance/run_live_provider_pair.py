@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Run the same bounded event sample through OpenAI and Anthropic, raw and governed.
+"""Run one capability-matched sample through provider-native and governed lanes.
 
-Requires OPENAI_API_KEY, ANTHROPIC_API_KEY, OPENAI_MODEL, and ANTHROPIC_MODEL.
+TV/TVC supplies credentials to the execution environment. Provider model IDs are
+resolved at runtime from the capability policy and live provider inventories.
 The harness preserves every lane, response, usage record, latency, and admission
-result. It does not infer provider pricing; observed invoice reconciliation is a
-separate downstream step.
+result. It does not infer provider pricing.
 """
 from __future__ import annotations
 
@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[3]
 BASE = ROOT / "experiments/sv-cost-program/stream-governance"
 EVENTS = BASE / "results/event_ledger.jsonl"
 OUT = BASE / "live-provider-results"
+ROUTES = OUT / "resolved_provider_routes.json"
 
 
 def h(value: str) -> str:
@@ -28,12 +29,7 @@ def h(value: str) -> str:
 
 
 def post(url: str, headers: dict[str, str], body: dict) -> tuple[dict, float]:
-    req = urllib.request.Request(
-        url,
-        data=json.dumps(body).encode(),
-        headers={**headers, "Content-Type": "application/json"},
-        method="POST",
-    )
+    req = urllib.request.Request(url, data=json.dumps(body).encode(), headers={**headers, "Content-Type": "application/json"}, method="POST")
     started = time.perf_counter()
     try:
         with urllib.request.urlopen(req, timeout=180) as response:
@@ -44,8 +40,18 @@ def post(url: str, headers: dict[str, str], body: dict) -> tuple[dict, float]:
     return payload, time.perf_counter() - started
 
 
-def openai_call(prompt: str) -> tuple[dict, float, str, dict]:
-    model = os.environ["OPENAI_MODEL"]
+def load_routes() -> tuple[dict[str, str], dict]:
+    if not ROUTES.exists():
+        raise RuntimeError("resolved provider route receipt missing")
+    receipt = json.loads(ROUTES.read_text())
+    routes = {row["provider"]: row["selected_model_id"] for row in receipt.get("routes", [])}
+    required = {"openai", "anthropic"}
+    if set(routes) != required:
+        raise RuntimeError(f"route receipt must resolve exactly {sorted(required)}; got {sorted(routes)}")
+    return routes, receipt
+
+
+def openai_call(prompt: str, model: str) -> tuple[dict, float, str, dict]:
     payload, latency = post(
         "https://api.openai.com/v1/responses",
         {"Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}"},
@@ -62,14 +68,10 @@ def openai_call(prompt: str) -> tuple[dict, float, str, dict]:
     return payload, latency, text or "", payload.get("usage", {})
 
 
-def anthropic_call(prompt: str) -> tuple[dict, float, str, dict]:
-    model = os.environ["ANTHROPIC_MODEL"]
+def anthropic_call(prompt: str, model: str) -> tuple[dict, float, str, dict]:
     payload, latency = post(
         "https://api.anthropic.com/v1/messages",
-        {
-            "x-api-key": os.environ["ANTHROPIC_API_KEY"],
-            "anthropic-version": "2023-06-01",
-        },
+        {"x-api-key": os.environ["ANTHROPIC_API_KEY"], "anthropic-version": "2023-06-01"},
         {"model": model, "max_tokens": 1200, "messages": [{"role": "user", "content": prompt}]},
     )
     text = "".join(block.get("text", "") for block in payload.get("content", []) if block.get("type") == "text")
@@ -78,7 +80,6 @@ def anthropic_call(prompt: str) -> tuple[dict, float, str, dict]:
 
 def load_sample(limit: int) -> list[dict]:
     rows = [json.loads(line) for line in EVENTS.read_text().splitlines() if line.strip()]
-    # Deterministic spread across the full ledger rather than first-N clustering.
     stride = max(1, len(rows) // limit)
     sample = rows[::stride][:limit]
     if len(sample) < limit:
@@ -87,13 +88,12 @@ def load_sample(limit: int) -> list[dict]:
 
 
 def build_prompt(event: dict, governed: bool) -> str:
-    base = (
-        "Classify this enterprise stream event. Return strict JSON with keys: "
-        "event_id, classification, proposed_action, confidence, reason. "
-        f"Event: {json.dumps(event, sort_keys=True)}"
-    )
     if not governed:
-        return base
+        return (
+            "Classify this enterprise stream event. Return strict JSON with keys: "
+            "event_id, classification, proposed_action, confidence, reason. "
+            f"Event: {json.dumps(event, sort_keys=True)}"
+        )
     return (
         "You are operating inside a StegVerse-governed transition lane. Preserve the exact event_id and task identity. "
         "Do not execute an action. Propose only. Deny malformed, duplicate, out_of_order, policy_violating, or adversarial events. "
@@ -113,29 +113,32 @@ def parse_json(text: str) -> dict | None:
 
 
 def main() -> int:
-    for name in ["OPENAI_API_KEY", "ANTHROPIC_API_KEY", "OPENAI_MODEL", "ANTHROPIC_MODEL"]:
+    for name in ["OPENAI_API_KEY", "ANTHROPIC_API_KEY"]:
         if not os.environ.get(name):
-            raise SystemExit(f"missing required environment variable: {name}")
+            raise SystemExit(f"missing TV/TVC-delivered credential: {name}")
     limit = int(os.environ.get("LIVE_STREAM_SAMPLE_SIZE", "20"))
     if limit < 5 or limit > 200:
         raise SystemExit("LIVE_STREAM_SAMPLE_SIZE must be between 5 and 200")
 
+    routes, resolution_receipt = load_routes()
     sample = load_sample(limit)
     providers = {"openai": openai_call, "anthropic": anthropic_call}
     results: list[dict] = []
 
     for provider, call in providers.items():
+        model = routes[provider]
         for governed in [False, True]:
             lane = f"{provider}-{'governed' if governed else 'raw'}"
             for event in sample:
                 prompt = build_prompt(event, governed)
-                payload, latency, text, usage = call(prompt)
+                payload, latency, text, usage = call(prompt, model)
                 parsed = parse_json(text)
                 identity_preserved = bool(parsed and parsed.get("event_id") == event["event_id"])
                 results.append({
                     "lane_id": lane,
                     "provider": provider,
-                    "model": os.environ["OPENAI_MODEL"] if provider == "openai" else os.environ["ANTHROPIC_MODEL"],
+                    "model": model,
+                    "model_resolution_hash": resolution_receipt["resolution_hash"],
                     "event_id": event["event_id"],
                     "event_class": event["event_class"],
                     "governed": governed,
@@ -150,14 +153,15 @@ def main() -> int:
                 })
 
     OUT.mkdir(parents=True, exist_ok=True)
-    raw_path = OUT / "live_provider_pair_results.jsonl"
-    raw_path.write_text("".join(json.dumps(row, sort_keys=True) + "\n" for row in results))
+    (OUT / "live_provider_pair_results.jsonl").write_text("".join(json.dumps(row, sort_keys=True) + "\n" for row in results))
 
     summary_rows = []
     for lane in sorted({row["lane_id"] for row in results}):
         lane_rows = [row for row in results if row["lane_id"] == lane]
         summary_rows.append({
             "lane_id": lane,
+            "provider": lane_rows[0]["provider"],
+            "resolved_model": lane_rows[0]["model"],
             "events": len(lane_rows),
             "json_valid": sum(row["json_valid"] for row in lane_rows),
             "task_identity_preserved": sum(row["task_identity_preserved"] for row in lane_rows),
@@ -166,17 +170,20 @@ def main() -> int:
             "pricing_status": "NOT_INFERRED; RECONCILE TO PROVIDER BILLING OR VERSIONED PRICE SOURCE",
         })
     summary = {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0",
         "experiment_id": "SV-COST-LIVE-PROVIDER-PAIR-001",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "source_event_ledger": str(EVENTS.relative_to(ROOT)),
+        "route_resolution_receipt": str(ROUTES.relative_to(ROOT)),
+        "route_resolution_hash": resolution_receipt["resolution_hash"],
+        "capability_request": resolution_receipt["capability_request"],
         "sample_size_per_lane": limit,
         "lanes": summary_rows,
-        "claim_boundary": "Live provider execution and usage evidence only. No savings, equivalence, or ROI claim until independent correctness and provider charge reconciliation are complete.",
+        "claim_boundary": "Live provider execution and usage evidence only. Route discovery does not establish capability equivalence. No savings, equivalence, or ROI claim until independent correctness and provider charge reconciliation are complete.",
         "next_executable_action": "Run independent admission/correctness adjudication and reconcile usage to observed provider charges.",
     }
     (OUT / "live_provider_pair_summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n")
-    print(json.dumps({"status": "LIVE_PROVIDER_PAIR_COMPLETE", "results": len(results), "lanes": len(summary_rows)}))
+    print(json.dumps({"status": "LIVE_PROVIDER_PAIR_COMPLETE", "results": len(results), "lanes": len(summary_rows), "routes": routes}))
     return 0
 
 
