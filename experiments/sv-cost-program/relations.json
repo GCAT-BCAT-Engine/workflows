@@ -1,6 +1,6 @@
 {
   "program_id": "SV-COST-MAJOR-GOAL-001",
-  "status": "R3_ADJUDICATED_R4_R5_SYNTHESIS_NEXT",
+  "status": "RELATIONAL_PROGRAM_EXECUTED_DECISION_READY_BOUNDED_CLAIMS",
   "relations": [
     {
       "id": "R1-HISTORICAL-REPEAT",
@@ -81,9 +81,10 @@
       ],
       "changed_variable": "operation class",
       "interpretation": "reuse economics, not platform inference equivalence",
-      "status": "EXECUTED_DIFFERENT_OPERATION_PENDING_CANONICAL_ADJUDICATION",
+      "status": "EXTERNAL_PROVIDER_GENERATION_CAN_BE_AVOIDED_FOR_ALREADY_ADMITTED_WORK_NET_SAVINGS_UNPROVEN",
       "evidence": "experiments/sv-cost-normalized/results/result.json",
-      "publication_gate": "must appear outside like-for-like platform tables and must retain unmeasured local runtime as an explicit gap"
+      "publication_gate": "must appear outside like-for-like platform tables and must retain unmeasured local runtime as an explicit gap",
+      "adjudication_ref": "experiments/sv-cost-program/results/r4-adjudication.json"
     },
     {
       "id": "R5-REPEATED-TRIALS",
@@ -98,8 +99,9 @@
       ],
       "changed_variable": "trial instance",
       "interpretation": "variance, failure rate, retry burden, and confidence",
-      "status": "ACTIVE_ACROSS_R2_AND_R3_PAIRED_TRIALS",
-      "publication_gate": "report distributions, failures, retries, and confidence intervals rather than only averages"
+      "status": "R5_ADJUDICATED_CROSS_RELATION_RELIABILITY",
+      "publication_gate": "report distributions, failures, retries, and confidence intervals rather than only averages",
+      "adjudication_ref": "experiments/sv-cost-program/results/r5-reliability-synthesis.json"
     }
   ],
   "execution_order": [

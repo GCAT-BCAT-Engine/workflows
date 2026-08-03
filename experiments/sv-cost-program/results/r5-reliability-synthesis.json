@@ -1,0 +1,44 @@
+{
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "relation_id": "R5-REPEATED-TRIALS",
+  "status": "R5_ADJUDICATED_CROSS_RELATION_RELIABILITY",
+  "relations": {
+    "R2": {
+      "paired_n": 10,
+      "verdict": "ROUTE_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
+      "direct_completion_rate": 0.0,
+      "batch_completion_rate": 0.0,
+      "direct_verifier_pass_rate": 0.0,
+      "batch_verifier_pass_rate": 0.1,
+      "cost_delta_ci95": [
+        -0.030934499999999997,
+        -0.030934499999999997
+      ],
+      "latency_delta_ci95": [
+        115.41067950660893,
+        119.2420791338274
+      ]
+    },
+    "R3": {
+      "paired_n": 5,
+      "verdict": "CONTEXT_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
+      "full_successful_output_rate": 0.0,
+      "managed_successful_output_rate": 0.0,
+      "input_token_delta_ci95": [
+        -28320.89480558595,
+        -278.7051944140476
+      ],
+      "cost_delta_ci95": [
+        -0.13594626127664858,
+        0.06124146127664857
+      ],
+      "latency_delta_ci95": [
+        -48.887388905274385,
+        60.37189225287447
+      ]
+    }
+  },
+  "total_paired_trials_across_distinct_relations": 15,
+  "pooled_effect_admissible": false,
+  "claim_boundary": "R2 and R3 estimate different causal relations and may not be pooled into one savings percentage. Failure rates, confidence intervals, and bounded repairs remain part of the result."
+}

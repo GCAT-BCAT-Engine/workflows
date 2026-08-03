@@ -1,6 +1,6 @@
 {
   "program_id": "SV-COST-MAJOR-GOAL-001",
-  "status": "R3_REPAIRED_GENERATION_ACTIVE",
+  "status": "RELATIONAL_PROGRAM_EXECUTED_DECISION_READY_BOUNDED_CLAIMS",
   "governing_issue": 12,
   "operator_review_surface": "docs/SV_COST_MAJOR_ANALYSIS.md",
   "lineage_manifest": "experiments/sv-cost-program/lineage.json",
@@ -111,9 +111,12 @@
   ],
   "terminal_relations": [
     "R1-HISTORICAL-REPEAT",
-    "R2-DIRECT-VS-BATCH"
+    "R2-DIRECT-VS-BATCH",
+    "R3-FULL-VS-STEGVERSE-CONTEXT",
+    "R4-GENERATION-VS-RECONSTRUCTION",
+    "R5-REPEATED-TRIALS"
   ],
-  "active_relation": "R3-FULL-VS-STEGVERSE-CONTEXT",
+  "active_relation": null,
   "blocked_until_r3_terminal": [
     "canonical R4 adjudication",
     "R5 cross-relation reliability synthesis",
@@ -124,5 +127,6 @@
     "local StegVerse compute, storage, verification, and maintenance cost",
     "provider invoice reconciliation",
     "final sensitivity and break-even analysis"
-  ]
+  ],
+  "decision_receipt": "experiments/sv-cost-program/results/cfo-decision.json"
 }

@@ -1,0 +1,32 @@
+{
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "relation_id": "R4-GENERATION-VS-RECONSTRUCTION",
+  "status": "R4_ADJUDICATED_DIFFERENT_OPERATION",
+  "verdict": "EXTERNAL_PROVIDER_GENERATION_CAN_BE_AVOIDED_FOR_ALREADY_ADMITTED_WORK_NET_SAVINGS_UNPROVEN",
+  "operation_boundary": {
+    "provider_lanes": "fresh generation",
+    "stegverse_lane": "deterministic reconstruction from admitted repository state",
+    "like_for_like_inference_comparison": false
+  },
+  "evidence": {
+    "normalized_result_sha256": "sha256:5b28a5aad7ff3e60c1704dc0b54eeb8df5a8cff4249079126bad82312dfd3052",
+    "task_contract_hash": "sha256:0cb92e9c34742994e2b1fde980bd05763b64a267f33cbd89d6202b1483b871ae",
+    "all_selected_obligations_satisfied": true
+  },
+  "external_provider_avoidance_scenarios_usd_per_reconstruction": {
+    "instead_of_openai_generation": 0.03881,
+    "instead_of_anthropic_generation": 0.02295
+  },
+  "stegverse": {
+    "external_input_tokens": 0,
+    "external_output_tokens": 0,
+    "external_provider_cost_usd": 0.0,
+    "local_cost_status": "UNMEASURED_LOCAL_RUNTIME"
+  },
+  "publication_gate": {
+    "external_provider_charge_avoidance_admissible": true,
+    "net_savings_admissible": false,
+    "fully_burdened_roi_admissible": false,
+    "claim_boundary": "This is governed reuse economics for already admitted work. Local compute, storage, verification, engineering, and maintenance costs remain unmeasured."
+  }
+}

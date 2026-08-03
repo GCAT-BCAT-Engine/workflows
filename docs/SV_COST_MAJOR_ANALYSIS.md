@@ -1,6 +1,6 @@
 # StegVerse Cost and Capability Analysis
 
-Status: **IN PROGRESS — R3 ACTIVE — NO CFO SAVINGS CLAIM YET**
+Status: **DECISION READY — BOUNDED CLAIMS — GENERAL SAVINGS CLAIM NOT APPROVED**
 
 Governing program: `SV-COST-MAJOR-GOAL-001` / issue #12
 
@@ -182,3 +182,26 @@ The operator is not required to inspect individual result files. New evidence mu
 - Headline savings admissible: false
 
 The finding is bounded by successful full-path quality equivalence and by the distinction between pricing-derived cost and invoice evidence.
+## Final program synthesis
+
+**Program state:** `RELATIONAL_PROGRAM_EXECUTED_DECISION_READY_BOUNDED_CLAIMS`
+
+**CFO decision:** Do not approve a general StegVerse savings or ROI claim from the current evidence.
+
+- R1 reproduced the historical control envelope with an explicit reconstruction boundary.
+- R2 observed a native batch route and pricing effect, but successful quality-equivalent outputs were not established.
+- R3 verdict: `CONTEXT_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE`.
+- R3 headline managed-context savings admissible: `false`.
+- R4 establishes only that reconstruction of already admitted work can avoid a new external provider-generation charge; net savings remain unproven because local costs are unmeasured.
+- R5 retains 15 paired trials across two distinct causal relations and does not pool them into one savings percentage.
+
+### Required before ROI approval
+
+1. Meter StegVerse compute, storage, verification, engineering, and maintenance cost.
+2. Reconcile pricing-derived provider charges to invoices.
+3. Repeat any favorable R3 effect on a held-out workload.
+4. Produce workload-weighted break-even and sensitivity ranges.
+
+The completed testing program supports a bounded financial decision. It does not support a favorable general savings claim unless the remaining cost and validation gates are satisfied.
+
+Machine-readable decision receipt: `experiments/sv-cost-program/results/cfo-decision.json`

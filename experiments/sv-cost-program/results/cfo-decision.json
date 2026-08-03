@@ -1,0 +1,20 @@
+{
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "status": "DECISION_READY_WITH_BOUNDED_CLAIMS",
+  "decision": "DO_NOT_APPROVE_A_GENERAL_STEGVERSE_SAVINGS_CLAIM_FROM_CURRENT_EVIDENCE",
+  "findings": {
+    "historical_control_envelope_reproduced": true,
+    "successful_route_savings_established": false,
+    "successful_managed_context_savings_established": false,
+    "external_provider_charge_avoidance_for_admitted_reconstruction_established": true,
+    "net_reconstruction_savings_established": false
+  },
+  "required_before_roi_approval": [
+    "measure StegVerse compute, storage, verification, engineering, and maintenance cost",
+    "reconcile pricing-derived provider costs to invoices",
+    "repeat any favorable R3 effect on an independent held-out workload",
+    "calculate workload-weighted break-even and sensitivity ranges"
+  ],
+  "claim_boundary": "The evidence program is decision-ready because it supports a bounded decision, not because it proves a favorable ROI.",
+  "canonical_analysis": "docs/SV_COST_MAJOR_ANALYSIS.md"
+}
