@@ -76,13 +76,15 @@
     },
     {
       "id": "R3-FULL-VS-STEGVERSE-CONTEXT",
-      "state": "REPAIRED_GENERATION_DISPATCHED",
+      "state": "R3_ADJUDICATED",
       "operation_class": "paired_observed_provider_execution",
       "generation": "r3-gen-20260803-fix1",
       "artifacts": [
         "experiments/sv-cost-program/r3-full-vs-managed/governance.json",
         "experiments/sv-cost-program/r3-full-vs-managed/protocol.json",
         "experiments/sv-cost-program/r3-full-vs-managed/run.py",
+        "experiments/sv-cost-program/r3-full-vs-managed/results/result.json",
+        "experiments/sv-cost-program/results/r3-adjudication.json",
         ".github/workflows/sv-cost-r3-full-vs-managed.yml",
         ".github/workflows/sv-cost-r3-controller-v2.yml"
       ],
@@ -93,37 +95,71 @@
         "workflow_initial": "cc866f9239f003dab092764a4a1d260f397bb035",
         "defective_controller_retired": "bbf3335610d47e7448089dc7951dc17d8683ee10",
         "repaired_execution_dispatch": "b122112501d7fc744066e9ad53e9f73e16f8b496",
-        "generation_aware_controller": "f2bd2c28aa0778a2074deed3955d1a17d297f502"
+        "generation_aware_controller": "f2bd2c28aa0778a2074deed3955d1a17d297f502",
+        "observed_evidence": "ca04407737cfe8257014d36c1d680d4df2729f8b",
+        "adjudication": "d1617f6ce3419b20c44df13118509e73a1d3ec20"
       },
-      "required_terminal_artifacts": [
-        "experiments/sv-cost-program/r3-full-vs-managed/results/result.json",
-        "experiments/sv-cost-program/results/r3-adjudication.json"
-      ],
-      "boundary": "No R3 cost, token, latency, or quality conclusion is admitted until generation-bound evidence and adjudication are committed."
+      "boundary": "Context-management savings are admissible only when both lanes complete the full governed path and satisfy the same verifier requirements. Pricing-derived cost is not invoice evidence.",
+      "verdict": "CONTEXT_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
+      "run": {
+        "id": 30829852891,
+        "attempt": 1,
+        "head_sha": "b122112501d7fc744066e9ad53e9f73e16f8b496",
+        "artifact_id": 8863128197,
+        "artifact_digest": "sha256:8591f70a40d1765d15fb45902d22643f5189d777126ca45d18e941d1b38e7912"
+      }
     },
     {
       "id": "R4-GENERATION-VS-RECONSTRUCTION",
-      "state": "EXECUTED_DIFFERENT_OPERATION_PENDING_CANONICAL_ADJUDICATION",
+      "state": "R4_ADJUDICATED_DIFFERENT_OPERATION",
       "operation_class": "provider_generation_vs_governed_reconstruction",
       "artifacts": [
         "experiments/sv-cost-normalized/task_contract.json",
         "experiments/sv-cost-normalized/results/result.json",
         "experiments/sv-cost-normalized/results/native/openai.json",
         "experiments/sv-cost-normalized/results/native/anthropic.json",
-        "experiments/sv-cost-normalized/results/native/stegverse-only.json"
+        "experiments/sv-cost-normalized/results/native/stegverse-only.json",
+        "experiments/sv-cost-program/results/r4-adjudication.json"
       ],
       "current_result_blob_sha": "a500441a5a9f3a486b56f013016b1fa4ef8969c0",
-      "boundary": "Repository reconstruction can avoid external provider generation for already admitted work, but local compute, storage, verification, and maintenance cost remain unmeasured. It is not a like-for-like inference comparison."
+      "boundary": "This is governed reuse economics for already admitted work. Local compute, storage, verification, engineering, and maintenance costs remain unmeasured.",
+      "verdict": "EXTERNAL_PROVIDER_GENERATION_CAN_BE_AVOIDED_FOR_ALREADY_ADMITTED_WORK_NET_SAVINGS_UNPROVEN",
+      "adjudication": "experiments/sv-cost-program/results/r4-adjudication.json",
+      "finalizer_commit": "4d8cf5b072f1e0cf232920249a13d24bafe4a81f"
+    },
+    {
+      "id": "R5-REPEATED-TRIALS",
+      "state": "R5_ADJUDICATED_CROSS_RELATION_RELIABILITY",
+      "operation_class": "cross_relation_reliability_synthesis",
+      "artifacts": [
+        "experiments/sv-cost-program/results/r2-adjudication.json",
+        "experiments/sv-cost-program/results/r3-adjudication.json",
+        "experiments/sv-cost-program/results/r5-reliability-synthesis.json"
+      ],
+      "total_paired_trials_across_distinct_relations": 15,
+      "pooled_effect_admissible": false,
+      "boundary": "R2 and R3 estimate different causal relations and may not be pooled into one savings percentage. Failure rates, confidence intervals, and bounded repairs remain part of the result.",
+      "finalizer_commit": "4d8cf5b072f1e0cf232920249a13d24bafe4a81f"
+    },
+    {
+      "id": "CFO-DECISION",
+      "state": "DECISION_READY_WITH_BOUNDED_CLAIMS",
+      "decision": "DO_NOT_APPROVE_A_GENERAL_STEGVERSE_SAVINGS_CLAIM_FROM_CURRENT_EVIDENCE",
+      "artifact": "experiments/sv-cost-program/results/cfo-decision.json",
+      "canonical_analysis": "docs/SV_COST_MAJOR_ANALYSIS.md",
+      "boundary": "The evidence program is decision-ready because it supports a bounded decision, not because it proves a favorable ROI.",
+      "remaining_owner": "issue #13",
+      "finalizer_commit": "4d8cf5b072f1e0cf232920249a13d24bafe4a81f"
     }
   ],
   "unresolved": [
-    "R3 generation-bound result and adjudication",
-    "canonical R4 adjudication outside like-for-like provider tables",
-    "local StegVerse compute, storage, verification, and maintenance cost",
-    "invoice reconciliation for provider charges",
-    "final CFO decision synthesis and sensitivity analysis"
+    "issue #13: fully burdened local cost",
+    "issue #13: provider invoice reconciliation",
+    "issue #13: successful quality-equivalent held-out validation before a favorable context claim",
+    "issue #13: break-even and sensitivity analysis"
   ],
   "terminal_receipts": [
+    "experiments/sv-cost-program/results/historical-lineage-observation.json",
     "experiments/sv-cost-program/results/r2-adjudication.json",
     "experiments/sv-cost-program/results/r3-adjudication.json",
     "experiments/sv-cost-program/results/r4-adjudication.json",

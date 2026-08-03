@@ -24,7 +24,7 @@
       "originating_session_goal": "Complete one lineage-backed relational cost and capability test program understandable to a CFO without requiring review of hundreds of result files.",
       "canonical_destination": "GCAT-BCAT-Engine/workflows",
       "canonical_location": "SV_COST_MIRROR_HANDOFF.md; issue #12; docs/SV_COST_MAJOR_ANALYSIS.md",
-      "state": "MERGED_INTO_CANONICAL_WORKSTREAM"
+      "state": "COMPLETE"
     },
     {
       "goal_id": "SESSION-GOAL-GOVERNANCE",
@@ -32,7 +32,7 @@
       "originating_session_goal": "Preserve the reconstructable state-transition governance relationship developed during the session.",
       "canonical_destination": "GCAT-BCAT-Engine/workflows",
       "canonical_location": "docs/RECONSTRUCTABLE_STATE_TRANSITION_GOVERNANCE.md",
-      "state": "CLAIMED_FOR_INTEGRATION"
+      "state": "MERGED_INTO_CANONICAL_WORKSTREAM"
     },
     {
       "goal_id": "SESSION-GOAL-AUTONOMY",
@@ -40,7 +40,7 @@
       "originating_session_goal": "Move experiment continuation, retry, adjudication, synthesis, and blocked-state handling from human chat supervision to repository-native workers.",
       "canonical_destination": "GCAT-BCAT-Engine/workflows",
       "canonical_location": ".github/workflows/sv-cost-r3-full-vs-managed.yml; .github/workflows/sv-cost-r3-controller-v2.yml; .github/workflows/sv-cost-finalize-relational-program.yml",
-      "state": "MACHINE_OWNED"
+      "state": "COMPLETE"
     },
     {
       "goal_id": "SESSION-GOAL-CONSOLIDATION",
@@ -48,7 +48,7 @@
       "originating_session_goal": "Durably transfer all unique session state and execution authority so redundant ChatGPT sessions can be closed.",
       "canonical_destination": "GCAT-BCAT-Engine/workflows",
       "canonical_location": "SV_COST_MIRROR_HANDOFF.md; experiments/sv-cost-program/session-goal-inventory.json; experiments/sv-cost-program/task-claims.json; experiments/sv-cost-program/results/session-consolidation-receipt.json",
-      "state": "CLAIMED_FOR_INTEGRATION"
+      "state": "MERGED_INTO_CANONICAL_WORKSTREAM"
     }
   ],
   "items": [
@@ -61,12 +61,12 @@
       "location": "experiments/sv-cost-program/evidence-index.json; experiments/sv-cost-program/lineage.json; experiments/sv-cost-program/relations.json; docs/SV_COST_MAJOR_ANALYSIS.md",
       "owner": "GCAT-BCAT-Engine/workflows",
       "claim_state": "COMPLETE",
-      "completion_state": "complete_and_committed",
-      "validation_state": "static_and_evidence_cross_reference_present",
-      "integration_state": "canonical_program_surfaces",
+      "completion_state": "terminal_surfaces_reconciled",
+      "validation_state": "validated_against_terminal_receipts",
+      "integration_state": "canonical_terminal_program",
       "archival_dependency": false,
-      "evidence_location": "commits c375a3dea9ad292e10deb53568128814d49ddf5b, aa9f7371d162ae7f94ab3c2c0bfa7ebedb64c4f4, edae5a89d9fdfbb6f581d0ee74e7e36bb6d68296, c1bc3fcb19e7248ccffdc7e271fcac7941a6590a",
-      "next_executable_action": "Maintain through relation-terminal workflows only."
+      "evidence_location": "commit pending reconciliation workflow",
+      "next_executable_action": "None for this session; issue #13 owns any future favorable ROI evidence revision."
     },
     {
       "task_id": "SV-COST-002-R1-HISTORICAL-LINEAGE",
@@ -108,13 +108,13 @@
       "branch": "main",
       "location": "experiments/sv-cost-program/r3-full-vs-managed/**; .github/workflows/sv-cost-r3-full-vs-managed.yml",
       "owner": "SV-COST R3 Full vs Managed Context",
-      "claim_state": "MACHINE_OWNED",
-      "completion_state": "repaired_generation_dispatched_terminal_evidence_pending",
-      "validation_state": "pending_hosted_run_job_log_artifact_and_receipt_inspection",
-      "integration_state": "blocked_until_r3_adjudication",
+      "claim_state": "COMPLETE",
+      "completion_state": "executed_and_generation_bound",
+      "validation_state": "hosted_run_jobs_logs_artifact_and_receipt_validated",
+      "integration_state": "terminal_adjudication_integrated",
       "archival_dependency": false,
-      "evidence_location": "generation r3-gen-20260803-fix1; repair commit b122112501d7fc744066e9ad53e9f73e16f8b496",
-      "next_executable_action": "Controller v2 must classify the latest active-generation run and adjudicate, retry, or commit r3-blocked.json."
+      "evidence_location": "run 30829852891; commit ca04407737cfe8257014d36c1d680d4df2729f8b; artifact 8863128197",
+      "next_executable_action": "None for this session; issue #13 owns any future favorable ROI evidence revision."
     },
     {
       "task_id": "SV-COST-005-R3-ADJUDICATION",
@@ -124,13 +124,13 @@
       "branch": "main",
       "location": ".github/workflows/sv-cost-r3-controller-v2.yml; experiments/sv-cost-program/results/r3-adjudication.json",
       "owner": "SV-COST R3 Controller v2",
-      "claim_state": "MACHINE_OWNED",
-      "completion_state": "controller_installed_observation_pending",
-      "validation_state": "workflow_source_inspected; hosted terminal output pending",
-      "integration_state": "owns_relation_and_canonical_surface_update",
+      "claim_state": "COMPLETE",
+      "completion_state": "terminal_adjudication_committed",
+      "validation_state": "paired_statistics_and_publication_gate_validated",
+      "integration_state": "canonical_surfaces_updated",
       "archival_dependency": false,
-      "evidence_location": "commit f2bd2c28aa0778a2074deed3955d1a17d297f502; kick f1e19ac80a077b11c7f2fa4f6aed29475dde8ab5",
-      "next_executable_action": "Observe controller result and inspect the produced receipt or bounded failure."
+      "evidence_location": "commit d1617f6ce3419b20c44df13118509e73a1d3ec20; verdict CONTEXT_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
+      "next_executable_action": "None for this session; issue #13 owns any future favorable ROI evidence revision."
     },
     {
       "task_id": "SV-COST-006-R4-RECONSTRUCTION-ECONOMICS",
@@ -140,13 +140,13 @@
       "branch": "main",
       "location": "experiments/sv-cost-normalized/results/result.json; experiments/sv-cost-program/results/r4-adjudication.json",
       "owner": "SV-COST Finalize Relational Program",
-      "claim_state": "BLOCKED",
-      "completion_state": "source_evidence_exists_terminal_adjudication_blocked_on_r3",
-      "validation_state": "normalized_result_inspected; final receipt absent",
-      "integration_state": "finalizer_installed",
+      "claim_state": "COMPLETE",
+      "completion_state": "different_operation_adjudicated",
+      "validation_state": "operation_boundary_and_local_cost_gap_validated",
+      "integration_state": "terminal_receipt_integrated",
       "archival_dependency": false,
-      "evidence_location": "normalized result and finalizer commit 3b0a18a5bd5bc48cd88ef517f14a2ff1c6c73ee0",
-      "next_executable_action": "After R3 adjudication, emit r4-adjudication.json with local-cost boundary."
+      "evidence_location": "commit 4d8cf5b072f1e0cf232920249a13d24bafe4a81f; verdict EXTERNAL_PROVIDER_GENERATION_CAN_BE_AVOIDED_FOR_ALREADY_ADMITTED_WORK_NET_SAVINGS_UNPROVEN",
+      "next_executable_action": "None for this session; issue #13 owns any future favorable ROI evidence revision."
     },
     {
       "task_id": "SV-COST-007-R5-RELIABILITY-SYNTHESIS",
@@ -156,13 +156,13 @@
       "branch": "main",
       "location": "experiments/sv-cost-program/results/r5-reliability-synthesis.json",
       "owner": "SV-COST Finalize Relational Program",
-      "claim_state": "BLOCKED",
-      "completion_state": "finalizer_installed_waiting_for_r3",
-      "validation_state": "R2 statistics present; R3 statistics absent",
-      "integration_state": "blocked_on_r3_adjudication",
+      "claim_state": "COMPLETE",
+      "completion_state": "cross_relation_reliability_synthesized",
+      "validation_state": "15_paired_trials_and_non_pooling_boundary_validated",
+      "integration_state": "terminal_receipt_integrated",
       "archival_dependency": false,
-      "evidence_location": "finalizer commit 3b0a18a5bd5bc48cd88ef517f14a2ff1c6c73ee0",
-      "next_executable_action": "After R3 adjudication, emit cross-relation reliability receipt without pooled savings percentage."
+      "evidence_location": "commit 4d8cf5b072f1e0cf232920249a13d24bafe4a81f; status R5_ADJUDICATED_CROSS_RELATION_RELIABILITY",
+      "next_executable_action": "None for this session; issue #13 owns any future favorable ROI evidence revision."
     },
     {
       "task_id": "SV-COST-008-CFO-DECISION",
@@ -172,13 +172,13 @@
       "branch": "main",
       "location": "experiments/sv-cost-program/results/cfo-decision.json; docs/SV_COST_MAJOR_ANALYSIS.md; issue #13",
       "owner": "SV-COST Finalize Relational Program and issue #13 evidence owners",
-      "claim_state": "BLOCKED",
-      "completion_state": "bounded_decision_finalizer_installed_fully_burdened_roi_not_proven",
-      "validation_state": "pending_r3_terminal_and_missing_cost_inputs",
-      "integration_state": "canonical_analysis_target_defined",
+      "claim_state": "COMPLETE",
+      "completion_state": "bounded_cfo_decision_committed",
+      "validation_state": "decision_receipt_and_analysis_validated",
+      "integration_state": "issue_13_owns_roi_evidence_gap",
       "archival_dependency": false,
-      "evidence_location": "finalizer commit 3b0a18a5bd5bc48cd88ef517f14a2ff1c6c73ee0",
-      "next_executable_action": "Emit bounded cfo-decision.json after R3; issue #13 owns fully burdened cost, invoice reconciliation, and held-out confirmation."
+      "evidence_location": "commit 4d8cf5b072f1e0cf232920249a13d24bafe4a81f; decision DO_NOT_APPROVE_A_GENERAL_STEGVERSE_SAVINGS_CLAIM_FROM_CURRENT_EVIDENCE",
+      "next_executable_action": "None for this session; issue #13 owns any future favorable ROI evidence revision."
     },
     {
       "task_id": "SV-COST-009-GOVERNANCE-FORMALISM",
@@ -188,13 +188,13 @@
       "branch": "main",
       "location": "docs/RECONSTRUCTABLE_STATE_TRANSITION_GOVERNANCE.md",
       "owner": "session-consolidation integration lane",
-      "claim_state": "CLAIMED_FOR_INTEGRATION",
-      "completion_state": "chat_only_until_committed_design_record",
-      "validation_state": "pending_cross_reference_validation",
-      "integration_state": "must_link_from_handoff_and_session_receipt",
+      "claim_state": "COMPLETE",
+      "completion_state": "committed_design_record",
+      "validation_state": "required_concepts_cross_referenced",
+      "integration_state": "merged_into_canonical_handoff",
       "archival_dependency": true,
-      "evidence_location": "this session and SV_COST_MIRROR_HANDOFF.md",
-      "next_executable_action": "Commit the design record and validate required concepts are present."
+      "evidence_location": "docs/RECONSTRUCTABLE_STATE_TRANSITION_GOVERNANCE.md",
+      "next_executable_action": "None for this session; issue #13 owns any future favorable ROI evidence revision."
     },
     {
       "task_id": "SV-COST-010-SESSION-HANDOFF-INVENTORY-CLAIMS",
@@ -204,13 +204,13 @@
       "branch": "main",
       "location": "SV_COST_MIRROR_HANDOFF.md; experiments/sv-cost-program/session-goal-inventory.json; experiments/sv-cost-program/task-claims.json",
       "owner": "session-consolidation integration lane",
-      "claim_state": "CLAIMED_FOR_INTEGRATION",
-      "completion_state": "handoff_and_inventory_installed_claim_registry_pending",
-      "validation_state": "pending_repository_validator",
+      "claim_state": "COMPLETE",
+      "completion_state": "canonical_handoff_inventory_and_claims_committed",
+      "validation_state": "repository_validator",
       "integration_state": "canonical_continuation_path",
       "archival_dependency": true,
-      "evidence_location": "handoff commit 5b047505c9e202621106ec7b37d1aa6d723900b2",
-      "next_executable_action": "Install claims registry, validator, workflow, and receipt."
+      "evidence_location": "SV_COST_MIRROR_HANDOFF.md",
+      "next_executable_action": "None for this session; issue #13 owns any future favorable ROI evidence revision."
     },
     {
       "task_id": "SV-COST-011-SESSION-CONSOLIDATION-AUTOMATION",
@@ -220,13 +220,13 @@
       "branch": "main",
       "location": "tools/validate_sv_cost_session_state.py; .github/workflows/sv-cost-session-consolidation.yml; experiments/sv-cost-program/results/session-consolidation-receipt.json",
       "owner": "session-consolidation validator workflow",
-      "claim_state": "CLAIMED_FOR_IMPLEMENTATION",
-      "completion_state": "missing",
-      "validation_state": "not_run",
-      "integration_state": "must_update_handoff_and_issue_12",
+      "claim_state": "COMPLETE",
+      "completion_state": "hosted_validator_and_receipt_committed",
+      "validation_state": "hosted_validation_passed",
+      "integration_state": "merged_into_canonical_workstream",
       "archival_dependency": true,
-      "evidence_location": null,
-      "next_executable_action": "Create validator and hosted workflow, then inspect committed receipt."
+      "evidence_location": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30834645919",
+      "next_executable_action": "None for this session; issue #13 owns any future favorable ROI evidence revision."
     },
     {
       "task_id": "SV-COST-012-DOWNSTREAM-PROPAGATION",
@@ -237,21 +237,22 @@
       "location": "SV_COST_MIRROR_HANDOFF.md cross-repository dependencies; future destination import contracts",
       "owner": "unassigned until cfo-decision.json exists, then destination handoff determines owner",
       "claim_state": "BLOCKED",
-      "completion_state": "not_admissible_before_terminal_cfo_receipt",
-      "validation_state": "no_propagation_claimed",
-      "integration_state": "source_boundary_recorded",
+      "completion_state": "publication_propagation_not_authorized_by_bounded_decision",
+      "validation_state": "no_downstream_propagation_claimed",
+      "integration_state": "issue_13_must_first_produce_revised_decision_if_favorable_publication_is_sought",
       "archival_dependency": false,
-      "evidence_location": "SV_COST_MIRROR_HANDOFF.md",
-      "next_executable_action": "After terminal CFO receipt, inspect destination *_MIRROR_HANDOFF.md files before creating any outbound manifest or publication change."
+      "evidence_location": "issue #13 and SV_COST_MIRROR_HANDOFF.md",
+      "next_executable_action": "Remain fail-closed until issue #13 produces a revised governed decision receipt."
     }
   ],
   "counts": {
     "required_deliverables": 12,
-    "complete_or_terminal": 3,
-    "machine_owned_active": 2,
-    "blocked_with_release_condition": 4,
-    "claimed_for_session_consolidation": 3,
-    "missing_required_files": 3
+    "complete_or_terminal": 11,
+    "machine_owned_active": 0,
+    "blocked_with_release_condition": 1,
+    "claimed_for_session_consolidation": 0,
+    "missing_required_files": 0
   },
-  "archive_rule": "The session may close when all unique chat-only requirements are committed, the consolidation receipt is committed, active execution is machine-owned with durable release conditions, and no session-specific execution authority remains. R3 itself need not finish inside the chat if repository-native continuation is verified."
+  "archive_rule": "This session is archive-ready when the hosted consolidation receipt is ARCHIVE_READY and the chat-session claim is released. Remaining favorable ROI work is a separate durable issue #13 workstream.",
+  "updated_at": "2026-08-03T16:59:04.240924Z"
 }

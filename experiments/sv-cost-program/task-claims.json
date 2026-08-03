@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "program_id": "SV-COST-MAJOR-GOAL-001",
-  "updated_at": "2026-08-03T16:18:00Z",
+  "updated_at": "2026-08-03T16:59:04.241509Z",
   "canonical_handoff": "SV_COST_MIRROR_HANDOFF.md",
   "allowed_states": [
     "UNCLAIMED",
@@ -36,7 +36,7 @@
       "claimant": "github-actions:SV-COST R3 Full vs Managed Context",
       "execution_lane": "r3-gen-20260803-fix1",
       "role": "implementation",
-      "state": "MACHINE_OWNED",
+      "state": "COMPLETE",
       "claimed_at": "2026-08-03T15:56:36Z",
       "expires_at": "2026-08-04T16:18:00Z",
       "release_condition": "Commit generation-bound result.json and immutable evidence, or reach the controller-enforced three-attempt limit and commit r3-blocked.json.",
@@ -51,7 +51,14 @@
         "committed result.json"
       ],
       "collision_boundaries": "No alternate R3 workflow, runner, or manual dispatch may write the same result generation while this claim is active.",
-      "next_task_after_release": "SV-COST-R3-ADJUDICATION"
+      "next_task_after_release": "SV-COST-R3-ADJUDICATION",
+      "released_at": "2026-08-03T16:19:18Z",
+      "release_evidence": {
+        "run_id": 30829852891,
+        "commit": "ca04407737cfe8257014d36c1d680d4df2729f8b",
+        "artifact_id": 8863128197,
+        "artifact_digest": "sha256:8591f70a40d1765d15fb45902d22643f5189d777126ca45d18e941d1b38e7912"
+      }
     },
     {
       "task_id": "SV-COST-R3-ADJUDICATION",
@@ -69,7 +76,7 @@
       "claimant": "github-actions:SV-COST R3 Controller v2",
       "execution_lane": "generation-aware-observation",
       "role": "validation_and_integration",
-      "state": "MACHINE_OWNED",
+      "state": "COMPLETE",
       "claimed_at": "2026-08-03T15:58:15Z",
       "expires_at": "2026-08-04T16:18:00Z",
       "release_condition": "Commit r3-adjudication.json and update canonical surfaces, or commit r3-blocked.json after bounded attempts.",
@@ -82,7 +89,12 @@
         "publication gate"
       ],
       "collision_boundaries": "May integrate only the terminal R3 evidence produced by the active generation; superseded and follow-on runs are ignored.",
-      "next_task_after_release": "SV-COST-R4-R5-FINALIZE"
+      "next_task_after_release": "SV-COST-R4-R5-FINALIZE",
+      "released_at": "2026-08-03T16:19:34Z",
+      "release_evidence": {
+        "commit": "d1617f6ce3419b20c44df13118509e73a1d3ec20",
+        "receipt": "experiments/sv-cost-program/results/r3-adjudication.json"
+      }
     },
     {
       "task_id": "SV-COST-R4-R5-FINALIZE",
@@ -103,7 +115,7 @@
       "claimant": "github-actions:SV-COST Finalize Relational Program",
       "execution_lane": "terminal-synthesis",
       "role": "integration",
-      "state": "BLOCKED",
+      "state": "COMPLETE",
       "claimed_at": "2026-08-03T16:14:39Z",
       "expires_at": "2026-08-05T16:18:00Z",
       "release_condition": "r3-adjudication.json exists with status R3_ADJUDICATED; then commit R4, R5, CFO receipts and canonical terminal surfaces.",
@@ -115,7 +127,16 @@
         "issue #12 terminal comment"
       ],
       "collision_boundaries": "No independent R4/R5 synthesis may write canonical terminal surfaces while this claim is active or blocked on its declared release condition.",
-      "next_task_after_release": "SV-COST-DOWNSTREAM-PROPAGATION-REVIEW"
+      "next_task_after_release": "SV-COST-DOWNSTREAM-PROPAGATION-REVIEW",
+      "released_at": "2026-08-03T16:19:51Z",
+      "release_evidence": {
+        "commit": "4d8cf5b072f1e0cf232920249a13d24bafe4a81f",
+        "receipts": [
+          "r4-adjudication.json",
+          "r5-reliability-synthesis.json",
+          "cfo-decision.json"
+        ]
+      }
     },
     {
       "task_id": "SV-COST-SESSION-CONSOLIDATE",
@@ -135,7 +156,7 @@
       "claimant": "chatgpt-session:2026-08-03-sv-cost-consolidation",
       "execution_lane": "session-integration",
       "role": "integration_and_validation",
-      "state": "CLAIMED_FOR_INTEGRATION",
+      "state": "MERGED_INTO_CANONICAL_WORKSTREAM",
       "claimed_at": "2026-08-03T16:18:00Z",
       "expires_at": "2026-08-04T16:18:00Z",
       "release_condition": "All listed surfaces are committed, validator passes, hosted workflow commits a consolidation receipt, and the handoff states the exact canonical continuation path.",
@@ -149,7 +170,13 @@
         "issue #12 consolidation comment"
       ],
       "collision_boundaries": "This lane does not alter R3 experimental results or adjudication. It may only preserve session requirements and validate continuation authority.",
-      "next_task_after_release": "Release the chat-session claim as MERGED_INTO_CANONICAL_WORKSTREAM and evaluate archival readiness."
+      "next_task_after_release": "Release the chat-session claim as MERGED_INTO_CANONICAL_WORKSTREAM and evaluate archival readiness.",
+      "released_at": "2026-08-03T16:59:04.241509Z",
+      "release_evidence": {
+        "workflow_run": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30834645919",
+        "receipt": "experiments/sv-cost-program/results/session-consolidation-receipt.json",
+        "canonical_handoff": "SV_COST_MIRROR_HANDOFF.md"
+      }
     },
     {
       "task_id": "SV-COST-CFO-EVIDENCE-003",
@@ -162,13 +189,13 @@
         "experiments/sv-cost-program/cost-model/**",
         "experiments/sv-cost-program/results/cfo-cost-evidence.json"
       ],
-      "claimant": "issue-13-assigned-evidence-owners",
+      "claimant": "issue-13-durable-evidence-workstream",
       "execution_lane": "fully-burdened-cost-and-held-out-validation",
       "role": "implementation_and_validation",
       "state": "BLOCKED",
       "claimed_at": "2026-08-03T16:18:00Z",
       "expires_at": "2026-08-10T16:18:00Z",
-      "release_condition": "Named cost sources and invoice data become available and issue #13 records a claimant with evidence-producing commits or workflows.",
+      "release_condition": "Issue #13 records named cost sources, a versioned cost contract, executable meters, invoice references, and a successful quality-equivalent held-out protocol before a revised favorable decision is possible.",
       "expected_evidence": [
         "metered StegVerse compute cost",
         "storage cost",

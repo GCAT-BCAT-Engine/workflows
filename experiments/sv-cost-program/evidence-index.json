@@ -74,9 +74,12 @@
         "../results/r3-adjudication.json"
       ],
       "relation": "R3-FULL-VS-STEGVERSE-CONTEXT",
-      "status": "REPAIRED_GENERATION_DISPATCHED",
+      "status": "TERMINAL_ADJUDICATED",
       "generation": "r3-gen-20260803-fix1",
-      "boundary": "No R3 finding is admitted until generation-bound evidence and adjudication are committed."
+      "boundary": "Context-management savings are admissible only when both lanes complete the full governed path and satisfy the same verifier requirements. Pricing-derived cost is not invoice evidence.",
+      "verdict": "CONTEXT_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
+      "run_id": 30829852891,
+      "adjudication": "experiments/sv-cost-program/results/r3-adjudication.json"
     },
     {
       "id": "normalized-three-platform",
@@ -94,8 +97,10 @@
         "results/normalized/stegverse-only.json"
       ],
       "relation": "R4-GENERATION-VS-RECONSTRUCTION",
-      "status": "VALID_DIFFERENT_OPERATION_PENDING_CANONICAL_ADJUDICATION",
-      "boundary": "Provider generation and deterministic repository reconstruction are different operations. External provider cost can be reported separately from unmeasured local runtime cost."
+      "status": "TERMINAL_ADJUDICATED_DIFFERENT_OPERATION",
+      "boundary": "This is governed reuse economics for already admitted work. Local compute, storage, verification, engineering, and maintenance costs remain unmeasured.",
+      "verdict": "EXTERNAL_PROVIDER_GENERATION_CAN_BE_AVOIDED_FOR_ALREADY_ADMITTED_WORK_NET_SAVINGS_UNPROVEN",
+      "adjudication": "experiments/sv-cost-program/results/r4-adjudication.json"
     },
     {
       "id": "staged-math-progress",
@@ -117,16 +122,19 @@
     "R5-REPEATED-TRIALS"
   ],
   "active_relation": null,
-  "blocked_until_r3_terminal": [
-    "canonical R4 adjudication",
-    "R5 cross-relation reliability synthesis",
-    "final CFO decision synthesis"
-  ],
   "remaining_evidence_gaps": [
-    "R3 generation-bound result and adjudication",
-    "local StegVerse compute, storage, verification, and maintenance cost",
+    "fully burdened StegVerse compute, storage, verification, engineering, and maintenance cost",
     "provider invoice reconciliation",
-    "final sensitivity and break-even analysis"
+    "successful quality-equivalent held-out context-management validation before any favorable context claim",
+    "workload-weighted break-even and sensitivity analysis"
   ],
-  "decision_receipt": "experiments/sv-cost-program/results/cfo-decision.json"
+  "decision_receipt": "experiments/sv-cost-program/results/cfo-decision.json",
+  "remaining_evidence_owner": {
+    "issue": 13,
+    "title": "SV-COST-CFO-EVIDENCE-003",
+    "state": "BLOCKED_PENDING_NAMED_COST_SOURCES_AND_HELD_OUT_PROTOCOL"
+  },
+  "reliability_receipt": "experiments/sv-cost-program/results/r5-reliability-synthesis.json",
+  "total_paired_trials_across_distinct_relations": 15,
+  "cfo_decision": "DO_NOT_APPROVE_A_GENERAL_STEGVERSE_SAVINGS_CLAIM_FROM_CURRENT_EVIDENCE"
 }

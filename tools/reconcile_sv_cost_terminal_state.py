@@ -523,7 +523,7 @@ This chat is archive-ready when the hosted consolidation receipt reports `ARCHIV
 Denominator: 12 required session deliverables in `session-goal-inventory.json`.
 
 - Task completion: 11/12 terminal; the twelfth is intentionally `BLOCKED` and transferred to issue `#13`.
-- Developed files: 12/12.
+- Developed files: 13/13.
 - Validation: 15/15 repository checks plus hosted R3 job/log/artifact inspection.
 - Integration: 8/8 canonical control-surface links.
 - Goal activation: 4/4 session goals terminal or transferred.

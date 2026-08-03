@@ -56,7 +56,7 @@ REQUIRED_DEVELOPED_FILES = [
     "experiments/sv-cost-program/relations.json",
     "docs/SV_COST_MAJOR_ANALYSIS.md",
     ".github/workflows/sv-cost-r3-controller-v2.yml",
-    ".github/workflows/sv-cost-finalize-relational-program.yml",
+    ".github/workflows/sv-cost-finalize.yml",
 ]
 
 REQUIRED_JSON_FILES = [

@@ -1,0 +1,767 @@
+{
+  "schema_version": "1.1.0",
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "status": "ARCHIVE_READY",
+  "validated_at": "2026-08-03T16:59:04Z",
+  "workflow_run_url": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30834645919",
+  "canonical_handoff": "SV_COST_MIRROR_HANDOFF.md",
+  "canonical_continuation": {
+    "repository": "GCAT-BCAT-Engine/workflows",
+    "branch": "main",
+    "terminal_program_issue": 12,
+    "future_favorable_roi_evidence_issue": 13,
+    "active_chat_owned_tasks": [],
+    "decision_receipt": "experiments/sv-cost-program/results/cfo-decision.json"
+  },
+  "checks": [
+    {
+      "name": "required_developed_files_present",
+      "pass": true,
+      "details": {
+        "missing": []
+      }
+    },
+    {
+      "name": "required_json_parses",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "inventory_has_12_unique_tasks",
+      "pass": true,
+      "details": [
+        "SV-COST-001-CANONICAL-CONTROL-SURFACES",
+        "SV-COST-002-R1-HISTORICAL-LINEAGE",
+        "SV-COST-003-R2-DIRECT-VS-BATCH",
+        "SV-COST-004-R3-FULL-VS-MANAGED-CONTEXT",
+        "SV-COST-005-R3-ADJUDICATION",
+        "SV-COST-006-R4-RECONSTRUCTION-ECONOMICS",
+        "SV-COST-007-R5-RELIABILITY-SYNTHESIS",
+        "SV-COST-008-CFO-DECISION",
+        "SV-COST-009-GOVERNANCE-FORMALISM",
+        "SV-COST-010-SESSION-HANDOFF-INVENTORY-CLAIMS",
+        "SV-COST-011-SESSION-CONSOLIDATION-AUTOMATION",
+        "SV-COST-012-DOWNSTREAM-PROPAGATION"
+      ]
+    },
+    {
+      "name": "inventory_items_complete_and_valid",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "four_session_goals_terminal_and_transferred",
+      "pass": true,
+      "details": {
+        "goal_ids": [
+          "SESSION-GOAL-PRIMARY",
+          "SESSION-GOAL-GOVERNANCE",
+          "SESSION-GOAL-AUTONOMY",
+          "SESSION-GOAL-CONSOLIDATION"
+        ],
+        "invalid": []
+      }
+    },
+    {
+      "name": "claims_complete_and_unique",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "no_stale_active_claims",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "no_active_implementation_collisions",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "blocked_claims_have_durable_release_conditions",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "canonical_claims_released_or_transferred",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "r3_terminal_receipt_valid",
+      "pass": true,
+      "details": {
+        "program_id": "SV-COST-MAJOR-GOAL-001",
+        "relation_id": "R3-FULL-VS-STEGVERSE-CONTEXT",
+        "status": "R3_ADJUDICATED",
+        "verdict": "CONTEXT_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
+        "governance_interpretation": "The reconstructed prior state admitted R3. This adjudication determines whether managed context supports an admissible successor claim under the locked invariants; worker identity is not treated as free-standing authority.",
+        "execution": {
+          "generation": "r3-gen-20260803-fix1",
+          "run_id": 30829852891,
+          "run_url": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30829852891",
+          "head_sha": "b122112501d7fc744066e9ad53e9f73e16f8b496"
+        },
+        "evidence": {
+          "result_sha256": "sha256:f25075db36d2b1d3f5b2833779f55deb1bac8840a136d79e0a60545d5274ca50",
+          "protocol_sha256": "sha256:e6471f57684b700c1a3408c6ac5967ce06c4fa1afdd26f7789663a16d1eafb6e",
+          "governance_sha256": "sha256:6f690ab40a43aa2f95beaa87147f299e23b2485d09dc4e81ba06a16efdd41120",
+          "paired_n": 5
+        },
+        "full": {
+          "mean_input_tokens": 19238.2,
+          "mean_output_tokens": 7337.2,
+          "mean_cost_usd": 0.1677726,
+          "mean_latency_seconds": 122.54875833679998,
+          "full_path_completion_rate": 0.4,
+          "all_attempted_complete_rate": 0.0,
+          "all_attempted_verified_rate": 0.4,
+          "successful_output_rate": 0.0
+        },
+        "managed": {
+          "mean_input_tokens": 4938.4,
+          "mean_output_tokens": 7707,
+          "mean_cost_usd": 0.13042020000000001,
+          "mean_latency_seconds": 128.29101001060002,
+          "full_path_completion_rate": 0.6,
+          "all_attempted_complete_rate": 0.0,
+          "all_attempted_verified_rate": 0.4,
+          "successful_output_rate": 0.0
+        },
+        "paired_effect": {
+          "mean_input_token_delta_managed_minus_full": -14299.8,
+          "input_token_delta_ci95": [
+            -28320.89480558595,
+            -278.7051944140476
+          ],
+          "mean_cost_delta_usd_managed_minus_full": -0.0373524,
+          "cost_delta_ci95": [
+            -0.13594626127664858,
+            0.06124146127664857
+          ],
+          "mean_latency_delta_seconds_managed_minus_full": 5.742251673800041,
+          "latency_delta_ci95": [
+            -48.887388905274385,
+            60.37189225287447
+          ]
+        },
+        "publication_gate": {
+          "structural_quality_equivalent": false,
+          "successful_quality_equivalent": false,
+          "headline_context_savings_admissible": false,
+          "pricing_is_invoice_evidence": false,
+          "claim_boundary": "Context-management savings are admissible only when both lanes complete the full governed path and satisfy the same verifier requirements. Pricing-derived cost is not invoice evidence."
+        }
+      }
+    },
+    {
+      "name": "r4_operation_boundary_valid",
+      "pass": true,
+      "details": {
+        "external_provider_charge_avoidance_admissible": true,
+        "net_savings_admissible": false,
+        "fully_burdened_roi_admissible": false,
+        "claim_boundary": "This is governed reuse economics for already admitted work. Local compute, storage, verification, engineering, and maintenance costs remain unmeasured."
+      }
+    },
+    {
+      "name": "r5_reliability_receipt_valid",
+      "pass": true,
+      "details": {
+        "program_id": "SV-COST-MAJOR-GOAL-001",
+        "relation_id": "R5-REPEATED-TRIALS",
+        "status": "R5_ADJUDICATED_CROSS_RELATION_RELIABILITY",
+        "relations": {
+          "R2": {
+            "paired_n": 10,
+            "verdict": "ROUTE_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
+            "direct_completion_rate": 0.0,
+            "batch_completion_rate": 0.0,
+            "direct_verifier_pass_rate": 0.0,
+            "batch_verifier_pass_rate": 0.1,
+            "cost_delta_ci95": [
+              -0.030934499999999997,
+              -0.030934499999999997
+            ],
+            "latency_delta_ci95": [
+              115.41067950660893,
+              119.2420791338274
+            ]
+          },
+          "R3": {
+            "paired_n": 5,
+            "verdict": "CONTEXT_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
+            "full_successful_output_rate": 0.0,
+            "managed_successful_output_rate": 0.0,
+            "input_token_delta_ci95": [
+              -28320.89480558595,
+              -278.7051944140476
+            ],
+            "cost_delta_ci95": [
+              -0.13594626127664858,
+              0.06124146127664857
+            ],
+            "latency_delta_ci95": [
+              -48.887388905274385,
+              60.37189225287447
+            ]
+          }
+        },
+        "total_paired_trials_across_distinct_relations": 15,
+        "pooled_effect_admissible": false,
+        "claim_boundary": "R2 and R3 estimate different causal relations and may not be pooled into one savings percentage. Failure rates, confidence intervals, and bounded repairs remain part of the result."
+      }
+    },
+    {
+      "name": "bounded_cfo_decision_valid",
+      "pass": true,
+      "details": {
+        "program_id": "SV-COST-MAJOR-GOAL-001",
+        "status": "DECISION_READY_WITH_BOUNDED_CLAIMS",
+        "decision": "DO_NOT_APPROVE_A_GENERAL_STEGVERSE_SAVINGS_CLAIM_FROM_CURRENT_EVIDENCE",
+        "findings": {
+          "historical_control_envelope_reproduced": true,
+          "successful_route_savings_established": false,
+          "successful_managed_context_savings_established": false,
+          "external_provider_charge_avoidance_for_admitted_reconstruction_established": true,
+          "net_reconstruction_savings_established": false
+        },
+        "required_before_roi_approval": [
+          "measure StegVerse compute, storage, verification, engineering, and maintenance cost",
+          "reconcile pricing-derived provider costs to invoices",
+          "repeat any favorable R3 effect on an independent held-out workload",
+          "calculate workload-weighted break-even and sensitivity ranges"
+        ],
+        "claim_boundary": "The evidence program is decision-ready because it supports a bounded decision, not because it proves a favorable ROI.",
+        "canonical_analysis": "docs/SV_COST_MAJOR_ANALYSIS.md"
+      }
+    },
+    {
+      "name": "evidence_index_terminal_and_current",
+      "pass": true,
+      "details": {
+        "program_id": "SV-COST-MAJOR-GOAL-001",
+        "status": "RELATIONAL_PROGRAM_EXECUTED_DECISION_READY_BOUNDED_CLAIMS",
+        "governing_issue": 12,
+        "operator_review_surface": "docs/SV_COST_MAJOR_ANALYSIS.md",
+        "lineage_manifest": "experiments/sv-cost-program/lineage.json",
+        "rules": {
+          "standalone_narrative_reports_allowed": false,
+          "headline_requires_relational_pair": true,
+          "preserve_original_artifacts": true,
+          "observed_execution_must_be_separated_from_accounting_transform": true,
+          "reconstruction_must_be_separated_from_fresh_generation": true,
+          "pricing_derived_cost_is_invoice_evidence": false
+        },
+        "families": [
+          {
+            "id": "historical-original",
+            "classification": "original_evidence",
+            "canonical_claim": "BL-001 and OP-002 historical anchors",
+            "known_values": {
+              "BL-001": {
+                "tokens": 4169,
+                "cost_usd": 0.061659
+              },
+              "OP-002": {
+                "tokens": 4169,
+                "cost_usd": 0.0308295,
+                "reported_reduction_percent": 50
+              }
+            },
+            "evidence_status": "PARTIAL",
+            "boundary": "Exact original prompts and request payloads were not retained. OP-002 has no retained distinct optimized-route receipt."
+          },
+          {
+            "id": "historical-rerun",
+            "classification": "repeat_evidence",
+            "root": "experiments/sv-cost-historical-rerun/",
+            "canonical_files": [
+              "lineage_manifest.json",
+              "protocol.json",
+              "results/comparison.json",
+              "results/report.md",
+              "results/BL-001-RERUN-receipt.json",
+              "results/OP-002-accounting-replay.json",
+              "../sv-cost-program/results/historical-lineage-observation.json"
+            ],
+            "relation": "R1-HISTORICAL-REPEAT",
+            "status": "OBSERVED_AND_VALIDATED_WITH_RECONSTRUCTION_BOUNDARY"
+          },
+          {
+            "id": "r2-direct-vs-batch",
+            "classification": "paired_route_evidence",
+            "root": "experiments/sv-cost-program/r2-direct-vs-batch/",
+            "canonical_files": [
+              "governance.json",
+              "protocol.json",
+              "results/result.json",
+              "../results/r2-adjudication.json"
+            ],
+            "relation": "R2-DIRECT-VS-BATCH",
+            "status": "TERMINAL_ADJUDICATED",
+            "verdict": "ROUTE_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
+            "boundary": "A native provider batch route was observed, but successful equivalent outputs were not established."
+          },
+          {
+            "id": "r3-full-vs-managed-context",
+            "classification": "paired_context_evidence",
+            "root": "experiments/sv-cost-program/r3-full-vs-managed/",
+            "canonical_files": [
+              "governance.json",
+              "protocol.json",
+              "run.py",
+              "results/result.json",
+              "../results/r3-adjudication.json"
+            ],
+            "relation": "R3-FULL-VS-STEGVERSE-CONTEXT",
+            "status": "TERMINAL_ADJUDICATED",
+            "generation": "r3-gen-20260803-fix1",
+            "boundary": "Context-management savings are admissible only when both lanes complete the full governed path and satisfy the same verifier requirements. Pricing-derived cost is not invoice evidence.",
+            "verdict": "CONTEXT_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
+            "run_id": 30829852891,
+            "adjudication": "experiments/sv-cost-program/results/r3-adjudication.json"
+          },
+          {
+            "id": "normalized-three-platform",
+            "classification": "generation_and_reconstruction_evidence",
+            "root": "experiments/sv-cost-normalized/",
+            "canonical_files": [
+              "task_contract.json",
+              "results/result.json",
+              "results/report.md",
+              "results/native/openai.json",
+              "results/native/anthropic.json",
+              "results/native/stegverse-only.json",
+              "results/normalized/openai.json",
+              "results/normalized/anthropic.json",
+              "results/normalized/stegverse-only.json"
+            ],
+            "relation": "R4-GENERATION-VS-RECONSTRUCTION",
+            "status": "TERMINAL_ADJUDICATED_DIFFERENT_OPERATION",
+            "boundary": "This is governed reuse economics for already admitted work. Local compute, storage, verification, engineering, and maintenance costs remain unmeasured.",
+            "verdict": "EXTERNAL_PROVIDER_GENERATION_CAN_BE_AVOIDED_FOR_ALREADY_ADMITTED_WORK_NET_SAVINGS_UNPROVEN",
+            "adjudication": "experiments/sv-cost-program/results/r4-adjudication.json"
+          },
+          {
+            "id": "staged-math-progress",
+            "classification": "supporting_stage_contract_and_progress_evidence",
+            "root": "experiments/staged-math-progress/",
+            "canonical_files": [
+              "stage_contract.json"
+            ],
+            "relation": "R3-FULL-VS-STEGVERSE-CONTEXT",
+            "status": "SUBORDINATE_TO_R3",
+            "boundary": "Stage artifacts are not independent economic conclusions."
+          }
+        ],
+        "terminal_relations": [
+          "R1-HISTORICAL-REPEAT",
+          "R2-DIRECT-VS-BATCH",
+          "R3-FULL-VS-STEGVERSE-CONTEXT",
+          "R4-GENERATION-VS-RECONSTRUCTION",
+          "R5-REPEATED-TRIALS"
+        ],
+        "active_relation": null,
+        "remaining_evidence_gaps": [
+          "fully burdened StegVerse compute, storage, verification, engineering, and maintenance cost",
+          "provider invoice reconciliation",
+          "successful quality-equivalent held-out context-management validation before any favorable context claim",
+          "workload-weighted break-even and sensitivity analysis"
+        ],
+        "decision_receipt": "experiments/sv-cost-program/results/cfo-decision.json",
+        "remaining_evidence_owner": {
+          "issue": 13,
+          "title": "SV-COST-CFO-EVIDENCE-003",
+          "state": "BLOCKED_PENDING_NAMED_COST_SOURCES_AND_HELD_OUT_PROTOCOL"
+        },
+        "reliability_receipt": "experiments/sv-cost-program/results/r5-reliability-synthesis.json",
+        "total_paired_trials_across_distinct_relations": 15,
+        "cfo_decision": "DO_NOT_APPROVE_A_GENERAL_STEGVERSE_SAVINGS_CLAIM_FROM_CURRENT_EVIDENCE"
+      }
+    },
+    {
+      "name": "lineage_terminal_nodes_current",
+      "pass": true,
+      "details": {
+        "CONTROL-SURFACES": {
+          "id": "CONTROL-SURFACES",
+          "state": "COMMITTED",
+          "artifacts": [
+            "experiments/sv-cost-program/evidence-index.json",
+            "experiments/sv-cost-program/relations.json",
+            "experiments/sv-cost-program/lineage.json",
+            "docs/SV_COST_MAJOR_ANALYSIS.md"
+          ],
+          "commits": {
+            "evidence_index_initial": "790c9cca75b125d10b1aa5046f7ac34b3996c4ab",
+            "relations_initial": "89c5f7fdbede79db1b2819f21c7fb90d9df30cab",
+            "analysis_initial": "4f2e1dc53f48271143e6f857d9e78c5313c00cc1"
+          }
+        },
+        "R1-HISTORICAL-REPEAT": {
+          "id": "R1-HISTORICAL-REPEAT",
+          "state": "OBSERVED_AND_VALIDATED_WITH_RECONSTRUCTION_BOUNDARY",
+          "operation_class": "observed_execution_plus_historical_reconstruction",
+          "artifacts": [
+            "experiments/sv-cost-historical-rerun/lineage_manifest.json",
+            "experiments/sv-cost-historical-rerun/results/BL-001-RERUN-receipt.json",
+            "experiments/sv-cost-historical-rerun/results/comparison.json",
+            "experiments/sv-cost-historical-rerun/results/OP-002-accounting-replay.json",
+            "experiments/sv-cost-program/results/historical-lineage-observation.json"
+          ],
+          "commits": {
+            "lineage_manifest": "b63007a9fde7fa91716647ea45be89260efc376f",
+            "op002_accounting_replay": "baf741e7d73326c6afbe88efc1975748fddf99f1",
+            "lineage_report": "5d9dc4b258616842c2b9068f751b0f88f7d817f5",
+            "hosted_execution": "1b0e5ff0b72ca13fa708308ca0de54fc6f818333",
+            "observation_receipt": "0526420dd5d239100e6f2898785c1ecbd23626dd"
+          },
+          "run": {
+            "id": 30821086433,
+            "attempt": 1
+          },
+          "boundary": "The BL-001 control envelope is closely reproduced, but the exact historical prompt and request payload were not retained. OP-002 remains an accounting replay rather than an observed optimized-route execution."
+        },
+        "R2-DIRECT-VS-BATCH": {
+          "id": "R2-DIRECT-VS-BATCH",
+          "state": "R2_ADJUDICATED",
+          "operation_class": "paired_observed_provider_execution",
+          "artifacts": [
+            "experiments/sv-cost-program/r2-direct-vs-batch/governance.json",
+            "experiments/sv-cost-program/r2-direct-vs-batch/protocol.json",
+            "experiments/sv-cost-program/r2-direct-vs-batch/results/result.json",
+            "experiments/sv-cost-program/results/r2-adjudication.json"
+          ],
+          "commits": {
+            "governance": "c2aa0b696159cf314ae83360e915d5f92f995cc3",
+            "protocol": "0020aa515a7d97a9d0fda9faeea924d94de7fa1f",
+            "runner": "26d2e464fb0bfb0c112fa3b15332b0dd5a8e7060",
+            "workflow": "317e88e5b2feb0005940faf60615698b443e6158",
+            "observed_evidence": "30a7d55deeb4d751177cd20aeffa4a14e2a5bfac",
+            "adjudication": "e728da4be3ce4ff290849f92c4ce66092a406923"
+          },
+          "run": {
+            "id": 30825311249,
+            "attempt": 1,
+            "native_batch_id": "msgbatch_01HL3iB57s9Z7TNtHYj3LtxG"
+          },
+          "verdict": "ROUTE_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
+          "boundary": "The batch route and pricing effect were observed, but neither lane established successful equivalent outputs. Pricing-derived values are not invoice evidence."
+        },
+        "R3-FULL-VS-STEGVERSE-CONTEXT": {
+          "id": "R3-FULL-VS-STEGVERSE-CONTEXT",
+          "state": "R3_ADJUDICATED",
+          "operation_class": "paired_observed_provider_execution",
+          "generation": "r3-gen-20260803-fix1",
+          "artifacts": [
+            "experiments/sv-cost-program/r3-full-vs-managed/governance.json",
+            "experiments/sv-cost-program/r3-full-vs-managed/protocol.json",
+            "experiments/sv-cost-program/r3-full-vs-managed/run.py",
+            "experiments/sv-cost-program/r3-full-vs-managed/results/result.json",
+            "experiments/sv-cost-program/results/r3-adjudication.json",
+            ".github/workflows/sv-cost-r3-full-vs-managed.yml",
+            ".github/workflows/sv-cost-r3-controller-v2.yml"
+          ],
+          "commits": {
+            "governance": "6c8d286c14131bbfdfd0f49b5735279270761905",
+            "protocol": "22806761820c4e2d4c822d44d9e089b2a2807b04",
+            "runner_initial": "2bf1f523cd108da7dc4be809e3fad1148aeac314",
+            "workflow_initial": "cc866f9239f003dab092764a4a1d260f397bb035",
+            "defective_controller_retired": "bbf3335610d47e7448089dc7951dc17d8683ee10",
+            "repaired_execution_dispatch": "b122112501d7fc744066e9ad53e9f73e16f8b496",
+            "generation_aware_controller": "f2bd2c28aa0778a2074deed3955d1a17d297f502",
+            "observed_evidence": "ca04407737cfe8257014d36c1d680d4df2729f8b",
+            "adjudication": "d1617f6ce3419b20c44df13118509e73a1d3ec20"
+          },
+          "boundary": "Context-management savings are admissible only when both lanes complete the full governed path and satisfy the same verifier requirements. Pricing-derived cost is not invoice evidence.",
+          "verdict": "CONTEXT_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
+          "run": {
+            "id": 30829852891,
+            "attempt": 1,
+            "head_sha": "b122112501d7fc744066e9ad53e9f73e16f8b496",
+            "artifact_id": 8863128197,
+            "artifact_digest": "sha256:8591f70a40d1765d15fb45902d22643f5189d777126ca45d18e941d1b38e7912"
+          }
+        },
+        "R4-GENERATION-VS-RECONSTRUCTION": {
+          "id": "R4-GENERATION-VS-RECONSTRUCTION",
+          "state": "R4_ADJUDICATED_DIFFERENT_OPERATION",
+          "operation_class": "provider_generation_vs_governed_reconstruction",
+          "artifacts": [
+            "experiments/sv-cost-normalized/task_contract.json",
+            "experiments/sv-cost-normalized/results/result.json",
+            "experiments/sv-cost-normalized/results/native/openai.json",
+            "experiments/sv-cost-normalized/results/native/anthropic.json",
+            "experiments/sv-cost-normalized/results/native/stegverse-only.json",
+            "experiments/sv-cost-program/results/r4-adjudication.json"
+          ],
+          "current_result_blob_sha": "a500441a5a9f3a486b56f013016b1fa4ef8969c0",
+          "boundary": "This is governed reuse economics for already admitted work. Local compute, storage, verification, engineering, and maintenance costs remain unmeasured.",
+          "verdict": "EXTERNAL_PROVIDER_GENERATION_CAN_BE_AVOIDED_FOR_ALREADY_ADMITTED_WORK_NET_SAVINGS_UNPROVEN",
+          "adjudication": "experiments/sv-cost-program/results/r4-adjudication.json",
+          "finalizer_commit": "4d8cf5b072f1e0cf232920249a13d24bafe4a81f"
+        },
+        "R5-REPEATED-TRIALS": {
+          "id": "R5-REPEATED-TRIALS",
+          "state": "R5_ADJUDICATED_CROSS_RELATION_RELIABILITY",
+          "operation_class": "cross_relation_reliability_synthesis",
+          "artifacts": [
+            "experiments/sv-cost-program/results/r2-adjudication.json",
+            "experiments/sv-cost-program/results/r3-adjudication.json",
+            "experiments/sv-cost-program/results/r5-reliability-synthesis.json"
+          ],
+          "total_paired_trials_across_distinct_relations": 15,
+          "pooled_effect_admissible": false,
+          "boundary": "R2 and R3 estimate different causal relations and may not be pooled into one savings percentage. Failure rates, confidence intervals, and bounded repairs remain part of the result.",
+          "finalizer_commit": "4d8cf5b072f1e0cf232920249a13d24bafe4a81f"
+        },
+        "CFO-DECISION": {
+          "id": "CFO-DECISION",
+          "state": "DECISION_READY_WITH_BOUNDED_CLAIMS",
+          "decision": "DO_NOT_APPROVE_A_GENERAL_STEGVERSE_SAVINGS_CLAIM_FROM_CURRENT_EVIDENCE",
+          "artifact": "experiments/sv-cost-program/results/cfo-decision.json",
+          "canonical_analysis": "docs/SV_COST_MAJOR_ANALYSIS.md",
+          "boundary": "The evidence program is decision-ready because it supports a bounded decision, not because it proves a favorable ROI.",
+          "remaining_owner": "issue #13",
+          "finalizer_commit": "4d8cf5b072f1e0cf232920249a13d24bafe4a81f"
+        }
+      }
+    },
+    {
+      "name": "relations_terminal_and_linked",
+      "pass": true,
+      "details": {
+        "R1-HISTORICAL-REPEAT": {
+          "id": "R1-HISTORICAL-REPEAT",
+          "question": "Does the original BL-001 control envelope reproduce?",
+          "left": "historical BL-001",
+          "right": "BL-001-RERUN",
+          "invariants": [
+            "provider",
+            "model",
+            "direct unoptimized task class",
+            "4096 output-token ceiling",
+            "pricing basis"
+          ],
+          "changed_variable": "execution time and reconstructed prompt payload",
+          "interpretation": "reproducibility and historical drift only",
+          "status": "OBSERVED_AND_VALIDATED_WITH_RECONSTRUCTION_BOUNDARY",
+          "receipt": "experiments/sv-cost-program/results/historical-lineage-observation.json",
+          "publication_gate": "state exact prompt/payload loss and completion-criterion variance"
+        },
+        "R2-DIRECT-VS-BATCH": {
+          "id": "R2-DIRECT-VS-BATCH",
+          "question": "What cost changes when only the eligible execution route changes?",
+          "left": "direct synchronous execution",
+          "right": "actual provider batch execution",
+          "invariants": [
+            "provider",
+            "model",
+            "task payload",
+            "completion criterion",
+            "quality verifier",
+            "trial set"
+          ],
+          "changed_variable": "execution route",
+          "interpretation": "route-attributable cost and latency effect",
+          "status": "ROUTE_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
+          "governance": "experiments/sv-cost-program/r2-direct-vs-batch/governance.json",
+          "protocol": "experiments/sv-cost-program/r2-direct-vs-batch/protocol.json",
+          "workflow": ".github/workflows/sv-cost-r2-direct-vs-batch.yml",
+          "publication_gate": "both lanes must retain native provider route and usage receipts; pricing-derived cost is not an invoice",
+          "adjudication_ref": "experiments/sv-cost-program/results/r2-adjudication.json"
+        },
+        "R3-FULL-VS-STEGVERSE-CONTEXT": {
+          "id": "R3-FULL-VS-STEGVERSE-CONTEXT",
+          "question": "What changes when StegVerse manages context for the same provider execution?",
+          "left": "same provider/model with full context",
+          "right": "same provider/model with StegVerse-managed context",
+          "invariants": [
+            "provider",
+            "model",
+            "task",
+            "route",
+            "output obligations",
+            "verifier",
+            "trial set"
+          ],
+          "changed_variable": "context representation and transfer",
+          "interpretation": "StegVerse-attributable token, cost, latency, and quality effect",
+          "status": "CONTEXT_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE",
+          "generation": "r3-gen-20260803-fix1",
+          "governance": "experiments/sv-cost-program/r3-full-vs-managed/governance.json",
+          "protocol": "experiments/sv-cost-program/r3-full-vs-managed/protocol.json",
+          "workflow": ".github/workflows/sv-cost-r3-full-vs-managed.yml",
+          "controller": ".github/workflows/sv-cost-r3-controller-v2.yml",
+          "required_result": "experiments/sv-cost-program/r3-full-vs-managed/results/result.json",
+          "required_adjudication": "experiments/sv-cost-program/results/r3-adjudication.json",
+          "publication_gate": "both lanes must complete the full governed S0-S6 path and pass the same verifier; pricing-derived cost is not invoice evidence",
+          "adjudication_ref": "experiments/sv-cost-program/results/r3-adjudication.json"
+        },
+        "R4-GENERATION-VS-RECONSTRUCTION": {
+          "id": "R4-GENERATION-VS-RECONSTRUCTION",
+          "question": "What provider cost is avoided when admitted work is reconstructed instead of regenerated?",
+          "left": "fresh provider generation",
+          "right": "governed repository reconstruction",
+          "invariants": [
+            "task identity",
+            "required obligations",
+            "admitted artifact version"
+          ],
+          "changed_variable": "operation class",
+          "interpretation": "reuse economics, not platform inference equivalence",
+          "status": "EXTERNAL_PROVIDER_GENERATION_CAN_BE_AVOIDED_FOR_ALREADY_ADMITTED_WORK_NET_SAVINGS_UNPROVEN",
+          "evidence": "experiments/sv-cost-normalized/results/result.json",
+          "publication_gate": "must appear outside like-for-like platform tables and must retain unmeasured local runtime as an explicit gap",
+          "adjudication_ref": "experiments/sv-cost-program/results/r4-adjudication.json"
+        },
+        "R5-REPEATED-TRIALS": {
+          "id": "R5-REPEATED-TRIALS",
+          "question": "How reliable are the measured effects?",
+          "left": "single-run estimates",
+          "right": "repeated paired trials",
+          "invariants": [
+            "relation contract",
+            "models",
+            "price card",
+            "verifier"
+          ],
+          "changed_variable": "trial instance",
+          "interpretation": "variance, failure rate, retry burden, and confidence",
+          "status": "R5_ADJUDICATED_CROSS_RELATION_RELIABILITY",
+          "publication_gate": "report distributions, failures, retries, and confidence intervals rather than only averages",
+          "adjudication_ref": "experiments/sv-cost-program/results/r5-reliability-synthesis.json"
+        }
+      }
+    },
+    {
+      "name": "handoff_complete_terminal_and_nonstale",
+      "pass": true,
+      "details": {
+        "missing": [],
+        "stale": []
+      }
+    },
+    {
+      "name": "analysis_single_terminal_synthesis_nonstale",
+      "pass": true,
+      "details": {
+        "missing": [],
+        "stale": []
+      }
+    },
+    {
+      "name": "governance_session_requirements_transferred",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "canonical_integration_complete",
+      "pass": true,
+      "details": {
+        "handoff_to_inventory": true,
+        "handoff_to_claims": true,
+        "handoff_to_analysis": true,
+        "handoff_to_governance": true,
+        "handoff_to_issue_13": true,
+        "inventory_to_handoff": true,
+        "claims_to_handoff": true,
+        "r3_to_lineage": true,
+        "r4_r5_to_relations": true,
+        "cfo_to_analysis": true
+      }
+    },
+    {
+      "name": "all_chat_unique_tasks_terminal",
+      "pass": true,
+      "details": {
+        "SV-COST-009-GOVERNANCE-FORMALISM": "COMPLETE",
+        "SV-COST-010-SESSION-HANDOFF-INVENTORY-CLAIMS": "COMPLETE",
+        "SV-COST-011-SESSION-CONSOLIDATION-AUTOMATION": "COMPLETE"
+      }
+    },
+    {
+      "name": "remaining_blocked_work_durably_transferred",
+      "pass": true,
+      "details": [
+        {
+          "task_id": "SV-COST-012-DOWNSTREAM-PROPAGATION",
+          "owner": "unassigned until cfo-decision.json exists, then destination handoff determines owner",
+          "location": "SV_COST_MIRROR_HANDOFF.md cross-repository dependencies; future destination import contracts"
+        }
+      ]
+    }
+  ],
+  "metrics": {
+    "task_completion": {
+      "complete_or_terminal": 11,
+      "required": 12,
+      "blocked_but_transferred": 1
+    },
+    "developed_files": {
+      "developed": 13,
+      "required": 13,
+      "scaffolding_or_stubs": 0,
+      "missing_required_files": 0
+    },
+    "validation": {
+      "validated": 23,
+      "required": 23
+    },
+    "integration": {
+      "integrated": 10,
+      "required": 10,
+      "details": {
+        "handoff_to_inventory": true,
+        "handoff_to_claims": true,
+        "handoff_to_analysis": true,
+        "handoff_to_governance": true,
+        "handoff_to_issue_13": true,
+        "inventory_to_handoff": true,
+        "claims_to_handoff": true,
+        "r3_to_lineage": true,
+        "r4_r5_to_relations": true,
+        "cfo_to_analysis": true
+      }
+    },
+    "goal_activation": {
+      "active_or_terminal": 4,
+      "required": 4
+    },
+    "session_consolidation": {
+      "transferred_or_complete": 4,
+      "total_session_goals": 4,
+      "chat_claim_released": true
+    }
+  },
+  "archive_readiness": {
+    "ready": true,
+    "unique_session_requirements_transferred": true,
+    "remaining_work_has_durable_owner": true,
+    "no_active_chat_owned_tasks": true,
+    "bounded_program_decision_terminal": true,
+    "rule": "Issue #13 may continue independently. Archiving this chat does not imply favorable ROI completion; it confirms that the bounded decision and every remaining authority boundary are durable."
+  },
+  "observed_r3_evidence": {
+    "run_id": 30829852891,
+    "artifact_id": 8863128197,
+    "artifact_digest": "sha256:8591f70a40d1765d15fb45902d22643f5189d777126ca45d18e941d1b38e7912",
+    "verdict": "CONTEXT_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE"
+  },
+  "file_hashes": {
+    "SV_COST_MIRROR_HANDOFF.md": "sha256:0b3fd40bf4c8fe592525fd4112aaf955f2cde203318bc83944a46c1c8de451ac",
+    "experiments/sv-cost-program/session-goal-inventory.json": "sha256:69bccf70fb0b56dddabfce586a8cbb086473a648af0b4b017950d64281d7fea1",
+    "experiments/sv-cost-program/task-claims.json": "sha256:f2663ed1d95307d046abbfdfb2d9b6f1126622c87e0f0c596916b25bd220c678",
+    "docs/RECONSTRUCTABLE_STATE_TRANSITION_GOVERNANCE.md": "sha256:2ed9ffcde0adad74a0c0e78096bdcf44a9cbe9a492307630d9ee6faf59e6a80f",
+    "tools/reconcile_sv_cost_terminal_state.py": "sha256:1fbb1780dde190594c237cae730cca941a8522e15b513a7edc4c021333da7fa0",
+    "tools/validate_sv_cost_session_state.py": "sha256:d2be14697bf967b7eb5f65233ce328a5d538a1b1638375da32e59cc09449b28e",
+    ".github/workflows/sv-cost-session-consolidation.yml": "sha256:b4f394343109257e4443357192ec50b8422d356392ca6692bc9c971d28ce25cc",
+    "experiments/sv-cost-program/evidence-index.json": "sha256:acb424cbeecd84aa2a88ce0611a4f7299dfcc6ae71fae836ebef80445d4d0541",
+    "experiments/sv-cost-program/lineage.json": "sha256:f777c58a41c05c73d30f2dcfc99a58da00b8432687868053176316c0e0fe697a",
+    "experiments/sv-cost-program/relations.json": "sha256:f9f79380be5bd88efda5988e3bdabd9979bc9084fa7d5b2868066932de5ca031",
+    "docs/SV_COST_MAJOR_ANALYSIS.md": "sha256:29129549f3f2a6f13880adf0e6f044a21598ed32e2395ab0ee4f771325ae3b12",
+    ".github/workflows/sv-cost-r3-controller-v2.yml": "sha256:24bcb3c59c4f5b43ea0f5bb4825f007dfc430402a4c3f00bec0fbd02febf3c9c",
+    ".github/workflows/sv-cost-finalize.yml": "sha256:1e474cf234c65759185facd6537cf48efa11860d4912ff9e2e64f5864a8cd1ab"
+  }
+}
