@@ -1,0 +1,48 @@
+{
+  "experiment_id": "SV-COST-STAGED-001",
+  "problem_id": "SV-MATH-001",
+  "canonical_tokenizer": "cl100k_base",
+  "purpose": "Measure validated mathematical progress at equal normalized token checkpoints and minimum observed cost to reach equivalent stages.",
+  "canonical_problem": "Characterize ALLOW admissibility for an abstract GCAT/BCAT evaluator. Let GBP, BD, and OC be predicates on a candidate transition. The evaluator returns ALLOW exactly when GBP and BD and OC all hold. Establish the necessary-and-sufficient characterization, state the claim boundary, and prepare a Lean 4 candidate for the logical core. Do not invent a deployed-engine specification or claim implementation validity.",
+  "checkpoints": [1000, 2000, 4000, 8000],
+  "stages": [
+    {
+      "id": "S0",
+      "name": "Task parsing and claim boundary",
+      "required": ["task identity", "stipulated abstract evaluator", "no deployed-engine claim", "unresolved implementation binding"]
+    },
+    {
+      "id": "S1",
+      "name": "Definitions and assumptions",
+      "required": ["GBP definition", "BD definition", "OC definition", "ALLOW or Admissible definition"]
+    },
+    {
+      "id": "S2",
+      "name": "Theorem formulation",
+      "required": ["necessary and sufficient", "GBP", "BD", "OC", "if and only if"]
+    },
+    {
+      "id": "S3",
+      "name": "Proof strategy and lemma decomposition",
+      "required": ["forward direction", "reverse direction", "necessity", "sufficiency"]
+    },
+    {
+      "id": "S4",
+      "name": "Complete informal proof",
+      "required": ["proof", "forward direction", "reverse direction", "claim boundary"]
+    },
+    {
+      "id": "S5",
+      "name": "Lean 4 candidate",
+      "required": ["```lean", "theorem", "Admissible", "JointConditions"]
+    },
+    {
+      "id": "S6",
+      "name": "Verification ledger",
+      "required": ["verified", "unresolved", "evidence", "implementation"]
+    }
+  ],
+  "admission_rule": "A stage is admitted only when all required evidence strings are present case-insensitively, task identity remains fixed, and the lane does not assert deployed-engine validity.",
+  "accounting_rule": "All serialized task, stage instructions, retained prior artifacts, governance instructions, outputs, and validator records are counted with cl100k_base. Native provider usage and observed API cost remain separate receipts.",
+  "claim_boundary": "This experiment measures progress through a stipulated formalization. It does not establish correctness for a deployed GCAT/BCAT implementation."
+}
