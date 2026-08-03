@@ -50,4 +50,5 @@ jobs:
           git add experiments/ten-advances/results reports/ten-advances-estimation-summary.md
           git diff --cached --quiet && exit 0
           git commit -m 'Record ten advances provider estimates'
-          git push
+          git pull --rebase origin main
+          git push origin HEAD:main
