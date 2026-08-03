@@ -1,0 +1,37 @@
+name: SV-COST OpenAI Announcement Demo
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - docs/OPENAI_ANNOUNCEMENT_STREAM_GOVERNANCE_DEMO.md
+      - experiments/sv-cost-program/publication/openai-announcement-demo-manifest.json
+      - experiments/sv-cost-program/publication/validate_openai_announcement_demo.py
+      - experiments/sv-cost-program/stream-governance/results/stream_governance_decision.json
+      - experiments/sv-cost-program/stream-governance/results/lane_costs.json
+      - .github/workflows/sv-cost-openai-announcement-demo.yml
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate publication manifest
+        run: python -m json.tool experiments/sv-cost-program/publication/openai-announcement-demo-manifest.json >/dev/null
+
+      - name: Validate announcement package
+        run: python experiments/sv-cost-program/publication/validate_openai_announcement_demo.py
+
+      - name: Publish summary
+        run: |
+          echo "## OpenAI Announcement Demo" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Publication package validated for human posting with synthetic-evidence disclosure." >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          python experiments/sv-cost-program/publication/validate_openai_announcement_demo.py >> "$GITHUB_STEP_SUMMARY"
