@@ -1,0 +1,121 @@
+{
+  "status": "OBSERVED_AND_VALIDATED",
+  "run_id": 30821086433,
+  "run_attempt": 1,
+  "run_url": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30821086433",
+  "artifact_id": 8858882241,
+  "observed_at": "2026-08-03T14:27:05Z",
+  "comparison": {
+    "experiment_id": "SV-COST-HISTORICAL-RERUN-002",
+    "method_status": "BEST_AVAILABLE_CONTROL_ENVELOPE_REPRODUCTION",
+    "historical": {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-6",
+      "baseline_max_output_tokens": 4096,
+      "historical_val_cost_usd": 0.015,
+      "historical_bl_observed_tokens": 4169,
+      "historical_bl_cost_usd": 0.061659,
+      "historical_bl_latency_seconds_approx": 52.5
+    },
+    "rerun_receipts": [
+      {
+        "test_id": "VAL-001-RERUN",
+        "method_status": "BEST_AVAILABLE_CONTROL_ENVELOPE_REPRODUCTION",
+        "model_requested": "claude-sonnet-4-6",
+        "model_returned": "claude-sonnet-4-6",
+        "provider_message_id": "msg_011CdfwhSbcAK4UDRaGGKf9e",
+        "provider_stop_reason": "end_turn",
+        "http_status": 200,
+        "max_output_tokens": 64,
+        "native_input_tokens": 24,
+        "native_output_tokens": 9,
+        "native_total_tokens": 33,
+        "observed_api_cost_usd": 0.000207,
+        "pricing_assumption": {
+          "input_usd_per_million": 3.0,
+          "output_usd_per_million": 15.0
+        },
+        "latency_seconds": 1.2958039319999983,
+        "request_payload_sha256": "sha256:3250f0276b5b9b431da20c15fcacadff37d586ae05267a82601196712ae6818c",
+        "prompt_sha256": "sha256:302a62f7ca7d21c992c77cb206c7568a853570744aa0474118cbf6bf73260a68",
+        "raw_response_sha256": "sha256:0fb3658b649f809ce9b31030fe1ed167576783c0361229a02a7025445c91b776",
+        "output_sha256": "sha256:b762ea5d0d5ee06d3939eebcc1eb241561c2847fd8249323bb5c30c03b9ddc13",
+        "validation": {
+          "transport_checks": {
+            "http_2xx": true,
+            "provider_message_id": true,
+            "returned_model": true,
+            "usage_present": true,
+            "raw_response_nonempty": true
+          },
+          "transport_valid": true,
+          "output_class_checks": {},
+          "output_class_valid": null,
+          "complete": true,
+          "overall_valid": true,
+          "interpretation": "Connectivity is established by transport and provider receipt metadata, not model-generated status text."
+        },
+        "reconstruction_boundary": "The exact historical request payload and exact connectivity prompt were not retained. This run reproduces the known provider, model, 4096-token ceiling, direct-unoptimized task class, usage capture, latency capture, raw response retention, and receipt hashing. It is a control-envelope reproduction, not a byte-identical replay."
+      },
+      {
+        "test_id": "BL-001-RERUN",
+        "method_status": "BEST_AVAILABLE_CONTROL_ENVELOPE_REPRODUCTION",
+        "model_requested": "claude-sonnet-4-6",
+        "model_returned": "claude-sonnet-4-6",
+        "provider_message_id": "msg_011CdfwhWmseZ23BBSRbDDvw",
+        "provider_stop_reason": "max_tokens",
+        "http_status": 200,
+        "max_output_tokens": 4096,
+        "native_input_tokens": 143,
+        "native_output_tokens": 4096,
+        "native_total_tokens": 4239,
+        "observed_api_cost_usd": 0.06186899999999999,
+        "pricing_assumption": {
+          "input_usd_per_million": 3.0,
+          "output_usd_per_million": 15.0
+        },
+        "latency_seconds": 61.869008238,
+        "request_payload_sha256": "sha256:37412d4b246665be219d5c3120b7f12827711f50016f16781ec0af97cd37cad2",
+        "prompt_sha256": "sha256:654d0fd161a30c9ac4765c4eddc7f374dd110d1afb6c78de1877e510d8c12880",
+        "raw_response_sha256": "sha256:f348335cb95129f33a6f6603ee34b3baca96e8a6c48f4ef22ec336e1f2e9bca7",
+        "output_sha256": "sha256:186d8e2de7acf4d0342d05c003d29abf7f274cfa85e2377072e7c3dba50537c5",
+        "validation": {
+          "transport_checks": {
+            "http_2xx": true,
+            "provider_message_id": true,
+            "returned_model": true,
+            "usage_present": true,
+            "raw_response_nonempty": true
+          },
+          "transport_valid": true,
+          "output_class_checks": {
+            "direct_artifact": true,
+            "definitions": true,
+            "necessary_and_sufficient": true,
+            "forward_direction": true,
+            "reverse_direction": true,
+            "claim_boundary": false,
+            "not_meta_only": true
+          },
+          "output_class_valid": false,
+          "lean_candidate_present": false,
+          "ceiling_saturated": true,
+          "refusal_detected": false,
+          "complete": false,
+          "overall_valid": false,
+          "interpretation": "Historical output-class validity is separated from completion. Lean presence and ceiling saturation are reported independently."
+        },
+        "reconstruction_boundary": "The exact historical request payload and exact connectivity prompt were not retained. This run reproduces the known provider, model, 4096-token ceiling, direct-unoptimized task class, usage capture, latency capture, raw response retention, and receipt hashing. It is a control-envelope reproduction, not a byte-identical replay."
+      }
+    ],
+    "bl_deltas": {
+      "tokens_absolute": 70,
+      "tokens_percent": 1.6790597265531337,
+      "cost_usd_absolute": 0.0002099999999999949,
+      "cost_percent": 0.34058288327736275,
+      "latency_seconds_absolute_vs_approx": 9.369008238
+    },
+    "claim_boundary": "The exact historical request payload and exact connectivity prompt were not retained. This run reproduces the known provider, model, 4096-token ceiling, direct-unoptimized task class, usage capture, latency capture, raw response retention, and receipt hashing. It is a control-envelope reproduction, not a byte-identical replay."
+  },
+  "claim_boundary": "Hosted workflow success and immutable artifact contents were observed and validated. This does not convert an accounting-only OP-002 record into observed route execution."
+}
