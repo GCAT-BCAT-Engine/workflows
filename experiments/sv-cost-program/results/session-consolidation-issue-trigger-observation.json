@@ -1,25 +1,25 @@
 {
   "program_id": "SV-COST-MAJOR-GOAL-001",
-  "status": "ISSUE_TRIGGER_OBSERVED_FAILURE",
+  "status": "ISSUE_TRIGGER_OBSERVED_SUCCESS",
   "run": {
-    "id": 30834427885,
-    "html_url": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30834427885",
+    "id": 30834645919,
+    "html_url": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30834645919",
     "status": "completed",
-    "conclusion": "failure",
+    "conclusion": "success",
     "event": "issues",
     "run_attempt": 1,
-    "head_sha": "03026e1784472bcb44e015d29e7d7bd0cb646f4c",
-    "created_at": "2026-08-03T16:56:05Z",
-    "updated_at": "2026-08-03T16:56:14Z"
+    "head_sha": "e238156cfb281db5613d6bab8299746df3771485",
+    "created_at": "2026-08-03T16:58:57Z",
+    "updated_at": "2026-08-03T16:59:12Z"
   },
   "jobs": [
     {
-      "id": 91756010368,
+      "id": 91756743789,
       "name": "reconcile-validate-release",
       "status": "completed",
-      "conclusion": "failure",
-      "started_at": "2026-08-03T16:56:09Z",
-      "completed_at": "2026-08-03T16:56:13Z",
+      "conclusion": "success",
+      "started_at": "2026-08-03T16:59:00Z",
+      "completed_at": "2026-08-03T16:59:12Z",
       "steps": [
         {
           "name": "Set up job",
@@ -42,55 +42,55 @@
         {
           "name": "Apply bounded canonical finalizer-path repair",
           "status": "completed",
-          "conclusion": "failure",
+          "conclusion": "success",
           "number": 4
         },
         {
           "name": "Compile reconciliation and validator",
           "status": "completed",
-          "conclusion": "skipped",
+          "conclusion": "success",
           "number": 5
         },
         {
           "name": "Reconcile terminal receipts and release chat claim",
           "status": "completed",
-          "conclusion": "skipped",
+          "conclusion": "success",
           "number": 6
         },
         {
           "name": "Validate and write archive-readiness receipt",
           "status": "completed",
-          "conclusion": "skipped",
+          "conclusion": "success",
           "number": 7
         },
         {
           "name": "Validate canonical files and stale-state exclusion",
           "status": "completed",
-          "conclusion": "skipped",
+          "conclusion": "success",
           "number": 8
         },
         {
           "name": "Upload immutable session transfer",
           "status": "completed",
-          "conclusion": "skipped",
+          "conclusion": "success",
           "number": 9
         },
         {
           "name": "Commit terminal reconciliation and receipt",
           "status": "completed",
-          "conclusion": "skipped",
+          "conclusion": "success",
           "number": 10
         },
         {
           "name": "Record closure and preserve issue 13 continuation",
           "status": "completed",
-          "conclusion": "skipped",
+          "conclusion": "success",
           "number": 11
         },
         {
           "name": "Post Run actions/setup-python@v5",
           "status": "completed",
-          "conclusion": "skipped",
+          "conclusion": "success",
           "number": 21
         },
         {
@@ -108,5 +108,5 @@
       ]
     }
   ],
-  "failed_log_tail": "reconcile-validate-release\tApply bounded canonical finalizer-path repair\t﻿2026-08-03T16:56:11.9910075Z ##[group]Run set -euo pipefail\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:11.9911143Z ^[[36;1mset -euo pipefail^[[0m\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:11.9912015Z ^[[36;1mpython - <<'PY'^[[0m\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:11.9912863Z ^[[36;1mfrom pathlib import Path^[[0m\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:11.9914258Z ^[[36;1mwrong = '.github/workflows/sv-cost-finalize-relational-program.yml'^[[0m\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:11.9915920Z ^[[36;1mcorrect = '.github/workflows/sv-cost-finalize.yml'^[[0m\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:11.9917108Z ^[[36;1mfor relative in (^[[0m\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:11.9918443Z ^[[36;1m    'tools/reconcile_sv_cost_terminal_state.py',^[[0m\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:11.9919713Z ^[[36;1m    'tools/validate_sv_cost_session_state.py',^[[0m\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:11.9920788Z ^[[36;1m):^[[0m\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:11.9921492Z ^[[36;1m    path = Path(relative)^[[0m\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:11.9922603Z ^[[36;1m    text = path.read_text().replace(wrong, correct)^[[0m\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:11.9924270Z ^[[36;1m    text = text.replace('Developed files: 12/12.', 'Developed files: 13/13.')^[[0m\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:11.9925792Z ^[[36;1m    path.write_text(text)^[[0m\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:11.9926794Z ^[[36;1m    assert wrong not in text^[[0m\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:11.9928071Z ^[[36;1m    assert correct in text^[[0m\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:11.9928993Z ^[[36;1mPY^[[0m\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:12.0004535Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:12.0006136Z env:\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:12.0007430Z   RECEIPT: experiments/sv-cost-program/results/session-consolidation-receipt.json\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:12.0009742Z   RUN_URL: https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30834427885\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:12.0011374Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.13/x64\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:12.0013143Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib/pkgconfig\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:12.0015389Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:12.0017932Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:12.0019568Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:12.0021142Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:12.0022721Z ##[endgroup]\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:12.0688046Z Traceback (most recent call last):\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:12.0694841Z   File \"<stdin>\", line 13, in <module>\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:12.0695955Z AssertionError\nreconcile-validate-release\tApply bounded canonical finalizer-path repair\t2026-08-03T16:56:12.0738480Z ##[error]Process completed with exit code 1."
+  "failed_log_tail": ""
 }
