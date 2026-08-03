@@ -1,20 +1,28 @@
 S0: Task parsing and claim boundary.
 
-**Task identity**  
-Experiment `SV-COST-STAGED-001`; capability test `SV-COMPACT-PROGRESS-001`.
+**Task identity:** `SV-COST-STAGED-001` / `SV-COMPACT-PROGRESS-001`
 
-**Stipulations**  
-For an abstract candidate transition \(t\), let \(GBP(t)\), \(BD(t)\), and \(OC(t)\) be predicates. The evaluator returns `ALLOW` exactly when all three predicates hold.
+**Stipulation**
+- For any candidate transition `t`, the abstract evaluator returns `ALLOW` exactly when `GBP(t)`, `BD(t)`, and `OC(t)` all hold.
 
-**Target claim for later establishment**  
+**Target claim**
 \[
 \operatorname{ALLOW}(t)\iff GBP(t)\land BD(t)\land OC(t).
 \]
 
-Equivalently, `ALLOW` is admissible precisely when each of `GBP`, `BD`, and `OC` holds; failure of any one makes `ALLOW` inadmissible.
+Equivalently:
+- **Necessity:** `ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)`.
+- **Sufficiency:** `GBP(t) ∧ BD(t) ∧ OC(t) → ALLOW(t)`.
 
-**Claim boundary**  
-The target is only the propositional characterization of the stipulated abstract evaluator. No claim is made about the meaning, correctness, completeness, or computability of the predicates, nor about any concrete or deployed GCAT/BCAT implementation. A later Lean 4 candidate may encode the logical core, but compilation, proof acceptance, integration, and implementation conformance remain unverified.
+**Claim boundary**
+- The characterization concerns only the stipulated abstract evaluator and its three predicates.
+- No meaning or properties of `GBP`, `BD`, or `OC` beyond propositional predicates are assumed.
+- No claim is made that any deployed or concrete GCAT/BCAT implementation satisfies this specification.
+- No claim is made about transition validity, runtime behavior, completeness, soundness, or implementation correspondence.
 
-**Current-stage status**  
-Task parsed and claim boundary fixed. No mathematical proof or Lean 4 candidate is asserted at S0.
+**Verified claims**
+- None at stage S0.
+
+**Unresolved implementation evidence**
+- No implementation, predicate definitions, evaluator code, or conformance evidence has been provided.
+- A Lean 4 candidate and logical verification remain for later stages.

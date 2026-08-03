@@ -2,65 +2,69 @@ S1: Definitions and assumptions
 
 ---
 
-## 1. Purpose
+## 1. Universe and Primitive Sorts
 
-This artifact establishes the formal definitions and assumptions required to support the necessary-and-sufficient characterization of `ALLOW` in Stage S2. All items below are **stipulations** for this experiment. No item asserts conformance of any deployed system.
+**Sort.**
+Let `T` be an arbitrary non-empty type, whose elements are called *candidate transitions*. No structure is placed on `T` beyond its being a type; in particular, no topology, ordering, or algebraic operations are assumed.
 
----
-
-## 2. Universe of Discourse
-
-**DEF-U.** Let `C` be an arbitrary type (the *candidate type*). Elements of `C` are called *candidate transitions*. No internal structure of `C` is assumed.
+**Variables.**
+Throughout, `t : T` ranges over candidate transitions.
 
 ---
 
-## 3. Primitive Predicates
+## 2. Primitive Predicates
 
-The following three predicates are taken as primitive — uninterpreted functions from candidates to propositions:
+The following three predicates are introduced as **abstract symbols**. They carry no definition beyond their types; all semantic content is supplied by the problem statement and by C1 below.
 
-| Identifier | Type | Reading |
-|---|---|---|
-| `GBP` | `C → Prop` | "Governed Boundary Predicate holds on c" |
-| `BD` | `C → Prop` | "Boundary Determination holds on c" |
-| `OC` | `C → Prop` | "Operational Condition holds on c" |
+| Symbol | Type | Informal gloss |
+|--------|------|----------------|
+| `GBP` | `T → Prop` | "Good-Behavior Predicate" — abstract condition on `t` |
+| `BD` | `T → Prop` | "Boundary/Domain" — abstract condition on `t` |
+| `OC` | `T → Prop` | "Output Condition" — abstract condition on `t` |
 
-**DEF-PRIM.** `GBP`, `BD`, and `OC` are stipulated as total predicates on `C`. No relationship among them is assumed; they may be independent, coincident, or contradictory on any particular `c`. No decidability assumption is made.
-
----
-
-## 4. The ALLOW Predicate
-
-**DEF-ALLOW (S-DEF).** For all `c : C`,
-
-```
-ALLOW(c)  :=  GBP(c) ∧ BD(c) ∧ OC(c)
-```
-
-This definition is the **sole axiomatic stipulation** governing `ALLOW` in this experiment. It is not derived; it is constitutive.
-
-**Remark (S-DEF scope).** S-DEF characterizes the abstract evaluator model only. It does not assert that any deployed GCAT/BCAT implementation computes `ALLOW` by this rule, nor that `GBP`, `BD`, `OC` correspond to any concrete runtime checks.
+**Assumption A-Pred.**
+`GBP`, `BD`, and `OC` are total predicates on `T`. For every `t : T`, each of `GBP t`, `BD t`, `OC t` is a well-formed proposition (possibly false, possibly true; no default is assumed).
 
 ---
 
-## 5. Structural Assumptions
+## 3. The ALLOW Relation
 
-**ASM-CLASSIC.** The ambient logic is classical propositional/predicate logic (or, in the Lean 4 formalization, the Prop-valued fragment of the Calculus of Constructions with classical axioms available but not required for the core conjunction).
+**Definition D-ALLOW (stipulated).**
+`ALLOW : T → Prop` is defined by the biconditional
 
-**ASM-TOTAL.** All three predicates are total: for every `c : C`, each of `GBP(c)`, `BD(c)`, `OC(c)` is either provably true or provably false under any complete valuation. (This assumption is used only to support later case analysis; it is not required for the definitional claim itself.)
+$$\forall t : T,\quad \mathrm{ALLOW}(t) \;\iff\; \mathrm{GBP}(t) \;\land\; \mathrm{BD}(t) \;\land\; \mathrm{OC}(t)$$
 
-**ASM-INDEPENDENCE.** No logical dependency among `GBP`, `BD`, `OC` is assumed. They are treated as three independent atomic propositions for any given `c`.
-
-**ASM-NO-IMPL.** No assumption is made that any software artifact evaluates these predicates. The model is purely abstract.
+This is **definitional**, not derived. It records the problem statement as a formal stipulation. No proof obligation arises from it beyond admitting it as an axiom within the abstract theory.
 
 ---
 
-## 6. Admitted Definitions Roster (S1)
+## 4. Derived Directions (admitted, not yet proved)
 
-| ID | Item | Status |
-|---|---|---|
-| DEF-U | Candidate type `C` | Stipulated |
-| DEF-PRIM | Predicates `GBP`, `BD`, `OC` | Stipulated, primitive |
-| DEF-ALLOW / S-DEF | `ALLOW(c) := GBP(c) ∧ BD(c) ∧ OC(c)` | Stipulated, axiomatic |
-| ASM-CLASSIC | Classical logic ambient | Assumed |
-| ASM-TOTAL | Totality of predicates | Assumed |
-| ASM-INDEPENDENCE | No inter-predicate dependency
+From D-ALLOW, two directions are immediately named for downstream use:
+
+| Label | Statement | Status |
+|-------|-----------|--------|
+| **C1** | `∀ t, ALLOW t ↔ GBP t ∧ BD t ∧ OC t` | **Stipulated** — definitional |
+| **C2 (necessity)** | `∀ t, ALLOW t → GBP t ∧ BD t ∧ OC t` | Admitted; follows from C1 by `Iff.mp` |
+| **C3 (sufficiency)** | `∀ t, GBP t ∧ BD t ∧ OC t → ALLOW t` | Admitted; follows from C1 by `Iff.mpr` |
+
+C2 and C3 are **not independently verified** at this stage; they are marked *admitted pending S2 proof obligations*.
+
+---
+
+## 5. Explicit Non-Assumptions
+
+The following are **not** assumed and must not be introduced in later stages without explicit admission:
+
+- `GBP`, `BD`, `OC` are not assumed independent of one another.
+- No implication among `GBP`, `BD`, `OC` is assumed (e.g., `GBP t → BD t` is not stipulated).
+- `T` is not assumed finite, countable, or inhabited by any particular element.
+- No claim is made that any deployed GCAT/BCAT system satisfies D-ALLOW.
+
+---
+
+## 6. Lean 4 Preamble (fragment, not validated)
+
+```lean4
+-- S1: Definitions and assumptions
+-- STATUS: candidate fragment; implementation

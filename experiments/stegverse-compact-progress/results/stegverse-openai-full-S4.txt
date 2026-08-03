@@ -1,68 +1,74 @@
 S4: Complete informal proof.
 
-**Task identity**  
-EXPERIMENT: SV-COST-STAGED-001  
-CAPABILITY TEST: SV-COMPACT-PROGRESS-001
+**Task identity:** `SV-COST-STAGED-001`  
+**Capability test:** `SV-COMPACT-PROGRESS-001`
 
-**Admitted dependencies**
-- S0: `sha256:1e8d7db326b7abb5df264bee6eb78f5767d37733643397bf6c805b3c62e3dd9f`
-- S1: `sha256:e6686035db5096ddfa61d6ed6f4487901f7b57efbe09873629d5c085ad060467`
-- S2: `sha256:7f1c18762e95ee6e345bb608bd5bff1ea0dabe0fb78b90cd061c966c1b423de7`
-- S3: `sha256:5736e3f4fc76c44fa9aa0de95b7b42d4cf1828640220f88980400530d036744d`
+### Admitted dependencies
+- `S0` (`sha256:cf823f714fc36351325450d467e369aaac1fa755e8aac528aa358717cb001e5d`) supplies the task and claim boundary.
+- `S1` (`sha256:7f0e127e6f2a8a1fbd9f8af01211a5dfbacfcc5cafddf77dd988c85c68a08165`) supplies the abstract definitions and evaluator stipulation.
+- `S2` (`sha256:6c8d0ea33c0c342aec21c7d0da50982eb8808d0f1438f3991ff186ad5132a7bd`) supplies the theorem formulation and Lean 4 candidate statement.
+- `S3` (`sha256:1a8de100f735211e14dcef3bae17d65acefa5a8a0f247fe3133542dc91b2220a`) supplies the proof strategy and lemma decomposition.
 
-## Stipulations
+These hashes identify admitted artifacts only; they do not establish semantic correctness, Lean compilation, or implementation conformity.
 
-Let `Transition` be an unspecified type, and let
-\[
-GBP,BD,OC,ALLOW:\mathrm{Transition}\to\mathrm{Prop}.
-\]
+### Stipulations
+Let:
+- `Transition` and `Outcome` be arbitrary types;
+- `ALLOW : Outcome`;
+- `eval : Transition → Outcome`;
+- `GBP BD OC : Transition → Prop`;
+- `Allowed t` abbreviate `eval t = ALLOW`;
+- `Conditions t` abbreviate `GBP t ∧ (BD t ∧ OC t)`.
 
 Assume the abstract evaluator specification:
 \[
 \forall t:\mathrm{Transition},\quad
-ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
+eval(t)=ALLOW\leftrightarrow GBP(t)\land(BD(t)\land OC(t)).
 \]
 
-## Generated claim
-
+### Necessary-and-sufficient characterization
 For every candidate transition \(t\),
 \[
-ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
+eval(t)=ALLOW
+\quad\leftrightarrow\quad
+GBP(t)\land(BD(t)\land OC(t)).
 \]
 
-Equivalently:
+Thus all three predicates are jointly:
 
-- **Necessity**
-  \[
-  ALLOW(t)\to GBP(t)\land BD(t)\land OC(t).
-  \]
+- **necessary** for `ALLOW`, and
+- **sufficient** for `ALLOW`.
 
-- **Sufficiency**
-  \[
-  GBP(t)\land BD(t)\land OC(t)\to ALLOW(t).
-  \]
+### Complete informal proof
+Fix an arbitrary candidate transition \(t\).
 
-## Complete informal proof
-
-Fix an arbitrary transition \(t\).
-
-By specializing the evaluator specification at \(t\), obtain:
+For necessity, suppose \(eval(t)=ALLOW\). Instantiating the stipulated evaluator specification at \(t\) gives:
 \[
-ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
+eval(t)=ALLOW\leftrightarrow GBP(t)\land(BD(t)\land OC(t)).
 \]
-
-For necessity, suppose \(ALLOW(t)\). Apply the forward direction of the specialized equivalence. It follows that
+Applying the forward direction of this biconditional to the supposition yields:
 \[
-GBP(t)\land BD(t)\land OC(t).
+GBP(t)\land(BD(t)\land OC(t)).
 \]
-Consequently, each condition \(GBP(t)\), \(BD(t)\), and \(OC(t)\) holds.
+Therefore `GBP t`, `BD t`, and `OC t` all hold whenever the evaluator returns `ALLOW`.
 
-For sufficiency, suppose
+For sufficiency, suppose:
 \[
-GBP(t)\land BD(t)\land OC(t).
+GBP(t)\land(BD(t)\land OC(t)).
 \]
-Apply the reverse direction of the specialized equivalence. It follows that \(ALLOW(t)\).
-
-Thus both implications hold, so:
+Apply the reverse direction of the same instantiated evaluator specification. It yields:
 \[
-ALLOW(t)\iff GBP(t)\land BD(t)\land
+eval(t)=ALLOW.
+\]
+Therefore the conjunction of `GBP t`, `BD t`, and `OC t` is sufficient for the evaluator to return `ALLOW`.
+
+Both implications have now been established, so:
+\[
+eval(t)=ALLOW
+\leftrightarrow
+GBP(t)\land(BD(t)\land OC(t)).
+\]
+Because \(t\) was arbitrary, this characterization holds for every candidate transition.
+
+### Generated claims
+- Relative to the stipulated abstract specification, the characterization follows directly

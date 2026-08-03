@@ -1,0 +1,16 @@
+S6: Verification ledger.
+
+**Task identity:** `SV-COST-STAGED-001`  
+**Capability test:** `SV-COMPACT-PROGRESS-001`
+
+### Admitted dependencies
+- `S0` (`sha256:cf823f714fc36351325450d467e369aaac1fa755e8aac528aa358717cb001e5d`): task identity and claim boundary.
+- `S1` (`sha256:7f0e127e6f2a8a1fbd9f8af01211a5dfbacfcc5cafddf77dd988c85c68a08165`): definitions and abstract evaluator stipulation.
+- `S2` (`sha256:6c8d0ea33c0c342aec21c7d0da50982eb8808d0f1438f3991ff186ad5132a7bd`): theorem formulation and complete compact Lean candidate.
+- `S3` (`sha256:1a8de100f735211e14dcef3bae17d65acefa5a8a0f247fe3133542dc91b2220a`): proof strategy and lemma decomposition.
+- `S4` (`sha256:bf7b36b3ec888a68c71793230c2ba3070e94fcbdad60d7648402a85a8fde8536`): informal proof.
+- `S5` (`sha256:0c9725d26fc9455faf9a25d6666e17d079a1d36ae51d599f6b98a8d9fafea5c3`): Lean 4 candidate artifact.
+
+The hashes establish artifact identity only. They do not establish semantic correctness, Lean elaboration or compilation, or conformity by any concrete implementation. The selected retrievals of `S3`, `S4`, and `S5` are truncated; no unshown content is used below.
+
+###

@@ -2,9 +2,9 @@
   {
     "artifact_id": "stegverse-anthropic-full:S0",
     "stage_id": "S0",
-    "sha256": "sha256:a10b971c8d67e3cffe1867cc1bc0b7e0db6276e62e93c39c639afe253fe2c21e",
+    "sha256": "sha256:5c351b5738dd96e677b5db1648a64d609ec3826744541df041be947d4a9d479c",
     "admitted": false,
-    "claims": "S0: Task parsing and claim boundary.\n**Subject of characterization:** An *abstract* GCAT/BCAT evaluator \u2014 a formal object defined solely by the stipulations below. No deployed implementation is referenced.\n> `ALLOW(t)` holds **if and only if** `GBP(t) \u2227 BD(t) \u2227 OC(t)`.\n## 2. Claim Boundary\n| C1 | The *necessary condition* for ALLOW: `ALLOW(t) \u2192 GBP(t) \u2227 BD(t) \u2227 OC(t)` | To be proved from stipulation |\n| C2 | The *suf",
+    "claims": "S0: Task parsing and claim boundary.\n- Problem label: `GCAT/BCAT ALLOW-admissibility characterization`\n- `ALLOW` \u2014 a distinguished outcome value of the evaluator\n> The evaluator returns `ALLOW` exactly when `GBP` and `BD` and `OC` all hold.\nThis is the sole semantic content admitted at this stage. No deployed system behavior is asserted.\n## 2. Claim Boundary\nA necessary-and-sufficient characterization of `ALLOW`-admi",
     "definitions": "reference prior definitions",
     "unresolved": "implementation binding remains unresolved",
     "next_stage": "S1"

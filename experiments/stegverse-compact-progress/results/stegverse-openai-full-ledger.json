@@ -2,11 +2,71 @@
   {
     "artifact_id": "stegverse-openai-full:S0",
     "stage_id": "S0",
-    "sha256": "sha256:522320dd8fac562f6c3dfa959aa83df723f00ddef8a50c82eb1843817bfcfd53",
-    "admitted": false,
-    "claims": "S0: Task parsing and claim boundary.\n- The abstract evaluator returns `ALLOW` exactly when all three propositions hold.\n\\operatorname{ALLOW}(t) \\iff GBP(t)\\land BD(t)\\land OC(t).\n- **Necessity:** `ALLOW t` implies `GBP t \u2227 BD t \u2227 OC t`.\n- **Sufficiency:** `GBP t \u2227 BD t \u2227 OC t` implies `ALLOW t`.\n### Claim boundary\n- correctness or conformity of any deployed GCAT/BCAT implementation;\n- **Unresolved implementation evid",
+    "sha256": "sha256:cf823f714fc36351325450d467e369aaac1fa755e8aac528aa358717cb001e5d",
+    "admitted": true,
+    "claims": "S0: Task parsing and claim boundary.\n- The abstract evaluator returns `ALLOW` exactly when `GBP`, `BD`, and `OC` all hold.\n1. State the necessary-and-sufficient characterization of `ALLOW`.\n### Claim boundary\n- The scope is an **abstract evaluator** governed by the stated `ALLOW` condition.\n- The logical target is the equivalence between `ALLOW` and the conjunction of `GBP`, `BD`, and `OC` for a candidate transition.",
     "definitions": "reference prior definitions",
     "unresolved": "implementation binding remains unresolved",
     "next_stage": "S1"
+  },
+  {
+    "artifact_id": "stegverse-openai-full:S1",
+    "stage_id": "S1",
+    "sha256": "sha256:7f0e127e6f2a8a1fbd9f8af01211a5dfbacfcc5cafddf77dd988c85c68a08165",
+    "admitted": true,
+    "claims": "- `S0` (`sha256:cf823f714fc36351325450d467e369aaac1fa755e8aac528aa358717cb001e5d`) supplies the task boundary and abstract `ALLOW` stipulation.\n- `GBP BD OC : Transition \u2192 Prop` be predicates on candidate transitions.\n- `Outcome` contain at least the result `ALLOW`.\n- `Allowed (t : Transition) : Prop` abbreviate `eval t = ALLOW`.\nConditions(t) \\;:=\\; GBP(t)\\land BD(t)\\land OC(t),\nwith conjunction parsed as `GBP t \u2227 (",
+    "definitions": "- `S0` (`sha256:cf823f714fc36351325450d467e369aaac1fa755e8aac528aa358717cb001e5d`) supplies the task boundary and abstract `ALLOW` stipulation.\n- `GBP BD OC : Transition \u2192 Prop` be predicates on candidate transitions.\n- `Outcome` contain at least the result `ALLOW`.\n- `Allowed (t : Transition) : Prop` abbreviate `eval t = ALLOW`.\nConditions(t) \\;:=\\; GBP(t)\\land BD(t)\\land OC(t),\nwith conjunction parsed as `GBP t \u2227 (",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S2"
+  },
+  {
+    "artifact_id": "stegverse-openai-full:S2",
+    "stage_id": "S2",
+    "sha256": "sha256:6c8d0ea33c0c342aec21c7d0da50982eb8808d0f1438f3991ff186ad5132a7bd",
+    "admitted": true,
+    "claims": "S2: Theorem formulation.\n### Theorem formulation\n### Lean 4 candidate theorem statement\ntheorem allow_iff_conditions\n\u2200 t, eval t = ALLOW \u2194 GBP t \u2227 (BD t \u2227 OC t)) :\n\u2200 t, eval t = ALLOW \u2194 GBP t \u2227 (BD t \u2227 OC t) :=\n- The displayed biconditional is the necessary-and-sufficient characterization of `ALLOW` under the admitted stipulation.\n- None independently verified. At this stage, the theorem formulation follows from admi",
+    "definitions": "reference prior definitions",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S3"
+  },
+  {
+    "artifact_id": "stegverse-openai-full:S3",
+    "stage_id": "S3",
+    "sha256": "sha256:1a8de100f735211e14dcef3bae17d65acefa5a8a0f247fe3133542dc91b2220a",
+    "admitted": true,
+    "claims": "S3: Proof strategy and lemma decomposition.\n2. Use its forward implication to prove necessity:\n3. Use its reverse implication to prove sufficiency:\n### Lemma decomposition\n#### Necessity lemma\nThis uses the forward direction of the stipulated biconditional.\n#### Sufficiency lemma\nThis uses the reverse direction of the stipulated biconditional.",
+    "definitions": "reference prior definitions",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S4"
+  },
+  {
+    "artifact_id": "stegverse-openai-full:S4",
+    "stage_id": "S4",
+    "sha256": "sha256:bf7b36b3ec888a68c71793230c2ba3070e94fcbdad60d7648402a85a8fde8536",
+    "admitted": true,
+    "claims": "S4: Complete informal proof.\n- `S3` (`sha256:1a8de100f735211e14dcef3bae17d65acefa5a8a0f247fe3133542dc91b2220a`) supplies the proof strategy and lemma decomposition.\n### Complete informal proof\nTherefore `GBP t`, `BD t`, and `OC t` all hold whenever the evaluator returns `ALLOW`.\nTherefore the conjunction of `GBP t`, `BD t`, and `OC t` is sufficient for the evaluator to return `ALLOW`.",
+    "definitions": "reference prior definitions",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S5"
+  },
+  {
+    "artifact_id": "stegverse-openai-full:S5",
+    "stage_id": "S5",
+    "sha256": "sha256:0c9725d26fc9455faf9a25d6666e17d079a1d36ae51d599f6b98a8d9fafea5c3",
+    "admitted": true,
+    "claims": "- `S2` (`sha256:6c8d0ea33c0c342aec21c7d0da50982eb8808d0f1438f3991ff186ad5132a7bd`): theorem formulation.\n```lean\ndef Allowed\ndef Conditions\ntheorem allow_implies_conditions",
+    "definitions": "reference prior definitions",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S6"
+  },
+  {
+    "artifact_id": "stegverse-openai-full:S6",
+    "stage_id": "S6",
+    "sha256": "sha256:1735040a03e13eebe330fc34e65e680da8374818a18894320708255deacbdfdb",
+    "admitted": true,
+    "claims": "The hashes establish artifact identity only. They do not establish semantic correctness, Lean elaboration or compilation, or conformity by any concrete implementation. The selected retrievals of `S3`, `S4`, and `S5` are truncated; no unshown content is used below.",
+    "definitions": "reference prior definitions",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "complete"
   }
 ]

@@ -2,11 +2,51 @@
   {
     "artifact_id": "stegverse-openai-compact:S0",
     "stage_id": "S0",
-    "sha256": "sha256:deafeaf4af6f071a5a20ec514983927db028b328d8f304c82c8d31f358268fff",
-    "admitted": false,
-    "claims": "S0: Task parsing and claim boundary.\nFor an abstract candidate transition \\(t\\), let \\(GBP(t)\\), \\(BD(t)\\), and \\(OC(t)\\) be predicates. The evaluator returns `ALLOW` exactly when all three predicates hold.\n\\operatorname{ALLOW}(t)\\iff GBP(t)\\land BD(t)\\land OC(t).\nEquivalently, `ALLOW` is admissible precisely when each of `GBP`, `BD`, and `OC` holds; failure of any one makes `ALLOW` inadmissible.\n**Claim boundary**\nT",
+    "sha256": "sha256:dfa08c1e7762f4efae13d5b2241dc3323cbc1e098e8501503e37087eb89fa5e2",
+    "admitted": true,
+    "claims": "S0: Task parsing and claim boundary.\n- For any candidate transition `t`, the abstract evaluator returns `ALLOW` exactly when `GBP(t)`, `BD(t)`, and `OC(t)` all hold.\n\\operatorname{ALLOW}(t)\\iff GBP(t)\\land BD(t)\\land OC(t).\n- **Necessity:** `ALLOW(t) \u2192 GBP(t) \u2227 BD(t) \u2227 OC(t)`.\n- **Sufficiency:** `GBP(t) \u2227 BD(t) \u2227 OC(t) \u2192 ALLOW(t)`.\n**Claim boundary**\n- No claim is made that any deployed or concrete GCAT/BCAT implemen",
     "definitions": "reference prior definitions",
     "unresolved": "implementation binding remains unresolved",
     "next_stage": "S1"
+  },
+  {
+    "artifact_id": "stegverse-openai-compact:S1",
+    "stage_id": "S1",
+    "sha256": "sha256:208b3bc2f3d77b58a65d0e6e54fc6c37ab6c6dbe66642e7fe0090f27ff0c7690",
+    "admitted": true,
+    "claims": "- `GBP : Transition \u2192 Prop`\n- `BD : Transition \u2192 Prop`\n- `OC : Transition \u2192 Prop`\n- `ALLOW : Transition \u2192 Prop`\n\\forall t,\\quad \\operatorname{ALLOW}(t)\n\\bigl(GBP(t)\\land BD(t)\\land OC(t)\\bigr).\nNo assumptions are made about decidability, independence, or the internal meanings of `GBP`, `BD`, and `OC`.\n\\operatorname{ALLOW}(t)\\rightarrow GBP(t)\\land BD(t)\\land OC(t).",
+    "definitions": "- `GBP : Transition \u2192 Prop`\n- `BD : Transition \u2192 Prop`\n- `OC : Transition \u2192 Prop`\n- `ALLOW : Transition \u2192 Prop`\n\\forall t,\\quad \\operatorname{ALLOW}(t)\n\\bigl(GBP(t)\\land BD(t)\\land OC(t)\\bigr).\nNo assumptions are made about decidability, independence, or the internal meanings of `GBP`, `BD`, and `OC`.\n\\operatorname{ALLOW}(t)\\rightarrow GBP(t)\\land BD(t)\\land OC(t).",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S2"
+  },
+  {
+    "artifact_id": "stegverse-openai-compact:S2",
+    "stage_id": "S2",
+    "sha256": "sha256:41d282afeb3f4a7dbef0e59ee3eb55c12aad78feb49c0b1f14305fde0a4fdbb4",
+    "admitted": true,
+    "claims": "S2: Theorem formulation.\nALLOW(t)\\iff GBP(t)\\land BD(t)\\land OC(t).\ntheorem allow_admissible_iff\n(hEval : \u2200 t, ALLOW t \u2194 GBP t \u2227 BD t \u2227 OC t)\nALLOW t \u2194 GBP t \u2227 BD t \u2227 OC t :=\ntheorem allow_necessity\ntheorem allow_sufficiency",
+    "definitions": "reference prior definitions",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S3"
+  },
+  {
+    "artifact_id": "stegverse-openai-compact:S3",
+    "stage_id": "S3",
+    "sha256": "sha256:48b727fcc03ef3ba8b480afe179b3b449434f29034d80e2f6b58e0a57f4d6652",
+    "admitted": true,
+    "claims": "S3: Proof strategy and lemma decomposition.\n1. **Necessity**\n2. **Sufficiency**\n- Derive necessity using the forward implication `(hEval t).mp`.\n- Derive sufficiency using the reverse implication `(hEval t).mpr`.\n- Construct the characterization from those two directional lemmas.\ntheorem allow_necessity\ntheorem allow_sufficiency",
+    "definitions": "reference prior definitions",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S4"
+  },
+  {
+    "artifact_id": "stegverse-openai-compact:S4",
+    "stage_id": "S4",
+    "sha256": "sha256:3021cc6430c40337297ef42dc72073cfc87c72a435fdda84e062c060196b886f",
+    "admitted": false,
+    "claims": "S4: Complete informal proof.\n### Complete informal proof\nFor necessity, suppose \\(ALLOW(t)\\) holds. By the forward direction of the stipulated evaluator equivalence \\(hEval(t)\\), it follows that \\(GBP(t)\\), \\(BD(t)\\), and \\(OC(t)\\) all hold. Hence",
+    "definitions": "reference prior definitions",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S5"
   }
 ]

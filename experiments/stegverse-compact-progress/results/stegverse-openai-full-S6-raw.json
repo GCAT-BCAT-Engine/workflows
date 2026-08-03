@@ -1,0 +1,103 @@
+{
+  "id": "resp_02567a7656c9f8f9006a70461f7ee881998ca0ea49b963cb67",
+  "object": "response",
+  "created_at": 1785742879,
+  "status": "incomplete",
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": null,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "incomplete_details": {
+    "reason": "max_output_tokens"
+  },
+  "instructions": null,
+  "max_output_tokens": 900,
+  "max_tool_calls": null,
+  "model": "gpt-5.6-sol",
+  "moderation": null,
+  "output": [
+    {
+      "id": "rs_02567a7656c9f8f9006a7046200acc8199abed708bdc7d0c6e",
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": "gAAAAABqcEYsTeeL4RF8x2hKYv6q7_Gy8QJKYwUsa4us8If5j0vvZPp6cbImGthTYkLaOFW5MzZASdyiLpVvfCnFJvZ3vB80sIOiNQMse6GhVE_Om7uLY0ajPEMKSB16PKC3x_V9ExTmflTLtmF2clDCWLX0TP4O7wkphkKXAJgWZgspGSxsu7w0YpitlJpozoEgXx7A5wugI1TRXJ4b6TuF7XoTSB16jhe55ltWVgad5500LYKR4hpc-nnBMwHE871xVNzVEHQZrm5XN8Rs1wxX66T4GNjXhPmWQETVVBV8Mb61Nli_cVluMwk4XnmUFMCpiDmEMUBtEWHf08BYBHkUgg3O4ot27jZwhss67Wf3jmMicn50v62bK6IEo51d2Vl8QuiRVAb-lL9b2dh3DtP9Qxr8VsAmFT1AkbAz-axn2fdjL5n7kjRKI68O5w5rOzDAHJr_DlkkQZwN5qh0eCJE7I4t3gjTTfMp7SF-iz788roDolqN_UIWaUe2Fhwn_njhffe5jtPQzuQ8YEsiM-o3UlH6ZiRvPrpa-YrZT_Gw-seTeVIuooICupo9dL-Gsqwiyh2e2R_0bysqW3y-1jlzDtpDHAsepSBxhngYk3qpFRiaHvNGlvillmZu2Lsf09BBxQEvg1989AiXeHMarQtOyInscOb21_wHbtz05rCl8egUkSZh277dU0S8TSxkwspjfW29rLIpZXVfDh2zf8lbaq-c6-MoQpIhiFHFZdNFwZDWw1fNximT7GHx17qyJm00ech-QzdMTYpfgtbi3_Wkdht2Y4P_MIFeTYPi-K3CSVv44GyrWCGCrVabdsOLNWG7bcDg_doupfy4AWxZyLDRzfgECeNS8-SLIk-6ok9zfFGLzTeFn7r9WhDghwtuA9m8HcCMUpqBpKlg_NbMmyYwubsdhGdxBnkEr7CqWki5Mxbp48tosVEYqbQKJdrb22YioRmYjZvK8o8Hmc9w86nA_e6O4GTpWVN8DjIPSnMaRtYbQM-GDyvZY9jm4_ykr350e5k4P7vkQjYs37PP1Jmbh3uOKSUtSWlSaPXsZ1Y_h-mIGzpaLCXNI6d3tnJiX5iR5dV4xZ_ycqq8vhmHLjvDzuAfe4qriJ9LDPla6tzOhu43J4JUQV-MuvT3S0HWC8L3v_2cAoYh7lGo353g6n24gNyevIluoU20pJSOpNDJ2MpRNxdwtBDubij3a6jhO36myFGIOTWEbzhZmyEtRNdf5UqAAQ7XJ6oek6wwIWigjqJpcKYkt5DQvd_OCw_5AH2DyOPR_cbPT5trUjOL7E2bSjHdoLc3RBHoAtXvFLIAQTbp1YnytL_hHH9XjpBd6qBDDlpZR6P_Fvxj9nk-2AQRYbsh3zpkACDYp-BSV2t13yOTAt7XgMboKNQhMVyPNipa54CWDmUDWWS3LBCvpsZ0vG__wFUntJ69wHhWD7zYGqQ3LTREShUlNGvsdmvx82pB8Ox7ZGRDx9bdEBqXyqk-EzpmpwUAzXBWkLNIydbbP9SV3OyO8vo6Hsk8NFSOMG6xI0BZ-SrO03vA9sUvgp-WzqxsY7xBeVlhkzKBzqHjt77gRNxFZGFDjPXqiK5lyG4C0gJqoCDZdvycBxvwcaGND5_AAIdI_lm5bwk2MYlOeuoCCZpsOI4n9_j_gYvRUYizR-3u_7c3rOa1c97MMGygBAuWvYW7sqCLGE9X5GV57b43d6D-oZ0CvDOhRkv3JPAtnDp-sxwIjYD_-cgx2sWQNUWwTVaclth3AIJlxsO2nuMjz_n7ATMv4kDyPlJGDlD8vLpTCq1yYLoXby51VQ69mlqWU6G_afQnhAzfDVEyPiqPhofn_ZmUJ-9IV8JZiuWyaR7TmnTNGm_r79gXmDr8rkEK4jCfXRZaG4R3mQWYYjSQGWUfkzvzr_3DF8URXcSDVbW_dUHFHJx5lXIj9OVLNVGABu2ZnuffXCC01wO2mYYSiVvF8a_SD7EXuIOlh6g4SJAGl5tvgumng43kpnfnwYwl_KM233tPUNx2kA_xw-4gN_8c8_laFa1kHWEgKYGRTuWnws4qYK29MHbCi98SoqlYFISDwUDYlDLH_1frwC4CSBebuxcwkCMbisLM4YMEEX7ZSSAhNzDGGwuc0aMp38TEbAp_yS-h6o6AEpqbipDw2J-ZwfCwYxcrM9pJySsExFnQSDd9vUiSn0yRIin09QTCXavVkHL1_064R0RSGlAV3uPW0EM2uOCxN9UmBaBPx5-q922IUHreQM64QJqoplDhv29Pwt3qnILW6GTHDwWC2MyxR6gYHuAEj0LQjP-5xCtTQ7aOwErfT1LOjUsc3QBNrh9iwoT1sJcLj1j10v6F3h9eC3KXmyuLCDBGhITsoAYgp7smDJg19EKO2NoWORjtpZk7IaKgn1gE_cPgDtVwcD5FPXpixuB_aI8btuErADu13WzOMdzZScgYBV2CzO3AC7L-holxcFFc29aA2UrXqTQzYdINT1_9Sd01srQMM-8poDf2H_FRrwP5T_L70wy4uQ6PhhAMf5dT4OPt53Qmk7ZXVmlHV_K6BjTZtvxL4-jgYG1u2ZKAHnvl7TPid8VoYIECKwu29Qx5jgLn0TxfWTUPNp608EAuW7jTAkcjxXrjRn4AGfOZQwDMOpfniYPNOtkeCV8gUPxCbMBZiBb1GuWvbCVqgVIkahOKhdpUkVzJswKnO719VjkwSfo8TEuPjf8p4PV_pHgG73UwT30S3oySpGuFGHbg_zci4KwXGNyk7yKuhugC3RTG-lVTrg27geAbRysNd-AxOFluEYLt8EY-rWHZGIYGKGWn8NHbh4MMHysXk3Z_T4I6VDRmEpfpxonnF2n_TKC9dsOflX_R-pZfr4EVRCtEPvSD9YXlUN9RdnwEYRN8lo9Q4-LDLie5ASCtjhualWiQC1Wk1K6aYS0RdfjzElOGEd9XPn3UFEZpvtslC8o44peY79AbM3Xy7mRQ9ECrv8feHbJ_vwyVkOqNT-e-snl8V3pXQnkZB0GTRlMBmmFcjyjmnwY3FbCo6922J88LjWlaZapeMMHiePRnmr_R-AXA9GowUEev0Nmn3wmFZS2o_-mt_8KuajrNTHLTN8oOvmBUod-UcUb2YVM3SiB53AgcA8hwvtMdnuxjttDpahSIs1zN9VWwzbPB9E9oYdtuktFjedvEeNKRNd7x3Z1uXYMfs3bwUt1c1RCTLTvV99PV8oSiIw-QMFh1keLoZR3AUS3FyFB8sAsvhC4By-9wWJXRfwZMl-3XCs7Zog2HhPqqBDu1m69FFJw_rMI1cbi6ztUtsFNA-482uve3KuhJKXv3c2NUePKNdtksZLFRcEiqbLUeIAmcW_GuX5bhB7CYU2qNcsFPJ8BunsGF9WkvZCUumX3loc4uBTz6CE7K6lIfrAxMVVB9vCecqywSzNG1_0JoE4qcBjlkFyywZH5hsLgzGer5dvRrmEGNw7BYvsQI9FKdepUVpaZO2U8ewhOsAClusE3N5dVfX_ODB3zXAXx9c3rU3G4nK6Dv-0FEP7jZmUwsueimUZTDcXYVlUFRe6QBxZMBsdT_BwIlTn_wR8jm6jcBU6nINyXvXlWGxELabQpzAuyD_j6nYYr5a9L__JzzfLR4QIm7vodxwrvUgVvPtt09HV1_3NblnYd5_AKWKo19l-EsJCAe92NT0daU1HxChB9VtbvDcMtZOb9QZIu11_c0sRumzz6I-qp4N9bA3iZtmq6mjems32FUDI8225EWnd5BRMgrzUL9d7q9kJzPoLUuUYADSha6L3WMFoB8dmAiMwrI2-bXDa5kQnoyJccAFVw3zxOGB4zdSElR3qY_t7dMgEujaga5UBI-afatVJJPE2gwgoTkCC9CtN9uE8zTomvuaAog8uES8YT4fgMDuVSi_ChGHQG9GgnpWp_n35mjJo5do__EG1phCHiAbvXuSxV_QBVThLdVJX0bvzeyiWjg4UIff6UzCeKWequIr5LgOpoz_2EMpwBHj-G6CuvoyDAaMwkiYhcTkJaqQFp-3NGJxp8ryndjThUc6K47OSDmV13bEOA0uBI9TFQubaoY39h-VcdJqAjq3rvQcASRdmvV2EasDJ8LFlXaEzLxBg3GnGR1EHGNckUYaSg6xCM3xa2tsJUs3Ss03e-TAXoY5h0nxclmpS_k0VJAcnBNA6rf0n9OveBM8QCtbIeHDRxG1ZjBSx3aCzI1n2-PU8GSRu7EwdtzPPIOvf9zgr98OqdUims0EfDycBk3Gal-uOfSXWQ1ydZZSb014zydhWeBJCf2tE76tsELPA7kWEZpcSm9kUlmmN18jaIP7qwo5TZ2HwIrfECz5_IiJE7PH98eGRzpRYyLkv0oKMyXY3c4hHY8xLqWOEXehkx3cRrNsldXZqNqkD1poouvPNg=",
+      "summary": []
+    },
+    {
+      "id": "msg_02567a7656c9f8f9006a7046286f14819996d6a195d13bd5cb",
+      "type": "message",
+      "status": "incomplete",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "logprobs": [],
+          "text": "S6: Verification ledger.\n\n**Task identity:** `SV-COST-STAGED-001`  \n**Capability test:** `SV-COMPACT-PROGRESS-001`\n\n### Admitted dependencies\n- `S0` (`sha256:cf823f714fc36351325450d467e369aaac1fa755e8aac528aa358717cb001e5d`): task identity and claim boundary.\n- `S1` (`sha256:7f0e127e6f2a8a1fbd9f8af01211a5dfbacfcc5cafddf77dd988c85c68a08165`): definitions and abstract evaluator stipulation.\n- `S2` (`sha256:6c8d0ea33c0c342aec21c7d0da50982eb8808d0f1438f3991ff186ad5132a7bd`): theorem formulation and complete compact Lean candidate.\n- `S3` (`sha256:1a8de100f735211e14dcef3bae17d65acefa5a8a0f247fe3133542dc91b2220a`): proof strategy and lemma decomposition.\n- `S4` (`sha256:bf7b36b3ec888a68c71793230c2ba3070e94fcbdad60d7648402a85a8fde8536`): informal proof.\n- `S5` (`sha256:0c9725d26fc9455faf9a25d6666e17d079a1d36ae51d599f6b98a8d9fafea5c3`): Lean 4 candidate artifact.\n\nThe hashes establish artifact identity only. They do not establish semantic correctness, Lean elaboration or compilation, or conformity by any concrete implementation. The selected retrievals of `S3`, `S4`, and `S5` are truncated; no unshown content is used below.\n\n###"
+        }
+      ],
+      "phase": "final_answer",
+      "role": "assistant"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "context": "all_turns",
+    "effort": "medium",
+    "mode": "standard",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "type": "text"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tool_usage": {
+    "image_gen": {
+      "input_tokens": 0,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "output_tokens": 0,
+      "output_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "total_tokens": 0
+    },
+    "web_search": {
+      "num_requests": 0
+    }
+  },
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 4275,
+    "input_tokens_details": {
+      "cache_write_tokens": 4272,
+      "cached_tokens": 0
+    },
+    "output_tokens": 900,
+    "output_tokens_details": {
+      "reasoning_tokens": 473
+    },
+    "total_tokens": 5175
+  },
+  "user": null,
+  "metadata": {}
+}

@@ -1,75 +1,72 @@
 S2: Theorem formulation.
 
-**Task identity**  
-EXPERIMENT: SV-COST-STAGED-001  
-CAPABILITY TEST: SV-COMPACT-PROGRESS-001
+**Task identity:** `SV-COST-STAGED-001`  
+**Capability test:** `SV-COMPACT-PROGRESS-001`
 
-**Admitted dependencies**
-- S0 artifact: `sha256:1e8d7db326b7abb5df264bee6eb78f5767d37733643397bf6c805b3c62e3dd9f`
-- S1 artifact: `sha256:e6686035db5096ddfa61d6ed6f4487901f7b57efbe09873629d5c085ad060467`
+### Admitted dependencies
+- `S0` (`sha256:cf823f714fc36351325450d467e369aaac1fa755e8aac528aa358717cb001e5d`) supplies the task boundary.
+- `S1` (`sha256:7f0e127e6f2a8a1fbd9f8af01211a5dfbacfcc5cafddf77dd988c85c68a08165`) supplies the abstract definitions and evaluator stipulation.
+- These hashes identify admitted artifacts; they are not evidence of semantic correctness or implementation conformity.
 
-**Stipulated context**
-- `Transition` is an unspecified type.
-- `GBP`, `BD`, `OC`, and `ALLOW` have type `Transition → Prop`.
-- Evaluator assumption:
-  \[
-  \forall t:\mathrm{Transition},\quad
-  ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
-  \]
+### Stipulations reused
+Let:
+- `Transition` be an arbitrary type;
+- `GBP BD OC : Transition → Prop`;
+- `Outcome` contain `ALLOW`;
+- `eval : Transition → Outcome`;
+- `Allowed t := eval t = ALLOW`;
+- `Conditions t := GBP t ∧ (BD t ∧ OC t)`.
 
-**Theorem formulation**
-
-For every candidate transition \(t\):
+Assume:
 \[
-ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
+\forall t:\mathrm{Transition},\quad
+Allowed(t)\leftrightarrow Conditions(t).
 \]
 
-Equivalently, the characterization consists of:
+### Theorem formulation
+For every candidate transition `t`,
+\[
+eval(t)=ALLOW
+\quad\leftrightarrow\quad
+GBP(t)\land\bigl(BD(t)\land OC(t)\bigr).
+\]
 
-1. **Necessity**
-   \[
-   \forall t,\quad ALLOW(t)\to GBP(t)\land BD(t)\land OC(t).
-   \]
+Thus, relative to the stipulated abstract evaluator:
 
-2. **Sufficiency**
-   \[
-   \forall t,\quad GBP(t)\land BD(t)\land OC(t)\to ALLOW(t).
-   \]
+- **Necessity:** If `eval t = ALLOW`, then `GBP t`, `BD t`, and `OC t` all hold.
+- **Sufficiency:** If `GBP t`, `BD t`, and `OC t` all hold, then `eval t = ALLOW`.
 
-Under the stipulated evaluator assumption, both directions are respectively the forward and reverse implications of that assumption.
-
-**Lean 4 candidate for the logical core**
-
+### Lean 4 candidate theorem statement
 ```lean
 theorem allow_iff_conditions
-    {Transition : Type}
-    (GBP BD OC ALLOW : Transition → Prop)
-    (evaluator_spec :
-      ∀ t, ALLOW t ↔ GBP t ∧ BD t ∧ OC t) :
-    ∀ t, ALLOW t ↔ GBP t ∧ BD t ∧ OC t :=
-  evaluator_spec
+    {Transition Outcome : Type}
+    (ALLOW : Outcome)
+    (eval : Transition → Outcome)
+    (GBP BD OC : Transition → Prop)
+    (allow_spec :
+      ∀ t, eval t = ALLOW ↔ GBP t ∧ (BD t ∧ OC t)) :
+    ∀ t, eval t = ALLOW ↔ GBP t ∧ (BD t ∧ OC t) :=
+  by
+    intro t
+    exact allow_spec t
 ```
 
-A direction-explicit candidate is:
+This is a candidate statement of the logical core; Lean elaboration or compilation is not asserted.
 
-```lean
-theorem allow_necessity_and_sufficiency
-    {Transition : Type}
-    (GBP BD OC ALLOW : Transition → Prop)
-    (evaluator_spec :
-      ∀ t, ALLOW t ↔ GBP t ∧ BD t ∧ OC t) :
-    (∀ t, ALLOW t → GBP t ∧ BD t ∧ OC t) ∧
-    (∀ t, GBP t ∧ BD t ∧ OC t → ALLOW t) := by
-  constructor
-  · intro t hAllow
-    exact (evaluator_spec t).mp hAllow
-  · intro t hConditions
-    exact (evaluator_spec t).mpr hConditions
-```
+### Generated claims
+- The displayed biconditional is the necessary-and-sufficient characterization of `ALLOW` under the admitted stipulation.
+- Its necessity and sufficiency clauses are the two directions of that biconditional.
+- The Lean candidate directly exposes the stipulated specification as its hypothesis and conclusion.
 
-**Claim status and boundary**
-- **Stipulated:** the abstract types, predicates, and evaluator equivalence.
-- **Generated claim:** the necessity-and-sufficiency theorem and its two directional formulations.
-- **Verified claim:** none at this stage; the Lean 4 text is only a candidate and has not been reported as compiled or kernel-checked.
-- **Unresolved implementation evidence:** concrete predicate definitions, evaluator encoding, build compatibility, runtime behavior, integration correctness, and conformance of any deployed or concrete GCAT/BCAT evaluator.
-- No implementation validity or deployed GCAT/BCAT conformance is claimed.
+### Verified claims
+- None independently verified. At this stage, the theorem formulation follows from admitted stipulations; no formal compilation or external semantic validation has been performed.
+
+### Claim boundary
+- The theorem concerns only the stipulated abstract evaluator.
+- It does not show that any deployed, source-level, compiled, or runtime GCAT/BCAT evaluator uses these predicates or conforms to this specification.
+- The Lean text is only a candidate for the logical core and does not establish implementation validity.
+
+### Unresolved implementation evidence
+- Lean 4 elaboration and compilation in a specified toolchain and environment.
+- Formal proof checking beyond inspection of the candidate.
+- Any correspondence between the abstract model and a concrete GCAT/BCAT implementation.

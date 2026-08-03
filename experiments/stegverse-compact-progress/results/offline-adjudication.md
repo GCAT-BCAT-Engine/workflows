@@ -2,10 +2,10 @@
 
 | Lane | Original stage | Offline stage | Available outputs | Next required stage |
 |---|---:|---:|---:|---:|
-| stegverse-openai-full | NONE | NONE | 1 | S0 |
-| stegverse-openai-compact | NONE | NONE | 1 | S0 |
+| stegverse-openai-full | S6 | S6 | 7 | none |
+| stegverse-openai-compact | S3 | S3 | 5 | S4 |
 | stegverse-anthropic-full | NONE | NONE | 1 | S0 |
-| stegverse-anthropic-compact | S6 | S6 | 7 | none |
+| stegverse-anthropic-compact | NONE | NONE | 1 | S0 |
 
 ## Boundary
 

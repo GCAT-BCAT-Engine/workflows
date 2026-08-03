@@ -1,52 +1,60 @@
 S1: Definitions and assumptions.
 
-**Admitted artifact**
-- Reuse `stegverse-openai-compact:S0` (`sha256:170db6a03dbf055b9971d0173c74f4504d130134c6c631b3d729c359f51e38bc`).
+### Stipulations
 
-**Stipulations**
-- Let `Transition` be an abstract type of candidate transitions.
-- Let `GBP BD OC : Transition → Prop` be predicates.
-- Let `ALLOW : Transition → Prop` denote the abstract evaluator’s ALLOW outcome.
-- Evaluator specification:
-  \[
-  \forall t,\; ALLOW(t) \leftrightarrow (GBP(t)\land BD(t)\land OC(t)).
-  \]
+Let `Transition` be an arbitrary type of candidate transitions, with predicates:
 
-**Generated claim target**
+- `GBP : Transition → Prop`
+- `BD : Transition → Prop`
+- `OC : Transition → Prop`
+- `ALLOW : Transition → Prop`
+
+Assume the abstract evaluator specification:
+
+\[
+\forall t,\quad \operatorname{ALLOW}(t)
+\leftrightarrow
+\bigl(GBP(t)\land BD(t)\land OC(t)\bigr).
+\]
+
+No assumptions are made about decidability, independence, or the internal meanings of `GBP`, `BD`, and `OC`.
+
+### Generated claims
+
+For each transition `t`, the specification is intended to yield:
+
 - Necessity:
   \[
-  \forall t,\; ALLOW(t)\to GBP(t)\land BD(t)\land OC(t).
+  \operatorname{ALLOW}(t)\rightarrow GBP(t)\land BD(t)\land OC(t).
   \]
 - Sufficiency:
   \[
-  \forall t,\; GBP(t)\land BD(t)\land OC(t)\to ALLOW(t).
+  GBP(t)\land BD(t)\land OC(t)\rightarrow \operatorname{ALLOW}(t).
   \]
-- Together these constitute the necessary-and-sufficient characterization.
 
-**Lean 4 logical-core definitions and assumptions**
+These claims are inherited from the admitted S0 artifact; no new proof is supplied at this stage.
+
+### Lean 4 candidate: definitions and assumption
+
 ```lean
 universe u
 
 variable {Transition : Type u}
-variable (GBP BD OC ALLOW : Transition → Prop)
 
-def EvaluatorSpec : Prop :=
-  ∀ t, ALLOW t ↔ (GBP t ∧ BD t ∧ OC t)
+variable
+  (GBP BD OC ALLOW : Transition → Prop)
 
-def Necessity : Prop :=
-  ∀ t, ALLOW t → (GBP t ∧ BD t ∧ OC t)
-
-def Sufficiency : Prop :=
-  ∀ t, (GBP t ∧ BD t ∧ OC t) → ALLOW t
+variable
+  (allow_spec :
+    ∀ t, ALLOW t ↔ GBP t ∧ BD t ∧ OC t)
 ```
 
-**Verified claims**
-- None at this stage; only definitions, stipulations, and proof targets are recorded.
+This is only a candidate logical interface, not evidence of compilation or implementation conformance.
 
-**Claim boundary**
-- These statements concern only the stipulated abstract evaluator.
-- No claim is made that any deployed or concrete GCAT/BCAT implementation uses these predicates, evaluates them correctly, or conforms to this specification.
-- The Lean text is an unverified candidate and is not evidence of implementation validity.
+### Verified claims
 
-**Unresolved implementation evidence**
-- Concrete GCAT/BCAT definitions, predicate bindings, evaluator behavior, Lean compilation, and implementation conformance remain unresolved.
+No Lean compilation, proof checking, or concrete evaluator validation has been performed at this stage.
+
+### Claim boundary and unresolved evidence
+
+The specification concerns only the abstract predicates above. No claim is made that any deployed or concrete GCAT/BCAT evaluator implements or conforms to it. The binding between these predicates and any implementation remains unresolved.

@@ -4,63 +4,75 @@ S0: Task parsing and claim boundary.
 
 ## 1. Task Parsing
 
-**Experiment/Capability identifiers:** SV-COST-STAGED-001 / SV-COMPACT-PROGRESS-001
+**Experiment / Capability identifiers (stipulated, not verified):**
+- Experiment: `SV-COST-STAGED-001`
+- Capability test: `SV-COMPACT-PROGRESS-001`
+- Problem label: `GCAT/BCAT ALLOW-admissibility characterization`
 
-**Subject of characterization:** An *abstract* GCAT/BCAT evaluator — a formal object defined solely by the stipulations below. No deployed implementation is referenced.
+**Primitive vocabulary (stipulated by problem statement):**
+- `GBP` — a predicate on a candidate transition (interpretation: unspecified; treated as a boolean-valued propositional variable)
+- `BD` — a predicate on a candidate transition (same)
+- `OC` — a predicate on a candidate transition (same)
+- `ALLOW` — a distinguished outcome value of the evaluator
 
-**Primitive predicates (stipulated, not defined externally):**
+**Evaluator rule (stipulated by problem statement):**
+> The evaluator returns `ALLOW` exactly when `GBP` and `BD` and `OC` all hold.
 
-| Symbol | Type | Role |
-|--------|------|------|
-| `GBP` | `Candidate → Prop` | "Good-Bid Predicate" (name is stipulated only) |
-| `BD` | `Candidate → Prop` | "Bid-Dominant" (name is stipulated only) |
-| `OC` | `Candidate → Prop` | "Other Condition" (name is stipulated only) |
-
-**Evaluator output (stipulated):**
-
-> `ALLOW(t)` holds **if and only if** `GBP(t) ∧ BD(t) ∧ OC(t)`.
-
-This is the *defining equation* of the abstract evaluator. It is a stipulation, not a derived result.
+This is the sole semantic content admitted at this stage. No deployed system behavior is asserted.
 
 ---
 
 ## 2. Claim Boundary
 
-The following boundaries are established and must be preserved in all subsequent stages.
+### 2.1 What is being claimed
 
-### 2a. What IS claimed (admissible scope)
-
-| # | Claim | Status |
-|---|-------|--------|
-| C1 | The *necessary condition* for ALLOW: `ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)` | To be proved from stipulation |
-| C2 | The *sufficient condition* for ALLOW: `GBP(t) ∧ BD(t) ∧ OC(t) → ALLOW(t)` | To be proved from stipulation |
-| C3 | The *necessary-and-sufficient* (iff) characterization combining C1 and C2 | To be proved from C1 + C2 |
-| C4 | A Lean 4 *candidate* encoding the logical core | To be produced; implementation validity is **not** claimed |
-
-### 2b. What is NOT claimed (inadmissible scope)
-
-- That any deployed GCAT/BCAT system conforms to this abstract evaluator.
-- That `GBP`, `BD`, or `OC` have any specific algorithmic meaning beyond the stipulation.
-- That the Lean 4 candidate compiles or is free of type errors without external verification.
-- Any property of ALLOW beyond what follows from the single defining equation.
-
-### 2c. Dependency structure
+**Claim target (to be established in subsequent stages):**
+A necessary-and-sufficient characterization of `ALLOW`-admissibility, i.e., a biconditional of the form:
 
 ```
-Stipulation: ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)
-        │
-        ├─► C1 (necessary):   ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)
-        ├─► C2 (sufficient):  GBP(t) ∧ BD(t) ∧ OC(t) → ALLOW(t)
-        └─► C3 (iff):         C1 ∧ C2
+ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)
 ```
 
-No external mathematical dependencies are required; the proof is purely propositional.
+for an arbitrary candidate transition `t`.
+
+### 2.2 What is not being claimed
+
+| Item | Status |
+|---|---|
+| Any deployed GCAT/BCAT system conforms to this rule | **Not claimed** |
+| `GBP`, `BD`, `OC` have specific semantic content beyond the problem stipulation | **Not claimed** |
+| The Lean 4 candidate to be produced is verified by a compiled Lean kernel | **Not claimed** |
+| The characterization is complete with respect to any real evaluator | **Not claimed** |
+
+### 2.3 Scope of the biconditional
+
+The biconditional is purely propositional (classical logic, no modal operators, no quantifier structure beyond ranging over candidate transitions). Its proof obligation reduces to two directions:
+
+- **(Sufficiency / →):** If `GBP(t) ∧ BD(t) ∧ OC(t)` then `ALLOW(t)`
+- **(Necessity / ←):** If `ALLOW(t)` then `GBP(t) ∧ BD(t) ∧ OC(t)`
+
+Both directions are direct consequences of the stipulated rule. No lemmas from external libraries are required beyond propositional logic.
 
 ---
 
-## 3. Separation of Artifact Classes
+## 3. Admitted Artifacts
 
-| Class | Contents at S0 | Carryforward rule |
-|-------|---------------|-------------------|
-| **Stipulations** | Defining equation of ALLOW; types of GBP, BD, OC | Fixed; may not be altered |
-| **Generated claims** | C1, C2, C3, C4 as listed above | Carry to
+| Artifact | Content | Status |
+|---|---|---|
+| `STIP-001` | Evaluator rule: `ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)` | Stipulated |
+
+No previously admitted artifacts exist; `STIP-001` is the founding stipulation for all subsequent stages.
+
+---
+
+## 4. Open Items for Subsequent Stages
+
+| Stage | Obligation |
+|---|---|
+| S1 | State the formal claim (the biconditional) precisely as a mathematical proposition |
+| S2 | Produce the Lean 4 candidate for the logical core |
+| S3 | Record unresolved implementation evidence (verification gap disclosure) |
+
+---
+
+*End of S0 artifact.*

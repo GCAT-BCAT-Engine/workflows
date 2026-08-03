@@ -1,62 +1,77 @@
-# S3: Proof strategy and lemma decomposition
+S3: Proof strategy and lemma decomposition
 
 ---
 
 ## 1. Stage Identity
 
+**Experiment:** SV-COST-STAGED-001
+**Capability Test:** SV-COMPACT-PROGRESS-001
 **Stage:** S3 — Proof strategy and lemma decomposition
-**Depends on:** S1 (sha256:ba7aff1e81a6b2118b4a12c01ea4f78b78b3c369b4b06a12fc9a694158017340), S2 (sha256:7f8dec22c9051057f9d28390c606bb328f525cd9ed6ce775bf0f3bc4d26069e8)
-**Governance:** All items are stipulations for this experiment. No item asserts conformance of any deployed GCAT/BCAT system.
+**Admitted dependencies:** S0, S1, S2 (ledger above)
+**Claim boundary:** All claims are about abstract predicates only. No deployed GCAT/BCAT implementation is described or constrained.
 
 ---
 
-## 2. Proof Strategy
+## 2. Proof Context Recall
 
-**THM-ALLOW-IFF (S2-MAIN)** asserts:
+From S1 (retrieved, sha256:53b49be…):
+- `T` : an arbitrary type
+- `GBP BD OC : T → Prop` : total abstract predicates
+- `ALLOW : T → Prop` is **stipulated** by the biconditional `D-ALLOW`
 
-> `ALLOW(c) ↔ GBP(c) ∧ BD(c) ∧ OC(c)`
+From S2 (retrieved, sha256:a4a513a9…):
+- **T-ALLOW-NAS:** `∀ t : T, ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)`
+- Corollaries C1, C2 depend on T-ALLOW-NAS
 
-Since `ALLOW` is defined by DEF-ALLOW (S-DEF) as the conjunction `GBP(c) ∧ BD(c) ∧ OC(c)`, the biconditional holds by **definitional unfolding followed by reflexivity of `↔`**. No induction, case analysis, or auxiliary hypotheses are required. The proof is a one-step rewrite under the definition.
-
-**Chosen proof method:** `unfold ALLOW` (or `simp only [ALLOW]`) followed by `exact Iff.rfl`.
-
-This is the minimal and complete strategy. The theorem is not empirically contingent; it is a logical consequence of the stipulated definition alone.
-
----
-
-## 3. Lemma Decomposition
-
-Although the main theorem requires no non-trivial lemmas, we decompose the biconditional into its two directional components for explicitness and for use as named sub-lemmas in the Lean 4 candidate (S4).
-
-### LEM-FWD (Necessity)
-
-> If `ALLOW(c)` then `GBP(c) ∧ BD(c) ∧ OC(c)`.
-
-**Proof sketch:** By DEF-ALLOW, `ALLOW(c)` is defined as `GBP(c) ∧ BD(c) ∧ OC(c)`. Unfolding the definition yields the conclusion directly. No premises beyond the definition are used.
-
-**Status:** Stipulated sub-lemma. Provable by `intro h; exact h` after unfolding.
+Because `ALLOW` is **defined** (not axiomatized independently) by exactly the right-hand conjunction, T-ALLOW-NAS is a **definitional unfolding**. The proof structure is therefore trivially reflexive at the logical level, but must be made explicit for the Lean 4 candidate.
 
 ---
 
-### LEM-BWD (Sufficiency)
+## 3. Proof Strategy
 
-> If `GBP(c) ∧ BD(c) ∧ OC(c)` then `ALLOW(c)`.
+### 3.1 High-Level Approach
 
-**Proof sketch:** By DEF-ALLOW, `ALLOW(c)` unfolds to `GBP(c) ∧ BD(c) ∧ OC(c)`. The hypothesis is exactly the conclusion after unfolding. No premises beyond the definition are used.
+T-ALLOW-NAS asserts a biconditional. The canonical strategy is:
 
-**Status:** Stipulated sub-lemma. Provable by `intro h; exact h` after unfolding.
+> Prove (→) and (←) separately, then combine with `Iff.intro`.
+
+Because `ALLOW` is stipulated as the conjunction (D-ALLOW), both directions reduce to unfolding the definition and applying the identity of the conjunction.
+
+**Forward direction (necessity):**
+`ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)`
+Unfold D-ALLOW; the hypothesis immediately yields the conjunction.
+
+**Backward direction (sufficiency):**
+`GBP(t) ∧ BD(t) ∧ OC(t) → ALLOW(t)`
+Fold D-ALLOW; the conjunction is exactly the definiens.
+
+### 3.2 Proof Mode
+
+In Lean 4, if `ALLOW` is introduced via `def` or `abbrev` equating it to the conjunction, `simp` / `exact` / `constructor` suffice. If introduced via an `axiom` or `opaque` plus a separate axiom schema, we need to cite that axiom explicitly.
+
+The Lean 4 candidate (Stage S4) will treat both cases; here we record the lemma decomposition only.
 
 ---
 
-### LEM-CONJ-COMM (Auxiliary, optional)
+## 4. Lemma Decomposition
 
-> `GBP(c) ∧ BD(c) ∧ OC(c)` is equivalent under any permutation of conjuncts.
+### L1 — Forward (Necessity)
 
-**Status:** Not required for the main proof. Noted for completeness; associativity and commutativity of `∧` in Prop are standard in Lean 4 / Mathlib. Not used in the minimal proof path.
+**Lemma L1-ALLOW-Nec**
+```
+∀ t : T, ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)
+```
+*Proof sketch:*
+Fix `t`. Assume `h : ALLOW(t)`.
+Apply definitional unfolding of `ALLOW` (D-ALLOW) to obtain `h' : GBP(t) ∧ BD(t) ∧ OC(t)`.
+Return `h'`. ∎
+
+*Dependencies:* D-ALLOW (S1).
 
 ---
 
-## 4. Proof Structure Table
+### L2 — Backward (Sufficiency)
 
-| Lemma | Direction | Method | Required for THM-ALLOW-IFF |
-|---|---|
+**Lemma L2-ALLOW-Suf**
+```
+∀ t

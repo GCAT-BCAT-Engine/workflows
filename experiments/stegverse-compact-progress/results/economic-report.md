@@ -2,15 +2,15 @@
 
 | Lane | Stage | Canonical input | Observed sync cost | Combined compact + batch-normalized cost | Status |
 |---|---:|---:|---:|---:|---|
-| stegverse-openai-full | NONE | 222 | $0.013870 | $0.013870 | OBSERVED_SYNCHRONOUS |
-| stegverse-openai-compact | NONE | 222 | $0.009100 | $0.004550 | BATCH_NORMALIZED_NOT_BATCH_RECEIPTED |
-| stegverse-anthropic-full | NONE | 222 | $0.014301 | $0.014301 | OBSERVED_SYNCHRONOUS |
-| stegverse-anthropic-compact | S6 | 8,784 | $0.125739 | $0.062870 | BATCH_NORMALIZED_NOT_BATCH_RECEIPTED |
+| stegverse-openai-full | S6 | 14,280 | $0.240140 | $0.240140 | OBSERVED_SYNCHRONOUS |
+| stegverse-openai-compact | S3 | 4,475 | $0.141470 | $0.070735 | BATCH_NORMALIZED_NOT_BATCH_RECEIPTED |
+| stegverse-anthropic-full | NONE | 222 | $0.013596 | $0.013596 | OBSERVED_SYNCHRONOUS |
+| stegverse-anthropic-compact | NONE | 222 | $0.013266 | $0.006633 | BATCH_NORMALIZED_NOT_BATCH_RECEIPTED |
 
 ## Provider comparisons
 
-- openai: same stage=True; workload-only reduction=34.39%; combined compact + batch-normalized reduction=67.20%.
-- anthropic: same stage=False; workload-only reduction=-779.23%; combined compact + batch-normalized reduction=-339.62%.
+- openai: same stage=False; workload-only reduction=41.09%; combined compact + batch-normalized reduction=70.54%.
+- anthropic: same stage=True; workload-only reduction=2.43%; combined compact + batch-normalized reduction=51.21%.
 
 ## StegVerse-only lane
 

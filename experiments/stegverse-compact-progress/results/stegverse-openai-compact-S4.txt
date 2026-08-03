@@ -1,87 +1,69 @@
 S4: Complete informal proof.
 
-**Stipulations**
+### Stipulation
 
-Let `Transition` be an arbitrary type and let
+Let `Transition` be an abstract type, and let
 
-- `GBP : Transition → Prop`,
-- `BD : Transition → Prop`,
-- `OC : Transition → Prop`.
+- `GBP : Transition → Prop`
+- `BD : Transition → Prop`
+- `OC : Transition → Prop`
+- `ALLOW : Transition → Prop`
 
-Define the abstract admissibility predicate by
+Assume the evaluator specification
+
 \[
-\operatorname{ALLOW}(t) \;:\!\iff\; GBP(t)\land BD(t)\land OC(t).
+hEval:\forall t,\quad ALLOW(t)\leftrightarrow
+\bigl(GBP(t)\land BD(t)\land OC(t)\bigr).
 \]
 
-**Generated claim**
+No decidability, independence, or interpretation of these predicates is assumed.
+
+### Generated claim
 
 For every candidate transition \(t\),
+
 \[
-\operatorname{ALLOW}(t)\iff GBP(t)\land BD(t)\land OC(t).
+ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
 \]
 
 Equivalently:
 
 1. **Necessity**
    \[
-   \operatorname{ALLOW}(t)\to GBP(t)\land BD(t)\land OC(t).
+   ALLOW(t)\to GBP(t)\land BD(t)\land OC(t).
    \]
 
 2. **Sufficiency**
    \[
-   GBP(t)\land BD(t)\land OC(t)\to\operatorname{ALLOW}(t).
+   GBP(t)\land BD(t)\land OC(t)\to ALLOW(t).
    \]
 
-**Complete informal proof**
+### Complete informal proof
 
-Fix an arbitrary candidate transition \(t\).
+Fix an arbitrary transition \(t\).
 
-For necessity, assume \(\operatorname{ALLOW}(t)\). By the definition of `ALLOW`, this assumption is exactly a proof of
+For necessity, suppose \(ALLOW(t)\) holds. By the forward direction of the stipulated evaluator equivalence \(hEval(t)\), it follows that \(GBP(t)\), \(BD(t)\), and \(OC(t)\) all hold. Hence
+
 \[
 GBP(t)\land BD(t)\land OC(t).
 \]
-Therefore all three predicates hold.
 
-For sufficiency, assume
+For sufficiency, suppose
+
 \[
 GBP(t)\land BD(t)\land OC(t).
 \]
-By the definition of `ALLOW`, this conjunction is exactly the condition required for \(\operatorname{ALLOW}(t)\). Therefore the evaluator admits \(t\).
 
-Since both implications hold, it follows that
+By the reverse direction of \(hEval(t)\), this conjunction implies \(ALLOW(t)\).
+
+Thus both implications hold, so
+
 \[
-\operatorname{ALLOW}(t)\iff GBP(t)\land BD(t)\land OC(t).
+ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
 \]
+
 Because \(t\) was arbitrary, the characterization holds for every candidate transition.
 
-**Lean 4 candidate for the logical core**
+### Verified claims
 
-```lean
-universe u
-
-variable {Transition : Type u}
-variable (GBP BD OC : Transition → Prop)
-
-def ALLOW (t : Transition) : Prop :=
-  GBP t ∧ BD t ∧ OC t
-
-theorem allow_necessary (t : Transition) :
-    ALLOW GBP BD OC t → GBP t ∧ BD t ∧ OC t := by
-  intro h
-  exact h
-
-theorem allow_sufficient (t : Transition) :
-    GBP t ∧ BD t ∧ OC t → ALLOW GBP BD OC t := by
-  intro h
-  exact h
-
-theorem allow_iff (t : Transition) :
-    ALLOW GBP BD OC t ↔ GBP t ∧ BD t ∧ OC t := by
-  constructor
-  · exact allow_necessary GBP BD OC t
-  · exact allow_sufficient GBP BD OC t
-```
-
-**Claim boundary**
-
-The proof establishes only the logical characterization of the stipulated abstract predicate `ALLOW`. The Lean text is an unverified candidate and is not claimed to compile. No evidence binds this abstraction to any deployed GCAT/BCAT evaluator, and no implementation validity or conformance is claimed.
+The necessity, sufficiency

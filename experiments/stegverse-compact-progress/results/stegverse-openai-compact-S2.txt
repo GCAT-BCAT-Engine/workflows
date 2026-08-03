@@ -1,7 +1,60 @@
 S2: Theorem formulation.
 
 ### Stipulations
-Let `Transition` be an abstract type, and let `GBP BD OC ALLOW : Transition → Prop`. Assume the abstract evaluator specification:
+
+Let:
+
+- `Transition` be an arbitrary type.
+- `GBP BD OC ALLOW : Transition → Prop`.
+- The abstract evaluator satisfy:
+  \[
+  \forall t,\quad ALLOW(t)\leftrightarrow
+  \bigl(GBP(t)\land BD(t)\land OC(t)\bigr).
+  \]
+
+No decidability, independence, or internal interpretation of the predicates is assumed.
+
+### Generated claims
+
+For every candidate transition \(t\):
 
 \[
-\forall t,\
+ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
+\]
+
+Equivalently:
+
+- **Necessity**
+  \[
+  ALLOW(t)\rightarrow GBP(t)\land BD(t)\land OC(t).
+  \]
+
+- **Sufficiency**
+  \[
+  GBP(t)\land BD(t)\land OC(t)\rightarrow ALLOW(t).
+  \]
+
+Thus `ALLOW` is admissible exactly when all three predicates hold.
+
+### Lean 4 candidate for the logical core
+
+```lean
+universe u
+
+variable {Transition : Type u}
+variable (GBP BD OC ALLOW : Transition → Prop)
+
+theorem allow_admissible_iff
+    (hEval : ∀ t, ALLOW t ↔ GBP t ∧ BD t ∧ OC t)
+    (t : Transition) :
+    ALLOW t ↔ GBP t ∧ BD t ∧ OC t :=
+  hEval t
+
+theorem allow_necessity
+    (hEval : ∀ t, ALLOW t ↔ GBP t ∧ BD t ∧ OC t)
+    (t : Transition) :
+    ALLOW t → GBP t ∧ BD t ∧ OC t :=
+  (hEval t).mp
+
+theorem allow_sufficiency
+    (hEval : ∀

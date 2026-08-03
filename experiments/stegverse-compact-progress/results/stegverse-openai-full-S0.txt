@@ -3,37 +3,23 @@ S0: Task parsing and claim boundary.
 **Task identity:** `SV-COST-STAGED-001`  
 **Capability test:** `SV-COMPACT-PROGRESS-001`
 
-### Stipulated model
-For an arbitrary candidate transition `t`:
+### Stipulations
+- A candidate transition is evaluated using predicates `GBP`, `BD`, and `OC`.
+- The abstract evaluator returns `ALLOW` exactly when `GBP`, `BD`, and `OC` all hold.
+- No prior artifacts are admitted.
 
-- `GBP t`, `BD t`, and `OC t` are propositions.
-- The abstract evaluator returns `ALLOW` exactly when all three propositions hold.
-
-Formally, the governing stipulation is:
-
-\[
-\operatorname{ALLOW}(t) \iff GBP(t)\land BD(t)\land OC(t).
-\]
-
-### Required result
-Establish the necessary-and-sufficient characterization:
-
-- **Necessity:** `ALLOW t` implies `GBP t ∧ BD t ∧ OC t`.
-- **Sufficiency:** `GBP t ∧ BD t ∧ OC t` implies `ALLOW t`.
-
-A later stage may encode this logical core as a Lean 4 candidate.
+### Target deliverables for later stages
+1. State the necessary-and-sufficient characterization of `ALLOW`.
+2. Establish its logical justification.
+3. Prepare a Lean 4 candidate expressing the logical core.
 
 ### Claim boundary
-The result concerns only the stipulated abstract evaluator and its predicates. It does **not** establish:
-
-- correctness or conformity of any deployed GCAT/BCAT implementation;
-- correspondence between `GBP`, `BD`, or `OC` and implementation checks;
-- soundness of predicate computation;
-- validity of a Lean 4 artifact before type-checking in a specified environment.
+- The scope is an **abstract evaluator** governed by the stated `ALLOW` condition.
+- The logical target is the equivalence between `ALLOW` and the conjunction of `GBP`, `BD`, and `OC` for a candidate transition.
+- No claim is made that any deployed, source-level, compiled, or runtime GCAT/BCAT implementation satisfies this specification.
+- A future Lean artifact may be a candidate encoding of the logical core only; absent compilation and environment evidence, it will not establish implementation validity.
 
 ### Status
-- **Stipulations recorded:** yes.
-- **Generated mathematical claims:** none beyond restating the target characterization.
-- **Verified claims:** none.
-- **Admitted artifacts reused:** none.
-- **Unresolved implementation evidence:** all implementation-conformance and Lean-validation evidence.
+- **Generated claims:** None beyond identifying the stipulated equivalence as the target.
+- **Verified claims:** None.
+- **Unresolved evidence:** Formal proof details, Lean 4 elaboration/compilation, and correspondence to any concrete GCAT/BCAT implementation.

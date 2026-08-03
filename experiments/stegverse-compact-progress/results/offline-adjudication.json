@@ -5,66 +5,368 @@
   "lanes": [
     {
       "lane_id": "stegverse-openai-full",
-      "original_highest": "NONE",
-      "offline_highest": "NONE",
-      "available_stage_count": 1,
+      "original_highest": "S6",
+      "offline_highest": "S6",
+      "available_stage_count": 7,
       "stages": [
         {
           "stage_id": "S0",
           "original": {
-            "admitted": false,
+            "admitted": true,
             "checks": {
               "task": true,
               "formula": true,
               "abstract_scope": true,
-              "deployment_boundary": false
+              "deployment_boundary": true
             },
-            "missing": [
-              "deployment_boundary"
-            ],
+            "missing": [],
             "forbidden_claim": false,
             "forbidden_hits": [],
             "validator": "semantic-structural-v2"
           },
           "offline": {
-            "admitted": false,
+            "admitted": true,
             "checks": {
               "task": true,
               "formula": true,
               "abstract_scope": true,
-              "deployment_boundary": false
+              "deployment_boundary": true
             },
-            "missing": [
-              "deployment_boundary"
-            ],
+            "missing": [],
             "forbidden_claim": false,
             "forbidden_hits": [],
             "validator": "semantic-structural-v2"
           },
           "changed": false,
-          "output_hash": "sha256:522320dd8fac562f6c3dfa959aa83df723f00ddef8a50c82eb1843817bfcfd53"
+          "output_hash": "sha256:cf823f714fc36351325450d467e369aaac1fa755e8aac528aa358717cb001e5d"
+        },
+        {
+          "stage_id": "S1",
+          "original": {
+            "admitted": true,
+            "checks": {
+              "GBP": true,
+              "BD": true,
+              "OC": true,
+              "ALLOW": true,
+              "predicate_types_or_definitions": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "offline": {
+            "admitted": true,
+            "checks": {
+              "GBP": true,
+              "BD": true,
+              "OC": true,
+              "ALLOW": true,
+              "predicate_types_or_definitions": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "changed": false,
+          "output_hash": "sha256:7f0e127e6f2a8a1fbd9f8af01211a5dfbacfcc5cafddf77dd988c85c68a08165"
+        },
+        {
+          "stage_id": "S2",
+          "original": {
+            "admitted": true,
+            "checks": {
+              "necessity": true,
+              "sufficiency": true,
+              "biconditional": true,
+              "symbols": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "offline": {
+            "admitted": true,
+            "checks": {
+              "necessity": true,
+              "sufficiency": true,
+              "biconditional": true,
+              "symbols": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "changed": false,
+          "output_hash": "sha256:6c8d0ea33c0c342aec21c7d0da50982eb8808d0f1438f3991ff186ad5132a7bd"
+        },
+        {
+          "stage_id": "S3",
+          "original": {
+            "admitted": true,
+            "checks": {
+              "forward": true,
+              "reverse": true,
+              "strategy_or_lemma": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "offline": {
+            "admitted": true,
+            "checks": {
+              "forward": true,
+              "reverse": true,
+              "strategy_or_lemma": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "changed": false,
+          "output_hash": "sha256:1a8de100f735211e14dcef3bae17d65acefa5a8a0f247fe3133542dc91b2220a"
+        },
+        {
+          "stage_id": "S4",
+          "original": {
+            "admitted": true,
+            "checks": {
+              "proof": true,
+              "forward": true,
+              "reverse": true,
+              "boundary": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "offline": {
+            "admitted": true,
+            "checks": {
+              "proof": true,
+              "forward": true,
+              "reverse": true,
+              "boundary": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "changed": false,
+          "output_hash": "sha256:bf7b36b3ec888a68c71793230c2ba3070e94fcbdad60d7648402a85a8fde8536"
+        },
+        {
+          "stage_id": "S5",
+          "original": {
+            "admitted": true,
+            "checks": {
+              "lean_block": true,
+              "theorem": true,
+              "symbols": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "offline": {
+            "admitted": true,
+            "checks": {
+              "lean_block": true,
+              "theorem": true,
+              "symbols": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "changed": false,
+          "output_hash": "sha256:0c9725d26fc9455faf9a25d6666e17d079a1d36ae51d599f6b98a8d9fafea5c3"
+        },
+        {
+          "stage_id": "S6",
+          "original": {
+            "admitted": true,
+            "checks": {
+              "verification_status": true,
+              "evidence": true,
+              "implementation_boundary": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "offline": {
+            "admitted": true,
+            "checks": {
+              "verification_status": true,
+              "evidence": true,
+              "implementation_boundary": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "changed": false,
+          "output_hash": "sha256:1735040a03e13eebe330fc34e65e680da8374818a18894320708255deacbdfdb"
         }
       ],
-      "requires_provider_rerun_from": "S0"
+      "requires_provider_rerun_from": null
     },
     {
       "lane_id": "stegverse-openai-compact",
-      "original_highest": "NONE",
-      "offline_highest": "NONE",
-      "available_stage_count": 1,
+      "original_highest": "S3",
+      "offline_highest": "S3",
+      "available_stage_count": 5,
       "stages": [
         {
           "stage_id": "S0",
           "original": {
-            "admitted": false,
+            "admitted": true,
             "checks": {
               "task": true,
               "formula": true,
               "abstract_scope": true,
-              "deployment_boundary": false
+              "deployment_boundary": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "offline": {
+            "admitted": true,
+            "checks": {
+              "task": true,
+              "formula": true,
+              "abstract_scope": true,
+              "deployment_boundary": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "changed": false,
+          "output_hash": "sha256:dfa08c1e7762f4efae13d5b2241dc3323cbc1e098e8501503e37087eb89fa5e2"
+        },
+        {
+          "stage_id": "S1",
+          "original": {
+            "admitted": true,
+            "checks": {
+              "GBP": true,
+              "BD": true,
+              "OC": true,
+              "ALLOW": true,
+              "predicate_types_or_definitions": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "offline": {
+            "admitted": true,
+            "checks": {
+              "GBP": true,
+              "BD": true,
+              "OC": true,
+              "ALLOW": true,
+              "predicate_types_or_definitions": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "changed": false,
+          "output_hash": "sha256:208b3bc2f3d77b58a65d0e6e54fc6c37ab6c6dbe66642e7fe0090f27ff0c7690"
+        },
+        {
+          "stage_id": "S2",
+          "original": {
+            "admitted": true,
+            "checks": {
+              "necessity": true,
+              "sufficiency": true,
+              "biconditional": true,
+              "symbols": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "offline": {
+            "admitted": true,
+            "checks": {
+              "necessity": true,
+              "sufficiency": true,
+              "biconditional": true,
+              "symbols": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "changed": false,
+          "output_hash": "sha256:41d282afeb3f4a7dbef0e59ee3eb55c12aad78feb49c0b1f14305fde0a4fdbb4"
+        },
+        {
+          "stage_id": "S3",
+          "original": {
+            "admitted": true,
+            "checks": {
+              "forward": true,
+              "reverse": true,
+              "strategy_or_lemma": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "offline": {
+            "admitted": true,
+            "checks": {
+              "forward": true,
+              "reverse": true,
+              "strategy_or_lemma": true
+            },
+            "missing": [],
+            "forbidden_claim": false,
+            "forbidden_hits": [],
+            "validator": "semantic-structural-v2"
+          },
+          "changed": false,
+          "output_hash": "sha256:48b727fcc03ef3ba8b480afe179b3b449434f29034d80e2f6b58e0a57f4d6652"
+        },
+        {
+          "stage_id": "S4",
+          "original": {
+            "admitted": false,
+            "checks": {
+              "proof": true,
+              "forward": true,
+              "reverse": true,
+              "boundary": false
             },
             "missing": [
-              "deployment_boundary"
+              "boundary"
             ],
             "forbidden_claim": false,
             "forbidden_hits": [],
@@ -73,23 +375,23 @@
           "offline": {
             "admitted": false,
             "checks": {
-              "task": true,
-              "formula": true,
-              "abstract_scope": true,
-              "deployment_boundary": false
+              "proof": true,
+              "forward": true,
+              "reverse": true,
+              "boundary": false
             },
             "missing": [
-              "deployment_boundary"
+              "boundary"
             ],
             "forbidden_claim": false,
             "forbidden_hits": [],
             "validator": "semantic-structural-v2"
           },
           "changed": false,
-          "output_hash": "sha256:deafeaf4af6f071a5a20ec514983927db028b328d8f304c82c8d31f358268fff"
+          "output_hash": "sha256:3021cc6430c40337297ef42dc72073cfc87c72a435fdda84e062c060196b886f"
         }
       ],
-      "requires_provider_rerun_from": "S0"
+      "requires_provider_rerun_from": "S4"
     },
     {
       "lane_id": "stegverse-anthropic-full",
@@ -132,232 +434,54 @@
             "validator": "semantic-structural-v2"
           },
           "changed": false,
-          "output_hash": "sha256:a10b971c8d67e3cffe1867cc1bc0b7e0db6276e62e93c39c639afe253fe2c21e"
+          "output_hash": "sha256:5c351b5738dd96e677b5db1648a64d609ec3826744541df041be947d4a9d479c"
         }
       ],
       "requires_provider_rerun_from": "S0"
     },
     {
       "lane_id": "stegverse-anthropic-compact",
-      "original_highest": "S6",
-      "offline_highest": "S6",
-      "available_stage_count": 7,
+      "original_highest": "NONE",
+      "offline_highest": "NONE",
+      "available_stage_count": 1,
       "stages": [
         {
           "stage_id": "S0",
           "original": {
-            "admitted": true,
+            "admitted": false,
             "checks": {
-              "task": true,
+              "task": false,
               "formula": true,
               "abstract_scope": true,
               "deployment_boundary": true
             },
-            "missing": [],
+            "missing": [
+              "task"
+            ],
             "forbidden_claim": false,
             "forbidden_hits": [],
             "validator": "semantic-structural-v2"
           },
           "offline": {
-            "admitted": true,
+            "admitted": false,
             "checks": {
-              "task": true,
+              "task": false,
               "formula": true,
               "abstract_scope": true,
               "deployment_boundary": true
             },
-            "missing": [],
+            "missing": [
+              "task"
+            ],
             "forbidden_claim": false,
             "forbidden_hits": [],
             "validator": "semantic-structural-v2"
           },
           "changed": false,
-          "output_hash": "sha256:ea05ec268474265dd5ccd0540d658fd6464cd5f53292e7c301f411e6d49be1a7"
-        },
-        {
-          "stage_id": "S1",
-          "original": {
-            "admitted": true,
-            "checks": {
-              "GBP": true,
-              "BD": true,
-              "OC": true,
-              "ALLOW": true,
-              "predicate_types_or_definitions": true
-            },
-            "missing": [],
-            "forbidden_claim": false,
-            "forbidden_hits": [],
-            "validator": "semantic-structural-v2"
-          },
-          "offline": {
-            "admitted": true,
-            "checks": {
-              "GBP": true,
-              "BD": true,
-              "OC": true,
-              "ALLOW": true,
-              "predicate_types_or_definitions": true
-            },
-            "missing": [],
-            "forbidden_claim": false,
-            "forbidden_hits": [],
-            "validator": "semantic-structural-v2"
-          },
-          "changed": false,
-          "output_hash": "sha256:ba7aff1e81a6b2118b4a12c01ea4f78b78b3c369b4b06a12fc9a694158017340"
-        },
-        {
-          "stage_id": "S2",
-          "original": {
-            "admitted": true,
-            "checks": {
-              "necessity": true,
-              "sufficiency": true,
-              "biconditional": true,
-              "symbols": true
-            },
-            "missing": [],
-            "forbidden_claim": false,
-            "forbidden_hits": [],
-            "validator": "semantic-structural-v2"
-          },
-          "offline": {
-            "admitted": true,
-            "checks": {
-              "necessity": true,
-              "sufficiency": true,
-              "biconditional": true,
-              "symbols": true
-            },
-            "missing": [],
-            "forbidden_claim": false,
-            "forbidden_hits": [],
-            "validator": "semantic-structural-v2"
-          },
-          "changed": false,
-          "output_hash": "sha256:7f8dec22c9051057f9d28390c606bb328f525cd9ed6ce775bf0f3bc4d26069e8"
-        },
-        {
-          "stage_id": "S3",
-          "original": {
-            "admitted": true,
-            "checks": {
-              "forward": true,
-              "reverse": true,
-              "strategy_or_lemma": true
-            },
-            "missing": [],
-            "forbidden_claim": false,
-            "forbidden_hits": [],
-            "validator": "semantic-structural-v2"
-          },
-          "offline": {
-            "admitted": true,
-            "checks": {
-              "forward": true,
-              "reverse": true,
-              "strategy_or_lemma": true
-            },
-            "missing": [],
-            "forbidden_claim": false,
-            "forbidden_hits": [],
-            "validator": "semantic-structural-v2"
-          },
-          "changed": false,
-          "output_hash": "sha256:317ac7f2c0f581a9d4e1a0b80410410114b4a1a6d66ae37eb6c90e50db88bc1a"
-        },
-        {
-          "stage_id": "S4",
-          "original": {
-            "admitted": true,
-            "checks": {
-              "proof": true,
-              "forward": true,
-              "reverse": true,
-              "boundary": true
-            },
-            "missing": [],
-            "forbidden_claim": false,
-            "forbidden_hits": [],
-            "validator": "semantic-structural-v2"
-          },
-          "offline": {
-            "admitted": true,
-            "checks": {
-              "proof": true,
-              "forward": true,
-              "reverse": true,
-              "boundary": true
-            },
-            "missing": [],
-            "forbidden_claim": false,
-            "forbidden_hits": [],
-            "validator": "semantic-structural-v2"
-          },
-          "changed": false,
-          "output_hash": "sha256:ad99bd46c6966fb76e5d7f936bf6327df8bdcac86b1f3f851e498df3d76cc730"
-        },
-        {
-          "stage_id": "S5",
-          "original": {
-            "admitted": true,
-            "checks": {
-              "lean_block": true,
-              "theorem": true,
-              "symbols": true
-            },
-            "missing": [],
-            "forbidden_claim": false,
-            "forbidden_hits": [],
-            "validator": "semantic-structural-v2"
-          },
-          "offline": {
-            "admitted": true,
-            "checks": {
-              "lean_block": true,
-              "theorem": true,
-              "symbols": true
-            },
-            "missing": [],
-            "forbidden_claim": false,
-            "forbidden_hits": [],
-            "validator": "semantic-structural-v2"
-          },
-          "changed": false,
-          "output_hash": "sha256:0fb77d2d678699209cd3b608a3bb782cb172a0780553c47ab794709fa9faabd0"
-        },
-        {
-          "stage_id": "S6",
-          "original": {
-            "admitted": true,
-            "checks": {
-              "verification_status": true,
-              "evidence": true,
-              "implementation_boundary": true
-            },
-            "missing": [],
-            "forbidden_claim": false,
-            "forbidden_hits": [],
-            "validator": "semantic-structural-v2"
-          },
-          "offline": {
-            "admitted": true,
-            "checks": {
-              "verification_status": true,
-              "evidence": true,
-              "implementation_boundary": true
-            },
-            "missing": [],
-            "forbidden_claim": false,
-            "forbidden_hits": [],
-            "validator": "semantic-structural-v2"
-          },
-          "changed": false,
-          "output_hash": "sha256:d01f3e254d993e359f78f7f9cf581eae3301d6c9a5fc37ad71207f0cdac1598d"
+          "output_hash": "sha256:c49bda2d3754916bdb8000f7d9aa890747d5d8af9d9e07867805832faf23c67f"
         }
       ],
-      "requires_provider_rerun_from": null
+      "requires_provider_rerun_from": "S0"
     }
   ],
   "boundary": "This rescoring uses retained outputs only. It does not invent missing downstream stages or alter observed provider tokens, cost, or latency."

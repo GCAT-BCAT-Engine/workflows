@@ -1,72 +1,78 @@
 S3: Proof strategy and lemma decomposition.
 
-**Admitted stipulation**
+**Stipulation**
 
-For arbitrary `Transition` and predicates `GBP BD OC : Transition → Prop`:
+For arbitrary predicates
+`GBP BD OC ALLOW : Transition → Prop`, assume:
 
 \[
-\operatorname{ALLOW}(t) := GBP(t)\land BD(t)\land OC(t).
+hEval:\forall t,\ ALLOW(t)\leftrightarrow GBP(t)\land BD(t)\land OC(t).
 \]
 
-No additional properties are assumed.
+No decidability, independence, or predicate semantics are assumed.
+
+**Generated claims**
+
+For every transition `t`:
+
+1. **Necessity**
+   \[
+   ALLOW(t)\rightarrow GBP(t)\land BD(t)\land OC(t).
+   \]
+
+2. **Sufficiency**
+   \[
+   GBP(t)\land BD(t)\land OC(t)\rightarrow ALLOW(t).
+   \]
+
+3. **Necessary-and-sufficient characterization**
+   \[
+   ALLOW(t)\leftrightarrow GBP(t)\land BD(t)\land OC(t).
+   \]
 
 **Proof strategy**
 
-1. **Necessity:** unfold `ALLOW`; an `ALLOW t` proof is already a proof of `GBP t ∧ BD t ∧ OC t`.
-2. **Sufficiency:** unfold `ALLOW`; a proof of `GBP t ∧ BD t ∧ OC t` directly proves `ALLOW t`.
-3. **Characterization:** combine necessity and sufficiency to obtain
-   \[
-   \operatorname{ALLOW}(t)\iff GBP(t)\land BD(t)\land OC(t).
-   \]
+- Derive necessity using the forward implication `(hEval t).mp`.
+- Derive sufficiency using the reverse implication `(hEval t).mpr`.
+- Construct the characterization from those two directional lemmas.
+- The proof is purely propositional; no case analysis or classical reasoning is required.
 
-**Lemma decomposition**
-
-- `allow_necessary`:
-  \[
-  \operatorname{ALLOW}(t)\to GBP(t)\land BD(t)\land OC(t).
-  \]
-- `allow_sufficient`:
-  \[
-  GBP(t)\land BD(t)\land OC(t)\to\operatorname{ALLOW}(t).
-  \]
-- `allow_iff`: packages both directions as the necessary-and-sufficient characterization.
-
-**Lean 4 candidate for the logical core**
+**Lean 4 logical-core candidate**
 
 ```lean
 universe u
 
 variable {Transition : Type u}
-variable (GBP BD OC : Transition → Prop)
+variable {GBP BD OC ALLOW : Transition → Prop}
 
-def ALLOW (t : Transition) : Prop :=
-  GBP t ∧ BD t ∧ OC t
+theorem allow_necessity
+    (hEval : ∀ t, ALLOW t ↔ GBP t ∧ BD t ∧ OC t)
+    (t : Transition)
+    (hAllow : ALLOW t) :
+    GBP t ∧ BD t ∧ OC t :=
+  (hEval t).mp hAllow
 
-theorem allow_necessary (t : Transition) :
-    ALLOW GBP BD OC t → GBP t ∧ BD t ∧ OC t := by
-  intro h
-  exact h
+theorem allow_sufficiency
+    (hEval : ∀ t, ALLOW t ↔ GBP t ∧ BD t ∧ OC t)
+    (t : Transition)
+    (hConditions : GBP t ∧ BD t ∧ OC t) :
+    ALLOW t :=
+  (hEval t).mpr hConditions
 
-theorem allow_sufficient (t : Transition) :
-    GBP t ∧ BD t ∧ OC t → ALLOW GBP BD OC t := by
-  intro h
-  exact h
-
-theorem allow_iff (t : Transition) :
-    ALLOW GBP BD OC t ↔ GBP t ∧ BD t ∧ OC t := by
+theorem allow_admissible_iff
+    (hEval : ∀ t, ALLOW t ↔ GBP t ∧ BD t ∧ OC t)
+    (t : Transition) :
+    ALLOW t ↔ GBP t ∧ BD t ∧ OC t := by
   constructor
-  · exact allow_necessary GBP BD OC t
-  · exact allow_sufficient GBP BD OC t
+  · exact allow_necessity hEval t
+  · exact allow_sufficiency hEval t
 ```
 
-**Generated claim**
+**Verified claims**
 
-For every abstract candidate transition `t`, `ALLOW t` is admissible exactly when `GBP t`, `BD t`, and `OC t` all hold.
-
-**Verified claim**
-
-Relative to the admitted definition of `ALLOW`, both directions follow by definitional unfolding and require no domain-specific assumptions.
+- The theorem formulation and abstract evaluator equivalence are admitted from prior-stage artifacts.
+- No Lean compilation or proof-kernel verification is asserted at this stage.
 
 **Claim boundary and unresolved evidence**
 
-This establishes only the abstract propositional core. The Lean candidate has not been claimed as compiled or tool-verified here. No evidence binds `Transition`, `GBP`, `BD`, `OC`, or `ALLOW` to any deployed GCAT/BCAT evaluator; implementation conformance remains unresolved.
+These claims characterize only the stipulated abstract evaluator. No claim is made that any deployed or concrete GCAT/BCAT evaluator uses these predicates, satisfies `hEval`, or conforms to this Lean candidate. Implementation binding, compilation, and deployment conformance remain unresolved.

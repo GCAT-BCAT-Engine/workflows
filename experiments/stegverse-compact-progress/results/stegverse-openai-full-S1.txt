@@ -1,49 +1,57 @@
 S1: Definitions and assumptions.
 
-**Task identity**  
-EXPERIMENT: SV-COST-STAGED-001  
-CAPABILITY TEST: SV-COMPACT-PROGRESS-001
+**Task identity:** `SV-COST-STAGED-001`  
+**Capability test:** `SV-COMPACT-PROGRESS-001`
 
-**Admitted dependency**  
-- S0 artifact: `sha256:1e8d7db326b7abb5df264bee6eb78f5767d37733643397bf6c805b3c62e3dd9f`
+### Admitted dependency
+- `S0` (`sha256:cf823f714fc36351325450d467e369aaac1fa755e8aac528aa358717cb001e5d`) supplies the task boundary and abstract `ALLOW` stipulation.
+- The hash identifies the admitted artifact; it is not treated as evidence of semantic or implementation correctness.
 
-**Stipulated abstract objects**
-- Let `Transition` be an unspecified type of candidate transitions.
-- Let `GBP`, `BD`, and `OC` be predicates:
-  \[
-  GBP,BD,OC:\mathrm{Transition}\to\mathrm{Prop}.
-  \]
-- Let `ALLOW` be the abstract evaluator’s allow-result predicate:
-  \[
-  ALLOW:\mathrm{Transition}\to\mathrm{Prop}.
-  \]
+### Definitions
+Let:
+- `Transition` be an arbitrary type of candidate transitions.
+- `GBP BD OC : Transition → Prop` be predicates on candidate transitions.
+- `Outcome` contain at least the result `ALLOW`.
+- `eval : Transition → Outcome` be the abstract evaluator.
+- `Allowed (t : Transition) : Prop` abbreviate `eval t = ALLOW`.
 
-**Evaluator assumption**
-For every candidate transition \(t\):
+For each `t : Transition`, define the combined condition:
 \[
-ALLOW(t)\iff GBP(t)\land BD(t)\land OC(t).
+Conditions(t) \;:=\; GBP(t)\land BD(t)\land OC(t),
+\]
+with conjunction parsed as `GBP t ∧ (BD t ∧ OC t)`.
+
+### Stipulated assumption
+The abstract evaluator is governed by:
+\[
+\forall t:\mathrm{Transition},\quad
+Allowed(t)\leftrightarrow Conditions(t).
 \]
 
-This assumption formalizes the stipulation that the evaluator returns `ALLOW` exactly when all three predicates hold.
+Equivalently:
+\[
+\forall t,\quad
+eval(t)=ALLOW\leftrightarrow
+\bigl(GBP(t)\land BD(t)\land OC(t)\bigr).
+\]
 
-**Generated proof obligations**
-For arbitrary \(t:\mathrm{Transition}\):
+“Exactly when” supplies both directions:
+- `Allowed t → GBP t ∧ BD t ∧ OC t`;
+- `GBP t ∧ BD t ∧ OC t → Allowed t`.
 
-1. **Necessity**
-   \[
-   ALLOW(t)\to GBP(t)\land BD(t)\land OC(t).
-   \]
+### Generated claims
+- The later necessary-and-sufficient characterization should quantify over every candidate transition and use the stipulated biconditional above.
+- No proof or Lean 4 candidate is supplied at this stage.
 
-2. **Sufficiency**
-   \[
-   GBP(t)\land BD(t)\land OC(t)\to ALLOW(t).
-   \]
+### Verified claims
+- None. The definitions and evaluator condition are stipulations, not independently verified facts.
 
-Together, these obligations yield the target necessary-and-sufficient characterization.
+### Claim boundary
+- These definitions concern only the stipulated abstract evaluator.
+- They do not establish that any deployed, source-level, compiled, or runtime GCAT/BCAT implementation uses these predicates or satisfies this condition.
+- No Lean elaboration, compilation, runtime behavior, or implementation correspondence has been verified.
 
-**Claim status and boundary**
-- The definitions and evaluator assumption above are abstract stipulations, not facts established about any implementation.
-- The proof obligations are generated logical claims; they are not proved at this stage.
-- No Lean 4 candidate is supplied or verified at this stage.
-- No claim is made that any deployed or concrete GCAT/BCAT evaluator conforms to these definitions or assumptions.
-- Concrete predicate meanings, evaluator encoding, runtime behavior, integration correctness, and implementation validity remain unresolved evidence.
+### Unresolved implementation evidence
+- Logical derivation of the characterization.
+- Lean 4 encoding and elaboration/compilation evidence.
+- Correspondence between the abstract model and any concrete GCAT/BCAT implementation.
