@@ -1,0 +1,67 @@
+name: SV-COST Normalized Operation-Class Adjudication
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - experiments/sv-cost-normalized/results/result.json
+      - experiments/sv-cost-program/cost-model/canonical-task-set.json
+      - experiments/sv-cost-program/tools/adjudicate_normalized_operation_class.py
+      - .github/workflows/sv-cost-normalized-operation-adjudication.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sv-cost-normalized-operation-adjudication
+  cancel-in-progress: false
+
+jobs:
+  adjudicate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate operation-class matrix
+        run: python experiments/sv-cost-program/tools/adjudicate_normalized_operation_class.py
+
+      - name: Validate generated JSON
+        run: python -m json.tool experiments/sv-cost-program/results/normalized-operation-class-matrix.json >/dev/null
+
+      - name: Enforce operation-class boundaries
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('experiments/sv-cost-program/results/normalized-operation-class-matrix.json')
+          d=json.loads(p.read_text())
+          assert d['operation_class']=='bounded_abstract_characterization_or_admitted_reconstruction'
+          assert d['governance_demonstration']['stegverse_zero_provider_charge_selected'] is False
+          assert d['governance_demonstration']['stegverse_zero_provider_charge_rejected_from_cost_ranking'] is True
+          assert d['bounded_selection']['lane_id']=='anthropic'
+          assert 'counterfactual' in d['counterfactual_boundary'].lower()
+          print('operation-class invariants valid')
+          PY
+
+      - name: Commit matrix and report
+        run: |
+          git config user.name "stegverse-governance-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add experiments/sv-cost-program/results/normalized-operation-class-matrix.json reports/normalized-operation-class-matrix.md
+          if git diff --cached --quiet; then
+            echo "No normalized adjudication changes to commit."
+            exit 0
+          fi
+          git commit -m "Adjudicate normalized operation-class cost matrix"
+          git push
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## SV-COST Normalized Operation-Class Adjudication" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          cat reports/normalized-operation-class-matrix.md >> "$GITHUB_STEP_SUMMARY"
