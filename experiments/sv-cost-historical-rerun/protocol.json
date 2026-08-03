@@ -1,6 +1,6 @@
 {
-  "experiment_id": "SV-COST-HISTORICAL-RERUN-001",
-  "status": "BEST_AVAILABLE_RECONSTRUCTION",
+  "experiment_id": "SV-COST-HISTORICAL-RERUN-002",
+  "status": "BEST_AVAILABLE_CONTROL_ENVELOPE_REPRODUCTION",
   "source_method": "VAL-001 and BL-001 historical sv-cost controls",
   "known_historical_controls": {
     "provider": "anthropic",
@@ -11,23 +11,30 @@
     "historical_bl_cost_usd": 0.061659,
     "historical_bl_latency_seconds_approx": 52.5
   },
-  "reconstruction_boundary": "The exact historical request payload and exact connectivity prompt were not retained in the repository evidence currently available. This rerun preserves the known provider, model, output ceiling, task identity, output class, usage capture, latency capture, raw response retention, and receipt hashing. Results must be labeled control-envelope reproduction, not byte-identical replay.",
+  "reconstruction_boundary": "The exact historical request payload and exact connectivity prompt were not retained. This run reproduces the known provider, model, 4096-token ceiling, direct-unoptimized task class, usage capture, latency capture, raw response retention, and receipt hashing. It is a control-envelope reproduction, not a byte-identical replay.",
   "tests": [
     {
       "id": "VAL-001-RERUN",
-      "purpose": "Confirm the Anthropic execution path, model identity, usage accounting, raw-response retention, and receipt hashing.",
-      "max_output_tokens": 256,
-      "prompt": "Connectivity validation for SV-COST-HISTORICAL-RERUN-001. Return exactly two lines: STATUS: CONNECTED and MODEL_PATH: ANTHROPIC_SONNET_4_6. Do not solve the mathematical task."
+      "purpose": "Confirm that the Anthropic request succeeds and that provider identity, model identity, usage, raw response, latency, and hashes are captured.",
+      "max_output_tokens": 64,
+      "prompt": "Reply briefly to confirm receipt of this connectivity check. Do not perform any mathematical analysis."
     },
     {
       "id": "BL-001-RERUN",
-      "purpose": "Reproduce the known unoptimized direct baseline control envelope for SV-MATH-001.",
+      "purpose": "Reproduce the known direct, unoptimized baseline control envelope for SV-MATH-001.",
       "max_output_tokens": 4096,
-      "prompt": "SV-MATH-001 — GCAT/BCAT Admissibility Complete Invariant Characterization. Produce a direct, unoptimized mathematical artifact establishing a necessary-and-sufficient characterization for ALLOW admissibility in terms of geometric boundary preservation, bounded divergence, and ontological consistency. Separate stipulated assumptions from generated claims; state definitions, theorem, forward and reverse proof directions, limitations, and a Lean 4 candidate for the logical core. Do not claim that any deployed GCAT/BCAT implementation satisfies the abstract characterization unless implementation evidence is supplied. Return the proof artifact directly, not a plan or meta-analysis."
+      "prompt": "SV-MATH-001 — GCAT/BCAT Admissibility Complete Invariant Characterization. Produce the mathematical artifact directly. Define the abstract terms needed to characterize ALLOW admissibility using geometric boundary preservation, bounded divergence, and ontological consistency. State and prove the necessary-and-sufficient characterization in forward and reverse directions. Separate assumptions from generated claims and state the limitation that no deployed implementation is verified by this abstract proof. Include a Lean 4 logical-core candidate only if it fits within the fixed 4096-token ceiling. Do not provide a plan or commentary about the assignment."
     }
   ],
   "acceptance": {
-    "VAL-001-RERUN": ["provider request succeeds", "model identity retained", "usage retained", "raw response retained", "receipt hash retained"],
-    "BL-001-RERUN": ["provider request succeeds", "4096 output ceiling", "direct proof artifact", "definitions present", "necessary and sufficient result present", "forward and reverse directions present", "Lean candidate present", "claim boundary present", "usage, latency, raw response, and hashes retained"]
+    "VAL-001-RERUN": {
+      "transport_valid": ["HTTP request succeeds", "provider message id retained", "returned model retained", "usage retained", "raw response retained", "hashes retained"],
+      "text_is_not_authority": "Connectivity validity is determined from provider transport and receipt metadata, not from model-generated status strings."
+    },
+    "BL-001-RERUN": {
+      "transport_valid": ["provider request succeeds", "usage retained", "raw response retained", "hashes retained"],
+      "historical_output_class_valid": ["direct mathematical artifact", "definitions", "necessary and sufficient characterization", "forward direction", "reverse direction", "implementation claim boundary"],
+      "completion": ["stop reason recorded", "Lean candidate recorded when present", "ceiling saturation recorded separately from output-class validity"]
+    }
   }
 }
