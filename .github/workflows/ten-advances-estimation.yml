@@ -1,0 +1,53 @@
+name: Ten Advances Estimation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/ten-advances/**'
+      - '.github/workflows/ten-advances-estimation.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ten-advances-estimation
+  cancel-in-progress: false
+
+jobs:
+  estimate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      OPENAI_ESTIMATION_MODEL: ${{ vars.OPENAI_ESTIMATION_MODEL || 'gpt-5.6' }}
+      ANTHROPIC_ESTIMATION_MODEL: ${{ vars.ANTHROPIC_ESTIMATION_MODEL || 'claude-sonnet-4-6' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Credential boundary
+        shell: bash
+        run: |
+          test -n "$OPENAI_API_KEY" || { echo 'OPENAI_API_KEY missing'; exit 2; }
+          test -n "$ANTHROPIC_API_KEY" || { echo 'ANTHROPIC_API_KEY missing'; exit 2; }
+      - name: Run 50-lane estimation matrix
+        run: python experiments/ten-advances/tools/run_estimation_matrix.py
+      - name: Validate and generate report
+        run: python experiments/ten-advances/tools/validate_and_report.py
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: ten-advances-estimation-evidence
+          path: |
+            experiments/ten-advances/results/
+            reports/ten-advances-estimation-summary.md
+      - name: Commit validated outputs
+        shell: bash
+        run: |
+          git config user.name 'stegverse-estimation-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add experiments/ten-advances/results reports/ten-advances-estimation-summary.md
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record ten advances provider estimates'
+          git push
