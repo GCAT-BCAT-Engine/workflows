@@ -1,0 +1,305 @@
+name: SV-COST R3 Controller v2
+
+on:
+  workflow_run:
+    workflows: ["SV-COST R3 Full vs Managed Context"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: write
+  issues: write
+
+concurrency:
+  group: sv-cost-r3-controller-v2
+  cancel-in-progress: false
+
+jobs:
+  observe-adjudicate-continue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Resolve and classify R3 run
+        id: run
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_RUN_ID: ${{ github.event.workflow_run.id }}
+          EVENT_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          EVENT_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+          EVENT_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          if [[ "$EVENT_NAME" == workflow_run ]]; then
+            run_id="$EVENT_RUN_ID"
+            conclusion="$EVENT_CONCLUSION"
+            attempt="$EVENT_ATTEMPT"
+            head_sha="$EVENT_HEAD_SHA"
+          else
+            run_json="$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/sv-cost-r3-full-vs-managed.yml/runs?branch=main&per_page=20")"
+            selected="$(jq -c '[.workflow_runs[] | select(.status == "completed")][0] // empty' <<<"$run_json")"
+            test -n "$selected" || { echo 'No completed R3 workflow run found' >&2; exit 1; }
+            run_id="$(jq -r '.id' <<<"$selected")"
+            conclusion="$(jq -r '.conclusion' <<<"$selected")"
+            attempt="$(jq -r '.run_attempt // 1' <<<"$selected")"
+            head_sha="$(jq -r '.head_sha' <<<"$selected")"
+          fi
+
+          current_generation="$(grep -m1 'R3_GENERATION:' .github/workflows/sv-cost-r3-full-vs-managed.yml | awk '{print $2}')"
+          event_generation="$(git show "$head_sha:.github/workflows/sv-cost-r3-full-vs-managed.yml" 2>/dev/null | grep -m1 'R3_GENERATION:' | awk '{print $2}' || true)"
+          active=true
+          reason=active_generation
+          if [[ -z "$event_generation" || "$event_generation" != "$current_generation" ]]; then
+            active=false
+            reason=superseded_generation
+          fi
+
+          result_path='experiments/sv-cost-program/r3-full-vs-managed/results/result.json'
+          if [[ "$active" == true && "$conclusion" == success && -s "$result_path" ]]; then
+            result_head="$(jq -r '.execution.head_sha // empty' "$result_path")"
+            result_generation="$(jq -r '.execution.generation // empty' "$result_path")"
+            if [[ "$result_head" != "$head_sha" || "$result_generation" != "$current_generation" ]]; then
+              active=false
+              reason=non_evidence_follow_on_run
+            fi
+          fi
+
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+          echo "conclusion=$conclusion" >> "$GITHUB_OUTPUT"
+          echo "attempt=$attempt" >> "$GITHUB_OUTPUT"
+          echo "head_sha=$head_sha" >> "$GITHUB_OUTPUT"
+          echo "generation=$current_generation" >> "$GITHUB_OUTPUT"
+          echo "active=$active" >> "$GITHUB_OUTPUT"
+          echo "reason=$reason" >> "$GITHUB_OUTPUT"
+          echo "run_url=https://github.com/$GITHUB_REPOSITORY/actions/runs/$run_id" >> "$GITHUB_OUTPUT"
+
+      - name: Record superseded event
+        if: steps.run.outputs.active != 'true'
+        run: echo "Ignoring ${{ steps.run.outputs.reason }} for run ${{ steps.run.outputs.run_id }}"
+
+      - name: Continue active failed R3 run
+        if: steps.run.outputs.active == 'true' && steps.run.outputs.conclusion != 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ steps.run.outputs.run_id }}
+          ATTEMPT: ${{ steps.run.outputs.attempt }}
+          RUN_URL: ${{ steps.run.outputs.run_url }}
+          GENERATION: ${{ steps.run.outputs.generation }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if (( ATTEMPT < 3 )); then
+            gh api --method POST "repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID/rerun-failed-jobs"
+            gh issue comment 12 --repo "$GITHUB_REPOSITORY" --body "R3 generation \`$GENERATION\` attempt $ATTEMPT did not succeed. Failed jobs were automatically re-run. Evidence: $RUN_URL"
+          else
+            mkdir -p experiments/sv-cost-program/results
+            jq -n \
+              --arg generation "$GENERATION" \
+              --arg run_url "$RUN_URL" \
+              --argjson run_id "$RUN_ID" \
+              '{program_id:"SV-COST-MAJOR-GOAL-001",relation_id:"R3-FULL-VS-STEGVERSE-CONTEXT",status:"R3_BOUNDED_REPAIR_REQUIRED",generation:$generation,run_id:$run_id,run_url:$run_url,claim_boundary:"No context-savings claim is admitted after the bounded execution limit."}' \
+              > experiments/sv-cost-program/results/r3-blocked.json
+            git config user.name 'sv-cost-r3-controller'
+            git config user.email 'actions@users.noreply.github.com'
+            git add experiments/sv-cost-program/results/r3-blocked.json
+            git commit -m "Record bounded R3 execution failure [$GENERATION]" || true
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+            gh issue comment 12 --repo "$GITHUB_REPOSITORY" --body "R3 generation \`$GENERATION\` reached the three-attempt safety limit. The program is in bounded repair; no context-savings claim is admitted. Evidence: $RUN_URL"
+            exit 1
+          fi
+
+      - name: Adjudicate active successful R3 evidence
+        if: steps.run.outputs.active == 'true' && steps.run.outputs.conclusion == 'success'
+        env:
+          RUN_ID: ${{ steps.run.outputs.run_id }}
+          RUN_URL: ${{ steps.run.outputs.run_url }}
+          RUN_HEAD_SHA: ${{ steps.run.outputs.head_sha }}
+          GENERATION: ${{ steps.run.outputs.generation }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git pull --rebase origin main
+          python - <<'PY'
+          import hashlib
+          import json
+          import math
+          import os
+          import statistics
+          from pathlib import Path
+
+          base = Path('experiments/sv-cost-program/r3-full-vs-managed')
+          result_path = base / 'results/result.json'
+          protocol_path = base / 'protocol.json'
+          governance_path = base / 'governance.json'
+          relations_path = Path('experiments/sv-cost-program/relations.json')
+          out_path = Path('experiments/sv-cost-program/results/r3-adjudication.json')
+          analysis_path = Path('docs/SV_COST_MAJOR_ANALYSIS.md')
+
+          result = json.loads(result_path.read_text())
+          protocol = json.loads(protocol_path.read_text())
+          governance = json.loads(governance_path.read_text())
+          relations = json.loads(relations_path.read_text())
+
+          assert result['paired_n'] == 5
+          assert len(result['results']) == 10
+          assert result['transition_status'] in {'R3_OBSERVED_AND_VALIDATED', 'R3_QUALITY_DIVERGENCE'}
+          assert result['execution']['generation'] == os.environ['GENERATION']
+          assert result['execution']['head_sha'] == os.environ['RUN_HEAD_SHA']
+
+          full = sorted((x for x in result['results'] if x['context_mode'] == 'full'), key=lambda x: x['trial_id'])
+          managed = sorted((x for x in result['results'] if x['context_mode'] == 'managed'), key=lambda x: x['trial_id'])
+          assert len(full) == len(managed) == 5
+
+          expected_terminal = 'S6'
+          expected_stage_count = 7
+
+          def row_success(row):
+              return (
+                  row['terminal_stage'] == expected_terminal
+                  and row['admitted_stages'] == expected_stage_count
+                  and row['all_attempted_complete']
+                  and row['all_attempted_verified']
+              )
+
+          def lane_stats(rows):
+              return {
+                  'mean_input_tokens': statistics.mean(x['input_tokens'] for x in rows),
+                  'mean_output_tokens': statistics.mean(x['output_tokens'] for x in rows),
+                  'mean_cost_usd': statistics.mean(x['pricing_derived_cost_usd'] for x in rows),
+                  'mean_latency_seconds': statistics.mean(x['latency_seconds'] for x in rows),
+                  'full_path_completion_rate': statistics.mean(1.0 if x['terminal_stage'] == expected_terminal else 0.0 for x in rows),
+                  'all_attempted_complete_rate': statistics.mean(1.0 if x['all_attempted_complete'] else 0.0 for x in rows),
+                  'all_attempted_verified_rate': statistics.mean(1.0 if x['all_attempted_verified'] else 0.0 for x in rows),
+                  'successful_output_rate': statistics.mean(1.0 if row_success(x) else 0.0 for x in rows),
+              }
+
+          fs = lane_stats(full)
+          ms = lane_stats(managed)
+          pairs = list(zip(full, managed))
+          input_d = [m['input_tokens'] - f['input_tokens'] for f, m in pairs]
+          cost_d = [m['pricing_derived_cost_usd'] - f['pricing_derived_cost_usd'] for f, m in pairs]
+          latency_d = [m['latency_seconds'] - f['latency_seconds'] for f, m in pairs]
+
+          def ci95(values):
+              mean = statistics.mean(values)
+              if len(values) < 2:
+                  return [mean, mean]
+              half = 2.776 * statistics.stdev(values) / math.sqrt(len(values))
+              return [mean - half, mean + half]
+
+          structural_quality_equivalent = bool(result['publication_gate']['quality_equivalent'])
+          successful_quality_equivalent = (
+              structural_quality_equivalent
+              and fs['successful_output_rate'] == 1.0
+              and ms['successful_output_rate'] == 1.0
+          )
+          if successful_quality_equivalent:
+              verdict = 'CONTEXT_EFFECT_ADMISSIBLE_WITH_SUCCESSFUL_QUALITY_EQUIVALENCE'
+          elif structural_quality_equivalent:
+              verdict = 'CONTEXT_EFFECT_OBSERVED_BUT_BOTH_LANES_FAILED_SUCCESS_GATE'
+          else:
+              verdict = 'CONTEXT_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE'
+
+          sha = lambda p: 'sha256:' + hashlib.sha256(p.read_bytes()).hexdigest()
+          adjudication = {
+              'program_id': 'SV-COST-MAJOR-GOAL-001',
+              'relation_id': 'R3-FULL-VS-STEGVERSE-CONTEXT',
+              'status': 'R3_ADJUDICATED',
+              'verdict': verdict,
+              'governance_interpretation': 'The reconstructed prior state admitted R3. This adjudication determines whether managed context supports an admissible successor claim under the locked invariants; worker identity is not treated as free-standing authority.',
+              'execution': {
+                  'generation': os.environ['GENERATION'],
+                  'run_id': int(os.environ['RUN_ID']),
+                  'run_url': os.environ['RUN_URL'],
+                  'head_sha': os.environ['RUN_HEAD_SHA'],
+              },
+              'evidence': {
+                  'result_sha256': sha(result_path),
+                  'protocol_sha256': sha(protocol_path),
+                  'governance_sha256': sha(governance_path),
+                  'paired_n': 5,
+              },
+              'full': fs,
+              'managed': ms,
+              'paired_effect': {
+                  'mean_input_token_delta_managed_minus_full': statistics.mean(input_d),
+                  'input_token_delta_ci95': ci95(input_d),
+                  'mean_cost_delta_usd_managed_minus_full': statistics.mean(cost_d),
+                  'cost_delta_ci95': ci95(cost_d),
+                  'mean_latency_delta_seconds_managed_minus_full': statistics.mean(latency_d),
+                  'latency_delta_ci95': ci95(latency_d),
+              },
+              'publication_gate': {
+                  'structural_quality_equivalent': structural_quality_equivalent,
+                  'successful_quality_equivalent': successful_quality_equivalent,
+                  'headline_context_savings_admissible': successful_quality_equivalent and statistics.mean(cost_d) < 0,
+                  'pricing_is_invoice_evidence': False,
+                  'claim_boundary': 'Context-management savings are admissible only when both lanes complete the full governed path and satisfy the same verifier requirements. Pricing-derived cost is not invoice evidence.',
+              },
+          }
+          out_path.parent.mkdir(parents=True, exist_ok=True)
+          out_path.write_text(json.dumps(adjudication, indent=2) + '\n')
+
+          relations['status'] = 'R3_ADJUDICATED_R4_R5_SYNTHESIS_NEXT'
+          for relation in relations['relations']:
+              if relation['id'] == 'R3-FULL-VS-STEGVERSE-CONTEXT':
+                  relation['status'] = verdict
+                  relation['adjudication_ref'] = str(out_path)
+              if relation['id'] == 'R5-REPEATED-TRIALS':
+                  relation['status'] = 'ACTIVE_ACROSS_R2_AND_R3_PAIRED_TRIALS'
+          relations_path.write_text(json.dumps(relations, indent=2) + '\n')
+
+          text = analysis_path.read_text() if analysis_path.exists() else '# SV-COST Major Analysis\n'
+          marker = '\n## R3 — Full versus StegVerse-managed context\n'
+          section = marker + (
+              f"\n- Verdict: `{verdict}`\n"
+              f"- Paired trials: 5\n"
+              f"- Full successful-output rate: {fs['successful_output_rate']:.0%}\n"
+              f"- Managed successful-output rate: {ms['successful_output_rate']:.0%}\n"
+              f"- Mean input-token delta, managed minus full: {statistics.mean(input_d):.2f}\n"
+              f"- Mean pricing-derived cost delta, managed minus full: ${statistics.mean(cost_d):.6f}\n"
+              f"- Mean latency delta, managed minus full: {statistics.mean(latency_d):.2f} seconds\n"
+              f"- Headline savings admissible: {str(adjudication['publication_gate']['headline_context_savings_admissible']).lower()}\n\n"
+              "The finding is bounded by successful full-path quality equivalence and by the distinction between pricing-derived cost and invoice evidence.\n"
+          )
+          if marker in text:
+              text = text.split(marker)[0].rstrip() + section
+          else:
+              text = text.rstrip() + '\n' + section
+          analysis_path.write_text(text)
+          PY
+
+      - name: Commit adjudication and advance program
+        if: steps.run.outputs.active == 'true' && steps.run.outputs.conclusion == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ steps.run.outputs.run_url }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'sv-cost-r3-controller'
+          git config user.email 'actions@users.noreply.github.com'
+          git add experiments/sv-cost-program/results/r3-adjudication.json
+          git add experiments/sv-cost-program/relations.json
+          git add docs/SV_COST_MAJOR_ANALYSIS.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Adjudicate repaired governed R3 and advance synthesis"
+            for attempt in 1 2 3; do
+              git fetch origin main
+              if git rebase origin/main && git push origin HEAD:main; then break; fi
+              git rebase --abort || true
+              sleep $((attempt * 3))
+            done
+          fi
+          verdict="$(jq -r .verdict experiments/sv-cost-program/results/r3-adjudication.json)"
+          gh issue comment 12 --repo "$GITHUB_REPOSITORY" --body "R3 was observed and adjudicated as \`$verdict\`. The canonical analysis and relation state were updated. Evidence: $RUN_URL"
