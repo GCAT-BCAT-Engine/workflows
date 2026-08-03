@@ -1,0 +1,161 @@
+{
+  "schema_version": "1.0.0",
+  "experiment_id": "SV-COST-GOVERNANCE-CROSS-MODEL-001",
+  "generated_at": "2026-08-03T18:29:41.180838+00:00",
+  "comparison_unit": "successful equivalent admissible outcome",
+  "source_evidence": {
+    "calibration_path": "experiments/five-lane-calibration/results/calibration.json",
+    "calibration_sha256": "sha256:3bddc29e6314310c6bcc3651e347ef31b93b327bdb535837257bddf33b364b98",
+    "contract_path": "experiments/sv-cost-program/cost-model/governance-vs-no-governance-contract.json",
+    "contract_sha256": "sha256:3aef8ddd08e464d311b9d1da2f92e6818bd1ef7e8a973a00f0b6e68620bde733"
+  },
+  "scope_boundary": "Observed SV-MATH-001 calibration only. Structural output and task-identity gates are available; full proof correctness was not independently established by this integration.",
+  "selection_rule": "Minimize observed cost only among executed lanes that preserve task identity, produce the required output type, and retain a receipt.",
+  "rows": [
+    {
+      "lane_id": "openai-raw",
+      "provider": "openai",
+      "model": "gpt-5.6",
+      "status": "EXECUTED",
+      "input_tokens": 82,
+      "output_tokens": 4096,
+      "latency_seconds": 100.98938703536987,
+      "observed_cost_usd": 0.12329,
+      "task_identity_preserved": false,
+      "output_type": "formal_proof_candidate",
+      "receipt_hash": "sha256:5ff867c1efd47eb7630cfefdfc4ef822467ab7bdaab479c8dc46ee47646aaf8c",
+      "evidence_class": "OBSERVED_CALIBRATION",
+      "quality_gate_status": "PARTIAL_STRUCTURAL_ONLY",
+      "admissible_for_bounded_cost_comparison": false,
+      "gate_failures": [
+        "TASK_IDENTITY_NOT_PRESERVED"
+      ]
+    },
+    {
+      "lane_id": "openai-governed",
+      "provider": "openai",
+      "model": "gpt-5.6",
+      "status": "EXECUTED",
+      "input_tokens": 129,
+      "output_tokens": 4096,
+      "latency_seconds": 66.37639737129211,
+      "observed_cost_usd": 0.123525,
+      "task_identity_preserved": true,
+      "output_type": "formal_proof_candidate",
+      "receipt_hash": "sha256:f99a24b45b2c30a02bbc4bb7e210356a58b82e4c2830acd99d6e58f7314285de",
+      "evidence_class": "OBSERVED_CALIBRATION",
+      "quality_gate_status": "PARTIAL_STRUCTURAL_ONLY",
+      "admissible_for_bounded_cost_comparison": true,
+      "gate_failures": []
+    },
+    {
+      "lane_id": "anthropic-raw",
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-6",
+      "status": "EXECUTED",
+      "input_tokens": 91,
+      "output_tokens": 4096,
+      "latency_seconds": 63.6347975730896,
+      "observed_cost_usd": 0.061713,
+      "task_identity_preserved": true,
+      "output_type": "formal_proof_candidate",
+      "receipt_hash": "sha256:3d87f75dda3b61ba268fa4493f7846cef0164dcb7108c8988a2fac17b169ac45",
+      "evidence_class": "OBSERVED_CALIBRATION",
+      "quality_gate_status": "PARTIAL_STRUCTURAL_ONLY",
+      "admissible_for_bounded_cost_comparison": true,
+      "gate_failures": []
+    },
+    {
+      "lane_id": "anthropic-governed",
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-6",
+      "status": "EXECUTED",
+      "input_tokens": 142,
+      "output_tokens": 4096,
+      "latency_seconds": 68.3713686466217,
+      "observed_cost_usd": 0.061866,
+      "task_identity_preserved": true,
+      "output_type": "formal_proof_candidate",
+      "receipt_hash": "sha256:2294672c2d2f3c8298323fd2a24ef5c9563c91196bb9e5c91f71f653a703c842",
+      "evidence_class": "OBSERVED_CALIBRATION",
+      "quality_gate_status": "PARTIAL_STRUCTURAL_ONLY",
+      "admissible_for_bounded_cost_comparison": true,
+      "gate_failures": []
+    },
+    {
+      "lane_id": "stegverse-only",
+      "provider": "stegverse",
+      "status": "BLOCKED_NO_LOCAL_INFERENCE",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_seconds": 0,
+      "observed_cost_usd": 0,
+      "task_identity_preserved": true,
+      "output_type": "no_generated_proof",
+      "receipt_hash": "sha256:55b74da90d71c94533fa91d06fa1ddc09fdc8188e213bf22ae9fcaed66e95d5b",
+      "evidence_class": "OBSERVED_CALIBRATION",
+      "quality_gate_status": "PARTIAL_STRUCTURAL_ONLY",
+      "admissible_for_bounded_cost_comparison": false,
+      "gate_failures": [
+        "NOT_EXECUTED",
+        "REQUIRED_OUTPUT_NOT_PRESENT"
+      ]
+    }
+  ],
+  "provider_pairs": [
+    {
+      "provider": "openai",
+      "raw_lane": "openai-raw",
+      "governed_lane": "openai-governed",
+      "raw_admissible": false,
+      "governed_admissible": true,
+      "observed_governance_cost_delta_usd": 0.000235,
+      "observed_governance_cost_delta_percent": 0.190608,
+      "decision": "GOVERNED_LANE_ONLY_ADMISSIBLE"
+    },
+    {
+      "provider": "anthropic",
+      "raw_lane": "anthropic-raw",
+      "governed_lane": "anthropic-governed",
+      "raw_admissible": true,
+      "governed_admissible": true,
+      "observed_governance_cost_delta_usd": 0.000153,
+      "observed_governance_cost_delta_percent": 0.247922,
+      "decision": "BOTH_ADMISSIBLE_RAW_LOWER_COST"
+    }
+  ],
+  "bounded_selection": {
+    "lane_id": "anthropic-raw",
+    "provider": "anthropic",
+    "observed_cost_usd": 0.061713,
+    "status": "SELECTED_AMONG_STRUCTURALLY_ADMISSIBLE_CALIBRATION_LANES"
+  },
+  "governance_demonstration": {
+    "cheapest_is_not_automatically_accepted": true,
+    "rejected_lanes": [
+      {
+        "lane_id": "openai-raw",
+        "observed_cost_usd": 0.12329,
+        "reasons": [
+          "TASK_IDENTITY_NOT_PRESERVED"
+        ]
+      },
+      {
+        "lane_id": "stegverse-only",
+        "observed_cost_usd": 0,
+        "reasons": [
+          "NOT_EXECUTED",
+          "REQUIRED_OUTPUT_NOT_PRESENT"
+        ]
+      }
+    ],
+    "interpretation": "Governance is demonstrated by applying task and evidence gates before price comparison. A low or zero observed charge does not become a winning result when the required operation was not completed or task identity was not preserved."
+  },
+  "token_boundary": "Provider-reported tokens are retained as interface observations and do not determine selection.",
+  "next_evidence": [
+    "Run the same adjudicator over additional observed tasks and model versions.",
+    "Add independent correctness and quality-equivalence verdicts before general model ranking.",
+    "Measure local StegVerse governance cost where it is not included in provider charge.",
+    "Keep ten-advances prospective estimates separate from observed execution results."
+  ]
+}
