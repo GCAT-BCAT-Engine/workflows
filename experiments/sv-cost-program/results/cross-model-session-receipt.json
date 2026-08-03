@@ -2,9 +2,11 @@
   "schema_version": "1.0.2",
   "program_id": "SV-COST-MAJOR-GOAL-001",
   "session_goal_id": "SV-COST-CROSS-MODEL-SESSION-001",
-  "generated_at": "2026-08-03T21:03:18.161966+00:00",
-  "status": "ARCHIVE_READY",
-  "errors": [],
+  "generated_at": "2026-08-03T23:23:26.313524+00:00",
+  "status": "BLOCKED",
+  "errors": [
+    "handoff does not resolve cross-model inventory and result surfaces"
+  ],
   "canonical_continuation": "GCAT-BCAT-Engine/workflows/SV_COST_MIRROR_HANDOFF.md and issue #13",
   "resolved_surfaces": {
     "inventory": "experiments/sv-cost-program/cross-model-session-inventory.json",
@@ -12,5 +14,5 @@
     "normalized_matrix": "experiments/sv-cost-program/results/normalized-operation-class-matrix.json",
     "handoff": "SV_COST_MIRROR_HANDOFF.md"
   },
-  "next_executable_action": "None; repository-native workflows own future model additions."
+  "next_executable_action": "Resolve each named error and rerun this validator."
 }
