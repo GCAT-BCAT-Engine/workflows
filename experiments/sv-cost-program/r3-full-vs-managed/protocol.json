@@ -1,0 +1,47 @@
+{
+  "experiment_id": "SV-COST-R3-FULL-VS-MANAGED-001",
+  "relation_id": "R3-FULL-VS-STEGVERSE-CONTEXT",
+  "governance_ref": "governance.json",
+  "provider": "anthropic",
+  "model": "claude-sonnet-4-6",
+  "route": "messages",
+  "paired_trials": 5,
+  "max_output_tokens_per_stage": 1400,
+  "temperature": 0,
+  "pricing": {
+    "input_usd_per_million": 3.0,
+    "output_usd_per_million": 15.0,
+    "classification": "pricing-derived-not-invoice-evidence"
+  },
+  "task": {
+    "id": "SV-MATH-001-STAGED",
+    "problem": "Characterize ALLOW admissibility for an abstract GCAT/BCAT evaluator. GBP, BD, and OC are predicates on a candidate transition. The evaluator returns ALLOW exactly when GBP and BD and OC all hold. Establish the necessary-and-sufficient characterization, state the claim boundary, and prepare a Lean 4 candidate for the logical core. Do not claim implementation validity.",
+    "governance": "Preserve task identity. Separate stipulations, generated claims, verified claims, and unresolved implementation evidence. Do not claim any deployed GCAT/BCAT implementation conforms.",
+    "stage_contract_ref": "../../staged-math-progress/stage_contract.json"
+  },
+  "lanes": [
+    {
+      "id": "full-context",
+      "context_mode": "full",
+      "description": "Each stage receives all admitted prior stage outputs."
+    },
+    {
+      "id": "stegverse-managed-context",
+      "context_mode": "managed",
+      "description": "Each stage receives an artifact ledger plus only stage-relevant admitted excerpts."
+    }
+  ],
+  "pairing": {
+    "trial_ids": ["T01", "T02", "T03", "T04", "T05"],
+    "stage_order_locked": true,
+    "lane_order_alternates_by_trial": true,
+    "same_stage_prompt_shell": true,
+    "same_verifier": true
+  },
+  "success_criteria": {
+    "evidence_complete": "Every attempted stage retains request hash, context hash, provider message id, native usage, raw response, output hash, stop reason, latency, verifier result, and admission result.",
+    "quality_equivalence": "Both lanes must reach the same terminal stage with equal completion rate and no lower verifier pass rate in the managed lane.",
+    "cost_claim": "A context-management savings claim is admissible only when quality equivalence holds across paired trials.",
+    "claim_boundary": "Observed effects apply only to this locked staged task, provider, model, route, verifier, and trial set."
+  }
+}
