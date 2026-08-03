@@ -1,0 +1,208 @@
+{
+  "schema_version": "1.0.0",
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "updated_at": "2026-08-03T16:18:00Z",
+  "canonical_handoff": "SV_COST_MIRROR_HANDOFF.md",
+  "allowed_states": [
+    "UNCLAIMED",
+    "CLAIMED_FOR_IMPLEMENTATION",
+    "CLAIMED_FOR_VALIDATION",
+    "CLAIMED_FOR_INTEGRATION",
+    "MACHINE_OWNED",
+    "BLOCKED",
+    "COMPLETE",
+    "SUPERSEDED",
+    "MERGED_INTO_CANONICAL_WORKSTREAM"
+  ],
+  "collision_policy": {
+    "key": "repository + branch + exact surface",
+    "rule": "Only one active implementation claimant may own a surface. Validation and integration claims must name nonconflicting roles and may not mutate implementation-owned files except through the declared terminal integration step.",
+    "stale_rule": "An active claim whose expires_at is in the past must become BLOCKED, SUPERSEDED, or be renewed with a new run, commit, receipt, or workflow observation.",
+    "missing_evidence_rule": "Missing expected evidence is not success; classify RETRY through the owning workflow or BLOCKED with a machine-observable release condition.",
+    "chat_rule": "Chat sessions are not coordination authority. This registry and repository-native receipts are the coordination layer."
+  },
+  "claims": [
+    {
+      "task_id": "SV-COST-R3-EXECUTION",
+      "originating_goal": "SV-COST-004-R3-FULL-VS-MANAGED-CONTEXT",
+      "organization": "GCAT-BCAT-Engine",
+      "repository": "workflows",
+      "branch": "main",
+      "surfaces": [
+        ".github/workflows/sv-cost-r3-full-vs-managed.yml",
+        "experiments/sv-cost-program/r3-full-vs-managed/run.py",
+        "experiments/sv-cost-program/r3-full-vs-managed/results/**"
+      ],
+      "claimant": "github-actions:SV-COST R3 Full vs Managed Context",
+      "execution_lane": "r3-gen-20260803-fix1",
+      "role": "implementation",
+      "state": "MACHINE_OWNED",
+      "claimed_at": "2026-08-03T15:56:36Z",
+      "expires_at": "2026-08-04T16:18:00Z",
+      "release_condition": "Commit generation-bound result.json and immutable evidence, or reach the controller-enforced three-attempt limit and commit r3-blocked.json.",
+      "expected_evidence": [
+        "workflow run ID",
+        "job and step conclusions",
+        "immutable artifact",
+        "provider message IDs",
+        "response hashes",
+        "execution generation",
+        "head SHA",
+        "committed result.json"
+      ],
+      "collision_boundaries": "No alternate R3 workflow, runner, or manual dispatch may write the same result generation while this claim is active.",
+      "next_task_after_release": "SV-COST-R3-ADJUDICATION"
+    },
+    {
+      "task_id": "SV-COST-R3-ADJUDICATION",
+      "originating_goal": "SV-COST-005-R3-ADJUDICATION",
+      "organization": "GCAT-BCAT-Engine",
+      "repository": "workflows",
+      "branch": "main",
+      "surfaces": [
+        ".github/workflows/sv-cost-r3-controller-v2.yml",
+        "experiments/sv-cost-program/results/r3-adjudication.json",
+        "experiments/sv-cost-program/results/r3-blocked.json",
+        "experiments/sv-cost-program/relations.json",
+        "docs/SV_COST_MAJOR_ANALYSIS.md"
+      ],
+      "claimant": "github-actions:SV-COST R3 Controller v2",
+      "execution_lane": "generation-aware-observation",
+      "role": "validation_and_integration",
+      "state": "MACHINE_OWNED",
+      "claimed_at": "2026-08-03T15:58:15Z",
+      "expires_at": "2026-08-04T16:18:00Z",
+      "release_condition": "Commit r3-adjudication.json and update canonical surfaces, or commit r3-blocked.json after bounded attempts.",
+      "expected_evidence": [
+        "classified active generation",
+        "run ID and URL",
+        "result/protocol/governance hashes",
+        "paired statistics",
+        "quality-equivalence verdict",
+        "publication gate"
+      ],
+      "collision_boundaries": "May integrate only the terminal R3 evidence produced by the active generation; superseded and follow-on runs are ignored.",
+      "next_task_after_release": "SV-COST-R4-R5-FINALIZE"
+    },
+    {
+      "task_id": "SV-COST-R4-R5-FINALIZE",
+      "originating_goal": "SV-COST-006-R4-RECONSTRUCTION-ECONOMICS; SV-COST-007-R5-RELIABILITY-SYNTHESIS; SV-COST-008-CFO-DECISION",
+      "organization": "GCAT-BCAT-Engine",
+      "repository": "workflows",
+      "branch": "main",
+      "surfaces": [
+        ".github/workflows/sv-cost-finalize-relational-program.yml",
+        "experiments/sv-cost-program/results/r4-adjudication.json",
+        "experiments/sv-cost-program/results/r5-reliability-synthesis.json",
+        "experiments/sv-cost-program/results/cfo-decision.json",
+        "experiments/sv-cost-program/evidence-index.json",
+        "experiments/sv-cost-program/lineage.json",
+        "experiments/sv-cost-program/relations.json",
+        "docs/SV_COST_MAJOR_ANALYSIS.md"
+      ],
+      "claimant": "github-actions:SV-COST Finalize Relational Program",
+      "execution_lane": "terminal-synthesis",
+      "role": "integration",
+      "state": "BLOCKED",
+      "claimed_at": "2026-08-03T16:14:39Z",
+      "expires_at": "2026-08-05T16:18:00Z",
+      "release_condition": "r3-adjudication.json exists with status R3_ADJUDICATED; then commit R4, R5, CFO receipts and canonical terminal surfaces.",
+      "expected_evidence": [
+        "r4-adjudication.json",
+        "r5-reliability-synthesis.json",
+        "cfo-decision.json",
+        "updated canonical analysis",
+        "issue #12 terminal comment"
+      ],
+      "collision_boundaries": "No independent R4/R5 synthesis may write canonical terminal surfaces while this claim is active or blocked on its declared release condition.",
+      "next_task_after_release": "SV-COST-DOWNSTREAM-PROPAGATION-REVIEW"
+    },
+    {
+      "task_id": "SV-COST-SESSION-CONSOLIDATE",
+      "originating_goal": "SV-COST-009-GOVERNANCE-FORMALISM; SV-COST-010-SESSION-HANDOFF-INVENTORY-CLAIMS; SV-COST-011-SESSION-CONSOLIDATION-AUTOMATION",
+      "organization": "GCAT-BCAT-Engine",
+      "repository": "workflows",
+      "branch": "main",
+      "surfaces": [
+        "SV_COST_MIRROR_HANDOFF.md",
+        "experiments/sv-cost-program/session-goal-inventory.json",
+        "experiments/sv-cost-program/task-claims.json",
+        "docs/RECONSTRUCTABLE_STATE_TRANSITION_GOVERNANCE.md",
+        "tools/validate_sv_cost_session_state.py",
+        ".github/workflows/sv-cost-session-consolidation.yml",
+        "experiments/sv-cost-program/results/session-consolidation-receipt.json"
+      ],
+      "claimant": "chatgpt-session:2026-08-03-sv-cost-consolidation",
+      "execution_lane": "session-integration",
+      "role": "integration_and_validation",
+      "state": "CLAIMED_FOR_INTEGRATION",
+      "claimed_at": "2026-08-03T16:18:00Z",
+      "expires_at": "2026-08-04T16:18:00Z",
+      "release_condition": "All listed surfaces are committed, validator passes, hosted workflow commits a consolidation receipt, and the handoff states the exact canonical continuation path.",
+      "expected_evidence": [
+        "committed handoff",
+        "committed inventory",
+        "committed claims registry",
+        "committed governance design record",
+        "validator success",
+        "hosted workflow receipt",
+        "issue #12 consolidation comment"
+      ],
+      "collision_boundaries": "This lane does not alter R3 experimental results or adjudication. It may only preserve session requirements and validate continuation authority.",
+      "next_task_after_release": "Release the chat-session claim as MERGED_INTO_CANONICAL_WORKSTREAM and evaluate archival readiness."
+    },
+    {
+      "task_id": "SV-COST-CFO-EVIDENCE-003",
+      "originating_goal": "SV-COST-008-CFO-DECISION",
+      "organization": "GCAT-BCAT-Engine",
+      "repository": "workflows",
+      "branch": "main",
+      "surfaces": [
+        "issue #13",
+        "experiments/sv-cost-program/cost-model/**",
+        "experiments/sv-cost-program/results/cfo-cost-evidence.json"
+      ],
+      "claimant": "issue-13-assigned-evidence-owners",
+      "execution_lane": "fully-burdened-cost-and-held-out-validation",
+      "role": "implementation_and_validation",
+      "state": "BLOCKED",
+      "claimed_at": "2026-08-03T16:18:00Z",
+      "expires_at": "2026-08-10T16:18:00Z",
+      "release_condition": "Named cost sources and invoice data become available and issue #13 records a claimant with evidence-producing commits or workflows.",
+      "expected_evidence": [
+        "metered StegVerse compute cost",
+        "storage cost",
+        "verification cost",
+        "engineering and maintenance allocation",
+        "provider invoice reconciliation",
+        "held-out paired R3 confirmation",
+        "break-even and sensitivity receipt"
+      ],
+      "collision_boundaries": "May not amend observed R1-R3 receipts; it contributes additional cost and validation evidence under a separate versioned model.",
+      "next_task_after_release": "Update cfo-decision.json through a new governed decision revision."
+    },
+    {
+      "task_id": "SV-COST-R3-CONTROLLER-V1",
+      "originating_goal": "SV-COST-005-R3-ADJUDICATION",
+      "organization": "GCAT-BCAT-Engine",
+      "repository": "workflows",
+      "branch": "main",
+      "surfaces": [
+        ".github/workflows/sv-cost-r3-controller.yml"
+      ],
+      "claimant": "retired-controller",
+      "execution_lane": "obsolete",
+      "role": "validation_and_integration",
+      "state": "SUPERSEDED",
+      "claimed_at": "2026-08-03T15:20:22Z",
+      "expires_at": "2026-08-03T15:56:02Z",
+      "release_condition": "Satisfied by deletion at commit bbf3335610d47e7448089dc7951dc17d8683ee10.",
+      "expected_evidence": [
+        "deletion commit",
+        "replacement controller commit"
+      ],
+      "collision_boundaries": "Must never be restored as an active claimant.",
+      "next_task_after_release": "SV-COST-R3-ADJUDICATION"
+    }
+  ]
+}
