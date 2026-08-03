@@ -1,0 +1,75 @@
+{
+  "program_id": "SV-COST-MAJOR-GOAL-001",
+  "status": "ACTIVE_CONSOLIDATION",
+  "governing_issue": 12,
+  "operator_review_surface": "docs/SV_COST_MAJOR_ANALYSIS.md",
+  "rules": {
+    "standalone_narrative_reports_allowed": false,
+    "new_experiments_allowed_before_lineage_lock": false,
+    "headline_requires_relational_pair": true,
+    "preserve_original_artifacts": true
+  },
+  "families": [
+    {
+      "id": "historical-original",
+      "classification": "original_evidence",
+      "canonical_claim": "BL-001 and OP-002 historical anchors",
+      "known_values": {
+        "BL-001": {"tokens": 4169, "cost_usd": 0.061659},
+        "OP-002": {"tokens": 4169, "cost_usd": 0.0308295, "reported_reduction_percent": 50}
+      },
+      "evidence_status": "PARTIAL",
+      "boundary": "Exact original prompts, request payloads, and an observed OP-002 route receipt have not been located."
+    },
+    {
+      "id": "historical-rerun",
+      "classification": "repeat_evidence",
+      "root": "experiments/sv-cost-historical-rerun/",
+      "canonical_files": [
+        "protocol.json",
+        "results/comparison.json",
+        "results/report.md",
+        "results/BL-001-RERUN-receipt.json"
+      ],
+      "relation": "historical-original",
+      "status": "BEST_AVAILABLE_CONTROL_ENVELOPE_REPRODUCTION"
+    },
+    {
+      "id": "normalized-three-platform",
+      "classification": "reconstruction_and_normalization_evidence",
+      "root": "experiments/sv-cost-normalized/",
+      "canonical_files": [
+        "task_contract.json",
+        "results/result.json",
+        "results/report.md",
+        "results/native/openai.json",
+        "results/native/anthropic.json",
+        "results/native/stegverse-only.json",
+        "results/normalized/openai.json",
+        "results/normalized/anthropic.json",
+        "results/normalized/stegverse-only.json"
+      ],
+      "relation": null,
+      "status": "VALID_DIFFERENT_OPERATION",
+      "boundary": "Not eligible to be called Cost Analysis 2 because provider generation and deterministic reconstruction are different operations."
+    },
+    {
+      "id": "staged-math-progress",
+      "classification": "route_and_progress_evidence",
+      "root": "experiments/staged-math-progress/",
+      "canonical_files": [],
+      "relation": null,
+      "status": "INVENTORY_REQUIRED",
+      "boundary": "Stage outputs must be indexed and paired before any cost or capability claim is admitted."
+    }
+  ],
+  "required_next_state": {
+    "lineage_issue": 11,
+    "block_new_routes_until": [
+      "historical evidence fields classified",
+      "BL-001 repeat accepted",
+      "OP-002 identified as observed route or accounting-only",
+      "relational matrix committed"
+    ]
+  }
+}
