@@ -2,8 +2,8 @@
   "schema_version": "1.1.0",
   "program_id": "SV-COST-MAJOR-GOAL-001",
   "status": "NOT_ARCHIVE_READY",
-  "validated_at": "2026-08-03T16:56:12.804702Z",
-  "workflow_run_url": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30834428286",
+  "validated_at": "2026-08-03T16:59:02.376978Z",
+  "workflow_run_url": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30834645198",
   "canonical_handoff": "SV_COST_MIRROR_HANDOFF.md",
   "canonical_continuation": {
     "repository": "GCAT-BCAT-Engine/workflows",
@@ -752,9 +752,9 @@
     "verdict": "CONTEXT_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE"
   },
   "file_hashes": {
-    "SV_COST_MIRROR_HANDOFF.md": "sha256:191e38c6519fe4e68cc04f8fbfd2ca5627be3b2ee666a2137f56638457487ecf",
-    "experiments/sv-cost-program/session-goal-inventory.json": "sha256:43cf97fe14fc6c9f54eefcce6ec545bb37b3456aea67aa360b9c35f97151f1f3",
-    "experiments/sv-cost-program/task-claims.json": "sha256:2eb41b777f099e6ed7dae3079efef06909a064e9b170286e32b2d0e3b18ff795",
+    "SV_COST_MIRROR_HANDOFF.md": "sha256:486fed175c976b64e0ced3fba3aebea5f5369439c54319d21bc4cfa6117703a1",
+    "experiments/sv-cost-program/session-goal-inventory.json": "sha256:f263af8c65bd6af50e7d82aa25121af4ce02fc618d2ce1ba92fa6187c29aa93d",
+    "experiments/sv-cost-program/task-claims.json": "sha256:070986db230d2e78ed9ff0be7ae81b7139cd4ad4442b1bdcceae5078ad4e3e8d",
     "docs/RECONSTRUCTABLE_STATE_TRANSITION_GOVERNANCE.md": "sha256:2ed9ffcde0adad74a0c0e78096bdcf44a9cbe9a492307630d9ee6faf59e6a80f",
     "tools/reconcile_sv_cost_terminal_state.py": "sha256:e34a537222b200b3e49378f6244a10e5760301e18e7764f6b424b65e9b0aca4f",
     "tools/validate_sv_cost_session_state.py": "sha256:69d78b3f359ce19fe0f7e884edec9804ade3012116bf74ce84e9808467ecb3e4",
