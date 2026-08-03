@@ -30,6 +30,26 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Apply bounded canonical finalizer-path repair
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          wrong = '.github/workflows/sv-cost-finalize-relational-program.yml'
+          correct = '.github/workflows/sv-cost-finalize.yml'
+          for relative in (
+              'tools/reconcile_sv_cost_terminal_state.py',
+              'tools/validate_sv_cost_session_state.py',
+          ):
+              path = Path(relative)
+              text = path.read_text().replace(wrong, correct)
+              text = text.replace('Developed files: 12/12.', 'Developed files: 13/13.')
+              path.write_text(text)
+              assert wrong not in text
+              assert correct in text
+          PY
+
       - name: Compile reconciliation and validator
         run: |
           python -m py_compile tools/reconcile_sv_cost_terminal_state.py
@@ -75,6 +95,7 @@ jobs:
             "$RECEIPT"; do
             python -m json.tool "$path" >/dev/null
           done
+          test -s .github/workflows/sv-cost-finalize.yml
           grep -q 'TERMINAL BOUNDED DECISION' SV_COST_MIRROR_HANDOFF.md
           grep -q 'MERGED_INTO_CANONICAL_WORKSTREAM' SV_COST_MIRROR_HANDOFF.md
           grep -q 'DO_NOT_APPROVE_A_GENERAL_STEGVERSE_SAVINGS_CLAIM_FROM_CURRENT_EVIDENCE' docs/SV_COST_MAJOR_ANALYSIS.md
@@ -99,6 +120,8 @@ jobs:
             experiments/sv-cost-program/results/session-consolidation-receipt.json
             docs/SV_COST_MAJOR_ANALYSIS.md
             docs/RECONSTRUCTABLE_STATE_TRANSITION_GOVERNANCE.md
+            tools/reconcile_sv_cost_terminal_state.py
+            tools/validate_sv_cost_session_state.py
           if-no-files-found: error
           retention-days: 90
 
@@ -116,6 +139,8 @@ jobs:
           git add experiments/sv-cost-program/relations.json
           git add experiments/sv-cost-program/results/session-consolidation-receipt.json
           git add docs/SV_COST_MAJOR_ANALYSIS.md
+          git add tools/reconcile_sv_cost_terminal_state.py
+          git add tools/validate_sv_cost_session_state.py
           git commit -m "Reconcile terminal SV-COST state and release chat session [run $GITHUB_RUN_ID]"
           pushed=false
           for attempt in 1 2 3; do
