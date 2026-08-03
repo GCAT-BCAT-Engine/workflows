@@ -1,0 +1,57 @@
+name: Historical sv-cost VAL-001 BL-001 Rerun
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/sv-cost-historical-rerun/**'
+      - '.github/workflows/sv-cost-historical-rerun.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sv-cost-historical-rerun
+  cancel-in-progress: false
+
+jobs:
+  rerun:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      ANTHROPIC_MODEL: claude-sonnet-4-6
+      ANTHROPIC_INPUT_USD_PER_M: '3'
+      ANTHROPIC_OUTPUT_USD_PER_M: '15'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run VAL-001 and BL-001 reconstruction
+        run: python experiments/sv-cost-historical-rerun/run.py
+
+      - name: Upload immutable evidence bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: sv-cost-historical-rerun-results
+          path: experiments/sv-cost-historical-rerun/results/
+
+      - name: Commit receipts and report safely
+        shell: bash
+        run: |
+          git config user.name 'sv-cost-rerun-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add experiments/sv-cost-historical-rerun/results
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record historical sv-cost VAL-001 and BL-001 rerun'
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main && git push origin HEAD:main && exit 0
+            git rebase --abort || true
+            sleep $((attempt * 3))
+          done
+          exit 1
