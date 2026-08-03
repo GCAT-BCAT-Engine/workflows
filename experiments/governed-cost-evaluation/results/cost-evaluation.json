@@ -1,0 +1,26 @@
+[
+  {
+    "lane_id": "stegverse-openai",
+    "provider": "openai",
+    "model": "gpt-5.6",
+    "input_tokens": 140,
+    "output_tokens": 4096,
+    "latency_seconds": 66.41064214706421,
+    "observed_api_cost_usd": 0.12358,
+    "task_identity_preserved": true,
+    "output_type": "formal_proof_candidate",
+    "receipt_hash": "sha256:a3c6d60a65f16ead05a0ee748bffb71ded83d68f9c929eafdb9860545a20597c"
+  },
+  {
+    "lane_id": "stegverse-anthropic",
+    "provider": "anthropic",
+    "model": "claude-sonnet-4-6",
+    "input_tokens": 155,
+    "output_tokens": 4096,
+    "latency_seconds": 63.586909770965576,
+    "observed_api_cost_usd": 0.061905,
+    "task_identity_preserved": true,
+    "output_type": "formal_proof_candidate",
+    "receipt_hash": "sha256:96ad438537bfe1f8a71a7125dc7e502b7a960ca7fe6607c231d8ae8fad3f532d"
+  }
+]
