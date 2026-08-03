@@ -1,0 +1,200 @@
+# SV-MATH-001 — ALLOW Gate Admissibility
+
+## Assumptions and claim boundary
+
+Because no authoritative GCAT/BCAT specification was supplied, the following is a generated abstract formalization:
+
+1. GCAT and BCAT are state-indexed endomorphisms on engine entities.
+2. Geometric boundary preservation means that both transformations preserve boundary membership in both directions.
+3. Bounded divergence means that a single natural-number bound applies to the divergence of both transformations at the given state.
+4. Ontological consistency means that both transformations preserve each entity’s ontology label.
+5. The canonical `ALLOW` evaluator returns `ALLOW` exactly when all three conditions hold.
+6. An external implementation inherits the theorem only if it conforms extensionally to that canonical evaluator.
+
+Thus the three conditions are jointly complete **for the specified evaluator, and for conforming implementations**. No claim is made that an unspecified production GCAT/BCAT engine uses these semantics.
+
+## Lean 4 proof candidate
+
+```lean
+import Mathlib
+
+namespace StegVerse
+namespace SVMATH001
+
+universe u v w
+
+/-
+Generic preservation predicates. These also provide categorical-style
+identity and composition laws for boundary and ontology preservation.
+-/
+
+/-- A predicate `P` is preserved and reflected by the endomorphism `f`. -/
+def Preserves {α : Type u} (P : α → Prop) (f : α → α) : Prop :=
+  ∀ x, P x ↔ P (f x)
+
+/-- An ontology labelling is preserved by an endomorphism. -/
+def OntologyPreserves
+    {α : Type u} {Ω : Type w}
+    (ontology : α → Ω) (f : α → α) : Prop :=
+  ∀ x, ontology (f x) = ontology x
+
+/-- Identity preserves every predicate. -/
+theorem Preserves.id
+    {α : Type u} (P : α → Prop) :
+    Preserves P id := by
+  intro x
+  rfl
+
+/--
+Categorical composition law for predicate-preserving endomorphisms.
+
+If `f` and `g` preserve and reflect `P`, then `g ∘ f` also preserves
+and reflects `P`.
+-/
+theorem Preserves.comp
+    {α : Type u} {P : α → Prop} {f g : α → α}
+    (hf : Preserves P f)
+    (hg : Preserves P g) :
+    Preserves P (g ∘ f) := by
+  intro x
+  exact (hf x).trans (hg (f x))
+
+/-- Identity preserves every ontology labelling. -/
+theorem OntologyPreserves.id
+    {α : Type u} {Ω : Type w}
+    (ontology : α → Ω) :
+    OntologyPreserves ontology id := by
+  intro x
+  rfl
+
+/--
+Categorical composition law for ontology-preserving endomorphisms.
+-/
+theorem OntologyPreserves.comp
+    {α : Type u} {Ω : Type w}
+    {ontology : α → Ω} {f g : α → α}
+    (hf : OntologyPreserves ontology f)
+    (hg : OntologyPreserves ontology g) :
+    OntologyPreserves ontology (g ∘ f) := by
+  intro x
+  calc
+    ontology ((g ∘ f) x) = ontology (g (f x)) := rfl
+    _ = ontology (f x) := hg (f x)
+    _ = ontology x := hf x
+
+/--
+Abstract GCAT/BCAT engine signature.
+
+No metric axioms are required for SV-MATH-001. The `distance` field is
+the selected natural-number-valued divergence measure.
+-/
+structure Engine where
+  Entity   : Type u
+  State    : Type v
+  Ontology : Type w
+
+  gcat : State → Entity → Entity
+  bcat : State → Entity → Entity
+
+  boundary : State → Entity → Prop
+  distance : Entity → Entity → Nat
+  ontology : Entity → Ontology
+
+/--
+Geometric boundary preservation at state `s`.
+
+Both GCAT and BCAT preserve and reflect membership in the geometric
+boundary selected by `s`.
+-/
+def GeometricBoundaryPreservation
+    (e : Engine) (s : e.State) : Prop :=
+  Preserves (e.boundary s) (e.gcat s) ∧
+  Preserves (e.boundary s) (e.bcat s)
+
+/--
+Bounded divergence at state `s`.
+
+One finite natural-number bound must bound the GCAT and BCAT divergence
+of every entity.
+-/
+def BoundedDivergence
+    (e : Engine) (s : e.State) : Prop :=
+  ∃ K : Nat,
+    (∀ x : e.Entity, e.distance x (e.gcat s x) ≤ K) ∧
+    (∀ x : e.Entity, e.distance x (e.bcat s x) ≤ K)
+
+/--
+Ontological consistency at state `s`.
+
+GCAT and BCAT must preserve the ontology label of every entity.
+-/
+def OntologicalConsistency
+    (e : Engine) (s : e.State) : Prop :=
+  OntologyPreserves e.ontology (e.gcat s) ∧
+  OntologyPreserves e.ontology (e.bcat s)
+
+/-- The conjunction of all three ALLOW conditions. -/
+def JointConditions
+    (e : Engine) (s : e.State) : Prop :=
+  GeometricBoundaryPreservation e s ∧
+  BoundedDivergence e s ∧
+  OntologicalConsistency e s
+
+/-- Observable gate result. -/
+inductive GateResult where
+  | ALLOW
+  | DENY
+deriving DecidableEq, Repr
+
+/--
+Canonical GCAT/BCAT gate evaluator.
+
+Classical decidability is used because the conditions quantify over
+possibly infinite entity types.
+-/
+noncomputable def evaluate
+    (e : Engine) (s : e.State) : GateResult :=
+  if JointConditions e s then
+    GateResult.ALLOW
+  else
+    GateResult.DENY
+
+/-- A state is gate-admissible when the canonical evaluator returns ALLOW. -/
+def Admissible
+    (e : Engine) (s : e.State) : Prop :=
+  evaluate e s = GateResult.ALLOW
+
+/--
+Main necessary-and-sufficient theorem.
+
+The ALLOW gate is admissible exactly when geometric boundary
+preservation, bounded divergence, and ontological consistency all hold.
+-/
+theorem admissible_iff_joint_conditions
+    (e : Engine) (s : e.State) :
+    Admissible e s ↔ JointConditions e s := by
+  classical
+  by_cases h : JointConditions e s
+  · simp [Admissible, evaluate, h]
+  · simp [Admissible, evaluate, h]
+
+/-- Geometric boundary preservation is necessary for ALLOW. -/
+theorem admissible_implies_geometric
+    (e : Engine) (s : e.State)
+    (h : Admissible e s) :
+    GeometricBoundaryPreservation e s := by
+  have hj : JointConditions e s :=
+    (admissible_iff_joint_conditions e s).mp h
+  exact hj.1
+
+/-- Bounded divergence is necessary for ALLOW. -/
+theorem admissible_implies_bounded
+    (e : Engine) (s : e.State)
+    (h : Admissible e s) :
+    BoundedDivergence e s := by
+  have hj : JointConditions e s :=
+    (admissible_iff_joint_conditions e s).mp h
+  exact hj.2.1
+
+/-- Ontological consistency is necessary for ALLOW. -/
+theorem admissible

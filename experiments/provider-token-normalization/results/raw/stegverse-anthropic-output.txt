@@ -1,0 +1,290 @@
+# SV-MATH-001: ALLOW Gate Admissibility — Formal Proof
+
+## Task Identity Preservation
+**Task:** Formal proof of necessary and sufficient conditions for ALLOW gate admissibility in the GCAT/BCAT engine.
+**Output type:** Mathematical proof document with definitions, theorem statements, proof reasoning, categorical rewriting, and verification ledger.
+**Domain:** Categorical/geometric logic, rewriting systems, ontological consistency theory.
+
+---
+
+## Assumptions (Stated Explicitly)
+
+**A1.** The GCAT/BCAT engine is modeled as a string-diagram rewriting system over a symmetric monoidal category **C** with a distinguished subcategory of *admissible morphisms*.
+
+**A2.** "ALLOW gate" denotes a unary gate constructor `ALLOW : Obj(C) → Obj(C)` that marks morphisms as pass-through-admissible in the execution trace.
+
+**A3.** "Geometric boundary preservation" (GBP) is formalizable as a functor condition: the gate does not expand the support of any object beyond its declared boundary envelope.
+
+**A4.** "Bounded divergence" (BD) is formalizable as a finiteness condition on the rewriting derivation tree: no rewriting sequence under the gate produces an infinite non-terminating chain.
+
+**A5.** "Ontological consistency" (OC) is formalizable as a coherence condition: the gate does not produce objects that violate typing constraints imposed by the ontology lattice **Ω**.
+
+**A6.** The ontology lattice **Ω** is a bounded distributive lattice with a top element ⊤ (universal type) and bottom ⊥ (void type); consistency means no derivation reaches ⊥ except from ⊥-typed inputs.
+
+**A7.** "Admissibility" of an ALLOW gate instance means: it is safe to execute the guarded morphism in the engine without violating engine invariants.
+
+**A8.** These assumptions are *stipulative* for the purpose of this formalization. The connection to any specific deployed GCAT/BCAT engine is an *open empirical claim* requiring evidence (see Verification Ledger).
+
+---
+
+## Section 1: Definitions
+
+### Definition 1.1 — Execution Category C
+
+Let **C** be a symmetric monoidal category (SMC) where:
+- Objects `Ob(C)` represent typed data bundles.
+- Morphisms `f : A → B` represent engine transformations.
+- Monoidal product `⊗` represents parallel composition.
+- The unit object `I` represents the empty data bundle.
+
+### Definition 1.2 — Boundary Envelope
+
+For each object `A ∈ Ob(C)`, let `∂(A) ∈ 𝒫(Loc)` be the **boundary envelope** of `A`, where `Loc` is a set of *locations* (memory addresses, semantic slots, or geometric regions, per context). This is a function `∂ : Ob(C) → 𝒫(Loc)`.
+
+**Monotonicity axiom:** For any morphism `f : A → B`, `∂(B) ⊆ ∂(A) ∪ Δ(f)` where `Δ(f)` is the *declared expansion* of `f`.
+
+### Definition 1.3 — Geometric Boundary Preservation (GBP)
+
+A gate `g : A → B` satisfies **GBP** iff:
+
+```
+GBP(g) ↔ ∂(B) ⊆ ∂(A)
+```
+
+That is, `g` does not introduce new locations not already in `A`'s envelope. `Δ(g) = ∅` for a GBP-satisfying gate.
+
+### Definition 1.4 — Rewriting Derivation Tree
+
+Let `R` be the set of rewriting rules of the GCAT/BCAT engine. A **derivation tree** `T(g)` rooted at gate `g` is the (possibly infinite) tree of rule applications triggered by `g`. Let `|T(g)|` denote the cardinality of nodes in `T(g)`.
+
+### Definition 1.5 — Bounded Divergence (BD)
+
+A gate `g` satisfies **BD** iff:
+
+```
+BD(g) ↔ |T(g)| < ∞
+```
+
+Equivalently, every rewriting sequence triggered by `g` is terminating (strongly normalizing in `R` restricted to the scope of `g`).
+
+### Definition 1.6 — Ontology Lattice Ω
+
+Let `(Ω, ≤, ∧, ∨, ⊤, ⊥)` be a bounded distributive lattice. There is a *type assignment* functor `τ : Ob(C) → Ω`. For any morphism `f : A → B`, we require `τ(B) ≤ τ(A)` (types can only be refined, not expanded — **type monotonicity**).
+
+**Note:** This models a *refinement type system* where the ontology lattice orders types by specificity. ⊤ is "any type," ⊥ is "contradiction/void."
+
+### Definition 1.7 — Ontological Consistency (OC)
+
+A gate `g : A → B` satisfies **OC** iff:
+
+```
+OC(g) ↔ (τ(A) ≠ ⊥ → τ(B) ≠ ⊥)
+```
+
+Equivalently: `g` does not derive a contradiction-typed output from a non-contradictory input.
+
+Stronger form (used in the sufficiency direction):
+
+```
+OC⁺(g) ↔ τ(g(x)) ≥ ⊥_strict for all x : A with τ(x) > ⊥
+```
+
+where `⊥_strict` denotes the immediate successor of ⊥ in Ω (the minimal consistent type).
+
+### Definition 1.8 — ALLOW Gate Admissibility
+
+A gate instance `ALLOW(g) : A → B` is **admissible** in the GCAT/BCAT engine iff executing it preserves all engine invariants:
+
+```
+Admissible(ALLOW(g)) ↔ 
+  (∀ engine state σ : Execute(ALLOW(g), σ) produces a valid successor state σ')
+```
+
+We formalize "valid successor state" as:
+1. No boundary violation (related to GBP)
+2. Termination of sub-execution (related to BD)
+3. No ontological contradiction introduced (related to OC)
+
+This gives the *informal* tripartite condition. The theorem below establishes these as jointly necessary and sufficient.
+
+---
+
+## Section 2: Theorem Statement
+
+### Theorem SV-MATH-001 (Main)
+
+**For any gate instance `g : A → B` in the GCAT/BCAT engine:**
+
+```
+Admissible(ALLOW(g)) ↔ GBP(g) ∧ BD(g) ∧ OC(g)
+```
+
+**Structure of proof:**
+- (→) Necessity: Admissibility implies each of GBP, BD, OC.
+- (←) Sufficiency: GBP ∧ BD ∧ OC jointly imply Admissibility.
+- (Completeness): The three conditions are *jointly complete* — no additional condition is needed.
+
+### Corollary 2.1
+
+The conditions GBP, BD, OC are *independent* (no two imply the third). This follows from the counterexample constructions in the proof of necessity.
+
+---
+
+## Section 3: Proof
+
+### 3.1 Proof of Necessity (→)
+
+**Assume:** `Admissible(ALLOW(g))` holds for `g : A → B`.
+
+We show GBP(g), BD(g), OC(g) each follow.
+
+---
+
+#### Lemma 3.1.1 — Admissibility → GBP
+
+**Proof by contrapositive.**
+
+Assume `¬GBP(g)`. Then `∃ loc ∈ ∂(B) \ ∂(A)`. This means `g` introduces a new location `loc` not declared in `A`'s boundary envelope.
+
+In the engine model, boundary envelopes define the *write authorization scope* of each execution step. An engine invariant (Engine Invariant I, denoted EI-I) states:
+
+```
+EI-I: For all executed morphisms f : A → B, writes are confined to ∂(A).
+```
+
+If `g` writes to `loc ∉ ∂(A)`, then execution of `ALLOW(g)` violates EI-I, producing an invalid successor state. Therefore `ALLOW(g)` is not admissible. By contrapositive, admissibility implies GBP. □
+
+**Dependency:** This proof depends on EI-I being a genuine engine invariant. This is a *generated claim* pending verification against engine specification (see Ledger item L1).
+
+---
+
+#### Lemma 3.1.2 — Admissibility → BD
+
+**Proof by contrapositive.**
+
+Assume `¬BD(g)`. Then `|T(g)| = ∞`, i.e., the derivation tree of `g` is infinite and the rewriting sequence does not terminate.
+
+Engine invariant EI-II states:
+
+```
+EI-II: All execution traces must terminate in finite time (strong termination).
+```
+
+If `T(g)` is infinite, executing `ALLOW(g)` produces an infinite trace, violating EI-II and producing no valid successor state (the engine diverges). Therefore `ALLOW(g)` is not admissible. By contrapositive, admissibility implies BD. □
+
+**Dependency:** Depends on EI-II being a genuine invariant (Ledger item L2). The assumption that BD is equivalent to strong normalization of `R` restricted to the scope of `g` is stated in A4.
+
+---
+
+#### Lemma 3.1.3 — Admissibility → OC
+
+**Proof by contrapositive.**
+
+Assume `¬OC(g)`. Then `∃ x : A` with `τ(x) ≠ ⊥` such that `τ(g(x)) = ⊥`.
+
+Engine invariant EI-III states:
+
+```
+EI-III: No execution step may produce an object of type ⊥ from a non-⊥-typed input,
+         as ⊥-typed objects represent ontological contradictions that corrupt the 
+         knowledge state.
+```
+
+If `g` produces a ⊥-typed output from non-⊥ input, executing `ALLOW(g)` violates EI-III and corrupts the engine state. Therefore `ALLOW(g)` is not admissible. By contrapositive, admissibility implies OC. □
+
+**Dependency:** Depends on EI-III (Ledger item L3) and on the ontology lattice model of Definition 1.6.
+
+---
+
+#### Summary of Necessity
+
+Under assumptions A1–A8 and engine invariants EI-I, EI-II, EI-III:
+
+```
+Admissible(ALLOW(g)) → GBP(g) ∧ BD(g) ∧ OC(g)
+```
+
+The three lemmas are independent contrapositive arguments; each condition arises from a distinct class of engine invariant. □
+
+---
+
+### 3.2 Proof of Sufficiency (←)
+
+**Assume:** `GBP(g) ∧ BD(g) ∧ OC(g)` holds for `g : A → B`.
+
+We show `Admissible(ALLOW(g))`.
+
+We must show that executing `ALLOW(g)` in any valid engine state `σ` produces a valid successor state `σ'`.
+
+Let `σ` be an arbitrary valid engine state. Validity of `σ` means:
+- (σ-I) All object boundary envelopes are respected in σ's memory/location map.
+- (σ-II) No pending divergent computation exists.
+- (σ-III) All typed objects in σ satisfy `τ(x) ≠ ⊥` (no contradictions present).
+
+---
+
+#### Lemma 3.2.1 — GBP ensures boundary invariant of σ' (EI-I preservation)
+
+Since `GBP(g)` holds, `∂(B) ⊆ ∂(A)`. All writes by `g` are within `∂(A)`, which is within the authorized scope of the execution step. Therefore σ' respects all boundary envelopes. EI-I is preserved. □
+
+---
+
+#### Lemma 3.2.2 — BD ensures termination (EI-II preservation)
+
+Since `BD(g)` holds, `|T(g)| < ∞`. The derivation tree terminates, and the execution trace of `ALLOW(g)` in σ is finite. EI-II is preserved. □
+
+---
+
+#### Lemma 3.2.3 — OC ensures no contradiction introduction (EI-III preservation)
+
+Since σ is valid, all inputs to `g` satisfy `τ(x) ≠ ⊥`. Since `OC(g)` holds, `τ(g(x)) ≠ ⊥` for all such x. Therefore σ' contains no ⊥-typed objects. EI-III is preserved. □
+
+---
+
+#### Completing the Sufficiency Argument
+
+The successor state σ' satisfies σ'-I (from Lemma 3.2.1), σ'-II (from Lemma 3.2.2), and σ'-III (from Lemma 3.2.3). Therefore σ' is a valid engine state, and `ALLOW(g)` is admissible. □
+
+---
+
+### 3.3 Proof of Joint Completeness
+
+**Claim:** No additional condition beyond GBP, BD, OC is required for admissibility.
+
+**Proof strategy:** We show the engine invariants decompose *completely* into the three categories, and that GBP, BD, OC are *individually necessary* and *collectively sufficient*.
+
+**Formal argument using invariant classification:**
+
+Define the set of all engine invariants `ℐ = {EI-I, EI-II, EI-III, ...}`. We claim that under assumptions A1–A8, every invariant in `ℐ` falls into exactly one of three classes:
+
+```
+Class B (Boundary): invariants about spatial/location scope → captured by GBP
+Class T (Termination): invariants about execution finiteness → captured by BD
+Class O (Ontology): invariants about type/consistency → captured by OC
+```
+
+**Argument for completeness:** The SMC model of the engine partitions operational semantics into three independent dimensions:
+1. **Spatial** (what locations are touched) — fully characterized by the boundary functor `∂`.
+2. **Temporal** (how long computation runs) — fully characterized by the rewriting system `R` and its termination behavior.
+3. **Semantic** (what types/meanings are produced) — fully characterized by the type functor `τ : Ob(C) → Ω`.
+
+These three dimensions are *orthogonal* (independent) and *exhaustive* (every engine state property is a combination of spatial, temporal, and semantic properties). Therefore GBP ∧ BD ∧ OC capture all invariant classes.
+
+**Generated claim:** The exhaustiveness argument above is *structurally plausible* given the SMC model, but requires formal verification that no engine invariant exists outside Classes B, T, O (see Ledger item L4).
+
+---
+
+### 3.4 Independence of Conditions
+
+We establish that no two of {GBP, BD, OC} imply the third, using counterexample constructions.
+
+#### Example 3.4.1 — GBP ∧ BD but ¬OC
+
+Let `g : A → B` where:
+- `∂(B) ⊆ ∂(A)` (GBP holds)
+- Derivation tree is finite, depth 1 (BD holds)
+- `τ(A) = t` for some `t > ⊥`, but `g` maps to `τ(B) = ⊥` (OC fails)
+
+Such a `g` is a *boundary-preserving, terminating contradiction introducer*. **Constructed:** Let `g` be the "annihilate" morphism that maps any non-empty object to the empty/void type within the same location scope. GBP ∧ BD hold, OC fails.
+
+#### Example 3
