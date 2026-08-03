@@ -2,24 +2,24 @@
   "program_id": "SV-COST-MAJOR-GOAL-001",
   "status": "ISSUE_TRIGGER_OBSERVED_SUCCESS",
   "run": {
-    "id": 30834645919,
-    "html_url": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30834645919",
+    "id": 30835001225,
+    "html_url": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30835001225",
     "status": "completed",
     "conclusion": "success",
     "event": "issues",
     "run_attempt": 1,
-    "head_sha": "e238156cfb281db5613d6bab8299746df3771485",
-    "created_at": "2026-08-03T16:58:57Z",
-    "updated_at": "2026-08-03T16:59:12Z"
+    "head_sha": "00af8388fa4e3e1238feb41f63647e8cd87c9f9c",
+    "created_at": "2026-08-03T17:03:27Z",
+    "updated_at": "2026-08-03T17:03:40Z"
   },
   "jobs": [
     {
-      "id": 91756743789,
+      "id": 91757905445,
       "name": "reconcile-validate-release",
       "status": "completed",
       "conclusion": "success",
-      "started_at": "2026-08-03T16:59:00Z",
-      "completed_at": "2026-08-03T16:59:12Z",
+      "started_at": "2026-08-03T17:03:30Z",
+      "completed_at": "2026-08-03T17:03:39Z",
       "steps": [
         {
           "name": "Set up job",
