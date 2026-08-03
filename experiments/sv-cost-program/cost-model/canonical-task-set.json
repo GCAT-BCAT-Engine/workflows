@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0.0",
+  "experiment_id": "SV-COST-GOVERNANCE-CROSS-MODEL-001",
+  "tasks": [
+    {
+      "task_id": "SV-MATH-001-CALIBRATION",
+      "evidence_class": "OBSERVED",
+      "source": "experiments/five-lane-calibration/results/calibration.json",
+      "operation_class": "fresh_formal_proof_generation",
+      "required_output_type": "formal_proof_candidate",
+      "required_gates": [
+        "execution_completed",
+        "task_identity_preserved",
+        "required_output_present",
+        "native_receipt_present"
+      ],
+      "quality_posture": "PARTIAL_STRUCTURAL_ONLY",
+      "ranking_permission": "BOUNDED_STRUCTURAL_COST_COMPARISON_ONLY",
+      "notes": "Independent proof correctness is not established by the existing calibration receipt."
+    },
+    {
+      "task_id": "SV-COST-NORMALIZED-001",
+      "evidence_class": "OBSERVED",
+      "source": "experiments/sv-cost-normalized/results/result.json",
+      "operation_class": "bounded_abstract_characterization_or_admitted_reconstruction",
+      "required_output_type": "normalized_contract_response",
+      "required_gates": [
+        "task_identity_preserved",
+        "structural_obligations_present",
+        "classification_comparable",
+        "native_receipt_present"
+      ],
+      "quality_posture": "BOUNDED_COMPARABLE",
+      "ranking_permission": "OPERATION_CLASS_SEPARATED",
+      "notes": "StegVerse reconstruction may be compared only when reconstruction is the requested operation; it is not fresh inference."
+    },
+    {
+      "task_id": "TEN-ADVANCES-ESTIMATION-001",
+      "evidence_class": "PROSPECTIVE_ESTIMATE",
+      "source": "experiments/ten-advances/results/estimates.json",
+      "operation_class": "cost_and_feasibility_estimation",
+      "required_output_type": "bounded_estimate_with_uncertainty",
+      "required_gates": [
+        "all_five_lanes_present",
+        "assumptions_present",
+        "uncertainty_bounds_present",
+        "receipt_hash_present"
+      ],
+      "quality_posture": "ESTIMATION_ONLY",
+      "ranking_permission": "NO_OBSERVED_COST_RANKING",
+      "notes": "Prospective estimates must never be merged with observed execution cost."
+    }
+  ],
+  "selection_rule": "Cost can select among lanes only after every task-specific gate passes and only within the same operation class and evidence class.",
+  "cross_task_rule": "Do not pool costs across tasks with different outputs, operation classes, success definitions, or evidence posture."
+}
