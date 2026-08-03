@@ -1,0 +1,54 @@
+{
+  "experiment_id": "SV-COST-R2-DIRECT-VS-BATCH-001",
+  "relation_id": "R2-DIRECT-VS-BATCH",
+  "status": "DESIGN_LOCKED_EXECUTION_AUTHORIZED_BY_CONSTRAINTS",
+  "provider": "anthropic",
+  "model": "claude-sonnet-4-6",
+  "trial_count_per_lane": 10,
+  "max_output_tokens": 4096,
+  "temperature": 0,
+  "prompt": "SV-MATH-001 — GCAT/BCAT Admissibility Complete Invariant Characterization. Produce the mathematical artifact directly. Define the abstract terms needed to characterize ALLOW admissibility using geometric boundary preservation, bounded divergence, and ontological consistency. State and prove the necessary-and-sufficient characterization in forward and reverse directions. Separate assumptions from generated claims and state the limitation that no deployed implementation is verified by this abstract proof. Include a Lean 4 logical-core candidate only if it fits within the fixed 4096-token ceiling. Do not provide a plan or commentary about the assignment.",
+  "lanes": {
+    "direct": {
+      "endpoint": "/v1/messages",
+      "service_tier": "standard",
+      "pricing_usd_per_million": {"input": 3.0, "output": 15.0}
+    },
+    "batch": {
+      "endpoint": "/v1/messages/batches",
+      "service_tier": "batch",
+      "pricing_usd_per_million": {"input": 1.5, "output": 7.5}
+    }
+  },
+  "quality_verifier": {
+    "id": "SV-MATH-001-STRUCTURAL-V1",
+    "checks": [
+      "direct_artifact",
+      "definitions",
+      "necessary_and_sufficient",
+      "forward_direction",
+      "reverse_direction",
+      "implementation_claim_boundary",
+      "not_meta_only"
+    ],
+    "completion_is_separate": true
+  },
+  "analysis": {
+    "retain_failed_trials": true,
+    "pair_by_trial_id": true,
+    "report": [
+      "native input/output/total tokens",
+      "pricing-derived route cost",
+      "wall-clock latency",
+      "stop reason",
+      "completion rate",
+      "verifier pass rate",
+      "paired cost deltas",
+      "paired token deltas",
+      "median and mean",
+      "sample standard deviation",
+      "95 percent confidence interval for paired cost delta"
+    ]
+  },
+  "claim_boundary": "This test measures provider-observed synchronous and batch routes under an identical request contract. Pricing-derived costs use the locked public price card and are not represented as an invoice or negotiated enterprise rate."
+}
