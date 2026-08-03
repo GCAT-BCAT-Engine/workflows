@@ -1,0 +1,74 @@
+S0: Task parsing and claim boundary.
+
+---
+
+## Task Parsing
+
+**Problem statement (paraphrase for record):**
+An abstract evaluator for GCAT/BCAT is given. It accepts three predicates over a candidate transition:
+
+- **GBP** — some predicate on the candidate transition
+- **BD** — some predicate on the candidate transition
+- **OC** — some predicate on the candidate transition
+
+The evaluator returns **ALLOW** exactly when all three predicates hold simultaneously.
+
+The task is to:
+1. Establish the necessary-and-sufficient characterization of ALLOW admissibility.
+2. State the claim boundary precisely.
+3. Prepare a Lean 4 candidate for the logical core.
+
+---
+
+## Stipulations (Given, Not Generated)
+
+| ID | Stipulation |
+|----|-------------|
+| ST-1 | `GBP`, `BD`, `OC` are uninterpreted predicates on a type `T` of candidate transitions. |
+| ST-2 | The evaluator returns `ALLOW` on input `t : T` if and only if `GBP(t) ∧ BD(t) ∧ OC(t)`. |
+| ST-3 | No claim is made that any deployed GCAT/BCAT implementation conforms to this specification. |
+| ST-4 | The logical core is purely propositional/logical; no semantic content of `GBP`, `BD`, `OC` is assumed. |
+
+---
+
+## Claim Boundary
+
+**What is being claimed (scope):**
+
+> **Claim C-0 (Logical Core, to be established in subsequent stages):**
+> For all `t : T`, `ALLOW(t)` holds if and only if `GBP(t) ∧ BD(t) ∧ OC(t)`.
+>
+> This is a *definitional equivalence*: the right-hand side is stipulated as the definition of `ALLOW`. The necessary-and-sufficient characterization is therefore tautological given ST-2, and the mathematical content lies in making this explicit and machine-checkable.
+
+**What is NOT being claimed:**
+
+| Exclusion | Reason |
+|-----------|--------|
+| That any real GCAT/BCAT system behaves this way | ST-3 |
+| That `GBP`, `BD`, `OC` have any particular meaning | ST-4 |
+| That the Lean 4 candidate compiles or is implementation-valid | Explicitly deferred; candidate status only |
+| That the conjunction order matters semantically | Conjunction is commutative; order is presentational |
+
+---
+
+## Stage S0 Output: Parsed Task Structure
+
+```
+EXPERIMENT:   SV-COST-STAGED-001
+CAPABILITY:   SV-COMPACT-PROGRESS-001
+PROBLEM ID:   GCAT/BCAT ALLOW admissibility characterization
+
+STAGES IDENTIFIED:
+  S0  — Task parsing and claim boundary            [CURRENT — complete]
+  S1  — Necessary-and-sufficient characterization  [PENDING]
+  S2  — Lean 4 candidate for logical core          [PENDING]
+
+ADMITTED ARTIFACTS:  [none]
+GENERATED CLAIMS:    [C-0, stated above, not yet verified]
+VERIFIED CLAIMS:     [none]
+UNRESOLVED IMPL.:    [Lean 4 candidate validity deferred to S2]
+```
+
+---
+
+**S0 complete. No artifact admitted. C-0 is a generated claim, not yet verified. Awaiting instruction to proceed to S1.**

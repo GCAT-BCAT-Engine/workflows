@@ -1,0 +1,41 @@
+S0: Task parsing and claim boundary.
+
+**Task identity**
+- Experiment: `SV-COST-STAGED-001`
+- Capability test: `SV-COMPACT-PROGRESS-001`
+- Current stage: `S0 — Task parsing and claim boundary`
+- Context mode: `full`
+
+**Stipulations**
+- `GBP`, `BD`, and `OC` are predicates on a candidate transition.
+- The abstract evaluator returns `ALLOW` exactly when `GBP`, `BD`, and `OC` all hold.
+- No prior artifacts are admitted.
+
+**Target logical claim**
+For every candidate transition `t`:
+
+\[
+\operatorname{ALLOW}(t) \iff GBP(t)\land BD(t)\land OC(t).
+\]
+
+The required characterization has two directions:
+1. **Necessity:** `ALLOW(t)` implies `GBP(t) ∧ BD(t) ∧ OC(t)`.
+2. **Sufficiency:** `GBP(t) ∧ BD(t) ∧ OC(t)` implies `ALLOW(t)`.
+
+**Claim status**
+- The evaluator semantics above are task stipulations.
+- The displayed biconditional is the logical claim to be established from those stipulations.
+- No proof has been verified at this stage.
+- No Lean 4 candidate has been produced or checked at this stage.
+
+**Claim boundary**
+- The scope is only the abstract predicates and evaluator relation stated above.
+- No properties of `GBP`, `BD`, or `OC` beyond their being predicates are assumed.
+- No claim is made about executable behavior, completeness of a concrete policy model, or any deployed GCAT/BCAT implementation.
+- No implementation-conformance or Lean-compilation validity is claimed.
+- Artifact identity, including any later hash, does not establish semantic correctness.
+
+**Deferred work**
+- Establish the biconditional from the stipulated evaluator semantics.
+- Prepare a Lean 4 candidate for the logical core.
+- Record separately whether that candidate is merely generated or actually checked.

@@ -1,0 +1,62 @@
+S3: Proof strategy and lemma decomposition.
+
+---
+
+## S3 Artifact: Proof Strategy and Lemma Decomposition
+
+---
+
+### 1. Admitted Context (Carried Forward Without Modification)
+
+| ID | Content | Source |
+|----|---------|--------|
+| ST-1 | `GBP`, `BD`, `OC` uninterpreted predicates on `T` | S0 |
+| ST-2 | Evaluator returns ALLOW iff all three hold | S0 |
+| ST-3 | No conformance claim for deployed systems | S0 |
+| ST-4 | Logical core only; no semantic content assumed | S0 |
+| DEF-1 | `T` arbitrary non-empty type | S1 |
+| DEF-2 | `GBP`, `BD`, `OC` : `T → Prop`, total, uninterpreted | S1 |
+| DEF-3 | `ALLOW(t) := GBP(t) ∧ BD(t) ∧ OC(t)` | S1 |
+| ASM-1 | Constructive logic; EM not required | S1 |
+| ASM-2 | Conjunction right-associative; all bracketings equivalent | S1 |
+| ASM-3 | Universal quantification over all `t : T` | S1 |
+| ASM-4 | `ALLOW` is total; no partial definedness | S1 |
+| THEOREM-1 | `∀ t : T, ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)` | S2 |
+| PO-1 | Forward direction: necessity | S2 |
+| PO-2 | Backward direction: sufficiency | S2 |
+
+---
+
+### 2. Proof Strategy Selection
+
+#### 2.1 Available Strategies
+
+Three candidate strategies are identified and evaluated:
+
+| Strategy ID | Name | Description | Applicability |
+|-------------|------|-------------|---------------|
+| PS-A | Definitional unfolding | Prove both directions by `rfl` or `exact id` after unfolding DEF-3 | Applicable; exploits the fact that ALLOW is a `def`, not an inductive type |
+| PS-B | Iff introduction with explicit constructors | Use `Iff.intro` to provide forward and backward functions explicitly | Applicable; maximally explicit; preferred for decomposition clarity |
+| PS-C | `tauto` / decision procedure | Dispatch the entire biconditional to a propositional tactic | Applicable but opaque; obscures lemma structure |
+
+#### 2.2 Selected Strategy
+
+**Primary strategy: PS-B (Iff introduction with explicit constructors).**
+
+Rationale:
+- Maximally transparent: each lemma corresponds to exactly one proof obligation.
+- Compatible with the lemma decomposition goal of this stage.
+- Constructive throughout (ASM-1); no appeal to classical logic.
+- Supports clean Lean 4 candidate generation in S4.
+
+**Secondary fallback: PS-A (Definitional unfolding).**
+
+Rationale: Because ALLOW is defined by `def` in Lean 4 (not `inductive`), both directions reduce to `id` after unfolding. PS-B will be implemented to use `fun h => h` and `fun h => h` respectively, which is the explicit form of definitional equality at `Prop`. PS-A is thus the degenerate case of PS-B.
+
+PS-C is set aside; it would be valid but provides no decomposition structure.
+
+---
+
+### 3. Lemma Decomposition
+
+The proof of THEOREM-1 is decomposed into the following

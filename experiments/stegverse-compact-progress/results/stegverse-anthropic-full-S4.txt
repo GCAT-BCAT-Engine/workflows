@@ -1,0 +1,53 @@
+S4: Complete informal proof.
+
+---
+
+## S4 Artifact: Complete Informal Proof
+
+---
+
+### 1. Admitted Context (Carried Forward Without Modification)
+
+| ID | Content | Source |
+|----|---------|--------|
+| ST-1 | `GBP`, `BD`, `OC` uninterpreted predicates on `T` | S0 |
+| ST-2 | Evaluator returns ALLOW iff all three hold | S0 |
+| ST-3 | No conformance claim for deployed systems | S0 |
+| ST-4 | Logical core only; no semantic content assumed | S0 |
+| DEF-1 | `T` arbitrary non-empty type | S1 |
+| DEF-2 | `GBP`, `BD`, `OC` : `T → Prop`, total, uninterpreted | S1 |
+| DEF-3 | `ALLOW(t) := GBP(t) ∧ BD(t) ∧ OC(t)` | S1 |
+| ASM-1 | Constructive logic; EM not required | S1 |
+| ASM-2 | Conjunction right-associative; all bracketings equivalent | S1 |
+| ASM-3 | Universal quantification over all `t : T` | S1 |
+| ASM-4 | `ALLOW` is total; no partial definedness | S1 |
+| THEOREM-1 | `∀ t : T, ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)` | S2 |
+| PO-1 | Forward direction: necessity | S2 |
+| PO-2 | Backward direction: sufficiency | S2 |
+| PS-B | Primary strategy: Iff introduction with explicit constructors | S3 |
+| PS-A | Secondary: definitional unfolding as degenerate case | S3 |
+| LEM-1 | `∀ t, ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)` | S3 |
+| LEM-2 | `∀ t, GBP(t) ∧ BD(t) ∧ OC(t) → ALLOW(t)` | S3 |
+| COMP | THEOREM-1 follows from LEM-1 and LEM-2 by `Iff.intro` | S3 |
+
+---
+
+### 2. Preliminary Remarks on Proof Character
+
+The proof is **analytic** in the strict sense: it contains no synthetic steps, introduces no auxiliary objects, and requires no induction, case analysis, or appeal to external lemmas. Both directions of the biconditional reduce immediately to the observation that `ALLOW(t)` and `GBP(t) ∧ BD(t) ∧ OC(t)` are *definitionally identical* expressions (DEF-3). The entire mathematical content of THEOREM-1 is the act of making this identity explicit and structured.
+
+The proof is recorded in full nonetheless, for three reasons:
+1. To discharge PO-1 and PO-2 as formal proof obligations with named steps.
+2. To provide the informal ground for the Lean 4 candidate (next stage).
+3. To maintain the staged artifact discipline required by the experiment.
+
+---
+
+### 3. Proof of LEM-1 (Necessity / Forward Direction)
+
+**Statement.**
+For all `t : T`, if `ALLOW(t)` then `GBP(t) ∧ BD(t) ∧ OC(t)`.
+
+**Proof.**
+
+Let

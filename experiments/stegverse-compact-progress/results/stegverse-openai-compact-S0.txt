@@ -1,0 +1,35 @@
+S0: Task parsing and claim boundary.
+
+**Task identity**  
+Characterize ALLOW admissibility for an abstract GCAT/BCAT evaluator using predicates `GBP`, `BD`, and `OC` on a candidate transition.
+
+**Stipulated model**  
+For any candidate transition `t`, the abstract evaluator returns `ALLOW` exactly when all three predicates hold:
+- `GBP t`
+- `BD t`
+- `OC t`
+
+**Target claim for later stages**  
+For every candidate transition `t`:
+\[
+\operatorname{ALLOW}(t) \leftrightarrow \bigl(\operatorname{GBP}(t)\land \operatorname{BD}(t)\land \operatorname{OC}(t)\bigr).
+\]
+
+This is the intended necessary-and-sufficient characterization:
+- necessity: `ALLOW t` implies each predicate;
+- sufficiency: the conjunction implies `ALLOW t`.
+
+**Claim boundary**
+- The target concerns only the stipulated abstract evaluator.
+- No deployed or concrete GCAT/BCAT implementation is asserted to satisfy this model.
+- No correspondence between implementation code and `GBP`, `BD`, `OC`, or `ALLOW` has been established.
+- A future Lean 4 candidate may encode the logical core, but compilation, proof checking, integration, and implementation validity remain unresolved.
+
+**Verified claims**  
+None at stage S0.
+
+**Unresolved implementation evidence**
+- Concrete evaluator definition
+- Predicate definitions
+- Mapping from implementation states/transitions to the abstract model
+- Lean environment, imports, compilation, and theorem verification

@@ -1,0 +1,78 @@
+S0: Task parsing and claim boundary
+
+---
+
+## 1. Task Parsing
+
+**Experiment / Capability identifiers (stipulated, not verified):**
+- Experiment: SV-COST-STAGED-001
+- Capability test: SV-COMPACT-PROGRESS-001
+- Problem label: SV-COST-STAGED-001 / GCAT-BCAT-ALLOW
+
+**Domain:** Abstract evaluator semantics (logical/mathematical model only). No deployed GCAT/BCAT implementation is referenced or claimed to conform.
+
+**Given (stipulated definitions):**
+
+| Symbol | Type | Role |
+|--------|------|------|
+| `GBP` | `Candidate → Prop` | Predicate on a candidate transition |
+| `BD` | `Candidate → Prop` | Predicate on a candidate transition |
+| `OC` | `Candidate → Prop` | Predicate on a candidate transition |
+| `ALLOW` | `Candidate → Prop` | Output verdict of the abstract evaluator |
+
+**Evaluator rule (stipulated governing equation):**
+
+> The abstract GCAT/BCAT evaluator returns `ALLOW` on candidate `c` if and only if `GBP(c)`, `BD(c)`, and `OC(c)` all hold.
+
+Formally:
+
+```
+∀ c : Candidate, ALLOW(c) ↔ (GBP(c) ∧ BD(c) ∧ OC(c))
+```
+
+This is the **sole definitional input**; it is stipulated, not derived.
+
+---
+
+## 2. Claim Boundary
+
+### 2.1 What this task produces (in scope)
+
+| Stage | Artifact | Status |
+|-------|----------|--------|
+| S0 (this stage) | Task parse + claim boundary document | In progress |
+| S1 (next) | Necessary-and-sufficient characterization statement | Pending |
+| S2 | Lean 4 candidate for the logical core | Pending |
+
+### 2.2 Admitted claims (none at S0)
+
+No mathematical claims are admitted at this stage. The governing equation above is a **stipulation**, not an admitted theorem.
+
+### 2.3 Explicit boundary conditions
+
+**Inside scope:**
+- Propositional/logical characterization of `ALLOW` in terms of `GBP`, `BD`, `OC`.
+- A Lean 4 *candidate* (syntactic artifact) encoding the logical core.
+- Separation of necessary conditions, sufficient conditions, and the biconditional.
+
+**Outside scope / explicitly disclaimed:**
+- Any claim that a deployed or production GCAT/BCAT evaluator conforms to this model.
+- Any claim that the Lean 4 candidate compiles or has been verified by a Lean kernel.
+- Semantics of `GBP`, `BD`, `OC` beyond what is stipulated above.
+- Computational complexity, runtime behavior, or side effects.
+
+### 2.4 Artifact identity note
+
+This document is the S0 artifact. Its identity is its content as produced here. No hash is asserted to carry semantic weight.
+
+---
+
+## 3. Readiness gate for S1
+
+S1 may proceed. The following are established as stipulations and will be reused:
+
+- **S0-STIP-01:** `Candidate` is an abstract type.
+- **S0-STIP-02:** `GBP`, `BD`, `OC`, `ALLOW` are predicates of type `Candidate → Prop`.
+- **S0-STIP-03:** The governing equation is `∀ c, ALLOW(c) ↔ (GBP(c) ∧ BD(c) ∧ OC(c))`.
+
+*Awaiting S1 instruction

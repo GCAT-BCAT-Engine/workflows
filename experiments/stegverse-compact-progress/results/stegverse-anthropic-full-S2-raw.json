@@ -1,0 +1,27 @@
+{
+  "model": "claude-sonnet-4-6",
+  "id": "msg_011CdfN6Zu5TBi16dMeSct4e",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "text",
+      "text": "S2: Theorem formulation.\n\n---\n\n## S2 Artifact: Theorem Formulation\n\n---\n\n### 1. Restatement of Admitted Context\n\nCarried forward from S0 and S1 without modification:\n\n| ID | Content | Source |\n|----|---------|--------|\n| ST-1 | `GBP`, `BD`, `OC` uninterpreted predicates on `T` | S0 |\n| ST-2 | Evaluator returns ALLOW iff all three hold | S0 |\n| ST-3 | No conformance claim for deployed systems | S0 |\n| ST-4 | Logical core only; no semantic content assumed | S0 |\n| DEF-1 | `T` arbitrary non-empty type | S1 |\n| DEF-2 | `GBP`, `BD`, `OC` : `T \u2192 Prop`, total, uninterpreted | S1 |\n| DEF-3 | `ALLOW(t) := GBP(t) \u2227 BD(t) \u2227 OC(t)` | S1 |\n| ASM-1 | Constructive logic; EM not required | S1 |\n| ASM-2 | Conjunction right-associative; all bracketings equivalent | S1 |\n| ASM-3 | Universal quantification over all `t : T` | S1 |\n| ASM-4 | `ALLOW` is total; no partial definedness | S1 |\n\n---\n\n### 2. Principal Theorem\n\n**THEOREM-1 (ALLOW Admissibility \u2014 Necessary and Sufficient Characterization).**\n\n> Let `T` be an arbitrary non-empty type.\n> Let `GBP`, `BD`, `OC` : `T \u2192 Prop` be uninterpreted total predicates (DEF-2).\n> Define `ALLOW(t) := GBP(t) \u2227 BD(t) \u2227 OC(t)` (DEF-3).\n>\n> Then for all `t : T`:\n>\n> ```\n> ALLOW(t)  \u2194  GBP(t) \u2227 BD(t) \u2227 OC(t)\n> ```\n>\n> That is:\n>\n> - **(Necessity / Forward direction):** `ALLOW(t) \u2192 GBP(t) \u2227 BD(t) \u2227 OC(t)`\n> - **(Sufficiency / Backward direction):** `GBP(t) \u2227 BD(t) \u2227 OC(t) \u2192 ALLOW(t)`\n\n---\n\n### 3. Decomposition of Proof Obligations\n\n**Proof obligation PO-1 (Forward / Necessity).**\n\n```\nAssume: ALLOW(t)\nGoal:   GBP(t) \u2227 BD(t) \u2227 OC(t)\n\nBy DEF-3, ALLOW(t) is definitionally equal to GBP(t) \u2227 BD(t) \u2227 OC(t).\nThe assumption unfolds directly to the goal.\nProof: by definition.\n```\n\n**Proof obligation PO-2 (Backward / Sufficiency).**\n\n```\nAssume: GBP(t) \u2227 BD(t) \u2227 OC(t)\nGoal:   ALLOW(t)\n\nBy DEF-3, ALLOW(t) is definitionally equal to GBP(t) \u2227 BD(t) \u2227 OC(t).\nThe goal unfolds directly to the assumption.\nProof: by definition.\n```\n\n**Summary.** Both directions reduce to definitional unfolding. No lemmas"
+    }
+  ],
+  "stop_reason": "max_tokens",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 2106,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 900,
+    "service_tier": "standard",
+    "inference_geo": "global"
+  }
+}

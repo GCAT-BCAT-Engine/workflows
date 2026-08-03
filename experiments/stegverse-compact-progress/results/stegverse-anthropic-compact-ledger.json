@@ -1,0 +1,12 @@
+[
+  {
+    "artifact_id": "stegverse-anthropic-compact:S0",
+    "stage_id": "S0",
+    "sha256": "sha256:f9c3c05b33d30442b4f423f024248952abdf5730069b52615c89728c52f1bdf0",
+    "admitted": false,
+    "claims": "S0: Task parsing and claim boundary\n- Problem label: SV-COST-STAGED-001 / GCAT-BCAT-ALLOW\n**Domain:** Abstract evaluator semantics (logical/mathematical model only). No deployed GCAT/BCAT implementation is referenced or claimed to conform.\n| `ALLOW` | `Candidate \u2192 Prop` | Output verdict of the abstract evaluator |\n> The abstract GCAT/BCAT evaluator returns `ALLOW` on candidate `c` if and only if `GBP(c)`, `BD(c)`, an",
+    "definitions": "reference prior definitions",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S1"
+  }
+]

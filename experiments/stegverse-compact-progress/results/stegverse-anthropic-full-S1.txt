@@ -1,0 +1,75 @@
+S1: Definitions and assumptions.
+
+---
+
+## S1 Artifact: Definitions and Assumptions
+
+---
+
+### 1. Universe of Discourse
+
+**DEF-1 (Candidate Transition Type).**
+Let `T` be an arbitrary non-empty type. Elements `t : T` are called *candidate transitions*. No further structure is imposed on `T`.
+
+**DEF-2 (Predicates).**
+The following are stipulated as total, uninterpreted predicates on `T`:
+
+| Name | Type | Role |
+|------|------|------|
+| `GBP` | `T → Prop` | First gate predicate |
+| `BD` | `T → Prop` | Second gate predicate |
+| `OC` | `T → Prop` | Third gate predicate |
+
+"Uninterpreted" means: no axiom governs the truth value of `GBP(t)`, `BD(t)`, or `OC(t)` for any particular `t`. They are free in the logical environment.
+
+**DEF-3 (ALLOW).**
+The evaluator output predicate `ALLOW : T → Prop` is defined by:
+
+```
+ALLOW(t)  :=  GBP(t) ∧ BD(t) ∧ OC(t)
+```
+
+This definition is stipulated, not derived. It is the sole semantic content of the evaluator specification.
+
+---
+
+### 2. Logical Setting
+
+**ASM-1 (Classical or Intuitionistic compatibility).**
+The characterization holds in both classical and intuitionistic propositional logic. No excluded-middle axiom is required because the target claim is a biconditional whose right-to-left and left-to-right directions are each constructive.
+
+**ASM-2 (Conjunction semantics).**
+`∧` denotes standard binary conjunction. The conjunction `GBP(t) ∧ BD(t) ∧ OC(t)` is parsed as `GBP(t) ∧ (BD(t) ∧ OC(t))` (right-associative), which is propositionally equivalent to any other bracketing and to the flat three-way conjunction.
+
+**ASM-3 (Universality).**
+The characterization is asserted for *all* `t : T` by universal quantification. No distinguished or witness element of `T` is assumed.
+
+**ASM-4 (No side conditions).**
+The evaluator has no implicit preconditions, error states, or partial definedness. `ALLOW` is total on `T`.
+
+---
+
+### 3. Admitted Artifacts Carried Forward
+
+| Artifact | Source | Status |
+|----------|--------|--------|
+| ST-1 through ST-4 | S0 | Admitted |
+| C-0 (claim statement) | S0 | Generated, not yet verified |
+
+---
+
+### 4. New Definitions Introduced at S1
+
+| ID | Definition | Content |
+|----|-----------|---------|
+| DEF-1 | Candidate transition type | `T` arbitrary non-empty type |
+| DEF-2 | Predicates GBP, BD, OC | Uninterpreted, total, `T → Prop` |
+| DEF-3 | ALLOW | `ALLOW(t) := GBP(t) ∧ BD(t) ∧ OC(t)` |
+| ASM-1 | Logic setting | Constructive; no EM required |
+| ASM-2 | Conjunction parsing | Right-associative; all bracketings equivalent |
+| ASM-3 | Universality | ∀ t : T |
+| ASM-4 | Totality | No partial definedness |
+
+---
+
+### 5. No New

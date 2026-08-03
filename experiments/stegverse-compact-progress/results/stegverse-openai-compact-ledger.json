@@ -1,0 +1,32 @@
+[
+  {
+    "artifact_id": "stegverse-openai-compact:S0",
+    "stage_id": "S0",
+    "sha256": "sha256:a268778f8a3ade91a224007b8ea2f794421396fbc90d300c971494e74ca57665",
+    "admitted": true,
+    "claims": "S0: Task parsing and claim boundary.\nCharacterize ALLOW admissibility for an abstract GCAT/BCAT evaluator using predicates `GBP`, `BD`, and `OC` on a candidate transition.\nFor any candidate transition `t`, the abstract evaluator returns `ALLOW` exactly when all three predicates hold:\n\\operatorname{ALLOW}(t) \\leftrightarrow \\bigl(\\operatorname{GBP}(t)\\land \\operatorname{BD}(t)\\land \\operatorname{OC}(t)\\bigr).\n- necess",
+    "definitions": "reference prior definitions",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S1"
+  },
+  {
+    "artifact_id": "stegverse-openai-compact:S1",
+    "stage_id": "S1",
+    "sha256": "sha256:33ae02b9992a34241a98e958f3e45f90b2e577e35f4a13c92d221584a864dc00",
+    "admitted": true,
+    "claims": "- `GBP`, `BD`, and `OC` are predicates on `Transition`.\n- `ALLOW` is the abstract evaluator\u2019s allow-outcome predicate.\n\\forall t,\\quad \\operatorname{ALLOW}(t)\\leftrightarrow\n\\bigl(\\operatorname{GBP}(t)\\land \\operatorname{BD}(t)\\land \\operatorname{OC}(t)\\bigr).\n(GBP BD OC : Transition \u2192 Prop)\nGBP t \u2227 BD t \u2227 OC t\nvariable (GBP BD OC ALLOW : Transition \u2192 Prop)\n\u2200 t, ALLOW t \u2194 Conditions GBP BD OC t)",
+    "definitions": "- `GBP`, `BD`, and `OC` are predicates on `Transition`.\n- `ALLOW` is the abstract evaluator\u2019s allow-outcome predicate.\n\\forall t,\\quad \\operatorname{ALLOW}(t)\\leftrightarrow\n\\bigl(\\operatorname{GBP}(t)\\land \\operatorname{BD}(t)\\land \\operatorname{OC}(t)\\bigr).\n(GBP BD OC : Transition \u2192 Prop)\nGBP t \u2227 BD t \u2227 OC t\nvariable (GBP BD OC ALLOW : Transition \u2192 Prop)\n\u2200 t, ALLOW t \u2194 Conditions GBP BD OC t)",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S2"
+  },
+  {
+    "artifact_id": "stegverse-openai-compact:S2",
+    "stage_id": "S2",
+    "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "admitted": false,
+    "claims": "",
+    "definitions": "reference prior definitions",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S3"
+  }
+]

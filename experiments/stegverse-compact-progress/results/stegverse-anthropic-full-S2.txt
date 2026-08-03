@@ -1,0 +1,74 @@
+S2: Theorem formulation.
+
+---
+
+## S2 Artifact: Theorem Formulation
+
+---
+
+### 1. Restatement of Admitted Context
+
+Carried forward from S0 and S1 without modification:
+
+| ID | Content | Source |
+|----|---------|--------|
+| ST-1 | `GBP`, `BD`, `OC` uninterpreted predicates on `T` | S0 |
+| ST-2 | Evaluator returns ALLOW iff all three hold | S0 |
+| ST-3 | No conformance claim for deployed systems | S0 |
+| ST-4 | Logical core only; no semantic content assumed | S0 |
+| DEF-1 | `T` arbitrary non-empty type | S1 |
+| DEF-2 | `GBP`, `BD`, `OC` : `T → Prop`, total, uninterpreted | S1 |
+| DEF-3 | `ALLOW(t) := GBP(t) ∧ BD(t) ∧ OC(t)` | S1 |
+| ASM-1 | Constructive logic; EM not required | S1 |
+| ASM-2 | Conjunction right-associative; all bracketings equivalent | S1 |
+| ASM-3 | Universal quantification over all `t : T` | S1 |
+| ASM-4 | `ALLOW` is total; no partial definedness | S1 |
+
+---
+
+### 2. Principal Theorem
+
+**THEOREM-1 (ALLOW Admissibility — Necessary and Sufficient Characterization).**
+
+> Let `T` be an arbitrary non-empty type.
+> Let `GBP`, `BD`, `OC` : `T → Prop` be uninterpreted total predicates (DEF-2).
+> Define `ALLOW(t) := GBP(t) ∧ BD(t) ∧ OC(t)` (DEF-3).
+>
+> Then for all `t : T`:
+>
+> ```
+> ALLOW(t)  ↔  GBP(t) ∧ BD(t) ∧ OC(t)
+> ```
+>
+> That is:
+>
+> - **(Necessity / Forward direction):** `ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)`
+> - **(Sufficiency / Backward direction):** `GBP(t) ∧ BD(t) ∧ OC(t) → ALLOW(t)`
+
+---
+
+### 3. Decomposition of Proof Obligations
+
+**Proof obligation PO-1 (Forward / Necessity).**
+
+```
+Assume: ALLOW(t)
+Goal:   GBP(t) ∧ BD(t) ∧ OC(t)
+
+By DEF-3, ALLOW(t) is definitionally equal to GBP(t) ∧ BD(t) ∧ OC(t).
+The assumption unfolds directly to the goal.
+Proof: by definition.
+```
+
+**Proof obligation PO-2 (Backward / Sufficiency).**
+
+```
+Assume: GBP(t) ∧ BD(t) ∧ OC(t)
+Goal:   ALLOW(t)
+
+By DEF-3, ALLOW(t) is definitionally equal to GBP(t) ∧ BD(t) ∧ OC(t).
+The goal unfolds directly to the assumption.
+Proof: by definition.
+```
+
+**Summary.** Both directions reduce to definitional unfolding. No lemmas
