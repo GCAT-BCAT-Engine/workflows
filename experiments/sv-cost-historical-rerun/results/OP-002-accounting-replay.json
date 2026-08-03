@@ -1,0 +1,18 @@
+{
+  "test_id": "OP-002-ACCOUNTING-REPLAY",
+  "lineage_id": "SV-COST-LINEAGE-002",
+  "classification": "ACCOUNTING_REPLAY_NOT_OBSERVED_ROUTE_EXECUTION",
+  "source_receipt": "BL-001-RERUN-receipt.json",
+  "source_native_total_tokens": 4239,
+  "source_observed_cost_usd": 0.061869,
+  "historical_route_factor": 0.5,
+  "replayed_cost_usd": 0.0309345,
+  "historical_op002_cost_usd": 0.0308295,
+  "delta_usd": 0.000105,
+  "delta_percent_vs_historical": 0.34058288327736275,
+  "token_delta_vs_historical": 70,
+  "token_delta_percent_vs_historical": 1.6790597265531337,
+  "actual_batch_receipt_present": false,
+  "actual_optimized_route_receipt_present": false,
+  "claim_boundary": "This result repeats the historical 50-percent accounting transform against the observed BL-001 rerun cost. It is not evidence that a batch or optimized provider route executed. The arithmetic lineage reproduces within the same 0.34-percent cost variance as the BL-001 control-envelope rerun."
+}
