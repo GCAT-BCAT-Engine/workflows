@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "program_id": "SV-COST-MAJOR-GOAL-001",
   "session_goal_id": "SV-COST-CROSS-MODEL-SESSION-001",
-  "generated_at": "2026-08-03T20:58:49.299036+00:00",
+  "generated_at": "2026-08-03T20:59:35.617694+00:00",
   "status": "BLOCKED",
   "errors": [
     "handoff missing reference: cross-model-session-inventory.json",
