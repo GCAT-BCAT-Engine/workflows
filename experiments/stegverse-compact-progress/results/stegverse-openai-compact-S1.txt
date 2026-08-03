@@ -1,46 +1,57 @@
 S1: Definitions and assumptions.
 
-**Stipulations**
+### Stipulated abstract model
 
-- `Transition` is an abstract type of candidate transitions.
-- `GBP`, `BD`, and `OC` are predicates on `Transition`.
-- `ALLOW` is the abstract evaluator’s allow-outcome predicate.
-- Evaluator specification:
-  \[
-  \forall t,\quad \operatorname{ALLOW}(t)\leftrightarrow
-  \bigl(\operatorname{GBP}(t)\land \operatorname{BD}(t)\land \operatorname{OC}(t)\bigr).
-  \]
+Let `Transition` be an arbitrary type of candidate transitions. Let
 
-**Lean 4 candidate context**
+- `GBP : Transition → Prop`,
+- `BD : Transition → Prop`,
+- `OC : Transition → Prop`
+
+be predicates on candidate transitions.
+
+Define abstract admissibility by
+
+\[
+\operatorname{ALLOW}(t) \;:\!\iff\; GBP(t)\land BD(t)\land OC(t).
+\]
+
+No further properties of `Transition`, `GBP`, `BD`, or `OC` are assumed.
+
+### Lean 4 definition candidate
 
 ```lean
 universe u
 
 variable {Transition : Type u}
 
-def Conditions
-    (GBP BD OC : Transition → Prop)
-    (t : Transition) : Prop :=
+variable (GBP BD OC : Transition → Prop)
+
+def ALLOW (t : Transition) : Prop :=
   GBP t ∧ BD t ∧ OC t
-
-variable (GBP BD OC ALLOW : Transition → Prop)
-
-variable
-  (evaluator_spec :
-    ∀ t, ALLOW t ↔ Conditions GBP BD OC t)
 ```
 
-**Generated claims for later proof**
+This is an unverified logical-core candidate, not evidence about any concrete implementation.
 
-- Necessity: `ALLOW t` implies `GBP t`, `BD t`, and `OC t`.
-- Sufficiency: `GBP t ∧ BD t ∧ OC t` implies `ALLOW t`.
-- Hence `ALLOW t` is equivalent to `Conditions GBP BD OC t`.
+### Generated claim target
 
-**Verified claims**
+For every `t : Transition`, the intended necessary-and-sufficient characterization is
 
-- The admitted S0 artifact fixes the abstract characterization and excludes claims about concrete or deployed implementations.
-- No Lean compilation or proof has been verified at this stage.
+\[
+\operatorname{ALLOW}(t)\iff GBP(t)\land BD(t)\land OC(t).
+\]
 
-**Claim boundary and unresolved evidence**
+Its two directions are:
 
-The specification concerns only the abstract evaluator described above. No concrete GCAT/BCAT evaluator is identified, inspected, or shown to satisfy `evaluator_spec`; implementation validity and conformance remain unresolved.
+- Necessity: `ALLOW t → GBP t ∧ BD t ∧ OC t`.
+- Sufficiency: `GBP t ∧ BD t ∧ OC t → ALLOW t`.
+
+No proof or Lean verification is asserted at this stage.
+
+### Claim boundary
+
+The definitions concern only the stipulated abstract evaluator. They do not establish that any deployed or concrete GCAT/BCAT implementation computes these predicates correctly, applies this decision rule, or conforms to the characterization.
+
+### Unresolved implementation evidence
+
+No concrete evaluator source, predicate binding, execution evidence, or implementation-conformance proof has been provided.

@@ -1,0 +1,72 @@
+S3: Proof strategy and lemma decomposition.
+
+**Admitted stipulation**
+
+For arbitrary `Transition` and predicates `GBP BD OC : Transition → Prop`:
+
+\[
+\operatorname{ALLOW}(t) := GBP(t)\land BD(t)\land OC(t).
+\]
+
+No additional properties are assumed.
+
+**Proof strategy**
+
+1. **Necessity:** unfold `ALLOW`; an `ALLOW t` proof is already a proof of `GBP t ∧ BD t ∧ OC t`.
+2. **Sufficiency:** unfold `ALLOW`; a proof of `GBP t ∧ BD t ∧ OC t` directly proves `ALLOW t`.
+3. **Characterization:** combine necessity and sufficiency to obtain
+   \[
+   \operatorname{ALLOW}(t)\iff GBP(t)\land BD(t)\land OC(t).
+   \]
+
+**Lemma decomposition**
+
+- `allow_necessary`:
+  \[
+  \operatorname{ALLOW}(t)\to GBP(t)\land BD(t)\land OC(t).
+  \]
+- `allow_sufficient`:
+  \[
+  GBP(t)\land BD(t)\land OC(t)\to\operatorname{ALLOW}(t).
+  \]
+- `allow_iff`: packages both directions as the necessary-and-sufficient characterization.
+
+**Lean 4 candidate for the logical core**
+
+```lean
+universe u
+
+variable {Transition : Type u}
+variable (GBP BD OC : Transition → Prop)
+
+def ALLOW (t : Transition) : Prop :=
+  GBP t ∧ BD t ∧ OC t
+
+theorem allow_necessary (t : Transition) :
+    ALLOW GBP BD OC t → GBP t ∧ BD t ∧ OC t := by
+  intro h
+  exact h
+
+theorem allow_sufficient (t : Transition) :
+    GBP t ∧ BD t ∧ OC t → ALLOW GBP BD OC t := by
+  intro h
+  exact h
+
+theorem allow_iff (t : Transition) :
+    ALLOW GBP BD OC t ↔ GBP t ∧ BD t ∧ OC t := by
+  constructor
+  · exact allow_necessary GBP BD OC t
+  · exact allow_sufficient GBP BD OC t
+```
+
+**Generated claim**
+
+For every abstract candidate transition `t`, `ALLOW t` is admissible exactly when `GBP t`, `BD t`, and `OC t` all hold.
+
+**Verified claim**
+
+Relative to the admitted definition of `ALLOW`, both directions follow by definitional unfolding and require no domain-specific assumptions.
+
+**Claim boundary and unresolved evidence**
+
+This establishes only the abstract propositional core. The Lean candidate has not been claimed as compiled or tool-verified here. No evidence binds `Transition`, `GBP`, `BD`, `OC`, or `ALLOW` to any deployed GCAT/BCAT evaluator; implementation conformance remains unresolved.

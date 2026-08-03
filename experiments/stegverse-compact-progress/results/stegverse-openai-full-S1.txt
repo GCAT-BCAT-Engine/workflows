@@ -1,0 +1,63 @@
+S1: Definitions and assumptions.
+
+**Task identity**
+- Experiment: `SV-COST-STAGED-001`
+- Capability test: `SV-COMPACT-PROGRESS-001`
+- Subject: Abstract GCAT/BCAT evaluator admissibility.
+
+**Admitted dependency**
+- S0 artifact: `sha256:7fc33318b537b4b44a87d84b877679434928ab65c1872d61f19816fb166e274c`.
+- Reused content: task identity, stipulations, target claim, and claim boundary.
+- The hash establishes artifact identity only, not semantic correctness.
+
+**Definitions**
+Let `Transition` be an arbitrary type of candidate transitions. Let:
+- `GBP : Transition → Prop`
+- `BD : Transition → Prop`
+- `OC : Transition → Prop`
+- `ALLOW : Transition → Prop`
+
+Here, `ALLOW(t)` means that the stipulated abstract evaluator returns `ALLOW` for transition `t`.
+
+**Assumption**
+The evaluator’s stipulated decision rule is:
+
+`∀ t : Transition, ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
+
+No independence, decidability, consistency, or domain-specific meaning is assumed for `GBP`, `BD`, or `OC`.
+
+**Lean 4 candidate vocabulary**
+```lean
+universe u
+
+variable {Transition : Type u}
+variable (GBP BD OC ALLOW : Transition → Prop)
+
+axiom allow_spec :
+  ∀ t : Transition, ALLOW t ↔ (GBP t ∧ BD t ∧ OC t)
+```
+
+This is an unvalidated candidate encoding of the abstract definitions and assumption, not evidence about any implementation.
+
+**Generated claim reserved for later establishment**
+For every `t : Transition`:
+
+`ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
+
+Its two directions are:
+- Necessity: `ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)`.
+- Sufficiency: `GBP(t) ∧ BD(t) ∧ OC(t) → ALLOW(t)`.
+
+No proof artifact is supplied at this stage.
+
+**Claim boundary**
+- These definitions and assumptions concern only the stipulated abstract evaluator.
+- They do not establish conformity of any deployed, source-level, compiled, configured, or operational GCAT/BCAT implementation.
+- The Lean text has not been shown to type-check in a particular Lean 4 environment.
+- No implementation correspondence, extraction result, runtime behavior, or configuration property is asserted.
+
+**Verification status**
+- Stipulated: predicate signatures and the exact abstract decision rule.
+- Generated: the reserved necessary-and-sufficient characterization.
+- Verified: only faithful transcription of the admitted S0 stipulations into the definitions above; no formal theorem has been verified.
+- Unresolved: Lean 4 type-checking, proof validation, and all evidence connecting the abstraction to an actual GCAT/BCAT implementation.

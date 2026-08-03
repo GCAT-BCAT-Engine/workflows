@@ -1,0 +1,101 @@
+{
+  "id": "resp_063a5f55d711a1e3006a703f7fb880819baaf382f638920fd2",
+  "object": "response",
+  "created_at": 1785741183,
+  "status": "completed",
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1785741197,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 900,
+  "max_tool_calls": null,
+  "model": "gpt-5.6-sol",
+  "moderation": null,
+  "output": [
+    {
+      "id": "rs_063a5f55d711a1e3006a703f8069f0819bb3f829e4694597dc",
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": "gAAAAABqcD-NYm-n4MWfo_E41FWJO1iz5yR8cRz2-HcsSE9aWHRlqAmR7-CpZymMk6Qrz406k1lbiCPddoQOnwwXq_H-aL_L_mcgjhpslWssZibI0gqHbmnnK_fTHGeF5y75a-GmJQ_tPyQHSCDxwTwP4TwoLrpt3xlTA8H_oDu4n7pVE9u8f0NfBdtIa4hvt9zuMd3z0WFdr8GoRtfrqIFPUhOB5AH1S7dZshvXW_IXFk3vvw5ZyOEc_0Fh0uDoQNXxLPYx8tZWHC80maXcemxahfcRy2Ddp875TIceay8-YWvXz-gk76M7RBmArZS_jfTI4m63sfgRS7nioR2enUURj3nPeYWCUk6LGiV8wKiMWhjl4ebIj4ixzRzlDU0p7dS3gtPAxghRL2UH5uAlOOJ5JbSItlZK5Vn2c8UxgcwjR7tB2O4DtdDU2W0jLHZ4W6G6TWGi8I3Jz8T98mbmdFZlctVzAsbPkmJBBe34SN91t6diVkwZuU9Wg1ej2Ea0jQuGiT5vI2YL-gzy4CuHDjI4uNaPFbmhUiPc_P1iGzP1fuaQMiKsgoUsp4f3XPi6nrbCI8W__jW1aljVoOzlJSQ9S5oZ-e00LIIHyDBAC5VxHWrRUjJUu4q7hAo4qxU04_v829eqkHO4m5IJdbzUWP14rihHOQaYzmf0gwqxgxXSAQ-ycshjJ0m0M_JVF5JQHEzEtUspCH3Ww7OH3XLkEOTJ5zSecSiNh9t_PU1iZcc78cmPgBvSU7okR14_woXmUzG2KSOrVDSf-mAKQZn3D52WOtOauSaX9zcNoL6hJA__kYBUpWhCoYPFauVcJ068giO8YnqnsT_q59vll-gnyUWZ_zwl99Fe1O3Cd7lqqJ0msPHQZxs8sV7NTFOtNc0LQbZu99MpOJtZbF2w8HPMUfEScQNAxhumaB0qVelahZlPG27IwkmYcGpMY5KooivbbBbwSpFaxgkAh1iGQmUGkSX1-CCwm8Yh5dj26XrtF0GJmGmbUdhBYy8e7BqZu1y0iuLac-KScB73s4SuBiJw0PFP05CZytTuucHxY7g3KqqMA-Yo-9q2mq20lYpx6DHsXwJGXd-XMOdUNKSzgIfiAA6jHMK1ZZxCOgrgPwcIQJ57naDfJszadjPHyTWGc1UKEtuWTZQuQc-KpokR7rTePPK16qWpdpKaYcPSyz98oomtj-ZQCK73hH9lAEUmYi7Z_RumB5HLZX1JgoZU2W1eTkeS61OIDC0DPm9_JXB9aBtbB58FsIu2e6-wSgqqwZxqptRnu8Bsp3_baj69Anm79cd-h0ebY6vRJk3OzBunPsqq-g3Z7RIicAzBhnNIboOzQWiuKqJ8m1LRNLSAIwdblDCw8DCcxyQJzmN88NCWk_4OoHoX7XI7w4m5YGwj1glMuwJeQZJMyEJC3hwyWjIUkB1Q5hqyOOgeBLXQX4Rmc_kC-Yw6g7ZnC8UZvcQ46rl6hnGv1NtRNRTHxQQ-aRnAgH40CZdZZwI74NPdZlvxsEOug3s0-swF11RZ486KAEFQ0xdhtzYyLvtdhUnT9BYGHHhoBm1pr28_jivx0cEfX86ES4jzVYCnlxB1-B2N2kBT3AUiAwNpYNwQ6lBlCPL_r4WtHyex6uIEr-IiADKOJ6Fz78-yrgj03iPf03FFDasSJbEXRE1U_Vms8NuzjemD8R1uJN01x3ZAwWmc2qBBrqlIZR0QvJXNaXSm4WCVP7-dfOk_qf5C1JTeOoIE-lOfJnusa3mv9hKmGqNBiscsjqs7lyE2q7cg8UCxvQ-uXyruRV9VJ6Nvf2rd7s7LqTLj2knJLFed6atfDhPjoegqJT7EBwkFWgWPM88Yst8D0Xt9y8Q9EN6nVmUui1uJQZM4HiGPSks8goEXEV7pXzElGUr4JZMbdKNGi8rdC8rtdalCcq5Vo23qqFWavbvOzDVdzVxrl367KpVrChu8Jx4R6KBsEtqU_ZNZH8p16sUMSueT14Vi6oK2y9DHaI_95Xxm80o8Db015clwNb4jmcVMb5Q7M-ltG5T88NsJh9w2TpRn2YTJphy2wVrq11-iagCylV3UqmOW6bCHc1j_HAfvsvL6pDS7CBZENY2I0WsXaJfJyrgcmiD_8wFt0w0SFV9T5EreHjlLyoTCVbbNFGSd5UkBHuufCdkUT3b9AIy8bWMzy4-2pITO_-k8OW-hQho4kj0P_VfbHuC5x9ygb9DiT8zlT_AANpP3GnH9SNScr39uHP0sI-5_Ljm5Is3HxrSkTmDJiSoO5ZFP5B7-NxAqqfIAmxKQ0hyLuv6C4xRDM1CpTwbxz8EAfuCD4fWpOUL8dVkeBdrytX3GpQ3x2q_Lw0EeznwLLUsEwgmJ8fRTluGEg4KlA7vcrAtEdRfGiQADxa2euxNLxjyyV8HcRQ2dUkQAOKpy_laiUfbBc18Vj0ta3dAc81N1KWzPzTNGTKdJJ8PtdvhmJeA8ARaxlGN0llBgUVS-6pZCYTeFTx0nDhUQIZe1lxCFDxMJ0cQ0Yvx1kFt__PCAbdDNtEmZ9nzLVJP01pw-PP2FwSlEN8iYMorxgCW5Q-XOug9JGAUuqDvji1K3fNKSyzWhCcecWaIwS88wDmhti854bVvpxZiqd9GcgUTf-y0L46trJizLF7LNxRXRXBCbNfSvTsPszgCD8MDHHthovb1r6D1phVxiFEoUZX_MmWMdzUpkswNYUvoSz47kqAkRkXagkxDUcd9htCcAVc9tG5Hn7Ko1v0zdh0K0xXnX048lINFg8TBnInDvnvDsZ0UAlAxQ8FQRmwjPlLQJRSQeJBz4YdRqKJeZH01AJ4tN8B3n3UlMDKqlI7AdVtBkyzxoFtcE8l47sMVDctMdlpKLpfHc2a87Wbjybvd2uiQA_5F0FfDEMn9OIo1ANQSaYCmN5XMGail0g1Pfo8IyP7vA_HoHrebEv0U0ers3kblNLAgwxQUvPdahzdLAZ7RomS0b-0pr5-lL5h3mZZBJ7vl36fTt3rAkg_olCqwUHRAlniIleYCZWfbEOfs5gXRZ1P6_xAn7b4XnTB8MX2jvlFRBNNF2X_9PL4H3fyWj2jM41bLLPwsrTbJIsy7Dbbos_iNIsB9x-NkJD9NeD_hxpjuiljiB1OCJWfN2zIryb16VgL2ZMH7HXFru4h5wzsyBajWlBnZZFvpTEndK7THGs8G9ajijS5Xx5K3cKG6LmXOVOiJe5cM6",
+      "summary": []
+    },
+    {
+      "id": "msg_063a5f55d711a1e3006a703f87ad18819bb387bdb9e8e0f14c",
+      "type": "message",
+      "status": "completed",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "logprobs": [],
+          "text": "S6: Verification ledger.\n\n| Item | Classification | Status | Evidence / boundary |\n|---|---|---:|---|\n| `GBP`, `BD`, and `OC` are predicates on an abstract candidate transition | Stipulation | Accepted | Abstract model only; no additional predicate properties are assumed. |\n| `ALLOW t` holds exactly when `GBP t \u2227 BD t \u2227 OC t` | Stipulation | Accepted | Defines the intended abstract evaluator behavior. |\n| Necessity: `ALLOW t \u2192 GBP t \u2227 BD t \u2227 OC t` | Generated claim | Verified informally | Follows by unfolding the stipulated definition of `ALLOW`. |\n| Sufficiency: `GBP t \u2227 BD t \u2227 OC t \u2192 ALLOW t` | Generated claim | Verified informally | Follows directly from the stipulated definition of `ALLOW`. |\n| Characterization: `ALLOW t \u2194 GBP t \u2227 BD t \u2227 OC t` | Generated claim | Verified informally | Combines necessity and sufficiency; equivalently, it is definitional under the stipulation. |\n| Lean 4 logical core | Candidate artifact | Not verified | The selected S5 text contains incomplete declarations and proof bodies. It is not established to parse, elaborate, or compile. |\n| Correspondence with a deployed GCAT/BCAT evaluator | Implementation claim | Unresolved | No implementation, semantics, tests, or binding evidence was supplied. |\n| Deployed implementation validity or conformance | Implementation claim | Not claimed | The abstract theorem cannot establish implementation correctness without a verified binding. |\n\n**Claim boundary:** Verification covers only the elementary propositional consequence of the stipulated abstract definition of `ALLOW`. It does not verify the Lean candidate or any deployed GCAT/BCAT implementation. Artifact hashes establish identity only, not semantic correctness."
+        }
+      ],
+      "phase": "final_answer",
+      "role": "assistant"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "context": "all_turns",
+    "effort": "medium",
+    "mode": "standard",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "type": "text"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tool_usage": {
+    "image_gen": {
+      "input_tokens": 0,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "output_tokens": 0,
+      "output_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "total_tokens": 0
+    },
+    "web_search": {
+      "num_requests": 0
+    }
+  },
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 1902,
+    "input_tokens_details": {
+      "cache_write_tokens": 1899,
+      "cached_tokens": 0
+    },
+    "output_tokens": 680,
+    "output_tokens_details": {
+      "reasoning_tokens": 301
+    },
+    "total_tokens": 2582
+  },
+  "user": null,
+  "metadata": {}
+}

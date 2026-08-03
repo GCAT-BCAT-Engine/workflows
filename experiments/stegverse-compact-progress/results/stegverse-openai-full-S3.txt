@@ -1,0 +1,79 @@
+S3: Proof strategy and lemma decomposition.
+
+**Task identity**
+- Experiment: `SV-COST-STAGED-001`
+- Capability test: `SV-COMPACT-PROGRESS-001`
+- Subject: Abstract GCAT/BCAT evaluator admissibility.
+
+**Admitted dependencies**
+- S0 artifact: `sha256:7fc33318b537b4b44a87d84b877679434928ab65c1872d61f19816fb166e274c`
+- S1 artifact: `sha256:1f9d28c1b9383fdcc9e009097b6b07851224fbe71eb65ff25837069e2ef7d9c8`
+- S2 artifact: `sha256:a9d48ce81beba8d7f299a2726ba3d0e6e4d2beb38b6a65b27023027389fdd018`
+- Reused content: task identity, predicate signatures, stipulated evaluator rule, theorem formulation, and claim boundary.
+- These hashes establish artifact identity only, not semantic correctness.
+
+**Stipulated setting**
+Let `Transition` be an arbitrary type, with predicates:
+
+- `GBP : Transition → Prop`
+- `BD : Transition → Prop`
+- `OC : Transition → Prop`
+- `ALLOW : Transition → Prop`
+
+Assume:
+
+`allow_spec : ∀ t : Transition, ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
+
+**Generated proof strategy**
+For an arbitrary `t : Transition`, instantiate `allow_spec` at `t`. The resulting equivalence directly supplies both required directions:
+
+1. **Necessity lemma**
+   - Input: `hAllow : ALLOW(t)`.
+   - Use the forward implication of `allow_spec t`.
+   - Output: `GBP(t) ∧ BD(t) ∧ OC(t)`.
+
+2. **Sufficiency lemma**
+   - Input: `hConditions : GBP(t) ∧ BD(t) ∧ OC(t)`.
+   - Use the reverse implication of `allow_spec t`.
+   - Output: `ALLOW(t)`.
+
+3. **Characterization theorem**
+   - Construct the biconditional from the necessity and sufficiency lemmas.
+   - Alternatively, return `allow_spec t` directly because its instantiated type is exactly the target theorem.
+
+No auxiliary assumptions such as decidability, predicate independence, excluded middle, or domain-specific GCAT/BCAT semantics are needed.
+
+**Lemma decomposition**
+The logical dependency structure is:
+
+```text
+allow_spec t
+ ├─ forward direction ─→ allow_necessity t
+ └─ reverse direction ─→ allow_sufficiency t
+
+allow_necessity t + allow_sufficiency t
+ └─→ allow_admissible_iff t
+```
+
+The conjunction is parsed as:
+
+`GBP t ∧ (BD t ∧ OC t)`,
+
+which is Lean’s standard right-associative interpretation of `GBP t ∧ BD t ∧ OC t`. No reassociation is required because the assumption and conclusions use the same expression.
+
+**Lean 4 candidate for the logical core**
+```lean
+universe u
+
+variable {Transition : Type u}
+variable (GBP BD OC ALLOW : Transition → Prop)
+
+variable (allow_spec :
+  ∀ t : Transition, ALLOW t ↔ (GBP t ∧ BD t ∧ OC t))
+
+theorem allow_necessity (t : Transition) :
+    ALLOW t → (GBP t ∧ BD t ∧ OC t) :=
+  (allow_spec t).mp
+
+theorem allow_sufficiency (t : Transition) :
+    (GBP t ∧ BD t ∧ OC t

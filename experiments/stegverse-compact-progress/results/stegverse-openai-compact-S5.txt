@@ -1,0 +1,49 @@
+S5: Lean 4 candidate.
+
+**Stipulations**
+
+```lean
+universe u
+
+variable {Transition : Type u}
+variable (GBP BD OC : Transition → Prop)
+
+def ALLOW (t : Transition) : Prop :=
+  GBP t ∧ BD t ∧ OC t
+```
+
+**Generated claims and Lean 4 candidate**
+
+```lean
+theorem allow_necessary (t : Transition) :
+    ALLOW GBP BD OC t → GBP t ∧ BD t ∧ OC t := by
+  intro h
+  exact h
+
+theorem allow_sufficient (t : Transition) :
+    GBP t ∧ BD t ∧ OC t → ALLOW GBP BD OC t := by
+  intro h
+  exact h
+
+theorem allow_iff (t : Transition) :
+    ALLOW GBP BD OC t ↔ GBP t ∧ BD t ∧ OC t := by
+  constructor
+  · exact allow_necessary GBP BD OC t
+  · exact allow_sufficient GBP BD OC t
+```
+
+**Claim boundary**
+
+The candidate formalizes only the necessary-and-sufficient characterization of the stipulated abstract predicate:
+
+\[
+\operatorname{ALLOW}(t)\iff GBP(t)\land BD(t)\land OC(t).
+\]
+
+**Verified claims**
+
+None at this stage; the Lean 4 candidate has not been compiler-verified.
+
+**Unresolved implementation evidence**
+
+No evidence binds this abstraction to a deployed GCAT/BCAT evaluator. Compilation, implementation validity, and implementation conformance are not claimed.

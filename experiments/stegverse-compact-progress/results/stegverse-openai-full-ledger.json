@@ -2,11 +2,61 @@
   {
     "artifact_id": "stegverse-openai-full:S0",
     "stage_id": "S0",
-    "sha256": "sha256:97ab3e553e06a217479dbd6868558264c87b1837a8b18ad376a2fc958340941b",
-    "admitted": false,
-    "claims": "S0: Task parsing and claim boundary.\n- Current stage: `S0 \u2014 Task parsing and claim boundary`\n- The abstract evaluator returns `ALLOW` exactly when `GBP`, `BD`, and `OC` all hold.\n\\operatorname{ALLOW}(t) \\iff GBP(t)\\land BD(t)\\land OC(t).\n1. **Necessity:** `ALLOW(t)` implies `GBP(t) \u2227 BD(t) \u2227 OC(t)`.\n2. **Sufficiency:** `GBP(t) \u2227 BD(t) \u2227 OC(t)` implies `ALLOW(t)`.\n**Claim boundary**\n- No claim is made about executable",
+    "sha256": "sha256:7fc33318b537b4b44a87d84b877679434928ab65c1872d61f19816fb166e274c",
+    "admitted": true,
+    "claims": "S0: Task parsing and claim boundary.\n- The abstract evaluator returns `ALLOW` exactly when `GBP`, `BD`, and `OC` all hold.\n`ALLOW(t) \u2194 (GBP(t) \u2227 BD(t) \u2227 OC(t))`.\n- Necessity: `ALLOW(t)` implies all three predicates.\n- Sufficiency: all three predicates imply `ALLOW(t)`.\n**Claim boundary**\n- It does not establish that any deployed, source-level, compiled, configured, or operational GCAT/BCAT implementation has this beh",
     "definitions": "reference prior definitions",
     "unresolved": "implementation binding remains unresolved",
     "next_stage": "S1"
+  },
+  {
+    "artifact_id": "stegverse-openai-full:S1",
+    "stage_id": "S1",
+    "sha256": "sha256:1f9d28c1b9383fdcc9e009097b6b07851224fbe71eb65ff25837069e2ef7d9c8",
+    "admitted": true,
+    "claims": "- `GBP : Transition \u2192 Prop`\n- `BD : Transition \u2192 Prop`\n- `OC : Transition \u2192 Prop`\n- `ALLOW : Transition \u2192 Prop`\nHere, `ALLOW(t)` means that the stipulated abstract evaluator returns `ALLOW` for transition `t`.\n`\u2200 t : Transition, ALLOW(t) \u2194 (GBP(t) \u2227 BD(t) \u2227 OC(t))`.\nNo independence, decidability, consistency, or domain-specific meaning is assumed for `GBP`, `BD`, or `OC`.\n**Lean 4 candidate vocabulary**",
+    "definitions": "- `GBP : Transition \u2192 Prop`\n- `BD : Transition \u2192 Prop`\n- `OC : Transition \u2192 Prop`\n- `ALLOW : Transition \u2192 Prop`\nHere, `ALLOW(t)` means that the stipulated abstract evaluator returns `ALLOW` for transition `t`.\n`\u2200 t : Transition, ALLOW(t) \u2194 (GBP(t) \u2227 BD(t) \u2227 OC(t))`.\nNo independence, decidability, consistency, or domain-specific meaning is assumed for `GBP`, `BD`, or `OC`.\n**Lean 4 candidate vocabulary**",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S2"
+  },
+  {
+    "artifact_id": "stegverse-openai-full:S2",
+    "stage_id": "S2",
+    "sha256": "sha256:a9d48ce81beba8d7f299a2726ba3d0e6e4d2beb38b6a65b27023027389fdd018",
+    "admitted": true,
+    "claims": "S2: Theorem formulation.\n`\u2200 t : Transition, ALLOW(t) \u2194 (GBP(t) \u2227 BD(t) \u2227 OC(t))`.\n**Theorem formulation \u2014 exact admissibility characterization**\n`ALLOW(t) \u2194 (GBP(t) \u2227 BD(t) \u2227 OC(t))`.\n**Lean 4 candidate theorem signatures**\n\u2200 t : Transition, ALLOW t \u2194 (GBP t \u2227 BD t \u2227 OC t))\ntheorem allow_admissible_iff (t : Transition) :\nALLOW t \u2194 (GBP t",
+    "definitions": "reference prior definitions",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S3"
+  },
+  {
+    "artifact_id": "stegverse-openai-full:S3",
+    "stage_id": "S3",
+    "sha256": "sha256:bb26b2da4c10103637580e5ffb56e36c464bd13bf47099a73f39431acae4fbc0",
+    "admitted": true,
+    "claims": "S3: Proof strategy and lemma decomposition.\n1. **Necessity lemma**\n- Use the forward implication of `allow_spec t`.\n2. **Sufficiency lemma**\n- Use the reverse implication of `allow_spec t`.\n- Construct the biconditional from the necessity and sufficiency lemmas.\n**Lemma decomposition**\n\u251c\u2500 forward direction \u2500\u2192 allow_necessity t",
+    "definitions": "reference prior definitions",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S4"
+  },
+  {
+    "artifact_id": "stegverse-openai-full:S4",
+    "stage_id": "S4",
+    "sha256": "sha256:20e26d73330e4438e46e0cd429f0668a92d3a1c17176d658f703b524748155e2",
+    "admitted": true,
+    "claims": "S4: Complete informal proof.\n- Reused content: task identity, abstract predicate signatures, stipulated evaluator rule, theorem formulation, proof strategy, and claim boundary.\n**Complete informal proof**\nHence every allowed transition satisfies all three predicates.",
+    "definitions": "reference prior definitions",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S5"
+  },
+  {
+    "artifact_id": "stegverse-openai-full:S5",
+    "stage_id": "S5",
+    "sha256": "sha256:9393cea7519d7e588e9090284582c61b057b9f634379a71415f80f15785be34f",
+    "admitted": false,
+    "claims": "```lean",
+    "definitions": "reference prior definitions",
+    "unresolved": "implementation binding remains unresolved",
+    "next_stage": "S6"
   }
 ]

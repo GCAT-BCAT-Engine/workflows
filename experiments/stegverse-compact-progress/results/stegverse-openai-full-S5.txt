@@ -1,0 +1,30 @@
+S5: Lean 4 candidate.
+
+**Task identity**
+- Experiment: `SV-COST-STAGED-001`
+- Capability test: `SV-COMPACT-PROGRESS-001`
+- Subject: Abstract GCAT/BCAT evaluator admissibility.
+
+**Admitted dependencies**
+- S0: `sha256:7fc33318b537b4b44a87d84b877679434928ab65c1872d61f19816fb166e274c`
+- S1: `sha256:1f9d28c1b9383fdcc9e009097b6b07851224fbe71eb65ff25837069e2ef7d9c8`
+- S2: `sha256:a9d48ce81beba8d7f299a2726ba3d0e6e4d2beb38b6a65b27023027389fdd018`
+- S3: `sha256:bb26b2da4c10103637580e5ffb56e36c464bd13bf47099a73f39431acae4fbc0`
+- S4: `sha256:20e26d73330e4438e46e0cd429f0668a92d3a1c17176d658f703b524748155e2`
+
+These hashes establish artifact identity only, not semantic correctness.
+
+**Stipulated logical setting**
+
+For an arbitrary type of candidate transitions, `GBP`, `BD`, `OC`, and `ALLOW` are predicates. The abstract evaluator specification is:
+
+`∀ t, ALLOW t ↔ (GBP t ∧ BD t ∧ OC t)`.
+
+**Lean 4 candidate**
+
+```lean
+universe u
+
+namespace AbstractGCATBCAT
+
+variable {

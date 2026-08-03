@@ -1,0 +1,103 @@
+{
+  "id": "resp_07847030167650fb006a703f3c58d8819bb67013257e8fc10d",
+  "object": "response",
+  "created_at": 1785741116,
+  "status": "incomplete",
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": null,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "incomplete_details": {
+    "reason": "max_output_tokens"
+  },
+  "instructions": null,
+  "max_output_tokens": 900,
+  "max_tool_calls": null,
+  "model": "gpt-5.6-sol",
+  "moderation": null,
+  "output": [
+    {
+      "id": "rs_07847030167650fb006a703f3fa96c819bae74075428ebf505",
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": "gAAAAABqcD9LkVJYz4HWWs87tB22WRyOfqJ1snHqTrgeMB4h2wMZYOSuP8NtLpolM_uMIXElTmrvepFq7JCxh0Ofz-65A70HRWbd_-L3N2mHhkP-cCu6oOcyxg07cOhTifXu31gsE1c3Uh5dltIiswNk8vzlb765idz_tLeeF6uwn49VaqbnC8KFYbh5IRus0t6d6-b7hU9qCQMWTczYppr9H__s3I5ANu-kiKYekCCmUf5v-6MdrHsnoK9aht7yFYIz-fD3PWdt2VBkb9YiUni02ubf5Dn9hAp2PREMKkzdIlLcHaaNx7gBodnSW5rJdSprOrDRbe74sN1HGNSw8tj5jeg_wWMNr-6BOMOn3EjFJJu1SZ4ccxak_zUbLf_9yDrtvHtdbq-CItvxLp0soBI8U2Wu60GMt79rq1LgMbk4MZK7XGwXmdgRRB4gVBRABL-UfVuZw243UigGC3vYMqxilHGgpcoOz7eb43k9rHutCE92PfA73oE8M5XM7fwZzF-ujWlZVuVuyEf1p06ra9ald1u64eep63ytyUv-9WSGgK68lNXKO1PKl_wscyTD-_lL3wpweTldepOePJUMuCwCKQjkkQEImiS1SulNEcc0ZXhJJ1-ZpVGztymUU7di9F-BE0BYETwZB8KeUKIAo-971HYLF6-TSJZFq9MQtap2UI_NVwTD9_kSVwgMvyWhDBKRtZDsTwQJT2x53ZXhuvSzEb5PYbtg8sG4ovbUtPRIuhrxe-pCQ6IDbqBoMyKhdFQt3p59cBD0Xdq_mxMCuoCLZ59jnEKnl_US2iZ7dBz1vmq8EzyqtfS9YxRekT2sniubWkmCbD8cLu6iz3vUXCEGaLk6aYrVNCH2zSa8tnmvMupj8QhDmMJEI3WhaiZZs3VlW-Kd5evkkUS3KVeMrZngBQLLX6lQ9IqtChNzC5aHEwZWG0BLaOWScEnopQKqcvLASmp6fzxAQbbvbZLBckaHdO3Pd6jzEHyMudENPPVRk_LJhUBf1Fx15BT3vMRO3cGctVSSVxaxI7f8PrJHt2cxc0FnNxNA1j4VJAIi3DnZc5toQxCwJ6heh2ZxUo20mfsdunmAlZ2tTGSFscg3ufEihRurwAh5BOG0e1Zyz7ATa5y-oY8OeLvudj8uwv8JB6cG5o8A9uCcgS0LnUFQwWwmpKS1rvhUWV7V7xnac-3fwwqRxaGSGr_OTwgbhzpVb9Phcfy4oH4x0Oo0FpYgsw_gtCSevv-EpNERCHfhd03dZLis5jTY30rJFE9HTY0rpd2sD0rqVXTtndJ_P4MgkW0Auz-3hjXqQcY5RWaQ7Oq86w2q5FhCXuia9Bk-L-k2TYTEBGqP0oH1QSUnoKqMBjvrmHInskUXOPSf3h43Y4Mgjo7uMFcd0UGjAqBrw_8t25hmUlgXkK5dBq4K-APj_cGGozMQj88RsYXGv3RBf808vPDX8AdIMVDTpgEVr9R0UZJ-IUMXVRwJcT9G1Peq0yBGYol2hpnRQJyTrse5qUWRm0D0-5grZc3kGsCI8eZ2xunDmrm-uM8OCvzxFhA5iIVivvvLqyZJkQAJtGzL15rNhlfMEO4cRHoMkKY74ELErFJ9YCUX868s4DcppTY3jPL0e5Rc9uB28mdehfHmBjYdnkujHAtUKQRX6EqaDPCoLhTo5LavtA4j9DG9BsnyDY9EUhBNxccNJNDetoa2toqXL8HVf2KlU2Z7rcA33phGPgbgOugC7qPKGHm8p9MuZ0qK5VyGT33oOMP6YwtqVUSkqAgDtq92Kc3jkfglF0qCiz15oex50PerMgkCy2AQFI_VBWYfIxrrv0md4xpaizdYmKVikIkTpweC7VWLGqIkrjLqeyJq3ROZ7Z0gPUYZuqRn1faRxGuUUpjRQfnyM4poEwczKGBLllCVyxHZ8-DUVb26H4xp26pmKp7f2z8r-6VtLir18ENNp0tgH4q-RMsoG5dzUhK9zzoVcaRNV-w4a_m14AG4ze3b7h4_3XGX2dKQdPCf_B8LmKryPd1Y1KRBnm9BjDp9F2yHv-ev5qMiNe8s0nB2n7gJ2fLxSUkMB2I7C-2LBUJCY9RYC0ZqONighkn2-5xIu6ShKgfQjV9ns_K1S69ykmqQ5wlWR7LEf35aDGm4NWUvKB775RnSy5-ONMBZu93LsGamR97tFb7giJ6wA2lO70eZY7YxsASYuZw-vTLupV2eYaFl_LYCMiYzoeR3JSXLgqDkMYekYt8WojGlp882je75HXLF4ASQja0fdDmsnQyVc7SEnEGr-Dkqmu2Omy7Fwx1UIQf0jbMQJ2rDkGer-0qPSuP4r1HOFENSdp-aP60bjyEfjaDvKbV7P63Fp3H9VP3rZnDYZQLAxJOzrdSdvNMsvKir519bCJ1uqts5d0W_q4xM5MLgUUMP1BsqWkOkxxivKdu6NK5qffg2a3UjU6hyld2f3UkTssUpnoKyRl6T1Y86seF0sqeU4StaY8OpFdXEDtyVMtIueA2j4dABzA-o80C3YtDncoqeUnLPspFS7_MJq0kOjTn-zkpw4q2g1h7dP_NPeJGe14K-R0EuRd_-E_vzMoLFHnDRTgH2PXpQrtLuR8WyoakUXVzjRFjc5tDgHWZ8xNkqxT0ukwisZrtbvVBAxAqwVhYUkl7U-ruKUXo69CmCGlbSxJ4V9L_oaS1IiUYLy99kaQaTljxgXvNaBfwQNYKbljWzjLEzoV0xkc78e3sN8vs5AmFCzowwM96yZUH0vqi1LuMxy_sm0t8srix0vG6zD5BbVVr-fKoYpFP0L1asLENx-CX-e8abYJUpm9cSTKaf2GZj3sGIH5TwhIQe0pMhzZ-3XR1JVtsGWhyBPkAU1KQNEg9G77wd0nILgkgPF_xBUGcp8OCvKlZi011tJQXQpYR2m7MQO0AXD-hjHNLAr6hY4FSfVhtPWeXVZFgtbxqepVgQKNnEraRFN30RjdLGtYbWfrZmdR0ms_9KuLYHoCS_98NGvccXN16FJrB-gucOQOOryYffB43Srgfy8TY3jZ6lD09jxOIZOo8-Imz-Bd9uKgvVHkc3ecAXCWGJQwvxIdwOnf_VDX3bxS0XtzNNprkiR_CWhykU5EnzivyV7sR-qPBbUqGRyuhpzHdyh_-oAo72uDu6rhaKmvTDEBa3GZFB9Zi9P1-Ti3E89zwvKObI6oZZvBV5HrqDG__FZfG0_sxEO3pmcJmO59_xRvHP4D7DuGPlS5ywFbI90HI3sH0yZqa4nmjiaDkr_8a8-_kplJxb8_2IEjiOBVtBBLkV76COyxrxCXQWy0IXAQN5F3N0vJv5PpDHrrxjWi6FttBJb4d1oJpt_GOnwfj3xg22Tw0M5WiD5DlSIFXC5ZwqO0G1Uw39OeuPmbb6a1SwDa0JQcmou5XMonxFJGhOywfa8pR9uUPYQVuV6acSXh4VDh1wzB_S7Cpmw4Ylk0hZkGxe99YBkxcsozIAgfsLJ1pw9Cb8V7uKFZ7zS1S9DVHOosU9glTdc6uFva0PpAwqkLvP_v4zi-RgaiOPS2beqDScm0I3k_xGLNqYXmQ4QYOd_tDvkFVj_oEa-k5JEox_uq_7p88jTLfAXYg57nffcox1z2ht8_IZwzV87upZKfVWLqL7D5t04_8WUIz_Gvp_oLLCNvA4ZJkUOG6oTSATtBmOKvNEyOO1DsT2gc26c7BeYGj8pbKg3A3jBSMjunEE1rDr1j02dW5XYbJCBx-v7xQozhVExvDueiVi0FZm_HhKJtyMBU1je4SwEkh2OuekV0QETZ_uWB30OwhcdSGuDCMORwMS-2pI8TB9fF-_3tF0vo0Kj5iBvtbS9sDqXiSRGxEvNd3B4SYt_B5IQ9Lt2aP5H-cD4yt9MR1igPsBW8tLf0YqxJ5CGY1H2C4YwH9JR6vQe3doSfI1-AboL5K4UjJGKUEaSkDf3yZx6zncJVyf1CuJ9h2n7tnnvAshoNzDRN1C6lP0YT3VhytZSdYTWTSMJfTzVEs-e6tgQSP8IMmTEtLTLGlPwORR-PbPHjsgya9t1rwWl0EBxewA3Tjd86Gz9OzgDxil5_eXnejA82sgGpPX128wO9FvOwcjFNNSeERiqwQpeKhMUrKCMFKYa-ZlkHNTWMkB8WiGkADZ1OC-fyRHfiyC2RPng6iQ_6B6qgVXY5MUCuAWsazaQRrmqQQ-LHG_T4hG0k08aEiqS4Ux5cG2tU0hWWeqEF0=",
+      "summary": []
+    },
+    {
+      "id": "msg_07847030167650fb006a703f47f758819b99ecafb607a697a8",
+      "type": "message",
+      "status": "incomplete",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "logprobs": [],
+          "text": "S5: Lean 4 candidate.\n\n**Task identity**\n- Experiment: `SV-COST-STAGED-001`\n- Capability test: `SV-COMPACT-PROGRESS-001`\n- Subject: Abstract GCAT/BCAT evaluator admissibility.\n\n**Admitted dependencies**\n- S0: `sha256:7fc33318b537b4b44a87d84b877679434928ab65c1872d61f19816fb166e274c`\n- S1: `sha256:1f9d28c1b9383fdcc9e009097b6b07851224fbe71eb65ff25837069e2ef7d9c8`\n- S2: `sha256:a9d48ce81beba8d7f299a2726ba3d0e6e4d2beb38b6a65b27023027389fdd018`\n- S3: `sha256:bb26b2da4c10103637580e5ffb56e36c464bd13bf47099a73f39431acae4fbc0`\n- S4: `sha256:20e26d73330e4438e46e0cd429f0668a92d3a1c17176d658f703b524748155e2`\n\nThese hashes establish artifact identity only, not semantic correctness.\n\n**Stipulated logical setting**\n\nFor an arbitrary type of candidate transitions, `GBP`, `BD`, `OC`, and `ALLOW` are predicates. The abstract evaluator specification is:\n\n`\u2200 t, ALLOW t \u2194 (GBP t \u2227 BD t \u2227 OC t)`.\n\n**Lean 4 candidate**\n\n```lean\nuniverse u\n\nnamespace AbstractGCATBCAT\n\nvariable {"
+        }
+      ],
+      "phase": "final_answer",
+      "role": "assistant"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "context": "all_turns",
+    "effort": "medium",
+    "mode": "standard",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "type": "text"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tool_usage": {
+    "image_gen": {
+      "input_tokens": 0,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "output_tokens": 0,
+      "output_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "total_tokens": 0
+    },
+    "web_search": {
+      "num_requests": 0
+    }
+  },
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3209,
+    "input_tokens_details": {
+      "cache_write_tokens": 3206,
+      "cached_tokens": 0
+    },
+    "output_tokens": 900,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4109
+  },
+  "user": null,
+  "metadata": {}
+}

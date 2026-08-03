@@ -1,0 +1,54 @@
+S2: Theorem formulation.
+
+**Task identity**
+- Experiment: `SV-COST-STAGED-001`
+- Capability test: `SV-COMPACT-PROGRESS-001`
+- Subject: Abstract GCAT/BCAT evaluator admissibility.
+
+**Admitted dependencies**
+- S0 artifact: `sha256:7fc33318b537b4b44a87d84b877679434928ab65c1872d61f19816fb166e274c`.
+- S1 artifact: `sha256:1f9d28c1b9383fdcc9e009097b6b07851224fbe71eb65ff25837069e2ef7d9c8`.
+- Reused content: task identity, abstract predicate signatures, stipulated decision rule, target claim, and claim boundary.
+- These hashes establish artifact identity only, not semantic correctness.
+
+**Stipulated setting**
+Let `Transition` be an arbitrary type, with predicates:
+
+- `GBP : Transition → Prop`
+- `BD : Transition → Prop`
+- `OC : Transition → Prop`
+- `ALLOW : Transition → Prop`
+
+Assume the abstract evaluator specification:
+
+`∀ t : Transition, ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
+
+**Theorem formulation — exact admissibility characterization**
+For every candidate transition `t`:
+
+`ALLOW(t) ↔ (GBP(t) ∧ BD(t) ∧ OC(t))`.
+
+Equivalently, admissibility has both directions:
+
+1. **Necessity**
+
+   `ALLOW(t) → GBP(t) ∧ BD(t) ∧ OC(t)`.
+
+2. **Sufficiency**
+
+   `GBP(t) ∧ BD(t) ∧ OC(t) → ALLOW(t)`.
+
+Thus, under the stipulated abstract decision rule, a transition is allowed if and only if all three predicates hold.
+
+**Lean 4 candidate theorem signatures**
+```lean
+universe u
+
+variable {Transition : Type u}
+variable (GBP BD OC ALLOW : Transition → Prop)
+
+variable (allow_spec :
+  ∀ t : Transition, ALLOW t ↔ (GBP t ∧ BD t ∧ OC t))
+
+theorem allow_admissible_iff (t : Transition) :
+    ALLOW t ↔ (GBP t

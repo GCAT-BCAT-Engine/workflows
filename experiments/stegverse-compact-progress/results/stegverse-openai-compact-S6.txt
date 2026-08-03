@@ -1,0 +1,14 @@
+S6: Verification ledger.
+
+| Item | Classification | Status | Evidence / boundary |
+|---|---|---:|---|
+| `GBP`, `BD`, and `OC` are predicates on an abstract candidate transition | Stipulation | Accepted | Abstract model only; no additional predicate properties are assumed. |
+| `ALLOW t` holds exactly when `GBP t ∧ BD t ∧ OC t` | Stipulation | Accepted | Defines the intended abstract evaluator behavior. |
+| Necessity: `ALLOW t → GBP t ∧ BD t ∧ OC t` | Generated claim | Verified informally | Follows by unfolding the stipulated definition of `ALLOW`. |
+| Sufficiency: `GBP t ∧ BD t ∧ OC t → ALLOW t` | Generated claim | Verified informally | Follows directly from the stipulated definition of `ALLOW`. |
+| Characterization: `ALLOW t ↔ GBP t ∧ BD t ∧ OC t` | Generated claim | Verified informally | Combines necessity and sufficiency; equivalently, it is definitional under the stipulation. |
+| Lean 4 logical core | Candidate artifact | Not verified | The selected S5 text contains incomplete declarations and proof bodies. It is not established to parse, elaborate, or compile. |
+| Correspondence with a deployed GCAT/BCAT evaluator | Implementation claim | Unresolved | No implementation, semantics, tests, or binding evidence was supplied. |
+| Deployed implementation validity or conformance | Implementation claim | Not claimed | The abstract theorem cannot establish implementation correctness without a verified binding. |
+
+**Claim boundary:** Verification covers only the elementary propositional consequence of the stipulated abstract definition of `ALLOW`. It does not verify the Lean candidate or any deployed GCAT/BCAT implementation. Artifact hashes establish identity only, not semantic correctness.

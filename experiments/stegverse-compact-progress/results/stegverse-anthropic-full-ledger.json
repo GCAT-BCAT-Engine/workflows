@@ -2,51 +2,11 @@
   {
     "artifact_id": "stegverse-anthropic-full:S0",
     "stage_id": "S0",
-    "sha256": "sha256:d1c8d3892457f2692ac8443999c4b8c66abc5c3f82e0ec1351cc39074236d992",
-    "admitted": true,
-    "claims": "S0: Task parsing and claim boundary.\nThe evaluator returns **ALLOW** exactly when all three predicates hold simultaneously.\n1. Establish the necessary-and-sufficient characterization of ALLOW admissibility.\n2. State the claim boundary precisely.\n| ST-2 | The evaluator returns `ALLOW` on input `t : T` if and only if `GBP(t) \u2227 BD(t) \u2227 OC(t)`. |\n| ST-3 | No claim is made that any deployed GCAT/BCAT implementation confor",
+    "sha256": "sha256:acc732ad0eb7acf73eeb466856e5e5bee83422a068f3980dc02c876fd512e8d0",
+    "admitted": false,
+    "claims": "S0: Task parsing and claim boundary\nAn abstract evaluator (referred to as a GCAT/BCAT evaluator) that operates on candidate transitions. The evaluator produces a binary output: ALLOW or (implicitly) DENY.\n> The evaluator returns ALLOW on a candidate transition `t` if and only if `GBP(t) \u2227 BD(t) \u2227 OC(t)`.\nThis is a *stipulation* introduced by the task. It is not a claim about any deployed system.\n## 2. Claim Boundary\n",
     "definitions": "reference prior definitions",
     "unresolved": "implementation binding remains unresolved",
     "next_stage": "S1"
-  },
-  {
-    "artifact_id": "stegverse-anthropic-full:S1",
-    "stage_id": "S1",
-    "sha256": "sha256:51e1cb5eb3c71e84e01bdfc48278cf7be3059b8df68b1fa167418392dac45dcb",
-    "admitted": true,
-    "claims": "| `GBP` | `T \u2192 Prop` | First gate predicate |\n| `BD` | `T \u2192 Prop` | Second gate predicate |\n| `OC` | `T \u2192 Prop` | Third gate predicate |\n\"Uninterpreted\" means: no axiom governs the truth value of `GBP(t)`, `BD(t)`, or `OC(t)` for any particular `t`. They are free in the logical environment.\n**DEF-3 (ALLOW).**\nThe evaluator output predicate `ALLOW : T \u2192 Prop` is defined by:\nALLOW(t)  :=  GBP(t) \u2227 BD(t) \u2227 OC(t)\n`\u2227` den",
-    "definitions": "| `GBP` | `T \u2192 Prop` | First gate predicate |\n| `BD` | `T \u2192 Prop` | Second gate predicate |\n| `OC` | `T \u2192 Prop` | Third gate predicate |\n\"Uninterpreted\" means: no axiom governs the truth value of `GBP(t)`, `BD(t)`, or `OC(t)` for any particular `t`. They are free in the logical environment.\n**DEF-3 (ALLOW).**\nThe evaluator output predicate `ALLOW : T \u2192 Prop` is defined by:\nALLOW(t)  :=  GBP(t) \u2227 BD(t) \u2227 OC(t)\n`\u2227` den",
-    "unresolved": "implementation binding remains unresolved",
-    "next_stage": "S2"
-  },
-  {
-    "artifact_id": "stegverse-anthropic-full:S2",
-    "stage_id": "S2",
-    "sha256": "sha256:904511f7779b598cbef71c9fe3f273e9d591907e5bd5e6abbc6b7a96814813cd",
-    "admitted": true,
-    "claims": "S2: Theorem formulation.\n## S2 Artifact: Theorem Formulation\n| ST-2 | Evaluator returns ALLOW iff all three hold | S0 |\n### 2. Principal Theorem\n**THEOREM-1 (ALLOW Admissibility \u2014 Necessary and Sufficient Characterization).**\n> ALLOW(t)  \u2194  GBP(t) \u2227 BD(t) \u2227 OC(t)",
-    "definitions": "reference prior definitions",
-    "unresolved": "implementation binding remains unresolved",
-    "next_stage": "S3"
-  },
-  {
-    "artifact_id": "stegverse-anthropic-full:S3",
-    "stage_id": "S3",
-    "sha256": "sha256:a85d56ddd4fe2a92cbf5d43d945ac26c754b48c7c415e97ce8162f14e66b5279",
-    "admitted": true,
-    "claims": "S3: Proof strategy and lemma decomposition.\n## S3 Artifact: Proof Strategy and Lemma Decomposition\n### 1. Admitted Context (Carried Forward Without Modification)\n| PO-1 | Forward direction: necessity | S2 |\n| PO-2 | Backward direction: sufficiency | S2 |\n| PS-B | Iff introduction with explicit constructors | Use `Iff.intro` to provide forward and backward functions explicitly | Applicable; maximally explicit; preferr",
-    "definitions": "reference prior definitions",
-    "unresolved": "implementation binding remains unresolved",
-    "next_stage": "S4"
-  },
-  {
-    "artifact_id": "stegverse-anthropic-full:S4",
-    "stage_id": "S4",
-    "sha256": "sha256:443eb643f8839d0c3f760ab23803ca1aa52e2121e6e4d35ee4776051316d0340",
-    "admitted": false,
-    "claims": "S4: Complete informal proof.\n## S4 Artifact: Complete Informal Proof\n### 2. Preliminary Remarks on Proof Character\nThe proof is **analytic** in the strict sense: it contains no synthetic steps, introduces no auxiliary objects, and requires no induction, case analysis, or appeal to external lemmas. Both directions of the biconditional reduce immediately to the observation that `ALLOW(t)` and `GBP(t) \u2227 BD(t) \u2227 OC(t)` a",
-    "definitions": "reference prior definitions",
-    "unresolved": "implementation binding remains unresolved",
-    "next_stage": "S5"
   }
 ]

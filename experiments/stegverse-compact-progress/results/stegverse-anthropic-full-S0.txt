@@ -1,74 +1,74 @@
-S0: Task parsing and claim boundary.
+S0: Task parsing and claim boundary
 
 ---
 
-## Task Parsing
+## 1. Task Parsing
 
-**Problem statement (paraphrase for record):**
-An abstract evaluator for GCAT/BCAT is given. It accepts three predicates over a candidate transition:
+**Experiment identifier:** SV-COST-STAGED-001
+**Capability test:** SV-COMPACT-PROGRESS-001
 
-- **GBP** — some predicate on the candidate transition
-- **BD** — some predicate on the candidate transition
-- **OC** — some predicate on the candidate transition
+**Object of study:**
+An abstract evaluator (referred to as a GCAT/BCAT evaluator) that operates on candidate transitions. The evaluator produces a binary output: ALLOW or (implicitly) DENY.
 
-The evaluator returns **ALLOW** exactly when all three predicates hold simultaneously.
+**Given predicates (stipulated, not derived):**
+- `GBP` — a predicate on a candidate transition
+- `BD` — a predicate on a candidate transition
+- `OC` — a predicate on a candidate transition
 
-The task is to:
-1. Establish the necessary-and-sufficient characterization of ALLOW admissibility.
-2. State the claim boundary precisely.
-3. Prepare a Lean 4 candidate for the logical core.
+**Stipulated semantics of the evaluator:**
+> The evaluator returns ALLOW on a candidate transition `t` if and only if `GBP(t) ∧ BD(t) ∧ OC(t)`.
 
----
-
-## Stipulations (Given, Not Generated)
-
-| ID | Stipulation |
-|----|-------------|
-| ST-1 | `GBP`, `BD`, `OC` are uninterpreted predicates on a type `T` of candidate transitions. |
-| ST-2 | The evaluator returns `ALLOW` on input `t : T` if and only if `GBP(t) ∧ BD(t) ∧ OC(t)`. |
-| ST-3 | No claim is made that any deployed GCAT/BCAT implementation conforms to this specification. |
-| ST-4 | The logical core is purely propositional/logical; no semantic content of `GBP`, `BD`, `OC` is assumed. |
+This is a *stipulation* introduced by the task. It is not a claim about any deployed system.
 
 ---
 
-## Claim Boundary
+## 2. Claim Boundary
 
-**What is being claimed (scope):**
+The following distinctions are enforced throughout all stages:
 
-> **Claim C-0 (Logical Core, to be established in subsequent stages):**
-> For all `t : T`, `ALLOW(t)` holds if and only if `GBP(t) ∧ BD(t) ∧ OC(t)`.
->
-> This is a *definitional equivalence*: the right-hand side is stipulated as the definition of `ALLOW`. The necessary-and-sufficient characterization is therefore tautological given ST-2, and the mathematical content lies in making this explicit and machine-checkable.
-
-**What is NOT being claimed:**
-
-| Exclusion | Reason |
-|-----------|--------|
-| That any real GCAT/BCAT system behaves this way | ST-3 |
-| That `GBP`, `BD`, `OC` have any particular meaning | ST-4 |
-| That the Lean 4 candidate compiles or is implementation-valid | Explicitly deferred; candidate status only |
-| That the conjunction order matters semantically | Conjunction is commutative; order is presentational |
+| Category | Status |
+|---|---|
+| The conjunction `GBP ∧ BD ∧ OC ↔ ALLOW` as a characterization of the *abstract evaluator defined here* | **Stipulated definition** — analytically true by construction |
+| Any claim that a deployed GCAT/BCAT system satisfies this characterization | **Not admitted** — outside scope; no conformance claimed |
+| The logical equivalence `ALLOW(t) ↔ GBP(t) ∧ BD(t) ∧ OC(t)` as a formal proposition | **Target of stages S1–S3** — to be stated precisely and proved |
+| Implementation validity of any Lean 4 artifact | **Not claimed** — Lean 4 candidate is a candidate only |
 
 ---
 
-## Stage S0 Output: Parsed Task Structure
+## 3. Necessary and Sufficient Form (Pre-formal Statement)
 
-```
-EXPERIMENT:   SV-COST-STAGED-001
-CAPABILITY:   SV-COMPACT-PROGRESS-001
-PROBLEM ID:   GCAT/BCAT ALLOW admissibility characterization
+The characterization to be established across subsequent stages is:
 
-STAGES IDENTIFIED:
-  S0  — Task parsing and claim boundary            [CURRENT — complete]
-  S1  — Necessary-and-sufficient characterization  [PENDING]
-  S2  — Lean 4 candidate for logical core          [PENDING]
+> **Claim C1 (informal):** For the abstract evaluator defined above, a candidate transition `t` satisfies `ALLOW(t)` if and only if all three of `GBP(t)`, `BD(t)`, and `OC(t)` hold.
 
-ADMITTED ARTIFACTS:  [none]
-GENERATED CLAIMS:    [C-0, stated above, not yet verified]
-VERIFIED CLAIMS:     [none]
-UNRESOLVED IMPL.:    [Lean 4 candidate validity deferred to S2]
-```
+- **Necessary direction:** If `ALLOW(t)`, then `GBP(t) ∧ BD(t) ∧ OC(t)`.
+- **Sufficient direction:** If `GBP(t) ∧ BD(t) ∧ OC(t)`, then `ALLOW(t)`.
+
+Both directions follow directly from the stipulated definition. The logical work in subsequent stages is to make this precise in a formal language (Lean 4) and to separate definitional from derived content.
 
 ---
 
-**S0 complete. No artifact admitted. C-0 is a generated claim, not yet verified. Awaiting instruction to proceed to S1.**
+## 4. Stage Boundary Declaration
+
+**S0 delivers:**
+- Parsed task identity ✓
+- Identified predicates and their roles ✓
+- Claim boundary table ✓
+- Pre-formal statement of Claim C1 ✓
+- Explicit non-conformance disclaimer ✓
+
+**S0 does not deliver:**
+- Formal Lean 4 syntax (deferred to S2/S3)
+- Proof of Claim C1 (deferred to S1/S2)
+- Any admitted artifact beyond this parsing record
+
+---
+
+## 5. Admitted Artifacts This Stage
+
+| Artifact ID | Content | Status |
+|---|---|---|
+| `S0-PARSE-001` | This document | Admitted as task parse record |
+| `C1-INFORMAL` | Pre-formal biconditional statement above | Admitted as claim target |
+
+**No prior admitted state exists. This document initializes the admitted state.**
