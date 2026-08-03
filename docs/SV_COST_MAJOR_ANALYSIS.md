@@ -1,84 +1,171 @@
 # StegVerse Cost and Capability Analysis
 
-Status: **IN PROGRESS — NOT YET PUBLICATION READY**
+Status: **IN PROGRESS — R3 ACTIVE — NO CFO SAVINGS CLAIM YET**
 
 Governing program: `SV-COST-MAJOR-GOAL-001` / issue #12
 
-This is the only human-facing synthesis document for the SV-Cost program. Individual receipts and reports are evidence inputs. They are not separate conclusions and should not require operator reconciliation.
+This is the only human-facing synthesis document for the SV-Cost program. Individual receipts and reports are subordinate evidence. They do not create separate conclusions and should not require operator reconciliation.
 
 ## Major question
 
-Under controlled, lineage-preserving tests, what measurable cost, latency, reliability, and capability changes can be attributed to execution route selection or StegVerse intervention?
+Under controlled, lineage-preserving tests, what measurable cost, latency, reliability, and capability changes can be attributed to execution-route selection, StegVerse-managed context, or governed reconstruction?
 
-## Current conclusions
+## Decision posture
 
-### 1. Historical baseline reproduction
+The evidence currently supports three bounded conclusions:
 
-The best-available BL-001 repeat reproduced the original cost envelope closely:
+1. The historical BL-001 cost envelope is reproducible within a narrow difference, subject to loss of the exact original prompt and payload.
+2. A native Anthropic batch route and its route-price effect were observed, but the comparison did not produce successful quality-equivalent outputs, so no CFO-grade route-savings claim is admitted.
+3. Repository reconstruction can avoid a new external provider call for already admitted work, but it is a different operation from fresh inference and local StegVerse cost is not yet measured.
+
+The active R3 relation is testing whether StegVerse-managed context changes provider tokens, pricing-derived cost, latency, or successful-output quality while holding the provider, model, route, task, stage order, and verifier constant. No R3 conclusion is admitted until generation-bound evidence and adjudication are committed.
+
+## Canonical control surfaces
+
+- Evidence index: `experiments/sv-cost-program/evidence-index.json`
+- Program lineage: `experiments/sv-cost-program/lineage.json`
+- Relational matrix: `experiments/sv-cost-program/relations.json`
+- Canonical results: `experiments/sv-cost-program/results/`
+
+## R1 — Historical baseline reproduction
+
+The best-available BL-001 repeat reproduced the historical control envelope closely:
 
 | Measure | Historical BL-001 | Repeat | Difference |
 |---|---:|---:|---:|
 | Native tokens | 4,169 | 4,239 | +70 / +1.68% |
-| Cost | $0.061659 | $0.061869 | +$0.000210 / +0.34% |
+| Pricing-derived cost | $0.061659 | $0.061869 | +$0.000210 / +0.34% |
 | Latency | ~52.5 s | 59.59 s | +7.09 s |
 
-This is a control-envelope reproduction, not a byte-identical replay. The exact original prompt and request payload were not retained, and the repeat reached the output-token ceiling.
+**Verdict:** `OBSERVED_AND_VALIDATED_WITH_RECONSTRUCTION_BOUNDARY`
 
-### 2. Historical OP-002 status
+This is a control-envelope reproduction, not a byte-identical replay. The exact original prompt and request payload were not retained, and the repeated BL-001 response reached the output-token ceiling.
 
-The reported OP-002 value of $0.0308295 is exactly 50% of the historical BL-001 cost. Applying the same arithmetic factor to the repeated BL-001 cost gives $0.0309345, also +0.34% from the historical OP-002 value.
+### Historical OP-002 boundary
 
-This demonstrates reproducible arithmetic. It does **not** yet demonstrate an observed batch or optimized route execution because no retained provider route receipt has been found.
+The historical OP-002 value of $0.0308295 is exactly 50% of the historical BL-001 cost. Applying the same factor to the repeated BL-001 cost gives $0.0309345, also +0.34% from the historical value.
 
-### 3. Three-platform normalized run
+That reproduces the accounting transformation. It does **not** prove a historical optimized-route execution because no distinct OP-002 provider route receipt was retained.
 
-The OpenAI, Anthropic, and repository-native StegVerse outputs satisfied the selected obligations. This remains useful reconstruction evidence, but it is not a like-for-like inference-cost comparison: OpenAI and Anthropic generated new answers, while the StegVerse-only lane reconstructed an answer from admitted repository state.
-
-It is therefore excluded from headline platform-cost comparison tables and will be reported later as governed reuse economics.
-
-## Relational test program
-
-| Relation | Independent variable | Current state |
-|---|---|---|
-| Historical BL-001 vs faithful repeat | execution time / reconstructed historical payload | Partially executed |
-| Direct vs actual batch route | provider execution route | Blocked: no observed batch receipt |
-| Full context vs StegVerse-managed context | context representation | Designed, not executed |
-| Generation vs governed reconstruction | operation class | Executed; separate analysis class |
-| Repeated paired trials | trial instance | Pending executable paired relation |
-
-The full machine-readable contracts are maintained at:
-
-- `experiments/sv-cost-program/evidence-index.json`
-- `experiments/sv-cost-program/relations.json`
-
-## Publication gate
-
-This document becomes publication-ready only when:
-
-1. the historical lineage record is complete and every unknown is explicit;
-2. at least one genuinely paired route or StegVerse-context relation has been executed;
-3. the same verifier and completion criteria are used across each pair;
-4. repeated trials report variance, failures, and retry cost;
-5. observed costs are distinguished from accounting transforms and counterfactual estimates;
-6. every headline statement links to canonical receipts.
-
-## Operator boundary
-
-The operator is not required to interpret individual result files. New evidence must update the canonical index, relational matrix, and this document. No standalone narrative result document may redefine the program or create a new goal.
+Canonical observation: `experiments/sv-cost-program/results/historical-lineage-observation.json`
 
 ## R2 — Direct synchronous versus provider batch
 
 **Governed verdict:** `ROUTE_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE`
 
-- Paired trials: 10
-- Direct mean pricing-derived cost: $0.061869
-- Batch mean pricing-derived cost: $0.030934
-- Direct completion rate: 0%
-- Batch completion rate: 0%
-- Direct verifier pass rate: 0%
-- Batch verifier pass rate: 10%
-- Mean batch-minus-direct latency: 117.33 seconds
+| Measure | Direct | Batch |
+|---|---:|---:|
+| Paired trials | 10 | 10 |
+| Mean tokens | 4,239 | 4,239 |
+| Mean pricing-derived cost | $0.061869 | $0.0309345 |
+| Mean latency | 64.63 s | 181.95 s |
+| Completion rate | 0% | 0% |
+| Verifier pass rate | 0% | 10% |
 
-The provider batch route and its native batch identifier were observed. The calculated route-price effect is retained as pricing-derived evidence. It is not presented as a CFO-grade successful-output savings claim unless both lanes produce equivalent successful outputs under the shared verifier.
+Observed paired effects:
+
+- Mean batch-minus-direct pricing-derived cost: **-$0.0309345**
+- Mean batch-minus-direct latency: **+117.33 seconds**
+- Native provider batch identifier retained: `msgbatch_01HL3iB57s9Z7TNtHYj3LtxG`
+
+The provider batch route was genuinely observed. However, neither lane established successful completion, and verifier outcomes diverged. The route-price effect is retained as evidence but is not admissible as a successful-output savings claim. Pricing-derived cost is not invoice evidence.
 
 Canonical adjudication: `experiments/sv-cost-program/results/r2-adjudication.json`
+
+## R3 — Full context versus StegVerse-managed context
+
+**Current state:** `REPAIRED_GENERATION_DISPATCHED`
+
+Active generation: `r3-gen-20260803-fix1`
+
+The paired test holds constant:
+
+- provider and model;
+- synchronous route;
+- task identity and seven-stage S0–S6 order;
+- output obligations and verifier;
+- trial identities and pricing basis.
+
+The changed variable is the context representation:
+
+- full lane: all prior generated stage content;
+- managed lane: artifact ledger plus stage-selective retrieval.
+
+The first generation failed because the runner used a non-Python lowercase Boolean literal after provider execution. That implementation defect was isolated from the economic claim, the defective controller was retired, and a repaired generation was dispatched with source SHA, run ID, attempt, and generation binding.
+
+No token, cost, latency, quality, or savings result is claimed until both of these exist:
+
+- `experiments/sv-cost-program/r3-full-vs-managed/results/result.json`
+- `experiments/sv-cost-program/results/r3-adjudication.json`
+
+A headline context-savings claim requires both lanes to complete and verify the full S0–S6 path in every accepted pair.
+
+## R4 — Fresh generation versus governed reconstruction
+
+The normalized evidence contains three operation lanes:
+
+| Lane | Operation | Input tokens | Output tokens | Pricing-derived / observed provider cost | Local cost status |
+|---|---|---:|---:|---:|---|
+| OpenAI | Fresh generation | 310 | 1,242 | $0.038810 | N/A |
+| Anthropic | Fresh generation | 375 | 1,455 | $0.022950 | N/A |
+| StegVerse-only | Deterministic repository reconstruction | 0 external | 0 external | $0 external provider cost | Unmeasured local runtime |
+
+All three lanes satisfied the selected structural obligations, but the operation classes differ. The StegVerse-only lane reconstructed already encoded work; it did not perform equivalent fresh provider inference.
+
+The admissible economic statement is therefore limited to:
+
+> Governed reconstruction can avoid a new external provider-generation charge for already admitted work.
+
+The evidence does not yet establish net savings because StegVerse compute, storage, verification, maintenance, and engineering costs remain unmeasured. R4 must remain outside like-for-like provider comparison tables.
+
+Source evidence: `experiments/sv-cost-normalized/results/result.json`
+
+## R5 — Repetition, variance, and reliability
+
+R2 includes ten paired trials and reports route effects, completion rates, verifier rates, latency variance, and confidence intervals. R3 is designed as five paired trials and will extend the reliability record only after its terminal evidence is committed.
+
+Averages alone are not sufficient. The final synthesis must preserve:
+
+- trial count and pairing;
+- completion and verifier failure rates;
+- retries and bounded-repair events;
+- variance and 95% confidence intervals;
+- provider execution receipts and source identity.
+
+## CFO-readiness gate
+
+| Requirement | Current state |
+|---|---|
+| Immutable lineage and canonical evidence paths | Established |
+| Historical reproducibility boundary | Established |
+| Observed native route execution | Established in R2 |
+| Successful quality-equivalent route savings | Not established |
+| Successful quality-equivalent managed-context effect | R3 pending |
+| Repeated paired trials and failure reporting | R2 established; R3 pending |
+| Provider invoice reconciliation | Missing |
+| StegVerse local compute/storage/verification cost | Missing |
+| Fully burdened cost and break-even analysis | Blocked by local-cost gap |
+| One decision-facing synthesis | This document, still in progress |
+
+## Claim boundaries
+
+The final document must keep four classes separate:
+
+1. **Observed execution:** native provider or repository execution with retained receipts and hashes.
+2. **Pricing-derived value:** cost calculated from retained usage and a versioned price card; not an invoice.
+3. **Accounting transform:** arithmetic applied without a distinct execution receipt.
+4. **Reconstruction savings:** avoided fresh-provider work for already admitted artifacts; not inference equivalence.
+
+No favorable or unfavorable result may be promoted beyond its evidence class.
+
+## Remaining governed transitions
+
+1. Observe and adjudicate repaired R3 evidence.
+2. Canonically adjudicate R4 as a different-operation reuse result.
+3. Consolidate R2 and R3 reliability evidence under R5.
+4. Add local-cost and invoice evidence or explicitly preserve those gaps.
+5. Produce the final CFO decision section with workload scenarios, break-even sensitivity, risks, and reproduction instructions.
+
+## Operator boundary
+
+The operator is not required to inspect individual result files. New evidence must update the canonical evidence index, lineage manifest, relational matrix, and this document. No standalone report may redefine the program or introduce a new major goal.
