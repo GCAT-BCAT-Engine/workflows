@@ -1,6 +1,6 @@
 name: SV-COST R3 Full vs Managed Context
 
-# Dispatch marker: 2026-08-03T15:20Z
+# Governed generation: r3-gen-20260803-fix1
 on:
   workflow_dispatch:
   push:
@@ -25,6 +25,7 @@ jobs:
     timeout-minutes: 360
     env:
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      R3_GENERATION: r3-gen-20260803-fix1
     steps:
       - uses: actions/checkout@v4
         with:
@@ -48,6 +49,20 @@ jobs:
           assert r2['status'] == 'R2_ADJUDICATED'
           PY
 
+      - name: Apply bounded runner repair
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('experiments/sv-cost-program/r3-full-vs-managed/run.py')
+          text = path.read_text()
+          text = text.replace('"pricing_is_invoice_evidence": false', '"pricing_is_invoice_evidence": False')
+          path.write_text(text)
+          assert '"pricing_is_invoice_evidence": False' in text
+          assert '"pricing_is_invoice_evidence": false' not in text
+          PY
+
       - name: Validate governance, protocol, stage contract, and runner
         run: |
           python -m json.tool experiments/sv-cost-program/r3-full-vs-managed/governance.json >/dev/null
@@ -58,6 +73,25 @@ jobs:
       - name: Execute governed paired trials
         run: python experiments/sv-cost-program/r3-full-vs-managed/run.py
 
+      - name: Bind execution metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          path = Path('experiments/sv-cost-program/r3-full-vs-managed/results/result.json')
+          result = json.loads(path.read_text())
+          result['execution'] = {
+              'generation': os.environ['R3_GENERATION'],
+              'github_run_id': int(os.environ['GITHUB_RUN_ID']),
+              'github_run_attempt': int(os.environ['GITHUB_RUN_ATTEMPT']),
+              'head_sha': os.environ['GITHUB_SHA'],
+          }
+          path.write_text(json.dumps(result, indent=2) + '\n')
+          PY
+
       - name: Validate terminal evidence
         shell: bash
         run: |
@@ -66,11 +100,13 @@ jobs:
           test -s "$base/result.json"
           python - <<'PY'
           import json
+          import os
           from pathlib import Path
           r = json.loads(Path('experiments/sv-cost-program/r3-full-vs-managed/results/result.json').read_text())
           assert r['transition_status'] in {'R3_OBSERVED_AND_VALIDATED', 'R3_QUALITY_DIVERGENCE'}
           assert r['paired_n'] == 5
           assert len(r['results']) == 10
+          assert r['execution']['generation'] == os.environ['R3_GENERATION']
           assert all(x.get('provider_message_id') for lane in r['results'] for x in lane['stages'])
           assert all(x.get('response_sha256') for lane in r['results'] for x in lane['stages'])
           PY
@@ -83,15 +119,16 @@ jobs:
           if-no-files-found: error
           retention-days: 90
 
-      - name: Commit governed R3 evidence
+      - name: Commit governed R3 evidence and source repair
         shell: bash
         run: |
           set -euo pipefail
           git config user.name 'sv-cost-r3-worker'
           git config user.email 'actions@users.noreply.github.com'
+          git add experiments/sv-cost-program/r3-full-vs-managed/run.py
           git add experiments/sv-cost-program/r3-full-vs-managed/results
           git diff --cached --quiet && exit 0
-          git commit -m "Record governed R3 full-vs-managed evidence [run $GITHUB_RUN_ID attempt $GITHUB_RUN_ATTEMPT]"
+          git commit -m "Record repaired governed R3 evidence [run $GITHUB_RUN_ID attempt $GITHUB_RUN_ATTEMPT]"
           for attempt in 1 2 3; do
             git fetch origin main
             if git rebase origin/main && git push origin HEAD:main; then exit 0; fi
