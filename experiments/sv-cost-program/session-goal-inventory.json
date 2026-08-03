@@ -39,7 +39,7 @@
       "type": "adjacent",
       "originating_session_goal": "Move experiment continuation, retry, adjudication, synthesis, and blocked-state handling from human chat supervision to repository-native workers.",
       "canonical_destination": "GCAT-BCAT-Engine/workflows",
-      "canonical_location": ".github/workflows/sv-cost-r3-full-vs-managed.yml; .github/workflows/sv-cost-r3-controller-v2.yml; .github/workflows/sv-cost-finalize-relational-program.yml",
+      "canonical_location": ".github/workflows/sv-cost-r3-full-vs-managed.yml; .github/workflows/sv-cost-r3-controller-v2.yml; .github/workflows/sv-cost-finalize.yml",
       "state": "COMPLETE"
     },
     {
@@ -225,7 +225,7 @@
       "validation_state": "hosted_validation_passed",
       "integration_state": "merged_into_canonical_workstream",
       "archival_dependency": true,
-      "evidence_location": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30834645919",
+      "evidence_location": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30835001225",
       "next_executable_action": "None for this session; issue #13 owns any future favorable ROI evidence revision."
     },
     {
@@ -254,5 +254,5 @@
     "missing_required_files": 0
   },
   "archive_rule": "This session is archive-ready when the hosted consolidation receipt is ARCHIVE_READY and the chat-session claim is released. Remaining favorable ROI work is a separate durable issue #13 workstream.",
-  "updated_at": "2026-08-03T16:59:04.240924Z"
+  "updated_at": "2026-08-03T17:03:33.726725Z"
 }

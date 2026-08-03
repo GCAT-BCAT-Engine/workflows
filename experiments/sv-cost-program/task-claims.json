@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "program_id": "SV-COST-MAJOR-GOAL-001",
-  "updated_at": "2026-08-03T16:59:04.241509Z",
+  "updated_at": "2026-08-03T17:03:33.727291Z",
   "canonical_handoff": "SV_COST_MIRROR_HANDOFF.md",
   "allowed_states": [
     "UNCLAIMED",
@@ -103,7 +103,7 @@
       "repository": "workflows",
       "branch": "main",
       "surfaces": [
-        ".github/workflows/sv-cost-finalize-relational-program.yml",
+        ".github/workflows/sv-cost-finalize.yml",
         "experiments/sv-cost-program/results/r4-adjudication.json",
         "experiments/sv-cost-program/results/r5-reliability-synthesis.json",
         "experiments/sv-cost-program/results/cfo-decision.json",
@@ -171,9 +171,9 @@
       ],
       "collision_boundaries": "This lane does not alter R3 experimental results or adjudication. It may only preserve session requirements and validate continuation authority.",
       "next_task_after_release": "Release the chat-session claim as MERGED_INTO_CANONICAL_WORKSTREAM and evaluate archival readiness.",
-      "released_at": "2026-08-03T16:59:04.241509Z",
+      "released_at": "2026-08-03T17:03:33.727291Z",
       "release_evidence": {
-        "workflow_run": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30834645919",
+        "workflow_run": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30835001225",
         "receipt": "experiments/sv-cost-program/results/session-consolidation-receipt.json",
         "canonical_handoff": "SV_COST_MIRROR_HANDOFF.md"
       }
