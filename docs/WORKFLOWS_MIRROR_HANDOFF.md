@@ -54,6 +54,8 @@ repository event
   -> duplicate/scoped/archive checks
   -> deterministic authority receipt
   -> existing standing and task orchestration
+  -> completed adoption registry
+  -> Master Records bounded custody
 ```
 
 The reusable workflow verifies the caller repository in the caller context.
@@ -68,11 +70,12 @@ The reviewed six-repository corpus is complete for handoff authority when:
 2. scoped and archived handoffs cannot compete for authority;
 3. each manifest hash matches the declared handoff;
 4. each repository's hosted authority workflow returns `ALLOW`;
-5. the reusable verifier is pinned to an immutable implementation commit; and
-6. the central adoption registry records the commit and workflow evidence.
+5. the reusable verifier is pinned to an immutable implementation commit;
+6. the central adoption registry records the commit and workflow evidence; and
+7. Master Records accepts the completed registry for bounded custody.
 
-Those conditions are now satisfied for all six reviewed repositories. The
-workflows repository also verifies its own authority state.
+All seven conditions are now satisfied. The workflows repository also verifies
+its own authority state.
 
 The older reusable sandbox-builder goal remains a separate unfinished
 construction-plane goal and is not falsely marked complete by this work.
@@ -88,6 +91,9 @@ format-A repository handoff established
 scoped program handoffs explicitly declared
 six-repository adoption registry completed
 all seven hosted authority gates returned ALLOW
+completed registry promoted at commit dc0ab5077eafd3d57a6b9044c9e335424575a66f
+completed registry gate run 30958489248 succeeded
+Master Records custody accepted and validated
 ```
 
 Validated corpus:
@@ -99,7 +105,19 @@ StegVerse-002/StegProfile — COMPLETE — run 30957335435
 StegVerse-002/core-lite — COMPLETE — run 30958116917
 StegVerse-002/admissibility-gateway — COMPLETE — run 30958198224
 StegVerse-002/capability-registry — COMPLETE — run 30958290028
-GCAT-BCAT-Engine/workflows — HOST COMPLETE — run 30957952734
+GCAT-BCAT-Engine/workflows — HOST COMPLETE — run 30958489248
+```
+
+Master Records custody evidence:
+
+```text
+repository: master-records/orchestration
+custody commit: 5cc259d414fb21fb94914ae244fdd033f3115b76
+custody id: HAC-2026-08-04-001
+custody decision: ACCEPTED_FOR_CUSTODY
+authority effect: NONE
+custody run: 30958850868 — success
+custody receipt hash: f99056b1295e4787617e489e776b4a6a89d769c443f237e83236a05cb2165684
 ```
 
 ## Remaining work
@@ -110,7 +128,7 @@ the reviewed corpus. The next continuity-hardening work is distinct:
 ```text
 add hash-pinned cross-repository reference objects
 add session-change provenance contracts and receipts
-transfer released authority evidence into Master Records custody
+normalize Master Records repository-wide handoff authority
 apply the reusable gate to additional ecosystem repositories
 complete the pre-existing repository-agnostic sandbox builder
 ```
@@ -132,12 +150,11 @@ StegVerse-002/core-lite — COMPLETE
 StegVerse-002/admissibility-gateway — COMPLETE
 StegVerse-002/capability-registry — COMPLETE
 GCAT-BCAT-Engine/workflows — COMPLETE HOST
-master-records/orchestration — PENDING CUSTODY
+master-records/orchestration — COMPLETE BOUNDED CUSTODY
 ```
 
 ## Next task
 
-Transfer the adoption registry and authority evidence into Master Records,
-then add the session-change and cross-repository-reference contracts before
-starting the remaining decision-contract, plane-boundary, and ingress-hardening
-correction workstreams.
+Implement session-change provenance and hash-pinned cross-repository reference
+contracts, then begin the decision-contract, plane-boundary, and ingress-
+hardening correction workstreams under the verified handoff authority gate.
