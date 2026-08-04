@@ -1,11 +1,22 @@
 {
   "schema": "stegverse.handoff.adoption-registry.v1",
-  "generated_at": "2026-08-04T23:15:00Z",
+  "generated_at": "2026-08-04T23:00:00Z",
   "contract_owner": "GCAT-BCAT-Engine/workflows",
   "portable_verifier_owner": "StegVerse-002/micro-node-runtime",
+  "reviewed_corpus_complete": true,
+  "reviewed_corpus_repository_count": 6,
   "repositories": [
     {
+      "repository": "GCAT-BCAT-Engine/workflows",
+      "role": "hosted_contract_owner",
+      "state": "COMPLETE",
+      "commit": "a859be95c29245f9b5fa7fab1a824920ac0b10ed",
+      "workflow_run": 30957952734,
+      "decision": "ALLOW"
+    },
+    {
       "repository": "StegVerse-002/micro-node-runtime",
+      "role": "portable_verifier_owner",
       "state": "COMPLETE",
       "commit": "f41febfd2fe9e2aec6f3594f90610ea1ffe29926",
       "workflow_run": 30957032618,
@@ -27,15 +38,44 @@
     },
     {
       "repository": "StegVerse-002/core-lite",
-      "state": "PENDING"
+      "state": "COMPLETE",
+      "commit": "427f3584932a46d76f5a40c0e1d0a66f8578fbe5",
+      "workflow_run": 30958116917,
+      "decision": "ALLOW"
     },
     {
       "repository": "StegVerse-002/admissibility-gateway",
-      "state": "PENDING"
+      "state": "COMPLETE",
+      "commit": "22e6bb5feddc183a71d7c3db543c2ceb7acfa8f6",
+      "workflow_run": 30958198224,
+      "decision": "ALLOW"
     },
     {
       "repository": "StegVerse-002/capability-registry",
-      "state": "PENDING"
+      "state": "COMPLETE",
+      "commit": "9cffeb385a735ad16c032c866f79bedaadf42554",
+      "workflow_run": 30958290028,
+      "decision": "ALLOW"
+    }
+  ],
+  "separate_non_authority_workflow_failures": [
+    {
+      "repository": "StegVerse-002/core-lite",
+      "workflow_run": 30958115338,
+      "classification": "legacy_intake_workflow_failure",
+      "affects_handoff_authority": false
+    },
+    {
+      "repository": "StegVerse-002/admissibility-gateway",
+      "workflow_run": 30958197322,
+      "classification": "release_verification_workflow_failure",
+      "affects_handoff_authority": false
+    },
+    {
+      "repository": "StegVerse-002/capability-registry",
+      "workflow_run": 30958289458,
+      "classification": "registry_validation_workflow_failure",
+      "affects_handoff_authority": false
     }
   ]
 }

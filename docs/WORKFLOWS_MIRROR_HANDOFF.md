@@ -62,15 +62,17 @@ cross-organization read credentials.
 
 ## Done state for this repo
 
-The handoff-authority lane is complete when:
+The reviewed six-repository corpus is complete for handoff authority when:
 
-1. this repository verifies its own governing handoff;
-2. the reusable workflow can be called by another repository;
-3. duplicate current handoffs return `DENY`;
-4. missing authority manifests return `FAIL_CLOSED`;
-5. authority receipts are deterministic;
-6. adopted repositories record their commit and hosted workflow evidence; and
-7. orchestration consumes only an `ALLOW` authority result.
+1. each repository declares exactly one repository-wide current handoff;
+2. scoped and archived handoffs cannot compete for authority;
+3. each manifest hash matches the declared handoff;
+4. each repository's hosted authority workflow returns `ALLOW`;
+5. the reusable verifier is pinned to an immutable implementation commit; and
+6. the central adoption registry records the commit and workflow evidence.
+
+Those conditions are now satisfied for all six reviewed repositories. The
+workflows repository also verifies its own authority state.
 
 The older reusable sandbox-builder goal remains a separate unfinished
 construction-plane goal and is not falsely marked complete by this work.
@@ -81,34 +83,41 @@ construction-plane goal and is not falsely marked complete by this work.
 portable stdlib authority verifier installed
 repository-wide authority manifest installed
 local release-blocking workflow installed
-reusable caller-side workflow installed
+reusable caller-side workflow installed and pinned by consumers
 format-A repository handoff established
 scoped program handoffs explicitly declared
-adoption registry installed
+six-repository adoption registry completed
+all seven hosted authority gates returned ALLOW
 ```
 
-First adoption wave:
+Validated corpus:
 
 ```text
-StegVerse-002/micro-node-runtime — COMPLETE
-StegVerse-002/StegGuardian — COMPLETE
-StegVerse-002/StegProfile — COMPLETE
+StegVerse-002/micro-node-runtime — COMPLETE — run 30957032618
+StegVerse-002/StegGuardian — COMPLETE — run 30957428849
+StegVerse-002/StegProfile — COMPLETE — run 30957335435
+StegVerse-002/core-lite — COMPLETE — run 30958116917
+StegVerse-002/admissibility-gateway — COMPLETE — run 30958198224
+StegVerse-002/capability-registry — COMPLETE — run 30958290028
+GCAT-BCAT-Engine/workflows — HOST COMPLETE — run 30957952734
 ```
 
 ## Remaining work
 
-```text
-Adopt the reusable gate in:
-  StegVerse-002/core-lite
-  StegVerse-002/admissibility-gateway
-  StegVerse-002/capability-registry
+The duplicate-current-handoff and ambiguous-authority problem is resolved for
+the reviewed corpus. The next continuity-hardening work is distinct:
 
-Then:
-  add signed or hash-pinned cross-repository references
-  add session-change provenance contracts
-  transfer released receipts into Master Records
-  complete the pre-existing repository-agnostic sandbox builder
+```text
+add hash-pinned cross-repository reference objects
+add session-change provenance contracts and receipts
+transfer released authority evidence into Master Records custody
+apply the reusable gate to additional ecosystem repositories
+complete the pre-existing repository-agnostic sandbox builder
 ```
+
+Separate existing workflow failures remain outside the authority result and are
+recorded in `data/handoff-authority-adoption.json` without being misclassified
+as handoff-authority failures.
 
 No favorable general StegVerse savings claim is admitted by this handoff.
 SV-COST issue `#13` remains the scoped owner of future ROI evidence.
@@ -119,16 +128,16 @@ SV-COST issue `#13` remains the scoped owner of future ROI evidence.
 StegVerse-002/micro-node-runtime — COMPLETE
 StegVerse-002/StegGuardian — COMPLETE
 StegVerse-002/StegProfile — COMPLETE
-StegVerse-002/core-lite — PENDING
-StegVerse-002/admissibility-gateway — PENDING
-StegVerse-002/capability-registry — PENDING
+StegVerse-002/core-lite — COMPLETE
+StegVerse-002/admissibility-gateway — COMPLETE
+StegVerse-002/capability-registry — COMPLETE
+GCAT-BCAT-Engine/workflows — COMPLETE HOST
 master-records/orchestration — PENDING CUSTODY
 ```
 
 ## Next task
 
-Install `.handoff/current.json` and a caller of
-`.github/workflows/handoff-authority-reusable.yml` in core-lite,
-admissibility-gateway, and capability-registry. Do not start centralized
-correction orchestration in a repository whose authority result is not
-`ALLOW`.
+Transfer the adoption registry and authority evidence into Master Records,
+then add the session-change and cross-repository-reference contracts before
+starting the remaining decision-contract, plane-boundary, and ingress-hardening
+correction workstreams.
