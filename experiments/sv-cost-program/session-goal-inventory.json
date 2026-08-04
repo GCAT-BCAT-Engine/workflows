@@ -225,7 +225,7 @@
       "validation_state": "hosted_validation_passed",
       "integration_state": "merged_into_canonical_workstream",
       "archival_dependency": true,
-      "evidence_location": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30930526761",
+      "evidence_location": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30930992637",
       "next_executable_action": "None for this session; issue #13 owns any future favorable ROI evidence revision."
     },
     {
@@ -254,5 +254,5 @@
     "missing_required_files": 0
   },
   "archive_rule": "This session is archive-ready when the hosted consolidation receipt is ARCHIVE_READY and the chat-session claim is released. Remaining favorable ROI work is a separate durable issue #13 workstream.",
-  "updated_at": "2026-08-04T16:43:54.811540Z"
+  "updated_at": "2026-08-04T16:49:52.224554Z"
 }

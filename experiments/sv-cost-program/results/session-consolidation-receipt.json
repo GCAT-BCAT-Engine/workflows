@@ -2,8 +2,8 @@
   "schema_version": "1.1.0",
   "program_id": "SV-COST-MAJOR-GOAL-001",
   "status": "ARCHIVE_READY",
-  "validated_at": "2026-08-04T16:43:54Z",
-  "workflow_run_url": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30930526761",
+  "validated_at": "2026-08-04T16:49:52Z",
+  "workflow_run_url": "https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30930992637",
   "canonical_handoff": "SV_COST_MIRROR_HANDOFF.md",
   "canonical_continuation": {
     "repository": "GCAT-BCAT-Engine/workflows",
@@ -750,13 +750,13 @@
     "verdict": "CONTEXT_EFFECT_NOT_ADMISSIBLE_DUE_TO_QUALITY_OR_COMPLETION_DIVERGENCE"
   },
   "file_hashes": {
-    "SV_COST_MIRROR_HANDOFF.md": "sha256:01fb2b2db46bed28ee7db2946e205ae73f172fc904351049fff742c2478e0d03",
-    "experiments/sv-cost-program/session-goal-inventory.json": "sha256:3c5105ecd2ecf17767d914b412c3093b50b205865adf4f6fb34ec479cf80e373",
-    "experiments/sv-cost-program/task-claims.json": "sha256:bee94b3301066e52567ebfa55bf638de371228a734b3da2e444d6318171eb9e2",
+    "SV_COST_MIRROR_HANDOFF.md": "sha256:54f8c6a2b1de3d0430696b32e60e81f611fc61e90857916bca486923a31cc2a9",
+    "experiments/sv-cost-program/session-goal-inventory.json": "sha256:d2d595c6523ed7dfe815acfeea8c60b993fa564409e936b751b32cb7b42b87fd",
+    "experiments/sv-cost-program/task-claims.json": "sha256:c80c0d9c1068e7f25158cb315655f00b807a38dd8ad7ae59879e49959e6603a2",
     "docs/RECONSTRUCTABLE_STATE_TRANSITION_GOVERNANCE.md": "sha256:2ed9ffcde0adad74a0c0e78096bdcf44a9cbe9a492307630d9ee6faf59e6a80f",
     "tools/reconcile_sv_cost_terminal_state.py": "sha256:1fbb1780dde190594c237cae730cca941a8522e15b513a7edc4c021333da7fa0",
     "tools/validate_sv_cost_session_state.py": "sha256:d2be14697bf967b7eb5f65233ce328a5d538a1b1638375da32e59cc09449b28e",
-    ".github/workflows/sv-cost-session-consolidation.yml": "sha256:b4f394343109257e4443357192ec50b8422d356392ca6692bc9c971d28ce25cc",
+    ".github/workflows/sv-cost-session-consolidation.yml": "sha256:bb896359f16a8a3c50c589698c5a16c9b3768c99daa0d13cdf3c6df3a66d1644",
     "experiments/sv-cost-program/evidence-index.json": "sha256:acb424cbeecd84aa2a88ce0611a4f7299dfcc6ae71fae836ebef80445d4d0541",
     "experiments/sv-cost-program/lineage.json": "sha256:f777c58a41c05c73d30f2dcfc99a58da00b8432687868053176316c0e0fe697a",
     "experiments/sv-cost-program/relations.json": "sha256:f9f79380be5bd88efda5988e3bdabd9979bc9084fa7d5b2868066932de5ca031",

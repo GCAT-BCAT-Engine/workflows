@@ -36,7 +36,7 @@ Live Git state, workflow jobs and logs, immutable artifacts, provider receipts, 
 - R5 reliability synthesis: `COMPLETE`; receipt `r5-reliability-synthesis.json`.
 - CFO bounded decision: `COMPLETE`; commit `4d8cf5b072f1e0cf232920249a13d24bafe4a81f`, receipt `cfo-decision.json`.
 - Favorable ROI evidence: `BLOCKED`, durable owner issue `#13`.
-- Chat-session consolidation: `MERGED_INTO_CANONICAL_WORKSTREAM`; hosted evidence `https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30930526761`.
+- Chat-session consolidation: `MERGED_INTO_CANONICAL_WORKSTREAM`; hosted evidence `https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/30930992637`.
 
 No active implementation claim remains on R1–R5. The defective R3 controller remains superseded and must not be restored.
 
@@ -123,3 +123,48 @@ Denominator: 12 required session deliverables in `session-goal-inventory.json`.
 - Integration: 8/8 canonical control-surface links.
 - Goal activation: 4/4 session goals terminal or transferred.
 - Session consolidation: 4/4 and claim released.
+
+<!-- SV_COST_FIVE_LANE_PUBLICATION:BEGIN -->
+## Adjacent completed five-lane publication
+
+- Goal ID: `SV-COST-FIVE-LANE-PUBLICATION-001`
+- State: `ARCHIVE_READY`
+- Operation class: `governed_state_reconstruction`
+- Comparison unit: `successful equivalent admissible outcome`
+- Five-lane result: `experiments/sv-cost-program/five-lane-results/results/five_lane_results.json`
+- Session consolidation: `experiments/sv-cost-program/five-lane-results/session-consolidation.json`
+- Publisher handoff: `GCAT-BCAT-Engine/Publisher/docs/SV_COST_FIVE_LANE_PUBLICATION_MIRROR_HANDOFF.md`
+- Site handoff: `StegVerse-Labs/Site/papers/SV_COST_FIVE_LANE_MIRROR_HANDOFF.md`
+
+| Lane | Cost per successful equivalent admissible outcome | Status |
+|---|---:|---|
+| OpenAI raw | $0.006875 | PASS |
+| OpenAI governed | $0.006880 | PASS |
+| Anthropic raw | $0.010656 | PASS |
+| Anthropic governed | $0.007116 | PASS |
+| StegVerse-only deterministic reconstruction | $0.000000002885 | PASS |
+
+Hosted publication evidence:
+
+- experimental evidence commit: `3720211a1cfaaf2db697f3e26194d083db21e94f`;
+- Publisher PDF run: `30930126860`;
+- Publisher PDF job: `92062384747`;
+- Publisher immutable artifact: `8900768707`;
+- Publisher PDF commit: `dc684109351e3b0b0148a69b116d120415489a02`;
+- PDF SHA-256: `sha256:e19bfb6f59d11d4abe21400846cdc050678a89eb1a0b07da745a22b7b33ea1f6`;
+- Site public verification run: `30928531888`;
+- Site public verification issue: `StegVerse-Labs/Site#173`, closed;
+- all publication implementation, validation, and integration claims: `COMPLETE — RELEASED`.
+
+Claim boundary: this is one bounded deterministic reconstruction operation. It does not establish universal provider economics, invoice-reconciled provider charges, enterprise-wide savings, company ROI, or fresh-inference equivalence.
+
+The earlier statement that no downstream propagation was claimed is superseded only for this bounded five-lane publication. No favorable general savings or ROI propagation is admitted. Issue `#13` remains the only canonical continuation for a future favorable general ROI revision and is not an archival dependency of the completed publication session.
+
+MERGED INTO:
+
+- `GCAT-BCAT-Engine/workflows/experiments/sv-cost-program/five-lane-results/session-consolidation.json`
+- `GCAT-BCAT-Engine/Publisher/docs/SV_COST_FIVE_LANE_PUBLICATION_MIRROR_HANDOFF.md`
+- `StegVerse-Labs/Site/papers/SV_COST_FIVE_LANE_MIRROR_HANDOFF.md`
+
+The originating five-lane publication session contains no unique remaining authority and is archive-ready.
+<!-- SV_COST_FIVE_LANE_PUBLICATION:END -->
