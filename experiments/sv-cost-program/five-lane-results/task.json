@@ -4,6 +4,7 @@
   "task_id": "SV-RECON-001",
   "operation_class": "governed_state_reconstruction",
   "comparison_unit": "successful equivalent admissible outcome",
+  "execution_trigger": "2026-08-03T19:37:00-05:00",
   "initial_state": {
     "balance": 100,
     "risk_score": 1,
