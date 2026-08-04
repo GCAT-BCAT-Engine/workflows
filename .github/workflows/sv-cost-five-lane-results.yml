@@ -6,7 +6,7 @@ on:
     branches: [main]
     paths:
       - 'experiments/sv-cost-program/five-lane-results/task.json'
-      - 'experiments/sv-cost-program/five-lane-results/run.py'
+      - 'experiments/sv-cost-program/five-lane-results/run_v2.py'
       - '.github/workflows/sv-cost-five-lane-results.yml'
 
 permissions:
@@ -27,36 +27,30 @@ jobs:
       ANTHROPIC_FIVE_LANE_MODEL: ${{ vars.ANTHROPIC_CALIBRATION_MODEL || 'claude-sonnet-4-6' }}
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
       - name: Credential boundary
         run: |
           test -n "$OPENAI_API_KEY"
           test -n "$ANTHROPIC_API_KEY"
-
       - name: Compile harness
-        run: python -m py_compile experiments/sv-cost-program/five-lane-results/run.py
-
+        run: python -m py_compile experiments/sv-cost-program/five-lane-results/run_v2.py
       - name: Execute all five lanes fail closed
         id: execute
         shell: bash
         run: |
           set +e
-          python experiments/sv-cost-program/five-lane-results/run.py
+          python experiments/sv-cost-program/five-lane-results/run_v2.py
           code=$?
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
           exit 0
-
       - name: Upload immutable evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: sv-cost-five-lane-results
           path: experiments/sv-cost-program/five-lane-results/results/
-
       - name: Commit observed results including failures
         if: always()
         shell: bash
@@ -65,7 +59,7 @@ jobs:
           git config user.email 'actions@users.noreply.github.com'
           git add experiments/sv-cost-program/five-lane-results/results
           git diff --cached --quiet && exit 0
-          git commit -m 'Record observed five-lane reconstructable governance cost results'
+          git commit -m 'Record normalized five-lane reconstructable governance cost results'
           for attempt in 1 2 3; do
             git fetch origin main
             git rebase origin/main && git push origin HEAD:main && exit 0
@@ -73,14 +67,12 @@ jobs:
             sleep $((attempt * 3))
           done
           exit 1
-
       - name: Validate publication gate
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          p=Path('experiments/sv-cost-program/five-lane-results/results/five_lane_results.json')
-          d=json.loads(p.read_text())
+          d=json.loads(Path('experiments/sv-cost-program/five-lane-results/results/five_lane_results.json').read_text())
           assert len(d['rows']) == 5
           assert d['all_five_successful_equivalent_admissible'] is True
           assert d['publication_status'] == 'RESULTS_READY_FOR_BOUNDED_PUBLICATION'
