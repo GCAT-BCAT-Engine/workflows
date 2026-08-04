@@ -1,0 +1,41 @@
+{
+  "schema": "stegverse.handoff.adoption-registry.v1",
+  "generated_at": "2026-08-04T23:15:00Z",
+  "contract_owner": "GCAT-BCAT-Engine/workflows",
+  "portable_verifier_owner": "StegVerse-002/micro-node-runtime",
+  "repositories": [
+    {
+      "repository": "StegVerse-002/micro-node-runtime",
+      "state": "COMPLETE",
+      "commit": "f41febfd2fe9e2aec6f3594f90610ea1ffe29926",
+      "workflow_run": 30957032618,
+      "decision": "ALLOW"
+    },
+    {
+      "repository": "StegVerse-002/StegGuardian",
+      "state": "COMPLETE",
+      "commit": "cbbeafe188fa63bde10f417ef63d6505efc47cb3",
+      "workflow_run": 30957428849,
+      "decision": "ALLOW"
+    },
+    {
+      "repository": "StegVerse-002/StegProfile",
+      "state": "COMPLETE",
+      "commit": "ae8fdb0174acba2d63aaf6c10b786bf32d487b97",
+      "workflow_run": 30957335435,
+      "decision": "ALLOW"
+    },
+    {
+      "repository": "StegVerse-002/core-lite",
+      "state": "PENDING"
+    },
+    {
+      "repository": "StegVerse-002/admissibility-gateway",
+      "state": "PENDING"
+    },
+    {
+      "repository": "StegVerse-002/capability-registry",
+      "state": "PENDING"
+    }
+  ]
+}

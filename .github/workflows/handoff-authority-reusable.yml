@@ -1,0 +1,45 @@
+name: Reusable Handoff Authority Gate
+
+on:
+  workflow_call:
+    inputs:
+      repository:
+        description: Expected owner/repository identity
+        required: true
+        type: string
+      verifier_ref:
+        description: workflows branch, tag, or commit containing the verifier
+        required: false
+        default: main
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  verify-handoff-authority:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Retrieve portable authority verifier
+        env:
+          VERIFIER_REF: ${{ inputs.verifier_ref }}
+        run: |
+          curl --fail --silent --show-error --location \
+            "https://raw.githubusercontent.com/GCAT-BCAT-Engine/workflows/${VERIFIER_REF}/tools/handoff_authority.py" \
+            --output "${RUNNER_TEMP}/handoff_authority.py"
+      - name: Verify caller repository authority
+        env:
+          EXPECTED_REPOSITORY: ${{ inputs.repository }}
+        run: |
+          python "${RUNNER_TEMP}/handoff_authority.py" \
+            --root "${GITHUB_WORKSPACE}" \
+            --repository "${EXPECTED_REPOSITORY}" \
+            --output "${GITHUB_WORKSPACE}/handoff-verification-receipt.json"
+      - name: Upload authority receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: handoff-authority-${{ github.run_id }}
+          path: handoff-verification-receipt.json
+          if-no-files-found: error

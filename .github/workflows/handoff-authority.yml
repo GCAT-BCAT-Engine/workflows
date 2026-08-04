@@ -1,0 +1,67 @@
+name: Handoff Authority Gate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.handoff/**'
+      - '**/*_HANDOFF.md'
+      - '**/*_MIRROR_HANDOFF.md'
+      - 'tools/handoff_authority.py'
+      - 'tests/test_handoff_authority.py'
+      - 'docs/HANDOFF_ORCHESTRATION_CONTRACT.md'
+      - 'data/handoff-authority-adoption.json'
+      - '.github/workflows/handoff-authority*.yml'
+  pull_request:
+    paths:
+      - '.handoff/**'
+      - '**/*_HANDOFF.md'
+      - '**/*_MIRROR_HANDOFF.md'
+      - 'tools/handoff_authority.py'
+      - 'tests/test_handoff_authority.py'
+      - 'docs/HANDOFF_ORCHESTRATION_CONTRACT.md'
+      - 'data/handoff-authority-adoption.json'
+      - '.github/workflows/handoff-authority*.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run stdlib authority tests
+        run: python -m unittest discover -s tests -p 'test_handoff_authority.py'
+      - name: Verify workflows repository authority
+        run: |
+          python tools/handoff_authority.py \
+            --root . \
+            --repository GCAT-BCAT-Engine/workflows \
+            --output handoff-verification-receipt.json
+      - name: Validate adoption registry
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('data/handoff-authority-adoption.json').read_text())
+          assert data['schema'] == 'stegverse.handoff.adoption-registry.v1'
+          repos = data['repositories']
+          names = [item['repository'] for item in repos]
+          assert len(names) == len(set(names))
+          for item in repos:
+              assert item['state'] in {'COMPLETE', 'PENDING', 'BLOCKED', 'SUPERSEDED'}
+              if item['state'] == 'COMPLETE':
+                  assert len(item['commit']) == 40
+                  assert isinstance(item['workflow_run'], int)
+                  assert item['decision'] == 'ALLOW'
+          print('HANDOFF_ADOPTION_REGISTRY=PASS')
+          PY
+      - name: Upload authority receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: workflows-handoff-authority-${{ github.run_id }}
+          path: handoff-verification-receipt.json
+          if-no-files-found: error

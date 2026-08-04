@@ -1,120 +1,134 @@
 # GCAT-BCAT-Engine/workflows Mirror Handoff
 
-Generated: 2026-05-15
+## Source of truth
 
-## Purpose
+This document is the single repository-wide current handoff for
+`GCAT-BCAT-Engine/workflows`. Machine authority is declared in
+`.handoff/current.json`.
 
-This handoff is the source of truth for workflow-side continuation work that is not part of `StegVerse-Labs/Site` or Publisher-to-Site mirroring.
-
-Use this file before continuing work in `GCAT-BCAT-Engine/workflows` so future sessions do not duplicate or reset the current direction.
-
-## Current Goal
-
-Build one reusable, organization/repository-agnostic sandbox builder that can target any repo by input instead of creating a custom bootstrap workflow per repo.
-
-The builder must:
+Goal-specific handoffs remain active only as scoped lanes:
 
 ```text
-accept target_repo
-accept target_branch
-accept build_profile
-accept mode = artifact_only | commit
-clone the target repo
-build in an isolated sandbox directory
-run tests inside the sandbox
-zip tested generated files
-emit manifest/checksum/test/receipt artifacts
-commit only after sandbox tests pass and only when mode=commit
+SV_COST_MIRROR_HANDOFF.md
+docs/TEN_ADVANCES_COST_ESTIMATION_MIRROR_HANDOFF.md
+docs/GOVERNED_RESEARCH_ENGINE_HANDOFF.md
 ```
 
-## Repo Roles
+Live default-branch state, Git history, workflow runs, artifacts, issues,
+receipts, and declared scoped handoffs override historical chat claims.
+
+## Role
+
+`GCAT-BCAT-Engine/workflows` owns reusable construction, validation, hosted
+orchestration, and cross-repository verification workflows.
+
+It does not grant runtime authority, destination custody, publication
+acceptance, or deployment merely because a workflow completed.
+
+## Current installed files
 
 ```text
-GCAT-BCAT-Engine/workflows
-  reusable orchestration workflows
-  LLM Adapter Gate
-  future org/repo-agnostic sandbox builder
-
-GCAT-BCAT-Engine/core-lite-prod
-  operational core services surface
-  must be proven before user-facing core-lite is augmented
-
-GCAT-BCAT-Engine/core-lite
-  public/user-facing production package source
-  should only receive tested, core-lite-prod-derived updates
+.handoff/current.json
+.github/workflows/handoff-authority.yml
+.github/workflows/handoff-authority-reusable.yml
+tools/handoff_authority.py
+tests/test_handoff_authority.py
+docs/HANDOFF_ORCHESTRATION_CONTRACT.md
+docs/WORKFLOWS_MIRROR_HANDOFF.md
+data/handoff-authority-adoption.json
+SV_COST_MIRROR_HANDOFF.md
+docs/TEN_ADVANCES_COST_ESTIMATION_MIRROR_HANDOFF.md
+docs/GOVERNED_RESEARCH_ENGINE_HANDOFF.md
 ```
 
-## Confirmed Existing Workflow Layer
+Existing provider, sandbox, validation, research, cost, and session-
+consolidation workflows remain installed and retain their scoped ownership.
 
-`GCAT-BCAT-Engine/workflows` already has provider secrets confirmed:
+## Current working path
 
 ```text
-OPENAI_API_KEY configured
-ANTHROPIC_API_KEY configured
+repository event
+  -> caller repository checkout
+  -> .handoff/current.json
+  -> governing handoff hash and profile verification
+  -> duplicate/scoped/archive checks
+  -> deterministic authority receipt
+  -> existing standing and task orchestration
 ```
 
-Existing installed layer:
+The reusable workflow verifies the caller repository in the caller context.
+This avoids requiring the public workflows repository to hold private
+cross-organization read credentials.
+
+## Done state for this repo
+
+The handoff-authority lane is complete when:
+
+1. this repository verifies its own governing handoff;
+2. the reusable workflow can be called by another repository;
+3. duplicate current handoffs return `DENY`;
+4. missing authority manifests return `FAIL_CLOSED`;
+5. authority receipts are deterministic;
+6. adopted repositories record their commit and hosted workflow evidence; and
+7. orchestration consumes only an `ALLOW` authority result.
+
+The older reusable sandbox-builder goal remains a separate unfinished
+construction-plane goal and is not falsely marked complete by this work.
+
+## Completed in latest pass
 
 ```text
-.github/workflows/llm-provider-check.yml
-.github/workflows/llm-adapter-gate.yml
-.github/workflows/validation_run.yml
+portable stdlib authority verifier installed
+repository-wide authority manifest installed
+local release-blocking workflow installed
+reusable caller-side workflow installed
+format-A repository handoff established
+scoped program handoffs explicitly declared
+adoption registry installed
 ```
 
-## Current Blocker
-
-Manual bundle/file-layer uploading is not acceptable as the primary build path.
-
-The next build must not require per-repo manual bundle extraction or repo-specific workflow rewriting.
-
-## Next Required Build
-
-Create:
+First adoption wave:
 
 ```text
-.github/workflows/stegverse-sandbox-builder.yml
+StegVerse-002/micro-node-runtime — COMPLETE
+StegVerse-002/StegGuardian — COMPLETE
+StegVerse-002/StegProfile — COMPLETE
 ```
 
-The first target run should be:
+## Remaining work
 
 ```text
-target_repo = GCAT-BCAT-Engine/core-lite-prod
-target_branch = main
-build_profile = core-lite-prod
-mode = artifact_only
-target_path = .
+Adopt the reusable gate in:
+  StegVerse-002/core-lite
+  StegVerse-002/admissibility-gateway
+  StegVerse-002/capability-registry
+
+Then:
+  add signed or hash-pinned cross-repository references
+  add session-change provenance contracts
+  transfer released receipts into Master Records
+  complete the pre-existing repository-agnostic sandbox builder
 ```
 
-## Required Done Criteria
+No favorable general StegVerse savings claim is admitted by this handoff.
+SV-COST issue `#13` remains the scoped owner of future ROI evidence.
 
-The sandbox builder is not done until it produces these artifacts from a GitHub Ubuntu run:
+## Destination installs
 
 ```text
-generated-files.zip
-generated-files-manifest.json
-test-report.json
-selftest-report.json
-receipt.json
-artifact-manifest.json
-confidence-report.json
+StegVerse-002/micro-node-runtime — COMPLETE
+StegVerse-002/StegGuardian — COMPLETE
+StegVerse-002/StegProfile — COMPLETE
+StegVerse-002/core-lite — PENDING
+StegVerse-002/admissibility-gateway — PENDING
+StegVerse-002/capability-registry — PENDING
+master-records/orchestration — PENDING CUSTODY
 ```
 
-No target repo mutation may occur in `artifact_only` mode.
+## Next task
 
-`commit` mode is allowed only after the artifact-only run is clean.
-
-## Build Rules
-
-```text
-No clean-repo baseline into populated repos.
-No manual file-layer upload as primary workflow.
-No repo-specific bootstrap if the reusable builder can do it.
-No mutation before sandbox tests pass.
-No bundle without manifest/checksum.
-No working claim without test output.
-No LLM provider output gets authority without TVC/CGE/receipt boundary.
-```
-
-## Archive Readiness
-
-This handoff is sufficient for the next session to continue without needing the prior chat thread.
+Install `.handoff/current.json` and a caller of
+`.github/workflows/handoff-authority-reusable.yml` in core-lite,
+admissibility-gateway, and capability-registry. Do not start centralized
+correction orchestration in a repository whose authority result is not
+`ALLOW`.
