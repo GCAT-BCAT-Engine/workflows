@@ -25,6 +25,39 @@ jobs:
             --repository GCAT-BCAT-Engine/workflows \
             --verify-diff \
             --output .continuity/provenance-verification-receipt.json
+      - name: Verify provenance adoption registry
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          path = Path('data/continuity-provenance-adoption.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+          assert data['schema'] == 'stegverse.continuity.provenance_adoption_registry.v1'
+          assert data['reviewed_corpus_complete'] is True
+          assert data['reviewed_corpus_repository_count'] == 6
+          entries = data['repositories']
+          assert len(entries) == 6
+          names = [entry['repository'] for entry in entries]
+          assert len(names) == len(set(names))
+          for entry in entries:
+              assert entry['state'] == 'COMPLETE'
+              assert entry['decision'] == 'ALLOW'
+              assert len(entry['commit']) == 40
+              assert len(entry['change_record_hash']) == 64
+              assert isinstance(entry['authority_run'], int)
+              assert isinstance(entry['provenance_run'], int)
+          host = data['host']
+          assert host['state'] == 'COMPLETE'
+          assert host['decision'] == 'ALLOW'
+          clean = dict(data)
+          declared = clean.pop('record_hash')
+          encoded = json.dumps(clean, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode('utf-8')
+          observed = hashlib.sha256(encoded).hexdigest()
+          assert observed == declared
+          print('CONTINUITY_PROVENANCE_ADOPTION_REGISTRY=PASS')
+          PY
       - name: Upload provenance receipt
         if: always()
         uses: actions/upload-artifact@v4

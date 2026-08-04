@@ -1,0 +1,87 @@
+{
+  "contract_owner": "GCAT-BCAT-Engine/workflows",
+  "generated_at": "2026-08-04T23:42:00Z",
+  "host": {
+    "authority_run": 30959846909,
+    "change_record": ".continuity/change-records/SV-CONT-20260804-PROVENANCE-002.json",
+    "change_record_hash": "a5a5664b4a9ddc806224dd4097412f9a8782199bb72a9717fc54ff9a512812b2",
+    "commit": "893abee7b959169095af59a0051ac51cd716a68a",
+    "decision": "ALLOW",
+    "provenance_run": 30959846881,
+    "repository": "GCAT-BCAT-Engine/workflows",
+    "state": "COMPLETE"
+  },
+  "portable_validator": {
+    "commit": "a79134d666cd784a10d28fa62dd43e170fd62c77",
+    "git_blob_sha1": "d415493046170bcbf1242bf2701629ff7adc0337",
+    "path": "tools/continuity_provenance.py",
+    "repository": "GCAT-BCAT-Engine/workflows",
+    "validation_run": 30959696236
+  },
+  "record_hash": "63ffb2eb38e397fe3814c4de7331d7f4a601281cb1e6884842ff4930baeee5c0",
+  "repositories": [
+    {
+      "authority_run": 30960799498,
+      "change_record": ".continuity/change-records/SV-CONT-MICRO-NODE-RUNTIME-20260804-001.json",
+      "change_record_hash": "f2bd2265ebf9abf0e8b2eb05dd4fc00d2b61246e4e809063a98305509e8ac12c",
+      "commit": "317479afe0dd63920879677ecadebbdd0edf7c40",
+      "decision": "ALLOW",
+      "provenance_run": 30960799786,
+      "repository": "StegVerse-002/micro-node-runtime",
+      "state": "COMPLETE"
+    },
+    {
+      "authority_run": 30960467356,
+      "change_record": ".continuity/change-records/SV-CONT-STEGGUARDIAN-20260804-001.json",
+      "change_record_hash": "fdb9c190bcb5f1a515aecef80247aa24a7699d4291d5ca7b430bbe2c3f7253ce",
+      "commit": "90936c3a8725782cc395794f31f197ca0c4862af",
+      "decision": "ALLOW",
+      "provenance_run": 30960467620,
+      "repository": "StegVerse-002/StegGuardian",
+      "state": "COMPLETE"
+    },
+    {
+      "authority_run": 30960579063,
+      "change_record": ".continuity/change-records/SV-CONT-STEGPROFILE-20260804-001.json",
+      "change_record_hash": "5313d77c95313c47ede8d2e1debe70497ea0c3ef2d0aab23e50df611b0601ddd",
+      "commit": "02e53514c08ee4087919eb28d4bb54813d02e5d5",
+      "decision": "ALLOW",
+      "provenance_run": 30960579422,
+      "repository": "StegVerse-002/StegProfile",
+      "state": "COMPLETE"
+    },
+    {
+      "authority_run": 30960013770,
+      "change_record": ".continuity/change-records/SV-CONT-CORE-LITE-20260804-001.json",
+      "change_record_hash": "35c40bbbdc4991e95a5be79412bb1708ea48ebdf1da05e8b6badca402e0c812c",
+      "commit": "18cdef35f07c0a694ac1d6383623a8e01fb00856",
+      "decision": "ALLOW",
+      "provenance_run": 30960013822,
+      "repository": "StegVerse-002/core-lite",
+      "state": "COMPLETE"
+    },
+    {
+      "authority_run": 30960176471,
+      "change_record": ".continuity/change-records/SV-CONT-ADMISSIBILITY-GATEWAY-20260804-001.json",
+      "change_record_hash": "f9f3852fa6ba9d69b7c42c776b7516aa962b676123130e6600b74951ed474eb6",
+      "commit": "e6a2be8e4c95d3b4f81cacef992ccdfadddff273",
+      "decision": "ALLOW",
+      "provenance_run": 30960176456,
+      "repository": "StegVerse-002/admissibility-gateway",
+      "state": "COMPLETE"
+    },
+    {
+      "authority_run": 30960309037,
+      "change_record": ".continuity/change-records/SV-CONT-CAPABILITY-REGISTRY-20260804-001.json",
+      "change_record_hash": "9f1980cd4ab5a516b831c3e1838103e9c3bb4b1590394672d391b2a552442ba3",
+      "commit": "86a5ef2e0880a1d0f0ab8a1e7310d847db26d0b1",
+      "decision": "ALLOW",
+      "provenance_run": 30960309044,
+      "repository": "StegVerse-002/capability-registry",
+      "state": "COMPLETE"
+    }
+  ],
+  "reviewed_corpus_complete": true,
+  "reviewed_corpus_repository_count": 6,
+  "schema": "stegverse.continuity.provenance_adoption_registry.v1"
+}
