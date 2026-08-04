@@ -5,7 +5,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'experiments/sv-cost-program/five-lane-results/**'
+      - 'experiments/sv-cost-program/five-lane-results/task.json'
+      - 'experiments/sv-cost-program/five-lane-results/run.py'
       - '.github/workflows/sv-cost-five-lane-results.yml'
 
 permissions:
@@ -39,10 +40,41 @@ jobs:
       - name: Compile harness
         run: python -m py_compile experiments/sv-cost-program/five-lane-results/run.py
 
-      - name: Execute all five lanes
-        run: python experiments/sv-cost-program/five-lane-results/run.py
+      - name: Execute all five lanes fail closed
+        id: execute
+        shell: bash
+        run: |
+          set +e
+          python experiments/sv-cost-program/five-lane-results/run.py
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
 
-      - name: Validate result contract
+      - name: Upload immutable evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sv-cost-five-lane-results
+          path: experiments/sv-cost-program/five-lane-results/results/
+
+      - name: Commit observed results including failures
+        if: always()
+        shell: bash
+        run: |
+          git config user.name 'stegverse-five-lane-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add experiments/sv-cost-program/five-lane-results/results
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record observed five-lane reconstructable governance cost results'
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main && git push origin HEAD:main && exit 0
+            git rebase --abort || true
+            sleep $((attempt * 3))
+          done
+          exit 1
+
+      - name: Validate publication gate
         run: |
           python - <<'PY'
           import json
@@ -58,25 +90,3 @@ jobs:
           assert len(d['replacement_comparisons']) == 4
           print('SV_COST_FIVE_LANE_RESULTS_VALIDATION_PASS')
           PY
-
-      - name: Upload immutable evidence
-        uses: actions/upload-artifact@v4
-        with:
-          name: sv-cost-five-lane-results
-          path: experiments/sv-cost-program/five-lane-results/results/
-
-      - name: Commit validated results
-        shell: bash
-        run: |
-          git config user.name 'stegverse-five-lane-bot'
-          git config user.email 'actions@users.noreply.github.com'
-          git add experiments/sv-cost-program/five-lane-results/results
-          git diff --cached --quiet && exit 0
-          git commit -m 'Record validated five-lane reconstructable governance cost results'
-          for attempt in 1 2 3; do
-            git fetch origin main
-            git rebase origin/main && git push origin HEAD:main && exit 0
-            git rebase --abort || true
-            sleep $((attempt * 3))
-          done
-          exit 1
