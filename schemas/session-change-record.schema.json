@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/session-change-record.schema.json",
+  "title": "StegVerse Session Change Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "change_id",
+    "repository",
+    "base_commit",
+    "actor",
+    "governing_handoff",
+    "changed_paths",
+    "claims",
+    "unresolved_tasks",
+    "created_at",
+    "record_hash"
+  ],
+  "properties": {
+    "schema": {
+      "const": "stegverse.session.change_record.v1"
+    },
+    "change_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "repository": {
+      "type": "string",
+      "pattern": "^[^/]+/[^/]+$"
+    },
+    "base_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "actor": {
+      "type": "object",
+      "required": [
+        "class",
+        "instance"
+      ],
+      "properties": {
+        "class": {
+          "enum": [
+            "human",
+            "chatgpt",
+            "agent",
+            "workflow",
+            "mixed"
+          ]
+        },
+        "instance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "session_ref": {
+          "type": "string"
+        }
+      }
+    },
+    "governing_handoff": {
+      "type": "object",
+      "required": [
+        "path",
+        "hash_algorithm",
+        "hash"
+      ]
+    },
+    "changed_paths": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "change_type",
+          "hash_algorithm",
+          "hash"
+        ]
+      }
+    },
+    "claims": {
+      "type": "array"
+    },
+    "unresolved_tasks": {
+      "type": "array"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "record_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

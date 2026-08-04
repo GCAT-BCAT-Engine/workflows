@@ -1,0 +1,115 @@
+{
+  "actor": {
+    "class": "chatgpt",
+    "instance": "GPT-5.6 Thinking",
+    "session_ref": "handoff-authority-integration-2026-08-04"
+  },
+  "base_commit": "aafa0fd002285da91a937c6dcf7a212351cc51be",
+  "change_id": "SV-CONT-20260804-PROVENANCE-001",
+  "changed_paths": [
+    {
+      "change_type": "added",
+      "hash": "8d87938df13c7f23a2520836505e50a8668df76a",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/config.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "5ebed9674e48418b1f8c306ca380885695893a61",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/cross-repository-references.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "c71009b9200e5060e783e016ed1336e1914113ad",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".github/workflows/continuity-provenance-reusable.yml"
+    },
+    {
+      "change_type": "added",
+      "hash": "0f6c66b1565a7b19787ad08b97d174943cbe0328",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".github/workflows/continuity-provenance.yml"
+    },
+    {
+      "change_type": "modified",
+      "hash": "50f06b084204b561f48ba8f1f29380d2baf31299",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".handoff/current.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "a082417fd84409647d178906eaab163fe75aa5c1",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/CONTINUITY_PROVENANCE_CONTRACT.md"
+    },
+    {
+      "change_type": "modified",
+      "hash": "5bc4cd7db0657a9ae356cb0a81aa1a8b0702a6ba",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/HANDOFF_ORCHESTRATION_CONTRACT.md"
+    },
+    {
+      "change_type": "modified",
+      "hash": "aa27b77605d0c822b9f1e3b02427ae785ed23904",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+    },
+    {
+      "change_type": "added",
+      "hash": "c7a1482e90f3371f9847abe2b4aac4b95d69fecd",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "schemas/cross-repository-reference-set.schema.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "b0ce30e79bfb1eed9dfdb861af5c392e9d930709",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "schemas/session-change-record.schema.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "1b6dd380a64304cf573740828237e8b9f8094d16",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "tests/test_continuity_provenance.py"
+    },
+    {
+      "change_type": "added",
+      "hash": "d415493046170bcbf1242bf2701629ff7adc0337",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "tools/continuity_provenance.py"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "commit-bound continuity provenance validator installed",
+      "state": "IMPLEMENTED"
+    },
+    {
+      "claim": "hash-pinned cross-repository reference contract installed",
+      "state": "IMPLEMENTED"
+    },
+    {
+      "claim": "local and reusable hosted provenance workflows installed",
+      "state": "IMPLEMENTED"
+    },
+    {
+      "claim": "eight stdlib provenance tests prepared",
+      "state": "VALIDATED_LOCAL"
+    }
+  ],
+  "created_at": "2026-08-04T23:12:00Z",
+  "governing_handoff": {
+    "hash": "aa27b77605d0c822b9f1e3b02427ae785ed23904",
+    "hash_algorithm": "git-blob-sha1",
+    "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+  },
+  "record_hash": "fcf007e1154cf178fb58951da13b8046667c1649e7168b2b836c7b03ac06f383",
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "schema": "stegverse.session.change_record.v1",
+  "unresolved_tasks": [
+    "observe hosted continuity provenance workflow result",
+    "adopt continuity provenance in reviewed six-repository corpus",
+    "transfer released provenance evidence into Master Records custody"
+  ]
+}

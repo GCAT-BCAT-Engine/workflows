@@ -1,0 +1,37 @@
+{
+  "record_hash": "48072b6de7de295ae23703ceb6651cbe5b060482f8f8e95818ff4ae0a2090ccd",
+  "references": [
+    {
+      "content_hash": "e369aba1841f6f76c4c7f0c4d733bdbfbeaa88b0",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "runtime/orchestrator/handoff_authority.py",
+      "reference_id": "portable-handoff-authority-verifier",
+      "relationship": "portable_contract_source",
+      "repository": "StegVerse-002/micro-node-runtime",
+      "required": true,
+      "source_commit": "f41febfd2fe9e2aec6f3594f90610ea1ffe29926",
+      "verification_evidence": [
+        "workflow_run:30957032618",
+        "commit:f41febfd2fe9e2aec6f3594f90610ea1ffe29926"
+      ],
+      "verification_status": "VERIFIED"
+    },
+    {
+      "content_hash": "3f987a1aae00e9d31f31fea73ce780117bd18685",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "custody/handoff-authority/adoption-registry.custody.json",
+      "reference_id": "handoff-authority-master-records-custody",
+      "relationship": "custody_destination",
+      "repository": "master-records/orchestration",
+      "required": true,
+      "source_commit": "5cc259d414fb21fb94914ae244fdd033f3115b76",
+      "verification_evidence": [
+        "workflow_run:30958850868",
+        "custody_receipt:f99056b1295e4787617e489e776b4a6a89d769c443f237e83236a05cb2165684"
+      ],
+      "verification_status": "VERIFIED"
+    }
+  ],
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "schema": "stegverse.cross_repository_reference_set.v1"
+}

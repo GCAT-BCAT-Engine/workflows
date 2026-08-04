@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/cross-repository-reference-set.schema.json",
+  "title": "StegVerse Cross-Repository Reference Set",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "repository",
+    "references",
+    "record_hash"
+  ],
+  "properties": {
+    "schema": {
+      "const": "stegverse.cross_repository_reference_set.v1"
+    },
+    "repository": {
+      "type": "string",
+      "pattern": "^[^/]+/[^/]+$"
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "reference_id",
+          "repository",
+          "source_commit",
+          "path",
+          "hash_algorithm",
+          "content_hash",
+          "required",
+          "verification_status",
+          "verification_evidence"
+        ]
+      }
+    },
+    "record_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

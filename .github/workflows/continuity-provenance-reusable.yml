@@ -1,0 +1,47 @@
+name: Reusable Continuity Provenance Gate
+
+on:
+  workflow_call:
+    inputs:
+      repository:
+        description: Expected owner/repository identity
+        required: true
+        type: string
+      verifier_ref:
+        description: Immutable workflows commit containing the validator
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  verify-continuity-provenance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Retrieve continuity provenance validator
+        env:
+          VERIFIER_REF: ${{ inputs.verifier_ref }}
+        run: |
+          curl --fail --silent --show-error --location \
+            "https://raw.githubusercontent.com/GCAT-BCAT-Engine/workflows/${VERIFIER_REF}/tools/continuity_provenance.py" \
+            --output "${RUNNER_TEMP}/continuity_provenance.py"
+      - name: Verify session change record and references
+        env:
+          EXPECTED_REPOSITORY: ${{ inputs.repository }}
+        run: |
+          python "${RUNNER_TEMP}/continuity_provenance.py" \
+            --root "${GITHUB_WORKSPACE}" \
+            --repository "${EXPECTED_REPOSITORY}" \
+            --verify-diff \
+            --output "${GITHUB_WORKSPACE}/.continuity/provenance-verification-receipt.json"
+      - name: Upload provenance receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: continuity-provenance-${{ github.run_id }}
+          path: .continuity/provenance-verification-receipt.json
+          if-no-files-found: error
