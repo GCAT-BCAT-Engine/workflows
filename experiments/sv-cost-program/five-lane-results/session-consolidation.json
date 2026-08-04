@@ -1,9 +1,9 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "session_goal_id": "SV-COST-FIVE-LANE-PUBLICATION-001",
   "originating_session_goal": "Complete five-lane cost research, publish the actual results to Publisher and Site, produce a LinkedIn-ready PDF and post copy, correct mobile presentation, and transfer all continuation state into repository-native control surfaces.",
-  "state": "INTEGRATION_IN_PROGRESS",
-  "updated_at": "2026-08-04T16:30:00Z",
+  "state": "ARCHIVE_READY",
+  "updated_at": "2026-08-04T16:44:04Z",
   "canonical_continuation": {
     "experimental_evidence": "GCAT-BCAT-Engine/workflows/experiments/sv-cost-program/five-lane-results/results/five_lane_results.json",
     "experimental_handoff": "GCAT-BCAT-Engine/workflows/SV_COST_MIRROR_HANDOFF.md",
@@ -59,33 +59,33 @@
     },
     {
       "task_id": "SV5-004",
-      "goal": "Publish and format the bounded Site projection",
+      "goal": "Publish, format, and directly verify the bounded Site projection",
       "repository": "StegVerse-Labs/Site",
       "branch": "main",
-      "surface": "papers/sv-cost-relational-analysis.html",
-      "owner": "Site",
-      "claim_state": "COMPLETE",
+      "surface": "papers/sv-cost-relational-analysis.html; papers/sv-cost-five-lane-public-verification.json; papers/SV_COST_FIVE_LANE_MIRROR_HANDOFF.md",
+      "owner": "Site public verification workflow",
+      "claim_state": "COMPLETE_CLAIM_RELEASED",
       "completion_state": "COMPLETE",
-      "validation_state": "PUBLIC_HTTP_200_MARKERS_PASS",
+      "validation_state": "PUBLIC_HTTP_200_ALL_MARKERS_PASS",
       "integration_state": "COMPLETE",
       "archival_dependency": false,
-      "evidence": "commit a439ad2743b564c32287599c32deac4dd93aa784; run 30928531888; receipt papers/sv-cost-five-lane-public-verification.json",
+      "evidence": "run 30928531888; commit a439ad2743b564c32287599c32deac4dd93aa784; issue StegVerse-Labs/Site#173 closed",
       "next_action": "NONE"
     },
     {
       "task_id": "SV5-005",
-      "goal": "Produce a repository-owned LinkedIn PDF",
+      "goal": "Produce and validate a repository-owned LinkedIn PDF",
       "repository": "GCAT-BCAT-Engine/Publisher",
       "branch": "main",
-      "surface": "artifacts/five-lane-reconstructable-governance/StegVerse_Five_Lane_Cost_Results_LinkedIn.pdf",
-      "owner": ".github/workflows/build-sv-cost-five-lane-linkedin-pdf.yml",
-      "claim_state": "MACHINE_OWNED",
-      "completion_state": "IN_PROGRESS",
-      "validation_state": "PENDING_RECEIPT",
-      "integration_state": "SOURCE_AND_WORKFLOW_INSTALLED",
-      "archival_dependency": true,
-      "evidence": "workflow commit 06cc9772168a49d412f05f6d600246c3ab8698ed",
-      "next_action": "Commit PDF, manifest update, and pdf-validation-receipt.json"
+      "surface": "artifacts/five-lane-reconstructable-governance/StegVerse_Five_Lane_Cost_Results_LinkedIn.pdf; pdf-validation-receipt.json; publication manifest",
+      "owner": "Build SV-COST Five-Lane LinkedIn PDF workflow",
+      "claim_state": "COMPLETE_CLAIM_RELEASED",
+      "completion_state": "COMPLETE",
+      "validation_state": "HOSTED_PDF_HASH_PAGE_TEXT_MARKERS_PASS",
+      "integration_state": "COMPLETE",
+      "archival_dependency": false,
+      "evidence": "run 30930126860; job 92062384747; artifact 8900768707; commit dc684109351e3b0b0148a69b116d120415489a02; PDF sha256:e19bfb6f59d11d4abe21400846cdc050678a89eb1a0b07da745a22b7b33ea1f6",
+      "next_action": "NONE"
     },
     {
       "task_id": "SV5-006",
@@ -122,40 +122,54 @@
       "goal": "Eliminate chat-only continuation",
       "repository": "GCAT-BCAT-Engine/workflows; GCAT-BCAT-Engine/Publisher; StegVerse-Labs/Site",
       "branch": "main",
-      "surface": "canonical handoffs and this consolidation record",
-      "owner": "session-integration lane",
-      "claim_state": "CLAIMED_FOR_INTEGRATION",
-      "completion_state": "IN_PROGRESS",
-      "validation_state": "PENDING_PDF_TERMINAL_RECEIPT",
-      "integration_state": "IN_PROGRESS",
-      "archival_dependency": true,
-      "evidence": "Publisher and Site specific handoffs installed",
-      "next_action": "Update handoffs, disable redundant chat automation, and release integration claim"
+      "surface": "SV_COST_MIRROR_HANDOFF.md; Publisher five-lane handoff; Site five-lane handoff; this consolidation record",
+      "owner": "repository-native handoffs and workflows",
+      "claim_state": "COMPLETE_CLAIM_RELEASED",
+      "completion_state": "COMPLETE",
+      "validation_state": "STATE_TRANSFER_AND_AUTOMATION_RETIREMENT_PASS",
+      "integration_state": "COMPLETE",
+      "archival_dependency": false,
+      "evidence": "workflows handoff commit 8e9bd444d882481955cd45aa29226827039c810f; Publisher handoff commit e882abd1b135de2d7ef022241e43814fdfa24d9a; Site handoff and public receipt complete; redundant chat watcher disabled 2026-08-04T16:44:04Z",
+      "next_action": "ARCHIVE_ORIGINATING_SESSION"
     }
   ],
   "duplicate_and_convergence_findings": [
     "No relevant open pull request owns the five-lane result or publication surfaces.",
-    "The prior methodology-only document and post are superseded by the actual-results paper and final copy.",
+    "The prior methodology-only document, PDF, and post are superseded by the actual-results paper, generated PDF, and final copy.",
+    "The initial strict-output and PDF-marker failures are preserved as fail-closed evidence and superseded by successful corrected runs.",
     "The general provider-profit and ROI question is not duplicated; it remains solely owned by issue #13.",
-    "Site public verification was claimed only by issue #173 and is now complete and released."
+    "Site public verification was claimed only by issue #173 and is complete and released.",
+    "Publisher PDF generation was claimed only by its hosted workflow and is complete and released."
   ],
-  "archive_conditions": [
-    "Publisher PDF artifact and validation receipt are committed.",
-    "Publisher handoff releases its PDF claim.",
-    "Workflows handoff records the bounded five-lane publication without weakening issue #13 boundaries.",
-    "Chat automation Finish Five-Lane Publication is disabled after repository-native ownership is verified.",
-    "This consolidation record becomes ARCHIVE_READY."
-  ],
+  "automation_state": {
+    "repository_native_pdf_build": "ACTIVE_ON_DEMAND_AND_SOURCE_CHANGE",
+    "repository_native_site_verification": "ACTIVE_SCHEDULED_AND_ON_DEMAND",
+    "chat_finish_five_lane_publication_watcher": "DISABLED_AS_REDUNDANT"
+  },
+  "archive_conditions": {
+    "publisher_pdf_and_receipt_committed": true,
+    "publisher_claim_released": true,
+    "site_public_body_verified": true,
+    "site_claim_released": true,
+    "workflows_handoff_updated": true,
+    "publisher_handoff_updated": true,
+    "site_handoff_complete": true,
+    "redundant_chat_automation_disabled": true,
+    "unique_chat_only_information_remaining": false,
+    "archive_ready": true
+  },
   "completion_accounting": {
-    "session_tasks_complete_or_transferred": 6,
+    "session_tasks_complete_or_transferred": 8,
     "session_tasks_total": 8,
-    "developed_files_complete": 9,
+    "developed_files_complete": 11,
     "developed_files_required": 11,
-    "validation_complete": 7,
+    "validation_complete": 9,
     "validation_required": 9,
-    "integration_complete": 7,
+    "integration_complete": 9,
     "integration_required": 9,
-    "session_consolidation_complete": 6,
-    "session_consolidation_total": 8
-  }
+    "session_consolidation_complete": 8,
+    "session_consolidation_total": 8,
+    "archival_readiness_percent": 100
+  },
+  "archive_declaration": "ARCHIVE THIS SESSION"
 }
