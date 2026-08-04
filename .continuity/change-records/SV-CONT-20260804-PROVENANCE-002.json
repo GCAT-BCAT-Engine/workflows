@@ -1,0 +1,57 @@
+{
+  "actor": {
+    "class": "chatgpt",
+    "instance": "GPT-5.6 Thinking",
+    "session_ref": "handoff-authority-integration-2026-08-04"
+  },
+  "base_commit": "a79134d666cd784a10d28fa62dd43e170fd62c77",
+  "change_id": "SV-CONT-20260804-PROVENANCE-002",
+  "changed_paths": [
+    {
+      "change_type": "modified",
+      "hash": "8355b458465bfa5bac67b2fb85e008dbfdd9af50",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/config.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "b8afb95458960b991acaedfd531efa4c5057b465",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".handoff/current.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "59e58dd4696786bada7bd0be39eb1d03b87907fc",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "handoff authority workflow run 30959696225 succeeded",
+      "state": "VALIDATED_HOSTED"
+    },
+    {
+      "claim": "continuity provenance workflow run 30959696236 succeeded",
+      "state": "VALIDATED_HOSTED"
+    },
+    {
+      "claim": "central continuity provenance host lane completed",
+      "state": "COMPLETE"
+    }
+  ],
+  "created_at": "2026-08-04T23:23:00Z",
+  "governing_handoff": {
+    "hash": "59e58dd4696786bada7bd0be39eb1d03b87907fc",
+    "hash_algorithm": "git-blob-sha1",
+    "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+  },
+  "record_hash": "a5a5664b4a9ddc806224dd4097412f9a8782199bb72a9717fc54ff9a512812b2",
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "schema": "stegverse.session.change_record.v1",
+  "unresolved_tasks": [
+    "adopt continuity provenance in reviewed six-repository corpus",
+    "transfer released provenance evidence into Master Records custody",
+    "normalize Master Records repository-wide handoff authority"
+  ]
+}

@@ -33,6 +33,7 @@ acceptance, or deployment merely because a workflow completed.
 .handoff/current.json
 .continuity/config.json
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-001.json
+.continuity/change-records/SV-CONT-20260804-PROVENANCE-002.json
 .continuity/cross-repository-references.json
 .github/workflows/handoff-authority.yml
 .github/workflows/handoff-authority-reusable.yml
@@ -84,17 +85,20 @@ one repository-wide governing handoff, all authority workflows return `ALLOW`,
 the completed registry is retained, and Master Records accepts bounded custody.
 Those conditions are satisfied.
 
-The continuity-provenance lane is complete for this repository when:
+The continuity-provenance host lane is complete when:
 
-1. its current change is bound to an exact base commit;
-2. the actor and session instance are declared;
+1. its changes are bound to exact base commits;
+2. actor and session instances are declared;
 3. every non-exempt changed path is inventoried with a content hash;
-4. the governing handoff hash matches repository content;
-5. required external references are pinned to source commits and content
-   hashes with verification evidence;
-6. the Git diff matches the declared path inventory; and
-7. the hosted provenance workflow returns `ALLOW`.
+4. governing handoff hashes match repository content;
+5. required external references are pinned to source commits and content hashes
+   with verification evidence;
+6. Git diffs match the declared path inventories;
+7. the hosted provenance workflow returns `ALLOW`; and
+8. a successor transition is itself completed through a new verified change
+   record rather than by mutating the first record.
 
+Those host conditions are satisfied through provenance records `001` and `002`.
 The older reusable sandbox-builder goal remains a separate unfinished
 construction-plane goal and is not falsely marked complete by this work.
 
@@ -103,9 +107,7 @@ construction-plane goal and is not falsely marked complete by this work.
 Handoff authority and custody:
 
 ```text
-portable handoff authority verifier installed
-six-repository reviewed corpus normalized
-all seven hosted authority gates returned ALLOW
+reviewed six-repository handoff corpus normalized
 completed registry commit: dc0ab5077eafd3d57a6b9044c9e335424575a66f
 completed registry run: 30958489248 — success
 Master Records custody commit: 5cc259d414fb21fb94914ae244fdd033f3115b76
@@ -116,24 +118,26 @@ source-side custody record commit: aafa0fd002285da91a937c6dcf7a212351cc51be
 source-side authority run: 30958998198 — success
 ```
 
-Continuity provenance installation:
+Continuity provenance host:
 
 ```text
-commit-bound session change record schema installed
-hash-pinned cross-repository reference schema installed
-stdlib provenance validator installed
-8 provenance tests prepared
-local and reusable hosted provenance workflows installed
-machine-owned SV-COST paths explicitly exempted, not silently ignored
-portable handoff verifier reference pinned to commit and Git blob
-Master Records custody reference pinned to commit and Git blob
+implementation commit: a79134d666cd784a10d28fa62dd43e170fd62c77
+handoff authority run: 30959696225 — success
+continuity provenance run: 30959696236 — success
+change record 001 hash: fcf007e1154cf178fb58951da13b8046667c1649e7168b2b836c7b03ac06f383
+changed paths in record 001: 12
+required external references: 2, both VERIFIED
+stdlib provenance tests: 8 passed in hosted workflow
 ```
+
+The successor validation-closure transition is recorded separately in
+`SV-CONT-20260804-PROVENANCE-002.json`, proving that completed validation did not
+silently rewrite or invalidate record `001`.
 
 ## Remaining work
 
 ```text
-observe hosted provenance workflow success for this installation
-pin downstream callers to the immutable provenance implementation commit
+pin downstream callers to immutable provenance implementation commit a79134d666cd784a10d28fa62dd43e170fd62c77
 adopt .continuity surfaces in the reviewed six-repository corpus
 transfer released provenance receipts into Master Records custody
 normalize Master Records repository-wide handoff authority
@@ -152,24 +156,18 @@ SV-COST issue `#13` remains the scoped owner of future ROI evidence.
 
 ```text
 Handoff authority:
-  StegVerse-002/micro-node-runtime — COMPLETE
-  StegVerse-002/StegGuardian — COMPLETE
-  StegVerse-002/StegProfile — COMPLETE
-  StegVerse-002/core-lite — COMPLETE
-  StegVerse-002/admissibility-gateway — COMPLETE
-  StegVerse-002/capability-registry — COMPLETE
+  reviewed six-repository corpus — COMPLETE
   GCAT-BCAT-Engine/workflows — COMPLETE HOST
   master-records/orchestration — COMPLETE BOUNDED CUSTODY
 
 Continuity provenance:
-  GCAT-BCAT-Engine/workflows — IMPLEMENTED; HOSTED VALIDATION PENDING
+  GCAT-BCAT-Engine/workflows — COMPLETE HOST
   reviewed six-repository corpus — PENDING ADOPTION
   master-records/orchestration — PENDING PROVENANCE CUSTODY
 ```
 
 ## Next task
 
-Validate this repository's commit-bound provenance record. After `ALLOW`, pin
-consumer workflows to the resulting immutable commit, adopt the provenance
-contract across the reviewed corpus, and then begin the decision-contract,
+Pin consumer workflows to provenance implementation commit `a79134d…`, adopt
+the contract across the reviewed corpus, and then begin the decision-contract,
 plane-boundary, and ingress-hardening workstreams under both verified gates.
