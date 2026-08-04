@@ -15,9 +15,11 @@ on:
       - 'experiments/sv-cost-program/results/r4-adjudication.json'
       - 'experiments/sv-cost-program/results/r5-reliability-synthesis.json'
       - 'experiments/sv-cost-program/results/cfo-decision.json'
+      - 'experiments/sv-cost-program/five-lane-results/session-consolidation.json'
       - 'docs/SV_COST_MAJOR_ANALYSIS.md'
       - 'docs/RECONSTRUCTABLE_STATE_TRANSITION_GOVERNANCE.md'
       - 'tools/reconcile_sv_cost_terminal_state.py'
+      - 'tools/append_sv_cost_five_lane_handoff.py'
       - 'tools/validate_sv_cost_session_state.py'
       - '.github/workflows/sv-cost-session-consolidation.yml'
 
@@ -50,6 +52,7 @@ jobs:
       - name: Validate reconciliation code
         run: |
           python -m py_compile tools/reconcile_sv_cost_terminal_state.py
+          python -m py_compile tools/append_sv_cost_five_lane_handoff.py
           python -m py_compile tools/validate_sv_cost_session_state.py
 
       - name: Reconcile terminal receipts into canonical state
@@ -61,6 +64,9 @@ jobs:
             --workflow-run-url "$RUN_URL" \
             > /tmp/sv-cost-reconciliation.json
           test "$(jq -r .status /tmp/sv-cost-reconciliation.json)" = RECONCILED
+
+      - name: Append completed five-lane publication state
+        run: python tools/append_sv_cost_five_lane_handoff.py
 
       - name: Validate archive-ready state and write receipt
         shell: bash
@@ -76,7 +82,7 @@ jobs:
           test "$(jq -r .archive_readiness.ready "$RECEIPT")" = true
           test "$(jq -r .archive_readiness.no_active_chat_owned_tasks "$RECEIPT")" = true
 
-      - name: Validate every canonical JSON surface
+      - name: Validate every canonical JSON and handoff surface
         shell: bash
         run: |
           set -euo pipefail
@@ -90,11 +96,15 @@ jobs:
             experiments/sv-cost-program/results/r4-adjudication.json \
             experiments/sv-cost-program/results/r5-reliability-synthesis.json \
             experiments/sv-cost-program/results/cfo-decision.json \
+            experiments/sv-cost-program/five-lane-results/session-consolidation.json \
             "$RECEIPT"; do
             python -m json.tool "$path" >/dev/null
           done
           grep -q 'TERMINAL BOUNDED DECISION' SV_COST_MIRROR_HANDOFF.md
           grep -q 'MERGED_INTO_CANONICAL_WORKSTREAM' SV_COST_MIRROR_HANDOFF.md
+          grep -q 'SV-COST-FIVE-LANE-PUBLICATION-001' SV_COST_MIRROR_HANDOFF.md
+          grep -q '30930126860' SV_COST_MIRROR_HANDOFF.md
+          grep -q 'e19bfb6f59d11d4abe21400846cdc050678a89eb1a0b07da745a22b7b33ea1f6' SV_COST_MIRROR_HANDOFF.md
           grep -q 'DO_NOT_APPROVE_A_GENERAL_STEGVERSE_SAVINGS_CLAIM_FROM_CURRENT_EVIDENCE' docs/SV_COST_MAJOR_ANALYSIS.md
           ! grep -Eqi 'active R3 relation is testing|R3 pending|REPAIRED_GENERATION_DISPATCHED|Remaining governed transitions|SESSION CONSOLIDATION IN PROGRESS' \
             SV_COST_MIRROR_HANDOFF.md docs/SV_COST_MAJOR_ANALYSIS.md experiments/sv-cost-program/evidence-index.json experiments/sv-cost-program/lineage.json
@@ -115,6 +125,7 @@ jobs:
             experiments/sv-cost-program/results/r5-reliability-synthesis.json
             experiments/sv-cost-program/results/cfo-decision.json
             experiments/sv-cost-program/results/session-consolidation-receipt.json
+            experiments/sv-cost-program/five-lane-results/session-consolidation.json
             docs/SV_COST_MAJOR_ANALYSIS.md
             docs/RECONSTRUCTABLE_STATE_TRANSITION_GOVERNANCE.md
           if-no-files-found: error
@@ -133,6 +144,7 @@ jobs:
           git add experiments/sv-cost-program/lineage.json
           git add experiments/sv-cost-program/relations.json
           git add experiments/sv-cost-program/results/session-consolidation-receipt.json
+          git add experiments/sv-cost-program/five-lane-results/session-consolidation.json
           git add docs/SV_COST_MAJOR_ANALYSIS.md
           if ! git diff --cached --quiet; then
             git commit -m "Reconcile terminal SV-COST state and release chat session [run $GITHUB_RUN_ID]"
@@ -155,6 +167,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          gh issue comment 12 --repo "$GITHUB_REPOSITORY" --body "SV-COST session state was reconciled and released into the canonical repository workstream. Archive-readiness receipt: \`experiments/sv-cost-program/results/session-consolidation-receipt.json\`. Hosted evidence: $RUN_URL. The bounded decision remains \`DO_NOT_APPROVE_A_GENERAL_STEGVERSE_SAVINGS_CLAIM_FROM_CURRENT_EVIDENCE\`. Any future favorable ROI revision is owned exclusively by issue #13."
+          gh issue comment 12 --repo "$GITHUB_REPOSITORY" --body "SV-COST session state was reconciled and released into the canonical repository workstream. Archive-readiness receipt: \`experiments/sv-cost-program/results/session-consolidation-receipt.json\`. Five-lane publication consolidation: \`experiments/sv-cost-program/five-lane-results/session-consolidation.json\`. Hosted evidence: $RUN_URL. The bounded decision remains \`DO_NOT_APPROVE_A_GENERAL_STEGVERSE_SAVINGS_CLAIM_FROM_CURRENT_EVIDENCE\`. Any future favorable ROI revision is owned exclusively by issue #13."
           gh issue close 11 --repo "$GITHUB_REPOSITORY" --reason completed --comment "Historical lineage was observed, validated, integrated into the terminal relational program, and preserved in the canonical handoff and receipts."
-          gh issue close 12 --repo "$GITHUB_REPOSITORY" --reason completed --comment "The relational program, R1-R5 adjudications, bounded CFO decision, canonical synthesis, session handoff, claim registry, and archive-readiness receipt are committed and validated. Issue #13 owns any future favorable ROI evidence revision."
+          gh issue close 12 --repo "$GITHUB_REPOSITORY" --reason completed --comment "The relational program, R1-R5 adjudications, bounded CFO decision, validated five-lane publication integration, canonical synthesis, session handoff, claim registry, and archive-readiness receipts are committed and validated. Issue #13 owns any future favorable ROI evidence revision."
