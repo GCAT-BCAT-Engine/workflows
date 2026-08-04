@@ -1,0 +1,27 @@
+{
+  "model": "claude-sonnet-4-6",
+  "id": "msg_011CdgpAC92R8CHHMzvZUCYw",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "text",
+      "text": "```json\n{\"applied_count\":5,\"decisions\":[{\"event_id\":\"E01\",\"status\":\"ALLOW\"},{\"event_id\":\"E02\",\"status\":\"ALLOW\"},{\"event_id\":\"E03\",\"status\":\"ALLOW\"},{\"event_id\":\"E04\",\"status\":\"DENY\"},{\"event_id\":\"E05\",\"status\":\"ALLOW\"},{\"event_id\":\"E06\",\"status\":\"ALLOW\"}],\"denied_count\":1,\"final_state\":{\"balance\":75,\"risk_score\":6,\"standing\":\"active\"},\"task_id\":\"SV-RECON-001\"}\n```\n\nWait, let me recompute carefully.\n\nInitial: balance=100, risk_score=1, standing=active\n\nE01 credit 25: balance=125, risk_score=1\nE02 debit 40: standing=active, 125-40=85>=0 \u2192 ALLOW, balance=85\nE03 risk_add 2: 1+2=3<=5 \u2192 ALLOW, risk_score=3\nE04 debit 100: standing=active, 85-100=-15<0 \u2192 DENY\nE05 risk_add 3: 3+3=6>5 \u2192 DENY\nE06 debit 10: standing=active, 85-10=75>=0 \u2192 ALLOW, balance=75\n\napplied_count=4, denied_count=2\n\n```json\n{\"applied_count\":4,\"decisions\":[{\"event_id\":\"E01\",\"status\":\"ALLOW\"},{\"event_id\":\"E02\",\"status\":\"ALLOW\"},{\"event_id\":\"E03\",\"status\":\"ALLOW\"},{\"event_id\":\"E04\",\"status\":\"DENY\"},{\"event_id\":\"E05\",\"status\":\"DENY\"},{\"event_id\":\"E06\",\"status\":\"ALLOW\"}],\"denied_count\":2,\"final_state\":{\"balance\":75,\"risk_score\":3,\"standing\":\"active\"},\"task_id\":\"SV-RECON-001\"}\n```"
+    }
+  ],
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 408,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 460,
+    "service_tier": "standard",
+    "inference_geo": "global"
+  }
+}

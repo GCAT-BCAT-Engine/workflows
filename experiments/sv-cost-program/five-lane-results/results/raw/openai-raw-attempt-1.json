@@ -1,31 +1,31 @@
 {
-  "id": "resp_0ab3e66a9f581587006a7134e2f678819bafa5ae78038e9116",
+  "id": "resp_08febc59f725be21006a713b5888b88194bc7a28bd298a79ad",
   "object": "response",
-  "created_at": 1785804003,
+  "created_at": 1785805656,
   "status": "completed",
   "background": false,
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1785804006,
+  "completed_at": 1785805660,
   "error": null,
   "frequency_penalty": 0.0,
   "incomplete_details": null,
   "instructions": null,
-  "max_output_tokens": 1600,
+  "max_output_tokens": 1200,
   "max_tool_calls": null,
   "model": "gpt-5.6-sol",
   "moderation": null,
   "output": [
     {
-      "id": "rs_0ab3e66a9f581587006a7134e3be64819b9cd22d01ef9f0c24",
+      "id": "rs_08febc59f725be21006a713b5ae8548194bd7ef330141a00ee",
       "type": "reasoning",
       "content": [],
-      "encrypted_content": "gAAAAABqcTTmPalZJktvzTZqU5aLyhPevvbysOGPfnxpTxhWTT5hDL05mBJtFenZyN9vvLABp99c48r_CYxhhndS0FAvVqPWS-LuuqyTx5xCROhDXtI807kIYcP4EDcL-1o0vbkqXJZZdatQnJR2k9uWeVgRaor1iorUV61nZdJtaJnGbK4Cz0Yult5JM3mat39HPhZkvfzco-zq2ox8wTn-qHCl22ch5IDQKLcVUrggkjftvINHIInP6xwlKpGaOAdq3yOOdP26iRfRd1wXxdnwVsN0aOlr9QQIGgK5CjdsBrr3zyfAgqKwaJ4aNxU91kZGsHau4cxqmLRkMDEKG3wvpxIc-m4GM5Oo0JHKCI_hgp5RmzEVKvakSjwg8as_i8dZhlxL6ViayPidrdEcsea0JL8rJNNijesYEEQNY2wLbCFTSOJSl1uQHnlKkBXYiw6KGgA3si2NDoa6OXI34pY7zhOZWzDvJ9oMAKLyf1lkoXBOuun69JIWG_dLC2WO735-Kc1Gq8FWHNwbSgRjeZOVugiVCJagULoGaSxNbFsTSyNqToHeVixGyy3Ij2BXsMv17KQ6uv2Eg98XV29C5WVIIeFfDlBfwk7skOUDy3dAFjqcFrjQFiHKI4MOUNrIH_Mt7ml-u8nVreGEyN6r-MWyvZ0_-V7tqOpdBbjpmXIfsKE8EV1FZRtkMc91FVfWIfU0seDEoeEHm3-Vxv1hlruCj-vCmdpkMkaQgC6LbQg_lhkGg4iU4EWv8Llg-0lDqulhnOCZskpDEx7-tIGO59oenqh34rWkn9kWfJTXR4P1vKJI4VZqoekmwngkV4qZkf0xH4e1Tb3j6vql5Vbl8EgZf3U3SUrue2-0I2Z8EtsHlxMC10Uq_rSZf5sVjJvk6wCLXIk5Qix-wcmJvY5caC6HrS4WsV2HCm14IjO88a1QPV12MpD8fy_J67w-V4qlhZpaPfJn2TU1kxjcw_xYiEjRweJYf-asG7Xc-ZqzUcIRrnmJA-xzbDKs-x4L0vlvss6BI9UK3B_rixjgsj3HFZ29aTppVJqH0BW7ZZulYKKguzp8XS4uFxlhsvEuYN_yhkL6WHamzeTa5vOCLc3kAlxQI4MKdik5w3aByInv6NlcIK8A1hQ3m1YbKAQgiVIwGLmVvyRvNWfUbbIaTCLBtwS3BvbN9h8FRGPIJ2APIaqNctSG9RqX-apJKAybSSqDlGIDe9uO4B5qCRmoyejumdEcIJ_w5LmLLntUPaIn2Cbx2mygVGefV-W5iJ1rJpinVXXTEfs_AwIY2GM4UPkO484SIoVUwiSf1hp-sq9k1d3OVmYAhfi25o9dpX9Jq43mIYBEagLqLZPceVsAj8ObCOHym7u111IHn6lf6ZK2A5p3B4UwNrvdcyp28F97KOk-2Xeki5JgVHe0JBVfaIA6gfcWIP4gvu8ufFzM5GvYGtiqm-lQmoc2dlSrMktlg-ZTLWEybl-e08g21CgNveHW0YNjI5MLQn5uXSMhXjN08PxfX4NxcVdyysZlbuWoitX7jtkTZO-OXkF13gPjaFQORLGvvvVccrxVVTKrJwzQ8EEMohkJWRfzhrBOUqzjnBbBxrF3l8a-5mHZtsDWhnq3rZslwohoiuf2dwVhY6vrtg19kyL1vMHbKV4yIFiUFnGMArt-ScwqqXsr0bQKUW5ZvrNb1-5AFCbHSE3xl8N8GoY0OFu4kHSIMbbQrEFS5ZefVCAxBsjVuVyC6JorH8ztBdAWcb5KeMrzjg==",
+      "encrypted_content": "gAAAAABqcTtc6r41kUlsjwLrc7UfTivR2xWymB6FJveWzGrsTnoIU_4jAFUmxKtibxknx-_Vwi0ZAEv3iqNV9FnsHoA5dGMTosuuejVKuMWuH5G0daGTdRst8wL190SCYEBfhfM-eZuivuoi-Aws4vgDkGMSmNKwnCUjEgATTAJhkusrlrqgfvyjrsX0RlfUVpckRB_UOrTpOdB3KJY_Ii980sj5T1VbLV02AZAzhAASS11o4PPRAxe28SUJbPUA06x-UOgzK_RDA_D_58J9n5rNjGpLhQ6C3lEshW76i7TYLFUbuBwJGGcP1N1SpPi4J7jk7k7UdSs7a5COlXNaQ_WDhMdmfL9PjN_GeGMrS9EM2EBE_VW7Sv7AAoPYtbn1kqpXUfsd4qsjfFrRZsmJZJwak6GzAODI1q7AEO9l9leX6IFOm5mQ40Hk51BBbqE2ApI_wWmsOMhNCRkqY7CcnO1Zgwvm5FJ5Be-2xozj3Su5E_WRdNstIHM6m1jAj4OUF9lUPB2LV70Tk12QIBJlqDo5i9gpqUMO8kCH0Ow_1gRgnWUJ7Ttwjnx369hz0oFoHq7pW0xVIA9vFxAH4gcy2V7cs15zv72s51Y3b6ZcbBuNybX6Odns0x_opXG4-xu7uOpJ423O29w9YJreDMi4x3Yp0z6atQyMnkmVqkSgf73epb8ILrKPkfuezgJln4Eza4wRUbl6yHpeprjx2SfMSpj8lOkAXb_ruSpZtd2KLTSBg0GRucnyq8iOPAq9QxF5g7PFSjwg2kf6w3qP5AvjINg2pSLE0axwykl6VNv8RFxyWF4Hm-3fuoeSj0EaAowyjGks7pRa6hg9ikSfh5tQMSn8lWHOnYb61u0rVBNPtJNhO4F7U6jI2a6rvi0ilVScMWEknPlegfrGEH1Zn6WGsNcsdiRP56SvaV2_le0ENp58Xzute5l4jL7SKBGm8E8MRmsWNRfTOnDXKhLaVtfPYE5ZobIImPZQwcoO8C-CMY3utpmlJbbVwqompxrdwm4lOcgjd7APWzWdHU4cCkqw8dGJQjf7yvJFkCMxAwnOCoFluGBruPbLYZQ1C3PP7W4ROdH3Ofm7EqAPnaCfqr3wtb0ekraEvqSdvP27nBA0vEz6Z6T8HqFBbliKKEnRcWcilIyuwnw-EUwTQWYO5HnWrWWvPSTsUdZ6EUuOkh4SLFIVaD9n8zt8BFOl0-7Dm1y81ALi7QMU6WDb",
       "summary": []
     },
     {
-      "id": "msg_0ab3e66a9f581587006a7134e586a4819b8ac28ef76613f50e",
+      "id": "msg_08febc59f725be21006a713b5be0588194bb55a24ba01efed0",
       "type": "message",
       "status": "completed",
       "content": [
@@ -33,7 +33,7 @@
           "type": "output_text",
           "annotations": [],
           "logprobs": [],
-          "text": "{\"task_id\":\"SV-RECON-001\",\"decisions\":[{\"event_id\":\"E01\",\"decision\":\"ALLOW\"},{\"event_id\":\"E02\",\"decision\":\"ALLOW\"},{\"event_id\":\"E03\",\"decision\":\"ALLOW\"},{\"event_id\":\"E04\",\"decision\":\"DENY\"},{\"event_id\":\"E05\",\"decision\":\"DENY\"},{\"event_id\":\"E06\",\"decision\":\"ALLOW\"}],\"final_state\":{\"balance\":75,\"risk_score\":3,\"standing\":\"active\"}}"
+          "text": "{\"applied_count\":4,\"decisions\":[{\"event_id\":\"E01\",\"status\":\"ALLOW\"},{\"event_id\":\"E02\",\"status\":\"ALLOW\"},{\"event_id\":\"E03\",\"status\":\"ALLOW\"},{\"event_id\":\"E04\",\"status\":\"DENY\"},{\"event_id\":\"E05\",\"status\":\"DENY\"},{\"event_id\":\"E06\",\"status\":\"ALLOW\"}],\"denied_count\":2,\"final_state\":{\"balance\":75,\"risk_score\":3,\"standing\":\"active\"},\"task_id\":\"SV-RECON-001\"}"
         }
       ],
       "phase": "final_answer",
@@ -85,16 +85,16 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 265,
+    "input_tokens": 307,
     "input_tokens_details": {
       "cache_write_tokens": 0,
       "cached_tokens": 0
     },
-    "output_tokens": 259,
+    "output_tokens": 194,
     "output_tokens_details": {
-      "reasoning_tokens": 159
+      "reasoning_tokens": 81
     },
-    "total_tokens": 524
+    "total_tokens": 501
   },
   "user": null,
   "metadata": {}

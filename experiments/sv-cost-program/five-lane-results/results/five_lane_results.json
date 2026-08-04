@@ -1,12 +1,12 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "experiment_id": "SV-COST-FIVE-LANE-RESULTS-001",
-  "generated_at": "2026-08-04T00:41:05Z",
+  "generated_at": "2026-08-04T01:08:11Z",
   "task_id": "SV-RECON-001",
   "operation_class": "governed_state_reconstruction",
   "comparison_unit": "successful equivalent admissible outcome",
   "task_contract_hash": "sha256:2e9b4a4193669b6d8f1d3fea8639d2adcee6090c58246b8b99920ba2f08dfb6b",
-  "required_output_hash": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
+  "required_output_hash": "sha256:155869baaef4bd023ad95e63c6a81d6ade921e92660cec351680e1aabd4d2597",
   "price_card": {
     "id": "SV-COST-DECLARED-2026-08-03",
     "status": "VERSIONED_DECLARED_RATE_NOT_INVOICE_RECONCILED",
@@ -24,56 +24,34 @@
       "model": "gpt-5.6",
       "governed": false,
       "operation_class": "governed_state_reconstruction",
-      "status": "FAILED_ADMISSIBILITY_OR_EQUIVALENCE",
-      "attempt_count": 2,
+      "status": "SUCCESSFUL_EQUIVALENT_ADMISSIBLE_OUTCOME",
+      "attempt_count": 1,
       "attempts": [
         {
           "attempt": 1,
-          "input_tokens": 265,
-          "output_tokens": 259,
-          "latency_seconds": 3.8114136119999955,
-          "provider_cost_usd": 0.009095,
-          "response_hash": "sha256:ac27fb317e1c9303bd533a688b6fc6ad875ca8c0d17971c7de5ca3544b84c0b7",
-          "normalized_hash": "sha256:a36aa9eaccbc9b5bf6aa320ef442ad671d651833cd6160b4cebbab5fe6b77ada",
-          "valid": false,
-          "failures": [
-            "MISMATCH_DECISIONS",
-            "MISSING_APPLIED_COUNT",
-            "MISSING_DENIED_COUNT",
-            "MISSING_CLAIM_BOUNDARY"
-          ]
-        },
-        {
-          "attempt": 2,
-          "input_tokens": 304,
-          "output_tokens": 646,
-          "latency_seconds": 11.602180254999979,
-          "provider_cost_usd": 0.0209,
-          "response_hash": "sha256:2096b9f727b58a949e5981b86452c41931cb60dcdeecf256e8868677fc10cf67",
-          "normalized_hash": "sha256:7b29f7c69f90682ff187f1de467d3c09012cb18c7b86c93b336d8ff8b5c29548",
-          "valid": false,
-          "failures": [
-            "MISMATCH_DECISIONS",
-            "MISMATCH_CLAIM_BOUNDARY"
-          ]
+          "input_tokens": 307,
+          "output_tokens": 194,
+          "latency_seconds": 5.2759442130000025,
+          "provider_cost_usd": 0.007355,
+          "response_hash": "sha256:8379d6c18f1ffb3b1805528110a98531d816cce5225c25f6a01b2b8b84165d48",
+          "normalized_hash": "sha256:155869baaef4bd023ad95e63c6a81d6ade921e92660cec351680e1aabd4d2597",
+          "valid": true,
+          "failures": []
         }
       ],
-      "input_tokens": 569,
-      "output_tokens": 905,
-      "latency_seconds": 15.413593866999975,
-      "provider_cost_usd": 0.029995,
+      "input_tokens": 307,
+      "output_tokens": 194,
+      "latency_seconds": 5.2759442130000025,
+      "provider_cost_usd": 0.007355,
       "local_compute_cost_usd": 0.0,
       "local_storage_cost_usd": 0.0,
-      "total_observed_and_modeled_cost_usd": 0.029995,
-      "cost_per_successful_equivalent_admissible_outcome_usd": null,
+      "total_observed_and_modeled_cost_usd": 0.007355,
+      "cost_per_successful_equivalent_admissible_outcome_usd": 0.007355,
       "task_identity_preserved": true,
-      "required_output_hash": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
-      "actual_output_hash": "sha256:7b29f7c69f90682ff187f1de467d3c09012cb18c7b86c93b336d8ff8b5c29548",
-      "admissible": false,
-      "gate_failures": [
-        "MISMATCH_DECISIONS",
-        "MISMATCH_CLAIM_BOUNDARY"
-      ],
+      "required_output_hash": "sha256:155869baaef4bd023ad95e63c6a81d6ade921e92660cec351680e1aabd4d2597",
+      "actual_output_hash": "sha256:155869baaef4bd023ad95e63c6a81d6ade921e92660cec351680e1aabd4d2597",
+      "admissible": true,
+      "gate_failures": [],
       "cost_evidence_status": "VERSIONED_DECLARED_RATE_NOT_INVOICE_RECONCILED"
     },
     {
@@ -82,56 +60,34 @@
       "model": "gpt-5.6",
       "governed": true,
       "operation_class": "governed_state_reconstruction",
-      "status": "FAILED_ADMISSIBILITY_OR_EQUIVALENCE",
-      "attempt_count": 2,
+      "status": "SUCCESSFUL_EQUIVALENT_ADMISSIBLE_OUTCOME",
+      "attempt_count": 1,
       "attempts": [
         {
           "attempt": 1,
-          "input_tokens": 299,
-          "output_tokens": 323,
-          "latency_seconds": 4.773664658000001,
-          "provider_cost_usd": 0.011185,
-          "response_hash": "sha256:2296c8d286b4ab3e55d532754f69c736228ab722977751174c9708f055c23808",
-          "normalized_hash": "sha256:a36aa9eaccbc9b5bf6aa320ef442ad671d651833cd6160b4cebbab5fe6b77ada",
-          "valid": false,
-          "failures": [
-            "MISMATCH_DECISIONS",
-            "MISSING_APPLIED_COUNT",
-            "MISSING_DENIED_COUNT",
-            "MISSING_CLAIM_BOUNDARY"
-          ]
-        },
-        {
-          "attempt": 2,
-          "input_tokens": 338,
-          "output_tokens": 851,
-          "latency_seconds": 12.396862340000013,
-          "provider_cost_usd": 0.02722,
-          "response_hash": "sha256:96161b7ea5c9a7deacd3c5e0f444ab5d780f797bfa855444e6f58c0536cdcddd",
-          "normalized_hash": "sha256:cd96f65f17d5cc46549dd68456e9141a1b58824ebf860e099ef834062c358dc0",
-          "valid": false,
-          "failures": [
-            "MISMATCH_DECISIONS",
-            "MISMATCH_CLAIM_BOUNDARY"
-          ]
+          "input_tokens": 326,
+          "output_tokens": 180,
+          "latency_seconds": 3.7451428529999973,
+          "provider_cost_usd": 0.00703,
+          "response_hash": "sha256:7ece210efad3a2c857b2a0c82407041d4de57958c5a30199c5fe0a4b668246cd",
+          "normalized_hash": "sha256:155869baaef4bd023ad95e63c6a81d6ade921e92660cec351680e1aabd4d2597",
+          "valid": true,
+          "failures": []
         }
       ],
-      "input_tokens": 637,
-      "output_tokens": 1174,
-      "latency_seconds": 17.170526998000014,
-      "provider_cost_usd": 0.038405,
+      "input_tokens": 326,
+      "output_tokens": 180,
+      "latency_seconds": 3.7451428529999973,
+      "provider_cost_usd": 0.00703,
       "local_compute_cost_usd": 0.0,
       "local_storage_cost_usd": 0.0,
-      "total_observed_and_modeled_cost_usd": 0.038405,
-      "cost_per_successful_equivalent_admissible_outcome_usd": null,
+      "total_observed_and_modeled_cost_usd": 0.00703,
+      "cost_per_successful_equivalent_admissible_outcome_usd": 0.00703,
       "task_identity_preserved": true,
-      "required_output_hash": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
-      "actual_output_hash": "sha256:cd96f65f17d5cc46549dd68456e9141a1b58824ebf860e099ef834062c358dc0",
-      "admissible": false,
-      "gate_failures": [
-        "MISMATCH_DECISIONS",
-        "MISMATCH_CLAIM_BOUNDARY"
-      ],
+      "required_output_hash": "sha256:155869baaef4bd023ad95e63c6a81d6ade921e92660cec351680e1aabd4d2597",
+      "actual_output_hash": "sha256:155869baaef4bd023ad95e63c6a81d6ade921e92660cec351680e1aabd4d2597",
+      "admissible": true,
+      "gate_failures": [],
       "cost_evidence_status": "VERSIONED_DECLARED_RATE_NOT_INVOICE_RECONCILED"
     },
     {
@@ -140,57 +96,34 @@
       "model": "claude-sonnet-4-6",
       "governed": false,
       "operation_class": "governed_state_reconstruction",
-      "status": "FAILED_ADMISSIBILITY_OR_EQUIVALENCE",
-      "attempt_count": 2,
+      "status": "SUCCESSFUL_EQUIVALENT_ADMISSIBLE_OUTCOME",
+      "attempt_count": 1,
       "attempts": [
         {
           "attempt": 1,
-          "input_tokens": 313,
-          "output_tokens": 545,
-          "latency_seconds": 6.534787424000001,
-          "provider_cost_usd": 0.009114,
-          "response_hash": "sha256:61da0bbfeecad53431e99355e91eeb297c17abc3d5e6c7a4d57890208651e6a9",
-          "normalized_hash": "sha256:e4e99f7f6ddddf6e208a04a3548652321f3080d39a4df11d310978b674ffc261",
-          "valid": false,
-          "failures": [
-            "MISSING_TASK_ID",
-            "MISMATCH_DECISIONS",
-            "MISSING_APPLIED_COUNT",
-            "MISSING_DENIED_COUNT",
-            "MISSING_CLAIM_BOUNDARY"
-          ]
-        },
-        {
-          "attempt": 2,
-          "input_tokens": 368,
-          "output_tokens": 647,
-          "latency_seconds": 8.511127987999998,
-          "provider_cost_usd": 0.010809,
-          "response_hash": "sha256:d4059d0902dae308181597e3ce13e0baeb24b9762bb7ca1ad86b863391b28bdd",
-          "normalized_hash": "sha256:acde08f0acda4209db5dea16b78d3d43c2d5d59202f6d9dc97764d32225584e5",
-          "valid": false,
-          "failures": [
-            "MISMATCH_DECISIONS",
-            "MISMATCH_CLAIM_BOUNDARY"
-          ]
+          "input_tokens": 362,
+          "output_tokens": 625,
+          "latency_seconds": 7.506172845999998,
+          "provider_cost_usd": 0.010461,
+          "response_hash": "sha256:181a75700118a77be8f8722caf3df750e14dac7bc9e213029824026eb71f516b",
+          "normalized_hash": "sha256:155869baaef4bd023ad95e63c6a81d6ade921e92660cec351680e1aabd4d2597",
+          "valid": true,
+          "failures": []
         }
       ],
-      "input_tokens": 681,
-      "output_tokens": 1192,
-      "latency_seconds": 15.045915412,
-      "provider_cost_usd": 0.019923,
+      "input_tokens": 362,
+      "output_tokens": 625,
+      "latency_seconds": 7.506172845999998,
+      "provider_cost_usd": 0.010461,
       "local_compute_cost_usd": 0.0,
       "local_storage_cost_usd": 0.0,
-      "total_observed_and_modeled_cost_usd": 0.019923,
-      "cost_per_successful_equivalent_admissible_outcome_usd": null,
+      "total_observed_and_modeled_cost_usd": 0.010461,
+      "cost_per_successful_equivalent_admissible_outcome_usd": 0.010461,
       "task_identity_preserved": true,
-      "required_output_hash": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
-      "actual_output_hash": "sha256:acde08f0acda4209db5dea16b78d3d43c2d5d59202f6d9dc97764d32225584e5",
-      "admissible": false,
-      "gate_failures": [
-        "MISMATCH_DECISIONS",
-        "MISMATCH_CLAIM_BOUNDARY"
-      ],
+      "required_output_hash": "sha256:155869baaef4bd023ad95e63c6a81d6ade921e92660cec351680e1aabd4d2597",
+      "actual_output_hash": "sha256:155869baaef4bd023ad95e63c6a81d6ade921e92660cec351680e1aabd4d2597",
+      "admissible": true,
+      "gate_failures": [],
       "cost_evidence_status": "VERSIONED_DECLARED_RATE_NOT_INVOICE_RECONCILED"
     },
     {
@@ -200,66 +133,69 @@
       "governed": true,
       "operation_class": "governed_state_reconstruction",
       "status": "FAILED_ADMISSIBILITY_OR_EQUIVALENCE",
-      "attempt_count": 2,
+      "attempt_count": 3,
       "attempts": [
         {
           "attempt": 1,
-          "input_tokens": 351,
-          "output_tokens": 615,
-          "latency_seconds": 7.537574629000005,
-          "provider_cost_usd": 0.010278,
-          "response_hash": "sha256:7b5ee04313b3c2cdc2b8031d4b6c6cfa42e9096b5f8f20b0ea15899d5b4f0760",
-          "normalized_hash": "sha256:5178f6600c08715e4ea557094a518503ce283118d4df2e5f9e1e71e42cb5634a",
+          "input_tokens": 382,
+          "output_tokens": 614,
+          "latency_seconds": 7.1902948479999935,
+          "provider_cost_usd": 0.010356,
+          "response_hash": "sha256:9c53ce7da2a7acf780440ade937ee972b25c289493482fad933acadfb5c0cf95",
+          "normalized_hash": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
           "valid": false,
           "failures": [
-            "MISSING_DECISIONS",
-            "MISSING_APPLIED_COUNT",
-            "MISSING_DENIED_COUNT",
-            "MISSING_CLAIM_BOUNDARY",
-            "UNSUPPORTED_FIELDS:event_decisions"
+            "INVALID_JSON:Extra data: line 19 column 1 (char 448)"
           ]
         },
         {
           "attempt": 2,
           "input_tokens": 408,
-          "output_tokens": 583,
-          "latency_seconds": 7.636361260000001,
-          "provider_cost_usd": 0.009969,
-          "response_hash": "sha256:ec2404826587293e4d138133f537b41f8b245836c8fc1c3d8b097a4c6982a78d",
-          "normalized_hash": "sha256:6e0e5a12715138078ebbea3e8c641910b70d46d4ac35b265e45c0fe412e00a5a",
+          "output_tokens": 466,
+          "latency_seconds": 5.938402510000003,
+          "provider_cost_usd": 0.008214,
+          "response_hash": "sha256:21bc372e4eadd117b03ccab32b047818ae1ed7d8edfba05f43aab11fa3c944cb",
+          "normalized_hash": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
           "valid": false,
           "failures": [
-            "MISSING_FINAL_STATE",
-            "MISMATCH_DECISIONS",
-            "MISMATCH_CLAIM_BOUNDARY",
-            "UNSUPPORTED_FIELDS:final_balance,final_risk_score,final_standing"
+            "INVALID_JSON:Extra data: line 2 column 1 (char 355)"
+          ]
+        },
+        {
+          "attempt": 3,
+          "input_tokens": 408,
+          "output_tokens": 460,
+          "latency_seconds": 6.402401558000008,
+          "provider_cost_usd": 0.008124,
+          "response_hash": "sha256:eac9036e25fa04fa60102b8bd08a5c4ee59b6b33c913a396d61a2e625e3fd586",
+          "normalized_hash": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "valid": false,
+          "failures": [
+            "INVALID_JSON:Extra data: line 2 column 1 (char 355)"
           ]
         }
       ],
-      "input_tokens": 759,
-      "output_tokens": 1198,
-      "latency_seconds": 15.173935889000006,
-      "provider_cost_usd": 0.020247,
+      "input_tokens": 1198,
+      "output_tokens": 1540,
+      "latency_seconds": 19.531098916000005,
+      "provider_cost_usd": 0.026694,
       "local_compute_cost_usd": 0.0,
       "local_storage_cost_usd": 0.0,
-      "total_observed_and_modeled_cost_usd": 0.020247,
+      "total_observed_and_modeled_cost_usd": 0.026694,
       "cost_per_successful_equivalent_admissible_outcome_usd": null,
-      "task_identity_preserved": true,
-      "required_output_hash": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
-      "actual_output_hash": "sha256:6e0e5a12715138078ebbea3e8c641910b70d46d4ac35b265e45c0fe412e00a5a",
+      "task_identity_preserved": false,
+      "required_output_hash": "sha256:155869baaef4bd023ad95e63c6a81d6ade921e92660cec351680e1aabd4d2597",
+      "actual_output_hash": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
       "admissible": false,
       "gate_failures": [
-        "MISSING_FINAL_STATE",
-        "MISMATCH_DECISIONS",
-        "MISMATCH_CLAIM_BOUNDARY",
-        "UNSUPPORTED_FIELDS:final_balance,final_risk_score,final_standing"
+        "INVALID_JSON:Extra data: line 2 column 1 (char 355)"
       ],
       "cost_evidence_status": "VERSIONED_DECLARED_RATE_NOT_INVOICE_RECONCILED"
     },
     {
       "lane_id": "stegverse-only",
       "provider": "stegverse",
-      "model": "deterministic-state-reconstructor-v1",
+      "model": "deterministic-state-reconstructor-v2",
       "governed": true,
       "operation_class": "governed_state_reconstruction",
       "status": "SUCCESSFUL_EQUIVALENT_ADMISSIBLE_OUTCOME",
@@ -267,24 +203,24 @@
       "attempts": [
         {
           "attempt": 1,
-          "normalized_hash": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
           "valid": true,
           "failures": [],
-          "latency_seconds": 1.66650000323898e-05,
-          "output_bytes": 601
+          "latency_seconds": 4.099999983964153e-07,
+          "normalized_hash": "sha256:155869baaef4bd023ad95e63c6a81d6ade921e92660cec351680e1aabd4d2597",
+          "output_bytes": 353
         }
       ],
       "input_tokens": 0,
       "output_tokens": 0,
-      "latency_seconds": 1.66650000323898e-05,
-      "provider_cost_usd": 0.0,
-      "local_compute_cost_usd": 2.222e-09,
-      "local_storage_cost_usd": 4.808e-09,
-      "total_observed_and_modeled_cost_usd": 7.03e-09,
-      "cost_per_successful_equivalent_admissible_outcome_usd": 7.03e-09,
+      "latency_seconds": 4.099999983964153e-07,
+      "provider_cost_usd": 0,
+      "local_compute_cost_usd": 5.5e-11,
+      "local_storage_cost_usd": 2.824e-09,
+      "total_observed_and_modeled_cost_usd": 2.879e-09,
+      "cost_per_successful_equivalent_admissible_outcome_usd": 2.879e-09,
       "task_identity_preserved": true,
-      "required_output_hash": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
-      "actual_output_hash": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
+      "required_output_hash": "sha256:155869baaef4bd023ad95e63c6a81d6ade921e92660cec351680e1aabd4d2597",
+      "actual_output_hash": "sha256:155869baaef4bd023ad95e63c6a81d6ade921e92660cec351680e1aabd4d2597",
       "admissible": true,
       "gate_failures": [],
       "cost_evidence_status": "MEASURED_RUNTIME_WITH_VERSIONED_DECLARED_INFRASTRUCTURE_RATES"
@@ -293,92 +229,59 @@
   "provider_pairs": [
     {
       "provider": "openai",
-      "raw_cost_usd": 0.029995,
-      "governed_cost_usd": 0.038405,
-      "governance_delta_usd": 0.00841,
-      "governance_delta_percent": 28.038006,
-      "raw_admissible": false,
-      "governed_admissible": false
+      "raw_cost_usd": 0.007355,
+      "governed_cost_usd": 0.00703,
+      "governance_delta_usd": -0.000325,
+      "governance_delta_percent": -4.418763,
+      "raw_admissible": true,
+      "governed_admissible": true
     },
     {
       "provider": "anthropic",
-      "raw_cost_usd": 0.019923,
-      "governed_cost_usd": 0.020247,
-      "governance_delta_usd": 0.000324,
-      "governance_delta_percent": 1.626261,
-      "raw_admissible": false,
+      "raw_cost_usd": 0.010461,
+      "governed_cost_usd": 0.026694,
+      "governance_delta_usd": 0.016233,
+      "governance_delta_percent": 155.176369,
+      "raw_admissible": true,
       "governed_admissible": false
     }
   ],
   "replacement_comparisons": [
     {
       "provider_lane": "openai-raw",
-      "provider_lane_cost_usd": 0.029995,
-      "stegverse_only_cost_usd": 7.03e-09,
-      "provider_to_stegverse_cost_ratio": 4266714.082504,
-      "matched_operation_modeled_reduction_percent": 99.999977,
-      "valid_only_if_both_admissible": false
+      "provider_lane_cost_usd": 0.007355,
+      "stegverse_only_cost_usd": 2.879e-09,
+      "provider_to_stegverse_cost_ratio": 2554706.495311,
+      "matched_operation_modeled_reduction_percent": 99.999961,
+      "valid_only_if_both_admissible": true
     },
     {
       "provider_lane": "openai-governed",
-      "provider_lane_cost_usd": 0.038405,
-      "stegverse_only_cost_usd": 7.03e-09,
-      "provider_to_stegverse_cost_ratio": 5463015.647226,
-      "matched_operation_modeled_reduction_percent": 99.999982,
-      "valid_only_if_both_admissible": false
+      "provider_lane_cost_usd": 0.00703,
+      "stegverse_only_cost_usd": 2.879e-09,
+      "provider_to_stegverse_cost_ratio": 2441820.076415,
+      "matched_operation_modeled_reduction_percent": 99.999959,
+      "valid_only_if_both_admissible": true
     },
     {
       "provider_lane": "anthropic-raw",
-      "provider_lane_cost_usd": 0.019923,
-      "stegverse_only_cost_usd": 7.03e-09,
-      "provider_to_stegverse_cost_ratio": 2833997.15505,
-      "matched_operation_modeled_reduction_percent": 99.999965,
-      "valid_only_if_both_admissible": false
+      "provider_lane_cost_usd": 0.010461,
+      "stegverse_only_cost_usd": 2.879e-09,
+      "provider_to_stegverse_cost_ratio": 3633553.317124,
+      "matched_operation_modeled_reduction_percent": 99.999972,
+      "valid_only_if_both_admissible": true
     },
     {
       "provider_lane": "anthropic-governed",
-      "provider_lane_cost_usd": 0.020247,
-      "stegverse_only_cost_usd": 7.03e-09,
-      "provider_to_stegverse_cost_ratio": 2880085.348506,
-      "matched_operation_modeled_reduction_percent": 99.999965,
+      "provider_lane_cost_usd": 0.026694,
+      "stegverse_only_cost_usd": 2.879e-09,
+      "provider_to_stegverse_cost_ratio": 9271969.433831,
+      "matched_operation_modeled_reduction_percent": 99.999989,
       "valid_only_if_both_admissible": false
     }
   ],
   "all_five_successful_equivalent_admissible": false,
-  "selected_lowest_cost_admissible_lane": {
-    "lane_id": "stegverse-only",
-    "provider": "stegverse",
-    "model": "deterministic-state-reconstructor-v1",
-    "governed": true,
-    "operation_class": "governed_state_reconstruction",
-    "status": "SUCCESSFUL_EQUIVALENT_ADMISSIBLE_OUTCOME",
-    "attempt_count": 1,
-    "attempts": [
-      {
-        "attempt": 1,
-        "normalized_hash": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
-        "valid": true,
-        "failures": [],
-        "latency_seconds": 1.66650000323898e-05,
-        "output_bytes": 601
-      }
-    ],
-    "input_tokens": 0,
-    "output_tokens": 0,
-    "latency_seconds": 1.66650000323898e-05,
-    "provider_cost_usd": 0.0,
-    "local_compute_cost_usd": 2.222e-09,
-    "local_storage_cost_usd": 4.808e-09,
-    "total_observed_and_modeled_cost_usd": 7.03e-09,
-    "cost_per_successful_equivalent_admissible_outcome_usd": 7.03e-09,
-    "task_identity_preserved": true,
-    "required_output_hash": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
-    "actual_output_hash": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
-    "admissible": true,
-    "gate_failures": [],
-    "cost_evidence_status": "MEASURED_RUNTIME_WITH_VERSIONED_DECLARED_INFRASTRUCTURE_RATES"
-  },
-  "total_test_cost_usd": 0.10857000703,
-  "claim_boundary": "This task measures one bounded deterministic reconstruction operation. It does not establish universal provider economics, company ROI, or fresh-inference equivalence.",
-  "publication_status": "RESEARCH_IN_PROGRESS_FAIL_CLOSED"
+  "selected_lowest_cost_admissible_lane": null,
+  "publication_status": "PUBLICATION_BLOCKED",
+  "claim_boundary": "This task measures one bounded deterministic reconstruction operation. It does not establish universal provider economics, company ROI, or fresh-inference equivalence."
 }
