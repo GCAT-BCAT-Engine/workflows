@@ -1,11 +1,11 @@
 # Five-Lane Reconstructable Governance Cost Results
 
-Status: PUBLICATION_BLOCKED
+Status: RESULTS_READY_FOR_BOUNDED_PUBLICATION
 
 | Lane | Attempts | Input | Output | Latency s | Cost USD | Admissible |
 |---|---:|---:|---:|---:|---:|---|
-| openai-raw | 1 | 307 | 194 | 5.275944 | $0.007355000000 | True |
-| openai-governed | 1 | 326 | 180 | 3.745143 | $0.007030000000 | True |
-| anthropic-raw | 1 | 362 | 625 | 7.506173 | $0.010461000000 | True |
-| anthropic-governed | 3 | 1198 | 1540 | 19.531099 | $0.026694000000 | False |
-| stegverse-only | 1 | 0 | 0 | 0.000000 | $0.000000002879 | True |
+| openai-raw | 1 | 307 | 178 | 3.424028 | $0.006875000000 | True |
+| openai-governed | 1 | 326 | 175 | 2.867607 | $0.006880000000 | True |
+| anthropic-raw | 1 | 362 | 638 | 7.939446 | $0.010656000000 | True |
+| anthropic-governed | 1 | 382 | 398 | 5.459360 | $0.007116000000 | True |
+| stegverse-only | 1 | 0 | 0 | 0.000000 | $0.000000002885 | True |
