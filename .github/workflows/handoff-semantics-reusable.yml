@@ -26,8 +26,17 @@ jobs:
           VERIFIER_REF: ${{ inputs.verifier_ref }}
         run: |
           curl --fail --silent --show-error --location \
-            "https://raw.githubusercontent.com/StegVerse-002/micro-node-runtime/f41febfd2fe9e2aec6f3594f90610ea1ffe29926/runtime/orchestrator/handoff_authority.py" \
+            "https://raw.githubusercontent.com/GCAT-BCAT-Engine/workflows/${VERIFIER_REF}/tools/handoff_authority.py" \
             --output "${RUNNER_TEMP}/handoff_authority.py"
+          cat >> "${RUNNER_TEMP}/handoff_authority.py" <<'PY'
+
+          def canonical_json(payload):
+              return json.dumps(
+                  payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False
+              ).encode("utf-8")
+
+          verify_repository = verify
+          PY
           curl --fail --silent --show-error --location \
             "https://raw.githubusercontent.com/GCAT-BCAT-Engine/workflows/${VERIFIER_REF}/tools/handoff_semantics.py" \
             --output "${RUNNER_TEMP}/handoff_semantics.py"

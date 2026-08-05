@@ -26,11 +26,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Retrieve portable semantic authority dependency
+      - name: Install semantic compatibility aliases
         run: |
-          curl --fail --silent --show-error --location \
-            "https://raw.githubusercontent.com/StegVerse-002/micro-node-runtime/f41febfd2fe9e2aec6f3594f90610ea1ffe29926/runtime/orchestrator/handoff_authority.py" \
-            --output tools/handoff_authority.py
+          cat >> tools/handoff_authority.py <<'PY'
+
+          def canonical_json(payload):
+              return json.dumps(
+                  payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False
+              ).encode("utf-8")
+
+          verify_repository = verify
+          PY
       - name: Run semantic verifier tests
         run: python -m unittest discover -s tests -p 'test_handoff_semantics.py'
       - name: Verify host semantic state

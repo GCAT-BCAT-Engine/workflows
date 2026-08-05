@@ -1,0 +1,74 @@
+{
+  "actor": {
+    "class": "chatgpt",
+    "instance": "GPT-5.6 Thinking",
+    "session_ref": "handoff-semantic-host-public-compatibility-2026-08-04"
+  },
+  "base_commit": "28915f924ab0eb6815327331f310b889012e79a6",
+  "change_id": "SV-CONT-20260804-PROVENANCE-006",
+  "changed_paths": [
+    {
+      "change_type": "modified",
+      "hash": "fda8fb24f26e7589a77b3966e9e031541ab58b59",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/config.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "3f799c767417ef3d5b2da5850f13c217862861f4",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".github/workflows/handoff-semantics-reusable.yml"
+    },
+    {
+      "change_type": "modified",
+      "hash": "eddaf92f66bedf86aefd18d09b8552bd7c2cb31a",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".github/workflows/handoff-semantics.yml"
+    },
+    {
+      "change_type": "modified",
+      "hash": "eab253c79723b78ecd31111c2ad47fa5701b93cb",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".handoff/current.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "d0ba6d21af6b7db2b626c2de10d0d08942efe6df",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "semantic host run 30962266652 private source failure observed",
+      "state": "OBSERVED_FAILURE"
+    },
+    {
+      "claim": "semantic host now uses the public host verifier with ephemeral compatibility aliases",
+      "state": "CORRECTED"
+    },
+    {
+      "claim": "semantic reconciliation rules remain unchanged and read-only",
+      "state": "PRESERVED_BOUNDARY"
+    },
+    {
+      "claim": "record 005 authority and provenance success preserved",
+      "state": "PRESERVED"
+    }
+  ],
+  "created_at": "2026-08-05T00:15:00Z",
+  "governing_handoff": {
+    "hash": "d0ba6d21af6b7db2b626c2de10d0d08942efe6df",
+    "hash_algorithm": "git-blob-sha1",
+    "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+  },
+  "record_hash": "b58651bb713add4400cc9754dc2c9f9819e7c62315136e7b3a8dcefad834856c",
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "schema": "stegverse.session.change_record.v1",
+  "unresolved_tasks": [
+    "observe successor record 006 authority, semantic, and provenance workflow results",
+    "pin capability-registry pilot only after all three gates return ALLOW",
+    "retain first read-only pilot receipts and measured delta result",
+    "transfer released semantic evidence into Master Records custody"
+  ]
+}

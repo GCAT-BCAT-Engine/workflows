@@ -40,6 +40,7 @@ execution.
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-003.json
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-004.json
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-005.json
+.continuity/change-records/SV-CONT-20260804-PROVENANCE-006.json
 .continuity/cross-repository-references.json
 .github/workflows/handoff-authority.yml
 .github/workflows/handoff-authority-reusable.yml
@@ -112,7 +113,7 @@ The semantic host is complete when:
 9. host authority, semantic, and provenance workflows all return `ALLOW`.
 
 Conditions 1–8 are installed. Condition 9 is the activation gate for successor
-record `005`.
+record `006`.
 
 ## Completed in latest pass
 
@@ -156,7 +157,12 @@ successor record 004 provenance run: 30961927202 — success
 successor record 004 semantic run: 30961927136 — failure
 failure class: HOST_API_COMPATIBILITY
 semantic rules evaluated: false
-successor record 005: portable authority dependency correction installed
+successor record 005 authority run: 30962266630 — success
+successor record 005 provenance run: 30962266678 — success
+successor record 005 semantic run: 30962266652 — failure
+failure class: PRIVATE_PORTABLE_SOURCE_UNAVAILABLE
+semantic rules evaluated: false
+successor record 006: public host compatibility shim installed
 Format A parser: installed
 multi-source field-authority table: installed
 conformance worker: installed
@@ -170,7 +176,7 @@ hosted validation: pending
 ## Remaining work
 
 ```text
-observe successor record 005 authority, semantic, and provenance workflow success
+observe successor record 006 authority, semantic, and provenance workflow success
 pin StegVerse-002/capability-registry to the immutable semantic host commit
 verify the prior capability-registry canonical-path correction remains stable
 retain the first read-only pilot receipts and measured delta result
@@ -212,7 +218,7 @@ Handoff semantics:
 
 ## Next task
 
-After successor record `005` returns `ALLOW` for authority, semantics, and
+After successor record `006` returns `ALLOW` for authority, semantics, and
 provenance, pin the capability-registry pilot to that immutable host commit.
 Preserve the existing canonical paths and all task intent, and retain
 the read-only semantic receipts before any repair authority is proposed.
