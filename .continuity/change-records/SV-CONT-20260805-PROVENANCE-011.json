@@ -1,0 +1,59 @@
+{
+  "actor": {
+    "class": "chatgpt",
+    "instance": "GPT-5.6 Thinking",
+    "session_ref": "handoff-orchestration-format-a-closure-correction-2026-08-05"
+  },
+  "base_commit": "2352e400485ff9e2b5ce3d5796c126b90f0dbc42",
+  "change_id": "SV-CONT-20260805-PROVENANCE-011",
+  "changed_paths": [
+    {
+      "change_type": "modified",
+      "hash": "6095509a02de0c1c958fe5c7f3529ea2cf224efb",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/config.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "4a38d91739f4bc72e43bad6cbbcc784ba9f585c1",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".handoff/current.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "9a6ebc5e5331fe79c2aa7551279ddb285868cf69",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "archive-ready inventory, registries, custody, dispatch, and canonical ownership remain unchanged",
+      "state": "PRESERVED"
+    },
+    {
+      "claim": "canonical handoff restores the exact Format A headings Done state for this repo and Completed in latest pass",
+      "state": "CORRECTED"
+    },
+    {
+      "claim": "completed-state entries in the corrected section are exact repository paths",
+      "state": "CORRECTED"
+    },
+    {
+      "claim": "no semantic rule, authority boundary, claim state, or archive criterion was weakened",
+      "state": "PRESERVED_BOUNDARY"
+    }
+  ],
+  "created_at": "2026-08-05T02:10:00Z",
+  "governing_handoff": {
+    "hash": "9a6ebc5e5331fe79c2aa7551279ddb285868cf69",
+    "hash_algorithm": "git-blob-sha1",
+    "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+  },
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "schema": "stegverse.session.change_record.v1",
+  "unresolved_tasks": [
+    "validate transition 011 handoff authority, semantic admission, provenance, registry, and archive-ready inventory workflows"
+  ],
+  "record_hash": "b977d1214131d2aaaff8d8154f4dd68f20a71373b870a06a5a962f4445fe1d4b"
+}

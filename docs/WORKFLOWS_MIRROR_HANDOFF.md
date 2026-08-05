@@ -7,7 +7,7 @@ This document is the single repository-wide current handoff for
 `.handoff/current.json`; commit-bound continuity is declared in
 `.continuity/config.json`.
 
-The completed originating-session inventory is:
+The completed originating-session execution inventory is:
 
 ```text
 data/session-consolidation/handoff-orchestration-session-20260804.json
@@ -48,6 +48,8 @@ repair, release, publication, deployment, or activation authority.
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-007.json
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-008.json
 .continuity/change-records/SV-CONT-20260805-PROVENANCE-009.json
+.continuity/change-records/SV-CONT-20260805-PROVENANCE-010.json
+.continuity/change-records/SV-CONT-20260805-PROVENANCE-011.json
 .github/workflows/handoff-authority.yml
 .github/workflows/handoff-authority-reusable.yml
 .github/workflows/handoff-semantics.yml
@@ -93,94 +95,108 @@ handoff authority ALLOW
   -> event intake and next-node selection
 ```
 
-## Completed session goals
+## Done state for this repo
 
-Handoff authority:
+The originating handoff-orchestration session is complete when:
+
+1. one repository-wide handoff is machine-authoritative in every reviewed repository;
+2. handoff authority and commit-bound provenance are independently verified;
+3. Format A conformance, repository-state delta, and reconciliation remain separate receipts;
+4. repair remains disabled;
+5. all five reviewed Format A repositories are `COMPLETE_READ_ONLY`;
+6. released semantic evidence is accepted through bounded Master Records custody;
+7. Runtime Orchestrator event intake and direct next-node selection require dual verified-state admission;
+8. every adjacent incomplete goal has an exact canonical owner and location;
+9. no originating-session active or unassigned claim remains; and
+10. the archive-ready execution inventory passes hosted verification.
+
+All ten conditions are satisfied subject to the current transition's hosted
+revalidation.
+
+## Completed in latest pass
 
 ```text
-reviewed corpus: 6/6 complete
-bounded custody: complete
-authority_effect: NONE
+data/handoff-semantic-adoption.json
+data/session-consolidation/handoff-orchestration-session-20260804.json
+schemas/handoff-semantic-adoption-registry.schema.json
+schemas/session-execution-inventory.schema.json
+tools/verify_handoff_semantic_adoption.py
+tools/verify_session_execution_inventory.py
+tests/test_handoff_semantic_adoption.py
+tests/test_session_execution_inventory.py
+.continuity/cross-repository-references.json
+.continuity/change-records/SV-CONT-20260804-PROVENANCE-008.json
+.continuity/change-records/SV-CONT-20260805-PROVENANCE-009.json
+.continuity/change-records/SV-CONT-20260805-PROVENANCE-010.json
+.continuity/change-records/SV-CONT-20260805-PROVENANCE-011.json
 ```
 
-Continuity provenance:
+Validation and integration evidence:
 
 ```text
-host and reviewed corpus: complete
-bounded custody: complete
-```
-
-Read-only handoff semantics:
-
-```text
-portable source: complete
-reusable host: complete
-reviewed Format A corpus: 5/5 COMPLETE_READ_ONLY
+semantic corpus: 5/5 COMPLETE_READ_ONLY
 conformance delta total: 0
 state delta total: 0
 fixed points: 5/5
 repair enabled: 0/5
-expanded bounded custody: complete
-custody run: 30966692695 — success
-custody artifact: 8914977815
-custody artifact digest: sha256:fbba1c64642fe6a9900b04a95ccc568e17acc4e51e4ee6adf524fe31401c76cb
-```
-
-Runtime Orchestrator verified-state admission:
-
-```text
-release commit: e9d6a6d00aab18aefbdcd0a07eae656d5a53e541
-authority/semantics run: 30967835815 — success
-provenance run: 30967836204 — success
-PWC-003 run: 30967835892 — success
-runtime validation run: 30967835845 — success
+central transition 008 authority run: 30966222156 — success
+central transition 008 provenance run: 30966222118 — success
+central transition 008 semantic and inventory run: 30966222149 — success
+expanded semantic custody run: 30966692695 — success
+expanded semantic custody artifact: 8914977815
+expanded semantic custody artifact digest: sha256:fbba1c64642fe6a9900b04a95ccc568e17acc4e51e4ee6adf524fe31401c76cb
+Runtime Orchestrator release commit: e9d6a6d00aab18aefbdcd0a07eae656d5a53e541
+Runtime Orchestrator authority and semantic run: 30967835815 — success
+Runtime Orchestrator provenance run: 30967836204 — success
+Runtime Orchestrator PWC-003 run: 30967835892 — success
+Runtime Orchestrator validation run: 30967835845 — success
 verified-state receipt: a523eb60f2d94485c77427e3f2478b1c54815252cc302420b3c484a33e8ecf72
-full verification: PASS
-authority_effect: NONE
-node_executed: false
-```
-
-Session coordination:
-
-```text
-total originating-session goals: 11
-complete: 6
-merged into exact canonical workstreams: 5
-active session claims: 0
-unassigned tasks: 0
+session goals complete or transferred: 11/11
+active originating-session claims: 0
+unassigned originating-session tasks: 0
 archive state: READY
 ```
 
-## Adjacent canonical workstreams
+## Remaining work
 
-These goals remain project work but no longer belong to the originating
-session:
+No unique implementation, validation, integration, custody, propagation,
+reconciliation, or observation work remains for the originating session.
+
+Adjacent project work continues only under these canonical owners:
 
 ```text
-DECISION-001
-  owner: StegVerse-002/admissibility-gateway
-  location: docs/ADMISSIBILITY_GATEWAY_MIRROR_HANDOFF.md
-
-PLANE-001
-  owner: StegVerse-002/micro-node-runtime
-  location: tools/plane_guard.py
-
-INGRESS-001
-  owner: StegVerse-002/core-lite
-  location: scripts/candidate_bundle_review.py
-
-TEST-001
-  owner: GCAT-BCAT-Engine/workflows
-  location: tests/test_continuity_provenance.py
-
-PROP-001
-  owner: GCAT-BCAT-Engine/Publisher
-  location: PUBLISHER_MIRROR_HANDOFF.md
+DECISION-001 — StegVerse-002/admissibility-gateway/docs/ADMISSIBILITY_GATEWAY_MIRROR_HANDOFF.md
+PLANE-001 — StegVerse-002/micro-node-runtime/tools/plane_guard.py
+INGRESS-001 — StegVerse-002/core-lite/scripts/candidate_bundle_review.py
+TEST-001 — GCAT-BCAT-Engine/workflows/tests/test_continuity_provenance.py
+PROP-001 — GCAT-BCAT-Engine/Publisher/PUBLISHER_MIRROR_HANDOFF.md
 ```
 
-Their exact completion, validation, integration, evidence, and next actions are
-preserved in the execution inventory. They are not silently treated as
-complete.
+Future changes to these contracts require new claims and successor continuity
+records. Governed semantic repair remains unauthorized.
+
+## Destination installs
+
+```text
+GCAT-BCAT-Engine/workflows — canonical registries and execution inventory
+StegVerse-002/micro-node-runtime — verified-state Runtime Orchestrator admission
+master-records/orchestration — bounded authority, provenance, and semantic custody
+StegVerse-002/StegGuardian — read-only semantic adoption complete
+StegVerse-002/StegProfile — read-only semantic adoption complete; private lane excluded
+StegVerse-002/core-lite — read-only semantic adoption complete
+StegVerse-002/admissibility-gateway — read-only semantic adoption complete
+StegVerse-002/capability-registry — read-only semantic pilot complete
+```
+
+No new public release claim was created. Site, Publisher, admissibility-wiki,
+and stegguardian-wiki propagation remains controlled by `PROP-001` and each
+owning repository's release criteria.
+
+## Next task
+
+Repository-native owners continue the five adjacent canonical workstreams from
+the exact execution-inventory locations above. No ChatGPT session is required
+to preserve or mediate the originating session state.
 
 ## Claims and collision state
 
@@ -198,37 +214,6 @@ TEST-001 — MERGED_INTO_CANONICAL_WORKSTREAM
 PROP-001 — MERGED_INTO_CANONICAL_WORKSTREAM
 stale or indefinite originating-session claims: 0
 ```
-
-## Destination installs
-
-```text
-GCAT-BCAT-Engine/workflows — canonical registries and execution inventory
-StegVerse-002/micro-node-runtime — verified-state Runtime Orchestrator admission
-master-records/orchestration — bounded authority, provenance, and semantic custody
-StegVerse-002/StegGuardian — read-only semantic adoption complete
-StegVerse-002/StegProfile — read-only semantic adoption complete; private lane excluded
-StegVerse-002/core-lite — read-only semantic adoption complete
-StegVerse-002/admissibility-gateway — read-only semantic adoption complete
-StegVerse-002/capability-registry — read-only semantic pilot complete
-```
-
-No new public release claim was created. Site, Publisher, admissibility-wiki,
-and stegguardian-wiki propagation remains controlled by the exact owning
-repository release criteria recorded in `PROP-001`.
-
-## Remaining work
-
-No unique implementation, validation, integration, custody, propagation,
-reconciliation, or observation work remains for the originating session.
-
-Future changes to these contracts require new claims and successor continuity
-records. Governed semantic repair remains unauthorized.
-
-## Next task
-
-Repository-native owners continue the five adjacent canonical workstreams from
-their exact inventory locations. No ChatGPT session is required to preserve or
-mediate the originating session state.
 
 ## Completion and archive measures
 
