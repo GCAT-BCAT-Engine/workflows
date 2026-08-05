@@ -1,27 +1,28 @@
 {
-  "active_goal": "Complete semantic corpus consolidation, bounded expanded custody, and dual-gate Runtime Orchestrator admission; durably transfer adjacent repository-correction workstreams.",
+  "active_goal": "All session-specific handoff-authority, semantic, provenance, custody, and Runtime Orchestrator dispatch goals are complete or durably transferred.",
   "archive_conditions": [
-    "SEM-CUSTODY-002 expanded custody returns hosted ALLOW",
-    "DISPATCH-001 is installed, validated, reflected in micro-node handoffs, and its claim is released",
-    "central semantic registry and this inventory pass hosted verification",
-    "all session-specific requirements remain assigned to exact durable locations"
+    "SEM-CUSTODY-002 expanded custody returned ALLOW at run 30966692695",
+    "DISPATCH-001 was released at micro-node commit e9d6a6d00aab18aefbdcd0a07eae656d5a53e541",
+    "micro-node release workflows 30967835815, 30967836204, 30967835892, and 30967835845 succeeded",
+    "central semantic registry and execution inventory transition 008 returned authority, provenance, and semantic ALLOW",
+    "all adjacent incomplete goals are assigned to exact canonical repositories and locations",
+    "zero session-specific active or unassigned claims remain"
   ],
-  "archive_state": "NOT_READY",
+  "archive_state": "READY",
   "canonical_continuation": {
     "branch": "main",
     "handoff": "docs/WORKFLOWS_MIRROR_HANDOFF.md",
     "path": "data/session-consolidation/handoff-orchestration-session-20260804.json",
     "repository": "GCAT-BCAT-Engine/workflows"
   },
-  "generated_at": "2026-08-05T01:00:00Z",
-  "inventory_hash": "637046759a15a2e938b65196c0836aaa6da30700263ce0d5e61caebcc6c1f399",
+  "generated_at": "2026-08-05T02:00:00Z",
   "original_session_goal": "Re-evaluate the Claude repository-correction plan, normalize handoff authority before code correction, and make continuity authority, semantic reconciliation, and commit-bound provenance operational across the reviewed StegVerse corpus.",
-  "role": "ACTIVE_DISTINCT_SUPPORT",
+  "role": "COMPLETE_ARCHIVE",
   "schema": "stegverse.session.execution_inventory.v1",
   "session_id": "handoff-orchestration-readiness-2026-08-04",
   "summary": {
-    "active_distinct_support": 2,
-    "complete": 4,
+    "active_distinct_support": 0,
+    "complete": 6,
     "merged_into_canonical_workstream": 5,
     "total_session_goals": 11,
     "unassigned": 0
@@ -73,59 +74,59 @@
       "validation_state": "host and portable-source gates green"
     },
     {
-      "archival_dependency": "expanded registry commit and hosted registry verification",
+      "archival_dependency": "none",
       "branch": "main",
       "claim_state": "COMPLETE",
-      "completion_state": "five of five complete read-only",
+      "completion_state": "five of five complete read-only and centrally verified",
       "destination_repository": "GCAT-BCAT-Engine/workflows",
       "evidence_location": "data/handoff-semantic-adoption.json",
-      "integration_state": "central registry consolidation in progress",
+      "integration_state": "central registry complete and hosted green",
       "location": "data/handoff-semantic-adoption.json",
-      "next_executable_action": "validate this consolidated registry in the semantic host workflow",
+      "next_executable_action": "none",
       "originating_session_goal": "Propagate pinned read-only semantic admission to the reviewed Format A repositories.",
       "owner": "semantic adoption registry",
       "task_id": "SEM-PROP-001",
-      "validation_state": "all semantic and provenance release transitions green"
+      "validation_state": "authority 30966222156; provenance 30966222118; semantic/inventory 30966222149"
     },
     {
-      "archival_dependency": "new bounded custody transition and hosted ALLOW",
+      "archival_dependency": "none",
       "branch": "main",
       "claim_expiration_or_release_condition": "release when expanded custody workflow returns ALLOW; mark BLOCKED if source registry verification denies",
-      "claim_state": "CLAIMED_FOR_INTEGRATION",
+      "claim_state": "COMPLETE",
       "claim_timestamp": "2026-08-05T01:00:00Z",
       "collision_boundaries": "do not modify or supersede existing pilot custody; append a new custody transition; authority_effect remains NONE",
-      "completion_state": "pilot custody complete; expanded corpus custody missing",
+      "completion_state": "expanded five-repository corpus accepted for bounded custody",
       "destination_repository": "master-records/orchestration",
       "evidence_location": "HANDOFF_SEMANTIC_CUSTODY_HANDOFF.md",
       "expected_evidence": "custody commit, workflow run, artifact digest, custody receipt hash",
-      "integration_state": "expanded source registry not yet accepted",
-      "location": "custody/handoff-semantics/adoption-registry.custody.json",
-      "next_executable_action": "accept the promoted five-repository registry through a new custody transition",
-      "next_task_after_release": "record expanded custody evidence in central and Master Records handoffs",
+      "integration_state": "complete and released",
+      "location": "custody/handoff-semantics/adoption-registry-expanded.custody.json",
+      "next_executable_action": "none",
+      "next_task_after_release": "future registry versions require new separately identified custody transitions",
       "originating_session_goal": "Retain released semantic corpus evidence without converting custody into authority.",
       "owner": "Master Records semantic custody lane",
       "task_id": "SEM-CUSTODY-002",
-      "validation_state": "existing custody run 30963744926 green"
+      "validation_state": "custody workflow 30966692695 success; 12 custody tests pass"
     },
     {
-      "archival_dependency": "implementation, tests, hosted workflows, handoff update, claim release",
+      "archival_dependency": "none",
       "branch": "main",
       "claim_expiration_or_release_condition": "release after dual-gate tests and hosted authority/provenance/runtime workflows pass; mark BLOCKED on a concurrent successor and rebase through a new change record",
-      "claim_state": "CLAIMED_FOR_IMPLEMENTATION",
+      "claim_state": "COMPLETE",
       "claim_timestamp": "2026-08-05T01:00:00Z",
       "collision_boundaries": "preserve semantic reconciliation successor, sovereign migration lane, and repository-wide Goal 8 handoff; modify only dispatch-gate surfaces and scoped continuity handoff",
-      "completion_state": "missing on current default branch after prior branch collision",
+      "completion_state": "dual verified-state admission complete and released",
       "destination_repository": "StegVerse-002/micro-node-runtime",
       "evidence_location": "docs/CONTINUITY_PROVENANCE_ADOPTION_HANDOFF.md",
       "expected_evidence": "micro-node commit, change record, unit tests, full verification receipt, workflow runs and artifacts",
-      "integration_state": "not integrated into orchestrator.py and next_node_selector.py",
+      "integration_state": "event intake and direct selector enforce authority plus provenance",
       "location": "runtime/orchestrator/verified_state_gate.py",
-      "next_executable_action": "install and test dual receipt verification at event intake and direct next-node selection",
-      "next_task_after_release": "promote dispatch completion to this inventory and close session-specific work",
+      "next_executable_action": "none",
+      "next_task_after_release": "future mutations require successor continuity records and the same dual gate",
       "originating_session_goal": "Make handoff authority and continuity provenance operational prerequisites for Runtime Orchestrator next-node selection.",
-      "owner": "this session distinct integration lane",
+      "owner": "Runtime Orchestrator repository-native lane",
       "task_id": "DISPATCH-001",
-      "validation_state": "not installed"
+      "validation_state": "authority/semantics 30967835815; provenance 30967836204; PWC-003 30967835892; runtime 30967835845"
     },
     {
       "archival_dependency": "none for this session after transfer",
@@ -202,5 +203,6 @@
       "task_id": "PROP-001",
       "validation_state": "semantic/continuity evidence is internal control-plane evidence"
     }
-  ]
+  ],
+  "inventory_hash": "781bd7d97d1a7d06b97579ab82af8783aaa089dbc2e9e78df2ca1e1c74549281"
 }

@@ -4,10 +4,16 @@
 
 This document is the single repository-wide current handoff for
 `GCAT-BCAT-Engine/workflows`. Machine authority is declared in
-`.handoff/current.json`; the current commit-bound transition is declared in
+`.handoff/current.json`; commit-bound continuity is declared in
 `.continuity/config.json`.
 
-Scoped program lanes remain subordinate:
+The completed originating-session inventory is:
+
+```text
+data/session-consolidation/handoff-orchestration-session-20260804.json
+```
+
+Scoped program handoffs remain subordinate:
 
 ```text
 SV_COST_MIRROR_HANDOFF.md
@@ -15,24 +21,17 @@ docs/TEN_ADVANCES_COST_ESTIMATION_MIRROR_HANDOFF.md
 docs/GOVERNED_RESEARCH_ENGINE_HANDOFF.md
 ```
 
-The execution inventory for the originating handoff-orchestration session is:
-
-```text
-data/session-consolidation/handoff-orchestration-session-20260804.json
-```
-
-Live default-branch state, Git history, workflow runs, retained artifacts,
-receipts, custody records, validated change records, and verified adoption
-registries override historical chat claims.
+Live Git state, workflow runs, artifacts, receipts, custody records, and
+validated registries override historical chat claims.
 
 ## Role
 
 This repository owns reusable handoff authority, read-only semantic
-reconciliation, continuity provenance, cross-repository adoption registries,
-and session-consolidation coordination.
+reconciliation, continuity provenance, adoption registries, and durable session
+coordination.
 
 Workflow success is evidence. It is not execution, admissibility, custody,
-repair, release, publication, deployment, or irreversible-transition authority.
+repair, release, publication, deployment, or activation authority.
 
 ## Current installed files
 
@@ -48,6 +47,7 @@ repair, release, publication, deployment, or irreversible-transition authority.
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-006.json
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-007.json
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-008.json
+.continuity/change-records/SV-CONT-20260805-PROVENANCE-009.json
 .github/workflows/handoff-authority.yml
 .github/workflows/handoff-authority-reusable.yml
 .github/workflows/handoff-semantics.yml
@@ -58,20 +58,17 @@ tools/handoff_authority.py
 tools/handoff_semantics.py
 tools/continuity_provenance.py
 tools/verify_handoff_semantic_adoption.py
+tools/verify_session_execution_inventory.py
 tests/test_handoff_authority.py
 tests/test_handoff_semantics.py
 tests/test_continuity_provenance.py
 tests/test_handoff_semantic_adoption.py
-config/handoff-field-authority.format-a-v1.json
-schemas/handoff-semantic-adoption-registry.schema.json
-docs/HANDOFF_ORCHESTRATION_CONTRACT.md
-docs/HANDOFF_SEMANTIC_RECONCILIATION_CONTRACT.md
-docs/CONTINUITY_PROVENANCE_CONTRACT.md
-docs/WORKFLOWS_MIRROR_HANDOFF.md
+tests/test_session_execution_inventory.py
 data/handoff-authority-adoption.json
 data/continuity-provenance-adoption.json
 data/handoff-semantic-adoption.json
 data/session-consolidation/handoff-orchestration-session-20260804.json
+docs/WORKFLOWS_MIRROR_HANDOFF.md
 ```
 
 ## Current working path
@@ -79,124 +76,176 @@ data/session-consolidation/handoff-orchestration-session-20260804.json
 ```text
 repository event
   -> governing handoff authority ALLOW
-  -> Format A conformance
-  -> repository-authoritative state comparison
-  -> bounded read-only reconciliation
-  -> commit-bound Git-diff and content-hash verification
-  -> required cross-repository reference verification
-  -> continuity provenance ALLOW
-  -> reviewed adoption-registry verification
-  -> standing and next-node selection
-  -> bounded Master Records custody
+  -> read-only semantic admission and reconciliation
+  -> commit-bound provenance ALLOW
+  -> validated adoption registry or execution inventory
+  -> hash-pinned cross-repository evidence
+  -> bounded Master Records custody where applicable
+  -> canonical repository-native continuation
 ```
 
-Reusable workflows execute in the caller checkout and are pinned by consumers
-to immutable host commits.
-
-## Done state for this repo
-
-The continuity foundation is complete when:
-
-1. one governing handoff is machine verified;
-2. authority, conformance, state delta, reconciliation, and provenance remain
-   separate receipts;
-3. intent and task fields are not mechanically reconciled;
-4. bounded-loop exhaustion and oscillation fail closed;
-5. repair remains disabled;
-6. reusable execution occurs in caller context;
-7. all five reviewed Format A repositories reach `COMPLETE_READ_ONLY`;
-8. the central registry rejects incomplete, duplicate, tampered, non-ALLOW, or
-   repair-enabled corpus state;
-9. released evidence is hash-pinned; and
-10. unresolved session goals have exact owners and durable locations.
-
-Conditions 1–10 are installed. Hosted validation of transition `008` is the
-current activation check.
-
-## Completed in latest pass
-
-Core host and source:
+Runtime Orchestrator dispatch additionally enforces:
 
 ```text
-portable source: StegVerse-002/micro-node-runtime@c0630fab9759d1a4e9cb62b3ba13ff818cf819f3
-reusable host: ec8dc192617b4f145ccfe850d58a9cb803016d19
-host authority run: 30962541372 — success
-host semantic run: 30962541426 — success
-host provenance run: 30962541361 — success
-repair mode: READ_ONLY
-governed repair: NOT_AUTHORIZED
+handoff authority ALLOW
+  + continuity provenance ALLOW
+  -> verified-state gate ALLOW
+  -> event intake and next-node selection
 ```
 
-Reviewed semantic corpus:
+## Completed session goals
+
+Handoff authority:
 
 ```text
-StegVerse-002/capability-registry — COMPLETE_READ_ONLY
-StegVerse-002/StegGuardian — COMPLETE_READ_ONLY
-StegVerse-002/StegProfile — COMPLETE_READ_ONLY
-StegVerse-002/core-lite — COMPLETE_READ_ONLY
-StegVerse-002/admissibility-gateway — COMPLETE_READ_ONLY
-conformance deltas: 0 across 5/5
-state deltas: 0 across 5/5
-reconciliation: FIXED_POINT_REACHED across 5/5
-repair_enabled: false across 5/5
-```
-
-StegGuardian's initial DENY remains retained. The correction changed stale
-descriptive state claims into exact repository paths; no semantic rule was
-weakened.
-
-Existing custody:
-
-```text
-handoff authority custody — COMPLETE
-continuity provenance custody — COMPLETE
-semantic pilot custody — COMPLETE
-semantic custody run: 30963744926 — success
+reviewed corpus: 6/6 complete
+bounded custody: complete
 authority_effect: NONE
-repair_authority: NOT_AUTHORIZED
 ```
 
-Transition `008` adds:
+Continuity provenance:
 
 ```text
-five-repository semantic registry
-deterministic registry verifier and four negative/positive stdlib tests
-nine hash-pinned required cross-repository references
-complete session execution inventory with zero unassigned tasks
+host and reviewed corpus: complete
+bounded custody: complete
 ```
 
-## Remaining work
+Read-only handoff semantics:
 
 ```text
-Accept the five-repository registry through a new bounded Master Records custody transition.
-Install authority-plus-provenance verified-state admission at Runtime Orchestrator event intake and direct next-node selection.
-Retain additional read-only measurements before any governed repair proposal.
-Continue decision-envelope, plane-boundary, candidate-ingress, and portable-consumer work only through the exact canonical owners recorded in the session inventory.
-Complete the pre-existing repository-agnostic sandbox builder under its existing owner.
+portable source: complete
+reusable host: complete
+reviewed Format A corpus: 5/5 COMPLETE_READ_ONLY
+conformance delta total: 0
+state delta total: 0
+fixed points: 5/5
+repair enabled: 0/5
+expanded bounded custody: complete
+custody run: 30966692695 — success
+custody artifact: 8914977815
+custody artifact digest: sha256:fbba1c64642fe6a9900b04a95ccc568e17acc4e51e4ee6adf524fe31401c76cb
 ```
 
-Decision vocabulary, plane boundary, candidate ingress, consumer tests, and
-publication are adjacent canonical workstreams. They are not completion claims
-of semantic reconciliation.
+Runtime Orchestrator verified-state admission:
+
+```text
+release commit: e9d6a6d00aab18aefbdcd0a07eae656d5a53e541
+authority/semantics run: 30967835815 — success
+provenance run: 30967836204 — success
+PWC-003 run: 30967835892 — success
+runtime validation run: 30967835845 — success
+verified-state receipt: a523eb60f2d94485c77427e3f2478b1c54815252cc302420b3c484a33e8ecf72
+full verification: PASS
+authority_effect: NONE
+node_executed: false
+```
+
+Session coordination:
+
+```text
+total originating-session goals: 11
+complete: 6
+merged into exact canonical workstreams: 5
+active session claims: 0
+unassigned tasks: 0
+archive state: READY
+```
+
+## Adjacent canonical workstreams
+
+These goals remain project work but no longer belong to the originating
+session:
+
+```text
+DECISION-001
+  owner: StegVerse-002/admissibility-gateway
+  location: docs/ADMISSIBILITY_GATEWAY_MIRROR_HANDOFF.md
+
+PLANE-001
+  owner: StegVerse-002/micro-node-runtime
+  location: tools/plane_guard.py
+
+INGRESS-001
+  owner: StegVerse-002/core-lite
+  location: scripts/candidate_bundle_review.py
+
+TEST-001
+  owner: GCAT-BCAT-Engine/workflows
+  location: tests/test_continuity_provenance.py
+
+PROP-001
+  owner: GCAT-BCAT-Engine/Publisher
+  location: PUBLISHER_MIRROR_HANDOFF.md
+```
+
+Their exact completion, validation, integration, evidence, and next actions are
+preserved in the execution inventory. They are not silently treated as
+complete.
+
+## Claims and collision state
+
+```text
+HAO-001 — COMPLETE
+PROV-001 — COMPLETE
+SEM-HOST-001 — COMPLETE
+SEM-PROP-001 — COMPLETE
+SEM-CUSTODY-002 — COMPLETE / RELEASED
+DISPATCH-001 — COMPLETE / RELEASED
+DECISION-001 — MERGED_INTO_CANONICAL_WORKSTREAM
+PLANE-001 — MERGED_INTO_CANONICAL_WORKSTREAM
+INGRESS-001 — MERGED_INTO_CANONICAL_WORKSTREAM
+TEST-001 — MERGED_INTO_CANONICAL_WORKSTREAM
+PROP-001 — MERGED_INTO_CANONICAL_WORKSTREAM
+stale or indefinite originating-session claims: 0
+```
 
 ## Destination installs
 
 ```text
-reviewed handoff authority corpus — COMPLETE
-reviewed continuity-provenance corpus — COMPLETE
-reviewed read-only semantic corpus — COMPLETE
-master-records/orchestration authority custody — COMPLETE
-master-records/orchestration provenance custody — COMPLETE
-master-records/orchestration semantic pilot custody — COMPLETE
-master-records/orchestration expanded semantic custody — CLAIMED_FOR_INTEGRATION
-StegVerse-002/micro-node-runtime dual-gate dispatch — CLAIMED_FOR_IMPLEMENTATION
-GCAT-BCAT-Engine/Publisher and public wikis—no new release claim from this lane
+GCAT-BCAT-Engine/workflows — canonical registries and execution inventory
+StegVerse-002/micro-node-runtime — verified-state Runtime Orchestrator admission
+master-records/orchestration — bounded authority, provenance, and semantic custody
+StegVerse-002/StegGuardian — read-only semantic adoption complete
+StegVerse-002/StegProfile — read-only semantic adoption complete; private lane excluded
+StegVerse-002/core-lite — read-only semantic adoption complete
+StegVerse-002/admissibility-gateway — read-only semantic adoption complete
+StegVerse-002/capability-registry — read-only semantic pilot complete
 ```
+
+No new public release claim was created. Site, Publisher, admissibility-wiki,
+and stegguardian-wiki propagation remains controlled by the exact owning
+repository release criteria recorded in `PROP-001`.
+
+## Remaining work
+
+No unique implementation, validation, integration, custody, propagation,
+reconciliation, or observation work remains for the originating session.
+
+Future changes to these contracts require new claims and successor continuity
+records. Governed semantic repair remains unauthorized.
 
 ## Next task
 
-Validate transition `008`. Then accept the promoted five-repository registry
-into bounded Master Records custody and install the dual-gate Runtime
-Orchestrator admission boundary. The exact claim, collision, evidence, and
-release conditions are in
+Repository-native owners continue the five adjacent canonical workstreams from
+their exact inventory locations. No ChatGPT session is required to preserve or
+mediate the originating session state.
+
+## Completion and archive measures
+
+```text
+developed session-control files: 14/14
+scaffolding or stubs: 0
+missing required session-control files: 0
+validation: 9/9
+integration: 9/9
+session goals completed or transferred: 11/11
+session consolidation: 11/11
+archival readiness: 100%
+```
+
+## Archive condition
+
+All primary, subsidiary, and adjacent goals are complete, explicitly
+superseded, or durably transferred. The exact canonical continuation is
 `data/session-consolidation/handoff-orchestration-session-20260804.json`.
+Deleting or archiving the originating conversation does not impair execution.
