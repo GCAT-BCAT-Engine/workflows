@@ -1,5 +1,5 @@
 {
-  "record_hash": "48072b6de7de295ae23703ceb6651cbe5b060482f8f8e95818ff4ae0a2090ccd",
+  "record_hash": "b6aedb0a17efdc71554a1e750436e379adaec7f9233bb7a13e0cb50255c44848",
   "references": [
     {
       "content_hash": "e369aba1841f6f76c4c7f0c4d733bdbfbeaa88b0",
@@ -28,6 +28,22 @@
       "verification_evidence": [
         "workflow_run:30958850868",
         "custody_receipt:f99056b1295e4787617e489e776b4a6a89d769c443f237e83236a05cb2165684"
+      ],
+      "verification_status": "VERIFIED"
+    },
+    {
+      "content_hash": "8454e12d6cf659dd38b8a3fdffc072f5cc83086e",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "runtime/orchestrator/handoff_semantics.py",
+      "reference_id": "portable-handoff-semantic-verifier",
+      "relationship": "portable_contract_source",
+      "repository": "StegVerse-002/micro-node-runtime",
+      "required": true,
+      "source_commit": "c0630fab9759d1a4e9cb62b3ba13ff818cf819f3",
+      "verification_evidence": [
+        "workflow_run:30961106607",
+        "provenance_run:30961106954",
+        "commit:c0630fab9759d1a4e9cb62b3ba13ff818cf819f3"
       ],
       "verification_status": "VERIFIED"
     }

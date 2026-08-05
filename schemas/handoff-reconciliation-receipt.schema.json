@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/handoff-reconciliation-receipt.schema.json",
+  "title": "Handoff reconciliation convergence receipt",
+  "type": "object",
+  "required": ["receipt_type", "repository", "pass_number", "max_reconciliation_passes", "delta_fingerprint", "fixed_point_reached", "status", "terminal_decision", "processing_disposition", "repair_enabled", "receipt_hash"],
+  "properties": {
+    "receipt_type": {"const": "stegverse.handoff_reconciliation.receipt.v1"},
+    "repository": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+    "pass_number": {"type": "integer", "minimum": 1},
+    "max_reconciliation_passes": {"type": "integer", "minimum": 1},
+    "delta_fingerprint": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "fixed_point_reached": {"type": "boolean"},
+    "status": {"enum": ["FIXED_POINT_REACHED", "DELTAS_REMAIN", "MAX_PASSES_EXCEEDED", "OSCILLATION_DETECTED"]},
+    "terminal_decision": {"enum": ["ALLOW", "CONDITIONAL", "FAIL_CLOSED"]},
+    "processing_disposition": {"enum": ["NONE", "REVIEW_REQUIRED", "BLOCKED"]},
+    "repair_enabled": {"const": false},
+    "receipt_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "additionalProperties": true
+}

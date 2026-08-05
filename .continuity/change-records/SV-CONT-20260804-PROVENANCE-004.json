@@ -1,0 +1,139 @@
+{
+  "actor": {
+    "class": "chatgpt",
+    "instance": "GPT-5.6 Thinking",
+    "session_ref": "handoff-semantic-reconciliation-2026-08-04"
+  },
+  "base_commit": "4e698a44be20e8b4ae0cb96c4abdec31716b80f2",
+  "change_id": "SV-CONT-20260804-PROVENANCE-004",
+  "changed_paths": [
+    {
+      "change_type": "modified",
+      "hash": "2ea8d9bc1b95e811138647429c275d19cfae6cc8",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/config.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "342a6f7ac108350bfa3b7320e056db5c1b1c12a3",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/cross-repository-references.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "23049454a823d489fe15330cc51d45cf9401263f",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".github/workflows/handoff-semantics-reusable.yml"
+    },
+    {
+      "change_type": "added",
+      "hash": "982220dfbd2d6816e95f5d2668042901e69efd23",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".github/workflows/handoff-semantics.yml"
+    },
+    {
+      "change_type": "modified",
+      "hash": "26a973273d9b1a6b6c3491496449643347bb16b5",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".handoff/current.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "09c7280719db705f89db2bb0434074bc009f5fd2",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "config/handoff-field-authority.format-a-v1.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "dc570c8223fbc17be30607b66a07ef6569157328",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/HANDOFF_ORCHESTRATION_CONTRACT.md"
+    },
+    {
+      "change_type": "added",
+      "hash": "769df71c2fccf983c58f91345d6fe0f8f6ec7996",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/HANDOFF_SEMANTIC_RECONCILIATION_CONTRACT.md"
+    },
+    {
+      "change_type": "modified",
+      "hash": "3e537717431db8be1f250abb6d447b42d118bd59",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+    },
+    {
+      "change_type": "added",
+      "hash": "3b7c0b68c5d621974606baddda5b888a3f93598a",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "schemas/handoff-conformance-receipt.schema.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "058235f80598259293a209bccef448d31f7a4b99",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "schemas/handoff-field-authority.schema.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "0e29374689a23e5a285ed65bb7c745ac514d1035",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "schemas/handoff-reconciliation-receipt.schema.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "33c792549f01a9a2bc3ddcbfeb3875a3cc30d6ae",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "schemas/handoff-state-delta-receipt.schema.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "f2e0399d2d009f905b544e38ad946ebb5a8a2550",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "tests/test_handoff_semantics.py"
+    },
+    {
+      "change_type": "added",
+      "hash": "0f3f930c5fb1522536a363351713bd83b312273a",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "tools/handoff_semantics.py"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "read-only Format A semantic reconciliation host installed",
+      "state": "IMPLEMENTED"
+    },
+    {
+      "claim": "portable semantic source pinned to verified commit and content hash",
+      "state": "VERIFIED_EXTERNAL_REFERENCE"
+    },
+    {
+      "claim": "conformance, state delta, and bounded reconciliation remain separate receipts",
+      "state": "IMPLEMENTED"
+    },
+    {
+      "claim": "automated handoff repair remains disabled",
+      "state": "PRESERVED_BOUNDARY"
+    },
+    {
+      "claim": "predecessor authority and provenance adoption state preserved",
+      "state": "PRESERVED"
+    }
+  ],
+  "created_at": "2026-08-04T23:50:00Z",
+  "governing_handoff": {
+    "hash": "3e537717431db8be1f250abb6d447b42d118bd59",
+    "hash_algorithm": "git-blob-sha1",
+    "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+  },
+  "record_hash": "3318ca81f7d90d7930b941ba09a79ef457f33faff0c1cc108fa25353453e15e0",
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "schema": "stegverse.session.change_record.v1",
+  "unresolved_tasks": [
+    "observe successor record 004 authority, semantic, and provenance workflow results",
+    "pin StegVerse-002/capability-registry to the immutable semantic host commit",
+    "retain first read-only pilot receipts and measured false-positive result",
+    "transfer released semantic evidence into Master Records custody",
+    "design governed repair proposals and append-only repair ledger after pilot evidence"
+  ]
+}

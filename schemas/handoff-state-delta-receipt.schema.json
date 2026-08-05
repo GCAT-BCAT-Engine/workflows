@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/handoff-state-delta-receipt.schema.json",
+  "title": "Read-only handoff state delta receipt",
+  "type": "object",
+  "required": ["receipt_type", "repository", "handoff_path", "field_authority_hash", "terminal_decision", "processing_disposition", "state_verified", "delta_count", "deltas", "receipt_hash"],
+  "properties": {
+    "receipt_type": {"const": "stegverse.handoff_state_delta.receipt.v1"},
+    "repository": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+    "handoff_path": {"type": "string", "minLength": 1},
+    "field_authority_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "terminal_decision": {"enum": ["ALLOW", "DENY", "FAIL_CLOSED"]},
+    "processing_disposition": {"enum": ["NONE", "BLOCKED"]},
+    "state_verified": {"type": "boolean"},
+    "delta_count": {"type": "integer", "minimum": 0},
+    "deltas": {"type": "array", "items": {"type": "object"}},
+    "read_only": {"type": "boolean"},
+    "receipt_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "additionalProperties": true
+}

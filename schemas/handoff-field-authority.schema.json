@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/handoff-field-authority.schema.json",
+  "title": "StegVerse Format A field authority table",
+  "type": "object",
+  "required": ["schema", "document_profile", "repair_mode", "max_reconciliation_passes", "fields"],
+  "properties": {
+    "schema": {"const": "stegverse.handoff.field_authority.v1"},
+    "document_profile": {"const": "format_a_v1"},
+    "repair_mode": {"enum": ["READ_ONLY", "PROPOSAL_ONLY", "GOVERNED_WRITE"]},
+    "max_reconciliation_passes": {"type": "integer", "minimum": 1},
+    "fields": {
+      "type": "object",
+      "required": ["source_of_truth", "role", "current_installed_files", "current_working_path", "done_state_for_this_repo", "completed_in_latest_pass", "remaining_work", "destination_installs", "next_task"],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z_]+$": {
+          "type": "object",
+          "required": ["authority_source", "delta_type", "automated_repair"],
+          "properties": {
+            "authority_source": {"type": "string", "minLength": 1},
+            "delta_type": {"enum": ["CONFORMANCE", "STATE", "MIXED"]},
+            "automated_repair": {"enum": ["FORBIDDEN", "PROPOSAL_ONLY", "GOVERNED_WRITE"]}
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

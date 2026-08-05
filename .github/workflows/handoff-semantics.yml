@@ -1,0 +1,44 @@
+name: Handoff Semantic Host Gate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.handoff/**'
+      - '.continuity/**'
+      - '**/*_HANDOFF.md'
+      - '**/*_MIRROR_HANDOFF.md'
+      - 'config/handoff-field-authority.format-a-v1.json'
+      - 'tools/handoff_authority.py'
+      - 'tools/handoff_semantics.py'
+      - 'tests/test_handoff_semantics.py'
+      - 'schemas/handoff-*.schema.json'
+      - 'docs/HANDOFF_*CONTRACT.md'
+      - '.github/workflows/handoff-semantics*.yml'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run semantic verifier tests
+        run: python -m unittest discover -s tests -p 'test_handoff_semantics.py'
+      - name: Verify host semantic state
+        run: |
+          python tools/handoff_semantics.py \
+            --root . \
+            --repository GCAT-BCAT-Engine/workflows \
+            --authority-table config/handoff-field-authority.format-a-v1.json \
+            --output-dir .handoff/semantic-receipts
+      - name: Upload semantic receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: handoff-semantic-host-${{ github.run_id }}
+          path: .handoff/semantic-receipts/*.json
+          if-no-files-found: error

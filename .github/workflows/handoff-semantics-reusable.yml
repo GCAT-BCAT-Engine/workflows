@@ -1,0 +1,52 @@
+name: Reusable Handoff Semantic Gate
+
+on:
+  workflow_call:
+    inputs:
+      repository:
+        description: Expected owner/repository identity
+        required: true
+        type: string
+      verifier_ref:
+        description: workflows commit containing the semantic verifier
+        required: false
+        default: main
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  verify-handoff-semantics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Retrieve pinned semantic verifier
+        env:
+          VERIFIER_REF: ${{ inputs.verifier_ref }}
+        run: |
+          curl --fail --silent --show-error --location \
+            "https://raw.githubusercontent.com/GCAT-BCAT-Engine/workflows/${VERIFIER_REF}/tools/handoff_authority.py" \
+            --output "${RUNNER_TEMP}/handoff_authority.py"
+          curl --fail --silent --show-error --location \
+            "https://raw.githubusercontent.com/GCAT-BCAT-Engine/workflows/${VERIFIER_REF}/tools/handoff_semantics.py" \
+            --output "${RUNNER_TEMP}/handoff_semantics.py"
+          curl --fail --silent --show-error --location \
+            "https://raw.githubusercontent.com/GCAT-BCAT-Engine/workflows/${VERIFIER_REF}/config/handoff-field-authority.format-a-v1.json" \
+            --output "${RUNNER_TEMP}/handoff-field-authority.format-a-v1.json"
+      - name: Verify caller handoff semantics
+        env:
+          EXPECTED_REPOSITORY: ${{ inputs.repository }}
+        run: |
+          python "${RUNNER_TEMP}/handoff_semantics.py" \
+            --root "${GITHUB_WORKSPACE}" \
+            --repository "${EXPECTED_REPOSITORY}" \
+            --authority-table "${RUNNER_TEMP}/handoff-field-authority.format-a-v1.json" \
+            --output-dir "${GITHUB_WORKSPACE}/handoff-semantic-receipts"
+      - name: Upload semantic receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: handoff-semantics-${{ github.run_id }}
+          path: handoff-semantic-receipts/*.json
+          if-no-files-found: error

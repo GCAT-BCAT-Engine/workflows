@@ -1,0 +1,17 @@
+{
+  "schema": "stegverse.handoff.field_authority.v1",
+  "document_profile": "format_a_v1",
+  "repair_mode": "READ_ONLY",
+  "max_reconciliation_passes": 3,
+  "fields": {
+    "source_of_truth": {"authority_source": "handoff_manifest", "delta_type": "CONFORMANCE", "automated_repair": "FORBIDDEN"},
+    "role": {"authority_source": "governance_policy", "delta_type": "CONFORMANCE", "automated_repair": "FORBIDDEN"},
+    "current_installed_files": {"authority_source": "repository_tree", "delta_type": "STATE", "automated_repair": "PROPOSAL_ONLY"},
+    "current_working_path": {"authority_source": "governance_policy", "delta_type": "CONFORMANCE", "automated_repair": "FORBIDDEN"},
+    "done_state_for_this_repo": {"authority_source": "governance_policy", "delta_type": "CONFORMANCE", "automated_repair": "FORBIDDEN"},
+    "completed_in_latest_pass": {"authority_source": "repository_tree_and_receipts", "delta_type": "STATE", "automated_repair": "PROPOSAL_ONLY"},
+    "remaining_work": {"authority_source": "task_registry", "delta_type": "CONFORMANCE", "automated_repair": "FORBIDDEN"},
+    "destination_installs": {"authority_source": "destination_evidence_and_governance_plan", "delta_type": "MIXED", "automated_repair": "FORBIDDEN"},
+    "next_task": {"authority_source": "task_registry", "delta_type": "CONFORMANCE", "automated_repair": "FORBIDDEN"}
+  }
+}

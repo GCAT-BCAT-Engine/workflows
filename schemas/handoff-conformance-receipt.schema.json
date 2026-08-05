@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/handoff-conformance-receipt.schema.json",
+  "title": "Handoff conformance receipt",
+  "type": "object",
+  "required": ["receipt_type", "repository", "handoff_path", "document_profile", "field_authority_hash", "terminal_decision", "processing_disposition", "conformant", "delta_count", "deltas", "receipt_hash"],
+  "properties": {
+    "receipt_type": {"const": "stegverse.handoff_conformance.receipt.v1"},
+    "repository": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+    "handoff_path": {"type": "string", "minLength": 1},
+    "document_profile": {"const": "format_a_v1"},
+    "field_authority_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "terminal_decision": {"enum": ["ALLOW", "FAIL_CLOSED"]},
+    "processing_disposition": {"enum": ["NONE", "REVIEW_REQUIRED"]},
+    "conformant": {"type": "boolean"},
+    "delta_count": {"type": "integer", "minimum": 0},
+    "deltas": {"type": "array", "items": {"type": "object"}},
+    "receipt_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "additionalProperties": true
+}

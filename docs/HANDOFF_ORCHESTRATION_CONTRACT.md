@@ -1,18 +1,28 @@
-# Handoff and Continuity Orchestration Contract
+# Handoff, Semantic, and Continuity Orchestration Contract
 
 ## Boundary
 
-Continuity authority is the verified-state admission stage inside the existing
-Runtime Orchestrator. It determines which repository handoff governs and
-whether that handoff matches repository state. It does not select or execute a
-task.
+Continuity authority is the first verified-state admission stage inside the
+Runtime Orchestrator. It proves which repository handoff governs, that its
+declared hash matches, that scoped and archived handoffs cannot compete, and
+that the declared document profile is structurally present.
 
-Continuity provenance then proves which actor or session changed that state,
-which base commit it used, which paths changed, and which external references
-were verified.
+Authority verification does not, by itself, prove that every factual claim
+inside the handoff matches repository reality.
+
+Semantic reconciliation is the second admission stage for Format A handoffs.
+It parses the nine typed fields, applies a multi-source field-authority table,
+checks conformance before state, and compares only repository-authoritative
+claims with the checked-out repository tree. It is read-only.
+
+Continuity provenance is the third admission stage. It proves which actor or
+session changed state, which base commit it used, which paths changed, and
+which external references were verified.
 
 The Runtime Orchestrator may determine standing and select a next node only
-after both gates return `ALLOW`.
+after all applicable gates return `ALLOW`. A non-Format-A repository may
+receive semantic `ALLOW` with processing disposition `DEFER`; that is an
+explicit non-applicability result, not a claim of semantic verification.
 
 ## Repository authority contract
 
@@ -28,6 +38,62 @@ a hosted authority workflow
 
 A repository must not infer source-of-truth authority from traversal order,
 modification time, document length, or prose in an undeclared document.
+
+## Semantic reconciliation contract
+
+Each Format A repository carries or receives a pinned copy of:
+
+```text
+config/handoff-field-authority.format-a-v1.json
+a read-only semantic verifier
+a hosted semantic workflow
+```
+
+The field authority sources are:
+
+```text
+Source of truth                 -> handoff manifest
+Role                            -> governance policy
+Current installed files         -> repository tree
+Current working path            -> governance policy
+Done state for this repo        -> governance policy
+Completed in latest pass        -> repository tree and receipts
+Remaining work                  -> durable task registry
+Destination installs            -> destination evidence and governance plan
+Next task                       -> durable task registry
+```
+
+Only repository-tree fields are mechanically compared with repository state.
+`Remaining work` and `Next task` are not stale merely because the work is not
+complete, and no semantic worker may empty those queues.
+
+Stored paths must be canonical repository-relative paths. Human display
+transforms, including omission of a leading period from `.github`, are
+non-conformant machine input.
+
+Semantic reconciliation emits separate deterministic receipts:
+
+```text
+stegverse.handoff_conformance.receipt.v1
+stegverse.handoff_state_delta.receipt.v1
+stegverse.handoff_reconciliation.receipt.v1
+stegverse.handoff_semantic_admission.receipt.v1
+```
+
+A reconciliation fixed point exists when one complete pass produces zero
+conformance deltas and zero repository-authoritative state deltas. Remaining
+intent does not prevent convergence. Maximum-pass exhaustion or repeated
+nonconsecutive delta fingerprints fails closed.
+
+Repair remains disabled:
+
+```text
+repair_mode: READ_ONLY
+repair_enabled: false
+```
+
+A state delta may produce a proposal, but no automated handoff write is
+authorized by this contract.
 
 ## Continuity provenance contract
 
@@ -83,6 +149,17 @@ jobs:
       verifier_ref: <immutable-commit>
 ```
 
+Handoff semantics:
+
+```yaml
+jobs:
+  handoff-semantics:
+    uses: GCAT-BCAT-Engine/workflows/.github/workflows/handoff-semantics-reusable.yml@<immutable-commit>
+    with:
+      repository: owner/repository
+      verifier_ref: <immutable-commit>
+```
+
 Continuity provenance:
 
 ```yaml
@@ -94,21 +171,26 @@ jobs:
       verifier_ref: <immutable-commit>
 ```
 
-The called workflows verify the caller repository in the caller checkout
+The called workflows verify caller repositories in the caller checkout
 context. This avoids requiring the public workflows repository to retain
 private cross-organization read credentials.
 
-## Decisions
+## Decision envelope
 
-- `ALLOW`: required authority or provenance state is proven.
-- `DENY`: a declared invariant is violated.
-- `FAIL_CLOSED`: required evidence cannot be read or evaluated.
+```text
+terminal_decision:
+  ALLOW | DENY | CONDITIONAL | FAIL_CLOSED
 
-Only `ALLOW` admits standing evaluation, task selection, release, or
-propagation.
+processing_disposition:
+  NONE | REVIEW_REQUIRED | BLOCKED | DEFER
+```
+
+Only an applicable `ALLOW` result admits standing evaluation, task selection,
+release, or propagation.
 
 ## Custody
 
 Per-repository workflow success is execution evidence. Master Records custody
-is a separate downstream transition and retains source commit, manifest or
+is a separate downstream transition and retains source commits, manifest or
 record hashes, workflow runs, boundary declarations, and custody decisions.
+Custody does not grant execution authority.
