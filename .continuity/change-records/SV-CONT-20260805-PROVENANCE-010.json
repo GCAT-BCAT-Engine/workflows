@@ -1,0 +1,53 @@
+{
+  "actor": {
+    "class": "chatgpt",
+    "instance": "GPT-5.6 Thinking",
+    "session_ref": "handoff-orchestration-archive-negative-test-correction-2026-08-05"
+  },
+  "base_commit": "4a87778bbcbeb1b1d75bc556067d3634b52a1f03",
+  "change_id": "SV-CONT-20260805-PROVENANCE-010",
+  "changed_paths": [
+    {
+      "change_type": "modified",
+      "hash": "8d239bd467abdf36c7c3c38408bed789906cfc94",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/config.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "51988c778e05a75eefedbe46af72396278b66c05",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "tests/test_session_execution_inventory.py"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "archive-ready inventory remains unchanged and valid",
+      "state": "PRESERVED"
+    },
+    {
+      "claim": "negative tests now synthesize active claims instead of assuming the live inventory contains one",
+      "state": "CORRECTED"
+    },
+    {
+      "claim": "archive denial and active-claim expiry controls remain independently tested",
+      "state": "VALIDATED_LOCALLY"
+    },
+    {
+      "claim": "no completed repository, custody, dispatch, or canonical ownership state was reopened",
+      "state": "PRESERVED_BOUNDARY"
+    }
+  ],
+  "created_at": "2026-08-05T02:06:00Z",
+  "governing_handoff": {
+    "hash": "f2370098a9c4bd0556def94c0bacde654f844564",
+    "hash_algorithm": "git-blob-sha1",
+    "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+  },
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "schema": "stegverse.session.change_record.v1",
+  "unresolved_tasks": [
+    "validate transition 010 authority, provenance, semantic registry, and archive-ready inventory workflows"
+  ],
+  "record_hash": "137ac4211e0f548c1ef38a050e70b50c72402d5ddf6cbb2254af9f9e34ad75e8"
+}
