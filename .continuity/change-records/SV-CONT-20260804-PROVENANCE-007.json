@@ -1,0 +1,78 @@
+{
+  "actor": {
+    "class": "chatgpt",
+    "instance": "GPT-5.6 Thinking",
+    "session_ref": "handoff-semantic-adoption-registry-2026-08-04"
+  },
+  "base_commit": "ec8dc192617b4f145ccfe850d58a9cb803016d19",
+  "change_id": "SV-CONT-20260804-PROVENANCE-007",
+  "changed_paths": [
+    {
+      "change_type": "modified",
+      "hash": "43ab0e8417a69f15f4808299882b6750bc4ea45a",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/config.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "659737802f0872c983dfd896ac83bbe6c38c2a5f",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/cross-repository-references.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "12d5dc7d73210258d8b36fdc50968ef38300d282",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".handoff/current.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "d2016997360e2be7dbdfc7286605e9c9c73705bd",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "data/handoff-semantic-adoption.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "68ff7ea496f368782f015d99fd9a5440c124c95c",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "reusable semantic host commit ec8dc192617b4f145ccfe850d58a9cb803016d19 validated by authority, semantic, and provenance gates",
+      "state": "VALIDATED"
+    },
+    {
+      "claim": "capability-registry read-only pilot reached zero-delta fixed point on commit 44dbee72e856adeb4f3572fb92be2145b0bdf4b6",
+      "state": "VALIDATED"
+    },
+    {
+      "claim": "central semantic adoption registry installed and capability evidence hash-pinned",
+      "state": "IMPLEMENTED"
+    },
+    {
+      "claim": "governed repair remains unauthorized pending additional read-only measurements",
+      "state": "PRESERVED_BOUNDARY"
+    },
+    {
+      "claim": "prior authority and provenance adoption records preserved",
+      "state": "PRESERVED"
+    }
+  ],
+  "created_at": "2026-08-05T00:35:00Z",
+  "governing_handoff": {
+    "hash": "68ff7ea496f368782f015d99fd9a5440c124c95c",
+    "hash_algorithm": "git-blob-sha1",
+    "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+  },
+  "record_hash": "9d8e1695c6a632a2bb1afb2191e9bfc84fe4784b3b22049ff28d792282057d6d",
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "schema": "stegverse.session.change_record.v1",
+  "unresolved_tasks": [
+    "accept released semantic evidence into Master Records custody",
+    "propagate the read-only semantic gate to the remaining Format A repositories",
+    "retain additional semantic measurements before governed repair is proposed",
+    "make applicable authority, semantic, and provenance gates prerequisites for Runtime Orchestrator dispatch"
+  ]
+}

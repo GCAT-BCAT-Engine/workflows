@@ -15,9 +15,9 @@ docs/TEN_ADVANCES_COST_ESTIMATION_MIRROR_HANDOFF.md
 docs/GOVERNED_RESEARCH_ENGINE_HANDOFF.md
 ```
 
-Live default-branch state, Git history, workflow runs, artifacts, issues,
-receipts, declared scoped handoffs, verified change records, and validated
-adoption registries override historical chat claims.
+Live default-branch state, Git history, workflow runs, artifacts, receipts,
+verified change records, and validated adoption registries override historical
+chat claims.
 
 ## Role
 
@@ -35,13 +35,14 @@ execution.
 ```text
 .handoff/current.json
 .continuity/config.json
+.continuity/cross-repository-references.json
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-001.json
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-002.json
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-003.json
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-004.json
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-005.json
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-006.json
-.continuity/cross-repository-references.json
+.continuity/change-records/SV-CONT-20260804-PROVENANCE-007.json
 .github/workflows/handoff-authority.yml
 .github/workflows/handoff-authority-reusable.yml
 .github/workflows/handoff-semantics.yml
@@ -67,6 +68,7 @@ docs/CONTINUITY_PROVENANCE_CONTRACT.md
 docs/WORKFLOWS_MIRROR_HANDOFF.md
 data/handoff-authority-adoption.json
 data/continuity-provenance-adoption.json
+data/handoff-semantic-adoption.json
 SV_COST_MIRROR_HANDOFF.md
 docs/TEN_ADVANCES_COST_ESTIMATION_MIRROR_HANDOFF.md
 docs/GOVERNED_RESEARCH_ENGINE_HANDOFF.md
@@ -94,105 +96,83 @@ and are pinned by consumers to immutable implementation commits.
 
 ## Done state for this repo
 
-Handoff authority is complete for the reviewed six-repository corpus and is
-accepted for bounded Master Records custody.
+Handoff authority, the reusable semantic host, and continuity provenance are
+installed and validated when:
 
-Continuity provenance is complete for the host and reviewed corpus. Its
-successor record `003` returned `ALLOW` for both authority and provenance.
+1. exactly one governing handoff is verified;
+2. Format A conformance and repository-state deltas are separate receipts;
+3. intent and task fields are never mechanically reconciled;
+4. bounded-loop exhaustion and oscillation fail closed;
+5. repair remains disabled;
+6. reusable execution occurs in the caller checkout;
+7. host authority, semantic, and provenance workflows return `ALLOW`; and
+8. at least one repository pilot reaches a retained zero-delta fixed point.
 
-The semantic host is complete when:
-
-1. the host carries the Format A field-authority table;
-2. conformance and repository-state deltas are separate receipts;
-3. semantic evaluation runs only after authority `ALLOW`;
-4. intent and task fields are never mechanically reconciled;
-5. leading-dot display transforms are rejected;
-6. bounded-loop exhaustion and oscillation fail closed;
-7. the reusable workflow executes in the caller checkout;
-8. repair remains disabled; and
-9. host authority, semantic, and provenance workflows all return `ALLOW`.
-
-Conditions 1–8 are installed. Condition 9 is the activation gate for successor
-record `006`.
+All eight conditions are satisfied.
 
 ## Completed in latest pass
-
-Handoff authority and custody:
-
-```text
-reviewed handoff corpus: 6/6 COMPLETE
-hosted authority owner: COMPLETE
-Master Records custody commit: 5cc259d414fb21fb94914ae244fdd033f3115b76
-custody run: 30958850868 — success
-custody decision: ACCEPTED_FOR_CUSTODY
-authority effect: NONE
-```
-
-Continuity-provenance host and corpus:
-
-```text
-portable provenance implementation: a79134d666cd784a10d28fa62dd43e170fd62c77
-reviewed provenance corpus: 6/6 HOSTED ALLOW
-central provenance adoption registry: INSTALLED AND VALIDATED
-successor record 003 authority run: 30961056934 — success
-successor record 003 provenance run: 30961057019 — success
-```
 
 Portable semantic source:
 
 ```text
 repository: StegVerse-002/micro-node-runtime
 commit: c0630fab9759d1a4e9cb62b3ba13ff818cf819f3
-semantic workflow run: 30961106607 — success
-provenance workflow run: 30961106954 — success
-portable semantic verifier blob: 8454e12d6cf659dd38b8a3fdffc072f5cc83086e
-local and hosted stdlib semantic tests: 11 passed
+semantic run: 30961106607 — success
+provenance run: 30961106954 — success
 ```
 
-Semantic host transition:
+Reusable semantic host:
 
 ```text
-successor record 004 authority run: 30961927166 — success
-successor record 004 provenance run: 30961927202 — success
-successor record 004 semantic run: 30961927136 — failure
-failure class: HOST_API_COMPATIBILITY
-semantic rules evaluated: false
-successor record 005 authority run: 30962266630 — success
-successor record 005 provenance run: 30962266678 — success
-successor record 005 semantic run: 30962266652 — failure
-failure class: PRIVATE_PORTABLE_SOURCE_UNAVAILABLE
-semantic rules evaluated: false
-successor record 006: public host compatibility shim installed
-Format A parser: installed
-multi-source field-authority table: installed
-conformance worker: installed
-state-delta worker: installed, read-only
-fixed-point and loop guard: installed
-reusable caller workflow: installed
+commit: ec8dc192617b4f145ccfe850d58a9cb803016d19
+authority run: 30962541372 — success
+semantic run: 30962541426 — success
+provenance run: 30962541361 — success
 repair mode: READ_ONLY
-hosted validation: pending
+```
+
+The two prior host failures remain retained in records `004` and `005` as
+integration evidence. Record `006` removed the private-source dependency without
+weakening semantic rules.
+
+Capability-registry pilot:
+
+```text
+repository: StegVerse-002/capability-registry
+commit: 44dbee72e856adeb4f3572fb92be2145b0bdf4b6
+authority run: 30963084750 — success
+semantic run: 30963084736 — success
+provenance run: 30963084782 — success
+conformance deltas: 0
+state deltas: 0
+reconciliation: FIXED_POINT_REACHED
+repair_enabled: false
+artifact digest: sha256:fe89cc16d624169e311bde9e65f44ab5329453fcd36fc1c2338d6162d8821f40
+semantic receipt: 816a14db19ffecf1a3bb2eb920d3aaa75838f85862082d0c4353cccf6ee2879e
+```
+
+The pilot also exposed and corrected a stale scoped-handoff pointer before
+semantic evaluation. Canonical `.github` paths and the capability task queue
+were preserved.
+
+```text
+data/handoff-semantic-adoption.json — INSTALLED
+.continuity/cross-repository-references.json — PILOT EVIDENCE PINNED
 ```
 
 ## Remaining work
 
 ```text
-observe successor record 006 authority, semantic, and provenance workflow success
-pin StegVerse-002/capability-registry to the immutable semantic host commit
-verify the prior capability-registry canonical-path correction remains stable
-retain the first read-only pilot receipts and measured delta result
-extend the pilot to the remaining reviewed Format A repositories
-accept released semantic evidence into Master Records custody
-design governed repair proposals and an append-only repair ledger
-make all applicable gates prerequisites for Runtime Orchestrator dispatch
-begin canonical decision-contract migration
-begin construction/governance plane enforcement
-begin candidate-ingress hardening
-complete the pre-existing repository-agnostic sandbox builder
+Propagate the read-only semantic gate to StegGuardian, StegProfile, core-lite, and admissibility-gateway.
+Retain additional zero-delta or typed-delta measurements.
+Transfer released semantic evidence into Master Records custody.
+Design governed repair proposals and an append-only repair ledger only after additional measurements.
+Make applicable authority, semantic, and provenance gates prerequisites for Runtime Orchestrator dispatch.
+Continue canonical decision-contract, plane-boundary, and candidate-ingress workstreams separately.
+Complete the pre-existing repository-agnostic sandbox builder.
 ```
 
-Unrelated legacy workflow failures remain owned by their applicable repository
-handoffs and are not reclassified as authority, semantic, or provenance
-failures.
+No favorable general StegVerse savings claim is admitted by this handoff.
 
 ## Destination installs
 
@@ -204,21 +184,23 @@ Handoff authority:
 
 Continuity provenance:
   GCAT-BCAT-Engine/workflows — COMPLETE HOST
-  reviewed corpus — 6/6 HOSTED ALLOW
-  central adoption registry — COMPLETE
+  reviewed corpus — COMPLETE HOSTED ADOPTION
   master-records/orchestration — PENDING PROVENANCE CUSTODY
 
 Handoff semantics:
   StegVerse-002/micro-node-runtime — PORTABLE SOURCE COMPLETE
-  GCAT-BCAT-Engine/workflows — HOST COMPATIBILITY CORRECTION INSTALLED; VALIDATION PENDING
-  StegVerse-002/capability-registry — READ-ONLY PILOT PENDING
-  remaining reviewed Format A repositories — PENDING AFTER PILOT
+  GCAT-BCAT-Engine/workflows — REUSABLE HOST COMPLETE
+  StegVerse-002/capability-registry — READ-ONLY FIXED-POINT PILOT COMPLETE
+  StegVerse-002/StegGuardian — PENDING READ-ONLY
+  StegVerse-002/StegProfile — PENDING READ-ONLY
+  StegVerse-002/core-lite — PENDING READ-ONLY
+  StegVerse-002/admissibility-gateway — PENDING READ-ONLY
   master-records/orchestration — SEMANTIC CUSTODY PENDING
 ```
 
 ## Next task
 
-After successor record `006` returns `ALLOW` for authority, semantics, and
-provenance, pin the capability-registry pilot to that immutable host commit.
-Preserve the existing canonical paths and all task intent, and retain
-the read-only semantic receipts before any repair authority is proposed.
+Accept the released capability-registry semantic evidence into bounded Master
+Records custody, then extend the pinned read-only gate to the remaining Format A
+repositories. Do not enable repair until the additional measurements and repair
+proposal contract are retained.

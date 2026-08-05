@@ -1,0 +1,55 @@
+{
+  "generated_at": "2026-08-05T00:35:00Z",
+  "governed_repair_state": "NOT_AUTHORIZED",
+  "host": {
+    "authority_run": 30962541372,
+    "commit": "ec8dc192617b4f145ccfe850d58a9cb803016d19",
+    "decision": "ALLOW",
+    "provenance_run": 30962541361,
+    "repository": "GCAT-BCAT-Engine/workflows",
+    "semantic_run": 30962541426
+  },
+  "portable_source": {
+    "commit": "c0630fab9759d1a4e9cb62b3ba13ff818cf819f3",
+    "decision": "ALLOW",
+    "provenance_run": 30961106954,
+    "repository": "StegVerse-002/micro-node-runtime",
+    "semantic_run": 30961106607
+  },
+  "registry_hash": "c0abe00f34ab7ba933b43e42db0515a5be425c3ead1db269dfc575ab4e082f19",
+  "repair_mode": "READ_ONLY",
+  "repositories": [
+    {
+      "artifact_digest": "sha256:fe89cc16d624169e311bde9e65f44ab5329453fcd36fc1c2338d6162d8821f40",
+      "authority_run": 30963084750,
+      "commit": "44dbee72e856adeb4f3572fb92be2145b0bdf4b6",
+      "conformance_delta_count": 0,
+      "provenance_run": 30963084782,
+      "reconciliation_status": "FIXED_POINT_REACHED",
+      "repair_enabled": false,
+      "repository": "StegVerse-002/capability-registry",
+      "semantic_receipt": "816a14db19ffecf1a3bb2eb920d3aaa75838f85862082d0c4353cccf6ee2879e",
+      "semantic_run": 30963084736,
+      "state": "COMPLETE_READ_ONLY",
+      "state_delta_count": 0,
+      "terminal_decision": "ALLOW"
+    },
+    {
+      "repository": "StegVerse-002/StegGuardian",
+      "state": "PENDING_READ_ONLY"
+    },
+    {
+      "repository": "StegVerse-002/StegProfile",
+      "state": "PENDING_READ_ONLY"
+    },
+    {
+      "repository": "StegVerse-002/core-lite",
+      "state": "PENDING_READ_ONLY"
+    },
+    {
+      "repository": "StegVerse-002/admissibility-gateway",
+      "state": "PENDING_READ_ONLY"
+    }
+  ],
+  "schema": "stegverse.handoff.semantic_adoption_registry.v1"
+}

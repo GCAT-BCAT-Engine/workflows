@@ -1,5 +1,5 @@
 {
-  "record_hash": "b6aedb0a17efdc71554a1e750436e379adaec7f9233bb7a13e0cb50255c44848",
+  "record_hash": "c02a1a4b736da910d77ad5de01666766200ce15105e20923db1dbf5b32c33abe",
   "references": [
     {
       "content_hash": "e369aba1841f6f76c4c7f0c4d733bdbfbeaa88b0",
@@ -44,6 +44,24 @@
         "workflow_run:30961106607",
         "provenance_run:30961106954",
         "commit:c0630fab9759d1a4e9cb62b3ba13ff818cf819f3"
+      ],
+      "verification_status": "VERIFIED"
+    },
+    {
+      "content_hash": "fdc4a1debab73c683f75fe10d962b6b75739945c",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/CAPABILITY_REGISTRY_MIRROR_HANDOFF.md",
+      "reference_id": "capability-registry-semantic-pilot",
+      "relationship": "read_only_semantic_pilot",
+      "repository": "StegVerse-002/capability-registry",
+      "required": true,
+      "source_commit": "44dbee72e856adeb4f3572fb92be2145b0bdf4b6",
+      "verification_evidence": [
+        "authority_run:30963084750",
+        "semantic_run:30963084736",
+        "provenance_run:30963084782",
+        "artifact_digest:sha256:fe89cc16d624169e311bde9e65f44ab5329453fcd36fc1c2338d6162d8821f40",
+        "semantic_receipt:816a14db19ffecf1a3bb2eb920d3aaa75838f85862082d0c4353cccf6ee2879e"
       ],
       "verification_status": "VERIFIED"
     }
