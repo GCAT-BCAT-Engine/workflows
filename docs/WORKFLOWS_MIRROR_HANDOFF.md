@@ -39,6 +39,7 @@ execution.
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-002.json
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-003.json
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-004.json
+.continuity/change-records/SV-CONT-20260804-PROVENANCE-005.json
 .continuity/cross-repository-references.json
 .github/workflows/handoff-authority.yml
 .github/workflows/handoff-authority-reusable.yml
@@ -111,7 +112,7 @@ The semantic host is complete when:
 9. host authority, semantic, and provenance workflows all return `ALLOW`.
 
 Conditions 1–8 are installed. Condition 9 is the activation gate for successor
-record `004`.
+record `005`.
 
 ## Completed in latest pass
 
@@ -150,7 +151,12 @@ local and hosted stdlib semantic tests: 11 passed
 Semantic host transition:
 
 ```text
-successor record: SV-CONT-20260804-PROVENANCE-004
+successor record 004 authority run: 30961927166 — success
+successor record 004 provenance run: 30961927202 — success
+successor record 004 semantic run: 30961927136 — failure
+failure class: HOST_API_COMPATIBILITY
+semantic rules evaluated: false
+successor record 005: portable authority dependency correction installed
 Format A parser: installed
 multi-source field-authority table: installed
 conformance worker: installed
@@ -164,9 +170,9 @@ hosted validation: pending
 ## Remaining work
 
 ```text
-observe successor record 004 authority, semantic, and provenance workflow success
+observe successor record 005 authority, semantic, and provenance workflow success
 pin StegVerse-002/capability-registry to the immutable semantic host commit
-correct the known github/workflows display-path defect in capability-registry
+verify the prior capability-registry canonical-path correction remains stable
 retain the first read-only pilot receipts and measured delta result
 extend the pilot to the remaining reviewed Format A repositories
 accept released semantic evidence into Master Records custody
@@ -198,7 +204,7 @@ Continuity provenance:
 
 Handoff semantics:
   StegVerse-002/micro-node-runtime — PORTABLE SOURCE COMPLETE
-  GCAT-BCAT-Engine/workflows — HOST INSTALLED; VALIDATION PENDING
+  GCAT-BCAT-Engine/workflows — HOST COMPATIBILITY CORRECTION INSTALLED; VALIDATION PENDING
   StegVerse-002/capability-registry — READ-ONLY PILOT PENDING
   remaining reviewed Format A repositories — PENDING AFTER PILOT
   master-records/orchestration — SEMANTIC CUSTODY PENDING
@@ -206,7 +212,7 @@ Handoff semantics:
 
 ## Next task
 
-After successor record `004` returns `ALLOW` for authority, semantics, and
+After successor record `005` returns `ALLOW` for authority, semantics, and
 provenance, pin the capability-registry pilot to that immutable host commit.
-Correct only the canonical path defect, preserve all task intent, and retain
+Preserve the existing canonical paths and all task intent, and retain
 the read-only semantic receipts before any repair authority is proposed.

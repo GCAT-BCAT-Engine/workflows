@@ -4,7 +4,7 @@
   "current_handoff": {
     "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md",
     "hash_algorithm": "git-blob-sha1",
-    "hash": "3e537717431db8be1f250abb6d447b42d118bd59"
+    "hash": "67b709933aa8d81a935b780670bc22b2611c751e"
   },
   "document_profile": "format_a_v1",
   "scoped_handoffs": [
@@ -16,6 +16,6 @@
     "date_suffix_required": true,
     "session_archive_prefix_allowed": true
   },
-  "declared_at": "2026-08-04T23:50:00Z",
-  "base_commit": "4e698a44be20e8b4ae0cb96c4abdec31716b80f2"
+  "declared_at": "2026-08-05T00:05:00Z",
+  "base_commit": "e72436a4e214955a979ffd0855d76fc19a455bc9"
 }
