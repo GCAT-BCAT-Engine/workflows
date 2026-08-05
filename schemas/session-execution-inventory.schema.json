@@ -1,0 +1,34 @@
+{
+  "$id": "https://stegverse.org/schemas/session-execution-inventory.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "inventory_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "schema": {
+      "const": "stegverse.session.execution_inventory.v1"
+    },
+    "tasks": {
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "session_id",
+    "generated_at",
+    "original_session_goal",
+    "active_goal",
+    "canonical_continuation",
+    "role",
+    "archive_state",
+    "tasks",
+    "summary",
+    "archive_conditions",
+    "inventory_hash"
+  ],
+  "title": "Session Execution Inventory",
+  "type": "object"
+}

@@ -1,0 +1,125 @@
+{
+  "actor": {
+    "class": "chatgpt",
+    "instance": "GPT-5.6 Thinking",
+    "session_ref": "handoff-orchestration-session-consolidation-2026-08-04"
+  },
+  "base_commit": "18814bc97a2def7066085a145cae4db66cb2c036",
+  "change_id": "SV-CONT-20260804-PROVENANCE-008",
+  "changed_paths": [
+    {
+      "change_type": "modified",
+      "hash": "b8aa62cef00b23739f4cc6d328fda2e3fe36e182",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/config.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "c20a3670116b170c6e9e7fbcdef559eb3f096faa",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/cross-repository-references.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "ab20072b90d84624f0348d78421d6da8de657103",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".github/workflows/handoff-semantics.yml"
+    },
+    {
+      "change_type": "modified",
+      "hash": "6daf537fa972d9841de8170f2e0a6059cdedafa6",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".handoff/current.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "2b3afd25a83667b42522c91c0ab472d3a63b740a",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "data/handoff-semantic-adoption.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "753613a563c9f5071ef5c63a30353f906ea124eb",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "data/session-consolidation/handoff-orchestration-session-20260804.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "55c69d6353491b4f4f24789abaac2272f608fd63",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+    },
+    {
+      "change_type": "added",
+      "hash": "675d31ddb2f3ff89809213369d22d253576bc87d",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "schemas/handoff-semantic-adoption-registry.schema.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "cc84630de9c2e7658c4543a800b36e20b73bf926",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "schemas/session-execution-inventory.schema.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "b6c46542a966d533a8e938c6b1ca599667c6ecc8",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "tests/test_handoff_semantic_adoption.py"
+    },
+    {
+      "change_type": "added",
+      "hash": "34c00918b44364168cf0bda564cdf80c1606b9f2",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "tests/test_session_execution_inventory.py"
+    },
+    {
+      "change_type": "added",
+      "hash": "a29ad6d0e9e04251d2e4629c202f4958a13d1502",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "tools/verify_handoff_semantic_adoption.py"
+    },
+    {
+      "change_type": "added",
+      "hash": "09e79598efa1a7e5ae55313eb07958f28e0a664d",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "tools/verify_session_execution_inventory.py"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "all five reviewed Format A repositories are COMPLETE_READ_ONLY with zero conformance and state deltas",
+      "state": "VALIDATED"
+    },
+    {
+      "claim": "central semantic adoption registry has deterministic fail-closed verification and four stdlib tests",
+      "state": "IMPLEMENTED"
+    },
+    {
+      "claim": "complete session execution inventory has exact owners, locations, claims, release conditions, evidence, and zero unassigned tasks",
+      "state": "IMPLEMENTED"
+    },
+    {
+      "claim": "existing authority, provenance, and semantic pilot custody are preserved; expanded semantic custody remains separately claimed",
+      "state": "PRESERVED_BOUNDARY"
+    },
+    {
+      "claim": "governed semantic repair remains unauthorized",
+      "state": "PRESERVED_BOUNDARY"
+    }
+  ],
+  "created_at": "2026-08-05T01:00:00Z",
+  "governing_handoff": {
+    "hash": "55c69d6353491b4f4f24789abaac2272f608fd63",
+    "hash_algorithm": "git-blob-sha1",
+    "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+  },
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "schema": "stegverse.session.change_record.v1",
+  "unresolved_tasks": [
+    "accept the promoted five-repository semantic registry through a new bounded Master Records custody transition",
+    "install dual authority-plus-provenance verified-state admission in StegVerse-002/micro-node-runtime",
+    "after both claims release, update the session inventory to READY and archive the originating session"
+  ],
+  "record_hash": "ff4f7c84468cd00fa719c6fdb6d368229d31b0e9522f1e5c24169663f19db347"
+}

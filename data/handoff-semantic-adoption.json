@@ -1,5 +1,11 @@
 {
-  "generated_at": "2026-08-05T00:35:00Z",
+  "completion": {
+    "complete_read_only": 5,
+    "failed": 0,
+    "pending": 0,
+    "required_repositories": 5
+  },
+  "generated_at": "2026-08-05T01:00:00Z",
   "governed_repair_state": "NOT_AUTHORIZED",
   "host": {
     "authority_run": 30962541372,
@@ -16,39 +22,111 @@
     "repository": "StegVerse-002/micro-node-runtime",
     "semantic_run": 30961106607
   },
-  "registry_hash": "c0abe00f34ab7ba933b43e42db0515a5be425c3ead1db269dfc575ab4e082f19",
+  "registry_hash": "aebe9fee1b149ce0589d50afd5d2af16d2aadfe3c6ff16dcfc1cbe2ec7be594b",
   "repair_mode": "READ_ONLY",
   "repositories": [
     {
       "artifact_digest": "sha256:fe89cc16d624169e311bde9e65f44ab5329453fcd36fc1c2338d6162d8821f40",
+      "artifact_id": 8913657587,
       "authority_run": 30963084750,
-      "commit": "44dbee72e856adeb4f3572fb92be2145b0bdf4b6",
       "conformance_delta_count": 0,
+      "conformance_receipt": "c0b8ca3b5ec968356f7ce920f5d5a802a62fdb1781789dbef982f70659f6ec47",
+      "evidence_commit": "44dbee72e856adeb4f3572fb92be2145b0bdf4b6",
       "provenance_run": 30963084782,
+      "reconciliation_receipt": "47d2a931fe4da49d424bc4f7fcbf26c8e50d25076f774fc64a8b87ddfa25da7f",
       "reconciliation_status": "FIXED_POINT_REACHED",
+      "release_commit": "44dbee72e856adeb4f3572fb92be2145b0bdf4b6",
       "repair_enabled": false,
       "repository": "StegVerse-002/capability-registry",
       "semantic_receipt": "816a14db19ffecf1a3bb2eb920d3aaa75838f85862082d0c4353cccf6ee2879e",
       "semantic_run": 30963084736,
       "state": "COMPLETE_READ_ONLY",
       "state_delta_count": 0,
+      "state_delta_receipt": "04be905d1343b89916a0f6ccf70b45762ce963be54095f070b581b1869d3de19",
       "terminal_decision": "ALLOW"
     },
     {
+      "artifact_digest": "sha256:1f7be043853f53fa7f6c5c3271705e5e83c90f8eab6710e61db1c7abd1ef1179",
+      "artifact_id": 8914160547,
+      "conformance_delta_count": 0,
+      "conformance_receipt": "685d306ebcd70375bd57c35b4a681d3c4982202f9ad7a99c4ea130a920b8018c",
+      "evidence_commit": "7fbad2a6b0a81e7f8bda1c5ed64c2a9e36f746b0",
+      "provenance_run": 30964684795,
+      "reconciliation_receipt": "3ac3417a0641af2aca666544673ff654bbed6da009709988e2c4fcc83dc32ba7",
+      "reconciliation_status": "FIXED_POINT_REACHED",
+      "recovery_evidence": {
+        "correction": "exact_path_state_claims",
+        "denied_artifact_digest": "sha256:98d8c4135f6b93cd77aa788c762329472dbeab09c138a6d30f729051810e2045",
+        "denied_artifact_id": 8913991735,
+        "denied_run": 30963988249
+      },
+      "release_commit": "59a83dbbc1415c11c06e34e692318f578e20baf0",
+      "repair_enabled": false,
       "repository": "StegVerse-002/StegGuardian",
-      "state": "PENDING_READ_ONLY"
+      "semantic_receipt": "4c6794ac99c3c469340e8847562667ed248e3a71f0d61f6855d8a289a6e6b6ab",
+      "semantic_run": 30964684808,
+      "state": "COMPLETE_READ_ONLY",
+      "state_delta_count": 0,
+      "state_delta_receipt": "914147e6b99af5078664e0b5d7dbc01c4da1d26aeb5dee514f4148b61d6dadc4",
+      "terminal_decision": "ALLOW"
     },
     {
+      "artifact_digest": "sha256:28205b4a5fa247b77093df419be83fe9d0f020e1640136fba0bdfa493ede0cd4",
+      "artifact_id": 8914025580,
+      "conformance_delta_count": 0,
+      "conformance_receipt": "a969fd8ac6ca6c88be0732802091996402b15b9624cc88e63bb59b4668211514",
+      "evidence_commit": "a4fc28c5984d8d84d5dc66c6562f582c12ee4f19",
+      "private_lane_evaluated": false,
+      "provenance_run": 30964737473,
+      "reconciliation_receipt": "fb0e291ee9003f4387ca0871ffbf6bd9855484427b65666344ef168eb3a231da",
+      "reconciliation_status": "FIXED_POINT_REACHED",
+      "release_commit": "1285f2118b1ef43a051c06134b4e554af9c7f545",
+      "repair_enabled": false,
       "repository": "StegVerse-002/StegProfile",
-      "state": "PENDING_READ_ONLY"
+      "semantic_receipt": "87bfed39a92003eb373eac48e4362578ee75f58acf224dadfce09ad5d2b0c576",
+      "semantic_run": 30964737417,
+      "state": "COMPLETE_READ_ONLY",
+      "state_delta_count": 0,
+      "state_delta_receipt": "b88c7197d1fe011ab30d49e7bcc12350b2005f71361e4d7b39d0344927d48d19",
+      "terminal_decision": "ALLOW"
     },
     {
+      "artifact_digest": "sha256:f8304a52872fe2cc269efac165d5de766ded6a5cf11055f6ff89e549abee9d66",
+      "artifact_id": 8914061751,
+      "conformance_delta_count": 0,
+      "conformance_receipt": "ed251f9ac3279769602e76cd1da13fe0e46f33d85272cf58a0a76ff09bda290c",
+      "evidence_commit": "9830f93f9e8997e05c369085c47fb867c36ed255",
+      "provenance_run": 30964790034,
+      "reconciliation_receipt": "a6a0b265a9d10a4497a0bad1bb319f5b8642ddf5160fa94f00f7edee6473b87f",
+      "reconciliation_status": "FIXED_POINT_REACHED",
+      "release_commit": "17a982bea2f178c49144c3f1888d443c830ac4f3",
+      "repair_enabled": false,
       "repository": "StegVerse-002/core-lite",
-      "state": "PENDING_READ_ONLY"
+      "semantic_receipt": "dc3f11b5c4493b6495a9a0259a457d0f89c95b4ec1857cd0f7f7b494bccf7a83",
+      "semantic_run": 30964789951,
+      "state": "COMPLETE_READ_ONLY",
+      "state_delta_count": 0,
+      "state_delta_receipt": "af3e10a28637ff341b63bfb501d7db99e386911c29328a5698c22e9881fe26d4",
+      "terminal_decision": "ALLOW"
     },
     {
+      "artifact_digest": "sha256:1e3692a640c528b28ee4c51a059f5ddff4395c2b3c3e058cd65cd0d213d8f560",
+      "artifact_id": 8914096446,
+      "conformance_delta_count": 0,
+      "conformance_receipt": "1fd577c908959fb499f514c1fb5e295920da9566d019c006361568a5f1cc7367",
+      "evidence_commit": "e30ccfa6964ec0c50d5aab9745f1f26796c487a4",
+      "provenance_run": 30964848329,
+      "reconciliation_receipt": "c911f5648cdc5b3aca963f0c5a9007bf78afdc5ee28805360073d4bd257bf511",
+      "reconciliation_status": "FIXED_POINT_REACHED",
+      "release_commit": "0a0a4cc8fc6020ae48823a79b4713d6ca3299128",
+      "repair_enabled": false,
       "repository": "StegVerse-002/admissibility-gateway",
-      "state": "PENDING_READ_ONLY"
+      "semantic_receipt": "f10e333c4fd6e65e0500bc4e7c064ff529fac18ed7d44dad2b97d1f41325417b",
+      "semantic_run": 30964848309,
+      "state": "COMPLETE_READ_ONLY",
+      "state_delta_count": 0,
+      "state_delta_receipt": "931f2b7c3f1391e5b7dcfbf5095b70b4186a7f7b78b0e7ccd4e90fac138bd7fc",
+      "terminal_decision": "ALLOW"
     }
   ],
   "schema": "stegverse.handoff.semantic_adoption_registry.v1"

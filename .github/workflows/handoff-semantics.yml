@@ -9,10 +9,17 @@ on:
       - '**/*_HANDOFF.md'
       - '**/*_MIRROR_HANDOFF.md'
       - 'config/handoff-field-authority.format-a-v1.json'
+      - 'data/handoff-semantic-adoption.json'
+      - 'data/session-consolidation/**'
+      - 'schemas/handoff-*.schema.json'
+      - 'schemas/session-execution-inventory.schema.json'
       - 'tools/handoff_authority.py'
       - 'tools/handoff_semantics.py'
+      - 'tools/verify_handoff_semantic_adoption.py'
+      - 'tools/verify_session_execution_inventory.py'
       - 'tests/test_handoff_semantics.py'
-      - 'schemas/handoff-*.schema.json'
+      - 'tests/test_handoff_semantic_adoption.py'
+      - 'tests/test_session_execution_inventory.py'
       - 'docs/HANDOFF_*CONTRACT.md'
       - '.github/workflows/handoff-semantics*.yml'
   pull_request:
@@ -39,6 +46,10 @@ jobs:
           PY
       - name: Run semantic verifier tests
         run: python -m unittest discover -s tests -p 'test_handoff_semantics.py'
+      - name: Run semantic adoption registry tests
+        run: python -m unittest discover -s tests -p 'test_handoff_semantic_adoption.py'
+      - name: Run session execution inventory tests
+        run: python -m unittest discover -s tests -p 'test_session_execution_inventory.py'
       - name: Verify host semantic state
         run: |
           python tools/handoff_semantics.py \
@@ -46,11 +57,24 @@ jobs:
             --repository GCAT-BCAT-Engine/workflows \
             --authority-table config/handoff-field-authority.format-a-v1.json \
             --output-dir .handoff/semantic-receipts
-      - name: Upload semantic receipts
+      - name: Verify reviewed semantic adoption registry
+        run: |
+          python tools/verify_handoff_semantic_adoption.py \
+            --registry data/handoff-semantic-adoption.json \
+            --output data/handoff-semantic-adoption.verification-receipt.json
+      - name: Verify session execution inventory
+        run: |
+          python tools/verify_session_execution_inventory.py \
+            --inventory data/session-consolidation/handoff-orchestration-session-20260804.json \
+            --output data/session-consolidation/handoff-orchestration-session-20260804.verification-receipt.json
+      - name: Upload semantic and consolidation receipts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: handoff-semantic-host-${{ github.run_id }}
-          path: .handoff/semantic-receipts/*.json
+          path: |
+            .handoff/semantic-receipts/*.json
+            data/handoff-semantic-adoption.verification-receipt.json
+            data/session-consolidation/handoff-orchestration-session-20260804.verification-receipt.json
           if-no-files-found: error
           include-hidden-files: true

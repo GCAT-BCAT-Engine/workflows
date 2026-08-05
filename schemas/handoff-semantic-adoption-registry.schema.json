@@ -1,0 +1,60 @@
+{
+  "$id": "https://stegverse.org/schemas/handoff-semantic-adoption-registry.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "governed_repair_state": {
+      "const": "NOT_AUTHORIZED"
+    },
+    "registry_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "repair_mode": {
+      "const": "READ_ONLY"
+    },
+    "repositories": {
+      "items": {
+        "required": [
+          "repository",
+          "state",
+          "evidence_commit",
+          "release_commit",
+          "semantic_run",
+          "provenance_run",
+          "artifact_id",
+          "artifact_digest",
+          "semantic_receipt",
+          "conformance_receipt",
+          "state_delta_receipt",
+          "reconciliation_receipt",
+          "conformance_delta_count",
+          "state_delta_count",
+          "reconciliation_status",
+          "repair_enabled",
+          "terminal_decision"
+        ],
+        "type": "object"
+      },
+      "maxItems": 5,
+      "minItems": 5,
+      "type": "array"
+    },
+    "schema": {
+      "const": "stegverse.handoff.semantic_adoption_registry.v1"
+    }
+  },
+  "required": [
+    "schema",
+    "generated_at",
+    "repair_mode",
+    "governed_repair_state",
+    "host",
+    "portable_source",
+    "repositories",
+    "completion",
+    "registry_hash"
+  ],
+  "title": "Handoff Semantic Adoption Registry",
+  "type": "object"
+}

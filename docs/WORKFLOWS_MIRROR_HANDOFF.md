@@ -4,10 +4,10 @@
 
 This document is the single repository-wide current handoff for
 `GCAT-BCAT-Engine/workflows`. Machine authority is declared in
-`.handoff/current.json`, and the current commit-bound transition is declared in
+`.handoff/current.json`; the current commit-bound transition is declared in
 `.continuity/config.json`.
 
-Goal-specific handoffs remain active only as scoped lanes:
+Scoped program lanes remain subordinate:
 
 ```text
 SV_COST_MIRROR_HANDOFF.md
@@ -15,20 +15,24 @@ docs/TEN_ADVANCES_COST_ESTIMATION_MIRROR_HANDOFF.md
 docs/GOVERNED_RESEARCH_ENGINE_HANDOFF.md
 ```
 
-Live default-branch state, Git history, workflow runs, artifacts, receipts,
-verified change records, and validated adoption registries override historical
-chat claims.
+The execution inventory for the originating handoff-orchestration session is:
+
+```text
+data/session-consolidation/handoff-orchestration-session-20260804.json
+```
+
+Live default-branch state, Git history, workflow runs, retained artifacts,
+receipts, custody records, validated change records, and verified adoption
+registries override historical chat claims.
 
 ## Role
 
-`GCAT-BCAT-Engine/workflows` owns reusable construction, validation, hosted
-orchestration, handoff-authority enforcement, read-only handoff-semantic
-reconciliation, continuity-provenance validation, and cross-repository
-adoption registries.
+This repository owns reusable handoff authority, read-only semantic
+reconciliation, continuity provenance, cross-repository adoption registries,
+and session-consolidation coordination.
 
-Workflow completion is evidence. It is not runtime authority, destination
-custody, publication acceptance, deployment, repair authority, or irreversible
-execution.
+Workflow success is evidence. It is not execution, admissibility, custody,
+repair, release, publication, deployment, or irreversible-transition authority.
 
 ## Current installed files
 
@@ -43,6 +47,7 @@ execution.
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-005.json
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-006.json
 .continuity/change-records/SV-CONT-20260804-PROVENANCE-007.json
+.continuity/change-records/SV-CONT-20260804-PROVENANCE-008.json
 .github/workflows/handoff-authority.yml
 .github/workflows/handoff-authority-reusable.yml
 .github/workflows/handoff-semantics.yml
@@ -52,16 +57,13 @@ execution.
 tools/handoff_authority.py
 tools/handoff_semantics.py
 tools/continuity_provenance.py
+tools/verify_handoff_semantic_adoption.py
 tests/test_handoff_authority.py
 tests/test_handoff_semantics.py
 tests/test_continuity_provenance.py
+tests/test_handoff_semantic_adoption.py
 config/handoff-field-authority.format-a-v1.json
-schemas/handoff-field-authority.schema.json
-schemas/handoff-conformance-receipt.schema.json
-schemas/handoff-state-delta-receipt.schema.json
-schemas/handoff-reconciliation-receipt.schema.json
-schemas/session-change-record.schema.json
-schemas/cross-repository-reference-set.schema.json
+schemas/handoff-semantic-adoption-registry.schema.json
 docs/HANDOFF_ORCHESTRATION_CONTRACT.md
 docs/HANDOFF_SEMANTIC_RECONCILIATION_CONTRACT.md
 docs/CONTINUITY_PROVENANCE_CONTRACT.md
@@ -69,9 +71,7 @@ docs/WORKFLOWS_MIRROR_HANDOFF.md
 data/handoff-authority-adoption.json
 data/continuity-provenance-adoption.json
 data/handoff-semantic-adoption.json
-SV_COST_MIRROR_HANDOFF.md
-docs/TEN_ADVANCES_COST_ESTIMATION_MIRROR_HANDOFF.md
-docs/GOVERNED_RESEARCH_ENGINE_HANDOFF.md
+data/session-consolidation/handoff-orchestration-session-20260804.json
 ```
 
 ## Current working path
@@ -81,126 +81,122 @@ repository event
   -> governing handoff authority ALLOW
   -> Format A conformance
   -> repository-authoritative state comparison
-  -> bounded reconciliation receipt
-  -> commit-bound session change record
-  -> complete Git-diff and per-path hash verification
+  -> bounded read-only reconciliation
+  -> commit-bound Git-diff and content-hash verification
   -> required cross-repository reference verification
   -> continuity provenance ALLOW
+  -> reviewed adoption-registry verification
   -> standing and next-node selection
-  -> validated adoption registry
-  -> Master Records bounded custody
+  -> bounded Master Records custody
 ```
 
-Reusable workflows verify caller repositories in the caller checkout context
-and are pinned by consumers to immutable implementation commits.
+Reusable workflows execute in the caller checkout and are pinned by consumers
+to immutable host commits.
 
 ## Done state for this repo
 
-Handoff authority, the reusable semantic host, and continuity provenance are
-installed and validated when:
+The continuity foundation is complete when:
 
-1. exactly one governing handoff is verified;
-2. Format A conformance and repository-state deltas are separate receipts;
-3. intent and task fields are never mechanically reconciled;
+1. one governing handoff is machine verified;
+2. authority, conformance, state delta, reconciliation, and provenance remain
+   separate receipts;
+3. intent and task fields are not mechanically reconciled;
 4. bounded-loop exhaustion and oscillation fail closed;
 5. repair remains disabled;
-6. reusable execution occurs in the caller checkout;
-7. host authority, semantic, and provenance workflows return `ALLOW`; and
-8. at least one repository pilot reaches a retained zero-delta fixed point.
+6. reusable execution occurs in caller context;
+7. all five reviewed Format A repositories reach `COMPLETE_READ_ONLY`;
+8. the central registry rejects incomplete, duplicate, tampered, non-ALLOW, or
+   repair-enabled corpus state;
+9. released evidence is hash-pinned; and
+10. unresolved session goals have exact owners and durable locations.
 
-All eight conditions are satisfied.
+Conditions 1–10 are installed. Hosted validation of transition `008` is the
+current activation check.
 
 ## Completed in latest pass
 
-Portable semantic source:
+Core host and source:
 
 ```text
-repository: StegVerse-002/micro-node-runtime
-commit: c0630fab9759d1a4e9cb62b3ba13ff818cf819f3
-semantic run: 30961106607 — success
-provenance run: 30961106954 — success
-```
-
-Reusable semantic host:
-
-```text
-commit: ec8dc192617b4f145ccfe850d58a9cb803016d19
-authority run: 30962541372 — success
-semantic run: 30962541426 — success
-provenance run: 30962541361 — success
+portable source: StegVerse-002/micro-node-runtime@c0630fab9759d1a4e9cb62b3ba13ff818cf819f3
+reusable host: ec8dc192617b4f145ccfe850d58a9cb803016d19
+host authority run: 30962541372 — success
+host semantic run: 30962541426 — success
+host provenance run: 30962541361 — success
 repair mode: READ_ONLY
+governed repair: NOT_AUTHORIZED
 ```
 
-The two prior host failures remain retained in records `004` and `005` as
-integration evidence. Record `006` removed the private-source dependency without
-weakening semantic rules.
-
-Capability-registry pilot:
+Reviewed semantic corpus:
 
 ```text
-repository: StegVerse-002/capability-registry
-commit: 44dbee72e856adeb4f3572fb92be2145b0bdf4b6
-authority run: 30963084750 — success
-semantic run: 30963084736 — success
-provenance run: 30963084782 — success
-conformance deltas: 0
-state deltas: 0
-reconciliation: FIXED_POINT_REACHED
-repair_enabled: false
-artifact digest: sha256:fe89cc16d624169e311bde9e65f44ab5329453fcd36fc1c2338d6162d8821f40
-semantic receipt: 816a14db19ffecf1a3bb2eb920d3aaa75838f85862082d0c4353cccf6ee2879e
+StegVerse-002/capability-registry — COMPLETE_READ_ONLY
+StegVerse-002/StegGuardian — COMPLETE_READ_ONLY
+StegVerse-002/StegProfile — COMPLETE_READ_ONLY
+StegVerse-002/core-lite — COMPLETE_READ_ONLY
+StegVerse-002/admissibility-gateway — COMPLETE_READ_ONLY
+conformance deltas: 0 across 5/5
+state deltas: 0 across 5/5
+reconciliation: FIXED_POINT_REACHED across 5/5
+repair_enabled: false across 5/5
 ```
 
-The pilot also exposed and corrected a stale scoped-handoff pointer before
-semantic evaluation. Canonical `.github` paths and the capability task queue
-were preserved.
+StegGuardian's initial DENY remains retained. The correction changed stale
+descriptive state claims into exact repository paths; no semantic rule was
+weakened.
+
+Existing custody:
 
 ```text
-data/handoff-semantic-adoption.json — INSTALLED
-.continuity/cross-repository-references.json — PILOT EVIDENCE PINNED
+handoff authority custody — COMPLETE
+continuity provenance custody — COMPLETE
+semantic pilot custody — COMPLETE
+semantic custody run: 30963744926 — success
+authority_effect: NONE
+repair_authority: NOT_AUTHORIZED
+```
+
+Transition `008` adds:
+
+```text
+five-repository semantic registry
+deterministic registry verifier and four negative/positive stdlib tests
+nine hash-pinned required cross-repository references
+complete session execution inventory with zero unassigned tasks
 ```
 
 ## Remaining work
 
 ```text
-Propagate the read-only semantic gate to StegGuardian, StegProfile, core-lite, and admissibility-gateway.
-Retain additional zero-delta or typed-delta measurements.
-Transfer released semantic evidence into Master Records custody.
-Design governed repair proposals and an append-only repair ledger only after additional measurements.
-Make applicable authority, semantic, and provenance gates prerequisites for Runtime Orchestrator dispatch.
-Continue canonical decision-contract, plane-boundary, and candidate-ingress workstreams separately.
-Complete the pre-existing repository-agnostic sandbox builder.
+Accept the five-repository registry through a new bounded Master Records custody transition.
+Install authority-plus-provenance verified-state admission at Runtime Orchestrator event intake and direct next-node selection.
+Retain additional read-only measurements before any governed repair proposal.
+Continue decision-envelope, plane-boundary, candidate-ingress, and portable-consumer work only through the exact canonical owners recorded in the session inventory.
+Complete the pre-existing repository-agnostic sandbox builder under its existing owner.
 ```
 
-No favorable general StegVerse savings claim is admitted by this handoff.
+Decision vocabulary, plane boundary, candidate ingress, consumer tests, and
+publication are adjacent canonical workstreams. They are not completion claims
+of semantic reconciliation.
 
 ## Destination installs
 
 ```text
-Handoff authority:
-  reviewed corpus — COMPLETE
-  GCAT-BCAT-Engine/workflows — COMPLETE HOST
-  master-records/orchestration — COMPLETE BOUNDED CUSTODY
-
-Continuity provenance:
-  GCAT-BCAT-Engine/workflows — COMPLETE HOST
-  reviewed corpus — COMPLETE HOSTED ADOPTION
-  master-records/orchestration — PENDING PROVENANCE CUSTODY
-
-Handoff semantics:
-  StegVerse-002/micro-node-runtime — PORTABLE SOURCE COMPLETE
-  GCAT-BCAT-Engine/workflows — REUSABLE HOST COMPLETE
-  StegVerse-002/capability-registry — READ-ONLY FIXED-POINT PILOT COMPLETE
-  StegVerse-002/StegGuardian — PENDING READ-ONLY
-  StegVerse-002/StegProfile — PENDING READ-ONLY
-  StegVerse-002/core-lite — PENDING READ-ONLY
-  StegVerse-002/admissibility-gateway — PENDING READ-ONLY
-  master-records/orchestration — SEMANTIC CUSTODY PENDING
+reviewed handoff authority corpus — COMPLETE
+reviewed continuity-provenance corpus — COMPLETE
+reviewed read-only semantic corpus — COMPLETE
+master-records/orchestration authority custody — COMPLETE
+master-records/orchestration provenance custody — COMPLETE
+master-records/orchestration semantic pilot custody — COMPLETE
+master-records/orchestration expanded semantic custody — CLAIMED_FOR_INTEGRATION
+StegVerse-002/micro-node-runtime dual-gate dispatch — CLAIMED_FOR_IMPLEMENTATION
+GCAT-BCAT-Engine/Publisher and public wikis—no new release claim from this lane
 ```
 
 ## Next task
 
-Accept the released capability-registry semantic evidence into bounded Master
-Records custody, then extend the pinned read-only gate to the remaining Format A
-repositories. Do not enable repair until the additional measurements and repair
-proposal contract are retained.
+Validate transition `008`. Then accept the promoted five-repository registry
+into bounded Master Records custody and install the dual-gate Runtime
+Orchestrator admission boundary. The exact claim, collision, evidence, and
+release conditions are in
+`data/session-consolidation/handoff-orchestration-session-20260804.json`.

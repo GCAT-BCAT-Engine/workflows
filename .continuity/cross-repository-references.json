@@ -1,5 +1,5 @@
 {
-  "record_hash": "c02a1a4b736da910d77ad5de01666766200ce15105e20923db1dbf5b32c33abe",
+  "record_hash": "76780c9d8677c82f86258c2a703b81179f9e5b44866e78701131085a8921c852",
   "references": [
     {
       "content_hash": "e369aba1841f6f76c4c7f0c4d733bdbfbeaa88b0",
@@ -10,10 +10,7 @@
       "repository": "StegVerse-002/micro-node-runtime",
       "required": true,
       "source_commit": "f41febfd2fe9e2aec6f3594f90610ea1ffe29926",
-      "verification_evidence": [
-        "workflow_run:30957032618",
-        "commit:f41febfd2fe9e2aec6f3594f90610ea1ffe29926"
-      ],
+      "verification_evidence": ["workflow_run:30957032618", "commit:f41febfd2fe9e2aec6f3594f90610ea1ffe29926"],
       "verification_status": "VERIFIED"
     },
     {
@@ -25,10 +22,7 @@
       "repository": "master-records/orchestration",
       "required": true,
       "source_commit": "5cc259d414fb21fb94914ae244fdd033f3115b76",
-      "verification_evidence": [
-        "workflow_run:30958850868",
-        "custody_receipt:f99056b1295e4787617e489e776b4a6a89d769c443f237e83236a05cb2165684"
-      ],
+      "verification_evidence": ["workflow_run:30958850868", "custody_receipt:f99056b1295e4787617e489e776b4a6a89d769c443f237e83236a05cb2165684"],
       "verification_status": "VERIFIED"
     },
     {
@@ -40,11 +34,7 @@
       "repository": "StegVerse-002/micro-node-runtime",
       "required": true,
       "source_commit": "c0630fab9759d1a4e9cb62b3ba13ff818cf819f3",
-      "verification_evidence": [
-        "workflow_run:30961106607",
-        "provenance_run:30961106954",
-        "commit:c0630fab9759d1a4e9cb62b3ba13ff818cf819f3"
-      ],
+      "verification_evidence": ["workflow_run:30961106607", "provenance_run:30961106954", "commit:c0630fab9759d1a4e9cb62b3ba13ff818cf819f3"],
       "verification_status": "VERIFIED"
     },
     {
@@ -56,13 +46,67 @@
       "repository": "StegVerse-002/capability-registry",
       "required": true,
       "source_commit": "44dbee72e856adeb4f3572fb92be2145b0bdf4b6",
-      "verification_evidence": [
-        "authority_run:30963084750",
-        "semantic_run:30963084736",
-        "provenance_run:30963084782",
-        "artifact_digest:sha256:fe89cc16d624169e311bde9e65f44ab5329453fcd36fc1c2338d6162d8821f40",
-        "semantic_receipt:816a14db19ffecf1a3bb2eb920d3aaa75838f85862082d0c4353cccf6ee2879e"
-      ],
+      "verification_evidence": ["authority_run:30963084750", "semantic_run:30963084736", "provenance_run:30963084782", "artifact_digest:sha256:fe89cc16d624169e311bde9e65f44ab5329453fcd36fc1c2338d6162d8821f40", "semantic_receipt:816a14db19ffecf1a3bb2eb920d3aaa75838f85862082d0c4353cccf6ee2879e"],
+      "verification_status": "VERIFIED"
+    },
+    {
+      "content_hash": "be2530d3942ae94b9ac186c3ede2710531424290",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/HANDOFF_SEMANTIC_ADOPTION_HANDOFF.md",
+      "reference_id": "stegguardian-semantic-adoption",
+      "relationship": "released_read_only_semantic_adoption",
+      "repository": "StegVerse-002/StegGuardian",
+      "required": true,
+      "source_commit": "59a83dbbc1415c11c06e34e692318f578e20baf0",
+      "verification_evidence": ["semantic_run:30964684808", "provenance_run:30964684795", "artifact_digest:sha256:1f7be043853f53fa7f6c5c3271705e5e83c90f8eab6710e61db1c7abd1ef1179", "semantic_receipt:4c6794ac99c3c469340e8847562667ed248e3a71f0d61f6855d8a289a6e6b6ab"],
+      "verification_status": "VERIFIED"
+    },
+    {
+      "content_hash": "85b00f9da13cc20118b5711d3022e6e70979de33",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/HANDOFF_SEMANTIC_ADOPTION_HANDOFF.md",
+      "reference_id": "stegprofile-semantic-adoption",
+      "relationship": "released_read_only_semantic_adoption",
+      "repository": "StegVerse-002/StegProfile",
+      "required": true,
+      "source_commit": "1285f2118b1ef43a051c06134b4e554af9c7f545",
+      "verification_evidence": ["semantic_run:30964737417", "provenance_run:30964737473", "artifact_digest:sha256:28205b4a5fa247b77093df419be83fe9d0f020e1640136fba0bdfa493ede0cd4", "semantic_receipt:87bfed39a92003eb373eac48e4362578ee75f58acf224dadfce09ad5d2b0c576"],
+      "verification_status": "VERIFIED"
+    },
+    {
+      "content_hash": "8a3e3b5d955aebca6d32908a7fa3d9667fbc6325",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/HANDOFF_SEMANTIC_ADOPTION_HANDOFF.md",
+      "reference_id": "core-lite-semantic-adoption",
+      "relationship": "released_read_only_semantic_adoption",
+      "repository": "StegVerse-002/core-lite",
+      "required": true,
+      "source_commit": "17a982bea2f178c49144c3f1888d443c830ac4f3",
+      "verification_evidence": ["semantic_run:30964789951", "provenance_run:30964790034", "artifact_digest:sha256:f8304a52872fe2cc269efac165d5de766ded6a5cf11055f6ff89e549abee9d66", "semantic_receipt:dc3f11b5c4493b6495a9a0259a457d0f89c95b4ec1857cd0f7f7b494bccf7a83"],
+      "verification_status": "VERIFIED"
+    },
+    {
+      "content_hash": "7c8ea7ac381cde13f3fcc75ca4814a92e21a8404",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/HANDOFF_SEMANTIC_ADOPTION_HANDOFF.md",
+      "reference_id": "admissibility-gateway-semantic-adoption",
+      "relationship": "released_read_only_semantic_adoption",
+      "repository": "StegVerse-002/admissibility-gateway",
+      "required": true,
+      "source_commit": "0a0a4cc8fc6020ae48823a79b4713d6ca3299128",
+      "verification_evidence": ["semantic_run:30964848309", "provenance_run:30964848329", "artifact_digest:sha256:1e3692a640c528b28ee4c51a059f5ddff4395c2b3c3e058cd65cd0d213d8f560", "semantic_receipt:f10e333c4fd6e65e0500bc4e7c064ff529fac18ed7d44dad2b97d1f41325417b"],
+      "verification_status": "VERIFIED"
+    },
+    {
+      "content_hash": "f308922b893eb2c54aedab232fec87d7cab42af5",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "HANDOFF_SEMANTIC_CUSTODY_HANDOFF.md",
+      "reference_id": "handoff-semantic-master-records-custody-v1",
+      "relationship": "bounded_custody_destination",
+      "repository": "master-records/orchestration",
+      "required": true,
+      "source_commit": "6c3ce486a00c120c0cadf9b38a141c666aff283d",
+      "verification_evidence": ["workflow_run:30963744926", "authority_effect:NONE", "repair_authority:NOT_AUTHORIZED"],
       "verification_status": "VERIFIED"
     }
   ],
