@@ -1,0 +1,37 @@
+name: SV Governed AI Premium Test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/sv-cost-program/governed-ai-premium/**'
+      - 'experiments/sv-cost-program/five-lane-results/results/five_lane_results.json'
+      - '.github/workflows/sv-governed-ai-premium.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-premium-model:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate Python syntax
+        run: python -m py_compile experiments/sv-cost-program/governed-ai-premium/reduce.py
+
+      - name: Run governed AI premium reducer
+        run: python experiments/sv-cost-program/governed-ai-premium/reduce.py
+
+      - name: Validate generated JSON
+        run: python -m json.tool experiments/sv-cost-program/governed-ai-premium/results/governed_ai_premium_results.json > /dev/null
+
+      - name: Upload governed AI premium evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: governed-ai-premium-evidence
+          path: |
+            experiments/sv-cost-program/governed-ai-premium/results/governed_ai_premium_results.json
+            experiments/sv-cost-program/governed-ai-premium/results/report.md
