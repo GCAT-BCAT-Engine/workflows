@@ -20,13 +20,21 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Validate Python syntax
-        run: python -m py_compile experiments/sv-cost-program/governed-ai-premium/reduce.py
+        run: |
+          python -m py_compile \
+            experiments/sv-cost-program/governed-ai-premium/reduce.py \
+            experiments/sv-cost-program/governed-ai-premium/isolate_steggate.py
 
       - name: Run governed AI premium reducer
         run: python experiments/sv-cost-program/governed-ai-premium/reduce.py
 
+      - name: Run isolated StegGate core-path meter
+        run: python experiments/sv-cost-program/governed-ai-premium/isolate_steggate.py
+
       - name: Validate generated JSON
-        run: python -m json.tool experiments/sv-cost-program/governed-ai-premium/results/governed_ai_premium_results.json > /dev/null
+        run: |
+          python -m json.tool experiments/sv-cost-program/governed-ai-premium/results/governed_ai_premium_results.json > /dev/null
+          python -m json.tool experiments/sv-cost-program/governed-ai-premium/results/steggate_isolation_results.json > /dev/null
 
       - name: Upload governed AI premium evidence
         uses: actions/upload-artifact@v4
@@ -35,3 +43,5 @@ jobs:
           path: |
             experiments/sv-cost-program/governed-ai-premium/results/governed_ai_premium_results.json
             experiments/sv-cost-program/governed-ai-premium/results/report.md
+            experiments/sv-cost-program/governed-ai-premium/results/steggate_isolation_results.json
+            experiments/sv-cost-program/governed-ai-premium/results/steggate_isolation_report.md
