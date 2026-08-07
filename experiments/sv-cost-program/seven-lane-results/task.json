@@ -1,0 +1,73 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "SV-COST-SEVEN-LANE-RESULTS-001",
+  "supersedes_for_new_runs": "SV-COST-FIVE-LANE-RESULTS-001",
+  "preserves_historical_result": "experiments/sv-cost-program/five-lane-results/results/five_lane_results.json",
+  "task_id": "SV-RECON-001",
+  "operation_class": "governed_state_reconstruction",
+  "comparison_unit": "successful equivalent admissible outcome",
+  "lane_schema": [
+    {"lane": 1, "lane_id": "openai-raw", "model_interest": "OpenAI", "stegverse_governed": false},
+    {"lane": 2, "lane_id": "openai-governed", "model_interest": "OpenAI/StegVerse", "stegverse_governed": true},
+    {"lane": 3, "lane_id": "anthropic-raw", "model_interest": "Anthropic", "stegverse_governed": false},
+    {"lane": 4, "lane_id": "anthropic-governed", "model_interest": "Anthropic/StegVerse", "stegverse_governed": true},
+    {"lane": 5, "lane_id": "stegverse-only", "model_interest": "StegVerse deterministic reconstruction", "stegverse_governed": true},
+    {"lane": 6, "lane_id": "deepseek-raw", "model_interest": "DeepSeek", "stegverse_governed": false},
+    {"lane": 7, "lane_id": "deepseek-governed", "model_interest": "DeepSeek/StegVerse", "stegverse_governed": true}
+  ],
+  "initial_state": {
+    "balance": 100,
+    "risk_score": 1,
+    "standing": "active"
+  },
+  "policy": {
+    "minimum_balance": 0,
+    "maximum_risk_score": 5,
+    "standing_required_for_debit": "active"
+  },
+  "events": [
+    {"event_id": "E01", "operation": "credit", "amount": 25},
+    {"event_id": "E02", "operation": "debit", "amount": 40},
+    {"event_id": "E03", "operation": "risk_add", "amount": 2},
+    {"event_id": "E04", "operation": "debit", "amount": 100},
+    {"event_id": "E05", "operation": "risk_add", "amount": 3},
+    {"event_id": "E06", "operation": "debit", "amount": 10}
+  ],
+  "decision_rules": [
+    "Process events in listed order.",
+    "A credit is ALLOW and increases balance.",
+    "A debit is ALLOW only when standing is active and resulting balance is not below minimum_balance; otherwise DENY and do not mutate state.",
+    "A risk_add is ALLOW only when resulting risk_score is not above maximum_risk_score; otherwise DENY and do not mutate state.",
+    "Denied events never mutate state.",
+    "Return only the required JSON object."
+  ],
+  "required_output": {
+    "task_id": "SV-RECON-001",
+    "final_state": {"balance": 75, "risk_score": 3, "standing": "active"},
+    "decisions": [
+      {"event_id": "E01", "status": "ALLOW", "reason": "CREDIT_APPLIED"},
+      {"event_id": "E02", "status": "ALLOW", "reason": "DEBIT_WITHIN_BOUNDARY"},
+      {"event_id": "E03", "status": "ALLOW", "reason": "RISK_WITHIN_BOUNDARY"},
+      {"event_id": "E04", "status": "DENY", "reason": "MINIMUM_BALANCE_VIOLATION"},
+      {"event_id": "E05", "status": "DENY", "reason": "MAXIMUM_RISK_VIOLATION"},
+      {"event_id": "E06", "status": "ALLOW", "reason": "DEBIT_WITHIN_BOUNDARY"}
+    ],
+    "applied_count": 4,
+    "denied_count": 2,
+    "claim_boundary": "DETERMINISTIC_RECONSTRUCTION_ONLY"
+  },
+  "price_card": {
+    "id": "SV-COST-SEVEN-LANE-DECLARED-RATES",
+    "status": "PROVIDER_RATES_MUST_BE_VERSIONED_AT_EXECUTION",
+    "openai_input_usd_per_million": 5.0,
+    "openai_output_usd_per_million": 30.0,
+    "anthropic_input_usd_per_million": 3.0,
+    "anthropic_output_usd_per_million": 15.0,
+    "deepseek_input_usd_per_million": null,
+    "deepseek_output_usd_per_million": null,
+    "deepseek_rate_source": "Set DEEPSEEK_INPUT_USD_PER_MILLION and DEEPSEEK_OUTPUT_USD_PER_MILLION from a versioned provider price source at execution time.",
+    "local_linux_runner_usd_per_minute": 0.008,
+    "local_storage_usd_per_gb_month": 0.008
+  },
+  "claim_boundary": "This seven-lane task extends the bounded deterministic reconstruction comparison with DeepSeek raw and DeepSeek/StegVerse governed lanes. Historical five-lane results remain immutable. No fresh-inference equivalence, universal provider economics, company ROI, or provider-quality claim is admitted."
+}
