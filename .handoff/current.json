@@ -10,12 +10,14 @@
   "scoped_handoffs": [
     "SV_COST_MIRROR_HANDOFF.md",
     "docs/TEN_ADVANCES_COST_ESTIMATION_MIRROR_HANDOFF.md",
-    "docs/GOVERNED_RESEARCH_ENGINE_HANDOFF.md"
+    "docs/GOVERNED_RESEARCH_ENGINE_HANDOFF.md",
+    "experiments/sv-cost-program/governed-ai-premium/SV_GOVERNED_AI_PREMIUM_MIRROR_HANDOFF.md",
+    "experiments/sv-cost-program/seven-lane-results/SV_COST_SEVEN_LANE_MIRROR_HANDOFF.md"
   ],
   "archive_policy": {
     "date_suffix_required": true,
     "session_archive_prefix_allowed": true
   },
-  "declared_at": "2026-08-05T02:10:00Z",
-  "base_commit": "2352e400485ff9e2b5ce3d5796c126b90f0dbc42"
+  "declared_at": "2026-08-07T22:17:00Z",
+  "base_commit": "d61ee166856d66033cc9b5c0a9d77969981f96c0"
 }
