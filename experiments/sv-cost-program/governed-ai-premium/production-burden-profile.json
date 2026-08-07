@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "profile_id": "SV-GOVERNED-AI-PRODUCTION-BURDEN-001",
+  "purpose": "Measure how StegGate cost and latency evolve from an in-process core check toward a more production-like governed execution path while keeping provider inference outside the meter.",
+  "runner_rate_usd_per_minute": 0.008,
+  "storage_rate_usd_per_gb_month": 0.008,
+  "iterations": 2000,
+  "tiers": [
+    {
+      "tier": 0,
+      "id": "CORE",
+      "label": "Core admissibility",
+      "components": ["canonicalization", "hashing", "authority check", "policy binding", "successor-state check", "receipt generation", "reconstruction verification"]
+    },
+    {
+      "tier": 1,
+      "id": "PROOF",
+      "label": "Core + cryptographic proof checks",
+      "components": ["CORE", "candidate MAC verification", "three receipt-proof verifications"]
+    },
+    {
+      "tier": 2,
+      "id": "LOOKUP",
+      "label": "Core + proof + policy/delegation retrieval",
+      "components": ["PROOF", "local policy artifact retrieval", "local delegation artifact retrieval", "artifact hash verification"]
+    },
+    {
+      "tier": 3,
+      "id": "PERSIST",
+      "label": "Core + proof + lookup + durable receipt persistence",
+      "components": ["LOOKUP", "SQLite transaction", "commit", "receipt re-read and hash verification"]
+    },
+    {
+      "tier": 4,
+      "id": "QUORUM",
+      "label": "Core + proof + lookup + persistence + quorum",
+      "components": ["PERSIST", "three-member deterministic approval verification", "2-of-3 quorum threshold"]
+    },
+    {
+      "tier": 5,
+      "id": "BOUNDARY",
+      "label": "Production-like local boundary",
+      "components": ["QUORUM", "local socket boundary round-trip", "request/response serialization", "boundary response hash verification"]
+    }
+  ],
+  "negative_cases": [
+    "revoked delegation must DENY",
+    "tampered successor state must DENY",
+    "tampered proof must DENY",
+    "insufficient quorum must DENY"
+  ],
+  "claim_boundary": "This profile measures synthetic local execution burdens on a GitHub-hosted Linux runner. Local files, SQLite, HMAC proofs, and socketpair transport approximate classes of production work but do not equal remote KMS, database, network, policy service, or human quorum costs."
+}
