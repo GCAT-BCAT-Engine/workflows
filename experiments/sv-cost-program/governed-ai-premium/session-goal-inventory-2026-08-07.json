@@ -1,0 +1,151 @@
+{
+  "schema_version": "1.0.0",
+  "session_id": "2026-08-07-governed-ai-abundant-intelligence-deepseek",
+  "canonical_handoff": "experiments/sv-cost-program/governed-ai-premium/SV_GOVERNED_AI_PREMIUM_MIRROR_HANDOFF.md",
+  "root_handoff": "SV_COST_MIRROR_HANDOFF.md",
+  "branch": "main",
+  "goals": [
+    {
+      "goal_id": "SV-GOVAI-PRIMARY-001",
+      "type": "primary",
+      "originating_session_goal": "Test StegVerse direction under abundant intelligence by shifting from provider token-price ranking to the incremental cost and operational value of adding StegGate to an existing AI provider product.",
+      "state": "MERGED_INTO_CANONICAL_WORKSTREAM",
+      "canonical_location": "experiments/sv-cost-program/governed-ai-premium/"
+    },
+    {
+      "goal_id": "SV-GOVAI-DEEPSEEK-002",
+      "type": "adjacent",
+      "originating_session_goal": "Extend the bounded reconstruction test with Lane 6 DeepSeek and Lane 7 DeepSeek/StegVerse under the same task contract.",
+      "state": "MACHINE_OWNED",
+      "canonical_location": "experiments/sv-cost-program/seven-lane-results/"
+    },
+    {
+      "goal_id": "SV-GOVAI-BURDEN-003",
+      "type": "adjacent",
+      "originating_session_goal": "Measure StegGate independently of model inference and segment governance cost by control burden and workload mix.",
+      "state": "COMPLETE",
+      "canonical_location": "experiments/sv-cost-program/governed-ai-premium/production_burden.py; experiments/sv-cost-program/governed-ai-premium/workload_mix.py"
+    },
+    {
+      "goal_id": "SV-GOVAI-PRODUCT-004",
+      "type": "adjacent",
+      "originating_session_goal": "Define a Governed AI provider product comparison without claiming a wholesale or retail price before production evidence exists.",
+      "state": "COMPLETE",
+      "canonical_location": "experiments/sv-cost-program/governed-ai-premium/product-comparison-schema.json; experiments/sv-cost-program/governed-ai-premium/product_tier_envelope.py"
+    },
+    {
+      "goal_id": "SV-GOVAI-REMOTE-005",
+      "type": "adjacent",
+      "originating_session_goal": "Replace synthetic local governance burdens with measured remote production components while preserving provider-independent and provider-specific cost separation.",
+      "state": "BLOCKED",
+      "canonical_location": "experiments/sv-cost-program/governed-ai-premium/remote-burden/"
+    },
+    {
+      "goal_id": "SV-GOVAI-CONSOLIDATE-006",
+      "type": "adjacent",
+      "originating_session_goal": "Durably preserve unique session state, claims, blockers, validation evidence, automation, and continuation authority so this chat is not required for future execution.",
+      "state": "COMPLETE",
+      "canonical_location": "experiments/sv-cost-program/governed-ai-premium/SV_GOVERNED_AI_PREMIUM_MIRROR_HANDOFF.md; experiments/sv-cost-program/governed-ai-premium/session-goal-inventory-2026-08-07.json; experiments/sv-cost-program/governed-ai-premium/task-claims-2026-08-07.json"
+    }
+  ],
+  "execution_inventory": [
+    {
+      "task_id": "SV-GOVAI-001-COMPARISON-SCHEMA",
+      "destination": "GCAT-BCAT-Engine/workflows@main",
+      "location": "experiments/sv-cost-program/governed-ai-premium/product-comparison-schema.json",
+      "owner": "governed-ai-premium canonical workstream",
+      "claim_state": "COMPLETE",
+      "completion_state": "schema_v1_1_installed",
+      "validation_state": "hosted workflow PASS",
+      "integration_state": "bound to reducers and handoff",
+      "archival_dependency": false,
+      "evidence_location": "workflow run 31222213580 artifact 9010786489",
+      "next_executable_action": "None unless metric contract changes through new evidence."
+    },
+    {
+      "task_id": "SV-GOVAI-002-LOCAL-BURDEN-CURVE",
+      "destination": "GCAT-BCAT-Engine/workflows@main",
+      "location": "experiments/sv-cost-program/governed-ai-premium/production_burden.py",
+      "owner": "github-actions:SV Governed AI Premium Test",
+      "claim_state": "COMPLETE",
+      "completion_state": "six burden classes plus four fail-closed negative cases implemented",
+      "validation_state": "hosted workflow PASS",
+      "integration_state": "consumed by product and workload reducers",
+      "archival_dependency": false,
+      "evidence_location": "run 31222023913 artifact 9010716206",
+      "next_executable_action": "Remote substitution is a separate task."
+    },
+    {
+      "task_id": "SV-GOVAI-003-WORKLOAD-MIX",
+      "destination": "GCAT-BCAT-Engine/workflows@main",
+      "location": "experiments/sv-cost-program/governed-ai-premium/workload_mix.py; workload-mix-scenarios.json",
+      "owner": "github-actions:SV Governed AI Premium Test",
+      "claim_state": "COMPLETE",
+      "completion_state": "four illustrative mixes implemented",
+      "validation_state": "hosted workflow PASS",
+      "integration_state": "canonical metric contract",
+      "archival_dependency": false,
+      "evidence_location": "run 31222213580 artifact 9010786489",
+      "next_executable_action": "Use measured distributions only when real usage evidence exists."
+    },
+    {
+      "task_id": "SV-GOVAI-004-DEEPSEEK-PRICE-CARD",
+      "destination": "GCAT-BCAT-Engine/workflows@main",
+      "location": "experiments/sv-cost-program/seven-lane-results/deepseek-price-card.json",
+      "owner": "seven-lane canonical workstream",
+      "claim_state": "COMPLETE",
+      "completion_state": "official V4 Flash price evidence versioned",
+      "validation_state": "schema validation required on next hosted run",
+      "integration_state": "task.json v2.1 bound",
+      "archival_dependency": false,
+      "evidence_location": "commit 143d50ac51b07300afaf031aaa8de6cb1635cac0; official source recorded in file",
+      "next_executable_action": "Refresh only when provider pricing/model changes."
+    },
+    {
+      "task_id": "SV-GOVAI-005-DEEPSEEK-PAIR",
+      "destination": "GCAT-BCAT-Engine/workflows@main",
+      "location": "experiments/sv-cost-program/seven-lane-results/run_deepseek_pair.py; results/deepseek_pair_results.json",
+      "owner": "github-actions:SV Cost DeepSeek Pair Continuation",
+      "claim_state": "MACHINE_OWNED",
+      "completion_state": "runner_installed_execution_dependency_pending",
+      "validation_state": "syntax/schema hosted validation pending",
+      "integration_state": "feeds Governed AI reducer only after COMPLETE",
+      "archival_dependency": false,
+      "evidence_location": "machine workflow artifacts and committed result when COMPLETE/FAILED",
+      "next_executable_action": "Execute automatically when DEEPSEEK_API_KEY is available; otherwise emit BLOCKED evidence."
+    },
+    {
+      "task_id": "SV-GOVAI-006-REMOTE-BURDEN",
+      "destination": "GCAT-BCAT-Engine/workflows@main",
+      "location": "experiments/sv-cost-program/governed-ai-premium/remote-burden/",
+      "owner": "unclaimed until an authorized remote policy/delegation/KMS/persistence endpoint is identified",
+      "claim_state": "BLOCKED",
+      "completion_state": "local synthetic substitutes exist; remote implementations absent",
+      "validation_state": "not executable without named remote service authority",
+      "integration_state": "must replace one local burden class at a time",
+      "archival_dependency": false,
+      "evidence_location": "SV_GOVERNED_AI_PREMIUM_MIRROR_HANDOFF.md",
+      "next_executable_action": "Repository-native continuation must bind a named authorized service endpoint before implementation; no unspecified external task is permitted."
+    },
+    {
+      "task_id": "SV-GOVAI-007-PUBLICATION",
+      "destination": "GCAT-BCAT-Engine/Publisher; StegVerse-Labs/Site; StegVerse-Labs/admissibility-wiki; StegVerse-002/stegguardian-wiki",
+      "location": "destination mirror handoffs and import/publication contracts",
+      "owner": "destination handoffs after publication gate",
+      "claim_state": "BLOCKED",
+      "completion_state": "not admitted",
+      "validation_state": "publication preconditions incomplete",
+      "integration_state": "no propagation claimed",
+      "archival_dependency": false,
+      "evidence_location": "governed-ai-premium handoff claim boundary",
+      "next_executable_action": "Only after canonical DeepSeek execution plus remote burden evidence support a bounded publication candidate, inspect destination handoffs and transfer only admitted claims."
+    }
+  ],
+  "archive_conditions": {
+    "unique_chat_state_transferred": true,
+    "machine_owned_deepseek_continuation_required": true,
+    "remote_burden_blocker_durable": true,
+    "publication_blocker_durable": true,
+    "chat_required_for_execution": false
+  }
+}
