@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "provider": "DeepSeek",
+  "model": "deepseek-v4-flash",
+  "model_version": "DeepSeek-V4-Flash",
+  "pricing_currency": "USD",
+  "pricing_unit": "per_1m_tokens",
+  "effective_observation_date": "2026-08-07",
+  "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+  "source_type": "official_provider_documentation",
+  "input_cache_hit_usd_per_million": 0.0028,
+  "input_cache_miss_usd_per_million": 0.14,
+  "output_usd_per_million": 0.28,
+  "costing_policy": "Use cache-miss input rate unless the provider response supplies cache-hit token accounting that can be independently separated. Output uses the published output rate.",
+  "legacy_alias_status": {
+    "deepseek-chat": "deprecated_after_2026-07-24T15:59:00Z",
+    "deepseek-reasoner": "deprecated_after_2026-07-24T15:59:00Z"
+  },
+  "base_url_openai_format": "https://api.deepseek.com",
+  "claim_boundary": "Versioned execution price evidence for the bounded seven-lane experiment only. Provider pricing can change; future runs must either use this card with its observation date or install a newer versioned card before making a cost claim."
+}
