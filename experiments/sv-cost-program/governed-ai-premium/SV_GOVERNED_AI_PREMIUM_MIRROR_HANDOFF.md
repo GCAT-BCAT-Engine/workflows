@@ -1,6 +1,6 @@
 # Governed AI Premium Mirror Handoff
 
-Status: **ACTIVE — CORE ISOLATION PASS — PRODUCTION-BURDEN CURVE PASS — PRODUCT ENVELOPE PASS — DEEPSEEK EVIDENCE PENDING**
+Status: **ACTIVE — LOCAL GOVERNANCE ECONOMICS STACK PASS — WORKLOAD MIX PASS — DEEPSEEK AND REMOTE BURDEN PENDING**
 
 ## Source of truth
 
@@ -45,10 +45,16 @@ existing provider AI + StegGate
 Preferred abundant-intelligence unit:
 
 ```text
-absolute governance cost per governed admissible action, segmented by governance burden
+absolute governance cost per governed admissible action by governance burden class
 ```
 
-Percentage premium over inference remains a secondary metric because the denominator can collapse while the governance workload stays unchanged.
+For mixed workloads, use:
+
+```text
+workload-weighted governance cost per governed admissible action
+```
+
+Percentage premium over inference remains secondary because the denominator can collapse while the governance workload stays unchanged.
 
 ## Installed implementation
 
@@ -60,10 +66,12 @@ isolate_steggate.py
 production-burden-profile.json
 production_burden.py
 product_tier_envelope.py
+workload-mix-scenarios.json
+workload_mix.py
 .github/workflows/sv-governed-ai-premium.yml
 ```
 
-Hosted workflow executes all reducers/meters, validates JSON, and uploads immutable evidence artifacts.
+The comparison schema is now `1.1.0` and explicitly separates provider inference cost, StegGate governance cost, provider-specific integration cost, and commercial margin.
 
 ## Hosted evidence
 
@@ -79,8 +87,6 @@ name: governed-ai-premium-evidence
 digest: sha256:4cfd49475c42a160413f92fdcd9b616e4641946330441c0f78735eceb3267c71
 ```
 
-The workflow passed the historical sensitivity reducer and isolated StegGate core-path meter.
-
 ### Production-burden curve
 
 Run `31222023913` completed `success` at commit `3d5ea7c07e132893f5c9c2c5aaa5596b0f64920f`.
@@ -93,7 +99,7 @@ name: governed-ai-premium-evidence
 digest: sha256:7b174c0f3d7f1182f2891e9931f95d3d6a58e8b6285bc47367c55566ba43cd03
 ```
 
-Observed local synthetic burden curve on the hosted Linux runner:
+Observed local synthetic burden curve on the hosted Linux runner for that run:
 
 | Tier | Mean latency | Modeled local cost / governed action |
 |---|---:|---:|
@@ -104,9 +110,7 @@ Observed local synthetic burden curve on the hosted Linux runner:
 | QUORUM | 1.116657 ms | $0.000000156728 |
 | BOUNDARY | 1.233232 ms | $0.000000172271 |
 
-All six tiers produced admissible results.
-
-Fail-closed negative tests also passed:
+All six tiers produced admissible results and all four fail-closed negative cases passed:
 
 ```text
 revoked_delegation_denied: true
@@ -115,20 +119,9 @@ tampered_proof_denied: true
 insufficient_quorum_denied: true
 ```
 
-These are synthetic local measurements. Local file retrieval, HMAC checks, SQLite persistence, deterministic quorum, and socketpair transport do not equal remote KMS, database, policy-service, WAN, or human-quorum costs.
-
 ### Product-tier envelope
 
-Run `31222078818`, commit `17e97fa20e0ce7d1ce697348da3b0ec47c57ad3f`, completed the full job successfully, including:
-
-```text
-historical pair reducer
-isolated StegGate core meter
-production-burden curve
-Governed AI product-tier envelope
-JSON validation
-artifact upload
-```
+Run `31222078818`, commit `17e97fa20e0ce7d1ce697348da3b0ec47c57ad3f`, completed `success`.
 
 Artifact:
 
@@ -140,7 +133,7 @@ digest: sha256:cd6c52f8d5b5a86eb3bb4cdb8aeddf35d1ed00a9297c23d5bfb6ced5b0658897
 
 The envelope combines historical provider inference observations with measured local governance burden and hypothetical inference compression factors. It emits 20%, 40%, and 60% gross-margin arithmetic only as sensitivity cases, not recommended prices.
 
-Example using OpenAI historical raw cost and the BOUNDARY burden tier:
+Example using the OpenAI historical raw cost and BOUNDARY burden tier:
 
 | Inference compression | Hypothetical inference | Measured local governance | Governance share of floor | Mode |
 |---:|---:|---:|---:|---|
@@ -148,11 +141,46 @@ Example using OpenAI historical raw cost and the BOUNDARY burden tier:
 | 0.01 | $0.000068750000 | $0.000000172271 | 0.249950% | TOKEN_PRICE_RELEVANT |
 | 0.0001 | $0.000000687500 | $0.000000172271 | 20.036837% | TOKEN_PRICE_COMPRESSED |
 
-This directly demonstrates the denominator effect: the same measured governance workload can become a large percentage of product floor as inference cost collapses, without governance itself becoming more expensive.
+### Workload-mix sensitivity
+
+Run `31222213580`, commit `c7ab2d3541b2529d677f49895e41f2027e7c9d4c`, completed `success`.
+
+Every hosted step passed:
+
+```text
+historical pair reducer
+isolated StegGate core meter
+production-burden curve
+Governed AI product-tier envelope
+Governed AI workload-mix sensitivity
+JSON validation
+artifact upload
+```
+
+Artifact:
+
+```text
+id: 9010786489
+name: governed-ai-premium-evidence
+digest: sha256:b7e1a237539289e41a4cbb3bf6c8a4d014c7394a6f2d7c4f5f14b83512300d93
+```
+
+Observed workload-mix sensitivity from the run:
+
+| Scenario | Expected local governance cost/action | Cost / 1M actions | Mean local latency/action | Receipt storage / 1M actions-month |
+|---|---:|---:|---:|---:|
+| LIGHT_ASSIST | $0.000000023842 | $0.023842 | 0.129918 ms | $0.006520 |
+| ENTERPRISE_OPS | $0.000000117380 | $0.117380 | 0.823352 ms | $0.007600 |
+| HIGH_CONSEQUENCE | $0.000000193594 | $0.193594 | 1.393519 ms | $0.007792 |
+| BALANCED | $0.000000125621 | $0.125621 | 0.886060 ms | $0.007480 |
+
+These scenarios are illustrative workload weights only; they are not usage, demand, revenue, or customer-mix forecasts.
+
+The result supports a stronger product metric than one universal StegGate premium: a provider can potentially price or meter a Governed AI tier by the governance burden actually required by the action or by an observed workload mix.
 
 ## Historical provider-pair evidence
 
-Completed five-lane evidence still provides two matched prompt-path pairs:
+Completed five-lane evidence provides two matched prompt-path pairs:
 
 | Pair | Raw cost | Governed cost | Observed pair delta | Delta % |
 |---|---:|---:|---:|---:|
@@ -169,7 +197,7 @@ Potential provider economics form:
 
 ```text
 provider inference
-+ StegGate governance burden
++ StegGate governance burden by class/workload mix
 + provider-specific integration/operations burden
 + provider margin
 = governed service tier
@@ -177,9 +205,7 @@ provider inference
 
 No wholesale charge or retail price is admitted yet.
 
-The current local measurements establish only that governance can be independently metered and burden-segmented. They do not establish remote production cost, willingness to pay, provider margin, or enterprise ROI.
-
-## Governance burden classes now under test
+## Governance burden classes
 
 ```text
 CORE      in-process admissibility + receipt/reconstruction
@@ -190,7 +216,27 @@ QUORUM    PERSIST + 2-of-3 approval verification
 BOUNDARY  QUORUM + serialized local service boundary
 ```
 
-This is a stronger comparison structure than one universal governance premium. Different governed actions can require different control burdens.
+Different actions can require different governance burdens. This makes burden-class and workload-weighted economics more defensible than one fixed governance surcharge.
+
+## Current metric contract
+
+`product-comparison-schema.json` v1.1.0 now defines:
+
+```text
+primary: absolute governance cost per governed admissible action by burden class
+workload: workload-weighted governance cost per governed admissible action
+secondary: percentage premium, latency, storage, admissibility lift, margin headroom
+```
+
+Mode boundaries for sensitivity testing are ratio-based:
+
+```text
+TOKEN_PRICE_RELEVANT: inference >= 10x governance burden
+TOKEN_PRICE_COMPRESSED: inference >= 1x and < 10x governance burden
+INTELLIGENCE_ABUNDANT: inference < governance burden, or intelligence price is otherwise no longer the main differentiator
+```
+
+These thresholds are testing semantics, not market laws.
 
 ## Claim boundary
 
@@ -198,15 +244,16 @@ Do not claim:
 
 - StegVerse improves underlying model intelligence;
 - provider pair deltas equal StegGate cost;
-- these local synthetic measurements equal production cloud/service cost;
+- local synthetic measurements equal production cloud/service cost;
 - one fixed governance premium applies to all actions;
+- illustrative workload mixes predict customer usage;
 - margin scenarios are recommended prices;
 - market willingness to pay or enterprise ROI is established;
 - DeepSeek economics are measured before canonical DeepSeek execution exists.
 
 Admitted bounded finding:
 
-> StegGate governance can be measured independently of provider inference, its burden can be segmented into explicit control-path classes, and absolute cost per governed admissible action remains a coherent metric as inference pricing compresses.
+> StegGate governance can be measured independently of provider inference, segmented into explicit control burdens, and aggregated into workload-weighted cost per governed admissible action. That metric remains coherent as inference pricing compresses.
 
 ## Exact next tasks
 
@@ -214,14 +261,15 @@ Admitted bounded finding:
 2. Feed the DeepSeek pair into the same Governed AI reducer without changing the comparison contract.
 3. Replace local approximations one class at a time with measured remote burdens: policy service, delegation service, KMS/signature verification, durable remote persistence, and network boundary.
 4. Separate provider-specific adapter overhead from provider-independent StegGate burden.
-5. Add workload mixes across governance classes rather than assuming every action uses BOUNDARY.
-6. Only after remote burden evidence exists, test bounded wholesale price envelopes and provider margin scenarios.
-7. Before any publication or cross-repo propagation, inspect the newest destination `*_MIRROR_HANDOFF.md` in `GCAT-BCAT-Engine/Publisher`, `StegVerse-Labs/Site`, `admissibility-wiki`, and `stegguardian-wiki`.
+5. Replace illustrative workload weights with measured workload distributions only when real usage evidence exists; retain illustrative scenarios for sensitivity testing.
+6. Only after remote burden evidence exists, test bounded wholesale price envelopes and provider margin scenarios as candidates rather than claims.
+7. Before publication or cross-repo propagation, inspect newest destination `*_MIRROR_HANDOFF.md` in `GCAT-BCAT-Engine/Publisher`, `StegVerse-Labs/Site`, `admissibility-wiki`, and `stegguardian-wiki`.
 
 ## Completion state
 
 ```text
 comparison_mode_definition: COMPLETE
+comparison_schema_v1_1: COMPLETE
 abundant_intelligence_modes: COMPLETE
 historical_pair_reducer: PASS
 isolated_core_meter: PASS
@@ -229,8 +277,11 @@ production_burden_profile: COMPLETE
 production_burden_runner: PASS
 negative_fail_closed_cases: 4/4 PASS
 product_tier_envelope: PASS
+workload_mix_scenarios: 4/4 COMPLETE
+workload_mix_reducer: PASS
 hosted_artifact_evidence: PASS
 provider_independent_local_burden_curve: ESTABLISHED_BOUNDED
+workload_weighted_local_economics: ESTABLISHED_BOUNDED
 remote_production_burden: PENDING
 deepseek_pair: PENDING
 provider_specific_adapter_overhead: PENDING
@@ -241,4 +292,4 @@ publication: NOT_ADMITTED
 
 ## Session consolidation
 
-The abundant-intelligence metric shift, historical pair evidence, core isolation, production-burden curve, fail-closed negative tests, product-envelope sensitivity, workflow runs, artifact IDs/digests, claim boundaries, and exact next tasks are durably transferred here. Repository-native continuation owns the remaining work.
+The abundant-intelligence metric shift, historical pair evidence, core isolation, production-burden curve, fail-closed negative tests, product-envelope sensitivity, workload-mix sensitivity, schema v1.1 metric promotion, workflow runs, artifact IDs/digests, claim boundaries, and exact next tasks are durably transferred here. Repository-native continuation owns the remaining work.
