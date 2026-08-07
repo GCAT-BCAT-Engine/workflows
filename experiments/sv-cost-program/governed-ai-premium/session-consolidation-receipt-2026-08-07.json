@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_id": "SV-GOVAI-SESSION-CONSOLIDATION-2026-08-07",
+  "session_id": "2026-08-07-governed-ai-abundant-intelligence-deepseek",
+  "canonical_handoff": "experiments/sv-cost-program/governed-ai-premium/SV_GOVERNED_AI_PREMIUM_MIRROR_HANDOFF.md",
+  "canonical_inventory": "experiments/sv-cost-program/governed-ai-premium/session-goal-inventory-2026-08-07.json",
+  "canonical_claims": "experiments/sv-cost-program/governed-ai-premium/task-claims-2026-08-07.json",
+  "deepseek_handoff": "experiments/sv-cost-program/seven-lane-results/SV_COST_SEVEN_LANE_MIRROR_HANDOFF.md",
+  "repository_wide_handoff": "docs/WORKFLOWS_MIRROR_HANDOFF.md",
+  "session_goals_total": 6,
+  "session_goals_complete_or_durably_transferred": 6,
+  "unique_chat_only_requirements": 0,
+  "active_chat_claims": 0,
+  "machine_owned_continuation": {
+    "task_id": "SV-GOVAI-DEEPSEEK-PAIR",
+    "workflow": ".github/workflows/sv-cost-deepseek-pair-continuation.yml",
+    "schedule": "15 6 * * *",
+    "latest_observed_run": 31222916921,
+    "latest_observed_job": 93011124505,
+    "latest_observed_state": "BLOCKED",
+    "blocker": "DEEPSEEK_API_KEY_MISSING",
+    "artifact_id": 9011025214,
+    "artifact_digest": "sha256:a59551c2364596afb34c5d2908cfb4c36ead66b97b8db40a5aa018da48ae4108",
+    "release_condition": "Authorized DEEPSEEK_API_KEY is present and both DeepSeek raw and DeepSeek/StegVerse reach canonical normalized equivalence."
+  },
+  "blocked_continuations": [
+    {
+      "task_id": "SV-GOVAI-DEEPSEEK-INTEGRATE",
+      "release_condition": "deepseek_pair_results.json.state == COMPLETE",
+      "destination": "experiments/sv-cost-program/governed-ai-premium/"
+    },
+    {
+      "task_id": "SV-GOVAI-REMOTE-BURDEN",
+      "release_condition": "A repository-visible integration contract identifies a named authorized remote policy/delegation/KMS/persistence/network service endpoint and bounded test authority.",
+      "destination": "experiments/sv-cost-program/governed-ai-premium/remote-burden/"
+    },
+    {
+      "task_id": "SV-GOVAI-PUBLICATION",
+      "release_condition": "A bounded publication candidate is admitted after required provider and production-burden evidence; destination handoffs are re-read before propagation.",
+      "destination": "GCAT-BCAT-Engine/Publisher; StegVerse-Labs/Site; StegVerse-Labs/admissibility-wiki; StegVerse-002/stegguardian-wiki"
+    }
+  ],
+  "validation_evidence": {
+    "local_stack_latest_run": 31223191270,
+    "local_stack_latest_conclusion": "success",
+    "deepseek_machine_run": 31222916921,
+    "deepseek_machine_workflow_conclusion": "success",
+    "deepseek_machine_state": "BLOCKED",
+    "handoff_authority_repair_run": 31223321555,
+    "handoff_authority_repair_conclusion": "success",
+    "semantic_host_run": 31223328037,
+    "semantic_host_conclusion": "success",
+    "continuity_provenance_run": 31223328045,
+    "continuity_provenance_conclusion": "success",
+    "continuity_record": ".continuity/change-records/SV-CONT-20260807-GOVAI-013.json",
+    "current_continuity_record": "SV-CONT-20260807-GOVAI-013"
+  },
+  "release_posture": {
+    "tag_authorized": false,
+    "release_authorized": false,
+    "publication_authorized": false,
+    "reason": "DeepSeek provider execution is blocked and remote production-burden evidence is not yet available."
+  },
+  "archive_state": "ARCHIVE_READY",
+  "archive_reason": "All unique session goals and requirements are complete or durably transferred; no chat-owned claim remains; unresolved project work is machine-owned or durably blocked with observable release conditions; repository handoff authority, semantics, and continuity provenance are validated."
+}
