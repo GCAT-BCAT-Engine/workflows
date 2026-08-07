@@ -1,0 +1,61 @@
+{
+  "actor": {
+    "class": "chatgpt",
+    "instance": "GPT-5.6 Sol",
+    "session_ref": "governed-ai-abundant-intelligence-deepseek-2026-08-07"
+  },
+  "base_commit": "a3384d9293b7a8acc9f14af97b0634b9d9b3b644",
+  "change_id": "SV-CONT-20260807-GOVAI-012",
+  "changed_paths": [
+    {
+      "change_type": "modified",
+      "hash": "b784761eee70e2f410d67918fd91857d9485c703",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/config.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "6d5f2f27f0517e3d6b591f93b3f5a9593fa17182",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".github/workflows/sv-cost-deepseek-pair-continuation.yml"
+    },
+    {
+      "change_type": "modified",
+      "hash": "32f625354c64a3329df45c354b9bdae915d130eb",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".github/workflows/sv-governed-ai-premium.yml"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "Governed AI local economics stack is implemented and validated under its scoped handoff",
+      "state": "PRESERVED"
+    },
+    {
+      "claim": "DeepSeek lanes 6 and 7 now have a machine-owned execution path with an official versioned V4 Flash price card",
+      "state": "INSTALLED"
+    },
+    {
+      "claim": "DeepSeek execution remains fail-closed when the authorized API credential is absent",
+      "state": "PRESERVED_BOUNDARY"
+    },
+    {
+      "claim": "Experiments under experiments/sv-cost-program remain scoped-program state and are exempt from repository-wide continuity path enumeration",
+      "state": "PRESERVED_BOUNDARY"
+    }
+  ],
+  "created_at": "2026-08-07T22:12:00Z",
+  "governing_handoff": {
+    "hash": "9a6ebc5e5331fe79c2aa7551279ddb285868cf69",
+    "hash_algorithm": "git-blob-sha1",
+    "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+  },
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "schema": "stegverse.session.change_record.v1",
+  "unresolved_tasks": [
+    "observe SV Cost DeepSeek Pair Continuation run and retain BLOCKED/COMPLETE evidence",
+    "execute DeepSeek raw and DeepSeek/StegVerse pair when authorized DEEPSEEK_API_KEY is present",
+    "replace local production-burden approximations only after a named authorized remote service contract exists"
+  ],
+  "record_hash": "2ea54a20d29fd9be5032477001791f20b5384be26b600096343dc167e9619cd2"
+}
