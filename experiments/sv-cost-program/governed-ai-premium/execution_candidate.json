@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "candidate_id": "SV-GOV-AI-ISO-CANDIDATE-001",
+  "task_id": "SV-RECON-001",
+  "actor": {
+    "actor_id": "test-agent-001",
+    "authority_class": "BOUNDED_TEST_EXECUTION",
+    "delegation_ref": "delegation:test-only"
+  },
+  "policy_ref": "policy:sv-recon-001",
+  "evidence_refs": [
+    "evidence:five-lane-required-output"
+  ],
+  "proposed_successor_state": {
+    "balance": 75,
+    "risk_score": 3,
+    "standing": "active"
+  },
+  "decisions": [
+    {"event_id": "E01", "status": "ALLOW"},
+    {"event_id": "E02", "status": "ALLOW"},
+    {"event_id": "E03", "status": "ALLOW"},
+    {"event_id": "E04", "status": "DENY"},
+    {"event_id": "E05", "status": "DENY"},
+    {"event_id": "E06", "status": "ALLOW"}
+  ],
+  "expected": {
+    "task_id": "SV-RECON-001",
+    "final_state": {
+      "balance": 75,
+      "risk_score": 3,
+      "standing": "active"
+    },
+    "applied_count": 4,
+    "denied_count": 2
+  },
+  "claim_boundary": "Synthetic canonical post-inference execution candidate for isolated StegGate control-path metering only."
+}
