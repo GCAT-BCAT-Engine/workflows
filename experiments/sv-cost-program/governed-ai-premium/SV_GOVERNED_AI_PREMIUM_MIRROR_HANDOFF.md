@@ -1,6 +1,6 @@
 # Governed AI Premium Mirror Handoff
 
-Status: **ACTIVE — COMPARISON MODE INSTALLED — EXECUTION PENDING**
+Status: **ACTIVE — COMPARISON MODE INSTALLED — HISTORICAL SENSITIVITY TEST ACTIVATED — ISOLATION PENDING**
 
 ## Source of truth
 
@@ -16,6 +16,12 @@ Canonical schema:
 
 ```text
 experiments/sv-cost-program/governed-ai-premium/product-comparison-schema.json
+```
+
+Historical evidence source:
+
+```text
+experiments/sv-cost-program/five-lane-results/results/five_lane_results.json
 ```
 
 Seven-lane execution evidence source:
@@ -96,6 +102,102 @@ provider inference price
 
 This enables an economically meaningful test even when raw model inference approaches commodity pricing.
 
+## Installed test implementation
+
+```text
+experiments/sv-cost-program/governed-ai-premium/reduce.py
+.github/workflows/sv-governed-ai-premium.yml
+```
+
+The reducer consumes the completed five-lane result and emits:
+
+```text
+experiments/sv-cost-program/governed-ai-premium/results/governed_ai_premium_results.json
+experiments/sv-cost-program/governed-ai-premium/results/report.md
+```
+
+Hosted workflow run activated:
+
+```text
+workflow: SV Governed AI Premium Test
+run_id: 31219003380
+head_sha: 1e8686d4814e69b960e48913b07a51b7ce3bc6b0
+state_at_last_observation: queued
+```
+
+The workflow performs syntax validation, executes the reducer, validates generated JSON, and uploads the generated evidence as an immutable workflow artifact.
+
+## Historical pair evidence now under test
+
+The completed five-lane evidence provides two existing matched pairs that can test the metric before DeepSeek arrives:
+
+| Pair | Raw cost | Governed cost | Observed pair delta | Observed delta % | Latency delta |
+|---|---:|---:|---:|---:|---:|
+| OpenAI -> OpenAI + StegGate prompt path | $0.006875 | $0.006880 | +$0.000005 | +0.072727% | -0.556421 s |
+| Anthropic -> Anthropic + StegGate prompt path | $0.010656 | $0.007116 | -$0.003540 | -33.220721% | -2.480086 s |
+
+Both pairs produced the same normalized required outcome and both raw and governed lanes were admissible in the completed bounded experiment.
+
+These deltas are **not isolated StegGate wholesale cost**. They include provider-side output/token behavior caused by the governed prompt path. The negative Anthropic delta demonstrates why raw-minus-governed provider cost cannot be directly relabeled as the cost of StegGate.
+
+## Metric-validity test
+
+The reducer applies hypothetical inference-compression factors:
+
+```text
+1.0
+0.1
+0.01
+0.001
+0.0001
+```
+
+while holding the observed pair delta constant only to test denominator behavior.
+
+This is a sensitivity test, not a forecast. It asks:
+
+> If the absolute governance-related delta stayed constant while intelligence became much cheaper, would percentage premium remain a useful primary metric?
+
+Expected validity finding:
+
+```text
+percentage premium becomes increasingly denominator-sensitive as inference cost compresses
+```
+
+Therefore, under TOKEN_PRICE_COMPRESSED and INTELLIGENCE_ABUNDANT modes, the preferred primary measure is:
+
+```text
+absolute incremental governance cost per governed admissible outcome
+```
+
+but that measure is not publication-ready until StegGate cost is independently isolated.
+
+## Required isolation experiment
+
+The next experiment must hold provider inference constant and meter the StegGate layer separately.
+
+Required StegGate cost components:
+
+```text
+policy evaluation compute
+authority/admissibility gate compute
+receipt generation
+hash/canonicalization work
+receipt storage
+reconstruction/verification cost where invoked
+network/service overhead attributable only to StegGate
+```
+
+Required separation:
+
+```text
+provider inference cost != StegGate wholesale governance cost
+provider prompt/output variation != StegGate compute cost
+StegVerse-only deterministic reconstruction reference != provider integration premium
+```
+
+The test should emit a provider-independent StegGate cost envelope where technically justified, plus provider-specific integration overhead where it cannot be separated.
+
 ## Required evidence
 
 No product pricing claim is admitted without:
@@ -116,14 +218,17 @@ The intended claim is narrower:
 
 > StegGate can be measured as an incremental productization layer that converts an existing AI service into a governed execution service under a defined admissibility contract.
 
+The current historical sensitivity test may establish metric behavior. It does not establish an actual wholesale StegGate price.
+
 ## Exact next tasks
 
-1. Complete seven-lane execution evidence, especially DeepSeek and DeepSeek/StegVerse.
-2. Add a result reducer that consumes pairwise raw/governed evidence and emits governance-premium metrics.
-3. Separate StegGate compute/storage cost from underlying provider inference cost in every governed lane.
-4. Add target-margin scenarios only after measured wholesale governance cost exists.
-5. Evaluate whether absolute governance cost remains stable as provider inference prices fall.
-6. If evidence supports the product hypothesis, inspect Publisher, Site, admissibility-wiki, and stegguardian-wiki mirror handoffs before propagation.
+1. Observe hosted run `31219003380`; inspect job steps and immutable artifact and record PASS/FAIL.
+2. Build the StegGate cost-isolation harness so provider inference is held constant while governance components are metered independently.
+3. Complete seven-lane execution evidence, especially DeepSeek and DeepSeek/StegVerse.
+4. Feed the DeepSeek pair into the same reducer without changing the comparison contract.
+5. Replace hypothetical fixed-delta sensitivity with measured StegGate cost envelopes once isolation evidence exists.
+6. Add target-margin scenarios only after measured wholesale governance cost exists.
+7. If evidence supports the product hypothesis, inspect Publisher, Site, admissibility-wiki, and stegguardian-wiki mirror handoffs before propagation.
 
 ## Completion state
 
@@ -131,8 +236,11 @@ The intended claim is narrower:
 comparison_mode_definition: COMPLETE
 abundant_intelligence_modes: COMPLETE
 governed_ai_product_hypothesis: COMPLETE
+historical_pair_reducer: INSTALLED
+abundance_metric_sensitivity: ACTIVATED_HOSTED_RUN_31219003380
+historical_pair_equivalence_basis: COMPLETE
 seven_lane_evidence_dependency: PENDING
-pairwise_premium_reducer: PENDING
+pairwise_premium_reducer: IMPLEMENTED_FOR_AVAILABLE_PAIRS
 measured_steggate_cost_isolation: PENDING
 retail_margin_scenarios: NOT_ADMITTED
 publication: NOT_ADMITTED
@@ -140,4 +248,4 @@ publication: NOT_ADMITTED
 
 ## Session consolidation
 
-The shift from provider unit-price ranking toward incremental Governed AI product economics is durably transferred here. This handoff and the machine-readable comparison schema own continuation.
+The shift from provider unit-price ranking toward incremental Governed AI product economics, the historical pair evidence, the metric-validity sensitivity test, the hosted validation route, and the next isolation experiment are durably transferred here. Repository state owns continuation.
