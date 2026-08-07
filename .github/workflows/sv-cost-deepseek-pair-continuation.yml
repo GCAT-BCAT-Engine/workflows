@@ -1,0 +1,86 @@
+name: SV Cost DeepSeek Pair Continuation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/sv-cost-program/seven-lane-results/**'
+      - '.github/workflows/sv-cost-deepseek-pair-continuation.yml'
+  schedule:
+    - cron: '15 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sv-cost-deepseek-pair-continuation
+  cancel-in-progress: false
+
+jobs:
+  deepseek-pair:
+    runs-on: ubuntu-latest
+    env:
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+      DEEPSEEK_API_BASE: https://api.deepseek.com
+      DEEPSEEK_SEVEN_LANE_MODEL: deepseek-v4-flash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate seven-lane Python and schema
+        run: |
+          python -m py_compile \
+            experiments/sv-cost-program/seven-lane-results/run.py \
+            experiments/sv-cost-program/seven-lane-results/run_deepseek_pair.py \
+            experiments/sv-cost-program/seven-lane-results/validate_schema.py
+          python experiments/sv-cost-program/seven-lane-results/validate_schema.py
+          python -m json.tool experiments/sv-cost-program/seven-lane-results/deepseek-price-card.json > /dev/null
+
+      - name: Execute DeepSeek pair or emit blocker
+        id: pair
+        run: |
+          python experiments/sv-cost-program/seven-lane-results/run_deepseek_pair.py | tee /tmp/deepseek-state.txt
+          state="$(tail -n 1 /tmp/deepseek-state.txt | tr -d '\r\n')"
+          echo "state=$state" >> "$GITHUB_OUTPUT"
+          echo "DeepSeek continuation state: $state" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Validate machine result
+        run: |
+          python -m json.tool experiments/sv-cost-program/seven-lane-results/results/deepseek_pair_results.json > /dev/null
+          python - <<'PY'
+          import json, pathlib
+          p = pathlib.Path('experiments/sv-cost-program/seven-lane-results/results/deepseek_pair_results.json')
+          d = json.loads(p.read_text())
+          assert d['state'] in {'COMPLETE','BLOCKED','RETRY','FAILED'}
+          if d['state'] == 'COMPLETE':
+              assert d['raw']['admissible'] is True
+              assert d['governed']['admissible'] is True
+              assert d['raw']['actual_output_hash'] == d['raw']['required_output_hash']
+              assert d['governed']['actual_output_hash'] == d['governed']['required_output_hash']
+          PY
+
+      - name: Upload DeepSeek continuation evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: sv-cost-deepseek-pair-${{ github.run_id }}
+          path: |
+            experiments/sv-cost-program/seven-lane-results/results/deepseek_pair_results.json
+            experiments/sv-cost-program/seven-lane-results/results/raw-deepseek-pair/**
+          if-no-files-found: error
+
+      - name: Persist terminal DeepSeek result
+        if: steps.pair.outputs.state == 'COMPLETE' || steps.pair.outputs.state == 'FAILED'
+        run: |
+          git config user.name 'stegverse-machine'
+          git config user.email 'actions@users.noreply.github.com'
+          git add experiments/sv-cost-program/seven-lane-results/results/deepseek_pair_results.json
+          git add -f experiments/sv-cost-program/seven-lane-results/results/raw-deepseek-pair || true
+          if git diff --cached --quiet; then
+            echo 'No terminal result change to commit.'
+          else
+            git commit -m 'Record terminal DeepSeek pair evidence [skip ci]'
+            git push origin HEAD:main
+          fi
