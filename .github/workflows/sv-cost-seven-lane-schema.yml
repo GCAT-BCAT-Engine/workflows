@@ -1,0 +1,29 @@
+name: SV Cost Seven-Lane Schema Validate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/sv-cost-program/seven-lane-results/**'
+      - '.github/workflows/sv-cost-seven-lane-schema.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python syntax validation
+        run: |
+          python -m py_compile \
+            experiments/sv-cost-program/seven-lane-results/run.py \
+            experiments/sv-cost-program/seven-lane-results/validate_schema.py
+
+      - name: Seven-lane contract validation
+        run: |
+          python experiments/sv-cost-program/seven-lane-results/validate_schema.py
