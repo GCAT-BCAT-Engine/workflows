@@ -1,0 +1,133 @@
+{
+  "schema_version": "1.0.0",
+  "session_id": "2026-08-07-governed-ai-abundant-intelligence-deepseek",
+  "canonical_handoff": "experiments/sv-cost-program/governed-ai-premium/SV_GOVERNED_AI_PREMIUM_MIRROR_HANDOFF.md",
+  "updated_at": "2026-08-07T22:07:00Z",
+  "collision_policy": {
+    "key": "repository + branch + exact surface",
+    "single_implementation_owner": true,
+    "stale_rule": "Active claims expire at expires_at unless renewed by a new commit, workflow run, artifact, receipt, or explicit BLOCKED state with machine-observable release condition.",
+    "missing_evidence_rule": "Missing evidence is BLOCKED, RETRY, or FAILED; never COMPLETE.",
+    "coordination_rule": "Repository records and workflows, not chat sessions, own continuation."
+  },
+  "claims": [
+    {
+      "task_id": "SV-GOVAI-LOCAL-STACK",
+      "originating_goal": "SV-GOVAI-PRIMARY-001; SV-GOVAI-BURDEN-003; SV-GOVAI-PRODUCT-004",
+      "organization": "GCAT-BCAT-Engine",
+      "repository": "workflows",
+      "branch": "main",
+      "surfaces": [
+        "experiments/sv-cost-program/governed-ai-premium/product-comparison-schema.json",
+        "experiments/sv-cost-program/governed-ai-premium/reduce.py",
+        "experiments/sv-cost-program/governed-ai-premium/isolate_steggate.py",
+        "experiments/sv-cost-program/governed-ai-premium/production_burden.py",
+        "experiments/sv-cost-program/governed-ai-premium/product_tier_envelope.py",
+        "experiments/sv-cost-program/governed-ai-premium/workload_mix.py",
+        ".github/workflows/sv-governed-ai-premium.yml"
+      ],
+      "claimant": "github-actions:SV Governed AI Premium Test",
+      "role": "implementation_validation_integration",
+      "state": "COMPLETE",
+      "claimed_at": "2026-08-07T21:00:00Z",
+      "expires_at": "2026-08-07T22:30:00Z",
+      "release_condition": "All local stack stages pass hosted validation and immutable artifact evidence is retained.",
+      "released_at": "2026-08-07T22:00:36Z",
+      "release_evidence": {
+        "run_id": 31222213580,
+        "artifact_id": 9010786489,
+        "artifact_digest": "sha256:b7e1a237539289e41a4cbb3bf6c8a4d014c7394a6f2d7c4f5f14b83512300d93"
+      },
+      "collision_boundaries": "No competing implementation may reinterpret provider prompt deltas as isolated StegGate cost or replace burden-class metrics with one universal surcharge without a new versioned schema.",
+      "next_task_after_release": "SV-GOVAI-DEEPSEEK-PAIR"
+    },
+    {
+      "task_id": "SV-GOVAI-DEEPSEEK-PAIR",
+      "originating_goal": "SV-GOVAI-DEEPSEEK-002",
+      "organization": "GCAT-BCAT-Engine",
+      "repository": "workflows",
+      "branch": "main",
+      "surfaces": [
+        "experiments/sv-cost-program/seven-lane-results/task.json",
+        "experiments/sv-cost-program/seven-lane-results/deepseek-price-card.json",
+        "experiments/sv-cost-program/seven-lane-results/run_deepseek_pair.py",
+        "experiments/sv-cost-program/seven-lane-results/results/deepseek_pair_results.json",
+        ".github/workflows/sv-cost-deepseek-pair-continuation.yml"
+      ],
+      "claimant": "github-actions:SV Cost DeepSeek Pair Continuation",
+      "execution_lane": "deepseek-v4-flash-pair",
+      "role": "implementation_validation",
+      "state": "MACHINE_OWNED",
+      "claimed_at": "2026-08-07T22:07:00Z",
+      "expires_at": "2026-08-15T00:00:00Z",
+      "release_condition": "Release COMPLETE when both DeepSeek raw and DeepSeek/StegVerse produce the required normalized outcome with retained provider response hashes and price-card binding. Remain BLOCKED if DEEPSEEK_API_KEY is absent; RETRY on transient provider/network failure; FAILED on non-equivalent output after the bounded execution attempt.",
+      "expected_evidence": [
+        "deepseek_pair_results.json",
+        "raw provider response artifacts",
+        "required and actual normalized output hashes",
+        "provider response hashes",
+        "token usage and cache accounting",
+        "versioned DeepSeek V4 Flash price-card hash",
+        "workflow run/job/log/artifact evidence"
+      ],
+      "collision_boundaries": "This lane owns only DeepSeek lanes 6 and 7. It must not rewrite historical five-lane results or the OpenAI/Anthropic evidence lineage.",
+      "machine_observable_blocker": "DEEPSEEK_API_KEY missing from the authorized GitHub Actions environment",
+      "next_task_after_release": "SV-GOVAI-DEEPSEEK-INTEGRATE"
+    },
+    {
+      "task_id": "SV-GOVAI-DEEPSEEK-INTEGRATE",
+      "originating_goal": "SV-GOVAI-PRIMARY-001; SV-GOVAI-DEEPSEEK-002",
+      "organization": "GCAT-BCAT-Engine",
+      "repository": "workflows",
+      "branch": "main",
+      "surfaces": [
+        "experiments/sv-cost-program/governed-ai-premium/reduce.py",
+        "experiments/sv-cost-program/governed-ai-premium/product_tier_envelope.py",
+        "experiments/sv-cost-program/governed-ai-premium/SV_GOVERNED_AI_PREMIUM_MIRROR_HANDOFF.md"
+      ],
+      "claimant": "repository-native integration lane after DeepSeek pair COMPLETE",
+      "role": "integration",
+      "state": "BLOCKED",
+      "claimed_at": "2026-08-07T22:07:00Z",
+      "expires_at": "2026-08-15T00:00:00Z",
+      "release_condition": "deepseek_pair_results.json state == COMPLETE",
+      "expected_evidence": ["DeepSeek pair incorporated without changing comparison contract", "hosted reducer PASS", "new immutable artifact"],
+      "collision_boundaries": "May consume DeepSeek pair evidence but may not edit its raw provider receipts.",
+      "next_task_after_release": "Evaluate bounded publication candidate and remote-burden dependency."
+    },
+    {
+      "task_id": "SV-GOVAI-REMOTE-BURDEN",
+      "originating_goal": "SV-GOVAI-REMOTE-005",
+      "organization": "GCAT-BCAT-Engine",
+      "repository": "workflows",
+      "branch": "main",
+      "surfaces": ["experiments/sv-cost-program/governed-ai-premium/remote-burden/**"],
+      "claimant": "unclaimed pending named authorized remote service",
+      "role": "implementation_validation",
+      "state": "BLOCKED",
+      "claimed_at": "2026-08-07T22:07:00Z",
+      "expires_at": "2026-08-15T00:00:00Z",
+      "release_condition": "A repository-visible integration contract identifies an authorized policy/delegation/KMS/persistence/network service endpoint and test authority.",
+      "expected_evidence": ["remote service contract", "measured latency and cost", "receipts", "fail-closed negative tests"],
+      "collision_boundaries": "Do not invent remote services or relabel local socket/file/SQLite/HMAC approximations as production remote evidence.",
+      "next_task_after_release": "Replace one local burden class at a time and rerun product/workload envelopes."
+    },
+    {
+      "task_id": "SV-GOVAI-PUBLICATION",
+      "originating_goal": "SV-GOVAI-PRODUCT-004",
+      "organization": "GCAT-BCAT-Engine and downstream consumers",
+      "repository": "Publisher; Site; admissibility-wiki; stegguardian-wiki",
+      "branch": "main",
+      "surfaces": ["destination *_MIRROR_HANDOFF.md", "publication/import contracts"],
+      "claimant": "destination handoff selected only after publication admission",
+      "role": "integration_propagation",
+      "state": "BLOCKED",
+      "claimed_at": "2026-08-07T22:07:00Z",
+      "expires_at": "2026-08-15T00:00:00Z",
+      "release_condition": "Canonical DeepSeek evidence and required production-burden evidence produce an admitted bounded publication candidate; then destination handoffs are re-read immediately before mutation.",
+      "expected_evidence": ["publication candidate", "destination validation", "hash-bound propagation receipt"],
+      "collision_boundaries": "No downstream mutation while publication is NOT_ADMITTED.",
+      "next_task_after_release": "Propagate only bounded claims and verify downstream ingestion."
+    }
+  ]
+}
