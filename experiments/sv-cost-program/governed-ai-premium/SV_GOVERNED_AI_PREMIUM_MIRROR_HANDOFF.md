@@ -1,38 +1,43 @@
 # Governed AI Premium Mirror Handoff
 
-Status: **ACTIVE — LOCAL GOVERNANCE ECONOMICS STACK PASS — WORKLOAD MIX PASS — DEEPSEEK AND REMOTE BURDEN PENDING**
+Status: **MERGED INTO CANONICAL WORKSTREAM — LOCAL STACK COMPLETE — DEEPSEEK MACHINE-OWNED — REMOTE BURDEN BLOCKED**
 
-## Source of truth
+## Active goal and original session goal
 
-Canonical repository:
+- Goal ID: `SV-GOVAI-PRIMARY-001`
+- Original session goal: determine the StegVerse directional response to increasingly abundant intelligence, extend the bounded test with DeepSeek / DeepSeek+StegVerse, and test whether the durable economic unit should become the incremental cost of turning an existing provider AI product into **Governed AI** through StegGate rather than provider token-price ranking.
+- Repository / branch: `GCAT-BCAT-Engine/workflows@main`
+- Canonical workstream: `experiments/sv-cost-program/governed-ai-premium/`
+- Canonical handoff: this file
+- Root program handoff: `SV_COST_MIRROR_HANDOFF.md`
+- Repository-wide handoff: `docs/WORKFLOWS_MIRROR_HANDOFF.md`
+- DeepSeek handoff: `experiments/sv-cost-program/seven-lane-results/SV_COST_SEVEN_LANE_MIRROR_HANDOFF.md`
+
+Live Git state, continuity provenance, workflow jobs/logs/artifacts, provider receipts, and committed results override prior chat claims.
+
+## Adjacent goals preserved
+
+1. `SV-GOVAI-DEEPSEEK-002` — Lane 6 DeepSeek and Lane 7 DeepSeek/StegVerse under the same deterministic reconstruction contract.
+2. `SV-GOVAI-BURDEN-003` — isolate StegGate from provider inference and meter explicit governance burden classes.
+3. `SV-GOVAI-PRODUCT-004` — test **Governed AI** as provider inference + StegGate burden + provider integration/operations + margin, without claiming a price before evidence exists.
+4. `SV-GOVAI-REMOTE-005` — replace local approximations with named authorized remote policy/delegation/proof/persistence/network components one class at a time.
+5. `SV-GOVAI-CONSOLIDATE-006` — transfer all unique session goals, claims, blockers, evidence, automation, and next actions into repository-native control surfaces.
+
+Durable session inventory:
 
 ```text
-GCAT-BCAT-Engine/workflows
+experiments/sv-cost-program/governed-ai-premium/session-goal-inventory-2026-08-07.json
 ```
 
-Canonical workstream:
+Durable collision-controlled claims:
 
 ```text
-experiments/sv-cost-program/governed-ai-premium/
+experiments/sv-cost-program/governed-ai-premium/task-claims-2026-08-07.json
 ```
 
-This file is the current task, collision, evidence, and continuation handoff for the Governed AI product-economics comparison.
+## Directional thesis now encoded in the schema
 
-Historical provider evidence:
-
-```text
-experiments/sv-cost-program/five-lane-results/results/five_lane_results.json
-```
-
-DeepSeek extension source:
-
-```text
-experiments/sv-cost-program/seven-lane-results/
-```
-
-## Directional thesis
-
-Provider unit-price ranking remains useful evidence, but it is not the durable long-run comparison if intelligence becomes abundant.
+Provider unit-price ranking remains evidence, but it is not assumed to be the durable comparison if intelligence becomes abundant.
 
 Primary long-run comparison:
 
@@ -42,19 +47,28 @@ vs
 existing provider AI + StegGate
 ```
 
-Preferred abundant-intelligence unit:
+Primary economic unit:
 
 ```text
 absolute governance cost per governed admissible action by governance burden class
 ```
 
-For mixed workloads, use:
+Mixed-workload unit:
 
 ```text
 workload-weighted governance cost per governed admissible action
 ```
 
-Percentage premium over inference remains secondary because the denominator can collapse while the governance workload stays unchanged.
+Percentage premium over inference is secondary because the denominator can collapse while governance work remains unchanged.
+
+`product-comparison-schema.json` is version `1.1.0` and separates:
+
+```text
+provider inference cost
+StegGate governance burden
+provider-specific integration/operations burden
+commercial margin
+```
 
 ## Installed implementation
 
@@ -68,38 +82,43 @@ production_burden.py
 product_tier_envelope.py
 workload-mix-scenarios.json
 workload_mix.py
+session-goal-inventory-2026-08-07.json
+task-claims-2026-08-07.json
 .github/workflows/sv-governed-ai-premium.yml
 ```
 
-The comparison schema is now `1.1.0` and explicitly separates provider inference cost, StegGate governance cost, provider-specific integration cost, and commercial margin.
+DeepSeek continuation components are installed at:
 
-## Hosted evidence
+```text
+experiments/sv-cost-program/seven-lane-results/task.json
+experiments/sv-cost-program/seven-lane-results/deepseek-price-card.json
+experiments/sv-cost-program/seven-lane-results/run_deepseek_pair.py
+.github/workflows/sv-cost-deepseek-pair-continuation.yml
+```
+
+## Completed local evidence
 
 ### Core isolation
 
-Run `31219131269` completed `success` at commit `22b4235efdda04f2203bf81a0a2ddb431556ca40`.
-
-Artifact:
-
 ```text
-id: 9009669589
-name: governed-ai-premium-evidence
+run: 31219131269
+commit: 22b4235efdda04f2203bf81a0a2ddb431556ca40
+artifact: 9009669589
 digest: sha256:4cfd49475c42a160413f92fdcd9b616e4641946330441c0f78735eceb3267c71
+state: PASS
 ```
 
 ### Production-burden curve
 
-Run `31222023913` completed `success` at commit `3d5ea7c07e132893f5c9c2c5aaa5596b0f64920f`.
-
-Artifact:
-
 ```text
-id: 9010716206
-name: governed-ai-premium-evidence
+run: 31222023913
+commit: 3d5ea7c07e132893f5c9c2c5aaa5596b0f64920f
+artifact: 9010716206
 digest: sha256:7b174c0f3d7f1182f2891e9931f95d3d6a58e8b6285bc47367c55566ba43cd03
+state: PASS
 ```
 
-Observed local synthetic burden curve on the hosted Linux runner for that run:
+Observed synthetic local curve from that run:
 
 | Tier | Mean latency | Modeled local cost / governed action |
 |---|---:|---:|
@@ -110,186 +129,207 @@ Observed local synthetic burden curve on the hosted Linux runner for that run:
 | QUORUM | 1.116657 ms | $0.000000156728 |
 | BOUNDARY | 1.233232 ms | $0.000000172271 |
 
-All six tiers produced admissible results and all four fail-closed negative cases passed:
-
-```text
-revoked_delegation_denied: true
-tampered_successor_denied: true
-tampered_proof_denied: true
-insufficient_quorum_denied: true
-```
+Fail-closed negative cases: `4/4 PASS` — revoked delegation, tampered successor, tampered proof, insufficient quorum all denied.
 
 ### Product-tier envelope
 
-Run `31222078818`, commit `17e97fa20e0ce7d1ce697348da3b0ec47c57ad3f`, completed `success`.
-
-Artifact:
-
 ```text
-id: 9010737144
-name: governed-ai-premium-evidence
+run: 31222078818
+commit: 17e97fa20e0ce7d1ce697348da3b0ec47c57ad3f
+artifact: 9010737144
 digest: sha256:cd6c52f8d5b5a86eb3bb4cdb8aeddf35d1ed00a9297c23d5bfb6ced5b0658897
+state: PASS
 ```
 
-The envelope combines historical provider inference observations with measured local governance burden and hypothetical inference compression factors. It emits 20%, 40%, and 60% gross-margin arithmetic only as sensitivity cases, not recommended prices.
-
-Example using the OpenAI historical raw cost and BOUNDARY burden tier:
-
-| Inference compression | Hypothetical inference | Measured local governance | Governance share of floor | Mode |
-|---:|---:|---:|---:|---|
-| 1.0 | $0.006875000000 | $0.000000172271 | 0.002506% | TOKEN_PRICE_RELEVANT |
-| 0.01 | $0.000068750000 | $0.000000172271 | 0.249950% | TOKEN_PRICE_RELEVANT |
-| 0.0001 | $0.000000687500 | $0.000000172271 | 20.036837% | TOKEN_PRICE_COMPRESSED |
+Margin cases remain sensitivity arithmetic only; they are not recommended wholesale or retail prices.
 
 ### Workload-mix sensitivity
 
-Run `31222213580`, commit `c7ab2d3541b2529d677f49895e41f2027e7c9d4c`, completed `success`.
-
-Every hosted step passed:
-
 ```text
-historical pair reducer
-isolated StegGate core meter
-production-burden curve
-Governed AI product-tier envelope
-Governed AI workload-mix sensitivity
-JSON validation
-artifact upload
-```
-
-Artifact:
-
-```text
-id: 9010786489
-name: governed-ai-premium-evidence
+run: 31222213580
+commit: c7ab2d3541b2529d677f49895e41f2027e7c9d4c
+artifact: 9010786489
 digest: sha256:b7e1a237539289e41a4cbb3bf6c8a4d014c7394a6f2d7c4f5f14b83512300d93
+state: PASS
 ```
 
-Observed workload-mix sensitivity from the run:
+| Illustrative scenario | Governance cost/action | Cost / 1M actions | Mean local latency/action |
+|---|---:|---:|---:|
+| LIGHT_ASSIST | $0.000000023842 | $0.023842 | 0.129918 ms |
+| ENTERPRISE_OPS | $0.000000117380 | $0.117380 | 0.823352 ms |
+| HIGH_CONSEQUENCE | $0.000000193594 | $0.193594 | 1.393519 ms |
+| BALANCED | $0.000000125621 | $0.125621 | 0.886060 ms |
 
-| Scenario | Expected local governance cost/action | Cost / 1M actions | Mean local latency/action | Receipt storage / 1M actions-month |
-|---|---:|---:|---:|---:|
-| LIGHT_ASSIST | $0.000000023842 | $0.023842 | 0.129918 ms | $0.006520 |
-| ENTERPRISE_OPS | $0.000000117380 | $0.117380 | 0.823352 ms | $0.007600 |
-| HIGH_CONSEQUENCE | $0.000000193594 | $0.193594 | 1.393519 ms | $0.007792 |
-| BALANCED | $0.000000125621 | $0.125621 | 0.886060 ms | $0.007480 |
+These weights are sensitivity cases, not demand or customer-usage forecasts.
 
-These scenarios are illustrative workload weights only; they are not usage, demand, revenue, or customer-mix forecasts.
+### Latest full local-stack validation
 
-The result supports a stronger product metric than one universal StegGate premium: a provider can potentially price or meter a Governed AI tier by the governance burden actually required by the action or by an observed workload mix.
+Run `31222897252` completed `success` after the durable task-claim registry was added. This confirms the current local Governed AI stack still passes after session-state consolidation.
 
-## Historical provider-pair evidence
+## DeepSeek current state
 
-Completed five-lane evidence provides two matched prompt-path pairs:
-
-| Pair | Raw cost | Governed cost | Observed pair delta | Delta % |
-|---|---:|---:|---:|---:|
-| OpenAI -> OpenAI/StegVerse | $0.006875 | $0.006880 | +$0.000005 | +0.072727% |
-| Anthropic -> Anthropic/StegVerse | $0.010656 | $0.007116 | -$0.003540 | -33.220721% |
-
-These deltas are not wholesale StegGate cost. They include provider-side token/output behavior. The negative Anthropic delta is direct evidence that raw-minus-governed provider cost cannot be relabeled as governance cost.
-
-## Product interpretation under test
-
-Candidate product label: **Governed AI**.
-
-Potential provider economics form:
+The earlier `deepseek-chat` alias is no longer used for new execution. The seven-lane task is bound to `deepseek-v4-flash` and a versioned official price card observed `2026-08-07`:
 
 ```text
-provider inference
-+ StegGate governance burden by class/workload mix
-+ provider-specific integration/operations burden
-+ provider margin
-= governed service tier
+cache-hit input: $0.0028 / 1M tokens
+cache-miss input: $0.14 / 1M tokens
+output: $0.28 / 1M tokens
 ```
 
-No wholesale charge or retail price is admitted yet.
-
-## Governance burden classes
+The first machine-owned DeepSeek continuation run completed successfully as a workflow but correctly emitted a fail-closed capability blocker:
 
 ```text
-CORE      in-process admissibility + receipt/reconstruction
-PROOF     CORE + cryptographic proof verification
-LOOKUP    PROOF + policy/delegation artifact retrieval
-PERSIST   LOOKUP + durable receipt persistence
-QUORUM    PERSIST + 2-of-3 approval verification
-BOUNDARY  QUORUM + serialized local service boundary
+workflow: SV Cost DeepSeek Pair Continuation
+run: 31222916921
+job: 93011124505
+artifact: 9011025214
+artifact digest: sha256:a59551c2364596afb34c5d2908cfb4c36ead66b97b8db40a5aa018da48ae4108
+machine state: BLOCKED
+raw blocker: DEEPSEEK_API_KEY_MISSING
+governed blocker: DEEPSEEK_API_KEY_MISSING
+price-card hash: sha256:8f39bbbdaaaefacca468d488916e5aea1bb2db98ef14f73a746eaed96a9ee78b
 ```
 
-Different actions can require different governance burdens. This makes burden-class and workload-weighted economics more defensible than one fixed governance surcharge.
+The workflow is scheduled daily at `06:15 UTC` and also runs on relevant pushes. It will automatically execute the pair when an authorized `DEEPSEEK_API_KEY` becomes available. `BLOCKED`, `RETRY`, `FAILED`, and `COMPLETE` are explicit machine states; missing evidence is never treated as success.
 
-## Current metric contract
-
-`product-comparison-schema.json` v1.1.0 now defines:
+Continuation owner:
 
 ```text
-primary: absolute governance cost per governed admissible action by burden class
-workload: workload-weighted governance cost per governed admissible action
-secondary: percentage premium, latency, storage, admissibility lift, margin headroom
+MERGED INTO: GCAT-BCAT-Engine/workflows/experiments/sv-cost-program/seven-lane-results/SV_COST_SEVEN_LANE_MIRROR_HANDOFF.md
 ```
 
-Mode boundaries for sensitivity testing are ratio-based:
+## Repository continuity reconciliation
+
+The repository-wide handoff `docs/WORKFLOWS_MIRROR_HANDOFF.md` and `.continuity/config.json` were inspected after the new workflow mutations exposed a provenance failure on an intermediate commit.
+
+A successor continuity record was installed:
 
 ```text
-TOKEN_PRICE_RELEVANT: inference >= 10x governance burden
-TOKEN_PRICE_COMPRESSED: inference >= 1x and < 10x governance burden
-INTELLIGENCE_ABUNDANT: inference < governance burden, or intelligence price is otherwise no longer the main differentiator
+.continuity/change-records/SV-CONT-20260807-GOVAI-012.json
+config current record: SV-CONT-20260807-GOVAI-012
+base commit: a3384d9293b7a8acc9f14af97b0634b9d9b3b644
 ```
 
-These thresholds are testing semantics, not market laws.
+Continuity Provenance Gate run `31223053271`, job `93011535159`, then passed every step including provenance tests, session change-record verification, cross-reference verification, adoption-registry verification, and receipt upload.
+
+This supersedes the intermediate provenance failure produced before the successor change record was installed.
+
+## Claims and convergence state
+
+```text
+SV-GOVAI-LOCAL-STACK        COMPLETE / RELEASED
+SV-GOVAI-DEEPSEEK-PAIR      MACHINE_OWNED / BLOCKED_ON_AUTHORIZED_CREDENTIAL
+SV-GOVAI-DEEPSEEK-INTEGRATE BLOCKED_ON_DEEPSEEK_PAIR_COMPLETE
+SV-GOVAI-REMOTE-BURDEN      BLOCKED_ON_NAMED_AUTHORIZED_REMOTE_SERVICE_CONTRACT
+SV-GOVAI-PUBLICATION        BLOCKED / NOT_ADMITTED
+```
+
+No competing OpenAI/Anthropic or historical five-lane implementation is authorized. The historical five-lane result remains immutable. This session's unique requirements are merged into the scoped Governed AI and seven-lane handoffs rather than creating a competing SV-COST root program.
+
+## Remote production-burden boundary
+
+Remote production substitution is intentionally not fabricated. Current local `LOOKUP`, `PERSIST`, `PROOF`, and `BOUNDARY` mechanisms remain synthetic approximations.
+
+Exact machine-observable release condition for `SV-GOVAI-REMOTE-BURDEN`:
+
+> A repository-visible integration contract identifies a named authorized policy, delegation, KMS/signature, durable-persistence, or network service endpoint and grants bounded test authority.
+
+Destination when that condition exists:
+
+```text
+experiments/sv-cost-program/governed-ai-premium/remote-burden/
+```
+
+Until then, the task is durably `BLOCKED`; there is no unspecified external work item.
+
+## Cross-repository propagation
+
+Repositories inspected for propagation posture:
+
+```text
+StegVerse-Labs/Site — docs/SITE_MIRROR_HANDOFF.md read; active Site work is separately claimed and publication/activation authority remains fail-closed.
+GCAT-BCAT-Engine/Publisher — repository root inspected; PUBLISHER_MIRROR_HANDOFF.md exists and PROP-001 owns publication policy.
+```
+
+Intended downstream consumers after an admitted bounded publication candidate remain:
+
+```text
+GCAT-BCAT-Engine/Publisher
+StegVerse-Labs/Site
+StegVerse-Labs/admissibility-wiki
+StegVerse-002/stegguardian-wiki
+```
+
+No mutation was made to downstream repositories because `SV-GOVAI-PUBLICATION` is `NOT_ADMITTED`. Re-read each destination's newest applicable `*_MIRROR_HANDOFF.md` immediately before any future propagation.
 
 ## Claim boundary
 
 Do not claim:
 
 - StegVerse improves underlying model intelligence;
-- provider pair deltas equal StegGate cost;
-- local synthetic measurements equal production cloud/service cost;
-- one fixed governance premium applies to all actions;
-- illustrative workload mixes predict customer usage;
-- margin scenarios are recommended prices;
+- provider prompt-path deltas equal StegGate wholesale cost;
+- local synthetic burden measurements equal production cloud/service cost;
+- one fixed governance premium applies to every action;
+- illustrative workload mixes predict usage;
+- margin sensitivity cases are recommended prices;
 - market willingness to pay or enterprise ROI is established;
-- DeepSeek economics are measured before canonical DeepSeek execution exists.
+- DeepSeek execution economics are measured while the provider pair remains BLOCKED.
 
 Admitted bounded finding:
 
-> StegGate governance can be measured independently of provider inference, segmented into explicit control burdens, and aggregated into workload-weighted cost per governed admissible action. That metric remains coherent as inference pricing compresses.
+> StegGate governance can be metered independently of provider inference, segmented into explicit control burdens, and aggregated into workload-weighted cost per governed admissible action. This remains a coherent comparison mode as inference pricing compresses.
 
-## Exact next tasks
+## Exact remaining tasks and owners
 
-1. Complete canonical seven-lane execution for `DeepSeek` and `DeepSeek/StegVerse` with a versioned DeepSeek price source and retained provider receipts.
-2. Feed the DeepSeek pair into the same Governed AI reducer without changing the comparison contract.
-3. Replace local approximations one class at a time with measured remote burdens: policy service, delegation service, KMS/signature verification, durable remote persistence, and network boundary.
-4. Separate provider-specific adapter overhead from provider-independent StegGate burden.
-5. Replace illustrative workload weights with measured workload distributions only when real usage evidence exists; retain illustrative scenarios for sensitivity testing.
-6. Only after remote burden evidence exists, test bounded wholesale price envelopes and provider margin scenarios as candidates rather than claims.
-7. Before publication or cross-repo propagation, inspect newest destination `*_MIRROR_HANDOFF.md` in `GCAT-BCAT-Engine/Publisher`, `StegVerse-Labs/Site`, `admissibility-wiki`, and `stegguardian-wiki`.
+1. `SV-GOVAI-DEEPSEEK-PAIR` — **MACHINE_OWNED** by `.github/workflows/sv-cost-deepseek-pair-continuation.yml`; release condition is authorized `DEEPSEEK_API_KEY` plus both lanes reaching canonical equivalence.
+2. `SV-GOVAI-DEEPSEEK-INTEGRATE` — **BLOCKED** in `task-claims-2026-08-07.json`; release condition is `deepseek_pair_results.json.state == COMPLETE`; destination is the Governed AI reducers in this directory.
+3. `SV-GOVAI-REMOTE-BURDEN` — **BLOCKED** in the same task registry; release condition is a named authorized remote service integration contract; destination is `remote-burden/`.
+4. `SV-GOVAI-PUBLICATION` — **BLOCKED / NOT_ADMITTED**; destination handoffs own propagation only after a bounded publication candidate exists.
 
-## Completion state
+No remaining task requires information that exists only in this conversation.
+
+## Session-consolidation state
 
 ```text
-comparison_mode_definition: COMPLETE
-comparison_schema_v1_1: COMPLETE
-abundant_intelligence_modes: COMPLETE
-historical_pair_reducer: PASS
-isolated_core_meter: PASS
-production_burden_profile: COMPLETE
-production_burden_runner: PASS
-negative_fail_closed_cases: 4/4 PASS
-product_tier_envelope: PASS
-workload_mix_scenarios: 4/4 COMPLETE
-workload_mix_reducer: PASS
-hosted_artifact_evidence: PASS
-provider_independent_local_burden_curve: ESTABLISHED_BOUNDED
-workload_weighted_local_economics: ESTABLISHED_BOUNDED
-remote_production_burden: PENDING
-deepseek_pair: PENDING
-provider_specific_adapter_overhead: PENDING
-wholesale_price_claim: NOT_ADMITTED
-retail_price_claim: NOT_ADMITTED
-publication: NOT_ADMITTED
+session goals: 6
+complete or durably transferred: 6/6
+unique chat-only requirements: 0
+active chat implementation claims: 0
+active chat validation claims: 0
+active chat integration claims: 0
+machine-owned continuation installed: yes
+machine-observable blocker installed: yes
+repository continuity provenance: PASS
+publication propagation: intentionally blocked and durably owned
 ```
 
-## Session consolidation
+## Completion measures
 
-The abundant-intelligence metric shift, historical pair evidence, core isolation, production-burden curve, fail-closed negative tests, product-envelope sensitivity, workload-mix sensitivity, schema v1.1 metric promotion, workflow runs, artifact IDs/digests, claim boundaries, and exact next tasks are durably transferred here. Repository-native continuation owns the remaining work.
+Denominator for this session-specific workstream:
+
+```text
+required developed files/control surfaces: 16
+installed substantive files/control surfaces: 16
+scaffolding/stubs: 0
+required validation groups: 8
+validated groups: 7
+required integration groups: 6
+integrated or durably blocked/transferred: 6
+primary+adjacent session goals: 6
+completed or durably transferred: 6
+```
+
+The only unvalidated group is provider execution of DeepSeek lanes 6/7, which is not a chat-retention dependency because its machine-owned workflow, blocker, schedule, price evidence, claim, and release condition are durable.
+
+## Archive condition
+
+This originating chat has no unique execution authority or undocumented project state remaining. DeepSeek provider execution and remote production burden remain project tasks, but both have exact repository-native owners or blocked release conditions and do not require this conversation to resume.
+
+MERGED INTO:
+
+```text
+GCAT-BCAT-Engine/workflows/experiments/sv-cost-program/governed-ai-premium/SV_GOVERNED_AI_PREMIUM_MIRROR_HANDOFF.md
+GCAT-BCAT-Engine/workflows/experiments/sv-cost-program/governed-ai-premium/session-goal-inventory-2026-08-07.json
+GCAT-BCAT-Engine/workflows/experiments/sv-cost-program/governed-ai-premium/task-claims-2026-08-07.json
+GCAT-BCAT-Engine/workflows/experiments/sv-cost-program/seven-lane-results/SV_COST_SEVEN_LANE_MIRROR_HANDOFF.md
+```
