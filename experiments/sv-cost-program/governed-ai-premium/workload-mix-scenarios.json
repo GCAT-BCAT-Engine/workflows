@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "scenario_set_id": "SV-GOVERNED-AI-WORKLOAD-MIX-001",
+  "unit_actions": 1000000,
+  "scenarios": [
+    {
+      "id": "LIGHT_ASSIST",
+      "description": "Illustrative low-consequence workload dominated by core/proof controls.",
+      "weights": {"CORE": 0.55, "PROOF": 0.35, "LOOKUP": 0.08, "PERSIST": 0.02, "QUORUM": 0.0, "BOUNDARY": 0.0}
+    },
+    {
+      "id": "ENTERPRISE_OPS",
+      "description": "Illustrative operational workload with policy/delegation lookup and durable receipts.",
+      "weights": {"CORE": 0.10, "PROOF": 0.15, "LOOKUP": 0.30, "PERSIST": 0.30, "QUORUM": 0.10, "BOUNDARY": 0.05}
+    },
+    {
+      "id": "HIGH_CONSEQUENCE",
+      "description": "Illustrative workload weighted toward quorum and service-boundary controls.",
+      "weights": {"CORE": 0.02, "PROOF": 0.03, "LOOKUP": 0.10, "PERSIST": 0.20, "QUORUM": 0.30, "BOUNDARY": 0.35}
+    },
+    {
+      "id": "BALANCED",
+      "description": "Illustrative mixed workload used only for sensitivity comparison.",
+      "weights": {"CORE": 0.15, "PROOF": 0.15, "LOOKUP": 0.20, "PERSIST": 0.20, "QUORUM": 0.15, "BOUNDARY": 0.15}
+    }
+  ],
+  "claim_boundary": "Scenario weights are illustrative testing inputs, not forecasts of customer mix, risk distribution, usage, demand, revenue, or market adoption."
+}
