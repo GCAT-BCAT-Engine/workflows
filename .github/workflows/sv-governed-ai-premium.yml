@@ -24,7 +24,8 @@ jobs:
           python -m py_compile \
             experiments/sv-cost-program/governed-ai-premium/reduce.py \
             experiments/sv-cost-program/governed-ai-premium/isolate_steggate.py \
-            experiments/sv-cost-program/governed-ai-premium/production_burden.py
+            experiments/sv-cost-program/governed-ai-premium/production_burden.py \
+            experiments/sv-cost-program/governed-ai-premium/product_tier_envelope.py
 
       - name: Run governed AI premium reducer
         run: python experiments/sv-cost-program/governed-ai-premium/reduce.py
@@ -35,11 +36,15 @@ jobs:
       - name: Run staged StegGate production-burden curve
         run: python experiments/sv-cost-program/governed-ai-premium/production_burden.py
 
+      - name: Run Governed AI product-tier envelope
+        run: python experiments/sv-cost-program/governed-ai-premium/product_tier_envelope.py
+
       - name: Validate generated JSON
         run: |
           python -m json.tool experiments/sv-cost-program/governed-ai-premium/results/governed_ai_premium_results.json > /dev/null
           python -m json.tool experiments/sv-cost-program/governed-ai-premium/results/steggate_isolation_results.json > /dev/null
           python -m json.tool experiments/sv-cost-program/governed-ai-premium/results/production_burden_results.json > /dev/null
+          python -m json.tool experiments/sv-cost-program/governed-ai-premium/results/product_tier_envelope_results.json > /dev/null
 
       - name: Upload governed AI premium evidence
         uses: actions/upload-artifact@v4
@@ -52,3 +57,5 @@ jobs:
             experiments/sv-cost-program/governed-ai-premium/results/steggate_isolation_report.md
             experiments/sv-cost-program/governed-ai-premium/results/production_burden_results.json
             experiments/sv-cost-program/governed-ai-premium/results/production_burden_report.md
+            experiments/sv-cost-program/governed-ai-premium/results/product_tier_envelope_results.json
+            experiments/sv-cost-program/governed-ai-premium/results/product_tier_envelope_report.md
