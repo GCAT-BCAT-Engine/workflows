@@ -1,9 +1,10 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "comparison_id": "SV-GOVERNED-AI-PREMIUM-001",
-  "status": "SCHEMA_INSTALLED_EXECUTION_PENDING",
-  "thesis": "As intelligence becomes abundant and inference unit prices compress, provider-to-provider token price comparison may lose strategic relevance. Measure the incremental cost and product value of adding StegGate governance to an existing model service.",
-  "primary_comparison_unit": "incremental cost per governed admissible outcome",
+  "status": "LOCAL_BURDEN_AND_WORKLOAD_METRICS_VALIDATED_REMOTE_PRODUCTION_EVIDENCE_PENDING",
+  "thesis": "As intelligence becomes abundant and inference unit prices compress, provider-to-provider token price comparison may lose strategic relevance. Measure the incremental cost and product value of adding StegGate governance to an existing model service, with governance burden segmented by the controls required for the action.",
+  "primary_comparison_unit": "absolute governance cost per governed admissible action by burden class",
+  "workload_comparison_unit": "workload-weighted governance cost per governed admissible action",
   "secondary_comparison_units": [
     "governance premium as percent of underlying inference cost",
     "incremental latency per governed admissible outcome",
@@ -11,56 +12,74 @@
     "admissibility lift relative to raw model execution",
     "provider gross-margin headroom for a governed AI product tier"
   ],
+  "governance_burden_classes": [
+    {"id": "CORE", "description": "in-process admissibility, receipt, and reconstruction verification"},
+    {"id": "PROOF", "description": "CORE plus cryptographic proof verification"},
+    {"id": "LOOKUP", "description": "PROOF plus policy and delegation retrieval/verification"},
+    {"id": "PERSIST", "description": "LOOKUP plus durable receipt persistence and reread verification"},
+    {"id": "QUORUM", "description": "PERSIST plus multi-member quorum verification"},
+    {"id": "BOUNDARY", "description": "QUORUM plus serialized service-boundary crossing"}
+  ],
   "provider_pairs": [
     {"raw": "openai-raw", "governed": "openai-governed", "product_label": "OpenAI + StegGate"},
     {"raw": "anthropic-raw", "governed": "anthropic-governed", "product_label": "Anthropic + StegGate"},
-    {"raw": "deepseek-raw", "governed": "deepseek-governed", "product_label": "DeepSeek + StegGate"}
+    {"raw": "deepseek-raw", "governed": "deepseek-governed", "product_label": "DeepSeek + StegGate", "status": "PENDING_CANONICAL_SEVEN_LANE_EXECUTION"}
   ],
   "required_inputs": [
     "raw provider inference cost",
-    "governed provider inference cost",
-    "StegGate compute cost",
-    "StegGate storage and receipt cost",
-    "raw and governed latency",
+    "StegGate governance burden cost measured independently of provider inference",
+    "governance burden class or workload mix",
+    "raw and governed latency where provider-pair comparison is performed",
     "raw and governed admissibility result",
-    "raw and governed normalized outcome hash",
-    "provider price-card source and timestamp"
+    "raw and governed normalized outcome hash where equivalence is required",
+    "provider price-card source and timestamp",
+    "remote production burden evidence before production pricing claims"
   ],
   "derived_metrics": {
-    "governance_incremental_cost_usd": "governed_total_cost_usd - raw_total_cost_usd",
-    "governance_premium_percent": "100 * governance_incremental_cost_usd / raw_total_cost_usd",
+    "absolute_governance_cost_usd": "measured_steggate_cost_for_required_burden_class",
+    "workload_weighted_governance_cost_usd": "sum(workload_class_weight * measured_class_cost)",
+    "governance_share_of_product_floor_percent": "100 * governance_cost / (provider_inference_cost + governance_cost)",
+    "governance_premium_percent": "100 * governance_cost / provider_inference_cost",
     "incremental_latency_seconds": "governed_latency_seconds - raw_latency_seconds",
     "admissibility_lift": "governed_admissible - raw_admissible",
-    "governed_product_floor_price_usd": "raw_total_cost_usd + governance_incremental_cost_usd",
+    "governed_product_floor_price_usd": "provider_inference_cost + governance_cost + provider_specific_integration_cost",
     "provider_price_at_target_margin_usd": "governed_product_floor_price_usd / (1 - target_gross_margin)"
   },
   "abundant_intelligence_modes": [
     {
       "mode": "TOKEN_PRICE_RELEVANT",
-      "condition": "underlying inference cost remains a material fraction of governed product cost",
-      "primary_metric": "governance_premium_percent"
+      "condition": "provider inference cost remains at least 10x the measured governance burden for the action",
+      "primary_metric": "provider inference plus absolute governance cost; percentage premium may remain informative"
     },
     {
       "mode": "TOKEN_PRICE_COMPRESSED",
-      "condition": "underlying inference cost approaches commodity pricing and no longer dominates total product value",
-      "primary_metric": "absolute incremental governance cost per admissible outcome"
+      "condition": "provider inference cost is between 1x and 10x the measured governance burden for the action",
+      "primary_metric": "absolute governance cost per governed admissible action and governance share of product floor"
     },
     {
       "mode": "INTELLIGENCE_ABUNDANT",
-      "condition": "model outputs are sufficiently substitutable that provider intelligence price is no longer the main differentiator",
-      "primary_metric": "cost and reliability of converting an ungoverned model output into an authorized, admissible, reconstructable execution"
+      "condition": "provider inference cost is below the measured governance burden or model outputs are sufficiently substitutable that intelligence price is no longer the main differentiator",
+      "primary_metric": "cost and reliability of converting model output into an authorized, admissible, reconstructable execution, workload-weighted by required governance class"
     }
   ],
   "product_hypothesis": {
     "name": "Governed AI",
-    "provider_offer": "Existing model service plus StegGate execution governance, admissibility decisioning, receipts, reconstructability, and policy enforcement.",
-    "commercial_question": "What incremental wholesale cost must a provider add to its current AI product to offer a governed tier, and what retail price preserves target margin?",
+    "provider_offer": "Existing model service plus StegGate execution governance, admissibility decisioning, receipts, reconstructability, policy enforcement, and selectable control burden appropriate to the action.",
+    "commercial_question": "What independently measured governance burden and provider-specific integration cost must be added to an existing AI product to offer a governed tier, and what retail price would preserve an explicitly assumed target margin?",
     "non_claims": [
       "StegVerse makes the underlying model more intelligent",
       "StegVerse universally lowers inference cost",
-      "all providers should charge the same governed premium",
-      "token price becomes universally irrelevant"
+      "all providers or all governed actions should carry the same premium",
+      "token price becomes universally irrelevant",
+      "local synthetic burden measurements equal remote production service cost",
+      "illustrative margin arithmetic proves willingness to pay"
     ]
   },
-  "claim_boundary": "This schema measures incremental governance cost and productization economics around a bounded admissible execution outcome. It does not establish universal provider economics, enterprise ROI, model superiority, or market willingness to pay."
+  "measurement_separation": {
+    "provider_inference_cost": "measured outside the StegGate burden meter",
+    "provider_specific_integration_cost": "must be measured separately when adapters, remote calls, or provider operations create non-Steggate overhead",
+    "steggate_governance_cost": "measured independently by burden class",
+    "commercial_margin": "assumption applied only after technical cost components are established"
+  },
+  "claim_boundary": "This schema measures bounded Governed AI product economics around admissible actions. Current burden-class and workload-mix evidence is synthetic and local. It does not establish universal provider economics, production wholesale price, retail price, enterprise ROI, model superiority, or market willingness to pay."
 }
