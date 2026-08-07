@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "comparison_id": "SV-GOVERNED-AI-PREMIUM-001",
+  "status": "SCHEMA_INSTALLED_EXECUTION_PENDING",
+  "thesis": "As intelligence becomes abundant and inference unit prices compress, provider-to-provider token price comparison may lose strategic relevance. Measure the incremental cost and product value of adding StegGate governance to an existing model service.",
+  "primary_comparison_unit": "incremental cost per governed admissible outcome",
+  "secondary_comparison_units": [
+    "governance premium as percent of underlying inference cost",
+    "incremental latency per governed admissible outcome",
+    "incremental bytes and receipt-storage cost per governed admissible outcome",
+    "admissibility lift relative to raw model execution",
+    "provider gross-margin headroom for a governed AI product tier"
+  ],
+  "provider_pairs": [
+    {"raw": "openai-raw", "governed": "openai-governed", "product_label": "OpenAI + StegGate"},
+    {"raw": "anthropic-raw", "governed": "anthropic-governed", "product_label": "Anthropic + StegGate"},
+    {"raw": "deepseek-raw", "governed": "deepseek-governed", "product_label": "DeepSeek + StegGate"}
+  ],
+  "required_inputs": [
+    "raw provider inference cost",
+    "governed provider inference cost",
+    "StegGate compute cost",
+    "StegGate storage and receipt cost",
+    "raw and governed latency",
+    "raw and governed admissibility result",
+    "raw and governed normalized outcome hash",
+    "provider price-card source and timestamp"
+  ],
+  "derived_metrics": {
+    "governance_incremental_cost_usd": "governed_total_cost_usd - raw_total_cost_usd",
+    "governance_premium_percent": "100 * governance_incremental_cost_usd / raw_total_cost_usd",
+    "incremental_latency_seconds": "governed_latency_seconds - raw_latency_seconds",
+    "admissibility_lift": "governed_admissible - raw_admissible",
+    "governed_product_floor_price_usd": "raw_total_cost_usd + governance_incremental_cost_usd",
+    "provider_price_at_target_margin_usd": "governed_product_floor_price_usd / (1 - target_gross_margin)"
+  },
+  "abundant_intelligence_modes": [
+    {
+      "mode": "TOKEN_PRICE_RELEVANT",
+      "condition": "underlying inference cost remains a material fraction of governed product cost",
+      "primary_metric": "governance_premium_percent"
+    },
+    {
+      "mode": "TOKEN_PRICE_COMPRESSED",
+      "condition": "underlying inference cost approaches commodity pricing and no longer dominates total product value",
+      "primary_metric": "absolute incremental governance cost per admissible outcome"
+    },
+    {
+      "mode": "INTELLIGENCE_ABUNDANT",
+      "condition": "model outputs are sufficiently substitutable that provider intelligence price is no longer the main differentiator",
+      "primary_metric": "cost and reliability of converting an ungoverned model output into an authorized, admissible, reconstructable execution"
+    }
+  ],
+  "product_hypothesis": {
+    "name": "Governed AI",
+    "provider_offer": "Existing model service plus StegGate execution governance, admissibility decisioning, receipts, reconstructability, and policy enforcement.",
+    "commercial_question": "What incremental wholesale cost must a provider add to its current AI product to offer a governed tier, and what retail price preserves target margin?",
+    "non_claims": [
+      "StegVerse makes the underlying model more intelligent",
+      "StegVerse universally lowers inference cost",
+      "all providers should charge the same governed premium",
+      "token price becomes universally irrelevant"
+    ]
+  },
+  "claim_boundary": "This schema measures incremental governance cost and productization economics around a bounded admissible execution outcome. It does not establish universal provider economics, enterprise ROI, model superiority, or market willingness to pay."
+}
