@@ -1,10 +1,8 @@
 # Governed AI Premium Mirror Handoff
 
-Status: **ACTIVE — COMPARISON MODE INSTALLED — HISTORICAL SENSITIVITY TEST ACTIVATED — ISOLATION PENDING**
+Status: **ACTIVE — CORE ISOLATION PASS — PRODUCTION-BURDEN CURVE PASS — PRODUCT ENVELOPE PASS — DEEPSEEK EVIDENCE PENDING**
 
 ## Source of truth
-
-This file is the current handoff for the product-economics comparison mode that complements the seven-lane model experiment.
 
 Canonical repository:
 
@@ -12,240 +10,235 @@ Canonical repository:
 GCAT-BCAT-Engine/workflows
 ```
 
-Canonical schema:
+Canonical workstream:
 
 ```text
-experiments/sv-cost-program/governed-ai-premium/product-comparison-schema.json
+experiments/sv-cost-program/governed-ai-premium/
 ```
 
-Historical evidence source:
+This file is the current task, collision, evidence, and continuation handoff for the Governed AI product-economics comparison.
+
+Historical provider evidence:
 
 ```text
 experiments/sv-cost-program/five-lane-results/results/five_lane_results.json
 ```
 
-Seven-lane execution evidence source:
+DeepSeek extension source:
 
 ```text
 experiments/sv-cost-program/seven-lane-results/
 ```
 
-## Directional change
+## Directional thesis
 
-The five- and seven-lane experiments remain useful for bounded provider cost and admissibility observations, but provider unit-price ranking is no longer the sole or necessarily primary economic question.
+Provider unit-price ranking remains useful evidence, but it is not the durable long-run comparison if intelligence becomes abundant.
 
-As model intelligence becomes cheaper and more abundant, the more durable commercial comparison is:
+Primary long-run comparison:
 
 ```text
-existing provider AI product
+existing provider AI
 vs
-existing provider AI product + StegGate
+existing provider AI + StegGate
 ```
 
-The key measurement is therefore the **incremental governance cost required to create a Governed AI product tier**, not merely which provider has the cheapest tokens.
-
-## Primary product question
-
-For each provider pair:
+Preferred abundant-intelligence unit:
 
 ```text
-OpenAI raw       -> OpenAI + StegGate
-Anthropic raw    -> Anthropic + StegGate
-DeepSeek raw     -> DeepSeek + StegGate
+absolute governance cost per governed admissible action, segmented by governance burden
 ```
 
-measure:
+Percentage premium over inference remains a secondary metric because the denominator can collapse while the governance workload stays unchanged.
 
-1. incremental cost per governed admissible outcome;
-2. governance premium as a percentage of underlying inference cost;
-3. incremental latency;
-4. admissibility lift or failure reduction;
-5. receipt/reconstruction overhead;
-6. provider gross-margin headroom for a retail Governed AI tier.
-
-## Abundant-intelligence transition modes
-
-### Mode A — TOKEN_PRICE_RELEVANT
-
-Use when model inference cost remains economically material. Compare raw cost, governed cost, and governance premium percentage.
-
-### Mode B — TOKEN_PRICE_COMPRESSED
-
-Use when inference pricing is sufficiently compressed that percentage comparisons become unstable or strategically misleading. Prefer the absolute added StegGate cost per governed admissible outcome.
-
-### Mode C — INTELLIGENCE_ABUNDANT
-
-Use when interchangeable model capability makes intelligence price secondary. The primary unit becomes:
-
-> cost and reliability of converting an ungoverned model output into an authorized, admissible, policy-bound, reconstructable execution.
-
-In this mode, StegGate is evaluated as a product-enabling control layer rather than as an inference-cost optimizer.
-
-## Commercial hypothesis
-
-Product name under test: **Governed AI**.
-
-Provider offer:
-
-> Current model capability plus StegGate execution governance, admissibility decisioning, policy enforcement, evidence receipts, and reconstructability.
-
-The provider can expose this as a distinct governed service tier without replacing its underlying model stack.
-
-Potential pricing form:
+## Installed implementation
 
 ```text
-provider inference price
-+ StegGate wholesale governance charge
-+ provider governed-tier margin
-= Governed AI retail price
-```
-
-This enables an economically meaningful test even when raw model inference approaches commodity pricing.
-
-## Installed test implementation
-
-```text
-experiments/sv-cost-program/governed-ai-premium/reduce.py
+product-comparison-schema.json
+execution_candidate.json
+reduce.py
+isolate_steggate.py
+production-burden-profile.json
+production_burden.py
+product_tier_envelope.py
 .github/workflows/sv-governed-ai-premium.yml
 ```
 
-The reducer consumes the completed five-lane result and emits:
+Hosted workflow executes all reducers/meters, validates JSON, and uploads immutable evidence artifacts.
+
+## Hosted evidence
+
+### Core isolation
+
+Run `31219131269` completed `success` at commit `22b4235efdda04f2203bf81a0a2ddb431556ca40`.
+
+Artifact:
 
 ```text
-experiments/sv-cost-program/governed-ai-premium/results/governed_ai_premium_results.json
-experiments/sv-cost-program/governed-ai-premium/results/report.md
+id: 9009669589
+name: governed-ai-premium-evidence
+digest: sha256:4cfd49475c42a160413f92fdcd9b616e4641946330441c0f78735eceb3267c71
 ```
 
-Hosted workflow run activated:
+The workflow passed the historical sensitivity reducer and isolated StegGate core-path meter.
+
+### Production-burden curve
+
+Run `31222023913` completed `success` at commit `3d5ea7c07e132893f5c9c2c5aaa5596b0f64920f`.
+
+Artifact:
 
 ```text
-workflow: SV Governed AI Premium Test
-run_id: 31219003380
-head_sha: 1e8686d4814e69b960e48913b07a51b7ce3bc6b0
-state_at_last_observation: queued
+id: 9010716206
+name: governed-ai-premium-evidence
+digest: sha256:7b174c0f3d7f1182f2891e9931f95d3d6a58e8b6285bc47367c55566ba43cd03
 ```
 
-The workflow performs syntax validation, executes the reducer, validates generated JSON, and uploads the generated evidence as an immutable workflow artifact.
+Observed local synthetic burden curve on the hosted Linux runner:
 
-## Historical pair evidence now under test
+| Tier | Mean latency | Modeled local cost / governed action |
+|---|---:|---:|
+| CORE | 0.036845 ms | $0.000000010353 |
+| PROOF | 0.113322 ms | $0.000000022950 |
+| LOOKUP | 0.420741 ms | $0.000000063939 |
+| PERSIST | 1.123170 ms | $0.000000157596 |
+| QUORUM | 1.116657 ms | $0.000000156728 |
+| BOUNDARY | 1.233232 ms | $0.000000172271 |
 
-The completed five-lane evidence provides two existing matched pairs that can test the metric before DeepSeek arrives:
+All six tiers produced admissible results.
 
-| Pair | Raw cost | Governed cost | Observed pair delta | Observed delta % | Latency delta |
-|---|---:|---:|---:|---:|---:|
-| OpenAI -> OpenAI + StegGate prompt path | $0.006875 | $0.006880 | +$0.000005 | +0.072727% | -0.556421 s |
-| Anthropic -> Anthropic + StegGate prompt path | $0.010656 | $0.007116 | -$0.003540 | -33.220721% | -2.480086 s |
-
-Both pairs produced the same normalized required outcome and both raw and governed lanes were admissible in the completed bounded experiment.
-
-These deltas are **not isolated StegGate wholesale cost**. They include provider-side output/token behavior caused by the governed prompt path. The negative Anthropic delta demonstrates why raw-minus-governed provider cost cannot be directly relabeled as the cost of StegGate.
-
-## Metric-validity test
-
-The reducer applies hypothetical inference-compression factors:
+Fail-closed negative tests also passed:
 
 ```text
-1.0
-0.1
-0.01
-0.001
-0.0001
+revoked_delegation_denied: true
+tampered_successor_denied: true
+tampered_proof_denied: true
+insufficient_quorum_denied: true
 ```
 
-while holding the observed pair delta constant only to test denominator behavior.
+These are synthetic local measurements. Local file retrieval, HMAC checks, SQLite persistence, deterministic quorum, and socketpair transport do not equal remote KMS, database, policy-service, WAN, or human-quorum costs.
 
-This is a sensitivity test, not a forecast. It asks:
+### Product-tier envelope
 
-> If the absolute governance-related delta stayed constant while intelligence became much cheaper, would percentage premium remain a useful primary metric?
-
-Expected validity finding:
+Run `31222078818`, commit `17e97fa20e0ce7d1ce697348da3b0ec47c57ad3f`, completed the full job successfully, including:
 
 ```text
-percentage premium becomes increasingly denominator-sensitive as inference cost compresses
+historical pair reducer
+isolated StegGate core meter
+production-burden curve
+Governed AI product-tier envelope
+JSON validation
+artifact upload
 ```
 
-Therefore, under TOKEN_PRICE_COMPRESSED and INTELLIGENCE_ABUNDANT modes, the preferred primary measure is:
+Artifact:
 
 ```text
-absolute incremental governance cost per governed admissible outcome
+id: 9010737144
+name: governed-ai-premium-evidence
+digest: sha256:cd6c52f8d5b5a86eb3bb4cdb8aeddf35d1ed00a9297c23d5bfb6ced5b0658897
 ```
 
-but that measure is not publication-ready until StegGate cost is independently isolated.
+The envelope combines historical provider inference observations with measured local governance burden and hypothetical inference compression factors. It emits 20%, 40%, and 60% gross-margin arithmetic only as sensitivity cases, not recommended prices.
 
-## Required isolation experiment
+Example using OpenAI historical raw cost and the BOUNDARY burden tier:
 
-The next experiment must hold provider inference constant and meter the StegGate layer separately.
+| Inference compression | Hypothetical inference | Measured local governance | Governance share of floor | Mode |
+|---:|---:|---:|---:|---|
+| 1.0 | $0.006875000000 | $0.000000172271 | 0.002506% | TOKEN_PRICE_RELEVANT |
+| 0.01 | $0.000068750000 | $0.000000172271 | 0.249950% | TOKEN_PRICE_RELEVANT |
+| 0.0001 | $0.000000687500 | $0.000000172271 | 20.036837% | TOKEN_PRICE_COMPRESSED |
 
-Required StegGate cost components:
+This directly demonstrates the denominator effect: the same measured governance workload can become a large percentage of product floor as inference cost collapses, without governance itself becoming more expensive.
+
+## Historical provider-pair evidence
+
+Completed five-lane evidence still provides two matched prompt-path pairs:
+
+| Pair | Raw cost | Governed cost | Observed pair delta | Delta % |
+|---|---:|---:|---:|---:|
+| OpenAI -> OpenAI/StegVerse | $0.006875 | $0.006880 | +$0.000005 | +0.072727% |
+| Anthropic -> Anthropic/StegVerse | $0.010656 | $0.007116 | -$0.003540 | -33.220721% |
+
+These deltas are not wholesale StegGate cost. They include provider-side token/output behavior. The negative Anthropic delta is direct evidence that raw-minus-governed provider cost cannot be relabeled as governance cost.
+
+## Product interpretation under test
+
+Candidate product label: **Governed AI**.
+
+Potential provider economics form:
 
 ```text
-policy evaluation compute
-authority/admissibility gate compute
-receipt generation
-hash/canonicalization work
-receipt storage
-reconstruction/verification cost where invoked
-network/service overhead attributable only to StegGate
+provider inference
++ StegGate governance burden
++ provider-specific integration/operations burden
++ provider margin
+= governed service tier
 ```
 
-Required separation:
+No wholesale charge or retail price is admitted yet.
+
+The current local measurements establish only that governance can be independently metered and burden-segmented. They do not establish remote production cost, willingness to pay, provider margin, or enterprise ROI.
+
+## Governance burden classes now under test
 
 ```text
-provider inference cost != StegGate wholesale governance cost
-provider prompt/output variation != StegGate compute cost
-StegVerse-only deterministic reconstruction reference != provider integration premium
+CORE      in-process admissibility + receipt/reconstruction
+PROOF     CORE + cryptographic proof verification
+LOOKUP    PROOF + policy/delegation artifact retrieval
+PERSIST   LOOKUP + durable receipt persistence
+QUORUM    PERSIST + 2-of-3 approval verification
+BOUNDARY  QUORUM + serialized local service boundary
 ```
 
-The test should emit a provider-independent StegGate cost envelope where technically justified, plus provider-specific integration overhead where it cannot be separated.
-
-## Required evidence
-
-No product pricing claim is admitted without:
-
-- raw and governed provider costs from matched runs;
-- measured StegGate compute/storage/receipt cost;
-- raw and governed latency;
-- normalized outcome equivalence where required;
-- admissibility result for each pair;
-- versioned provider price source;
-- explicit target-margin assumption for any retail pricing scenario.
+This is a stronger comparison structure than one universal governance premium. Different governed actions can require different control burdens.
 
 ## Claim boundary
 
-Do not claim that StegVerse improves model intelligence, universally lowers inference costs, creates a universal fixed premium, proves market willingness to pay, or establishes enterprise ROI.
+Do not claim:
 
-The intended claim is narrower:
+- StegVerse improves underlying model intelligence;
+- provider pair deltas equal StegGate cost;
+- these local synthetic measurements equal production cloud/service cost;
+- one fixed governance premium applies to all actions;
+- margin scenarios are recommended prices;
+- market willingness to pay or enterprise ROI is established;
+- DeepSeek economics are measured before canonical DeepSeek execution exists.
 
-> StegGate can be measured as an incremental productization layer that converts an existing AI service into a governed execution service under a defined admissibility contract.
+Admitted bounded finding:
 
-The current historical sensitivity test may establish metric behavior. It does not establish an actual wholesale StegGate price.
+> StegGate governance can be measured independently of provider inference, its burden can be segmented into explicit control-path classes, and absolute cost per governed admissible action remains a coherent metric as inference pricing compresses.
 
 ## Exact next tasks
 
-1. Observe hosted run `31219003380`; inspect job steps and immutable artifact and record PASS/FAIL.
-2. Build the StegGate cost-isolation harness so provider inference is held constant while governance components are metered independently.
-3. Complete seven-lane execution evidence, especially DeepSeek and DeepSeek/StegVerse.
-4. Feed the DeepSeek pair into the same reducer without changing the comparison contract.
-5. Replace hypothetical fixed-delta sensitivity with measured StegGate cost envelopes once isolation evidence exists.
-6. Add target-margin scenarios only after measured wholesale governance cost exists.
-7. If evidence supports the product hypothesis, inspect Publisher, Site, admissibility-wiki, and stegguardian-wiki mirror handoffs before propagation.
+1. Complete canonical seven-lane execution for `DeepSeek` and `DeepSeek/StegVerse` with a versioned DeepSeek price source and retained provider receipts.
+2. Feed the DeepSeek pair into the same Governed AI reducer without changing the comparison contract.
+3. Replace local approximations one class at a time with measured remote burdens: policy service, delegation service, KMS/signature verification, durable remote persistence, and network boundary.
+4. Separate provider-specific adapter overhead from provider-independent StegGate burden.
+5. Add workload mixes across governance classes rather than assuming every action uses BOUNDARY.
+6. Only after remote burden evidence exists, test bounded wholesale price envelopes and provider margin scenarios.
+7. Before any publication or cross-repo propagation, inspect the newest destination `*_MIRROR_HANDOFF.md` in `GCAT-BCAT-Engine/Publisher`, `StegVerse-Labs/Site`, `admissibility-wiki`, and `stegguardian-wiki`.
 
 ## Completion state
 
 ```text
 comparison_mode_definition: COMPLETE
 abundant_intelligence_modes: COMPLETE
-governed_ai_product_hypothesis: COMPLETE
-historical_pair_reducer: INSTALLED
-abundance_metric_sensitivity: ACTIVATED_HOSTED_RUN_31219003380
-historical_pair_equivalence_basis: COMPLETE
-seven_lane_evidence_dependency: PENDING
-pairwise_premium_reducer: IMPLEMENTED_FOR_AVAILABLE_PAIRS
-measured_steggate_cost_isolation: PENDING
-retail_margin_scenarios: NOT_ADMITTED
+historical_pair_reducer: PASS
+isolated_core_meter: PASS
+production_burden_profile: COMPLETE
+production_burden_runner: PASS
+negative_fail_closed_cases: 4/4 PASS
+product_tier_envelope: PASS
+hosted_artifact_evidence: PASS
+provider_independent_local_burden_curve: ESTABLISHED_BOUNDED
+remote_production_burden: PENDING
+deepseek_pair: PENDING
+provider_specific_adapter_overhead: PENDING
+wholesale_price_claim: NOT_ADMITTED
+retail_price_claim: NOT_ADMITTED
 publication: NOT_ADMITTED
 ```
 
 ## Session consolidation
 
-The shift from provider unit-price ranking toward incremental Governed AI product economics, the historical pair evidence, the metric-validity sensitivity test, the hosted validation route, and the next isolation experiment are durably transferred here. Repository state owns continuation.
+The abundant-intelligence metric shift, historical pair evidence, core isolation, production-burden curve, fail-closed negative tests, product-envelope sensitivity, workflow runs, artifact IDs/digests, claim boundaries, and exact next tasks are durably transferred here. Repository-native continuation owns the remaining work.
