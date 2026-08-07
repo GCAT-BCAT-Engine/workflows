@@ -1,0 +1,50 @@
+{
+  "actor": {
+    "class": "chatgpt",
+    "instance": "GPT-5.6 Sol",
+    "session_ref": "governed-ai-abundant-intelligence-deepseek-2026-08-07"
+  },
+  "base_commit": "d61ee166856d66033cc9b5c0a9d77969981f96c0",
+  "change_id": "SV-CONT-20260807-GOVAI-013",
+  "changed_paths": [
+    {
+      "change_type": "modified",
+      "hash": "3b7de78ed14f44f8cd91ddf6554c4796bd915fc7",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/config.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "900bacc38874e2b9f95ab489a754ca2fc20081b3",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".handoff/current.json"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "Governed AI and seven-lane program handoffs are subordinate scoped handoffs under the repository-wide WORKFLOWS handoff",
+      "state": "REGISTERED"
+    },
+    {
+      "claim": "The repository-wide handoff remains the single current source of truth and its content hash is unchanged",
+      "state": "PRESERVED"
+    },
+    {
+      "claim": "The scoped handoff registration resolves undeclared mirror-handoff authority failures without changing publication or execution authority",
+      "state": "CORRECTED"
+    }
+  ],
+  "created_at": "2026-08-07T22:17:00Z",
+  "governing_handoff": {
+    "hash": "9a6ebc5e5331fe79c2aa7551279ddb285868cf69",
+    "hash_algorithm": "git-blob-sha1",
+    "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+  },
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "schema": "stegverse.session.change_record.v1",
+  "unresolved_tasks": [
+    "DeepSeek provider pair remains machine-owned and blocked until authorized DEEPSEEK_API_KEY is present",
+    "remote production burden remains blocked until a named authorized remote service contract exists"
+  ],
+  "record_hash": "ffc786d0b2dcb7a1025c5529c2d76cc8466161554e7f9010c83d1992ecf5daff"
+}
