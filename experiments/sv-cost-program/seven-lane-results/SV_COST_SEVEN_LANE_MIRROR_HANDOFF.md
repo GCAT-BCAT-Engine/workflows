@@ -1,37 +1,18 @@
 # SV-COST Seven-Lane Mirror Handoff
 
-Status: **ACTIVE — SCHEMA INSTALLED — EXECUTION PENDING**
+Status: **MACHINE_OWNED — DEEPSEEK V4 PRICE BOUND — EXECUTION BLOCKED ON AUTHORIZED CREDENTIAL**
 
-## Source of truth
+## Active goal and source of truth
 
-This file is the current task and verification handoff for the seven-lane extension of the bounded reconstructable-governance experiment.
+- Goal ID: `SV-GOVAI-DEEPSEEK-002`
+- Originating session goal: extend the bounded reconstruction test with Lane 6 **DeepSeek** and Lane 7 **DeepSeek/StegVerse**, then use the matched pair in the Governed AI economics comparison.
+- Repository / branch: `GCAT-BCAT-Engine/workflows@main`
+- Canonical experiment: `experiments/sv-cost-program/seven-lane-results/`
+- Canonical handoff: this file
+- Parent product handoff: `experiments/sv-cost-program/governed-ai-premium/SV_GOVERNED_AI_PREMIUM_MIRROR_HANDOFF.md`
+- Historical immutable evidence: `experiments/sv-cost-program/five-lane-results/results/five_lane_results.json`
 
-Canonical repository:
-
-```text
-GCAT-BCAT-Engine/workflows
-```
-
-Canonical experiment:
-
-```text
-experiments/sv-cost-program/seven-lane-results/
-```
-
-Historical five-lane evidence remains immutable at:
-
-```text
-experiments/sv-cost-program/five-lane-results/results/five_lane_results.json
-```
-
-## Goal
-
-Extend the existing five-lane testing schema with two new lanes while preserving the exact task contract and admissibility comparison unit:
-
-- Lane 6: **DeepSeek raw**
-- Lane 7: **DeepSeek/StegVerse governed**
-
-The models of interest for the new work are therefore **DeepSeek** and **DeepSeek/StegVerse**.
+Live Git state, workflow jobs/logs/artifacts, provider receipts, and committed results override chat claims.
 
 ## Seven lanes
 
@@ -45,57 +26,163 @@ The models of interest for the new work are therefore **DeepSeek** and **DeepSee
 | 6 | `deepseek-raw` | DeepSeek | No |
 | 7 | `deepseek-governed` | DeepSeek/StegVerse | Yes |
 
-## Installed files
+## Authoritative files
 
 ```text
 experiments/sv-cost-program/seven-lane-results/task.json
+experiments/sv-cost-program/seven-lane-results/deepseek-price-card.json
 experiments/sv-cost-program/seven-lane-results/run.py
-experiments/sv-cost-program/seven-lane-results/SV_COST_SEVEN_LANE_MIRROR_HANDOFF.md
+experiments/sv-cost-program/seven-lane-results/run_deepseek_pair.py
+experiments/sv-cost-program/seven-lane-results/validate_schema.py
+.github/workflows/sv-cost-seven-lane-schema.yml
+.github/workflows/sv-cost-deepseek-pair-continuation.yml
 ```
 
-## Execution contract
+## Model and price correction
 
-The test reuses task `SV-RECON-001`, operation class `governed_state_reconstruction`, and comparison unit `successful equivalent admissible outcome`.
+The earlier default `deepseek-chat` alias is not the canonical model for new execution. The official DeepSeek documentation states that `deepseek-chat` / `deepseek-reasoner` were deprecated after `2026-07-24T15:59:00Z` and current V4 execution uses `deepseek-v4-flash` or `deepseek-v4-pro`.
 
-The DeepSeek runner uses the OpenAI-compatible DeepSeek chat-completions interface and defaults to:
+This experiment is now bound to:
 
 ```text
-DEEPSEEK_API_BASE=https://api.deepseek.com
-DEEPSEEK_SEVEN_LANE_MODEL=deepseek-chat
+model: deepseek-v4-flash
+base URL: https://api.deepseek.com
+price card: deepseek-price-card.json
+observed: 2026-08-07
+cache-hit input: $0.0028 / 1M tokens
+cache-miss input: $0.14 / 1M tokens
+output: $0.28 / 1M tokens
+cost rule: cache-miss unless provider usage proves cache-hit tokens separately
 ```
 
-Required provider credential for lanes 6 and 7:
+`task.json` schema `2.1.0` binds this versioned price evidence. Future pricing changes require a newer versioned card before a new cost claim.
+
+## Machine-owned execution claim
 
 ```text
-DEEPSEEK_API_KEY
+task_id: SV-GOVAI-DEEPSEEK-PAIR
+claimant: github-actions:SV Cost DeepSeek Pair Continuation
+role: implementation + validation
+state: MACHINE_OWNED / BLOCKED
+surfaces:
+  - task.json
+  - deepseek-price-card.json
+  - run_deepseek_pair.py
+  - results/deepseek_pair_results.json
+  - .github/workflows/sv-cost-deepseek-pair-continuation.yml
+claim_created: 2026-08-07T22:07:00Z
+claim_expires: 2026-08-15T00:00:00Z
+release_condition: both DeepSeek raw and DeepSeek/StegVerse reach the required normalized outcome with retained provider receipts and price-card binding
+collision_boundary: do not rewrite the historical five-lane result or OpenAI/Anthropic evidence
 ```
 
-DeepSeek pricing is deliberately not fabricated or frozen in the schema. At execution, a versioned provider rate source must populate:
+Durable claim registry:
 
 ```text
-DEEPSEEK_INPUT_USD_PER_MILLION
-DEEPSEEK_OUTPUT_USD_PER_MILLION
+experiments/sv-cost-program/governed-ai-premium/task-claims-2026-08-07.json
 ```
 
-If the model succeeds but rates are absent, admissibility evidence may complete while cost publication remains fail-closed with `ADMISSIBILITY_COMPLETE_COST_PUBLICATION_BLOCKED`.
+## Automation installed and activated
 
-## Admission boundary
-
-A seven-lane publication is admitted only when the generated canonical result states:
+Workflow:
 
 ```text
-all_seven_successful_equivalent_admissible = true
-all_seven_cost_evidence_complete = true
-publication_status = RESULTS_READY_FOR_BOUNDED_SEVEN_LANE_PUBLICATION
+.github/workflows/sv-cost-deepseek-pair-continuation.yml
 ```
 
-No historical five-lane value may be rewritten to make the seven-lane run pass.
+Triggers:
+
+```text
+push on seven-lane files
+daily schedule: 06:15 UTC
+workflow_dispatch
+```
+
+Machine behavior:
+
+1. validates Python and seven-lane schema;
+2. validates the versioned DeepSeek price card;
+3. executes only DeepSeek lanes 6 and 7 when `DEEPSEEK_API_KEY` is available;
+4. emits `BLOCKED` when the authorized credential is absent;
+5. emits `RETRY` for transient HTTP/network failure;
+6. emits `FAILED` for non-equivalent/non-admissible output;
+7. emits `COMPLETE` only when both lanes match the canonical required normalized output;
+8. uploads an immutable workflow artifact on every run;
+9. commits terminal provider evidence when state is `COMPLETE` or `FAILED`.
+
+## First hosted machine observation
+
+Workflow run:
+
+```text
+run: 31222916921
+job: 93011124505
+head: 71e4ca8bdf8d0b35d31fa82c85b9663c2c605d5f
+workflow conclusion: success
+machine state: BLOCKED
+```
+
+Every job step through schema validation, machine execution/blocker emission, result validation, and artifact upload passed. Terminal-result commit was correctly skipped because `BLOCKED` is not a terminal provider result.
+
+Immutable artifact:
+
+```text
+artifact id: 9011025214
+name: sv-cost-deepseek-pair-31222916921
+digest: sha256:a59551c2364596afb34c5d2908cfb4c36ead66b97b8db40a5aa018da48ae4108
+```
+
+Artifact result:
+
+```text
+state: BLOCKED
+raw.blocker: DEEPSEEK_API_KEY_MISSING
+governed.blocker: DEEPSEEK_API_KEY_MISSING
+price_card_hash: sha256:8f39bbbdaaaefacca468d488916e5aea1bb2db98ef14f73a746eaed96a9ee78b
+```
+
+This is the machine-observable release condition. No chat session needs to poll manually: the daily workflow will retry the capability gate and execute the pair when the authorized secret becomes present.
+
+## Execution and admission contract
+
+The comparison retains:
+
+```text
+task_id: SV-RECON-001
+operation_class: governed_state_reconstruction
+comparison_unit: successful equivalent admissible outcome
+same initial state
+same policy
+same event order
+same normalized required output
+same DeepSeek model for raw and governed lanes
+```
+
+A DeepSeek pair is admitted only when:
+
+```text
+raw.state == COMPLETE
+governed.state == COMPLETE
+raw.actual_output_hash == raw.required_output_hash
+governed.actual_output_hash == governed.required_output_hash
+provider response hashes retained
+usage/cost evidence bound to the versioned price card
+```
+
+The canonical full seven-lane publication remains more restrictive: all seven lanes and all required cost evidence must pass before a seven-lane publication claim is made.
+
+## Exact remaining tasks
+
+1. `MACHINE_OWNED` — `SV-GOVAI-DEEPSEEK-PAIR`: wait for the machine-observable condition `DEEPSEEK_API_KEY` present in the authorized GitHub Actions environment; the scheduled workflow then executes lanes 6 and 7 automatically.
+2. `BLOCKED` — `SV-GOVAI-DEEPSEEK-INTEGRATE`: after `results/deepseek_pair_results.json` is `COMPLETE`, feed the pair into `experiments/sv-cost-program/governed-ai-premium/` without changing the comparison contract.
+3. `BLOCKED` — canonical full seven-lane run: if a publication candidate needs all seven fresh lanes, execute `run.py` only with authorized OpenAI, Anthropic, and DeepSeek credentials and retain all raw receipts.
+4. `BLOCKED` — propagation: no Publisher, Site, admissibility-wiki, or stegguardian-wiki mutation until the Governed AI publication gate is explicitly admitted and each destination handoff is re-read immediately before mutation.
 
 ## Claim boundary
 
 This experiment measures one bounded deterministic reconstruction operation. It does not establish fresh-inference equivalence, universal provider quality, universal provider economics, company ROI, enterprise-wide savings, geopolitical superiority, or a general claim that one model is better than another.
 
-The central new comparison is narrower:
+The central DeepSeek comparison is only:
 
 ```text
 DeepSeek raw
@@ -103,35 +190,25 @@ vs
 DeepSeek + StegVerse execution governance
 ```
 
-under the same deterministic contract, identity, state, policy, events, validation, retry ceiling, and normalized admissible outcome used by the existing schema.
-
-## Exact next tasks
-
-1. Install an authorized execution route with the required provider secrets.
-2. Resolve and record a versioned DeepSeek price source before any cost claim.
-3. Execute all seven lanes or an explicitly labeled DeepSeek-only preflight followed by the canonical seven-lane run.
-4. Retain raw provider responses, usage, latency, failures, normalized hashes, and generated result/report artifacts.
-5. Validate that lanes 6 and 7 produce the same required normalized outcome hash as the established task contract.
-6. Only after canonical execution passes, update the root `SV_COST_MIRROR_HANDOFF.md` and inspect destination `*_MIRROR_HANDOFF.md` files before any Publisher, Site, admissibility-wiki, or stegguardian-wiki propagation.
-
-## Collision boundary
-
-Do not modify or supersede the historical five-lane result artifact. The seven-lane experiment is a new result lineage. Do not broaden its bounded claims into favorable ROI or universal model-quality claims. Issue `#13` remains the only canonical continuation for a future favorable general ROI revision.
+under the same deterministic contract.
 
 ## Completion state
 
 ```text
 schema_definition: COMPLETE
-lane_6_deepseek_raw: INSTALLED_NOT_EXECUTED
-lane_7_deepseek_stegverse: INSTALLED_NOT_EXECUTED
-runner: COMPLETE
-provider_credential_route: PENDING
-versioned_deepseek_price_source: PENDING
-canonical_execution: PENDING
-result_validation: PENDING
+schema_validation: PASS
+lane_6_deepseek_raw: IMPLEMENTED_BLOCKED_ON_CREDENTIAL
+lane_7_deepseek_stegverse: IMPLEMENTED_BLOCKED_ON_CREDENTIAL
+v4_model_binding: COMPLETE
+versioned_deepseek_price_source: COMPLETE
+machine_continuation: ACTIVE
+first_machine_observation: BLOCKED_WITH_ARTIFACT
+provider_execution: PENDING_AUTHORIZED_CREDENTIAL
+result_validation: PENDING_PROVIDER_EXECUTION
+product_economics_integration: BLOCKED_ON_PAIR_COMPLETE
 publication_propagation: NOT_ADMITTED
 ```
 
 ## Session consolidation
 
-The new lane definitions, execution contract, claim boundary, collision boundary, installed files, remaining prerequisites, and exact next tasks are durably transferred here. Repository state owns continuation.
+The DeepSeek lane requirement, model migration, price evidence, execution runner, machine-owned retry path, exact blocker, collision boundary, artifact evidence, and downstream integration condition are all durably transferred. This chat is not required to preserve or resume the DeepSeek pair task.
