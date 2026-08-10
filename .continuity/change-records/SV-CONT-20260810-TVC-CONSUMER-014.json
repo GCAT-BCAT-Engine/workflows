@@ -1,0 +1,37 @@
+{
+  "actor": {
+    "class": "chatgpt",
+    "instance": "GPT-5.6 Sol",
+    "session_ref": "stegfin-live-entry-tvc-provider-consumer-2026-08-10"
+  },
+  "base_commit": "5ca6f8708e91c5c66567a81ae088450775959c21",
+  "change_id": "SV-CONT-20260810-TVC-CONSUMER-014",
+  "changed_paths": [
+    {"change_type":"modified","hash":"42c00d5d3083e2fa08f2be8a62f6e36ec4a87fa1","hash_algorithm":"git-blob-sha1","path":".continuity/config.json"},
+    {"change_type":"modified","hash":"94ded1db1637f01fec1748b20a29e356b6310acb","hash_algorithm":"git-blob-sha1","path":".handoff/current.json"},
+    {"change_type":"added","hash":"9a472dab3e9d9c7008cf0b4ef16b7e60ec46c10a","hash_algorithm":"git-blob-sha1","path":"contracts/tvc-provider-capability-v1.json"},
+    {"change_type":"added","hash":"81ead10d0bf7eee6da43036313f50fa5890633fe","hash_algorithm":"git-blob-sha1","path":"docs/TVC_PROVIDER_CAPABILITY_CONSUMER_MIRROR_HANDOFF.md"},
+    {"change_type":"added","hash":"79c4999bfae41318fd439c51b063558696e04c76","hash_algorithm":"git-blob-sha1","path":"tasks/GCAT-TVC-PROVIDER-CAPABILITY-CONSUMER-001.json"},
+    {"change_type":"added","hash":"8f4d792c07201f037624082410625524f92bea8d","hash_algorithm":"git-blob-sha1","path":"tests/test_tvc_provider_capability_consumer.py"},
+    {"change_type":"added","hash":"922ed8baccbd25ec0512b189452e922d8762e01b","hash_algorithm":"git-blob-sha1","path":"tools/tvc_provider_capability_consumer.py"}
+  ],
+  "claims": [
+    {"claim":"StegVerse-Labs/TVC is the sole canonical provider-capability policy and route authority","state":"PINNED"},
+    {"claim":"GCAT-BCAT-Engine/workflows consumes the pinned TVC resolver without a local policy fallback","state":"IMPLEMENTED"},
+    {"claim":"current credential semantics are TC/TVC and production GitHub-token dependency is false","state":"PRESERVED"},
+    {"claim":"historical SV-cost local provider resolver remains replay evidence but is superseded as canonical authority","state":"SUPERSEDED_AS_CANONICAL_AUTHORITY"}
+  ],
+  "created_at": "2026-08-10T23:23:00Z",
+  "governing_handoff": {
+    "hash": "9a6ebc5e5331fe79c2aa7551279ddb285868cf69",
+    "hash_algorithm": "git-blob-sha1",
+    "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+  },
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "schema": "stegverse.session.change_record.v1",
+  "unresolved_tasks": [
+    "merge validated TVC consumer integration and release GCAT-TVC-PROVIDER-CAPABILITY-CONSUMER-001 claim",
+    "release StegVerse-Labs/TVC:TVC-PROVIDER-CAPABILITY-RESOLUTION-001 after consumer merge"
+  ],
+  "record_hash": "9f212f08efa70b0f9410e51fbd4b688e40e4df721f1efc09c33d7d0b75fb706f"
+}
