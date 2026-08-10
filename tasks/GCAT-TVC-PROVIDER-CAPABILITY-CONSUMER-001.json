@@ -1,0 +1,37 @@
+{
+  "schema_version": "stegverse.work-claim.v1",
+  "task_id": "GCAT-TVC-PROVIDER-CAPABILITY-CONSUMER-001",
+  "originating_goal": "Replace workflows-local canonical provider/model capability policy with a pinned consumer of StegVerse-Labs/TVC task TVC-PROVIDER-CAPABILITY-RESOLUTION-001.",
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "branch": "integration/tvc-provider-capability-consumer-20260810",
+  "state": "CLAIMED_FOR_INTEGRATION",
+  "claimant": "TVC provider capability consumer integration lane",
+  "role": "pinned consumer and deterministic equivalence validation",
+  "claim_created_at": "2026-08-10T23:20:00Z",
+  "claim_expires_at": "2026-08-11T23:20:00Z",
+  "claim_release_condition": "Pinned TVC contract metadata, local-only consumer, policy-drift fail-closed tests, and handoff merge; TVC remains sole canonical provider-capability policy authority.",
+  "source_authority": "StegVerse-Labs/TVC:TVC-PROVIDER-CAPABILITY-RESOLUTION-001",
+  "surfaces": [
+    "contracts/tvc-provider-capability-v1.json",
+    "tools/tvc_provider_capability_consumer.py",
+    "tests/test_tvc_provider_capability_consumer.py",
+    "docs/TVC_PROVIDER_CAPABILITY_CONSUMER_MIRROR_HANDOFF.md",
+    "tasks/GCAT-TVC-PROVIDER-CAPABILITY-CONSUMER-001.json"
+  ],
+  "authority_contract": {
+    "provider_capability_policy_authority": "StegVerse-Labs/TVC",
+    "credential_authority": "TC/TVC",
+    "consumer_policy_authority": false,
+    "fallback_to_workflows_local_policy": false,
+    "github_token_required": false,
+    "route_grants_execution_authority": false
+  },
+  "collision_boundaries": [
+    "do not duplicate TVC canonical provider-capability policy",
+    "do not require network source checkout at runtime",
+    "do not pass provider credentials through the contract adapter",
+    "do not restore the experiment-local resolver as canonical authority",
+    "do not infer execution or admissibility from route selection"
+  ],
+  "next_task_after_release": "Release TVC-PROVIDER-CAPABILITY-RESOLUTION-001 implementation claim after this consumer pin is merged and then consume the canonical contract from StegFin/other bounded consumers."
+}
