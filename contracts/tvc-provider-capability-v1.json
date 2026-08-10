@@ -1,0 +1,18 @@
+{
+  "schema_version": "stegverse.consumer-contract-pin.v1",
+  "contract_id": "GCAT-TVC-PROVIDER-CAPABILITY-CONSUMER-001",
+  "source_repository": "StegVerse-Labs/TVC",
+  "source_commit": "1c5ed9f83405a8d76f4759810162f7def4959f33",
+  "source_task": "tasks/TVC-PROVIDER-CAPABILITY-RESOLUTION-001.json",
+  "resolver_path": "tvc_provider_capability_resolver.py",
+  "policy_path": "config/provider_capability_policy.json",
+  "policy_stable_sha256": "1f1f9deaa2355d118231647a14e87673137ef3ad5f25809af0444798e741e6ab",
+  "request_schema_path": "schemas/provider_capability_request.schema.json",
+  "receipt_schema_path": "schemas/provider_route_receipt.schema.json",
+  "route_authority": "StegVerse-Labs/TVC",
+  "credential_authority": "TC/TVC",
+  "github_token_required": false,
+  "consumer_policy_authority": false,
+  "fallback_to_local_policy_allowed": false,
+  "route_grants_execution_authority": false
+}
