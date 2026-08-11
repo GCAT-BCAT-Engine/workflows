@@ -2,12 +2,13 @@
 
 ## Authority and scope
 
-This scoped handoff is subordinate to `docs/WORKFLOWS_MIRROR_HANDOFF.md` and authoritative for `GCAT-TVC-PROVIDER-CAPABILITY-CONSUMER-001`. It is a new successor integration after the prior workflows session was archived; it does not reopen superseded historical task ownership.
+This scoped handoff is subordinate to `docs/WORKFLOWS_MIRROR_HANDOFF.md` and authoritative for `GCAT-TVC-PROVIDER-CAPABILITY-CONSUMER-001`.
 
 ```text
 goal_id: GCAT-TVC-PROVIDER-CAPABILITY-CONSUMER-001
 repository: GCAT-BCAT-Engine/workflows
-branch: integration/tvc-provider-capability-consumer-20260810
+branch: main
+claim state: COMPLETE_RELEASED
 canonical provider-capability authority: StegVerse-Labs/TVC
 canonical source task: TVC-PROVIDER-CAPABILITY-RESOLUTION-001
 credential authority: TC/TVC
@@ -37,26 +38,24 @@ There is no network source checkout and no workflows-local policy fallback. Miss
 
 `experiments/sv-cost-program/stream-governance/resolve_provider_routes.py` and `experiments/sv-cost-program/cost-model/provider-capability-policy.json` remain historical research/prototype evidence. They are **SUPERSEDED_AS_CANONICAL_PROVIDER_CAPABILITY_AUTHORITY** by the pinned TVC contract.
 
-Those experiment surfaces may still gather provider inventories or support historical replay, but any new governed provider-capability route decision must pass through `tools/tvc_provider_capability_consumer.py` and canonical TVC policy.
-
-## Validation
-
-Tests prove:
+## Validation and release evidence
 
 ```text
-pinned TVC policy hash is enforced
-TVC resolver rather than consumer policy selects the route
-policy drift fails closed
-consumer-local policy fallback is prohibited
-GitHub-token production dependency is false
-TC/TVC credential semantics are preserved
-route selection grants no execution authority
+pinned TVC policy hash enforced: PASS
+TVC resolver rather than consumer policy selects route: PASS
+policy drift fail-closed: PASS
+consumer-local policy fallback prohibited: PASS
+GitHub-token production dependency false: PASS
+TC/TVC credential semantics preserved: PASS
+route selection grants no execution authority: PASS
+continuity provenance: PASS
+PR: #14
+merge: d96ffcbd3b8d879ef8554e22777e73ecd6125996
+source TVC PR: StegVerse-Labs/TVC#18
+source TVC merge: 8f9067b8cc40e65147117dfe53b0b3dc3c8ba714
+claim state: COMPLETE_RELEASED
 ```
-
-## Claim release condition
-
-Merge the pinned contract, adapter, equivalence tests, task, and this handoff. Then mark this integration claim COMPLETE_RELEASED and allow TVC task `TVC-PROVIDER-CAPABILITY-RESOLUTION-001` to release its implementation claim.
 
 ## Continuation
 
-After release, StegFin may consume canonical `base.quote.0x` route receipts through TVC while provider capability material itself remains non-exportable and is delivered only through the separately authorized TC/TVC/vault inherited-FD boundary. User wallet signing and broadcast remain USER_ONLY.
+No integration claim remains. StegFin may consume canonical `base.quote.0x` route receipts through TVC only after fresh governed Inventory N exists, while provider capability material remains non-exportable and is delivered only through the separately authorized TC/TVC/vault inherited-FD boundary. User wallet signing and broadcast remain USER_ONLY.
