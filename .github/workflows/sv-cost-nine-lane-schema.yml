@@ -1,0 +1,22 @@
+name: SV Cost Nine-Lane Schema Validate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/sv-cost-program/nine-lane-results/**'
+      - '.github/workflows/sv-cost-nine-lane-schema.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile
+        run: python -m py_compile experiments/sv-cost-program/nine-lane-results/run.py experiments/sv-cost-program/nine-lane-results/run_candidate_outputs.py experiments/sv-cost-program/nine-lane-results/validate_schema.py
+      - name: Validate nine-lane credentialless contract
+        run: python experiments/sv-cost-program/nine-lane-results/validate_schema.py
