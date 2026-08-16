@@ -1,4 +1,4 @@
-name: SV Cost DeepSeek Pair Continuation
+name: SV Cost Seven-Lane Credentialless Candidate Proof
 
 on:
   push:
@@ -6,81 +6,95 @@ on:
     paths:
       - 'experiments/sv-cost-program/seven-lane-results/**'
       - '.github/workflows/sv-cost-deepseek-pair-continuation.yml'
-  schedule:
-    - cron: '15 6 * * *'
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: sv-cost-deepseek-pair-continuation
+  group: sv-cost-seven-lane-credentialless-candidate-proof
   cancel-in-progress: false
 
 jobs:
-  deepseek-pair:
+  validate-and-process:
     runs-on: ubuntu-latest
-    env:
-      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-      DEEPSEEK_API_BASE: https://api.deepseek.com
-      DEEPSEEK_SEVEN_LANE_MODEL: deepseek-v4-flash
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Validate seven-lane Python and schema
+      - name: Validate credentialless seven-lane contract
         run: |
           python -m py_compile \
             experiments/sv-cost-program/seven-lane-results/run.py \
+            experiments/sv-cost-program/seven-lane-results/run_candidate_outputs.py \
             experiments/sv-cost-program/seven-lane-results/run_deepseek_pair.py \
             experiments/sv-cost-program/seven-lane-results/validate_schema.py
           python experiments/sv-cost-program/seven-lane-results/validate_schema.py
-          python -m json.tool experiments/sv-cost-program/seven-lane-results/deepseek-price-card.json > /dev/null
-
-      - name: Execute DeepSeek pair or emit blocker
-        id: pair
-        run: |
-          python experiments/sv-cost-program/seven-lane-results/run_deepseek_pair.py | tee /tmp/deepseek-state.txt
-          state="$(tail -n 1 /tmp/deepseek-state.txt | tr -d '\r\n')"
-          echo "state=$state" >> "$GITHUB_OUTPUT"
-          echo "DeepSeek continuation state: $state" >> "$GITHUB_STEP_SUMMARY"
-
-      - name: Validate machine result
-        run: |
-          python -m json.tool experiments/sv-cost-program/seven-lane-results/results/deepseek_pair_results.json > /dev/null
           python - <<'PY'
-          import json, pathlib
-          p = pathlib.Path('experiments/sv-cost-program/seven-lane-results/results/deepseek_pair_results.json')
-          d = json.loads(p.read_text())
-          assert d['state'] in {'COMPLETE','BLOCKED','RETRY','FAILED'}
-          if d['state'] == 'COMPLETE':
-              assert d['raw']['admissible'] is True
-              assert d['governed']['admissible'] is True
-              assert d['raw']['actual_output_hash'] == d['raw']['required_output_hash']
-              assert d['governed']['actual_output_hash'] == d['governed']['required_output_hash']
+          from pathlib import Path
+          paths = [
+              Path('experiments/sv-cost-program/seven-lane-results/run.py'),
+              Path('experiments/sv-cost-program/seven-lane-results/run_candidate_outputs.py'),
+              Path('experiments/sv-cost-program/seven-lane-results/run_deepseek_pair.py'),
+              Path('.github/workflows/sv-cost-deepseek-pair-continuation.yml'),
+          ]
+          forbidden = ('OPENAI_API_KEY', 'ANTHROPIC_API_KEY', 'DEEPSEEK_API_KEY')
+          for path in paths:
+              text = path.read_text()
+              for marker in forbidden:
+                  assert marker not in text, f'{marker} forbidden in {path}'
+          print('NO_PROVIDER_API_KEY_IN_CANONICAL_SEVEN_LANE_PATH')
           PY
 
-      - name: Upload DeepSeek continuation evidence
+      - name: Process external candidates or emit bounded blocker
+        id: execute
+        shell: bash
+        run: |
+          set +e
+          python experiments/sv-cost-program/seven-lane-results/run.py | tee /tmp/seven-lane-state.txt
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          if [ "$code" -eq 0 ]; then
+            echo 'state=COMPLETE' >> "$GITHUB_OUTPUT"
+          elif [ "$code" -eq 3 ]; then
+            echo 'state=BLOCKED_EXTERNAL_CANDIDATES' >> "$GITHUB_OUTPUT"
+          else
+            echo 'state=FAILED' >> "$GITHUB_OUTPUT"
+          fi
+          exit 0
+
+      - name: Validate generated proof surface
+        run: |
+          python -m json.tool experiments/sv-cost-program/seven-lane-results/results/generation-2-output-boundary/seven_lane_generation_2_results.json > /dev/null
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('experiments/sv-cost-program/seven-lane-results/results/generation-2-output-boundary/seven_lane_generation_2_results.json')
+          d = json.loads(p.read_text())
+          assert d['credential_invariant'] == 'NO_PROVIDER_API_KEY_POSSESSED_OR_CONSUMED_BY_STEGVERSE_TEST_WORKLOAD'
+          assert d['generation'] == 'GENERATION_2_CREDENTIALLESS_OUTPUT_BOUNDARY'
+          assert any(row['lane_id'] == 'stegverse-only' for row in d['rows'])
+          if d['all_seven_present']:
+              assert len(d['rows']) == 7
+              for provider in ('openai', 'anthropic', 'deepseek'):
+                  raw = next(r for r in d['rows'] if r['lane_id'] == provider + '-raw')
+                  governed = next(r for r in d['rows'] if r['lane_id'] == provider + '-governed')
+                  assert raw['candidate_hash'] == governed['candidate_hash']
+                  assert governed['replay_match'] is True
+                  assert governed['reconstruction_match'] is True
+          PY
+
+      - name: Upload immutable Generation-2 evidence
         uses: actions/upload-artifact@v4
         with:
-          name: sv-cost-deepseek-pair-${{ github.run_id }}
-          path: |
-            experiments/sv-cost-program/seven-lane-results/results/deepseek_pair_results.json
-            experiments/sv-cost-program/seven-lane-results/results/raw-deepseek-pair/**
+          name: sv-cost-seven-lane-generation-2-${{ github.run_id }}
+          path: experiments/sv-cost-program/seven-lane-results/results/generation-2-output-boundary/
           if-no-files-found: error
 
-      - name: Persist terminal DeepSeek result
-        if: steps.pair.outputs.state == 'COMPLETE' || steps.pair.outputs.state == 'FAILED'
+      - name: Summarize release condition
         run: |
-          git config user.name 'stegverse-machine'
-          git config user.email 'actions@users.noreply.github.com'
-          git add experiments/sv-cost-program/seven-lane-results/results/deepseek_pair_results.json
-          git add -f experiments/sv-cost-program/seven-lane-results/results/raw-deepseek-pair || true
-          if git diff --cached --quiet; then
-            echo 'No terminal result change to commit.'
-          else
-            git commit -m 'Record terminal DeepSeek pair evidence [skip ci]'
-            git push origin HEAD:main
-          fi
+          echo "Generation-2 state: ${{ steps.execute.outputs.state }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "StegVerse provider credential possession: FALSE" >> "$GITHUB_STEP_SUMMARY"
+          echo "Completion requires candidate-inputs/openai.json, anthropic.json, and deepseek.json." >> "$GITHUB_STEP_SUMMARY"
