@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/sv-cost-external-candidate.v2.json",
+  "title": "StegVerse nine-lane external provider candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["provider", "model", "task_id", "candidate_output", "provider_api_key_transferred_to_stegverse"],
+  "properties": {
+    "provider": {"enum": ["openai", "anthropic", "deepseek", "kimi"]},
+    "model": {"type": "string", "minLength": 1},
+    "task_id": {"const": "SV-RECON-001"},
+    "provider_api_key_transferred_to_stegverse": {"const": false},
+    "provider_response_id": {"type": ["string", "null"]},
+    "provider_response_hash": {"type": ["string", "null"]},
+    "provider_latency_seconds": {"type": ["number", "null"], "minimum": 0},
+    "provider_usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "input_tokens": {"type": "integer", "minimum": 0},
+        "output_tokens": {"type": "integer", "minimum": 0},
+        "reported_cost_usd": {"type": "number", "minimum": 0}
+      }
+    },
+    "candidate_output": {
+      "type": "object",
+      "required": ["task_id", "final_state", "decisions", "applied_count", "denied_count"],
+      "properties": {
+        "task_id": {"const": "SV-RECON-001"},
+        "final_state": {"type": "object"},
+        "decisions": {"type": "array"},
+        "applied_count": {"type": "integer"},
+        "denied_count": {"type": "integer"},
+        "claim_boundary": {"type": "string"}
+      }
+    }
+  }
+}
