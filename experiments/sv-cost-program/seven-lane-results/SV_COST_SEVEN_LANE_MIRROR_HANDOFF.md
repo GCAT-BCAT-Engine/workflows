@@ -1,214 +1,244 @@
 # SV-COST Seven-Lane Mirror Handoff
 
-Status: **MACHINE_OWNED — DEEPSEEK V4 PRICE BOUND — EXECUTION BLOCKED ON AUTHORIZED CREDENTIAL**
+Status: **GENERATION_2 CREDENTIALLESS OUTPUT-BOUNDARY IMPLEMENTED — HOSTED VALIDATION ACTIVE — EXTERNAL CANDIDATES PENDING**
 
-## Active goal and source of truth
+## Source of truth
 
-- Goal ID: `SV-GOVAI-DEEPSEEK-002`
-- Originating session goal: extend the bounded reconstruction test with Lane 6 **DeepSeek** and Lane 7 **DeepSeek/StegVerse**, then use the matched pair in the Governed AI economics comparison.
-- Repository / branch: `GCAT-BCAT-Engine/workflows@main`
-- Canonical experiment: `experiments/sv-cost-program/seven-lane-results/`
-- Canonical handoff: this file
-- Parent product handoff: `experiments/sv-cost-program/governed-ai-premium/SV_GOVERNED_AI_PREMIUM_MIRROR_HANDOFF.md`
-- Historical immutable evidence: `experiments/sv-cost-program/five-lane-results/results/five_lane_results.json`
+```text
+repository: GCAT-BCAT-Engine/workflows
+branch: main
+experiment: experiments/sv-cost-program/seven-lane-results/
+experiment_id: SV-COST-SEVEN-LANE-RESULTS-001
+generation: GENERATION_2_CREDENTIALLESS_OUTPUT_BOUNDARY
+credential_invariant: NO_PROVIDER_API_KEY_POSSESSED_OR_CONSUMED_BY_STEGVERSE_TEST_WORKLOAD
+historical_generation_1: experiments/sv-cost-program/five-lane-results/results/five_lane_results.json
+```
 
-Live Git state, workflow jobs/logs/artifacts, provider receipts, and committed results override chat claims.
+Live Git state, workflow logs/artifacts, candidate receipts, and committed results override chat claims.
+
+## Governing architecture
+
+Generation 2 no longer executes OpenAI, Anthropic, or DeepSeek by consuming provider API keys inside the StegVerse experiment.
+
+The canonical relationship is:
+
+```text
+user / existing application / TV-TVC provider relationship
+  -> provider generation
+  -> external candidate output
+  -> StegVerse seven-lane ingestion boundary
+  -> raw observation + governed observation
+  -> governance receipt
+  -> replay receipt
+  -> reconstruction receipt
+```
+
+The same provider candidate is used for each raw/governed pair. Therefore the changed variable is StegVerse governance, not credential plumbing or a second provider generation.
+
+`raw` means **provider candidate observed without StegVerse admission**, not direct possession of provider credentials.
+
+## Production-artifact reference
+
+The test contract is explicitly bound to the production StegVerse portable/SDK architecture:
+
+```text
+StegVerse-Labs/StegCore
+  docs/STEGVERSE_MICRO_ECOSYSTEM_MIRROR_HANDOFF.md
+  runtime identity: stegverse:steggate:canonical:three-layer:v1
+
+StegVerse-org/StegVerse-SDK
+  docs/SDK_PORTABLE_PACKAGE_CONSOLE_MIRROR_HANDOFF.md
+
+portable deployment classes:
+  S  = Sovereign isolated deployment
+  NS = Node Sovereign profile; install/profile does not itself grant membership
+
+provider account required by portable unit: FALSE
+non-TV/TVC secret required: FALSE
+```
+
+This experiment is a cost-analysis reference for the SDK production-artifact proof path. It does not replace the canonical StegCore evaluator or SDK package authority.
 
 ## Seven lanes
 
-| Lane | Lane ID | Model interest | StegVerse governance |
-|---:|---|---|---|
-| 1 | `openai-raw` | OpenAI | No |
-| 2 | `openai-governed` | OpenAI/StegVerse | Yes |
-| 3 | `anthropic-raw` | Anthropic | No |
-| 4 | `anthropic-governed` | Anthropic/StegVerse | Yes |
-| 5 | `stegverse-only` | StegVerse deterministic reconstruction | Yes |
-| 6 | `deepseek-raw` | DeepSeek | No |
-| 7 | `deepseek-governed` | DeepSeek/StegVerse | Yes |
+| Lane | Lane ID | Candidate / operation | StegVerse governance | Provider credential inside StegVerse workload |
+|---:|---|---|---|---|
+| 1 | `openai-raw` | external OpenAI candidate | No | No |
+| 2 | `openai-governed` | same OpenAI candidate | Yes | No |
+| 3 | `anthropic-raw` | external Anthropic candidate | No | No |
+| 4 | `anthropic-governed` | same Anthropic candidate | Yes | No |
+| 5 | `stegverse-only` | deterministic reconstruction | Yes | None |
+| 6 | `deepseek-raw` | external DeepSeek candidate | No | No |
+| 7 | `deepseek-governed` | same DeepSeek candidate | Yes | No |
 
-## Authoritative files
+## Canonical files
 
 ```text
 experiments/sv-cost-program/seven-lane-results/task.json
-experiments/sv-cost-program/seven-lane-results/deepseek-price-card.json
+experiments/sv-cost-program/seven-lane-results/candidate-input.schema.json
 experiments/sv-cost-program/seven-lane-results/run.py
+experiments/sv-cost-program/seven-lane-results/run_candidate_outputs.py
 experiments/sv-cost-program/seven-lane-results/run_deepseek_pair.py
 experiments/sv-cost-program/seven-lane-results/validate_schema.py
+experiments/sv-cost-program/seven-lane-results/deepseek-price-card.json
 .github/workflows/sv-cost-seven-lane-schema.yml
 .github/workflows/sv-cost-deepseek-pair-continuation.yml
 ```
 
-## Model and price correction
+`run.py` is the canonical Generation-2 entrypoint. `run_deepseek_pair.py` is retained only as a compatibility entrypoint and now delegates to the same credentialless candidate runner. The prior direct-key DeepSeek implementation is retired from the canonical execution path.
 
-The earlier default `deepseek-chat` alias is not the canonical model for new execution. The official DeepSeek documentation states that `deepseek-chat` / `deepseek-reasoner` were deprecated after `2026-07-24T15:59:00Z` and current V4 execution uses `deepseek-v4-flash` or `deepseek-v4-pro`.
+## Candidate contract
 
-This experiment is now bound to:
-
-```text
-model: deepseek-v4-flash
-base URL: https://api.deepseek.com
-price card: deepseek-price-card.json
-observed: 2026-08-07
-cache-hit input: $0.0028 / 1M tokens
-cache-miss input: $0.14 / 1M tokens
-output: $0.28 / 1M tokens
-cost rule: cache-miss unless provider usage proves cache-hit tokens separately
-```
-
-`task.json` schema `2.1.0` binds this versioned price evidence. Future pricing changes require a newer versioned card before a new cost claim.
-
-## Machine-owned execution claim
+Generation 2 consumes:
 
 ```text
-task_id: SV-GOVAI-DEEPSEEK-PAIR
-claimant: github-actions:SV Cost DeepSeek Pair Continuation
-role: implementation + validation
-state: MACHINE_OWNED / BLOCKED
-surfaces:
-  - task.json
-  - deepseek-price-card.json
-  - run_deepseek_pair.py
-  - results/deepseek_pair_results.json
-  - .github/workflows/sv-cost-deepseek-pair-continuation.yml
-claim_created: 2026-08-07T22:07:00Z
-claim_expires: 2026-08-15T00:00:00Z
-release_condition: both DeepSeek raw and DeepSeek/StegVerse reach the required normalized outcome with retained provider receipts and price-card binding
-collision_boundary: do not rewrite the historical five-lane result or OpenAI/Anthropic evidence
+candidate-inputs/openai.json
+candidate-inputs/anthropic.json
+candidate-inputs/deepseek.json
 ```
 
-Durable claim registry:
+Each candidate must bind:
 
 ```text
-experiments/sv-cost-program/governed-ai-premium/task-claims-2026-08-07.json
+provider
+model
+task_id
+candidate_output
+provider_api_key_transferred_to_stegverse: false
 ```
 
-## Automation installed and activated
+Optional retained economic evidence includes provider token usage, reported provider cost, latency, response ID, and response hash.
 
-Workflow:
+Missing candidates fail closed as `PUBLICATION_BLOCKED`; they do not cause the experiment to seek a provider secret.
+
+## Proof surface
+
+For every governed external candidate, the runner emits:
+
+```text
+receipts/<provider>-governance.json
+receipts/<provider>-replay.json
+receipts/<provider>-reconstruction.json
+```
+
+The governed row binds:
+
+```text
+candidate_hash
+decision
+required_output_hash
+normalized_output_hash
+provider credential possession: false
+governance incremental compute cost
+governance incremental storage cost
+replay match
+reconstruction match
+```
+
+This permits a user/reviewer to inspect:
+
+1. what the provider candidate was;
+2. whether StegVerse admitted or denied it;
+3. whether the same candidate can be replayed deterministically;
+4. whether the governed state can be independently reconstructed;
+5. whether StegVerse ever possessed the provider API credential.
+
+## Economic isolation
+
+Generation 1 remains immutable historical evidence and used provider credentials directly in the provider execution workflow.
+
+Generation 2 intentionally separates:
+
+```text
+provider generation cost
++ StegVerse governance incremental cost
++ receipt storage cost
++ replay/reconstruction cost
+```
+
+The raw/governed pair shares the exact same provider candidate, so no second provider generation is needed merely to add governance. This directly measures the incremental economic cost of placing StegVerse between externally generated output and consequential acceptance/display/action.
+
+Provider price values remain declared-rate evidence unless independently invoice reconciled.
+
+## Automation
+
+### Schema validation
+
+```text
+.github/workflows/sv-cost-seven-lane-schema.yml
+```
+
+Validates schema 3.0.0, seven lanes, production repo references, S/NS boundary, proof requirements, and the absence of canonical provider-key/API-call markers.
+
+### Candidate proof continuation
+
+Historical filename retained for compatibility:
 
 ```text
 .github/workflows/sv-cost-deepseek-pair-continuation.yml
 ```
 
-Triggers:
+Current workflow name:
 
 ```text
-push on seven-lane files
-daily schedule: 06:15 UTC
-workflow_dispatch
+SV Cost Seven-Lane Credentialless Candidate Proof
 ```
 
-Machine behavior:
+It has no provider secret injection and performs:
 
-1. validates Python and seven-lane schema;
-2. validates the versioned DeepSeek price card;
-3. executes only DeepSeek lanes 6 and 7 when `DEEPSEEK_API_KEY` is available;
-4. emits `BLOCKED` when the authorized credential is absent;
-5. emits `RETRY` for transient HTTP/network failure;
-6. emits `FAILED` for non-equivalent/non-admissible output;
-7. emits `COMPLETE` only when both lanes match the canonical required normalized output;
-8. uploads an immutable workflow artifact on every run;
-9. commits terminal provider evidence when state is `COMPLETE` or `FAILED`.
+1. Python/schema validation;
+2. direct-provider-key marker rejection;
+3. candidate processing or bounded missing-candidate blocker;
+4. Generation-2 result validation;
+5. immutable workflow artifact upload.
 
-## First hosted machine observation
-
-Workflow run:
-
-```text
-run: 31222916921
-job: 93011124505
-head: 71e4ca8bdf8d0b35d31fa82c85b9663c2c605d5f
-workflow conclusion: success
-machine state: BLOCKED
-```
-
-Every job step through schema validation, machine execution/blocker emission, result validation, and artifact upload passed. Terminal-result commit was correctly skipped because `BLOCKED` is not a terminal provider result.
-
-Immutable artifact:
-
-```text
-artifact id: 9011025214
-name: sv-cost-deepseek-pair-31222916921
-digest: sha256:a59551c2364596afb34c5d2908cfb4c36ead66b97b8db40a5aa018da48ae4108
-```
-
-Artifact result:
-
-```text
-state: BLOCKED
-raw.blocker: DEEPSEEK_API_KEY_MISSING
-governed.blocker: DEEPSEEK_API_KEY_MISSING
-price_card_hash: sha256:8f39bbbdaaaefacca468d488916e5aea1bb2db98ef14f73a746eaed96a9ee78b
-```
-
-This is the machine-observable release condition. No chat session needs to poll manually: the daily workflow will retry the capability gate and execute the pair when the authorized secret becomes present.
-
-## Execution and admission contract
-
-The comparison retains:
-
-```text
-task_id: SV-RECON-001
-operation_class: governed_state_reconstruction
-comparison_unit: successful equivalent admissible outcome
-same initial state
-same policy
-same event order
-same normalized required output
-same DeepSeek model for raw and governed lanes
-```
-
-A DeepSeek pair is admitted only when:
-
-```text
-raw.state == COMPLETE
-governed.state == COMPLETE
-raw.actual_output_hash == raw.required_output_hash
-governed.actual_output_hash == governed.required_output_hash
-provider response hashes retained
-usage/cost evidence bound to the versioned price card
-```
-
-The canonical full seven-lane publication remains more restrictive: all seven lanes and all required cost evidence must pass before a seven-lane publication claim is made.
-
-## Exact remaining tasks
-
-1. `MACHINE_OWNED` — `SV-GOVAI-DEEPSEEK-PAIR`: wait for the machine-observable condition `DEEPSEEK_API_KEY` present in the authorized GitHub Actions environment; the scheduled workflow then executes lanes 6 and 7 automatically.
-2. `BLOCKED` — `SV-GOVAI-DEEPSEEK-INTEGRATE`: after `results/deepseek_pair_results.json` is `COMPLETE`, feed the pair into `experiments/sv-cost-program/governed-ai-premium/` without changing the comparison contract.
-3. `BLOCKED` — canonical full seven-lane run: if a publication candidate needs all seven fresh lanes, execute `run.py` only with authorized OpenAI, Anthropic, and DeepSeek credentials and retain all raw receipts.
-4. `BLOCKED` — propagation: no Publisher, Site, admissibility-wiki, or stegguardian-wiki mutation until the Governed AI publication gate is explicitly admitted and each destination handoff is re-read immediately before mutation.
-
-## Claim boundary
-
-This experiment measures one bounded deterministic reconstruction operation. It does not establish fresh-inference equivalence, universal provider quality, universal provider economics, company ROI, enterprise-wide savings, geopolitical superiority, or a general claim that one model is better than another.
-
-The central DeepSeek comparison is only:
-
-```text
-DeepSeek raw
-vs
-DeepSeek + StegVerse execution governance
-```
-
-under the same deterministic contract.
+It does not poll for `DEEPSEEK_API_KEY` and does not invoke provider APIs.
 
 ## Completion state
 
 ```text
-schema_definition: COMPLETE
-schema_validation: PASS
-lane_6_deepseek_raw: IMPLEMENTED_BLOCKED_ON_CREDENTIAL
-lane_7_deepseek_stegverse: IMPLEMENTED_BLOCKED_ON_CREDENTIAL
-v4_model_binding: COMPLETE
-versioned_deepseek_price_source: COMPLETE
-machine_continuation: ACTIVE
-first_machine_observation: BLOCKED_WITH_ARTIFACT
-provider_execution: PENDING_AUTHORIZED_CREDENTIAL
-result_validation: PENDING_PROVIDER_EXECUTION
-product_economics_integration: BLOCKED_ON_PAIR_COMPLETE
-publication_propagation: NOT_ADMITTED
+generation_1_five_lane_evidence: COMPLETE_IMMUTABLE
+seven_lane_schema_3_0_0: COMPLETE
+credentialless_candidate_contract: COMPLETE
+canonical_direct_key_path_removed: COMPLETE
+same_candidate_raw_governed_invariant: COMPLETE
+production_stegcore_reference: COMPLETE
+production_sdk_reference: COMPLETE
+S_NS_reference_boundary: COMPLETE
+governance_receipt_generation: IMPLEMENTED
+replay_receipt_generation: IMPLEMENTED
+reconstruction_receipt_generation: IMPLEMENTED
+credential_nonpossession_receipt: IMPLEMENTED
+cost_isolation: IMPLEMENTED
+hosted_schema_validation: ACTIVE
+hosted_candidate_proof: ACTIVE
+openai_generation_2_candidate: PENDING_EXTERNAL_CANDIDATE
+anthropic_generation_2_candidate: PENDING_EXTERNAL_CANDIDATE
+deepseek_generation_2_candidate: PENDING_EXTERNAL_CANDIDATE
+full_generation_2_result: BLOCKED_ON_THREE_EXTERNAL_CANDIDATES
+seven_lane_publication: NOT_ADMITTED
 ```
 
-## Session consolidation
+## Next executable tasks
 
-The DeepSeek lane requirement, model migration, price evidence, execution runner, machine-owned retry path, exact blocker, collision boundary, artifact evidence, and downstream integration condition are all durably transferred. This chat is not required to preserve or resume the DeepSeek pair task.
+1. Supply production-equivalent OpenAI, Anthropic, and DeepSeek candidate artifacts through the candidate schema **without transferring provider API keys to StegVerse**.
+2. Execute one full Generation-2 seven-lane run and retain the immutable candidate + governance/replay/reconstruction evidence.
+3. Compare Generation-2 OpenAI/Anthropic measurements to immutable Generation-1 direct-key historical results as a separate architecture-overhead observation; do not merge the two evidence classes.
+4. Feed the admitted Generation-2 result into `experiments/sv-cost-program/governed-ai-premium/` only after all seven lanes and proof requirements pass.
+5. Use this same candidate/proof contract as the SDK-facing production-artifact test reference so S/NS users can reproduce the boundary behavior with production StegVerse artifacts.
+6. Before any publication/release propagation, re-read destination handoffs for `GCAT-BCAT-Engine/Publisher`, `StegVerse-Labs/Site`, `admissibility-wiki`, and `stegguardian-wiki`.
+
+## Claim boundary
+
+This experiment measures one bounded deterministic reconstruction operation and the incremental cost/evidence behavior of credentialless StegVerse output-boundary governance. It does not establish fresh-inference equivalence, universal provider quality, universal provider economics, company ROI, universal savings, or Node Sovereign membership.
+
+## Current claim
+
+```yaml
+active_goal: SV-COST-SEVEN-LANE-GEN2-003
+state: IMPLEMENTED_BLOCKED_ON_EXTERNAL_CANDIDATES
+credential_authority_inside_stegverse_workload: NONE
+protected_credential_authority: TV/TVC_OR_USER_EXISTING_PROVIDER_RELATIONSHIP
+historical_five_lane_result_mutable: false
+publication_admitted: false
+```
