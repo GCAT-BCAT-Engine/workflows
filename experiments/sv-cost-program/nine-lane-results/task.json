@@ -1,0 +1,102 @@
+{
+  "schema_version": "4.0.0",
+  "experiment_id": "SV-COST-NINE-LANE-RESULTS-001",
+  "generation": "GENERATION_2_CREDENTIALLESS_OUTPUT_BOUNDARY",
+  "supersedes_for_new_runs": "SV-COST-SEVEN-LANE-RESULTS-001",
+  "preserves_historical_results": [
+    "experiments/sv-cost-program/five-lane-results/results/five_lane_results.json",
+    "experiments/sv-cost-program/seven-lane-results/"
+  ],
+  "task_id": "SV-RECON-001",
+  "operation_class": "governed_state_reconstruction",
+  "comparison_unit": "successful equivalent admissible outcome",
+  "credential_invariant": "NO_PROVIDER_API_KEY_POSSESSED_OR_CONSUMED_BY_STEGVERSE_TEST_WORKLOAD",
+  "candidate_source_contract": {
+    "mode": "EXTERNAL_PROVIDER_CANDIDATE_OUTPUT",
+    "provider_relationship_owner": "USER_OR_EXISTING_APPLICATION_OR_TV_TVC",
+    "provider_api_key_transferred_to_stegverse": false,
+    "same_candidate_used_for_raw_and_governed_pair": true,
+    "required_candidate_files": [
+      "candidate-inputs/openai.json",
+      "candidate-inputs/anthropic.json",
+      "candidate-inputs/deepseek.json",
+      "candidate-inputs/kimi.json"
+    ]
+  },
+  "production_artifact_reference": {
+    "stegcore_repository": "StegVerse-Labs/StegCore",
+    "stegcore_runtime_identity": "stegverse:steggate:canonical:three-layer:v1",
+    "portable_handoff": "docs/STEGVERSE_MICRO_ECOSYSTEM_MIRROR_HANDOFF.md",
+    "sdk_repository": "StegVerse-org/StegVerse-SDK",
+    "sdk_output_boundary_handoff": "docs/SDK_OUTPUT_BOUNDARY_PROOF_MIRROR_HANDOFF.md",
+    "deployment_classes": ["S", "NS"],
+    "provider_account_required_by_portable_unit": false,
+    "non_tv_tvc_secret_required": false
+  },
+  "lane_schema": [
+    {"lane": 1, "lane_id": "openai-raw", "model_interest": "OpenAI", "stegverse_governed": false, "credential_mode": "EXTERNAL"},
+    {"lane": 2, "lane_id": "openai-governed", "model_interest": "OpenAI/StegVerse", "stegverse_governed": true, "credential_mode": "EXTERNAL"},
+    {"lane": 3, "lane_id": "anthropic-raw", "model_interest": "Anthropic", "stegverse_governed": false, "credential_mode": "EXTERNAL"},
+    {"lane": 4, "lane_id": "anthropic-governed", "model_interest": "Anthropic/StegVerse", "stegverse_governed": true, "credential_mode": "EXTERNAL"},
+    {"lane": 5, "lane_id": "stegverse-only", "model_interest": "StegVerse deterministic reconstruction", "stegverse_governed": true, "credential_mode": "NONE"},
+    {"lane": 6, "lane_id": "deepseek-raw", "model_interest": "DeepSeek", "stegverse_governed": false, "credential_mode": "EXTERNAL"},
+    {"lane": 7, "lane_id": "deepseek-governed", "model_interest": "DeepSeek/StegVerse", "stegverse_governed": true, "credential_mode": "EXTERNAL"},
+    {"lane": 8, "lane_id": "kimi-raw", "model_interest": "Kimi (Moonshot AI)", "stegverse_governed": false, "credential_mode": "EXTERNAL"},
+    {"lane": 9, "lane_id": "kimi-governed", "model_interest": "Kimi (Moonshot AI)/StegVerse", "stegverse_governed": true, "credential_mode": "EXTERNAL"}
+  ],
+  "initial_state": {"balance": 100, "risk_score": 1, "standing": "active"},
+  "policy": {"minimum_balance": 0, "maximum_risk_score": 5, "standing_required_for_debit": "active"},
+  "events": [
+    {"event_id": "E01", "operation": "credit", "amount": 25},
+    {"event_id": "E02", "operation": "debit", "amount": 40},
+    {"event_id": "E03", "operation": "risk_add", "amount": 2},
+    {"event_id": "E04", "operation": "debit", "amount": 100},
+    {"event_id": "E05", "operation": "risk_add", "amount": 3},
+    {"event_id": "E06", "operation": "debit", "amount": 10}
+  ],
+  "decision_rules": [
+    "Process events in listed order.",
+    "A credit is ALLOW and increases balance.",
+    "A debit is ALLOW only when standing is active and resulting balance is not below minimum_balance; otherwise DENY and do not mutate state.",
+    "A risk_add is ALLOW only when resulting risk_score is not above maximum_risk_score; otherwise DENY and do not mutate state.",
+    "Denied events never mutate state.",
+    "Return only the required JSON object."
+  ],
+  "required_output": {
+    "task_id": "SV-RECON-001",
+    "final_state": {"balance": 75, "risk_score": 3, "standing": "active"},
+    "decisions": [
+      {"event_id": "E01", "status": "ALLOW", "reason": "CREDIT_APPLIED"},
+      {"event_id": "E02", "status": "ALLOW", "reason": "DEBIT_WITHIN_BOUNDARY"},
+      {"event_id": "E03", "status": "ALLOW", "reason": "RISK_WITHIN_BOUNDARY"},
+      {"event_id": "E04", "status": "DENY", "reason": "MINIMUM_BALANCE_VIOLATION"},
+      {"event_id": "E05", "status": "DENY", "reason": "MAXIMUM_RISK_VIOLATION"},
+      {"event_id": "E06", "status": "ALLOW", "reason": "DEBIT_WITHIN_BOUNDARY"}
+    ],
+    "applied_count": 4,
+    "denied_count": 2,
+    "claim_boundary": "DETERMINISTIC_RECONSTRUCTION_ONLY"
+  },
+  "price_card": {
+    "id": "SV-COST-NINE-LANE-DECLARED-RATES",
+    "status": "VERSIONED_DECLARED_RATE_NOT_INVOICE_RECONCILED",
+    "openai_input_usd_per_million": 5.0,
+    "openai_output_usd_per_million": 30.0,
+    "anthropic_input_usd_per_million": 3.0,
+    "anthropic_output_usd_per_million": 15.0,
+    "deepseek_input_usd_per_million": 0.14,
+    "deepseek_output_usd_per_million": 0.28,
+    "kimi_rate_policy": "USE_CANDIDATE_REPORTED_COST_UNLESS_A_VERSIONED_OFFICIAL_RATE_CARD_IS_BOUND",
+    "local_linux_runner_usd_per_minute": 0.008,
+    "local_storage_usd_per_gb_month": 0.008
+  },
+  "proof_requirements": {
+    "governance_receipt": true,
+    "replay_receipt": true,
+    "reconstruction_receipt": true,
+    "candidate_hash_bound": true,
+    "provider_credential_nonpossession_asserted": true,
+    "raw_and_governed_candidate_hash_must_match": true
+  },
+  "claim_boundary": "Generation-2 nine-lane comparison: OpenAI, Anthropic, DeepSeek and Kimi external candidate outputs are each observed raw and then passed as the exact same candidate through StegVerse output-boundary governance, plus a StegVerse-only deterministic reconstruction lane. No StegVerse test workload possesses or consumes a provider API key. Historical five- and seven-lane evidence remains immutable. Kimi pricing is not inferred: reported provider cost is used unless a versioned official rate card is separately bound."
+}
