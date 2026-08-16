@@ -1,6 +1,6 @@
 # SV-COST Seven-Lane Mirror Handoff
 
-Status: **GENERATION_2 CREDENTIALLESS OUTPUT-BOUNDARY IMPLEMENTED — HOSTED VALIDATION ACTIVE — EXTERNAL CANDIDATES PENDING**
+Status: **GENERATION_2 CREDENTIALLESS OUTPUT-BOUNDARY IMPLEMENTED — HOSTED VALIDATION PASS — EXTERNAL CANDIDATES PENDING**
 
 ## Source of truth
 
@@ -20,8 +20,6 @@ Live Git state, workflow logs/artifacts, candidate receipts, and committed resul
 
 Generation 2 no longer executes OpenAI, Anthropic, or DeepSeek by consuming provider API keys inside the StegVerse experiment.
 
-The canonical relationship is:
-
 ```text
 user / existing application / TV-TVC provider relationship
   -> provider generation
@@ -35,11 +33,9 @@ user / existing application / TV-TVC provider relationship
 
 The same provider candidate is used for each raw/governed pair. Therefore the changed variable is StegVerse governance, not credential plumbing or a second provider generation.
 
-`raw` means **provider candidate observed without StegVerse admission**, not direct possession of provider credentials.
+`raw` means provider candidate observed without StegVerse admission, not direct possession of provider credentials.
 
 ## Production-artifact reference
-
-The test contract is explicitly bound to the production StegVerse portable/SDK architecture:
 
 ```text
 StegVerse-Labs/StegCore
@@ -48,6 +44,7 @@ StegVerse-Labs/StegCore
 
 StegVerse-org/StegVerse-SDK
   docs/SDK_PORTABLE_PACKAGE_CONSOLE_MIRROR_HANDOFF.md
+  docs/SDK_OUTPUT_BOUNDARY_PROOF_MIRROR_HANDOFF.md
 
 portable deployment classes:
   S  = Sovereign isolated deployment
@@ -56,8 +53,6 @@ portable deployment classes:
 provider account required by portable unit: FALSE
 non-TV/TVC secret required: FALSE
 ```
-
-This experiment is a cost-analysis reference for the SDK production-artifact proof path. It does not replace the canonical StegCore evaluator or SDK package authority.
 
 ## Seven lanes
 
@@ -85,7 +80,7 @@ experiments/sv-cost-program/seven-lane-results/deepseek-price-card.json
 .github/workflows/sv-cost-deepseek-pair-continuation.yml
 ```
 
-`run.py` is the canonical Generation-2 entrypoint. `run_deepseek_pair.py` is retained only as a compatibility entrypoint and now delegates to the same credentialless candidate runner. The prior direct-key DeepSeek implementation is retired from the canonical execution path.
+`run.py` is the canonical Generation-2 entrypoint. `run_deepseek_pair.py` is retained only as a compatibility entrypoint and delegates to the same credentialless candidate runner. The prior direct-key DeepSeek implementation is retired from the canonical execution path.
 
 ## Candidate contract
 
@@ -121,27 +116,7 @@ receipts/<provider>-replay.json
 receipts/<provider>-reconstruction.json
 ```
 
-The governed row binds:
-
-```text
-candidate_hash
-decision
-required_output_hash
-normalized_output_hash
-provider credential possession: false
-governance incremental compute cost
-governance incremental storage cost
-replay match
-reconstruction match
-```
-
-This permits a user/reviewer to inspect:
-
-1. what the provider candidate was;
-2. whether StegVerse admitted or denied it;
-3. whether the same candidate can be replayed deterministically;
-4. whether the governed state can be independently reconstructed;
-5. whether StegVerse ever possessed the provider API credential.
+The governed row binds candidate hash, decision, required and normalized output hashes, credential non-possession, governance incremental compute/storage cost, replay match, and reconstruction match.
 
 ## Economic isolation
 
@@ -156,19 +131,23 @@ provider generation cost
 + replay/reconstruction cost
 ```
 
-The raw/governed pair shares the exact same provider candidate, so no second provider generation is needed merely to add governance. This directly measures the incremental economic cost of placing StegVerse between externally generated output and consequential acceptance/display/action.
+The raw/governed pair shares the exact same provider candidate, so no second provider generation is needed merely to add governance.
 
 Provider price values remain declared-rate evidence unless independently invoice reconciled.
 
-## Automation
+## Hosted validation evidence
 
 ### Schema validation
 
 ```text
-.github/workflows/sv-cost-seven-lane-schema.yml
+workflow: .github/workflows/sv-cost-seven-lane-schema.yml
+run: 31918107807
+job: 95093309152
+head: f5c3a1f32c865155daa1baabf08bbc10de0eb285
+conclusion: SUCCESS
 ```
 
-Validates schema 3.0.0, seven lanes, production repo references, S/NS boundary, proof requirements, and the absence of canonical provider-key/API-call markers.
+Syntax validation and the Generation-2 credentialless contract validation passed.
 
 ### Candidate proof continuation
 
@@ -178,21 +157,27 @@ Historical filename retained for compatibility:
 .github/workflows/sv-cost-deepseek-pair-continuation.yml
 ```
 
-Current workflow name:
+Current workflow name: `SV Cost Seven-Lane Credentialless Candidate Proof`.
 
 ```text
-SV Cost Seven-Lane Credentialless Candidate Proof
+run: 31918122419
+job: 95093347248
+head: f309f56e225c8eac1f57ef9171fd01d365b66092
+conclusion: SUCCESS
+artifact: 9255521460
+artifact name: sv-cost-seven-lane-generation-2-31918122419
+artifact digest: sha256:5aebc4bb45dd04baf0fd0cdc37679a3654ec9041f0900307e113169aa9f53e56
 ```
 
-It has no provider secret injection and performs:
+Passed stages:
 
-1. Python/schema validation;
-2. direct-provider-key marker rejection;
-3. candidate processing or bounded missing-candidate blocker;
-4. Generation-2 result validation;
-5. immutable workflow artifact upload.
+1. credentialless seven-lane contract validation;
+2. external-candidate processing / bounded blocker generation;
+3. generated proof-surface validation;
+4. immutable Generation-2 evidence upload;
+5. release-condition summary.
 
-It does not poll for `DEEPSEEK_API_KEY` and does not invoke provider APIs.
+The hosted run had no provider candidates, so it correctly produced the bounded external-candidate blocker rather than seeking provider credentials.
 
 ## Completion state
 
@@ -205,13 +190,13 @@ same_candidate_raw_governed_invariant: COMPLETE
 production_stegcore_reference: COMPLETE
 production_sdk_reference: COMPLETE
 S_NS_reference_boundary: COMPLETE
-governance_receipt_generation: IMPLEMENTED
-replay_receipt_generation: IMPLEMENTED
-reconstruction_receipt_generation: IMPLEMENTED
-credential_nonpossession_receipt: IMPLEMENTED
-cost_isolation: IMPLEMENTED
-hosted_schema_validation: ACTIVE
-hosted_candidate_proof: ACTIVE
+governance_receipt_generation: COMPLETE_IMPLEMENTATION
+replay_receipt_generation: COMPLETE_IMPLEMENTATION
+reconstruction_receipt_generation: COMPLETE_IMPLEMENTATION
+credential_nonpossession_receipt: COMPLETE_IMPLEMENTATION
+cost_isolation: COMPLETE_IMPLEMENTATION
+hosted_schema_validation: PASS
+hosted_candidate_proof: PASS_BLOCKED_AS_DESIGNED_WITHOUT_EXTERNAL_CANDIDATES
 openai_generation_2_candidate: PENDING_EXTERNAL_CANDIDATE
 anthropic_generation_2_candidate: PENDING_EXTERNAL_CANDIDATE
 deepseek_generation_2_candidate: PENDING_EXTERNAL_CANDIDATE
@@ -221,12 +206,13 @@ seven_lane_publication: NOT_ADMITTED
 
 ## Next executable tasks
 
-1. Supply production-equivalent OpenAI, Anthropic, and DeepSeek candidate artifacts through the candidate schema **without transferring provider API keys to StegVerse**.
-2. Execute one full Generation-2 seven-lane run and retain the immutable candidate + governance/replay/reconstruction evidence.
-3. Compare Generation-2 OpenAI/Anthropic measurements to immutable Generation-1 direct-key historical results as a separate architecture-overhead observation; do not merge the two evidence classes.
+1. Supply production-equivalent OpenAI, Anthropic, and DeepSeek candidate artifacts through the candidate schema without transferring provider API keys to StegVerse.
+2. Execute one full Generation-2 seven-lane run and retain immutable candidate + governance/replay/reconstruction evidence.
+3. Compare Generation-2 OpenAI/Anthropic measurements to immutable Generation-1 direct-key historical results as a separate architecture-overhead observation.
 4. Feed the admitted Generation-2 result into `experiments/sv-cost-program/governed-ai-premium/` only after all seven lanes and proof requirements pass.
-5. Use this same candidate/proof contract as the SDK-facing production-artifact test reference so S/NS users can reproduce the boundary behavior with production StegVerse artifacts.
-6. Before any publication/release propagation, re-read destination handoffs for `GCAT-BCAT-Engine/Publisher`, `StegVerse-Labs/Site`, `admissibility-wiki`, and `stegguardian-wiki`.
+5. Continue SDK successor goal `SDK-OUTPUT-BOUNDARY-CANONICAL-004`: bind arbitrary provider output into the canonical sovereign transaction lifecycle so a canonical `manifest_receipt_id` can demonstrate Master Records replay/reconstruction while preserving provider credential non-possession.
+6. Run the same path from exact immutable S and NS portable package artifacts once the parent package-artifact binding workstream releases them.
+7. Before publication/release propagation, re-read destination handoffs for `GCAT-BCAT-Engine/Publisher`, `StegVerse-Labs/Site`, `admissibility-wiki`, and `stegguardian-wiki`.
 
 ## Claim boundary
 
@@ -236,9 +222,10 @@ This experiment measures one bounded deterministic reconstruction operation and 
 
 ```yaml
 active_goal: SV-COST-SEVEN-LANE-GEN2-003
-state: IMPLEMENTED_BLOCKED_ON_EXTERNAL_CANDIDATES
+state: IMPLEMENTED_VALIDATED_BLOCKED_ON_EXTERNAL_CANDIDATES
 credential_authority_inside_stegverse_workload: NONE
 protected_credential_authority: TV/TVC_OR_USER_EXISTING_PROVIDER_RELATIONSHIP
 historical_five_lane_result_mutable: false
 publication_admitted: false
+sdk_successor_goal: SDK-OUTPUT-BOUNDARY-CANONICAL-004
 ```
