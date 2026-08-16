@@ -22,8 +22,10 @@ jobs:
         run: |
           python -m py_compile \
             experiments/sv-cost-program/seven-lane-results/run.py \
+            experiments/sv-cost-program/seven-lane-results/run_candidate_outputs.py \
+            experiments/sv-cost-program/seven-lane-results/run_deepseek_pair.py \
             experiments/sv-cost-program/seven-lane-results/validate_schema.py
 
-      - name: Seven-lane contract validation
+      - name: Seven-lane credentialless contract validation
         run: |
           python experiments/sv-cost-program/seven-lane-results/validate_schema.py
