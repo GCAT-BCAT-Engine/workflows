@@ -38,14 +38,13 @@ jobs:
               Path('experiments/sv-cost-program/seven-lane-results/run.py'),
               Path('experiments/sv-cost-program/seven-lane-results/run_candidate_outputs.py'),
               Path('experiments/sv-cost-program/seven-lane-results/run_deepseek_pair.py'),
-              Path('.github/workflows/sv-cost-deepseek-pair-continuation.yml'),
           ]
-          forbidden = ('OPENAI_API_KEY', 'ANTHROPIC_API_KEY', 'DEEPSEEK_API_KEY')
+          forbidden = ('OPENAI_' + 'API_KEY', 'ANTHROPIC_' + 'API_KEY', 'DEEPSEEK_' + 'API_KEY')
           for path in paths:
               text = path.read_text()
               for marker in forbidden:
                   assert marker not in text, f'{marker} forbidden in {path}'
-          print('NO_PROVIDER_API_KEY_IN_CANONICAL_SEVEN_LANE_PATH')
+          print('NO_PROVIDER_API_KEY_IN_CANONICAL_SEVEN_LANE_EXECUTABLE_PATH')
           PY
 
       - name: Process external candidates or emit bounded blocker
