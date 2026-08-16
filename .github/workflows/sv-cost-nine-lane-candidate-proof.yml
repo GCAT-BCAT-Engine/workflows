@@ -1,0 +1,51 @@
+name: SV Cost Nine-Lane Credentialless Candidate Proof
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/sv-cost-program/nine-lane-results/**'
+      - '.github/workflows/sv-cost-nine-lane-candidate-proof.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-and-process:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate credentialless contract
+        run: |
+          python experiments/sv-cost-program/nine-lane-results/validate_schema.py
+          ! grep -E 'OPENAI_API_KEY|ANTHROPIC_API_KEY|DEEPSEEK_API_KEY|MOONSHOT_API_KEY|KIMI_API_KEY' experiments/sv-cost-program/nine-lane-results/run_candidate_outputs.py
+      - name: Process candidates or emit bounded blocker
+        id: run
+        shell: bash
+        run: |
+          set +e
+          python experiments/sv-cost-program/nine-lane-results/run.py
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          test "$code" -eq 0 -o "$code" -eq 3
+      - name: Validate proof result
+        run: |
+          python - <<'PY'
+          import json,pathlib
+          p=pathlib.Path('experiments/sv-cost-program/nine-lane-results/results/generation-2-output-boundary/nine_lane_generation_2_results.json')
+          d=json.loads(p.read_text())
+          assert len(d['rows']) in {1,3,5,7,9}
+          assert d['credential_invariant']=='NO_PROVIDER_API_KEY_POSSESSED_OR_CONSUMED_BY_STEGVERSE_TEST_WORKLOAD'
+          assert all(row.get('stegverse_provider_credential_possession') is False for row in d['rows'])
+          if d['all_nine_present']:
+              assert len(d['rows'])==9
+          else:
+              assert d['publication_status']=='PUBLICATION_BLOCKED'
+          PY
+      - name: Upload immutable Generation-2 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: sv-cost-nine-lane-generation-2-${{ github.run_id }}
+          path: experiments/sv-cost-program/nine-lane-results/results/generation-2-output-boundary/
+          if-no-files-found: error
