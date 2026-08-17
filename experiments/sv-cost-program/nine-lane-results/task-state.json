@@ -1,13 +1,13 @@
 {
   "schema": "stegverse.task-state/v1",
   "task_id": "SV-COST-NINE-LANE-GEN2-004",
-  "state": "MACHINE_OWNED_BLOCKED_ON_EXTERNAL_CANDIDATES",
+  "state": "MACHINE_OWNED_PARTIAL_CANDIDATES_PRESENT",
   "canonical_handoff": "experiments/sv-cost-program/nine-lane-results/SV_COST_NINE_LANE_MIRROR_HANDOFF.md",
   "credential_authority": "TV/TVC",
   "non_tv_tvc_secret_or_token_allowed": false,
   "collision_boundary": "Do not mutate historical five-lane or seven-lane evidence and do not add provider API clients or provider secrets to this workload.",
   "candidate_tasks": [
-    {"provider":"openai","owner":"USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_CANDIDATE_EXPORT","state":"BLOCKED","release_condition":"candidate-inputs/openai.json exists and validates with provider_api_key_transferred_to_stegverse=false"},
+    {"provider":"openai","owner":"USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_CANDIDATE_EXPORT","state":"SUPPLIED_PENDING_MACHINE_VALIDATION","evidence":"candidate-inputs/openai.json","release_condition":"candidate-inputs/openai.json validates with provider_api_key_transferred_to_stegverse=false and the candidate-proof workflow emits the OpenAI raw/governed pair"},
     {"provider":"anthropic","owner":"USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_CANDIDATE_EXPORT","state":"BLOCKED","release_condition":"candidate-inputs/anthropic.json exists and validates with provider_api_key_transferred_to_stegverse=false"},
     {"provider":"deepseek","owner":"USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_CANDIDATE_EXPORT","state":"BLOCKED","release_condition":"candidate-inputs/deepseek.json exists and validates with provider_api_key_transferred_to_stegverse=false"},
     {"provider":"kimi","owner":"USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_CANDIDATE_EXPORT","state":"BLOCKED","release_condition":"candidate-inputs/kimi.json exists and validates with provider_api_key_transferred_to_stegverse=false"}
