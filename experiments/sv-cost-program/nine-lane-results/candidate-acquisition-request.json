@@ -1,0 +1,83 @@
+{
+  "schema": "stegverse.sv-cost.candidate-acquisition-request/v1",
+  "task_id": "SV-COST-NINE-LANE-GEN2-004",
+  "experiment_id": "SV-COST-NINE-LANE-RESULTS-001",
+  "generation": "GENERATION_2_CREDENTIALLESS_OUTPUT_BOUNDARY",
+  "credential_authority": "TV/TVC",
+  "non_tv_tvc_secret_or_token_allowed": false,
+  "provider_api_key_transferred_to_stegverse": false,
+  "canonical_runner": ".github/workflows/sv-cost-nine-lane-candidate-proof.yml",
+  "candidate_schema": "experiments/sv-cost-program/nine-lane-results/candidate-input.schema.json",
+  "candidate_directory": "experiments/sv-cost-program/nine-lane-results/candidate-inputs",
+  "task_contract": {
+    "task_id": "SV-RECON-001",
+    "initial_state": {"balance": 100, "risk_score": 1, "standing": "active"},
+    "policy": {"minimum_balance": 0, "maximum_risk_score": 5, "standing_required_for_debit": "active"},
+    "events": [
+      {"event_id": "E01", "operation": "credit", "amount": 25},
+      {"event_id": "E02", "operation": "debit", "amount": 40},
+      {"event_id": "E03", "operation": "risk_add", "amount": 2},
+      {"event_id": "E04", "operation": "debit", "amount": 100},
+      {"event_id": "E05", "operation": "risk_add", "amount": 3},
+      {"event_id": "E06", "operation": "debit", "amount": 10}
+    ],
+    "decision_rules": [
+      "Process events in listed order.",
+      "A credit is ALLOW and increases balance.",
+      "A debit is ALLOW only when standing is active and resulting balance is not below minimum_balance; otherwise DENY and do not mutate state.",
+      "A risk_add is ALLOW only when resulting risk_score is not above maximum_risk_score; otherwise DENY and do not mutate state.",
+      "Denied events never mutate state.",
+      "Return only the required JSON object."
+    ]
+  },
+  "candidate_requirements": {
+    "required_fields": ["provider", "model", "task_id", "candidate_output", "provider_api_key_transferred_to_stegverse"],
+    "optional_economic_evidence": ["provider_response_id", "provider_response_hash", "provider_latency_seconds", "provider_usage.input_tokens", "provider_usage.output_tokens", "provider_usage.reported_cost_usd"],
+    "forbidden": ["provider API key", "provider bearer token", "provider secret", "GitHub token as provider/runtime authority", "synthetic or fabricated provider response"],
+    "same_candidate_used_for_raw_and_governed_pair": true
+  },
+  "providers": [
+    {
+      "provider": "openai",
+      "owner": "USER_EXISTING_CHATGPT_RELATIONSHIP",
+      "state": "SUPPLIED_LOCALLY_VALIDATED_PENDING_HOSTED_MACHINE_PROOF",
+      "target": "candidate-inputs/openai.json",
+      "evidence_commit": "13c0941704f0e3e037dcdd6e1ae70910345f056f",
+      "candidate_hash": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf"
+    },
+    {
+      "provider": "anthropic",
+      "owner": "USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_CANDIDATE_EXPORT",
+      "state": "BLOCKED_ON_AUTHENTIC_PROVIDER_CANDIDATE",
+      "target": "candidate-inputs/anthropic.json",
+      "release_condition": "A schema-valid authentic Anthropic candidate is committed with provider_api_key_transferred_to_stegverse=false."
+    },
+    {
+      "provider": "deepseek",
+      "owner": "USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_CANDIDATE_EXPORT",
+      "state": "BLOCKED_ON_AUTHENTIC_PROVIDER_CANDIDATE",
+      "target": "candidate-inputs/deepseek.json",
+      "release_condition": "A schema-valid authentic DeepSeek candidate is committed with provider_api_key_transferred_to_stegverse=false."
+    },
+    {
+      "provider": "kimi",
+      "owner": "USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_CANDIDATE_EXPORT",
+      "state": "BLOCKED_ON_AUTHENTIC_PROVIDER_CANDIDATE_AND_COST_EVIDENCE",
+      "target": "candidate-inputs/kimi.json",
+      "release_condition": "A schema-valid authentic Kimi candidate is committed with provider_api_key_transferred_to_stegverse=false and provider_usage.reported_cost_usd is supplied or a versioned official Kimi rate card is separately bound."
+    }
+  ],
+  "machine_observable_trigger": "push affecting experiments/sv-cost-program/nine-lane-results/**",
+  "machine_outputs": [
+    "results/generation-2-output-boundary/nine_lane_generation_2_results.json",
+    "results/generation-2-output-boundary/receipts/<provider>-governance.json",
+    "results/generation-2-output-boundary/receipts/<provider>-replay.json",
+    "results/generation-2-output-boundary/receipts/<provider>-reconstruction.json",
+    "immutable GitHub Actions artifact"
+  ],
+  "terminal_states": {
+    "partial": "PUBLICATION_BLOCKED",
+    "complete": "RESULTS_READY_FOR_BOUNDED_PUBLICATION"
+  },
+  "next_task_after_release": "Integrate admitted complete nine-lane evidence into experiments/sv-cost-program/governed-ai-premium only after all nine lanes and required cost evidence pass."
+}
