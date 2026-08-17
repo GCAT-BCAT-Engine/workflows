@@ -1,0 +1,29 @@
+{
+  "provider": "openai",
+  "model": "gpt-5.6-sol",
+  "task_id": "SV-RECON-001",
+  "provider_api_key_transferred_to_stegverse": false,
+  "provider_response_id": null,
+  "provider_response_hash": null,
+  "provider_latency_seconds": null,
+  "provider_usage": {},
+  "candidate_output": {
+    "task_id": "SV-RECON-001",
+    "final_state": {
+      "balance": 75,
+      "risk_score": 3,
+      "standing": "active"
+    },
+    "decisions": [
+      {"event_id": "E01", "status": "ALLOW", "reason": "CREDIT_APPLIED"},
+      {"event_id": "E02", "status": "ALLOW", "reason": "DEBIT_WITHIN_BOUNDARY"},
+      {"event_id": "E03", "status": "ALLOW", "reason": "RISK_WITHIN_BOUNDARY"},
+      {"event_id": "E04", "status": "DENY", "reason": "MINIMUM_BALANCE_VIOLATION"},
+      {"event_id": "E05", "status": "DENY", "reason": "MAXIMUM_RISK_VIOLATION"},
+      {"event_id": "E06", "status": "ALLOW", "reason": "DEBIT_WITHIN_BOUNDARY"}
+    ],
+    "applied_count": 4,
+    "denied_count": 2,
+    "claim_boundary": "DETERMINISTIC_RECONSTRUCTION_ONLY"
+  }
+}
