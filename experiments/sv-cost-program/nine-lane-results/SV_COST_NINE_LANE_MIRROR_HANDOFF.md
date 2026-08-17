@@ -1,6 +1,6 @@
 # SV-COST Nine-Lane Mirror Handoff
 
-Status: **GENERATION_2 NINE-LANE CREDENTIALLESS OUTPUT-BOUNDARY IMPLEMENTED — HOSTED VALIDATION PASS — MACHINE-OWNED CANDIDATE CONTINUATION ACTIVE**
+Status: **GENERATION_2 NINE-LANE CREDENTIALLESS OUTPUT-BOUNDARY IMPLEMENTED — OPENAI CANDIDATE SUPPLIED/LOCALLY VALIDATED — THREE PROVIDER CANDIDATES DURABLY ASSIGNED — MACHINE CONTINUATION ACTIVE**
 
 ## Source of truth
 
@@ -13,27 +13,30 @@ generation: GENERATION_2_CREDENTIALLESS_OUTPUT_BOUNDARY
 credential_invariant: NO_PROVIDER_API_KEY_POSSESSED_OR_CONSUMED_BY_STEGVERSE_TEST_WORKLOAD
 supersedes_for_new_runs: experiments/sv-cost-program/seven-lane-results/
 historical five-lane and seven-lane evidence: IMMUTABLE
+canonical_task_state: experiments/sv-cost-program/nine-lane-results/task-state.json
+candidate_acquisition_request: experiments/sv-cost-program/nine-lane-results/candidate-acquisition-request.json
+machine_owner: .github/workflows/sv-cost-nine-lane-candidate-proof.yml
 ```
 
 This is the canonical continuation for new cost-comparison runs. The seven-lane handoff remains historical evidence and must not be rewritten as nine-lane evidence.
 
 ## Originating session goal
 
-Extend the validated seven-lane credentialless cost analysis with Kimi while preserving the production-artifact SDK proof model, TV/TVC-only protected credential authority, and no provider API-key possession by StegVerse.
+Extend the validated seven-lane credentialless cost analysis with Kimi while preserving the production-artifact SDK proof model, TV/TVC-only protected credential authority, and no provider API-key possession by StegVerse. The session also carried the directives to make StegFin trade ready, replace descriptive local-model/runtime selection with an executable local discovery/launch/proof path, and formally develop the model locally. Those adjacent directives have converged to their canonical owners and are not reimplemented here.
 
 ## Nine lanes
 
-| Lane | ID | Candidate | StegVerse governed |
-|---:|---|---|---|
-| 1 | `openai-raw` | external OpenAI candidate | No |
-| 2 | `openai-governed` | same OpenAI candidate | Yes |
-| 3 | `anthropic-raw` | external Anthropic candidate | No |
-| 4 | `anthropic-governed` | same Anthropic candidate | Yes |
-| 5 | `stegverse-only` | deterministic reconstruction | Yes |
-| 6 | `deepseek-raw` | external DeepSeek candidate | No |
-| 7 | `deepseek-governed` | same DeepSeek candidate | Yes |
-| 8 | `kimi-raw` | external Kimi/Moonshot candidate | No |
-| 9 | `kimi-governed` | same Kimi/Moonshot candidate | Yes |
+| Lane | ID | Candidate | StegVerse governed | Current state |
+|---:|---|---|---|---|
+| 1 | `openai-raw` | OpenAI candidate from existing ChatGPT relationship | No | supplied / locally validated |
+| 2 | `openai-governed` | same OpenAI candidate | Yes | machine proof pending |
+| 3 | `anthropic-raw` | external Anthropic candidate | No | blocked on authentic candidate |
+| 4 | `anthropic-governed` | same Anthropic candidate | Yes | blocked on authentic candidate |
+| 5 | `stegverse-only` | deterministic reconstruction | Yes | implemented / validated |
+| 6 | `deepseek-raw` | external DeepSeek candidate | No | blocked on authentic candidate |
+| 7 | `deepseek-governed` | same DeepSeek candidate | Yes | blocked on authentic candidate |
+| 8 | `kimi-raw` | external Kimi/Moonshot candidate | No | blocked on authentic candidate + cost evidence |
+| 9 | `kimi-governed` | same Kimi/Moonshot candidate | Yes | blocked on authentic candidate + cost evidence |
 
 `raw` means candidate observed without StegVerse admission; it never means direct provider-key access.
 
@@ -42,6 +45,8 @@ Extend the validated seven-lane credentialless cost analysis with Kimi while pre
 ```text
 experiments/sv-cost-program/nine-lane-results/task.json
 experiments/sv-cost-program/nine-lane-results/candidate-input.schema.json
+experiments/sv-cost-program/nine-lane-results/candidate-acquisition-request.json
+experiments/sv-cost-program/nine-lane-results/candidate-inputs/openai.json
 experiments/sv-cost-program/nine-lane-results/run.py
 experiments/sv-cost-program/nine-lane-results/run_candidate_outputs.py
 experiments/sv-cost-program/nine-lane-results/validate_schema.py
@@ -57,9 +62,46 @@ provider relationship owner: USER / EXISTING APPLICATION / TV-TVC
 provider key transferred to StegVerse: FALSE
 provider key consumed by nine-lane workload: FALSE
 non-TV/TVC protected secret/token authority: FORBIDDEN
+GitHub token provider/runtime authority: NONE
+synthetic/fabricated provider candidate: FORBIDDEN
 ```
 
 Kimi pricing is not guessed. Until a versioned official Kimi rate card is bound, the runner accepts candidate-retained `provider_usage.reported_cost_usd` for Kimi cost accounting. Missing Kimi cost evidence prevents a complete cost comparison but does not create provider-secret authority.
+
+## OpenAI candidate activation evidence
+
+The existing ChatGPT relationship supplied one authentic OpenAI candidate without transferring an API key or provider secret to StegVerse.
+
+```text
+candidate: candidate-inputs/openai.json
+candidate commit: 13c0941704f0e3e037dcdd6e1ae70910345f056f
+model: gpt-5.6-sol
+provider_api_key_transferred_to_stegverse: false
+provider usage/cost metadata: not fabricated; omitted because not exposed by the ChatGPT surface
+candidate hash: sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf
+local deterministic validation: PASS_EXACT_REQUIRED_OUTPUT_MATCH
+required final state: balance=75, risk_score=3, standing=active
+required applied_count: 4
+required denied_count: 2
+```
+
+This local validation proves task-output equivalence and candidate-contract suitability. It does not by itself claim the newest hosted candidate-proof run passed; hosted workflow success must be separately inspected before making that claim.
+
+## Durable acquisition boundary for remaining providers
+
+The exact candidate request is now repository-owned rather than chat-owned:
+
+```text
+file: candidate-acquisition-request.json
+commit: 0db03e39d5d403e11112b6f152a667d69e7b814a
+providers remaining: anthropic, deepseek, kimi
+owner: USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_CANDIDATE_EXPORT
+machine release condition: schema-valid candidate-inputs/<provider>.json with provider_api_key_transferred_to_stegverse=false
+machine trigger: push affecting experiments/sv-cost-program/nine-lane-results/**
+machine owner: .github/workflows/sv-cost-nine-lane-candidate-proof.yml
+```
+
+The packet contains the exact `SV-RECON-001` state, events, decision rules, candidate fields, forbidden secret/token paths, provider-specific release conditions, and expected machine outputs. No future chat session is required to reconstruct the request.
 
 ## Production SDK relationship
 
@@ -74,18 +116,24 @@ NS = Node Sovereign profile; profile/install never self-grants membership
 
 ## Claims and continuation ownership
 
-Implementation/validation claim is **COMPLETE_RELEASED**. Remaining execution is machine-owned under:
+Implementation claim is **COMPLETE_RELEASED**. Repository-local schema/runner validation is complete. Candidate activation is split by provider and machine-owned after each candidate file arrives.
 
 ```text
-experiments/sv-cost-program/nine-lane-results/task-state.json
-.github/workflows/sv-cost-nine-lane-candidate-proof.yml
+openai: SUPPLIED_LOCALLY_VALIDATED_PENDING_HOSTED_MACHINE_PROOF
+anthropic: BLOCKED_ON_AUTHENTIC_PROVIDER_CANDIDATE
+deepseek: BLOCKED_ON_AUTHENTIC_PROVIDER_CANDIDATE
+kimi: BLOCKED_ON_AUTHENTIC_PROVIDER_CANDIDATE_AND_COST_EVIDENCE
 ```
 
-Each missing provider candidate has an explicit owner boundary: `USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_CANDIDATE_EXPORT`. The machine-observable release condition is existence of a validating `candidate-inputs/<provider>.json` with `provider_api_key_transferred_to_stegverse=false`.
+Current durable state commit:
 
-Collision boundary: do not mutate historical five-lane or seven-lane evidence and do not add provider API clients or provider secrets to this workload.
+```text
+00b825deccb822f5f189b581df0f2fcbbbd9279d
+```
 
-## Hosted validation evidence
+Collision boundary: do not mutate historical five-lane or seven-lane evidence, do not add provider API clients or provider secrets to this workload, do not fabricate provider candidates, and do not create a parallel runner or credential authority.
+
+## Hosted validation evidence — baseline source/control
 
 ### Nine-lane schema
 
@@ -97,9 +145,7 @@ head: b0637bd80f060cf7d2d9817c52e65d29698878da
 conclusion: SUCCESS
 ```
 
-Compilation and the nine-lane credentialless contract validation passed.
-
-### Nine-lane candidate proof
+### Prior bounded candidate proof
 
 ```text
 workflow: .github/workflows/sv-cost-nine-lane-candidate-proof.yml
@@ -108,71 +154,107 @@ job: 95099927760
 head: b96fe46ca8e10fde46427b02b04b6eb004819812
 conclusion: SUCCESS
 artifact: 9256253496
-artifact name: sv-cost-nine-lane-generation-2-31920663542
 artifact digest: sha256:30f4a366d453c735a20ee1b95b6ea2b9fc1a0110bc5354d928d5813db463601f
 ```
 
-Passed stages: credentialless contract validation; bounded candidate processing; proof result validation; immutable artifact upload.
+That historical proof had zero provider candidates and correctly emitted `PUBLICATION_BLOCKED`. It remains baseline source/control evidence only. The OpenAI candidate was added later and requires its own hosted machine proof before the hosted activation state is upgraded.
 
-Artifact inspection proved:
+## Adjacent goal convergence
 
-```text
-stegverse-only: admissible=true
-provider credential possession: false
-publication_status: PUBLICATION_BLOCKED
-blockers:
-  MISSING_EXTERNAL_CANDIDATE:candidate-inputs/openai.json
-  MISSING_EXTERNAL_CANDIDATE:candidate-inputs/anthropic.json
-  MISSING_EXTERNAL_CANDIDATE:candidate-inputs/deepseek.json
-  MISSING_EXTERNAL_CANDIDATE:candidate-inputs/kimi.json
-```
+### Sovereign local model/runtime
 
-## Completion state
-
-```text
-nine_lane_schema: COMPLETE
-kimi_raw_lane: COMPLETE_IMPLEMENTATION
-kimi_governed_lane: COMPLETE_IMPLEMENTATION
-credentialless_candidate_contract: COMPLETE
-same_candidate_pair_invariant: COMPLETE
-production_sdk_reference: COMPLETE
-S_NS_boundary: COMPLETE
-runner: COMPLETE
-schema_validator: COMPLETE
-hosted_schema_validation: PASS
-hosted_candidate_proof: PASS_BLOCKED_AS_DESIGNED_WITHOUT_EXTERNAL_CANDIDATES
-openai_candidate: BLOCKED_DURABLE_OWNER_ASSIGNED
-anthropic_candidate: BLOCKED_DURABLE_OWNER_ASSIGNED
-deepseek_candidate: BLOCKED_DURABLE_OWNER_ASSIGNED
-kimi_candidate: BLOCKED_DURABLE_OWNER_ASSIGNED
-full_nine_lane_result: MACHINE_OWNED_BLOCKED_ON_FOUR_EXTERNAL_CANDIDATES
-publication: NOT_ADMITTED
-```
-
-## Local runtime / formal model convergence
-
-The session directive to replace descriptive local-runtime selection and formally develop the local model is already complete and released under:
+Canonical owner:
 
 ```text
 StegVerse-002/micro-node-runtime/docs/SOVEREIGN_LOCAL_MODEL_RUNTIME_MIRROR_HANDOFF.md
-stegverse-reference-lm-v1
 ```
 
-Do not recreate that implementation.
+Current state:
+
+```text
+SOVEREIGN-LOCAL-MODEL-001 source: COMPLETE_RELEASED
+stegverse-reference-lm-v1: formally repository-developed
+descriptive select-a-runtime step: SUPERSEDED
+executable discovery/private launch/inference/measurement/proof: COMPLETE_RELEASED
+canonical validation: 31339534741 SUCCESS
+persistent endpoint validation: 31384116055 SUCCESS
+live HB30+/TVC activation: MACHINE_OWNED; manual/session execution prohibited
+```
+
+Do not recreate the local model/runtime in this repository.
+
+### StegFin trade readiness
+
+Canonical owner:
+
+```text
+StegVerse-Labs/stegfin-governance/docs/STEGFIN_MIRROR_HANDOFF.md
+```
+
+Current state:
+
+```text
+trade_ready_wallet_handoff_state: COMPLETE_ACTIVATED_AT_PRE_SIGN_BOUNDARY
+canonical task: STEGFIN-PHONE-DIRECT-ROUTE-010
+wallet signing authority: USER_ONLY
+broadcast authority: USER_ONLY
+non-TV/TVC secret/token allowed: false
+Render required: false
+```
+
+No cost-analysis task gains wallet authority from this convergence.
 
 ## Exact next tasks
 
-1. Machine owner waits for validating external OpenAI, Anthropic, DeepSeek and Kimi candidate artifacts without credential transfer.
-2. On candidate-file push, execute the full nine-lane comparison and retain governance/replay/reconstruction evidence.
-3. Require all four raw/governed candidate hashes to match pairwise.
-4. Require Kimi cost evidence to be candidate-reported or bind a versioned official rate card before making a Kimi cost claim.
-5. Integrate admitted nine-lane evidence into `experiments/sv-cost-program/governed-ai-premium/` only after all nine lanes and cost/proof requirements pass.
-6. Before release propagation, re-read Publisher, Site, admissibility-wiki and stegguardian-wiki handoffs.
+1. The candidate-proof workflow processes `candidate-inputs/openai.json` and emits the OpenAI raw/governed pair plus governance/replay/reconstruction receipts; hosted run/job/log/artifact inspection is required before promoting OpenAI to hosted-validated.
+2. `USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_CANDIDATE_EXPORT` supplies authentic Anthropic, DeepSeek and Kimi candidates according to `candidate-acquisition-request.json`, without transferring provider credentials.
+3. On each candidate-file push, the existing workflow processes all available pairs and remains `PUBLICATION_BLOCKED` until all nine lanes exist.
+4. Require all raw/governed candidate hashes to match pairwise.
+5. Require Kimi candidate-reported cost evidence or a separately bound versioned official Kimi rate card before a complete Kimi cost claim.
+6. Integrate admitted nine-lane evidence into `experiments/sv-cost-program/governed-ai-premium/` only after all nine lanes and cost/proof requirements pass.
+7. Before release propagation, re-read Publisher, Site, admissibility-wiki and stegguardian-wiki handoffs.
 
-## Archive conditions
+## Automation and release conditions
 
-The Kimi source implementation and hosted validation are complete and the remaining provider-candidate dependency is durably assigned with machine-observable release conditions. This chat need not remain active solely to poll those candidate files once the organization-level session inventory records this successor.
+```text
+owner repository: GCAT-BCAT-Engine/workflows
+trigger: candidate file push or workflow_dispatch
+input: schema-valid candidate-inputs/<provider>.json
+output: nine_lane_generation_2_results.json + provider governance/replay/reconstruction receipts + immutable workflow artifact
+missing candidate behavior: fail closed / PUBLICATION_BLOCKED
+complete behavior: RESULTS_READY_FOR_BOUNDED_PUBLICATION only when all nine are present and admissible
+next task: governed-ai-premium integration after complete admitted evidence
+```
+
+No recurring manual polling is required. Candidate existence is a machine-observable release condition.
+
+## Session consolidation / archive conditions
+
+Transferred session goals:
+
+```text
+local-runtime discovery/launch/proof -> StegVerse-002/micro-node-runtime canonical handoff
+formal local model development -> StegVerse-002/micro-node-runtime canonical handoff
+StegFin trade-ready pre-sign boundary -> StegVerse-Labs/stegfin-governance canonical handoff
+nine-lane cost analysis implementation -> this handoff/task-state/workflow
+OpenAI candidate -> candidate-inputs/openai.json
+remaining provider acquisition request -> candidate-acquisition-request.json
+```
+
+This session has no authority to generate Anthropic/DeepSeek/Kimi responses by bypassing their provider relationships or TV/TVC, and it has no authority to execute the machine-owned sovereign heartbeat activation or USER_ONLY wallet signature/broadcast. Once the newest OpenAI candidate-proof workflow result is inspectable and the task state is reconciled to that result, no unique chat implementation role remains; the three remaining provider release conditions are durable and machine-observable.
 
 ## Percent basis
 
-Required source/control deliverables: 8. Developed: 8/8. Hosted validations: 2/2 PASS. Source integration surfaces: nine-lane runner, SDK output-boundary reference, seven-lane supersession, durable candidate task-state = 4/4. Candidate observations are 0/4 and are explicitly a separate machine-owned activation phase rather than unfinished source implementation.
+```text
+required source/control deliverables: 10
+source/control developed: 10/10
+scaffolding/stubs: 0
+missing required source/control files: 0
+baseline source validations: 2/2 PASS
+provider candidates supplied: 1/4
+provider candidates locally validated: 1/4
+provider candidates hosted-machine-validated after supply: pending direct inspection
+source integration surfaces: 5/5
+publication: NOT_ADMITTED
+session-specific requirements durably transferred: 5/5
+```
