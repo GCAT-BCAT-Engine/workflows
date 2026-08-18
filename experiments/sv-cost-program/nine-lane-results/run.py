@@ -43,16 +43,33 @@ if result.get("all_nine_present") and KIMI_EVIDENCE.exists():
     old = "MISSING_COST_EVIDENCE:kimi:reported_cost_or_versioned_official_rate_card_required"
     result["cost_blockers"] = [x for x in result.get("cost_blockers", []) if x != old]
     result["blockers"] = [x for x in result.get("blockers", []) if x != old]
-    result["cost_evidence_complete"] = not result["cost_blockers"]
     result["cost_basis_disclosure"] = {
         "kimi": basis,
         "evidence": str(KIMI_EVIDENCE.relative_to(ROOT)),
         "allocated_effective_cost_usd": allocation,
         "comparability_note": "Kimi value is an allocated share of a user-facing subscription quota, not a marginal API invoice charge. Other provider cost fields retain their own declared/reported basis."
     }
-    all_admissible = bool(result.get("all_lanes_admissible"))
-    if result["cost_evidence_complete"] and all_admissible:
-        result["publication_status"] = "RESULTS_READY_FOR_BOUNDED_PUBLICATION"
+
+# A cost-analysis publication requires an admissible cost basis for every
+# external raw candidate. Behavioral/governance proof may still pass when
+# provider-facing applications do not expose per-request cost or token usage.
+for provider in ("openai", "anthropic", "deepseek", "kimi"):
+    raw = next((r for r in result.get("rows", []) if r.get("lane_id") == f"{provider}-raw"), None)
+    if raw is None:
+        continue
+    if raw.get("provider_cost_usd") is None:
+        blocker = f"MISSING_COST_EVIDENCE:{provider}:reported_cost_or_admissible_bound_cost_basis_required"
+        if blocker not in result.setdefault("cost_blockers", []):
+            result["cost_blockers"].append(blocker)
+        if blocker not in result.setdefault("blockers", []):
+            result["blockers"].append(blocker)
+
+result["cost_evidence_complete"] = bool(result.get("all_nine_present")) and not result.get("cost_blockers")
+all_admissible = bool(result.get("all_lanes_admissible"))
+if result.get("all_nine_present") and result["cost_evidence_complete"] and all_admissible:
+    result["publication_status"] = "RESULTS_READY_FOR_BOUNDED_PUBLICATION"
+else:
+    result["publication_status"] = "PUBLICATION_BLOCKED"
 
 RESULT.write_text(json.dumps(result, indent=2) + "\n")
 print(result["publication_status"])
