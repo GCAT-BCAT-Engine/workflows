@@ -13,19 +13,34 @@
     "openai": {
       "owner": "USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_COST_EVIDENCE_EXPORT",
       "candidate": "candidate-inputs/openai.json",
-      "state": "EVIDENCE_OBSERVED_REQUEST_ALLOCATION_STILL_BLOCKED",
-      "observed_evidence": "cost-evidence/openai-chatgpt-plus-ui-observation-2026-08-17.json",
-      "observed_evidence_commit": "131633acfa2a4620039404c57e1d1c915bc53136",
-      "observed_plan_price_usd_per_month": 19.99,
-      "observed_model_label": "5.6 Sol",
-      "observed_extra_agent_credit_offer": "100 credits for $4.00",
+      "state": "TWO_EVIDENCE_SURFACES_OBSERVED_REQUEST_ALLOCATION_STILL_BLOCKED",
+      "observed_evidence": [
+        {
+          "file": "cost-evidence/openai-chatgpt-plus-ui-observation-2026-08-17.json",
+          "commit": "131633acfa2a4620039404c57e1d1c915bc53136",
+          "mode": "CHATGPT_PLUS_PLAN_AND_USAGE_LIMIT_UI",
+          "finding": "ChatGPT Plus $19.99/month, model 5.6 Sol, 100 credits for $4.00 extra agent-credit offer; no request-specific allocation."
+        },
+        {
+          "file": "cost-evidence/openai-platform-aggregate-usage-observation-2026-08-17.json",
+          "commit": "26af7240a6e24b72f7342409d9839aadd6faba9a",
+          "mode": "OPENAI_PLATFORM_AGGREGATE_USAGE",
+          "finding": "$6.35 aggregate spend, 149 aggregate requests, 103145 aggregate tokens, Tier 1/model rate limits; not bound to the ChatGPT-app SV-RECON-001 candidate."
+        }
+      ],
       "request_specific_cost_available": false,
       "accepted_evidence_modes": [
         "PROVIDER_REPORTED_REQUEST_COST_USD",
         "PROVIDER_REPORTED_EXACT_INPUT_OUTPUT_TOKEN_USAGE_PLUS_BOUND_VERSIONED_RATE_CARD",
         "PROVIDER_UI_SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST"
       ],
-      "rejected_shortcut": "Do not divide the $19.99 monthly subscription by an arbitrary request count and do not apply the agent-credit unit price to SV-RECON-001 without provider-observed binding.",
+      "rejected_shortcuts": [
+        "Do not divide the $19.99 monthly subscription by an arbitrary request count.",
+        "Do not apply the $4/100 agent-credit unit price to SV-RECON-001 without provider-observed binding.",
+        "Do not divide $6.35 aggregate Platform spend by 149 aggregate requests and call the result the ChatGPT-app candidate cost.",
+        "Do not treat 103145/149 as exact candidate token usage.",
+        "Do not attribute aggregate API-key traffic to the ChatGPT-app candidate without request identity evidence."
+      ],
       "release_condition": "A provider-facing record exposes request-specific cost, exact token usage plus a bound versioned rate card, or provider-observed quota allocation tied to SV-RECON-001 and candidate-inputs/openai.json."
     },
     "anthropic": {
@@ -63,12 +78,13 @@
     "word counts treated as provider tokens",
     "subscription sticker price without a provider-observed allocation or quota-consumption basis",
     "historical request cost from a different task/model represented as this request cost",
+    "aggregate account usage averaged into a request-specific cost without request identity evidence",
     "fabricated provider response IDs, latency, usage, invoice values, or API charges",
     "provider API keys, bearer tokens, passwords, or other non-TV/TVC protected secrets"
   ],
   "machine_observer": ".github/workflows/sv-cost-nine-lane-candidate-proof.yml",
   "machine_release_condition": "All three incomplete provider cost-evidence records validate and the canonical run emits zero cost blockers; hosted run/job/log/artifact inspection then determines bounded publication readiness.",
-  "next_action": "Observe provider-facing Anthropic and DeepSeek cost/usage evidence and any stronger OpenAI request-specific usage surface if available; install only admissible evidence records; candidate behavioral outputs do not need to be rerun at providers.",
+  "next_action": "Observe provider-facing Anthropic and DeepSeek cost/usage evidence and any request-bound OpenAI usage surface if available; do not repeat already-exhausted ChatGPT plan or aggregate Platform searches unless the UI gains request-level identity/cost data.",
   "archive_dependency": false,
   "archive_rationale": "The remaining cost evidence has explicit owners, accepted evidence modes, rejection rules, file destinations, and machine-observable release conditions; no chat-only information is required."
 }
