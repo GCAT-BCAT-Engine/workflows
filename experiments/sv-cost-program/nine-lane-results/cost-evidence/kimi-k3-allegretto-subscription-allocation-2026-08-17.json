@@ -1,0 +1,53 @@
+{
+  "schema": "stegverse.provider-cost-evidence/v1",
+  "provider": "kimi",
+  "model": "Kimi K3",
+  "task_id": "SV-RECON-001",
+  "evidence_mode": "SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST",
+  "marginal_api_charge_reported": false,
+  "provider_exact_token_usage_available": false,
+  "plan": {
+    "name": "Allegretto",
+    "billing_period": "annual",
+    "annual_price_usd": 374.99,
+    "quota_reset_period": "monthly",
+    "monthly_equivalent_subscription_usd": 31.249166666667
+  },
+  "observed_usage_record": {
+    "label": "k3: Token Usage Query (1)",
+    "observed_at_local": "2026-08-17T19:57:00-05:00",
+    "subscription_quota_percent": 0.02,
+    "subscription_quota_fraction": 0.0002,
+    "bound_to_candidate": "candidate-inputs/kimi.json"
+  },
+  "separate_followup_record": {
+    "label": "k3: Token Usage Query (2)",
+    "observed_at_local": "2026-08-17T20:04:00-05:00",
+    "subscription_quota_percent": 0.02,
+    "purpose": "follow-up token-usage question; not included in the candidate cost allocation"
+  },
+  "calculation": {
+    "formula": "annual_price_usd / 12 * subscription_quota_fraction",
+    "allocated_effective_cost_usd": 0.006249833333,
+    "interpretation": "Allocated share of the monthly-equivalent Allegretto subscription corresponding to the provider-reported 0.02% quota consumption. This is not a marginal API invoice charge."
+  },
+  "token_usage_statement": {
+    "provider_ui_exact_metadata_available": false,
+    "provider_response_estimate_input_tokens": "~120-140",
+    "provider_response_estimate_output_tokens": "~90-110",
+    "use_for_exact_billing": false
+  },
+  "source_observation": {
+    "provided_by": "user Kimi account UI screenshots",
+    "screenshot_sha256": {
+      "plan_price": "f7ebaa8ad00d77b0a9281eec613b97db925e5b888907bec897364f0a601da58e",
+      "subscription_summary": "db798e95fad0850f7738b823d390b7eb11f279ab994e1e29385caff81385a8ee",
+      "usage_details": "9d95b85c3a50596fc167e4bf9d6841d5d79101873afea5d287b8eaab9d881ac6",
+      "token_metadata_response": "34194d77d23a54e6aef0348e7916d35e3e17d648ff0b814b2817909e1a6d0204"
+    }
+  },
+  "credential_authority": "TV/TVC",
+  "provider_api_key_transferred_to_stegverse": false,
+  "non_tv_tvc_secret_or_token_used": false,
+  "claim_boundary": "Kimi user-facing subscription allocation evidence only; do not represent as Kimi API marginal pricing or exact token billing."
+}
