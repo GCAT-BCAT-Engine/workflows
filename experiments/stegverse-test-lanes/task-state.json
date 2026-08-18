@@ -1,14 +1,14 @@
 {
   "schema": "stegverse.task-state/v1",
   "task_id": "STEGVERSE-TEST-LANES-001",
-  "state": "SOURCE_IMPLEMENTED_VALIDATION_PENDING_LIVE_CAPSULE_AND_SOVEREIGN_EXECUTION_PENDING",
+  "state": "SOURCE_IMPLEMENTED_VALIDATION_PENDING_LIVE_VAULT_DERIVED_CAPSULE_AND_SOVEREIGN_EXECUTION_PENDING",
   "canonical_handoff": "experiments/stegverse-test-lanes/TEST_LANES_MIRROR_HANDOFF.md",
   "credential_authority": "TV/TVC",
   "consumer_credential_authority": "NONE",
   "non_tv_tvc_secret_or_token_allowed": false,
   "primary_provider": "stegverse_local",
   "third_party_role": "CONTROL_OR_FALLBACK_ONLY",
-  "design_invariant": "EXPERIMENTS_PORTABLE_CREDENTIALS_NON_PORTABLE",
+  "design_invariant": "EXPERIMENTS_PORTABLE_CREDENTIALS_NON_PORTABLE_BINDING_STATE_OBSERVED_NOT_ASSERTED",
   "authoritative_surfaces": [
     "experiments/stegverse-test-lanes/schema/test-lanes-manifest.schema.json",
     "experiments/stegverse-test-lanes/manifests/sv-cost-nine-lane.v1.json",
@@ -34,6 +34,15 @@
   ],
   "provider_capsule_authority": "StegVerse-Labs/TVC/tasks/TVC-PROVIDER-CAPSULE-012.json",
   "provider_capsule_handoff": "StegVerse-Labs/TVC/docs/PROVIDER_CAPSULE_MIRROR_HANDOFF.md",
+  "provider_capsule_runtime_binding": {
+    "materializer": "StegVerse-Labs/TVC/scripts/tvc_materialize_provider_capsule_bindings.py",
+    "shared_readiness_source": "StegVerse-Labs/stegfin-governance/stegwallet/vault_agent_service.py",
+    "static_binding_state_is_live_evidence": false,
+    "ready_maps_to": "BOUND",
+    "unavailable_maps_to": "UNBOUND",
+    "portable_consumer_receives_credential_ref": false,
+    "portable_consumer_receives_credential_material": false
+  },
   "reference_manifest": {
     "test_id": "SV-COST-NINE-LANE-v1",
     "lane_count": 9,
@@ -68,6 +77,7 @@
     "owner": "StegVerse-Labs/TVC",
     "lease": "scripts/tvc_issue_test_lane_lease.py",
     "runner": "scripts/tvc_run_test_lane_external_candidate.py",
+    "runtime_registry_must_be_vault_materialized": true,
     "specialized_sv_recon_measurement_lease_unchanged": true,
     "generic_literal_prompt_profile_supported": true,
     "sanitized_resolution_exact_plan_hash_required": true,
@@ -89,11 +99,12 @@
     "stdlib_only_validation_workflow_installed": true,
     "workflow_provider_secrets": false,
     "hosted_ci_directly_observed": false,
-    "live_capsule_resolution_observed": false,
+    "live_vault_readiness_observed": false,
+    "live_materialized_capsule_resolution_observed": false,
     "live_external_lane_execution_observed": false,
     "live_stegverse_primary_lane_execution_observed": false
   },
-  "release_condition": "Source validation is directly observed; a TVC Provider Capsule resolution bundle is consumed without credential material and bound to the exact plan; the StegVerse primary lane executes on the sovereign local runtime without third-party credentials; optional unbound external lanes skip independently; at least one locally bound user external provider executes through TVC with local capsule model revalidation; and deterministic sanitized lane evidence/comparison completes without provider-authority promotion.",
-  "next_action": "Observe source validation; then at an authorized runtime bind user credentials through TV/TVC, resolve the portable plan, re-plan to READY, execute StegVerse primary through the sovereign runtime and READY external execution groups through the TVC generic Test-Lane runner, then validate/compare sanitized evidence only.",
+  "release_condition": "Source validation is directly observed; TVC derives Provider Capsule BOUND/UNBOUND from actual local vault readiness rather than static template assertions; a sanitized resolution bundle from that materialized runtime registry is consumed and bound to the exact plan; the StegVerse primary lane executes on the sovereign local runtime without third-party credentials; optional unavailable external lanes skip independently; at least one vault-ready external provider executes through TVC with local capsule model revalidation; and deterministic sanitized lane evidence/comparison completes without provider-authority promotion.",
+  "next_action": "Observe source validation; then at an authorized runtime bind user credentials through TV/TVC, materialize the runtime Provider Capsule registry from vault readiness, resolve the portable plan, re-plan to READY, execute StegVerse primary through the sovereign runtime and READY external execution groups through the TVC generic Test-Lane runner, then validate/compare sanitized evidence only.",
   "archive_dependency": false
 }
