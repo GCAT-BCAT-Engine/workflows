@@ -1,7 +1,7 @@
 {
   "schema": "stegverse.task-state/v1",
   "task_id": "STEGVERSE-TEST-LANES-001",
-  "state": "SOURCE_IMPLEMENTED_VALIDATION_PENDING_LIVE_CAPSULE_RESOLUTION_PENDING",
+  "state": "SOURCE_IMPLEMENTED_VALIDATION_PENDING_LIVE_CAPSULE_AND_SOVEREIGN_EXECUTION_PENDING",
   "canonical_handoff": "experiments/stegverse-test-lanes/TEST_LANES_MIRROR_HANDOFF.md",
   "credential_authority": "TV/TVC",
   "consumer_credential_authority": "NONE",
@@ -14,6 +14,9 @@
     "experiments/stegverse-test-lanes/manifests/sv-cost-nine-lane.v1.json",
     "experiments/stegverse-test-lanes/plan_test_lanes.py",
     "experiments/stegverse-test-lanes/tests/test_plan_test_lanes.py",
+    "experiments/stegverse-test-lanes/schema/lane-evidence.schema.json",
+    "experiments/stegverse-test-lanes/compare_test_lanes.py",
+    "experiments/stegverse-test-lanes/tests/test_compare_test_lanes.py",
     ".github/workflows/stegverse-test-lanes-validation.yml"
   ],
   "source_commits": [
@@ -22,16 +25,25 @@
     "a6521d4baafe48c44bd0f3b7bdb40313e0dede13",
     "d66dbc3b745dcf040b9669ba3c0f2c6fca8f478c",
     "165e0fabba4f90e7e4b260daf1f2b1fc972b1d66",
-    "165b0a379dd1d15e2b36eb598790f3ed1346c3b9"
+    "81d8bd35e2a13fb023693f2b6dea2829aeab4071",
+    "5bb043b6c435553947a2003ceb31a4c94825d648",
+    "ca2dff6df1dd31f074238e5bfa1a4813f50e6687",
+    "d34130b79929ae4379ecfd5b4de8f67af1d31b34",
+    "110de1013bc3b2649538b81fa6b495e60910c019",
+    "5e9c7c92ef50df1cb7497f1047ad4893e4e23cae"
   ],
   "provider_capsule_authority": "StegVerse-Labs/TVC/tasks/TVC-PROVIDER-CAPSULE-012.json",
+  "provider_capsule_handoff": "StegVerse-Labs/TVC/docs/PROVIDER_CAPSULE_MIRROR_HANDOFF.md",
   "reference_manifest": {
     "test_id": "SV-COST-NINE-LANE-v1",
     "lane_count": 9,
+    "execution_group_count": 5,
     "canonical_task": "SV-RECON-001",
     "canonical_task_blob_sha": "1bd5a640bf067ffad87c427a5c12cb57c029b214",
     "stegverse_primary_lanes": 1,
     "external_control_lanes": 8,
+    "external_provider_candidate_calls": 4,
+    "raw_governed_pairs_reuse_same_candidate": true,
     "manifest_contains_credentials": false
   },
   "planner_contract": {
@@ -41,18 +53,47 @@
     "required_unbound_external_state": "BLOCKED_REQUIRED_CREDENTIAL_UNBOUND",
     "bound_external_state": "READY_FOR_TVC_EXECUTION",
     "execution_authority_granted_by_plan": false,
-    "credential_material_in_plan": false
+    "credential_material_in_plan": false,
+    "external_raw_governed_candidate_reuse": true
+  },
+  "evidence_contract": {
+    "generic_lane_evidence_schema_installed": true,
+    "deterministic_comparator_installed": true,
+    "ready_lane_evidence_required": true,
+    "skipped_lane_evidence_forbidden": true,
+    "plan_task_provider_mode_binding_required": true,
+    "credential_material_allowed": false
+  },
+  "external_execution_contract": {
+    "owner": "StegVerse-Labs/TVC",
+    "lease": "scripts/tvc_issue_test_lane_lease.py",
+    "runner": "scripts/tvc_run_test_lane_external_candidate.py",
+    "specialized_sv_recon_measurement_lease_unchanged": true,
+    "generic_literal_prompt_profile_supported": true,
+    "sanitized_resolution_exact_plan_hash_required": true,
+    "selected_model_local_capsule_revalidation_required": true,
+    "credential_input_to_runner": false
+  },
+  "sovereign_execution_contract": {
+    "owner": "StegVerse-002/micro-node-runtime via canonical .github#60/G18 -> TVC -> LLM-adapter -> Master Records chain",
+    "role": "PRIMARY_REFERENCE",
+    "third_party_required": false,
+    "credential_requirement": "NONE",
+    "portable_consumer_may_not_replace_runtime": true
   },
   "validation": {
     "manifest_schema_installed": true,
     "deterministic_planner_tests_installed": true,
+    "execution_group_tests_installed": true,
+    "generic_evidence_comparison_tests_installed": true,
     "stdlib_only_validation_workflow_installed": true,
     "workflow_provider_secrets": false,
     "hosted_ci_directly_observed": false,
     "live_capsule_resolution_observed": false,
-    "live_lane_execution_observed": false
+    "live_external_lane_execution_observed": false,
+    "live_stegverse_primary_lane_execution_observed": false
   },
-  "release_condition": "Source validation is directly observed; a TVC Provider Capsule resolution bundle is consumed without credential material; the StegVerse primary lane remains executable without third-party credentials; optional unbound external lanes skip independently; and at least one locally bound user external provider can advance through TVC to sanitized lane evidence without provider-authority promotion.",
-  "next_action": "Observe source validation, then feed a TVC non-secret capsule-resolution bundle into plan_test_lanes.py. Execute READY lanes only through their canonical owners: StegVerse local through the sovereign runtime path and external controls through TVC provider-operation authority.",
+  "release_condition": "Source validation is directly observed; a TVC Provider Capsule resolution bundle is consumed without credential material and bound to the exact plan; the StegVerse primary lane executes on the sovereign local runtime without third-party credentials; optional unbound external lanes skip independently; at least one locally bound user external provider executes through TVC with local capsule model revalidation; and deterministic sanitized lane evidence/comparison completes without provider-authority promotion.",
+  "next_action": "Observe source validation; then at an authorized runtime bind user credentials through TV/TVC, resolve the portable plan, re-plan to READY, execute StegVerse primary through the sovereign runtime and READY external execution groups through the TVC generic Test-Lane runner, then validate/compare sanitized evidence only.",
   "archive_dependency": false
 }
