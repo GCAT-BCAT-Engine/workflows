@@ -1,7 +1,7 @@
 {
   "schema": "stegverse.task-state/v1",
   "task_id": "SV-COST-NINE-LANE-GEN2-004",
-  "state": "ALL_CANDIDATES_AND_COST_EVIDENCE_PRESENT_HOSTED_PROOF_PENDING",
+  "state": "FULL_NINE_LANE_EXECUTION_TRIGGERED_COST_PUBLICATION_BLOCKED",
   "canonical_handoff": "experiments/sv-cost-program/nine-lane-results/SV_COST_NINE_LANE_MIRROR_HANDOFF.md",
   "hosted_proof_observer_task": "experiments/sv-cost-program/nine-lane-results/hosted-proof-observer-task.json",
   "credential_authority": "TV/TVC",
@@ -10,16 +10,23 @@
   "provider_candidates_required": 4,
   "behavioral_lanes_available": 9,
   "behavioral_lanes_required": 9,
-  "cost_evidence_complete": true,
-  "cost_blockers": [],
+  "behavioral_preflight": "PASS_ALL_FOUR_CANDIDATES_EXACT_REQUIRED_OUTPUT_MATCH",
+  "required_output_hash": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
+  "cost_evidence_complete": false,
+  "cost_blockers": [
+    "MISSING_COST_EVIDENCE:openai:reported_cost_or_admissible_bound_cost_basis_required",
+    "MISSING_COST_EVIDENCE:anthropic:reported_cost_or_admissible_bound_cost_basis_required",
+    "MISSING_COST_EVIDENCE:deepseek:reported_cost_or_admissible_bound_cost_basis_required"
+  ],
   "kimi_cost_evidence": "cost-evidence/kimi-k3-allegretto-subscription-allocation-2026-08-17.json",
   "kimi_cost_basis": "SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST_NOT_MARGINAL_API_CHARGE",
   "kimi_allocated_effective_cost_usd": 0.006249833333,
   "machine_owner": ".github/workflows/sv-cost-nine-lane-candidate-proof.yml",
-  "machine_trigger": "push affecting nine-lane files or workflow_dispatch",
-  "source_ready": true,
-  "hosted_proof_state": "PENDING_DIRECT_OBSERVATION",
-  "publication_state": "SOURCE_READY_HOSTED_PROOF_PENDING",
+  "execution_request_commit": "a9bd7627c713ea602b68e97dccbe205e087f369c",
+  "cost_gate_commit": "018f45bcde6450dcb9fae2304fa8c7ed7f3c0a80",
+  "hosted_proof_state": "TRIGGERED_PENDING_DIRECT_RUN_JOB_LOG_ARTIFACT_OBSERVATION",
+  "publication_state": "PUBLICATION_BLOCKED_COST_EVIDENCE_INCOMPLETE",
+  "next_action": "Inspect hosted proof when run id is observable; independently obtain or bind admissible OpenAI, Anthropic, and DeepSeek cost bases before bounded cost publication.",
   "session_unique_untransferred_requirements": 0,
   "session_archive_ready": true
 }
