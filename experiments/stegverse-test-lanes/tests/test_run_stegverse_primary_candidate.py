@@ -1,8 +1,8 @@
 import importlib.util
 import json
+import unittest
 from pathlib import Path
-
-import pytest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("primary_runner", ROOT / "run_stegverse_primary_candidate.py")
@@ -84,54 +84,55 @@ def fake_http(url, *, payload=None, timeout=30):
     }
 
 
-def test_primary_candidate_is_credential_free_and_sovereign(monkeypatch):
-    task = task_bytes()
-    value = finalize(plan(), task)
-    monkeypatch.setattr(MODULE, "http_json", fake_http)
-    result = MODULE.run_primary_candidate(plan=value, task_bytes=task, endpoint="http://127.0.0.1:11435")
-    assert result["state"] == "PRIMARY_CANDIDATE_COMPLETE"
-    assert result["provider"] == "stegverse_local"
-    assert result["provider_role"] == "PRIMARY"
-    assert result["credential_requirement"] == "NONE"
-    assert result["credential_material_present"] is False
-    assert result["third_party_inference_required"] is False
-    assert result["candidate_output"] == '{"ok":true}'
+class PrimaryRunnerTests(unittest.TestCase):
+    def test_primary_candidate_is_credential_free_and_sovereign(self):
+        task = task_bytes()
+        value = finalize(plan(), task)
+        with patch.object(MODULE, "http_json", side_effect=fake_http):
+            result = MODULE.run_primary_candidate(plan=value, task_bytes=task, endpoint="http://127.0.0.1:11435")
+        self.assertEqual(result["state"], "PRIMARY_CANDIDATE_COMPLETE")
+        self.assertEqual(result["provider"], "stegverse_local")
+        self.assertEqual(result["provider_role"], "PRIMARY")
+        self.assertEqual(result["credential_requirement"], "NONE")
+        self.assertFalse(result["credential_material_present"])
+        self.assertFalse(result["third_party_inference_required"])
+        self.assertEqual(result["candidate_output"], '{"ok":true}')
+
+    def test_non_loopback_endpoint_is_rejected(self):
+        task = task_bytes()
+        value = finalize(plan(), task)
+        with patch.object(MODULE, "http_json", side_effect=fake_http):
+            with self.assertRaisesRegex(MODULE.PrimaryCandidateError, "loopback-local"):
+                MODULE.run_primary_candidate(plan=value, task_bytes=task, endpoint="https://example.com")
+
+    def test_third_party_health_drift_is_rejected(self):
+        task = task_bytes()
+        value = finalize(plan(), task)
+        def drift(url, *, payload=None, timeout=30):
+            if url.endswith("/health"):
+                health = dict(fake_http(url, payload=payload, timeout=timeout))
+                health["third_party_inference_required"] = True
+                return health
+            return fake_http(url, payload=payload, timeout=timeout)
+        with patch.object(MODULE, "http_json", side_effect=drift):
+            with self.assertRaisesRegex(MODULE.PrimaryCandidateError, "third-party inference"):
+                MODULE.run_primary_candidate(plan=value, task_bytes=task, endpoint="http://localhost:11435")
+
+    def test_plan_hash_tamper_is_rejected(self):
+        task = task_bytes()
+        value = finalize(plan(), task)
+        value["manifest_hash"] = "sha256:tampered"
+        with patch.object(MODULE, "http_json", side_effect=fake_http):
+            with self.assertRaisesRegex(MODULE.PrimaryCandidateError, "plan hash mismatch"):
+                MODULE.run_primary_candidate(plan=value, task_bytes=task, endpoint="http://127.0.0.1:11435")
+
+    def test_task_blob_tamper_is_rejected(self):
+        task = task_bytes()
+        value = finalize(plan(), task)
+        with patch.object(MODULE, "http_json", side_effect=fake_http):
+            with self.assertRaisesRegex(MODULE.PrimaryCandidateError, "task source blob mismatch"):
+                MODULE.run_primary_candidate(plan=value, task_bytes=b'{"task_id":"SV-RECON-001","events":[1]}', endpoint="http://127.0.0.1:11435")
 
 
-def test_non_loopback_endpoint_is_rejected(monkeypatch):
-    task = task_bytes()
-    value = finalize(plan(), task)
-    monkeypatch.setattr(MODULE, "http_json", fake_http)
-    with pytest.raises(MODULE.PrimaryCandidateError, match="loopback-local"):
-        MODULE.run_primary_candidate(plan=value, task_bytes=task, endpoint="https://example.com")
-
-
-def test_third_party_health_drift_is_rejected(monkeypatch):
-    task = task_bytes()
-    value = finalize(plan(), task)
-    def drift(url, *, payload=None, timeout=30):
-        if url.endswith("/health"):
-            health = dict(fake_http(url, payload=payload, timeout=timeout))
-            health["third_party_inference_required"] = True
-            return health
-        return fake_http(url, payload=payload, timeout=timeout)
-    monkeypatch.setattr(MODULE, "http_json", drift)
-    with pytest.raises(MODULE.PrimaryCandidateError, match="third-party inference"):
-        MODULE.run_primary_candidate(plan=value, task_bytes=task, endpoint="http://localhost:11435")
-
-
-def test_plan_hash_tamper_is_rejected(monkeypatch):
-    task = task_bytes()
-    value = finalize(plan(), task)
-    value["manifest_hash"] = "sha256:tampered"
-    monkeypatch.setattr(MODULE, "http_json", fake_http)
-    with pytest.raises(MODULE.PrimaryCandidateError, match="plan hash mismatch"):
-        MODULE.run_primary_candidate(plan=value, task_bytes=task, endpoint="http://127.0.0.1:11435")
-
-
-def test_task_blob_tamper_is_rejected(monkeypatch):
-    task = task_bytes()
-    value = finalize(plan(), task)
-    monkeypatch.setattr(MODULE, "http_json", fake_http)
-    with pytest.raises(MODULE.PrimaryCandidateError, match="task source blob mismatch"):
-        MODULE.run_primary_candidate(plan=value, task_bytes=b'{"task_id":"SV-RECON-001","events":[1]}', endpoint="http://127.0.0.1:11435")
+if __name__ == "__main__":
+    unittest.main()
