@@ -1,0 +1,48 @@
+{
+  "schema": "stegverse.provider-cost-evidence/v1",
+  "provider": "anthropic",
+  "model": "Claude Opus 5 High",
+  "task_id": "SV-RECON-001",
+  "candidate": "candidate-inputs/anthropic.json",
+  "evidence_mode": "PROVIDER_UI_PLAN_AND_USAGE_OBSERVATION",
+  "request_specific_cost_available": false,
+  "request_specific_token_usage_available": false,
+  "observations": {
+    "plan": "Claude Pro - Monthly",
+    "plan_price_usd_per_month": 20.0,
+    "current_session_percent_used": 2,
+    "current_session_reset_in": "1 hr 59 min",
+    "weekly_all_models_percent_used": 0,
+    "usage_credits_spent_usd": 0.54,
+    "usage_credit_monthly_spend_limit_usd": 100.0,
+    "usage_credit_current_balance_usd": 96.63,
+    "promotional_credit_usd": 96.62,
+    "promotional_credit_expiry": "2026-09-19"
+  },
+  "source_observation": {
+    "provided_by": "user Claude account UI screenshots",
+    "captured_local_time": "2026-08-17T22:51:00-05:00",
+    "screenshot_sha256": {
+      "usage_limits": "ac6206865c0bae6afaf60c108eb42c45a9b98a7b2a9ec9be2c61e3b4097b1c39",
+      "usage_credits": "d2297e5fb7df31a70b71f5460b05a3d54400b24374790738ab94cb95600c3699",
+      "subscription": "fbdb892d5be0d529776aec434ef23bf478586bd7e34c23c63ede52a5061f97e0"
+    }
+  },
+  "admissibility": {
+    "authentic_provider_billing_or_usage_surface": true,
+    "candidate_identity_bound": false,
+    "non_null_provider_cost_for_candidate": false,
+    "finding": "EVIDENCE_OBSERVED_REQUEST_ALLOCATION_STILL_BLOCKED",
+    "reason": "The UI exposes current-session percentage and aggregate usage-credit spend, but neither value is shown as attributable specifically to the SV-RECON-001 Claude response."
+  },
+  "rejected_inferences": [
+    "Do not attribute the full 2% current-session usage to SV-RECON-001 without a before/after delta or provider-recorded per-message allocation.",
+    "Do not attribute the full $0.54 usage-credit spend to SV-RECON-001 without request-specific billing evidence.",
+    "Do not divide the $20 monthly subscription by an arbitrary request count."
+  ],
+  "release_condition": "A provider-facing record exposes request-specific cost, exact token usage plus a bound versioned rate card, or a before/after provider-observed quota/credit delta tied specifically to the SV-RECON-001 candidate.",
+  "credential_authority": "TV/TVC",
+  "provider_api_key_transferred_to_stegverse": false,
+  "non_tv_tvc_secret_or_token_used": false,
+  "claim_boundary": "Authentic Claude consumer-plan and usage evidence only; not a request-specific marginal cost claim."
+}
