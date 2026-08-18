@@ -1,10 +1,12 @@
 {
   "schema": "stegverse.task-state/v1",
   "task_id": "SV-COST-NINE-LANE-GEN2-004",
-  "state": "FULL_NINE_LANE_EXECUTION_TRIGGERED_DOWNSTREAM_VALIDATION_OWNED",
+  "state": "FULL_NINE_LANE_LOCAL_BEHAVIORAL_PROOF_PASS_HOSTED_VALIDATION_OWNED",
   "canonical_handoff": "experiments/sv-cost-program/nine-lane-results/SV_COST_NINE_LANE_MIRROR_HANDOFF.md",
   "hosted_proof_observer_task": "experiments/sv-cost-program/nine-lane-results/hosted-proof-observer-task.json",
   "cost_evidence_request": "experiments/sv-cost-program/nine-lane-results/cost-evidence-request.json",
+  "local_behavioral_proof_receipt": "experiments/sv-cost-program/nine-lane-results/receipts/local-validation/SV-COST-NINE-LANE-LOCAL-PROOF-20260817T2223-0500.json",
+  "local_behavioral_proof_commit": "979f796f394fa0d6e4832b843c0046e11b2f2a95",
   "credential_authority": "TV/TVC",
   "non_tv_tvc_secret_or_token_allowed": false,
   "provider_candidates_supplied": 4,
@@ -12,6 +14,7 @@
   "behavioral_lanes_available": 9,
   "behavioral_lanes_required": 9,
   "behavioral_preflight": "PASS_ALL_FOUR_CANDIDATES_EXACT_REQUIRED_OUTPUT_MATCH",
+  "local_behavioral_validation": "PASS_LOCAL_BEHAVIORAL_EQUIVALENCE",
   "required_output_hash": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
   "cost_evidence_complete": false,
   "cost_blockers": [
@@ -30,6 +33,5 @@
   "next_action": "Repository-native observer inspects hosted proof. Cost-evidence-request.json separately owns OpenAI/Anthropic/DeepSeek cost evidence until its machine release condition is met.",
   "session_role": "MERGED_INTO_CANONICAL_MACHINE_AND_PROVIDER_EVIDENCE_WORKSTREAMS",
   "session_unique_untransferred_requirements": 0,
-  "session_archive_ready": true,
-  "archive_rationale": "All implementation, validation, cost-evidence, collision, and release requirements are durable and assigned. Remaining work has machine/provider owners and machine-observable release conditions; no chat-only information or authority remains."
+  "session_archive_ready": true
 }
