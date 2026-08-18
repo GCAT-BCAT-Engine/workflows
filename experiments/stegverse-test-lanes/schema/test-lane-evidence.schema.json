@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/test-lane-evidence.v1.json",
+  "title": "StegVerse Test Lane Evidence",
+  "type": "object",
+  "required": [
+    "schema",
+    "test_id",
+    "lane_id",
+    "request_hash",
+    "provider",
+    "provider_role",
+    "mode",
+    "task_source_blob_sha",
+    "output",
+    "output_hash",
+    "latency_ms",
+    "credential_material_present",
+    "execution_authority_granted"
+  ],
+  "properties": {
+    "schema": {"const": "stegverse.test-lane-evidence.v1"},
+    "test_id": {"type": "string", "minLength": 1},
+    "lane_id": {"type": "string", "minLength": 1},
+    "request_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "provider": {"type": "string", "minLength": 1},
+    "provider_role": {"enum": ["PRIMARY", "CONTROL_OR_FALLBACK_ONLY"]},
+    "mode": {"enum": ["REFERENCE", "RAW", "GOVERNED"]},
+    "model": {"type": ["string", "null"]},
+    "task_source_blob_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "output": {"type": "string"},
+    "output_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "latency_ms": {"type": "number", "minimum": 0},
+    "usage": {"type": ["object", "null"]},
+    "cost": {"type": ["object", "null"]},
+    "governance": {"type": ["object", "null"]},
+    "provider_evidence": {"type": ["object", "null"]},
+    "credential_material_present": {"const": false},
+    "execution_authority_granted": {"const": false}
+  },
+  "additionalProperties": false
+}
