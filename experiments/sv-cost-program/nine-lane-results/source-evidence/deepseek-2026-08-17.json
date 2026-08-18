@@ -1,0 +1,33 @@
+{
+  "schema": "stegverse.provider-candidate-source-evidence/v1",
+  "provider": "deepseek",
+  "ui_model_label": null,
+  "provider_identity_binding": "USER_CONFIRMED_SCREENSHOTS_2_AND_3_ARE_DEEPSEEK",
+  "task_id": "SV-RECON-001",
+  "captured_from_user_existing_provider_relationship": true,
+  "provider_api_key_transferred_to_stegverse": false,
+  "provider_usage_exposed": false,
+  "reported_cost_exposed": false,
+  "response_id_exposed": false,
+  "latency_exposed": false,
+  "observed_result": {
+    "final_state": {"balance": 75, "risk_score": 3, "standing": "active"},
+    "decisions": [
+      {"event_id":"E01","status":"ALLOW"},
+      {"event_id":"E02","status":"ALLOW"},
+      {"event_id":"E03","status":"ALLOW"},
+      {"event_id":"E04","status":"DENY"},
+      {"event_id":"E05","status":"DENY"},
+      {"event_id":"E06","status":"ALLOW"}
+    ],
+    "denial_explanations": {
+      "E04": "85 - 100 = -15, below minimum balance 0",
+      "E05": "3 + 3 = 6, above maximum risk score 5"
+    }
+  },
+  "structured_transcription": {
+    "applied_count": 4,
+    "denied_count": 2,
+    "note": "Counts are deterministic transcriptions of the six visible decisions; the exact DeepSeek model/version was not visible in the captured UI and was not inferred."
+  }
+}
