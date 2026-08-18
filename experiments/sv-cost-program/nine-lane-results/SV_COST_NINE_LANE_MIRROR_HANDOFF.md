@@ -1,6 +1,6 @@
 # SV-COST Nine-Lane Mirror Handoff
 
-Status: **FULL 9/9 EXECUTION TRIGGERED — ALL FOUR CANDIDATES PRESENT — BEHAVIORAL PREFLIGHT PASS — HOSTED PROOF MACHINE-OWNED — THREE COST BASES DURABLY ASSIGNED — SESSION ARCHIVE READY**
+Status: **FULL 9/9 LOCAL BEHAVIORAL PROOF PASS — HOSTED PROOF MACHINE-OWNED — THREE COST BASES DURABLY ASSIGNED — SESSION ARCHIVE READY**
 
 ## Canonical authority
 
@@ -14,6 +14,7 @@ non-TV/TVC protected secret/token authority: FORBIDDEN
 canonical task state: experiments/sv-cost-program/nine-lane-results/task-state.json
 hosted proof observer: experiments/sv-cost-program/nine-lane-results/hosted-proof-observer-task.json
 cost evidence request: experiments/sv-cost-program/nine-lane-results/cost-evidence-request.json
+local proof receipt: experiments/sv-cost-program/nine-lane-results/receipts/local-validation/SV-COST-NINE-LANE-LOCAL-PROOF-20260817T2223-0500.json
 machine runner: .github/workflows/sv-cost-nine-lane-candidate-proof.yml
 ```
 
@@ -36,6 +37,7 @@ Kimi candidate -> candidate-inputs/kimi.json
 Kimi subscription cost evidence -> cost-evidence/kimi-k3-allegretto-subscription-allocation-2026-08-17.json
 hosted proof observation -> hosted-proof-observer-task.json
 remaining provider cost evidence -> cost-evidence-request.json
+local deterministic behavioral proof -> receipts/local-validation/SV-COST-NINE-LANE-LOCAL-PROOF-20260817T2223-0500.json
 ```
 
 No duplicate local-model/runtime, heartbeat, credential, wallet-signing, or provider-client authority is created here.
@@ -50,6 +52,7 @@ Kimi K3: supplied / locally validated
 external candidates: 4/4
 behavioral lanes: 9/9
 behavioral preflight: PASS_ALL_FOUR_CANDIDATES_EXACT_REQUIRED_OUTPUT_MATCH
+local behavioral validation: PASS_LOCAL_BEHAVIORAL_EQUIVALENCE
 required output hash: sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf
 provider API keys transferred to StegVerse: false
 ```
@@ -63,6 +66,20 @@ DeepSeek: 1c0e30513d844cb63be9e1e5bab189697df3566e
 Kimi: b76fc0489e356773e98ff4006daa7fe7a61e7de4
 ```
 
+## Local deterministic proof
+
+A fresh local deterministic validation was executed from the canonical task/candidate state and preserved as:
+
+```text
+receipt: receipts/local-validation/SV-COST-NINE-LANE-LOCAL-PROOF-20260817T2223-0500.json
+receipt commit: 979f796f394fa0d6e4832b843c0046e11b2f2a95
+result: PASS_LOCAL_BEHAVIORAL_EQUIVALENCE
+required hash: sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf
+reconstructed hash: sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf
+```
+
+The receipt proves deterministic local equivalence of the four committed provider candidates to the canonical SV-RECON-001 result. It does not claim GitHub-hosted workflow success, artifact creation, provider marginal cost, or cost-publication readiness.
+
 ## Execution and hosted proof
 
 ```text
@@ -74,9 +91,7 @@ hosted workflow state: MACHINE_OWNED_PENDING_DIRECT_RUN_JOB_LOG_ARTIFACT_OBSERVA
 hosted PASS: NOT YET CLAIMED
 ```
 
-The connected Actions surface used by the originating chat did not enumerate push-triggered run IDs. A credential-free local mirror execution was also attempted, but that execution environment had no outbound DNS to raw.githubusercontent.com. Neither observation is a StegVerse test failure and neither is substituted for hosted proof.
-
-`hosted-proof-observer-task.json` owns the remaining workflow validation. It must inspect the actual run, job, logs, artifact, nine-lane result, governance/replay/reconstruction receipts, pairwise candidate hashes, credential nonpossession, and cost blocker state before promotion.
+The connected Actions surface used by the originating chat does not enumerate push-triggered run IDs. Do not infer hosted PASS from the trigger commit or from local proof. `hosted-proof-observer-task.json` owns the remaining workflow validation and must inspect the actual run, job, logs, artifact, nine-lane result, governance/replay/reconstruction receipts, pairwise candidate hashes, credential nonpossession, and cost blocker state before promotion.
 
 ## Cost evidence state
 
@@ -138,6 +153,7 @@ Authoritative state: trade-ready wallet handoff is `COMPLETE_ACTIVATED_AT_PRE_SI
 ```text
 nine-lane source implementation: COMPLETE_RELEASED
 provider behavioral acquisition: COMPLETE 4/4
+local behavioral proof: COMPLETE PASS
 hosted proof validation: MACHINE_OWNED / hosted-proof-observer-task.json
 OpenAI/Anthropic/DeepSeek cost evidence: BLOCKED_WITH_DURABLE_RELEASE_CONDITIONS / cost-evidence-request.json
 Kimi cost evidence: COMPLETE_BOUNDED_SUBSCRIPTION_ALLOCATION
@@ -174,13 +190,13 @@ Archival readiness does not claim hosted proof PASS or complete dollar-cost publ
 ## Completion accounting
 
 ```text
-session-owned source/control/consolidation deliverables: 20/20 COMPLETE
-source/control developed files: 20/20
+session-owned source/control/consolidation deliverables: 21/21 COMPLETE
+source/control developed files: 21/21
 scaffolding/stubs: 0
 missing required source/control files: 0
 provider behavioral candidates: 4/4
 behavioral lanes source-ready: 9/9
-session-owned source/local validation obligations: COMPLETE
+local behavioral proof: PASS
 hosted proof: MACHINE_OWNED_PENDING_OBSERVATION
 provider cost evidence: 1/4 complete; 3/4 durably blocked/assigned
 session integration/ownership transfers: 8/8
