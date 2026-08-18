@@ -1,6 +1,6 @@
 # SV-COST Generation-3 Control Mirror Handoff
 
-Updated: 2026-08-18T07:58:00-05:00
+Updated: 2026-08-18T08:10:00-05:00
 
 ## Active goal
 
@@ -15,7 +15,7 @@ canonical_precedence_handoff: StegVerse-Labs/TVC/docs/PROVIDER_PRECEDENCE_MIRROR
 credential_authority: TV/TVC
 NON-TV/TVC secret/token allowed: false
 consumer credential authority: NONE
-claim_state: CONSUMER_INTEGRATION_DEFINED_LIVE_EVIDENCE_PENDING
+claim_state: CONSUMER_SOURCE_COMPLETE_LIVE_EVIDENCE_PENDING
 ```
 
 ## Provider role model
@@ -59,7 +59,7 @@ OpenAI key: created; currently preserved as transitional GitHub Secret; live TVC
 Anthropic key: created; currently preserved as transitional GitHub Secret; live TVC binding not observed
 DeepSeek key: created; private/idle; live TVC binding not observed
 Kimi/Moonshot key: created; private/idle; live TVC binding not observed
-raw key values observed by this repository/session records: false
+raw key values observed by repository/session records: false
 ```
 
 This observation is availability metadata only; it grants no credential authority. Production/control use requires TV/TVC inherited-FD vault binding.
@@ -76,6 +76,36 @@ required output hash: sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe
 ```
 
 Any live runner must fail closed on task-blob mismatch.
+
+## Consumer implementation — COMPLETE SOURCE
+
+```text
+d3f63ef11e34e0a86e828b5b3862f7137153dc02  Generation-3 scoped mirror handoff
+a201db82d308df5af3336903654f5677787553d0  task-state.json
+9d2904355fcc84b6ad9a5c6174b73abfe446c05b  validate_tvc_evidence.py
+24c16755bf73fcedc6c21b32102f6eac52980f36  validator deterministic tests
+e35e38327291dc03ff18471cb706c1995ad3cd81  validation-only GitHub workflow
+9ca36bb2a865f9ec0b0b73c4629cf70106af49a2  task-state validation reconciliation
+```
+
+The consumer validator accepts only `stegverse.tvc.provider-measurement-evidence.v1` packets with exact provider/model/response identity, actual provider usage, `REQUEST_BOUND_COST`, exact-model official HTTPS rate card, canonical `SV-RECON-001` output hash, `provider_api_key_transferred_to_consumer=false`, and `secret_material_returned=false`.
+
+It rejects secret-like fields, candidate drift, estimated/non-request-bound cost, missing providers, and rate-card/model mismatch. A successful four-provider bundle is explicitly labeled `CONTROL_OR_FALLBACK_ONLY`, `provider_credentials_received=false`, and `publication_authority_granted=false`.
+
+## Validation posture
+
+```text
+validator source: INSTALLED
+synthetic deterministic tests: INSTALLED
+validation-only workflow: INSTALLED
+workflow permissions: {}
+workflow provider secrets: NONE
+hosted workflow result directly observed: NO
+independent anonymous clone execution: BLOCKED because current container DNS cannot resolve github.com
+live TVC evidence validation: NOT YET POSSIBLE / evidence not emitted
+```
+
+No PASS is inferred from source installation. GitHub Actions is validation-only and is not provider, credential, runtime, publication, or activation authority.
 
 ## Accepted Generation-3 evidence
 
@@ -96,7 +126,7 @@ Token estimates may be retained as separate controls but may not substitute for 
 
 ## Comparison outputs
 
-Generation 3 will compare, without conflation:
+Generation 3 compares, without conflation:
 
 1. Generation-2 consumer-surface economics/observability;
 2. StegVerse sovereign/local measured execution and local cost basis;
@@ -114,32 +144,21 @@ Generation-2 nine-lane source/behavior: COMPLETE_RELEASED
 Generation-2 hosted proof observation: MACHINE_OWNED by nine-lane hosted observer
 Generation-3 provider execution: TV/TVC OWNED
 Generation-3 credential binding: TV/TVC OWNED
-Generation-3 evidence consumer integration: GCAT-BCAT-Engine/workflows
+Generation-3 evidence consumer source: COMPLETE
+Generation-3 evidence validation: WAITING_TVC_EVIDENCE / hosted source validation not directly observed
 StegVerse local model/runtime: COMPLETE_RELEASED elsewhere
 StegVerse live sovereign activation: MACHINE_OWNED elsewhere
 ```
 
-No duplicate provider execution, credential store, local model runtime, heartbeat, or route authority is authorized here.
+No duplicate provider execution, credential store, local model runtime, heartbeat, route authority, or provider-primary authority is authorized here.
 
-## Validation and release conditions
+## Release condition
 
-Current validation state:
-
-```text
-Generation-3 consumer handoff: INSTALLED
-consumer task state: PENDING_INSTALLATION
-live TVC key binding: NOT OBSERVED
-live API calls: NOT EXECUTED
-exact provider usage receipts: NOT EMITTED
-REQUEST_BOUND_COST receipts: NOT EMITTED
-cross-generation comparison: NOT YET EXECUTABLE
-```
-
-Release requires 4/4 sanitized provider control envelopes accepted by schema/validator, exact canonical task identity, no secret material, exact provider usage, provider/model-matched rate cards, and retained distinction between Generation 2, StegVerse primary execution, and Generation 3 controls.
+Release requires 4/4 sanitized provider control envelopes accepted by the installed validator, exact canonical task identity, no secret material, exact provider usage, provider/model-matched official rate cards, retained distinction between Generation 2, StegVerse primary execution, and Generation 3 controls, and directly inspectable validation evidence.
 
 ## Integration/propagation boundary
 
-No Site, Publisher, admissibility-wiki, or stegguardian-wiki propagation is authorized from source readiness alone. Public propagation may occur only after the applicable cost publication gate and sovereign activation/release criteria are met and the destination handoffs are re-read.
+No Site, Publisher, admissibility-wiki, or stegguardian-wiki propagation is authorized from source readiness alone. Public propagation may occur only after the applicable cost publication gate and sovereign activation/release criteria are met and destination handoffs are re-read.
 
 ## Session consolidation
 
@@ -148,22 +167,25 @@ MERGED INTO:
 - `StegVerse-Labs/TVC/docs/PROVIDER_PRECEDENCE_MIRROR_HANDOFF.md`
 - `StegVerse-Labs/TVC/tasks/TVC-PROVIDER-MEASUREMENT-INGRESS-006.json`
 - `StegVerse-Labs/TVC/tasks/TVC-PROVIDER-MEASUREMENT-LIVE-RUN-009`
+- `experiments/sv-cost-program/generation-3-control/task-state.json`
 - `experiments/sv-cost-program/nine-lane-results/SV_COST_NINE_LANE_MIRROR_HANDOFF.md`
 
-Unique session requirements transferred here: StegVerse-primary provider role, third-party fallback/control-only role, four-key non-secret availability state, Generation-2/Generation-3 separation, exact API telemetry control objective, and TV/TVC-only credential authority.
+Unique session requirements transferred: StegVerse-primary provider role, third-party fallback/control-only role, four-key non-secret availability state, Generation-2/Generation-3 separation, exact API telemetry control objective, TV/TVC-only credential authority, and fail-closed consumer evidence acceptance.
 
 ## Completion accounting
 
 ```text
-required control/integration files: 2
-implemented: 1/2
+required control/integration files: 4
+implemented: 4/4
 scaffolding/stubs: 0
-missing: task-state.json
-validation: 0/2 live evidence gates
-integration: 1/3 (handoff installed; task state + live evidence pending)
-session requirements transferred: 6/6
+missing required source files: 0
+source validation surfaces: 2/2 installed
+hosted validation observed: 0/1
+live evidence gates: 0/4 provider packets
+consumer integration source: 100%
+session requirements transferred: 7/7
 ```
 
 ## Next executable action
 
-Install the consumer task state/validator contract, then wait for TVC-owned `TVC-PROVIDER-MEASUREMENT-LIVE-RUN-009` sanitized evidence. Do not execute provider APIs or handle provider credentials in this repository.
+TVC owns the next live action: bind the already-created provider keys only through inherited FDs and execute `TVC-PROVIDER-MEASUREMENT-LIVE-RUN-009`. This repository then validates the four sanitized evidence packets automatically. No provider credential or provider API execution belongs in this repository.
