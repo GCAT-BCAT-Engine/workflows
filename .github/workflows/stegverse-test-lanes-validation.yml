@@ -1,0 +1,68 @@
+name: Validate StegVerse Test Lanes
+
+on:
+  push:
+    paths:
+      - "experiments/stegverse-test-lanes/**"
+      - ".github/workflows/stegverse-test-lanes-validation.yml"
+  pull_request:
+    paths:
+      - "experiments/stegverse-test-lanes/**"
+      - ".github/workflows/stegverse-test-lanes-validation.yml"
+  workflow_dispatch: {}
+
+permissions: {}
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Anonymous checkout without GitHub credential authority
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          test -z "${GITHUB_TOKEN:-}"
+          test -z "${GH_TOKEN:-}"
+          git init .
+          git remote add origin https://github.com/GCAT-BCAT-Engine/workflows.git
+          if [ -n "${PR_NUMBER:-}" ]; then
+            env -u GITHUB_TOKEN -u GH_TOKEN git fetch --depth=1 origin "refs/pull/${PR_NUMBER}/merge"
+          else
+            env -u GITHUB_TOKEN -u GH_TOKEN git fetch --depth=1 origin "${GITHUB_SHA}"
+          fi
+          git checkout --detach FETCH_HEAD
+
+      - name: Run stdlib-only Test Lanes tests
+        run: python3 experiments/stegverse-test-lanes/tests/test_plan_test_lanes.py
+
+      - name: Produce credential-free reference plan
+        run: |
+          python3 experiments/stegverse-test-lanes/plan_test_lanes.py \
+            experiments/stegverse-test-lanes/manifests/sv-cost-nine-lane.v1.json \
+            --output /tmp/sv-cost-nine-lane.plan.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          plan=json.loads(Path('/tmp/sv-cost-nine-lane.plan.json').read_text())
+          assert plan['state'] == 'CAPSULE_RESOLUTION_REQUIRED'
+          assert plan['primary_provider'] == 'stegverse_local'
+          assert plan['credential_authority'] == 'TV/TVC'
+          assert plan['credential_material_present'] is False
+          assert plan['lane_count'] == 9
+          assert sum(1 for x in plan['lanes'] if x['state'] == 'READY_LOCAL_PRIMARY') == 1
+          assert sum(1 for x in plan['lanes'] if x['state'] == 'READY_FOR_TVC_CAPSULE_RESOLUTION') == 8
+          print('STEGVERSE_TEST_LANES_REFERENCE_PLAN_PASS')
+          PY
+
+      - name: Prove validation-only/no provider-secret authority
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          text=Path('.github/workflows/stegverse-test-lanes-validation.yml').read_text()
+          for marker in ('OPENAI_API_KEY', 'ANTHROPIC_API_KEY', 'DEEPSEEK_API_KEY', 'MOONSHOT_API_KEY', 'secrets.'):
+              assert marker not in text
+          assert 'permissions: {}' in text
+          assert 'git push' not in text
+          print('STEGVERSE_TEST_LANES_NO_PROVIDER_SECRET_AUTHORITY_PASS')
+          PY
