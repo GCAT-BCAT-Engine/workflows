@@ -13,13 +13,20 @@
     "openai": {
       "owner": "USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_COST_EVIDENCE_EXPORT",
       "candidate": "candidate-inputs/openai.json",
-      "state": "BLOCKED_ON_ADMISSIBLE_COST_EVIDENCE",
+      "state": "EVIDENCE_OBSERVED_REQUEST_ALLOCATION_STILL_BLOCKED",
+      "observed_evidence": "cost-evidence/openai-chatgpt-plus-ui-observation-2026-08-17.json",
+      "observed_evidence_commit": "131633acfa2a4620039404c57e1d1c915bc53136",
+      "observed_plan_price_usd_per_month": 19.99,
+      "observed_model_label": "5.6 Sol",
+      "observed_extra_agent_credit_offer": "100 credits for $4.00",
+      "request_specific_cost_available": false,
       "accepted_evidence_modes": [
         "PROVIDER_REPORTED_REQUEST_COST_USD",
         "PROVIDER_REPORTED_EXACT_INPUT_OUTPUT_TOKEN_USAGE_PLUS_BOUND_VERSIONED_RATE_CARD",
         "PROVIDER_UI_SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST"
       ],
-      "release_condition": "A cost-evidence/openai-*.json record exists, binds to SV-RECON-001 and candidate-inputs/openai.json, identifies its evidence mode and source observation, uses no non-TV/TVC secret/token, and yields a non-null bounded provider cost with basis disclosure."
+      "rejected_shortcut": "Do not divide the $19.99 monthly subscription by an arbitrary request count and do not apply the agent-credit unit price to SV-RECON-001 without provider-observed binding.",
+      "release_condition": "A provider-facing record exposes request-specific cost, exact token usage plus a bound versioned rate card, or provider-observed quota allocation tied to SV-RECON-001 and candidate-inputs/openai.json."
     },
     "anthropic": {
       "owner": "USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_COST_EVIDENCE_EXPORT",
@@ -61,7 +68,7 @@
   ],
   "machine_observer": ".github/workflows/sv-cost-nine-lane-candidate-proof.yml",
   "machine_release_condition": "All three incomplete provider cost-evidence records validate and the canonical run emits zero cost blockers; hosted run/job/log/artifact inspection then determines bounded publication readiness.",
-  "next_action": "Observe provider-facing cost/usage evidence when available; install only admissible evidence records; candidate behavioral outputs do not need to be rerun at providers.",
+  "next_action": "Observe provider-facing Anthropic and DeepSeek cost/usage evidence and any stronger OpenAI request-specific usage surface if available; install only admissible evidence records; candidate behavioral outputs do not need to be rerun at providers.",
   "archive_dependency": false,
   "archive_rationale": "The remaining cost evidence has explicit owners, accepted evidence modes, rejection rules, file destinations, and machine-observable release conditions; no chat-only information is required."
 }
