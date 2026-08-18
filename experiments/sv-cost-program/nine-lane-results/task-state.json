@@ -4,11 +4,13 @@
   "state": "MACHINE_OWNED_PARTIAL_CANDIDATES_PRESENT",
   "canonical_handoff": "experiments/sv-cost-program/nine-lane-results/SV_COST_NINE_LANE_MIRROR_HANDOFF.md",
   "candidate_acquisition_request": "experiments/sv-cost-program/nine-lane-results/candidate-acquisition-request.json",
+  "hosted_proof_observer_task": "experiments/sv-cost-program/nine-lane-results/hosted-proof-observer-task.json",
   "credential_authority": "TV/TVC",
   "non_tv_tvc_secret_or_token_allowed": false,
-  "collision_boundary": "Do not mutate historical five-lane or seven-lane evidence and do not add provider API clients or provider secrets to this workload.",
+  "github_token_runtime_authority": "NONE",
+  "collision_boundary": "Do not mutate historical five-lane or seven-lane evidence; do not add provider API clients, provider secrets, non-TV/TVC protected tokens, a second cost runner, or duplicate local-model/runtime authority.",
   "candidate_tasks": [
-    {"provider":"openai","owner":"USER_EXISTING_CHATGPT_RELATIONSHIP","state":"SUPPLIED_LOCALLY_VALIDATED_PENDING_HOSTED_MACHINE_PROOF","evidence":"candidate-inputs/openai.json","evidence_commit":"13c0941704f0e3e037dcdd6e1ae70910345f056f","candidate_hash":"sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf","local_validation":"PASS_EXACT_REQUIRED_OUTPUT_MATCH","release_condition":"candidate-proof workflow emits OpenAI raw/governed rows from candidate-inputs/openai.json with provider credential possession false"},
+    {"provider":"openai","owner":"USER_EXISTING_CHATGPT_RELATIONSHIP","state":"SUPPLIED_LOCALLY_VALIDATED_HOSTED_PROOF_MACHINE_OWNED","evidence":"candidate-inputs/openai.json","evidence_commit":"13c0941704f0e3e037dcdd6e1ae70910345f056f","candidate_hash":"sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf","local_validation":"PASS_EXACT_REQUIRED_OUTPUT_MATCH","hosted_validation_owner":"hosted-proof-observer-task.json","release_condition":"observer directly inspects a post-OpenAI candidate-proof run/job/log/artifact and records either OPENAI_HOSTED_PROOF_PASS or a precise fail-closed defect"},
     {"provider":"anthropic","owner":"USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_CANDIDATE_EXPORT","state":"BLOCKED_ON_AUTHENTIC_PROVIDER_CANDIDATE","evidence_request":"candidate-acquisition-request.json","release_condition":"candidate-inputs/anthropic.json exists and validates with provider_api_key_transferred_to_stegverse=false"},
     {"provider":"deepseek","owner":"USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_CANDIDATE_EXPORT","state":"BLOCKED_ON_AUTHENTIC_PROVIDER_CANDIDATE","evidence_request":"candidate-acquisition-request.json","release_condition":"candidate-inputs/deepseek.json exists and validates with provider_api_key_transferred_to_stegverse=false"},
     {"provider":"kimi","owner":"USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_CANDIDATE_EXPORT","state":"BLOCKED_ON_AUTHENTIC_PROVIDER_CANDIDATE_AND_COST_EVIDENCE","evidence_request":"candidate-acquisition-request.json","release_condition":"candidate-inputs/kimi.json exists and validates with provider_api_key_transferred_to_stegverse=false and reported provider cost is retained or a versioned official Kimi rate card is separately bound"}
@@ -17,5 +19,9 @@
   "machine_trigger": "push affecting nine-lane files or workflow_dispatch",
   "machine_outputs": ["nine_lane_generation_2_results.json","provider governance/replay/reconstruction receipts when candidates exist","immutable workflow artifact"],
   "next_task_after_release": "Integrate admitted nine-lane result into experiments/sv-cost-program/governed-ai-premium after all nine lanes and required cost evidence pass.",
-  "publication_state": "NOT_ADMITTED"
+  "publication_state": "NOT_ADMITTED",
+  "session_role": "MERGED_INTO_CANONICAL_MACHINE_AND_PROVIDER_AUTHORITY_WORKSTREAMS",
+  "session_unique_untransferred_requirements": 0,
+  "session_archive_ready": true,
+  "archive_rationale": "All session-specific implementation, validation contracts, candidate acquisition instructions, collision boundaries, and downstream release conditions are repository-owned. Remaining hosted-proof observation and provider candidates do not require chat-only information or authority."
 }
