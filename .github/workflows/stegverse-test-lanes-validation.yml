@@ -42,6 +42,9 @@ jobs:
       - name: Run stdlib-only sovereign primary candidate tests
         run: python3 experiments/stegverse-test-lanes/tests/test_run_stegverse_primary_candidate.py
 
+      - name: Run stdlib-only nine-lane evidence builder tests
+        run: python3 experiments/stegverse-test-lanes/tests/test_build_lane_evidence.py
+
       - name: Produce credential-free reference plan
         run: |
           python3 experiments/stegverse-test-lanes/plan_test_lanes.py \
