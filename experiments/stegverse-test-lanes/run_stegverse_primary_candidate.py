@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import time
 from pathlib import Path
 from typing import Any, Mapping
 from urllib.parse import urlparse
@@ -134,6 +135,7 @@ def run_primary_candidate(
 
     prompt_profile = str(group.get("prompt_profile") or "")
     prompt = build_prompt(task, prompt_profile)
+    started_ns = time.monotonic_ns()
     response = http_json(
         endpoint + "/v1/chat/completions",
         payload={
@@ -144,6 +146,7 @@ def run_primary_candidate(
         },
         timeout=timeout,
     )
+    latency_ms = (time.monotonic_ns() - started_ns) / 1_000_000
     require(response.get("model") == expected_model, "primary response model mismatch")
     choices = response.get("choices")
     require(isinstance(choices, list) and len(choices) == 1, "primary response must contain one choice")
@@ -176,6 +179,7 @@ def run_primary_candidate(
         "prompt_sha256": sha256_text(prompt),
         "candidate_output": candidate,
         "candidate_output_sha256": sha256_text(candidate),
+        "latency_ms": latency_ms,
         "provider_usage": dict(usage),
         "credential_requirement": "NONE",
         "credential_material_present": False,
