@@ -1,53 +1,23 @@
 {
   "schema": "stegverse.validation-task/v1",
   "task_id": "SV-COST-NINE-LANE-HOSTED-PROOF-005",
-  "originating_goal": "Validate the full Generation-2 nine-lane candidate-proof workflow with all four external candidates while preserving the Kimi cost-evidence gate.",
-  "repository": "GCAT-BCAT-Engine/workflows",
-  "branch": "main",
-  "canonical_handoff": "experiments/sv-cost-program/nine-lane-results/SV_COST_NINE_LANE_MIRROR_HANDOFF.md",
   "owner": "repository-native candidate-proof validation observer",
   "claim_state": "MACHINE_OWNED_VALIDATION_PENDING_OBSERVATION",
-  "validation_claim": "CLAIMED_FOR_VALIDATION",
-  "trigger": {
-    "workflow": ".github/workflows/sv-cost-nine-lane-candidate-proof.yml",
-    "event": "push",
-    "required_path_change": "experiments/sv-cost-program/nine-lane-results/**",
-    "candidate_commits": {
-      "openai": "13c0941704f0e3e037dcdd6e1ae70910345f056f",
-      "anthropic": "ef7feb4a9a5322e79f40ff0802736209c3da28b3",
-      "deepseek": "1c0e30513d844cb63be9e1e5bab189697df3566e",
-      "kimi": "b76fc0489e356773e98ff4006daa7fe7a61e7de4"
-    },
-    "runner_cost_gate_commit": "6148e6c8faf38b73b876d01e7266b8e7991beb59"
-  },
-  "required_observation": {
-    "workflow_name": "SV Cost Nine-Lane Credentialless Candidate Proof",
-    "job": "validate-and-process",
-    "required_result_predicates": {
-      "row_count": 9,
-      "required_lane_ids": [
-        "openai-raw","openai-governed",
-        "anthropic-raw","anthropic-governed",
-        "stegverse-only",
-        "deepseek-raw","deepseek-governed",
-        "kimi-raw","kimi-governed"
-      ],
-      "all_nine_present": true,
-      "all_lanes_admissible": true,
-      "provider_credential_possession": false,
-      "raw_governed_candidate_hashes_match": true,
-      "all_replay_matches": true,
-      "all_reconstruction_matches": true,
-      "candidate_blockers": [],
-      "cost_evidence_complete": false,
-      "cost_blockers": ["MISSING_COST_EVIDENCE:kimi:reported_cost_or_versioned_official_rate_card_required"],
-      "publication_status": "PUBLICATION_BLOCKED"
-    }
-  },
-  "release_condition": "Directly inspect the newest run, job, logs, artifact, and nine-lane result. Record FULL_NINE_LANE_BEHAVIORAL_PROOF_PASS_COST_EVIDENCE_PENDING when all behavioral predicates pass and Kimi cost remains unavailable, or record a precise fail-closed defect.",
-  "next_action_after_pass": "Obtain admissible Kimi cost evidence or bind a versioned official Kimi rate card, then rerun before complete cost publication.",
-  "archive_dependency": false,
+  "workflow": ".github/workflows/sv-cost-nine-lane-candidate-proof.yml",
+  "required_rows": 9,
+  "all_nine_present": true,
+  "all_lanes_admissible": true,
+  "candidate_blockers": [],
+  "cost_evidence_complete": true,
+  "cost_blockers": [],
+  "kimi_cost_evidence": "cost-evidence/kimi-k3-allegretto-subscription-allocation-2026-08-17.json",
+  "kimi_cost_evidence_commit": "926490c407eb199e401ab991b4fdd8b8c860bb56",
+  "kimi_cost_basis": "SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST_NOT_MARGINAL_API_CHARGE",
+  "kimi_allocated_effective_cost_usd": 0.006249833333,
+  "required_publication_status": "RESULTS_READY_FOR_BOUNDED_PUBLICATION",
+  "release_condition": "Directly inspect the newest workflow run, job, logs, artifact, and result after the Kimi allocation evidence and canonical entrypoint commits; record pass only if all nine lanes, credential nonpossession, replay, reconstruction, cost evidence, and publication predicates pass.",
+  "next_action_after_pass": "Integrate the bounded result into experiments/sv-cost-program/governed-ai-premium with the Kimi non-marginal subscription allocation basis preserved.",
   "credential_authority": "TV/TVC",
   "non_tv_tvc_secret_or_token_allowed": false,
-  "github_token_runtime_authority": "NONE"
+  "archive_dependency": false
 }
