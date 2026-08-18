@@ -165,6 +165,69 @@ def _resolution_index(capsule_resolutions: Mapping[str, Any] | None) -> dict[str
     return result
 
 
+def _group_state(states: list[str]) -> str:
+    if any(state.startswith("BLOCKED_") for state in states):
+        return "BLOCKED"
+    if any(state == "READY_FOR_TVC_CAPSULE_RESOLUTION" for state in states):
+        return "READY_FOR_TVC_CAPSULE_RESOLUTION"
+    if any(state == "READY_FOR_TVC_EXECUTION" for state in states):
+        return "READY_FOR_TVC_EXECUTION"
+    if all(state == "SKIPPED_OPTIONAL_CREDENTIAL_UNBOUND" for state in states):
+        return "SKIPPED_OPTIONAL_CREDENTIAL_UNBOUND"
+    if all(state == "READY_LOCAL_PRIMARY" for state in states):
+        return "READY_LOCAL_PRIMARY"
+    return "BLOCKED"
+
+
+def _execution_groups(planned: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    buckets: dict[str, dict[str, Any]] = {}
+    order: list[str] = []
+    for request in planned:
+        group_material = {
+            "provider": request["provider"],
+            "provider_role": request["provider_role"],
+            "capsule_id": request["capsule_id"],
+            "capability": request["capability"],
+            "model": request.get("model"),
+            "parameters": request.get("parameters") or {},
+            "task_id": request["task_id"],
+            "task_source": request["task_source"],
+            "task_source_blob_sha": request["task_source_blob_sha"],
+            "prompt_profile": request["prompt_profile"],
+        }
+        key = sha256_json(group_material)
+        if key not in buckets:
+            buckets[key] = {
+                "schema": "stegverse.test-lanes-execution-group.v1",
+                "execution_group_id": "group:" + key.split(":", 1)[1][:24],
+                **group_material,
+                "lane_ids": [],
+                "modes": [],
+                "member_request_hashes": [],
+                "member_states": [],
+                "required": False,
+                "candidate_reuse": False,
+                "credential_material_present": False,
+                "execution_authority_granted_by_group": False,
+            }
+            order.append(key)
+        group = buckets[key]
+        group["lane_ids"].append(request["lane_id"])
+        group["modes"].append(request["mode"])
+        group["member_request_hashes"].append(request["request_hash"])
+        group["member_states"].append(request["state"])
+        group["required"] = bool(group["required"] or request["state"] == "BLOCKED_REQUIRED_CREDENTIAL_UNBOUND" or request["provider"] == PRIMARY_PROVIDER)
+
+    groups: list[dict[str, Any]] = []
+    for key in order:
+        group = buckets[key]
+        group["state"] = _group_state(group.pop("member_states"))
+        group["candidate_reuse"] = group["provider"] != PRIMARY_PROVIDER and len(group["lane_ids"]) > 1
+        group["group_hash"] = sha256_json(group)
+        groups.append(group)
+    return groups
+
+
 def plan_manifest(
     manifest: Mapping[str, Any],
     *,
@@ -229,6 +292,7 @@ def plan_manifest(
         request["request_hash"] = sha256_json(request)
         planned.append(request)
 
+    groups = _execution_groups(planned)
     if blockers:
         overall = "BLOCKED"
     elif any(item["state"] == "READY_FOR_TVC_CAPSULE_RESOLUTION" for item in planned):
@@ -245,8 +309,10 @@ def plan_manifest(
         "credential_authority": "TV/TVC",
         "credential_material_present": False,
         "lane_count": len(planned),
+        "execution_group_count": len(groups),
         "blockers": blockers,
         "lanes": planned,
+        "execution_groups": groups,
     }
     result["plan_hash"] = sha256_json(result)
     return result
