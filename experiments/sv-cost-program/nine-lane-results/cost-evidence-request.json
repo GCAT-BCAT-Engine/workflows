@@ -1,0 +1,67 @@
+{
+  "schema": "stegverse.provider-cost-evidence-request/v1",
+  "task_id": "SV-COST-NINE-LANE-COST-EVIDENCE-006",
+  "experiment_id": "SV-COST-NINE-LANE-RESULTS-001",
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "branch": "main",
+  "canonical_handoff": "experiments/sv-cost-program/nine-lane-results/SV_COST_NINE_LANE_MIRROR_HANDOFF.md",
+  "credential_authority": "TV/TVC",
+  "non_tv_tvc_secret_or_token_allowed": false,
+  "provider_api_key_transfer_allowed": false,
+  "purpose": "Complete bounded dollar-cost publication without fabricating provider usage, billing, or token metadata.",
+  "providers": {
+    "openai": {
+      "owner": "USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_COST_EVIDENCE_EXPORT",
+      "candidate": "candidate-inputs/openai.json",
+      "state": "BLOCKED_ON_ADMISSIBLE_COST_EVIDENCE",
+      "accepted_evidence_modes": [
+        "PROVIDER_REPORTED_REQUEST_COST_USD",
+        "PROVIDER_REPORTED_EXACT_INPUT_OUTPUT_TOKEN_USAGE_PLUS_BOUND_VERSIONED_RATE_CARD",
+        "PROVIDER_UI_SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST"
+      ],
+      "release_condition": "A cost-evidence/openai-*.json record exists, binds to SV-RECON-001 and candidate-inputs/openai.json, identifies its evidence mode and source observation, uses no non-TV/TVC secret/token, and yields a non-null bounded provider cost with basis disclosure."
+    },
+    "anthropic": {
+      "owner": "USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_COST_EVIDENCE_EXPORT",
+      "candidate": "candidate-inputs/anthropic.json",
+      "state": "BLOCKED_ON_ADMISSIBLE_COST_EVIDENCE",
+      "accepted_evidence_modes": [
+        "PROVIDER_REPORTED_REQUEST_COST_USD",
+        "PROVIDER_REPORTED_EXACT_INPUT_OUTPUT_TOKEN_USAGE_PLUS_BOUND_VERSIONED_RATE_CARD",
+        "PROVIDER_UI_SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST"
+      ],
+      "release_condition": "A cost-evidence/anthropic-*.json record exists, binds to SV-RECON-001 and candidate-inputs/anthropic.json, identifies its evidence mode and source observation, uses no non-TV/TVC secret/token, and yields a non-null bounded provider cost with basis disclosure."
+    },
+    "deepseek": {
+      "owner": "USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_COST_EVIDENCE_EXPORT",
+      "candidate": "candidate-inputs/deepseek.json",
+      "state": "BLOCKED_ON_ADMISSIBLE_COST_EVIDENCE",
+      "accepted_evidence_modes": [
+        "PROVIDER_REPORTED_REQUEST_COST_USD",
+        "PROVIDER_REPORTED_EXACT_INPUT_OUTPUT_TOKEN_USAGE_PLUS_BOUND_VERSIONED_RATE_CARD",
+        "PROVIDER_UI_SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST"
+      ],
+      "release_condition": "A cost-evidence/deepseek-*.json record exists, binds to SV-RECON-001 and candidate-inputs/deepseek.json, identifies its evidence mode and source observation, uses no non-TV/TVC secret/token, and yields a non-null bounded provider cost with basis disclosure."
+    },
+    "kimi": {
+      "owner": "COMPLETE",
+      "state": "COMPLETE_BOUNDED_SUBSCRIPTION_ALLOCATION",
+      "evidence": "cost-evidence/kimi-k3-allegretto-subscription-allocation-2026-08-17.json",
+      "allocated_effective_cost_usd": 0.006249833333,
+      "basis": "SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST_NOT_MARGINAL_API_CHARGE"
+    }
+  },
+  "rejected_evidence": [
+    "estimated token counts not reported by provider billing/usage surfaces",
+    "word counts treated as provider tokens",
+    "subscription sticker price without a provider-observed allocation or quota-consumption basis",
+    "historical request cost from a different task/model represented as this request cost",
+    "fabricated provider response IDs, latency, usage, invoice values, or API charges",
+    "provider API keys, bearer tokens, passwords, or other non-TV/TVC protected secrets"
+  ],
+  "machine_observer": ".github/workflows/sv-cost-nine-lane-candidate-proof.yml",
+  "machine_release_condition": "All three incomplete provider cost-evidence records validate and the canonical run emits zero cost blockers; hosted run/job/log/artifact inspection then determines bounded publication readiness.",
+  "next_action": "Observe provider-facing cost/usage evidence when available; install only admissible evidence records; candidate behavioral outputs do not need to be rerun at providers.",
+  "archive_dependency": false,
+  "archive_rationale": "The remaining cost evidence has explicit owners, accepted evidence modes, rejection rules, file destinations, and machine-observable release conditions; no chat-only information is required."
+}
