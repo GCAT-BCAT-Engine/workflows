@@ -1,0 +1,55 @@
+name: SV Cost Generation-3 Control Validation
+
+on:
+  push:
+    paths:
+      - 'experiments/sv-cost-program/generation-3-control/**'
+      - '.github/workflows/sv-cost-generation-3-control-validation.yml'
+  pull_request:
+    paths:
+      - 'experiments/sv-cost-program/generation-3-control/**'
+      - '.github/workflows/sv-cost-generation-3-control-validation.yml'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  validate-control-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Anonymous public checkout without GitHub credential authority
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          test -z "${GITHUB_TOKEN:-}"
+          test -z "${GH_TOKEN:-}"
+          git init .
+          git remote add origin https://github.com/GCAT-BCAT-Engine/workflows.git
+          if [ -n "${PR_NUMBER:-}" ]; then
+            env -u GITHUB_TOKEN -u GH_TOKEN git fetch --depth=1 origin "refs/pull/${PR_NUMBER}/merge"
+          else
+            env -u GITHUB_TOKEN -u GH_TOKEN git fetch --depth=1 origin "${GITHUB_SHA}"
+          fi
+          git checkout --detach FETCH_HEAD
+
+      - name: Validate Generation-3 consumer evidence contract
+        run: |
+          set -euo pipefail
+          cd experiments/sv-cost-program/generation-3-control
+          python -m unittest -v test_validate_tvc_evidence.py
+
+      - name: Prove validation-only and credential-free posture
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          workflow = Path('.github/workflows/sv-cost-generation-3-control-validation.yml').read_text(encoding='utf-8')
+          forbidden = (
+              'secrets.', 'OPENAI_API_KEY', 'ANTHROPIC_API_KEY', 'DEEPSEEK_API_KEY',
+              'MOONSHOT_API_KEY', 'git push', 'contents: write'
+          )
+          for marker in forbidden:
+              assert marker not in workflow, marker
+          print('SV_COST_GENERATION_3_CONTROL_VALIDATION_ONLY_PASS')
+          PY
