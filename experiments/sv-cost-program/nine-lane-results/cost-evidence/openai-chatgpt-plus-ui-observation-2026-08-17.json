@@ -1,0 +1,47 @@
+{
+  "schema": "stegverse.provider-cost-evidence/v1",
+  "provider": "openai",
+  "model": "5.6 Sol",
+  "task_id": "SV-RECON-001",
+  "evidence_mode": "PROVIDER_UI_PLAN_AND_CREDIT_PRICE_OBSERVED_INSUFFICIENT_FOR_REQUEST_ALLOCATION",
+  "state": "OBSERVED_BUT_INSUFFICIENT_FOR_REQUEST_ALLOCATION",
+  "candidate": "candidate-inputs/openai.json",
+  "provider_api_key_transferred_to_stegverse": false,
+  "non_tv_tvc_secret_or_token_used": false,
+  "observed_plan": {
+    "name": "ChatGPT Plus",
+    "price_usd_per_month": 19.99,
+    "renews": "August 22"
+  },
+  "observed_usage_surface": {
+    "agentic_weekly_usage_remaining_percent": 100,
+    "credits_remaining": 0,
+    "credits_description": "Credits extend usage beyond plan limits."
+  },
+  "observed_credit_offer": {
+    "credits": 100,
+    "price_usd": 4.00,
+    "scope": "agentic/additional credits as shown in Usage and limits UI",
+    "bound_to_sv_recon_001_request": false
+  },
+  "request_specific_usage_or_cost": {
+    "exact_input_tokens": null,
+    "exact_output_tokens": null,
+    "request_cost_usd": null,
+    "request_quota_consumption": null,
+    "admissible_bounded_provider_cost_usd": null
+  },
+  "rejection_reason": "The screenshots establish the subscription price, model label, weekly agentic usage state, and optional credit price, but do not expose per-message usage, token counts, request-specific quota consumption, or a charge tied to SV-RECON-001. Dividing the monthly subscription by an arbitrary prompt count or applying the agent-credit unit price to this model response would fabricate a request allocation.",
+  "source_observation": {
+    "provided_by": "user ChatGPT iOS UI screenshots",
+    "observed_at_local": "2026-08-17T22:31:00-05:00",
+    "screenshot_sha256": {
+      "usage_and_limits_with_credit_offer": "f69e867d7c193753409cb5a8c6af0a84b8758255fc932f06398a06d4f8f95acf",
+      "usage_and_limits": "9a64b889327a0064d417ac094f190861dfd24be713318cf749727fdf27d1cf1c",
+      "general_model_label": "d4f99b530eb6cacce243163a4795dbb2e3d9943f6f62b3085badeb085e731d9b",
+      "apple_subscription": "5baffdcddfded804ea9ce7aad1599167876249bada0e5010f667e3a249c80fa1"
+    }
+  },
+  "release_condition": "A provider-facing surface exposes request-specific cost, exact token usage plus a bound rate card, or a provider-observed quota allocation tied to the SV-RECON-001 candidate.",
+  "claim_boundary": "Authentic OpenAI plan/usage UI evidence only; insufficient to assign a per-request dollar cost to SV-RECON-001."
+}
