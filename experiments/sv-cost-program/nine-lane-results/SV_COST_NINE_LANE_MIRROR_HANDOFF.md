@@ -1,6 +1,6 @@
 # SV-COST Nine-Lane Mirror Handoff
 
-Status: **GENERATION_2 IMPLEMENTED — OPENAI + ANTHROPIC SUPPLIED/LOCALLY VALIDATED — DEEPSEEK + KIMI REMAIN — MACHINE CONTINUATION ACTIVE — SESSION ARCHIVE SAFE**
+Status: **ALL FOUR EXTERNAL CANDIDATES PRESENT — 9/9 BEHAVIORAL LANES SOURCE-READY — KIMI COST EVIDENCE BOUND — HOSTED PROOF PENDING**
 
 ## Canonical authority
 
@@ -9,223 +9,119 @@ repository: GCAT-BCAT-Engine/workflows
 branch: main
 experiment_id: SV-COST-NINE-LANE-RESULTS-001
 generation: GENERATION_2_CREDENTIALLESS_OUTPUT_BOUNDARY
-credential_invariant: NO_PROVIDER_API_KEY_POSSESSED_OR_CONSUMED_BY_STEGVERSE_TEST_WORKLOAD
+credential_authority: TV/TVC
+non-TV/TVC protected secret/token authority: FORBIDDEN
 canonical task state: experiments/sv-cost-program/nine-lane-results/task-state.json
-candidate acquisition request: experiments/sv-cost-program/nine-lane-results/candidate-acquisition-request.json
 hosted proof observer: experiments/sv-cost-program/nine-lane-results/hosted-proof-observer-task.json
 machine runner: .github/workflows/sv-cost-nine-lane-candidate-proof.yml
-historical five/seven-lane evidence: IMMUTABLE
 ```
 
-This handoff is the canonical continuation for all new nine-lane cost-comparison work and supersedes chat-only continuation state.
-
-## Originating and adjacent session goals
-
-The originating cost goal is a credentialless nine-lane comparison with OpenAI, Anthropic, DeepSeek, Kimi, and StegVerse-only while preserving TV/TVC-only protected credential authority and no provider API-key possession by StegVerse. Adjacent session requirements were StegFin trade readiness, executable sovereign local-runtime discovery/launch/proof, formal local model development, and durable session consolidation.
-
-Those adjacent goals remain merged into their canonical owners and are not reimplemented here.
-
-## Current nine-lane state
+## Candidate state
 
 ```text
-openai-raw: supplied / locally validated
-openai-governed: hosted proof machine-owned
-anthropic-raw: supplied / locally validated
-anthropic-governed: hosted proof machine-owned
-stegverse-only: implemented / validated
-deepseek-raw/governed: blocked on authentic credentialless DeepSeek candidate
-kimi-raw/governed: blocked on authentic credentialless Kimi candidate plus retained cost evidence
-external providers supplied: 2/4
-expected rows from newest partial run: 5/9
-publication: NOT_ADMITTED
+OpenAI: supplied / locally validated
+Anthropic Opus 5 High: supplied / locally validated
+DeepSeek UI model unspecified: supplied / locally validated
+Kimi K3: supplied / locally validated
+external candidates: 4/4
+behavioral lanes available: 9/9
+provider API keys transferred to StegVerse: false
 ```
 
-`raw` means an externally obtained provider candidate observed before StegVerse governance. It never means direct provider-key possession.
-
-## Authoritative files
+Canonical candidate commits:
 
 ```text
-experiments/sv-cost-program/nine-lane-results/task.json
-experiments/sv-cost-program/nine-lane-results/candidate-input.schema.json
-experiments/sv-cost-program/nine-lane-results/candidate-acquisition-request.json
-experiments/sv-cost-program/nine-lane-results/candidate-inputs/openai.json
-experiments/sv-cost-program/nine-lane-results/candidate-inputs/anthropic.json
-experiments/sv-cost-program/nine-lane-results/candidate-source-evidence/anthropic-opus-5-high-2026-08-17.md
-experiments/sv-cost-program/nine-lane-results/hosted-proof-observer-task.json
-experiments/sv-cost-program/nine-lane-results/run.py
-experiments/sv-cost-program/nine-lane-results/run_candidate_outputs.py
-experiments/sv-cost-program/nine-lane-results/validate_schema.py
-experiments/sv-cost-program/nine-lane-results/task-state.json
-.github/workflows/sv-cost-nine-lane-schema.yml
-.github/workflows/sv-cost-nine-lane-candidate-proof.yml
+OpenAI: 13c0941704f0e3e037dcdd6e1ae70910345f056f
+Anthropic: ef7feb4a9a5322e79f40ff0802736209c3da28b3
+DeepSeek: 1c0e30513d844cb63be9e1e5bab189697df3566e
+Kimi: b76fc0489e356773e98ff4006daa7fe7a61e7de4
 ```
 
-## Credential and collision boundary
+## Kimi cost evidence
+
+The user-facing Kimi account does not expose exact API token billing for the candidate. It does expose subscription-plan price and per-request quota consumption.
 
 ```text
-credential authority: TV/TVC
-provider key transferred to StegVerse: FALSE
-provider key consumed by nine-lane workload: FALSE
-non-TV/TVC protected secret/token authority: FORBIDDEN
-GitHub token runtime/provider authority: NONE
-synthetic/fabricated provider candidate: FORBIDDEN
-parallel provider client/runner/credential authority: FORBIDDEN
+model: Kimi K3
+plan: Allegretto
+annual subscription price: $374.99
+quota reset: monthly
+candidate usage record: k3 Token Usage Query (1), 2026-08-17 19:57 local
+candidate quota consumption: 0.02%
+separate token-usage follow-up: k3 Token Usage Query (2), 2026-08-17 20:04 local, 0.02%
+monthly-equivalent subscription: $374.99 / 12 = $31.249166666667
+candidate allocation: $31.249166666667 * 0.0002 = $0.006249833333
 ```
 
-Do not infer provider usage, cost, latency, response IDs, or API model IDs when a user-facing provider surface did not expose them.
-
-## OpenAI candidate evidence
+Canonical evidence:
 
 ```text
-candidate: candidate-inputs/openai.json
-candidate commit: 13c0941704f0e3e037dcdd6e1ae70910345f056f
-model label: gpt-5.6-sol
-provider_api_key_transferred_to_stegverse: false
-candidate hash: sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf
-local deterministic validation: PASS_EXACT_REQUIRED_OUTPUT_MATCH
+cost-evidence/kimi-k3-allegretto-subscription-allocation-2026-08-17.json
+commit: 926490c407eb199e401ab991b4fdd8b8c860bb56
+basis: SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST_NOT_MARGINAL_API_CHARGE
 ```
 
-## Anthropic candidate evidence
+This value is an allocated share of a subscription quota, not a Kimi marginal API invoice charge. Kimi's UI-generated approximate token counts are retained as non-billing estimates only and are not used as exact cost inputs.
 
-The user supplied a Claude response and screenshot showing the UI model label `Opus 5 High`.
+## Cost-method policy
+
+`task.json` schema version 5.0.0 now permits Kimi cost evidence in this order:
+
+1. candidate-reported marginal cost;
+2. a versioned official rate card;
+3. provider-UI subscription-quota allocation when explicitly labeled non-marginal.
+
+Policy commit: `7360ce6f66aee89c42087b033ac3507f4c8b4655`.
+
+The canonical `run.py` entrypoint binds the Kimi allocation after the behavioral/governance runner executes, without creating a second runner or credential authority. Entrypoint commit: `972b0b68c5c7652023b1cc3e59b624663f60c2e9`.
+
+## Hosted proof
+
+Source state is ready for a complete 9/9 run. Hosted success is **not yet claimed**.
 
 ```text
-candidate: candidate-inputs/anthropic.json
-candidate commit: ef7feb4a9a5322e79f40ff0802736209c3da28b3
-source evidence: candidate-source-evidence/anthropic-opus-5-high-2026-08-17.md
-source evidence commit: 1967c56e5482b8bc47c63d050c88ba9811a382ce
-UI model label: Opus 5 High
-provider_api_key_transferred_to_stegverse: false
-candidate hash: sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf
-local deterministic validation: PASS_EXACT_REQUIRED_OUTPUT_MATCH
-provider response ID: not exposed
-provider token usage: not exposed
-provider cost: not exposed
-provider latency: not exposed
+observer: hosted-proof-observer-task.json
+observer commit: 0f9ee19a3e0b1ec54362d8dc8e33ea828a608a4b
+required rows: 9
+required all_nine_present: true
+required all_lanes_admissible: true
+required candidate blockers: []
+required cost_evidence_complete: true
+required cost blockers: []
+required Kimi basis: SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST_NOT_MARGINAL_API_CHARGE
+required bounded publication status: RESULTS_READY_FOR_BOUNDED_PUBLICATION
 ```
 
-Claude explicitly returned the six event outcomes and final state `balance=75`, `risk_score=3`, `standing=active`. The candidate schema requires `applied_count` and `denied_count`; those were deterministically transcribed as `4` and `2` from Claude's explicit six decisions rather than represented as separately reported provider metadata. Claude's additional observation that the supplied specification does not gate debit on risk score is preserved in the source-evidence record but does not alter the task contract.
-
-## Durable hosted-proof observer
-
-```text
-task: SV-COST-NINE-LANE-HOSTED-PROOF-005
-file: hosted-proof-observer-task.json
-latest observer commit: 0bba42a7dd052b453076f4ad0d272745655e8ddb
-owner: repository-native candidate-proof validation observer
-claim state: MACHINE_OWNED_VALIDATION_PENDING_OBSERVATION
-archive dependency: false
-```
-
-The observer now requires the newest partial proof to contain exactly five rows:
-
-```text
-openai-raw
-openai-governed
-anthropic-raw
-anthropic-governed
-stegverse-only
-```
-
-It also requires OpenAI and Anthropic credential nonpossession, pairwise raw/governed hash equality, governance ALLOW, replay match, reconstruction match, immutable artifact evidence, and exactly two remaining candidate blockers: DeepSeek and Kimi.
-
-## Durable acquisition boundary for remaining providers
-
-```text
-file: candidate-acquisition-request.json
-installation commit: 0db03e39d5d403e11112b6f152a667d69e7b814a
-remaining providers: deepseek, kimi
-owner: USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_CANDIDATE_EXPORT
-release: schema-valid candidate-inputs/<provider>.json with provider_api_key_transferred_to_stegverse=false
-trigger: push affecting experiments/sv-cost-program/nine-lane-results/**
-```
-
-For Kimi, retain candidate-reported cost if exposed. If no provider cost is exposed, do not guess; a versioned official Kimi rate card must be separately bound before asserting a complete Kimi cost comparison.
-
-## Baseline hosted evidence
-
-```text
-schema workflow run: 31920657862 SUCCESS
-schema job: 95099913822 SUCCESS
-prior bounded candidate-proof run: 31920663542 SUCCESS
-prior candidate-proof job: 95099927760 SUCCESS
-prior artifact: 9256253496
-prior artifact digest: sha256:30f4a366d453c735a20ee1b95b6ea2b9fc1a0110bc5354d928d5813db463601f
-```
-
-That historical candidate proof predates the supplied provider candidates. New hosted proof must be directly inspected before promoting either provider from local-validation state to hosted-validation state.
+The observer must directly inspect the newest workflow run, job, logs, artifact and result before hosted validation is promoted to PASS.
 
 ## Adjacent goal convergence
 
-### Sovereign local model/runtime
+Sovereign local model/runtime remains merged into:
 
-MERGED INTO:
+`StegVerse-002/micro-node-runtime/docs/SOVEREIGN_LOCAL_MODEL_RUNTIME_MIRROR_HANDOFF.md`
 
-```text
-StegVerse-002/micro-node-runtime/docs/SOVEREIGN_LOCAL_MODEL_RUNTIME_MIRROR_HANDOFF.md
-```
+StegFin trade readiness remains merged into:
 
-```text
-SOVEREIGN-LOCAL-MODEL-001: COMPLETE_RELEASED
-stegverse-reference-lm-v1: formally repository-developed
-descriptive select-a-runtime step: SUPERSEDED
-executable discovery/private launch/inference/measurement/proof: COMPLETE_RELEASED
-canonical validation: 31339534741 SUCCESS
-persistent endpoint validation: 31384116055 SUCCESS
-live HB30+/TVC activation: MACHINE_OWNED; manual/session execution prohibited
-```
+`StegVerse-Labs/stegfin-governance/docs/STEGFIN_MIRROR_HANDOFF.md`
 
-### StegFin trade readiness
-
-MERGED INTO:
-
-```text
-StegVerse-Labs/stegfin-governance/docs/STEGFIN_MIRROR_HANDOFF.md
-```
-
-```text
-trade_ready_wallet_handoff_state: COMPLETE_ACTIVATED_AT_PRE_SIGN_BOUNDARY
-wallet signing authority: USER_ONLY
-broadcast authority: USER_ONLY
-non-TV/TVC secret/token allowed: false
-Render required: false
-```
+No cost-analysis task gains runtime credential authority, wallet signing authority, or broadcast authority.
 
 ## Next executable work
 
-1. `hosted-proof-observer-task.json` observes and reconciles the newest post-Anthropic candidate-proof run.
-2. DeepSeek authentic candidate is written to `candidate-inputs/deepseek.json` under the existing acquisition contract.
-3. Kimi authentic candidate is written to `candidate-inputs/kimi.json`, retaining provider-reported cost if exposed.
-4. Each candidate-file push re-enters `.github/workflows/sv-cost-nine-lane-candidate-proof.yml`.
-5. After all nine lanes and required cost/proof predicates pass, integrate admitted evidence into `experiments/sv-cost-program/governed-ai-premium/`.
-6. Before public propagation, re-read the current Publisher, Site, admissibility-wiki, and stegguardian-wiki handoffs.
-
-## Session consolidation / archive state
-
-```text
-session_role: MERGED_INTO_CANONICAL_MACHINE_AND_PROVIDER_AUTHORITY_WORKSTREAMS
-unique_untransferred_requirements: 0
-unassigned_tasks: 0
-conflicting_session_claims: 0
-machine_continuations: DURABLY_ASSIGNED
-remaining user/provider contributions: DeepSeek + Kimi candidate outputs only
-archive_ready: true
-```
-
-This archive-safe state does not claim the newest hosted candidate proof has passed, DeepSeek/Kimi candidates exist, all nine lanes are complete, publication is admitted, sovereign live model activation has occurred, or any StegFin wallet transaction has been signed/broadcast/settled.
+1. Existing GitHub workflow executes the current 9/9 source state.
+2. `hosted-proof-observer-task.json` inspects run/job/log/artifact/result evidence.
+3. On PASS, integrate the bounded result into `experiments/sv-cost-program/governed-ai-premium/`, preserving the mixed cost-basis disclosure.
+4. Re-read Publisher/Site/wiki handoffs before any public propagation.
 
 ## Completion accounting
 
 ```text
-session-owned source/control/consolidation deliverables: COMPLETE
-source/control developed files: 14/14
-scaffolding/stubs: 0
-missing required source/control files: 0
-external provider candidates supplied: 2/4
-partial lanes locally available: 5/9
-hosted validation after provider supply: MACHINE_OWNED_PENDING_DIRECT_OBSERVATION
-remaining authentic provider candidates: 2
-session-specific requirements durably transferred: COMPLETE
-publication: NOT_ADMITTED
-archival readiness: 100%
+source/control implementation: COMPLETE
+external candidates: 4/4
+behavioral lanes source-ready: 9/9
+Kimi cost evidence: COMPLETE_BOUNDED_SUBSCRIPTION_ALLOCATION
+hosted workflow proof: PENDING_DIRECT_OBSERVATION
+publication: SOURCE_READY_NOT_YET_HOSTED_VALIDATED
+session unique untransferred requirements: 0
+archive safe: true
 ```
