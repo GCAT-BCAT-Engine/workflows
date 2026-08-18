@@ -1,7 +1,7 @@
 {
   "schema": "stegverse.validation-task/v1",
   "task_id": "SV-COST-NINE-LANE-HOSTED-PROOF-005",
-  "originating_goal": "Validate the post-OpenAI Generation-2 nine-lane candidate-proof workflow without introducing provider or non-TV/TVC credentials.",
+  "originating_goal": "Validate the newest Generation-2 nine-lane candidate-proof workflow after OpenAI and Anthropic candidates without introducing provider or non-TV/TVC credentials.",
   "repository": "GCAT-BCAT-Engine/workflows",
   "branch": "main",
   "canonical_handoff": "experiments/sv-cost-program/nine-lane-results/SV_COST_NINE_LANE_MIRROR_HANDOFF.md",
@@ -14,11 +14,15 @@
     "workflow": ".github/workflows/sv-cost-nine-lane-candidate-proof.yml",
     "event": "push",
     "required_path_change": "experiments/sv-cost-program/nine-lane-results/**",
-    "openai_candidate_commit": "13c0941704f0e3e037dcdd6e1ae70910345f056f"
+    "openai_candidate_commit": "13c0941704f0e3e037dcdd6e1ae70910345f056f",
+    "anthropic_candidate_commit": "ef7feb4a9a5322e79f40ff0802736209c3da28b3"
   },
   "required_observation": {
     "workflow_name": "SV Cost Nine-Lane Credentialless Candidate Proof",
-    "head_must_include_openai_candidate_commit": true,
+    "head_must_include_candidate_commits": [
+      "13c0941704f0e3e037dcdd6e1ae70910345f056f",
+      "ef7feb4a9a5322e79f40ff0802736209c3da28b3"
+    ],
     "job": "validate-and-process",
     "required_step_conclusions": {
       "Validate credentialless contract": "success",
@@ -27,15 +31,25 @@
       "Upload immutable Generation-2 evidence": "success"
     },
     "required_result_predicates": {
-      "row_count": 3,
-      "required_lane_ids": ["openai-raw", "openai-governed", "stegverse-only"],
+      "row_count": 5,
+      "required_lane_ids": [
+        "openai-raw",
+        "openai-governed",
+        "anthropic-raw",
+        "anthropic-governed",
+        "stegverse-only"
+      ],
       "openai_raw_admissible": true,
       "openai_governed_admissible": true,
       "openai_replay_match": true,
       "openai_reconstruction_match": true,
       "openai_provider_credential_possession": false,
+      "anthropic_raw_admissible": true,
+      "anthropic_governed_admissible": true,
+      "anthropic_replay_match": true,
+      "anthropic_reconstruction_match": true,
+      "anthropic_provider_credential_possession": false,
       "remaining_blockers": [
-        "MISSING_EXTERNAL_CANDIDATE:candidate-inputs/anthropic.json",
         "MISSING_EXTERNAL_CANDIDATE:candidate-inputs/deepseek.json",
         "MISSING_EXTERNAL_CANDIDATE:candidate-inputs/kimi.json"
       ],
@@ -52,11 +66,13 @@
     "artifact digest",
     "result row count",
     "OpenAI raw/governed candidate hash equality",
+    "Anthropic raw/governed candidate hash equality",
     "OpenAI governance/replay/reconstruction receipt results",
+    "Anthropic governance/replay/reconstruction receipt results",
     "remaining blocker list"
   ],
-  "release_condition": "The newest post-OpenAI candidate-proof run is directly inspected through run, job, logs, artifact, and result evidence; all required predicates pass; task-state and canonical handoff are reconciled to OPENAI_HOSTED_PROOF_PASS, or a precise fail-closed defect is recorded.",
-  "next_action_after_pass": "Wait only for validating credentialless Anthropic, DeepSeek, and Kimi candidate files. Their acquisition contract is candidate-acquisition-request.json; candidate-file push re-enters the existing machine workflow.",
+  "release_condition": "The newest post-Anthropic candidate-proof run is directly inspected through run, job, logs, artifact, and result evidence; all required predicates pass; task-state and canonical handoff are reconciled to OPENAI_AND_ANTHROPIC_HOSTED_PROOF_PASS, or a precise fail-closed defect is recorded.",
+  "next_action_after_pass": "Wait only for validating credentialless DeepSeek and Kimi candidate files under candidate-acquisition-request.json; each candidate-file push re-enters the existing machine workflow.",
   "archive_dependency": false,
   "archive_rationale": "This task contains the complete observation contract and machine-observable release condition. No unique chat-only information is required to execute or reconcile it.",
   "credential_authority": "TV/TVC",
