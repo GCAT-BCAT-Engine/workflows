@@ -1,7 +1,7 @@
 {
   "schema": "stegverse.task-state/v1",
   "task_id": "SV-COST-GENERATION-3-CONTROL-001",
-  "state": "CONSUMER_READY_BLOCKED_ON_TVC_SANITIZED_LIVE_EVIDENCE",
+  "state": "CONSUMER_SOURCE_COMPLETE_BLOCKED_ON_TVC_SANITIZED_LIVE_EVIDENCE_AND_HOSTED_VALIDATION_OBSERVATION",
   "canonical_handoff": "experiments/sv-cost-program/generation-3-control/GENERATION_3_CONTROL_MIRROR_HANDOFF.md",
   "generation_2_handoff": "experiments/sv-cost-program/nine-lane-results/SV_COST_NINE_LANE_MIRROR_HANDOFF.md",
   "credential_authority": "TV/TVC",
@@ -36,8 +36,18 @@
     "deepseek": "PENDING_TVC_LIVE_EVIDENCE",
     "kimi": "PENDING_TVC_LIVE_EVIDENCE"
   },
-  "consumer_validator": "experiments/sv-cost-program/generation-3-control/validate_tvc_evidence.py",
-  "release_condition": "All four sanitized TVC evidence packets validate against exact provider usage + exact-model official rate card cost, no secret material crosses the boundary, the exact canonical task identity is retained, and third-party controls remain non-authorizing relative to StegVerse primary inference.",
-  "next_action": "Wait for TVC-PROVIDER-MEASUREMENT-LIVE-RUN-009 evidence and validate it with validate_tvc_evidence.py; do not handle provider credentials here.",
+  "consumer_validation": {
+    "validator": "experiments/sv-cost-program/generation-3-control/validate_tvc_evidence.py",
+    "validator_commit": "9d2904355fcc84b6ad9a5c6174b73abfe446c05b",
+    "tests": "experiments/sv-cost-program/generation-3-control/test_validate_tvc_evidence.py",
+    "tests_commit": "24c16755bf73fcedc6c21b32102f6eac52980f36",
+    "workflow": ".github/workflows/sv-cost-generation-3-control-validation.yml",
+    "workflow_commit": "e35e38327291dc03ff18471cb706c1995ad3cd81",
+    "hosted_validation_directly_observed": false,
+    "independent_local_clone_validation": "BLOCKED_CONTAINER_DNS_GITHUB_COM_UNRESOLVABLE",
+    "false_pass_prohibited": true
+  },
+  "release_condition": "All four sanitized TVC evidence packets validate against exact provider usage + exact-model official rate card cost, no secret material crosses the boundary, the exact canonical task identity is retained, third-party controls remain non-authorizing relative to StegVerse primary inference, and validation evidence is directly inspectable.",
+  "next_action": "TVC-PROVIDER-MEASUREMENT-LIVE-RUN-009 produces sanitized evidence after TV/TVC inherited-FD key binding; this consumer then validates the four packets with validate_tvc_evidence.py. Do not handle provider credentials here.",
   "archive_dependency": false
 }
