@@ -33,8 +33,11 @@ jobs:
           fi
           git checkout --detach FETCH_HEAD
 
-      - name: Run stdlib-only Test Lanes tests
+      - name: Run stdlib-only Test Lanes planner tests
         run: python3 experiments/stegverse-test-lanes/tests/test_plan_test_lanes.py
+
+      - name: Run stdlib-only Test Lanes evidence/comparison tests
+        run: python3 experiments/stegverse-test-lanes/tests/test_compare_test_lanes.py
 
       - name: Produce credential-free reference plan
         run: |
@@ -64,5 +67,6 @@ jobs:
               assert marker not in text
           assert 'permissions: {}' in text
           assert 'git push' not in text
+          assert 'pip install' not in text
           print('STEGVERSE_TEST_LANES_NO_PROVIDER_SECRET_AUTHORITY_PASS')
           PY
