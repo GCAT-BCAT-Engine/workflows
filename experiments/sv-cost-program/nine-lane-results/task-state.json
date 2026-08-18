@@ -1,9 +1,10 @@
 {
   "schema": "stegverse.task-state/v1",
   "task_id": "SV-COST-NINE-LANE-GEN2-004",
-  "state": "FULL_NINE_LANE_EXECUTION_TRIGGERED_COST_PUBLICATION_BLOCKED",
+  "state": "FULL_NINE_LANE_EXECUTION_TRIGGERED_DOWNSTREAM_VALIDATION_OWNED",
   "canonical_handoff": "experiments/sv-cost-program/nine-lane-results/SV_COST_NINE_LANE_MIRROR_HANDOFF.md",
   "hosted_proof_observer_task": "experiments/sv-cost-program/nine-lane-results/hosted-proof-observer-task.json",
+  "cost_evidence_request": "experiments/sv-cost-program/nine-lane-results/cost-evidence-request.json",
   "credential_authority": "TV/TVC",
   "non_tv_tvc_secret_or_token_allowed": false,
   "provider_candidates_supplied": 4,
@@ -19,14 +20,16 @@
     "MISSING_COST_EVIDENCE:deepseek:reported_cost_or_admissible_bound_cost_basis_required"
   ],
   "kimi_cost_evidence": "cost-evidence/kimi-k3-allegretto-subscription-allocation-2026-08-17.json",
-  "kimi_cost_basis": "SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST_NOT_MARGINAL_API_CHARGE",
-  "kimi_allocated_effective_cost_usd": 0.006249833333,
   "machine_owner": ".github/workflows/sv-cost-nine-lane-candidate-proof.yml",
   "execution_request_commit": "a9bd7627c713ea602b68e97dccbe205e087f369c",
   "cost_gate_commit": "018f45bcde6450dcb9fae2304fa8c7ed7f3c0a80",
-  "hosted_proof_state": "TRIGGERED_PENDING_DIRECT_RUN_JOB_LOG_ARTIFACT_OBSERVATION",
+  "cost_evidence_request_commit": "50750b3391db0de4fc195c317f8d12864a38c88e",
+  "hosted_observer_reconciliation_commit": "b7192c67af9ada4f70cddbc3518824ed6d78fe6d",
+  "hosted_proof_state": "MACHINE_OWNED_PENDING_DIRECT_RUN_JOB_LOG_ARTIFACT_OBSERVATION",
   "publication_state": "PUBLICATION_BLOCKED_COST_EVIDENCE_INCOMPLETE",
-  "next_action": "Inspect hosted proof when run id is observable; independently obtain or bind admissible OpenAI, Anthropic, and DeepSeek cost bases before bounded cost publication.",
+  "next_action": "Repository-native observer inspects hosted proof. Cost-evidence-request.json separately owns OpenAI/Anthropic/DeepSeek cost evidence until its machine release condition is met.",
+  "session_role": "MERGED_INTO_CANONICAL_MACHINE_AND_PROVIDER_EVIDENCE_WORKSTREAMS",
   "session_unique_untransferred_requirements": 0,
-  "session_archive_ready": true
+  "session_archive_ready": true,
+  "archive_rationale": "All implementation, validation, cost-evidence, collision, and release requirements are durable and assigned. Remaining work has machine/provider owners and machine-observable release conditions; no chat-only information or authority remains."
 }
