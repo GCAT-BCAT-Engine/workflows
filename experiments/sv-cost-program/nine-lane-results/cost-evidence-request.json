@@ -46,13 +46,25 @@
     "anthropic": {
       "owner": "USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_COST_EVIDENCE_EXPORT",
       "candidate": "candidate-inputs/anthropic.json",
-      "state": "BLOCKED_ON_ADMISSIBLE_COST_EVIDENCE",
+      "state": "EVIDENCE_OBSERVED_REQUEST_ALLOCATION_STILL_BLOCKED",
+      "observed_evidence": "cost-evidence/anthropic-claude-pro-ui-observation-2026-08-17.json",
+      "observed_evidence_commit": "3bc724d3ee7b13350d91ea1568ebe0324c59e87a",
+      "observed_plan": "Claude Pro - Monthly",
+      "observed_plan_price_usd_per_month": 20.0,
+      "observed_current_session_percent_used": 2,
+      "observed_usage_credits_spent_usd": 0.54,
+      "request_specific_cost_available": false,
       "accepted_evidence_modes": [
         "PROVIDER_REPORTED_REQUEST_COST_USD",
         "PROVIDER_REPORTED_EXACT_INPUT_OUTPUT_TOKEN_USAGE_PLUS_BOUND_VERSIONED_RATE_CARD",
         "PROVIDER_UI_SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST"
       ],
-      "release_condition": "A cost-evidence/anthropic-*.json record exists, binds to SV-RECON-001 and candidate-inputs/anthropic.json, identifies its evidence mode and source observation, uses no non-TV/TVC secret/token, and yields a non-null bounded provider cost with basis disclosure."
+      "rejected_shortcuts": [
+        "Do not attribute the full 2% current-session usage to SV-RECON-001 without a before/after delta or provider-recorded per-message allocation.",
+        "Do not attribute the full $0.54 usage-credit spend to SV-RECON-001 without request-specific billing evidence.",
+        "Do not divide the $20 monthly subscription by an arbitrary request count."
+      ],
+      "release_condition": "A provider-facing record exposes request-specific cost, exact token usage plus a bound versioned rate card, or a before/after provider-observed quota/credit delta tied specifically to SV-RECON-001 and candidate-inputs/anthropic.json."
     },
     "deepseek": {
       "owner": "USER_EXISTING_PROVIDER_RELATIONSHIP_OR_TV_TVC_COST_EVIDENCE_EXPORT",
@@ -84,7 +96,7 @@
   ],
   "machine_observer": ".github/workflows/sv-cost-nine-lane-candidate-proof.yml",
   "machine_release_condition": "All three incomplete provider cost-evidence records validate and the canonical run emits zero cost blockers; hosted run/job/log/artifact inspection then determines bounded publication readiness.",
-  "next_action": "Observe provider-facing Anthropic and DeepSeek cost/usage evidence and any request-bound OpenAI usage surface if available; do not repeat already-exhausted ChatGPT plan or aggregate Platform searches unless the UI gains request-level identity/cost data.",
+  "next_action": "Observe provider-facing DeepSeek cost/usage evidence and any request-bound OpenAI/Anthropic usage surface if available; do not repeat already-exhausted plan/aggregate searches unless the UI gains request-level identity, per-message cost, exact tokens, or before/after usage deltas.",
   "archive_dependency": false,
   "archive_rationale": "The remaining cost evidence has explicit owners, accepted evidence modes, rejection rules, file destinations, and machine-observable release conditions; no chat-only information is required."
 }
