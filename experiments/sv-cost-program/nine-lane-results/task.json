@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0.0",
+  "schema_version": "5.0.0",
   "experiment_id": "SV-COST-NINE-LANE-RESULTS-001",
   "generation": "GENERATION_2_CREDENTIALLESS_OUTPUT_BOUNDARY",
   "supersedes_for_new_runs": "SV-COST-SEVEN-LANE-RESULTS-001",
@@ -86,7 +86,15 @@
     "anthropic_output_usd_per_million": 15.0,
     "deepseek_input_usd_per_million": 0.14,
     "deepseek_output_usd_per_million": 0.28,
-    "kimi_rate_policy": "USE_CANDIDATE_REPORTED_COST_UNLESS_A_VERSIONED_OFFICIAL_RATE_CARD_IS_BOUND",
+    "kimi_cost_policy": {
+      "preferred": "CANDIDATE_REPORTED_MARGINAL_COST",
+      "alternates": [
+        "VERSIONED_OFFICIAL_RATE_CARD",
+        "PROVIDER_UI_SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST"
+      ],
+      "subscription_allocation_must_be_labeled_non_marginal": true,
+      "current_evidence": "cost-evidence/kimi-k3-allegretto-subscription-allocation-2026-08-17.json"
+    },
     "local_linux_runner_usd_per_minute": 0.008,
     "local_storage_usd_per_gb_month": 0.008
   },
@@ -96,7 +104,8 @@
     "reconstruction_receipt": true,
     "candidate_hash_bound": true,
     "provider_credential_nonpossession_asserted": true,
-    "raw_and_governed_candidate_hash_must_match": true
+    "raw_and_governed_candidate_hash_must_match": true,
+    "cost_basis_disclosed": true
   },
-  "claim_boundary": "Generation-2 nine-lane comparison: OpenAI, Anthropic, DeepSeek and Kimi external candidate outputs are each observed raw and then passed as the exact same candidate through StegVerse output-boundary governance, plus a StegVerse-only deterministic reconstruction lane. No StegVerse test workload possesses or consumes a provider API key. Historical five- and seven-lane evidence remains immutable. Kimi pricing is not inferred: reported provider cost is used unless a versioned official rate card is separately bound."
+  "claim_boundary": "Generation-2 nine-lane comparison: OpenAI, Anthropic, DeepSeek and Kimi external candidate outputs are each observed raw and then passed as the exact same candidate through StegVerse output-boundary governance, plus a StegVerse-only deterministic reconstruction lane. No StegVerse test workload possesses or consumes a provider API key. Historical five- and seven-lane evidence remains immutable. Kimi cost may use provider-reported marginal cost, a versioned official rate card, or provider-UI subscription-quota allocation only when the latter is explicitly labeled as allocated effective subscription cost rather than marginal API pricing."
 }
