@@ -1,0 +1,43 @@
+{
+  "schema": "stegverse.task-state/v1",
+  "task_id": "SV-COST-GENERATION-3-CONTROL-001",
+  "state": "CONSUMER_READY_BLOCKED_ON_TVC_SANITIZED_LIVE_EVIDENCE",
+  "canonical_handoff": "experiments/sv-cost-program/generation-3-control/GENERATION_3_CONTROL_MIRROR_HANDOFF.md",
+  "generation_2_handoff": "experiments/sv-cost-program/nine-lane-results/SV_COST_NINE_LANE_MIRROR_HANDOFF.md",
+  "credential_authority": "TV/TVC",
+  "consumer_credential_authority": "NONE",
+  "non_tv_tvc_secret_or_token_allowed": false,
+  "primary_provider": "stegverse_local",
+  "third_party_role": "CONTROL_OR_FALLBACK_ONLY",
+  "canonical_task": "experiments/sv-cost-program/nine-lane-results/task.json",
+  "canonical_task_blob_sha": "1bd5a640bf067ffad87c427a5c12cb57c029b214",
+  "required_output_hash": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
+  "tvc_precedence_task": "StegVerse-Labs/TVC/tasks/TVC-PROVIDER-PRECEDENCE-010.json",
+  "tvc_ingress_task": "StegVerse-Labs/TVC/tasks/TVC-PROVIDER-MEASUREMENT-INGRESS-006.json",
+  "tvc_live_run_task": "StegVerse-Labs/TVC/tasks/TVC-PROVIDER-MEASUREMENT-LIVE-RUN-009",
+  "providers_required": ["openai", "anthropic", "deepseek", "kimi"],
+  "accepted_evidence_schema": "stegverse.tvc.provider-measurement-evidence.v1",
+  "accepted_cost_status": "REQUEST_BOUND_COST",
+  "accepted_cost_basis": "EXACT_PROVIDER_USAGE_X_OFFICIAL_MODEL_RATE_CARD",
+  "provider_api_key_transferred_to_consumer_required": false,
+  "secret_material_returned_required": false,
+  "token_estimate_may_substitute_for_actual_usage": false,
+  "credential_availability": {
+    "all_four_keys_created": true,
+    "source": "USER_REPORTED_NON_SECRET_AVAILABILITY_ONLY",
+    "openai": "GITHUB_SECRET_TRANSITIONAL_NOT_TVC_BOUND",
+    "anthropic": "GITHUB_SECRET_TRANSITIONAL_NOT_TVC_BOUND",
+    "deepseek": "USER_PRIVATE_IDLE_NOT_TVC_BOUND",
+    "kimi": "USER_PRIVATE_IDLE_NOT_TVC_BOUND"
+  },
+  "evidence_state": {
+    "openai": "PENDING_TVC_LIVE_EVIDENCE",
+    "anthropic": "PENDING_TVC_LIVE_EVIDENCE",
+    "deepseek": "PENDING_TVC_LIVE_EVIDENCE",
+    "kimi": "PENDING_TVC_LIVE_EVIDENCE"
+  },
+  "consumer_validator": "experiments/sv-cost-program/generation-3-control/validate_tvc_evidence.py",
+  "release_condition": "All four sanitized TVC evidence packets validate against exact provider usage + exact-model official rate card cost, no secret material crosses the boundary, the exact canonical task identity is retained, and third-party controls remain non-authorizing relative to StegVerse primary inference.",
+  "next_action": "Wait for TVC-PROVIDER-MEASUREMENT-LIVE-RUN-009 evidence and validate it with validate_tvc_evidence.py; do not handle provider credentials here.",
+  "archive_dependency": false
+}
