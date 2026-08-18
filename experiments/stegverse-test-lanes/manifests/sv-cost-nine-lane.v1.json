@@ -1,0 +1,132 @@
+{
+  "schema_version": "stegverse.test-lanes-manifest.v1",
+  "test_id": "SV-COST-NINE-LANE-v1",
+  "description": "Portable reproduction of the canonical nine-lane StegVerse cost/governance comparison. StegVerse-local is primary/reference; external providers are optional controls.",
+  "primary_provider": "stegverse_local",
+  "task": {
+    "task_id": "SV-RECON-001",
+    "source": "experiments/sv-cost-program/nine-lane-results/task.json",
+    "source_blob_sha": "1bd5a640bf067ffad87c427a5c12cb57c029b214",
+    "prompt_profile": "stegverse.sv-recon-001.prompt.v1",
+    "expected_output_hash": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf"
+  },
+  "credential_policy": {
+    "authority": "TV/TVC",
+    "manifest_contains_credentials": false,
+    "credential_export_allowed": false
+  },
+  "lanes": [
+    {
+      "lane_id": "openai-raw",
+      "provider": "openai",
+      "provider_role": "CONTROL_OR_FALLBACK_ONLY",
+      "capsule_id": "openai.user.default",
+      "capability": "llm.measure.openai",
+      "mode": "RAW",
+      "model": null,
+      "required": false,
+      "parameters": {},
+      "governance_profile": null
+    },
+    {
+      "lane_id": "openai-governed",
+      "provider": "openai",
+      "provider_role": "CONTROL_OR_FALLBACK_ONLY",
+      "capsule_id": "openai.user.default",
+      "capability": "llm.measure.openai",
+      "mode": "GOVERNED",
+      "model": null,
+      "required": false,
+      "parameters": {},
+      "governance_profile": "stegverse.default-governed.v1"
+    },
+    {
+      "lane_id": "anthropic-raw",
+      "provider": "anthropic",
+      "provider_role": "CONTROL_OR_FALLBACK_ONLY",
+      "capsule_id": "anthropic.user.default",
+      "capability": "llm.measure.anthropic",
+      "mode": "RAW",
+      "model": null,
+      "required": false,
+      "parameters": {},
+      "governance_profile": null
+    },
+    {
+      "lane_id": "anthropic-governed",
+      "provider": "anthropic",
+      "provider_role": "CONTROL_OR_FALLBACK_ONLY",
+      "capsule_id": "anthropic.user.default",
+      "capability": "llm.measure.anthropic",
+      "mode": "GOVERNED",
+      "model": null,
+      "required": false,
+      "parameters": {},
+      "governance_profile": "stegverse.default-governed.v1"
+    },
+    {
+      "lane_id": "stegverse-primary",
+      "provider": "stegverse_local",
+      "provider_role": "PRIMARY",
+      "capsule_id": "stegverse.local.default",
+      "capability": "local.model.inference",
+      "mode": "REFERENCE",
+      "model": "stegverse-reference-lm-v1",
+      "required": true,
+      "parameters": {},
+      "governance_profile": "stegverse.default-governed.v1"
+    },
+    {
+      "lane_id": "deepseek-raw",
+      "provider": "deepseek",
+      "provider_role": "CONTROL_OR_FALLBACK_ONLY",
+      "capsule_id": "deepseek.user.default",
+      "capability": "llm.measure.deepseek",
+      "mode": "RAW",
+      "model": null,
+      "required": false,
+      "parameters": {},
+      "governance_profile": null
+    },
+    {
+      "lane_id": "deepseek-governed",
+      "provider": "deepseek",
+      "provider_role": "CONTROL_OR_FALLBACK_ONLY",
+      "capsule_id": "deepseek.user.default",
+      "capability": "llm.measure.deepseek",
+      "mode": "GOVERNED",
+      "model": null,
+      "required": false,
+      "parameters": {},
+      "governance_profile": "stegverse.default-governed.v1"
+    },
+    {
+      "lane_id": "kimi-raw",
+      "provider": "kimi",
+      "provider_role": "CONTROL_OR_FALLBACK_ONLY",
+      "capsule_id": "kimi.user.default",
+      "capability": "llm.measure.kimi",
+      "mode": "RAW",
+      "model": null,
+      "required": false,
+      "parameters": {},
+      "governance_profile": null
+    },
+    {
+      "lane_id": "kimi-governed",
+      "provider": "kimi",
+      "provider_role": "CONTROL_OR_FALLBACK_ONLY",
+      "capsule_id": "kimi.user.default",
+      "capability": "llm.measure.kimi",
+      "mode": "GOVERNED",
+      "model": null,
+      "required": false,
+      "parameters": {},
+      "governance_profile": "stegverse.default-governed.v1"
+    }
+  ],
+  "comparison": {
+    "group_by": ["provider", "mode"],
+    "metrics": ["output_hash", "latency", "actual_usage", "request_bound_cost", "governance_outcome"]
+  }
+}
