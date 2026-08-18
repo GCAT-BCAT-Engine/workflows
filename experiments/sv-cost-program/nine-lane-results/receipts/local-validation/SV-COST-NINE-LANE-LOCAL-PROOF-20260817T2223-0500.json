@@ -1,0 +1,71 @@
+{
+  "schema": "stegverse.local-validation-receipt/v1",
+  "receipt_id": "SV-COST-NINE-LANE-LOCAL-PROOF-20260817T2223-0500",
+  "experiment_id": "SV-COST-NINE-LANE-RESULTS-001",
+  "task_id": "SV-RECON-001",
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "branch": "main",
+  "evidence_level": "LOCAL_DETERMINISTIC_VALIDATION_BELOW_HOSTED_WORKFLOW_PROOF",
+  "observed_at": "2026-08-17T22:23:00-05:00",
+  "credential_authority": "TV/TVC",
+  "non_tv_tvc_secret_or_token_used": false,
+  "provider_api_key_transferred_to_stegverse": false,
+  "candidate_commits": {
+    "openai": "13c0941704f0e3e037dcdd6e1ae70910345f056f",
+    "anthropic": "ef7feb4a9a5322e79f40ff0802736209c3da28b3",
+    "deepseek": "1c0e30513d844cb63be9e1e5bab189697df3566e",
+    "kimi": "b76fc0489e356773e98ff4006daa7fe7a61e7de4"
+  },
+  "models": {
+    "openai": "gpt-5.6-sol",
+    "anthropic": "Opus 5 High",
+    "deepseek": "DeepSeek (UI model unspecified)",
+    "kimi": "Kimi K3"
+  },
+  "required_output_hash": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
+  "reconstructed_output_hash": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
+  "candidate_normalized_hashes": {
+    "openai": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
+    "anthropic": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
+    "deepseek": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf",
+    "kimi": "sha256:bb775b0ada3f33c16adb2f26919f465c5121f9b218d181344fe62908380575cf"
+  },
+  "behavioral_lanes": {
+    "required": 9,
+    "source_ready": 9,
+    "external_candidates": 4,
+    "all_four_exact_required_output_match": true,
+    "candidate_blockers": []
+  },
+  "expected_final_state": {
+    "balance": 75,
+    "risk_score": 3,
+    "standing": "active"
+  },
+  "expected_decisions": [
+    {"event_id":"E01","status":"ALLOW","reason":"CREDIT_APPLIED"},
+    {"event_id":"E02","status":"ALLOW","reason":"DEBIT_WITHIN_BOUNDARY"},
+    {"event_id":"E03","status":"ALLOW","reason":"RISK_WITHIN_BOUNDARY"},
+    {"event_id":"E04","status":"DENY","reason":"MINIMUM_BALANCE_VIOLATION"},
+    {"event_id":"E05","status":"DENY","reason":"MAXIMUM_RISK_VIOLATION"},
+    {"event_id":"E06","status":"ALLOW","reason":"DEBIT_WITHIN_BOUNDARY"}
+  ],
+  "applied_count": 4,
+  "denied_count": 2,
+  "kimi_cost_evidence": {
+    "path": "cost-evidence/kimi-k3-allegretto-subscription-allocation-2026-08-17.json",
+    "basis": "SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST_NOT_MARGINAL_API_CHARGE",
+    "allocated_effective_cost_usd": 0.006249833333
+  },
+  "cost_evidence_complete": false,
+  "cost_blockers": [
+    "MISSING_COST_EVIDENCE:openai:reported_cost_or_admissible_bound_cost_basis_required",
+    "MISSING_COST_EVIDENCE:anthropic:reported_cost_or_admissible_bound_cost_basis_required",
+    "MISSING_COST_EVIDENCE:deepseek:reported_cost_or_admissible_bound_cost_basis_required"
+  ],
+  "hosted_proof_state": "PENDING_DIRECT_RUN_JOB_LOG_ARTIFACT_OBSERVATION",
+  "hosted_proof_owner": "hosted-proof-observer-task.json",
+  "publication_state": "PUBLICATION_BLOCKED_COST_EVIDENCE_INCOMPLETE",
+  "validation_result": "PASS_LOCAL_BEHAVIORAL_EQUIVALENCE",
+  "claim_boundary": "This receipt proves deterministic local equivalence of the four committed provider candidate outputs to the canonical SV-RECON-001 result. It does not prove GitHub-hosted workflow success, artifact creation, provider marginal cost, or bounded cost-publication readiness."
+}
