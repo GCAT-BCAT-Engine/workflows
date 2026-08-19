@@ -1,54 +1,24 @@
-name: Governed Cost Evaluation
+name: Governed Cost Evaluation [CONTAINED — TVC PROVIDER CAPABILITY REQUIRED]
 
 on:
-  workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'experiments/governed-cost-evaluation/**'
-      - '.github/workflows/governed-cost-evaluation.yml'
+  workflow_dispatch: {}
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: governed-cost-evaluation
+  group: governed-cost-evaluation-contained
   cancel-in-progress: false
 
 jobs:
-  evaluate:
+  contained:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
-    env:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      OPENAI_CALIBRATION_MODEL: ${{ vars.OPENAI_CALIBRATION_MODEL || 'gpt-5.6' }}
-      ANTHROPIC_CALIBRATION_MODEL: ${{ vars.ANTHROPIC_CALIBRATION_MODEL || 'claude-sonnet-4-6' }}
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - name: Credential boundary
-        run: |
-          test -n "$OPENAI_API_KEY"
-          test -n "$ANTHROPIC_API_KEY"
-      - name: Evaluate StegVerse OpenAI and Anthropic lanes
-        run: python experiments/governed-cost-evaluation/run.py
-      - name: Upload evidence
-        uses: actions/upload-artifact@v4
-        with:
-          name: governed-cost-evaluation-evidence
-          path: experiments/governed-cost-evaluation/results/
-      - name: Commit validated outputs safely
+      - name: Block direct provider credential path
         shell: bash
         run: |
-          git config user.name 'stegverse-cost-evaluation-bot'
-          git config user.email 'actions@users.noreply.github.com'
-          git add experiments/governed-cost-evaluation/results
-          git diff --cached --quiet && exit 0
-          git commit -m 'Record governed OpenAI and Anthropic cost evaluations'
-          for attempt in 1 2 3; do
-            git fetch origin main
-            git rebase origin/main && git push origin HEAD:main && exit 0
-            git rebase --abort || true
-            sleep $((attempt * 3))
-          done
+          set -euo pipefail
+          echo "::error::Governed cost evaluation is contained because the prior workflow directly consumed provider API secrets and committed evaluation outputs under GitHub Actions authority."
+          echo "Canonical TVC provider capability must own credential-bearing provider access; the consumer may receive only secret-free results/receipts."
           exit 1
