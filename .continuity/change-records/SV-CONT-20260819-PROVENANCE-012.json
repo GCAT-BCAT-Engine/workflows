@@ -1,0 +1,25 @@
+{
+  "record_id": "SV-CONT-20260819-PROVENANCE-012",
+  "recorded_at": "2026-08-19",
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "state": "OPEN_SUCCESSOR_SECURITY_TASK",
+  "source_finding": "StegVerse-Labs/footprint-auditor:evidence/findings/2026-08-19-gcat-verifier-remote-execution-provenance-gap.json",
+  "goal": "Make reusable handoff/provenance verifier retrieval intrinsically immutable without weakening read-only authority semantics.",
+  "affected_paths": [
+    ".github/workflows/handoff-authority-reusable.yml",
+    ".github/workflows/handoff-semantics-reusable.yml",
+    ".github/workflows/continuity-provenance-reusable.yml"
+  ],
+  "required_invariants": [
+    "verifier_ref must be a 40-character commit SHA",
+    "no mutable default branch/tag may select verifier code",
+    "downloaded executable/config content must be commit-bound or digest-verified",
+    "workflow success remains evidence only and does not become execution/admissibility/custody authority",
+    "all adopted callers must be revalidated after successor contract installation"
+  ],
+  "known_caller_evidence": {
+    "StegVerse-002/core-lite/handoff-authority": "pinned reusable workflow and verifier_ref",
+    "StegVerse-002/core-lite/handoff-semantics": "pinned reusable workflow and verifier_ref"
+  },
+  "completion": "OPEN_UNTIL_SOURCE_MUTATION_VALIDATION_CALLER_REVALIDATION_AND_CONTINUITY_EVIDENCE"
+}
