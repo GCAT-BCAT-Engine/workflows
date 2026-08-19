@@ -1,102 +1,24 @@
-name: "StegVerse External Full Process v2 - Erd\u0151s Class"
-'on':
-  workflow_dispatch:
-    inputs:
-      run_id:
-        description: External full process run ID
-        required: true
-        default: EXT-002-FIXED
-        type: string
-      budget_ceiling:
-        description: Budget ceiling in USD
-        required: true
-        default: '50.00'
-        type: string
+name: StegVerse External Full Process v2 [CONTAINED — TVC / SOURCE EVIDENCE REQUIRED]
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: external-full-process-contained
+  cancel-in-progress: false
+
 jobs:
-  external_full:
+  contained:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 5
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-    - name: Install dependencies
-      run: pip install requests
-    - name: Phase 1 - Haiku Tight Classification
-      env:
-        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      run: "cat << 'EOF' > ext2_phase1.py\nimport os, requests, json, time\napi_key\
-        \ = os.environ['ANTHROPIC_API_KEY']\n\nproblem = \"A primitive set is a set\
-        \ of integers greater than 1 where no element divides another. Erd\u0151s\
-        \ conjectured that the sum of 1/(n log n) over all n in a primitive set is\
-        \ maximized by the set of prime numbers.\"\n\nprint(\"=== EXT-002 PHASE 1:\
-        \ Haiku Tight Classification ===\")\nstart = time.time()\n\nresponse = requests.post(\n\
-        \    \"https://api.anthropic.com/v1/messages\",\n    headers={\"x-api-key\"\
-        : api_key, \"anthropic-version\": \"2023-06-01\", \"content-type\": \"application/json\"\
-        },\n    json={\"model\": \"claude-haiku-4-5\", \"max_tokens\": 512, \"messages\"\
-        : [{\"role\": \"user\", \"content\": f\"Classify complexity (Low/Medium/High/VeryHigh)\
-        \ and verify known status: {problem}\"}]}\n)\n\nelapsed = time.time() - start\n\
-        data = response.json()\ntokens_in = data['usage']['input_tokens']\ntokens_out\
-        \ = data['usage']['output_tokens']\ncost = (tokens_in * 1 + tokens_out * 5)\
-        \ / 1000000\n\nprint(f\"Haiku: {tokens_in} in, {tokens_out} out, ${cost:.6f},\
-        \ {elapsed:.2f}s\")\n\nresult = {\"phase\": 1, \"model\": \"haiku\", \"cost\"\
-        : cost, \"tokens_in\": tokens_in, \"tokens_out\": tokens_out, \"latency\"\
-        : elapsed, \"classification\": data['content'][0]['text'][:400]}\nwith open('ext2_phase1.json',\
-        \ 'w') as f:\n    json.dump(result, f, indent=2)\nEOF\npython3 ext2_phase1.py"
-    - name: Phase 2 - Source Grounding Check
-      run: "cat << 'EOF' > ext2_source.py\nimport json\n\nprint(\"=== EXT-002 PHASE\
-        \ 2: Source Grounding ===\")\n\nsources = [\n    {\"source\": \"arXiv:2202.02384\"\
-        , \"author\": \"Jared Duker Lichtman\", \"year\": 2022, \"status\": \"Solved\"\
-        },\n    {\"source\": \"Forum of Mathematics, Pi 11 (2023), e18\", \"author\"\
-        : \"Lichtman\", \"year\": 2023, \"status\": \"Published\"}\n]\n\nprint(\"\
-        Known sources:\")\nfor s in sources:\n    print(f\"  - {s['author']} ({s['year']}):\
-        \ {s['status']}\")\n\nresult = {\"phase\": 2, \"sources\": sources, \"verification\"\
-        : \"automated\"}\nwith open('ext2_sources.json', 'w') as f:\n    json.dump(result,\
-        \ f, indent=2)\nEOF\npython3 ext2_source.py"
-    - name: Phase 3 - Sonnet Analysis (Batch)
-      env:
-        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      run: "cat << 'EOF' > ext2_phase3.py\nimport os, requests, json, time\napi_key\
-        \ = os.environ['ANTHROPIC_API_KEY']\n\nproblem = \"A primitive set is a set\
-        \ of integers greater than 1 where no element divides another. Erd\u0151s\
-        \ conjectured that the sum of 1/(n log n) over all n in a primitive set is\
-        \ maximized by the set of prime numbers.\"\n\nprint(\"=== EXT-002 PHASE 3:\
-        \ Sonnet Analysis ===\")\nstart = time.time()\n\nresponse = requests.post(\n\
-        \    \"https://api.anthropic.com/v1/messages\",\n    headers={\"x-api-key\"\
-        : api_key, \"anthropic-version\": \"2023-06-01\", \"content-type\": \"application/json\"\
-        },\n    json={\"model\": \"claude-sonnet-4-6\", \"max_tokens\": 4096, \"messages\"\
-        : [{\"role\": \"user\", \"content\": f\"This is a SOLVED theorem (Lichtman\
-        \ 2022/2023). Reconstruct the proof landscape, identify key techniques, and\
-        \ explain why this was difficult: {problem}\"}]}\n)\n\nelapsed = time.time()\
-        \ - start\ndata = response.json()\ntokens_in = data['usage']['input_tokens']\n\
-        tokens_out = data['usage']['output_tokens']\nbase_cost = (tokens_in * 3 +\
-        \ tokens_out * 15) / 1000000\nbatch_cost = base_cost * 0.50\n\nprint(f\"Sonnet:\
-        \ {tokens_in} in, {tokens_out} out, batch ${batch_cost:.6f}, {elapsed:.2f}s\"\
-        )\n\nresult = {\"phase\": 3, \"model\": \"sonnet\", \"base_cost\": base_cost,\
-        \ \"batch_cost\": batch_cost, \"tokens_in\": tokens_in, \"tokens_out\": tokens_out,\
-        \ \"latency\": elapsed, \"analysis\": data['content'][0]['text'][:2000]}\n\
-        with open('ext2_phase3.json', 'w') as f:\n    json.dump(result, f, indent=2)\n\
-        EOF\npython3 ext2_phase3.py"
-    - name: Phase 4 - Final Report
-      run: "cat << 'EOF' > ext2_final.py\nimport json, time\n\nwith open('ext2_phase1.json',\
-        \ 'r') as f:\n    p1 = json.load(f)\nwith open('ext2_sources.json', 'r') as\
-        \ f:\n    p2 = json.load(f)\nwith open('ext2_phase3.json', 'r') as f:\n  \
-        \  p3 = json.load(f)\n\ntotal_cost = p1['cost'] + p3['batch_cost']\ntotal_tokens\
-        \ = p1['tokens_in'] + p1['tokens_out'] + p3['tokens_in'] + p3['tokens_out']\n\
-        \nbaseline_cost = 0.061659\nsavings = ((baseline_cost - total_cost) / baseline_cost\
-        \ * 100)\n\nprint(f\"=== EXT-002 FINAL REPORT ===\")\nprint(f\"Total cost:\
-        \ ${total_cost:.6f}\")\nprint(f\"Total tokens: {total_tokens}\")\nprint(f\"\
-        Savings vs baseline: {savings:.1f}%\")\n\nreport = {\n    \"run_id\": \"EXT-002-FIXED\"\
-        ,\n    \"problem\": \"Erd\u0151s primitive sets (solved theorem)\",\n    \"\
-        total_cost\": total_cost,\n    \"total_tokens\": total_tokens,\n    \"phases\"\
-        : [p1, p2, p3],\n    \"sources_verified\": True,\n    \"timestamp\": time.time()\n\
-        }\n\nwith open('ext2_report.json', 'w') as f:\n    json.dump(report, f, indent=2)\n\
-        EOF\npython3 ext2_final.py"
-    - name: Upload results
-      uses: actions/upload-artifact@v4
-      with:
-        name: external-full-results
-        path: ext2_*.json
+      - name: Block direct provider credential and source-verification overclaim
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "::error::External full-process validation is contained because the prior workflow directly consumed a provider API secret and labeled a static source list as verified without independently reconstructable source-verification evidence."
+          echo "Provider access must use canonical TVC capability evidence. Source grounding/verification must be independently evidenced before a verified claim is emitted."
+          exit 1
