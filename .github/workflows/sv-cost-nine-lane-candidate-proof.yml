@@ -11,11 +11,16 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: sv-cost-nine-lane-candidate-proof-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   validate-and-process:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Validate credentialless contract
         run: |
           python experiments/sv-cost-program/nine-lane-results/validate_schema.py
@@ -44,8 +49,9 @@ jobs:
               assert d['publication_status']=='PUBLICATION_BLOCKED'
           PY
       - name: Upload immutable Generation-2 evidence
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: sv-cost-nine-lane-generation-2-${{ github.run_id }}
           path: experiments/sv-cost-program/nine-lane-results/results/generation-2-output-boundary/
           if-no-files-found: error
+          retention-days: 90
