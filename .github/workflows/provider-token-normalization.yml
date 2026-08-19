@@ -1,59 +1,24 @@
-name: Normalized StegVerse Provider Tokens
+name: Normalized StegVerse Provider Tokens [CONTAINED — TVC PROVIDER CAPABILITY REQUIRED]
 
 on:
-  workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'experiments/provider-token-normalization/**'
-      - '.github/workflows/provider-token-normalization.yml'
+  workflow_dispatch: {}
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: normalized-stegverse-provider-tokens
+  group: provider-token-normalization-contained
   cancel-in-progress: false
 
 jobs:
-  compare:
+  contained:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
-    env:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      OPENAI_CALIBRATION_MODEL: ${{ vars.OPENAI_CALIBRATION_MODEL || 'gpt-5.6' }}
-      ANTHROPIC_CALIBRATION_MODEL: ${{ vars.ANTHROPIC_CALIBRATION_MODEL || 'claude-sonnet-4-6' }}
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Install pinned canonical tokenizer
-        run: pip install 'tiktoken==0.12.0'
-      - name: Credential boundary
-        run: |
-          test -n "$OPENAI_API_KEY"
-          test -n "$ANTHROPIC_API_KEY"
-      - name: Run normalized governed provider comparison
-        run: python experiments/provider-token-normalization/run.py
-      - name: Upload evidence
-        uses: actions/upload-artifact@v4
-        with:
-          name: normalized-stegverse-provider-token-evidence
-          path: experiments/provider-token-normalization/results/
-      - name: Commit validated outputs safely
+      - name: Block direct provider secret consumption
         shell: bash
         run: |
-          git config user.name 'stegverse-normalization-bot'
-          git config user.email 'actions@users.noreply.github.com'
-          git add experiments/provider-token-normalization/results
-          git diff --cached --quiet && exit 0
-          git commit -m 'Record normalized StegVerse provider token comparison'
-          for attempt in 1 2 3; do
-            git fetch origin main
-            git rebase origin/main && git push origin HEAD:main && exit 0
-            git rebase --abort || true
-            sleep $((attempt * 3))
-          done
+          set -euo pipefail
+          echo "::error::Provider-token normalization is contained because the prior consumer workflow directly interpolated provider API secrets and committed results under GitHub Actions authority."
+          echo "Use the canonical TVC provider-capability contract; provider credentials must not enter this consumer workflow. Durable publication requires separately admitted mutation authority."
           exit 1
