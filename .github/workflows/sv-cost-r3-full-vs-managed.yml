@@ -1,138 +1,24 @@
-name: SV-COST R3 Full vs Managed Context
+name: SV-COST R3 Full vs Managed Context [CONTAINED — TVC PROVIDER CAPABILITY REQUIRED]
 
-# Governed generation: r3-gen-20260803-fix1
 on:
-  workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'experiments/sv-cost-program/r3-full-vs-managed/run.py'
-      - 'experiments/sv-cost-program/r3-full-vs-managed/protocol.json'
-      - 'experiments/sv-cost-program/r3-full-vs-managed/governance.json'
-      - '.github/workflows/sv-cost-r3-full-vs-managed.yml'
+  workflow_dispatch: {}
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: sv-cost-r3-full-vs-managed-${{ github.ref }}
+  group: sv-cost-r3-contained
   cancel-in-progress: false
 
 jobs:
-  execute:
-    if: github.actor != 'github-actions[bot]'
+  contained:
     runs-on: ubuntu-latest
-    timeout-minutes: 360
-    env:
-      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      R3_GENERATION: r3-gen-20260803-fix1
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Verify prior state and secret
+      - name: Block direct provider credential and source/evidence mutation path
         shell: bash
         run: |
           set -euo pipefail
-          test -n "$ANTHROPIC_API_KEY" || { echo 'ANTHROPIC_API_KEY is missing' >&2; exit 1; }
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          relations = json.loads(Path('experiments/sv-cost-program/relations.json').read_text())
-          assert relations['status'] == 'R2_ADJUDICATED_R3_NEXT'
-          r2 = json.loads(Path('experiments/sv-cost-program/results/r2-adjudication.json').read_text())
-          assert r2['status'] == 'R2_ADJUDICATED'
-          PY
-
-      - name: Apply bounded runner repair
-        shell: bash
-        run: |
-          set -euo pipefail
-          python - <<'PY'
-          from pathlib import Path
-          path = Path('experiments/sv-cost-program/r3-full-vs-managed/run.py')
-          text = path.read_text()
-          text = text.replace('"pricing_is_invoice_evidence": false', '"pricing_is_invoice_evidence": False')
-          path.write_text(text)
-          assert '"pricing_is_invoice_evidence": False' in text
-          assert '"pricing_is_invoice_evidence": false' not in text
-          PY
-
-      - name: Validate governance, protocol, stage contract, and runner
-        run: |
-          python -m json.tool experiments/sv-cost-program/r3-full-vs-managed/governance.json >/dev/null
-          python -m json.tool experiments/sv-cost-program/r3-full-vs-managed/protocol.json >/dev/null
-          python -m json.tool experiments/staged-math-progress/stage_contract.json >/dev/null
-          python -m py_compile experiments/sv-cost-program/r3-full-vs-managed/run.py
-
-      - name: Execute governed paired trials
-        run: python experiments/sv-cost-program/r3-full-vs-managed/run.py
-
-      - name: Bind execution metadata
-        shell: bash
-        run: |
-          set -euo pipefail
-          python - <<'PY'
-          import json
-          import os
-          from pathlib import Path
-          path = Path('experiments/sv-cost-program/r3-full-vs-managed/results/result.json')
-          result = json.loads(path.read_text())
-          result['execution'] = {
-              'generation': os.environ['R3_GENERATION'],
-              'github_run_id': int(os.environ['GITHUB_RUN_ID']),
-              'github_run_attempt': int(os.environ['GITHUB_RUN_ATTEMPT']),
-              'head_sha': os.environ['GITHUB_SHA'],
-          }
-          path.write_text(json.dumps(result, indent=2) + '\n')
-          PY
-
-      - name: Validate terminal evidence
-        shell: bash
-        run: |
-          set -euo pipefail
-          base='experiments/sv-cost-program/r3-full-vs-managed/results'
-          test -s "$base/result.json"
-          python - <<'PY'
-          import json
-          import os
-          from pathlib import Path
-          r = json.loads(Path('experiments/sv-cost-program/r3-full-vs-managed/results/result.json').read_text())
-          assert r['transition_status'] in {'R3_OBSERVED_AND_VALIDATED', 'R3_QUALITY_DIVERGENCE'}
-          assert r['paired_n'] == 5
-          assert len(r['results']) == 10
-          assert r['execution']['generation'] == os.environ['R3_GENERATION']
-          assert all(x.get('provider_message_id') for lane in r['results'] for x in lane['stages'])
-          assert all(x.get('response_sha256') for lane in r['results'] for x in lane['stages'])
-          PY
-
-      - name: Upload immutable evidence
-        uses: actions/upload-artifact@v4
-        with:
-          name: sv-cost-r3-full-vs-managed-${{ github.run_id }}-${{ github.run_attempt }}
-          path: experiments/sv-cost-program/r3-full-vs-managed/results/
-          if-no-files-found: error
-          retention-days: 90
-
-      - name: Commit governed R3 evidence and source repair
-        shell: bash
-        run: |
-          set -euo pipefail
-          git config user.name 'sv-cost-r3-worker'
-          git config user.email 'actions@users.noreply.github.com'
-          git add experiments/sv-cost-program/r3-full-vs-managed/run.py
-          git add experiments/sv-cost-program/r3-full-vs-managed/results
-          git diff --cached --quiet && exit 0
-          git commit -m "Record repaired governed R3 evidence [run $GITHUB_RUN_ID attempt $GITHUB_RUN_ATTEMPT]"
-          for attempt in 1 2 3; do
-            git fetch origin main
-            if git rebase origin/main && git push origin HEAD:main; then exit 0; fi
-            git rebase --abort || true
-            sleep $((attempt * 3))
-          done
+          echo "::error::R3 full-vs-managed execution is contained because the prior workflow directly consumed a provider API secret, modified source during execution, and committed results under GitHub Actions authority."
+          echo "Historical R3 evidence remains preserved. Any rerun/repair requires canonical TVC provider capability plus separately admitted source and publication mutation authority."
           exit 1
