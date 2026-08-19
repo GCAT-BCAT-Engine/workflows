@@ -1,61 +1,24 @@
-name: Staged Mathematical Progress Benchmark
+name: Staged Mathematical Progress Benchmark [CONTAINED — TVC PROVIDER CAPABILITY REQUIRED]
 
 on:
-  workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'experiments/staged-math-progress/**'
-      - '.github/workflows/staged-math-progress.yml'
+  workflow_dispatch: {}
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: staged-math-progress
+  group: staged-math-progress-contained
   cancel-in-progress: false
 
 jobs:
-  evaluate:
+  contained:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
-    env:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      OPENAI_MODEL: gpt-5.6
-      ANTHROPIC_MODEL: claude-sonnet-4-6
-      MAX_STAGE_OUTPUT: '900'
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install canonical tokenizer
-        run: pip install tiktoken==0.12.0
-
-      - name: Run four-lane staged benchmark
-        run: python experiments/staged-math-progress/run.py
-
-      - name: Upload evidence
-        uses: actions/upload-artifact@v4
-        with:
-          name: staged-math-progress-results
-          path: experiments/staged-math-progress/results/
-
-      - name: Commit results safely
+      - name: Block direct provider credential path
         shell: bash
         run: |
-          git config user.name 'staged-math-progress-bot'
-          git config user.email 'actions@users.noreply.github.com'
-          git add experiments/staged-math-progress/results
-          git diff --cached --quiet && exit 0
-          git commit -m 'Record staged mathematical progress benchmark'
-          for attempt in 1 2 3; do
-            git fetch origin main
-            git rebase origin/main && git push origin HEAD:main && exit 0
-            git rebase --abort || true
-            sleep $((attempt * 3))
-          done
+          set -euo pipefail
+          echo "::error::Staged math benchmark is contained because the prior workflow directly consumed provider API secrets and committed benchmark results under GitHub Actions authority."
+          echo "Provider execution must be bound through canonical TVC capability evidence without credential export; result publication requires separate admitted mutation authority."
           exit 1
