@@ -1,99 +1,24 @@
-name: Historical sv-cost VAL-001 BL-001 Rerun
+name: Historical sv-cost VAL-001 BL-001 Rerun [CONTAINED — TVC PROVIDER CAPABILITY REQUIRED]
 
 on:
-  workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'experiments/sv-cost-historical-rerun/run.py'
-      - 'experiments/sv-cost-historical-rerun/protocol.json'
-      - '.github/workflows/sv-cost-historical-rerun.yml'
+  workflow_dispatch: {}
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: sv-cost-historical-rerun-${{ github.ref }}
+  group: sv-cost-historical-rerun-contained
   cancel-in-progress: false
 
 jobs:
-  rerun:
-    if: github.actor != 'github-actions[bot]'
+  contained:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
-    env:
-      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      ANTHROPIC_MODEL: claude-sonnet-4-6
-      ANTHROPIC_INPUT_USD_PER_M: '3'
-      ANTHROPIC_OUTPUT_USD_PER_M: '15'
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Verify required secret is present
-        shell: bash
-        run: |
-          test -n "$ANTHROPIC_API_KEY" || {
-            echo 'ANTHROPIC_API_KEY is missing' >&2
-            exit 1
-          }
-
-      - name: Validate protocol and runner syntax
-        run: |
-          python -m json.tool experiments/sv-cost-historical-rerun/protocol.json >/dev/null
-          python -m py_compile experiments/sv-cost-historical-rerun/run.py
-
-      - name: Run VAL-001 and BL-001 reconstruction
-        run: python experiments/sv-cost-historical-rerun/run.py
-
-      - name: Verify required evidence files
+      - name: Block direct provider credential rerun
         shell: bash
         run: |
           set -euo pipefail
-          base='experiments/sv-cost-historical-rerun/results'
-          for file in \
-            VAL-001-RERUN-raw.json \
-            VAL-001-RERUN-receipt.json \
-            BL-001-RERUN-raw.json \
-            BL-001-RERUN-receipt.json \
-            comparison.json \
-            report.md; do
-            test -s "$base/$file" || {
-              echo "Missing or empty evidence file: $base/$file" >&2
-              exit 1
-            }
-          done
-          python -m json.tool "$base/comparison.json" >/dev/null
-
-      - name: Upload immutable evidence bundle
-        uses: actions/upload-artifact@v4
-        with:
-          name: sv-cost-historical-rerun-results-${{ github.run_id }}-${{ github.run_attempt }}
-          path: experiments/sv-cost-historical-rerun/results/
-          if-no-files-found: error
-          retention-days: 90
-
-      - name: Commit receipts and report safely
-        shell: bash
-        run: |
-          set -euo pipefail
-          git config user.name 'sv-cost-rerun-bot'
-          git config user.email 'actions@users.noreply.github.com'
-          git add experiments/sv-cost-historical-rerun/results
-          git diff --cached --quiet && exit 0
-          git commit -m "Record historical sv-cost rerun [run $GITHUB_RUN_ID attempt $GITHUB_RUN_ATTEMPT]"
-          for attempt in 1 2 3; do
-            git fetch origin main
-            if git rebase origin/main && git push origin HEAD:main; then
-              exit 0
-            fi
-            git rebase --abort || true
-            sleep $((attempt * 3))
-          done
-          echo 'Unable to publish rerun receipts after three attempts' >&2
+          echo "::error::Historical rerun is contained because the prior workflow directly consumed a provider API secret and committed reconstructed results under GitHub Actions authority."
+          echo "Historical evidence remains preserved. New reconstruction requires canonical TVC provider capability and separately admitted result-publication authority."
           exit 1
