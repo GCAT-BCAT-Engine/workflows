@@ -1,84 +1,24 @@
-name: SV Cost Five-Lane Results
+name: SV Cost Five-Lane Results [CONTAINED — TVC / ADMISSION EVIDENCE REQUIRED]
 
 on:
-  workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'experiments/sv-cost-program/five-lane-results/task.json'
-      - 'experiments/sv-cost-program/five-lane-results/run_v2.py'
-      - '.github/workflows/sv-cost-five-lane-results.yml'
+  workflow_dispatch: {}
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: sv-cost-five-lane-results
+  group: sv-cost-five-lane-results-contained
   cancel-in-progress: false
 
 jobs:
-  execute-and-validate:
+  contained:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
-    env:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      OPENAI_FIVE_LANE_MODEL: ${{ vars.OPENAI_CALIBRATION_MODEL || 'gpt-5.6' }}
-      ANTHROPIC_FIVE_LANE_MODEL: ${{ vars.ANTHROPIC_CALIBRATION_MODEL || 'claude-sonnet-4-6' }}
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Credential boundary
-        run: |
-          test -n "$OPENAI_API_KEY"
-          test -n "$ANTHROPIC_API_KEY"
-      - name: Compile harness
-        run: python -m py_compile experiments/sv-cost-program/five-lane-results/run_v2.py
-      - name: Execute all five lanes fail closed
-        id: execute
+      - name: Block credential and admissibility substitution
         shell: bash
         run: |
-          set +e
-          python experiments/sv-cost-program/five-lane-results/run_v2.py
-          code=$?
-          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
-          exit 0
-      - name: Upload immutable evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: sv-cost-five-lane-results
-          path: experiments/sv-cost-program/five-lane-results/results/
-      - name: Commit observed results including failures
-        if: always()
-        shell: bash
-        run: |
-          git config user.name 'stegverse-five-lane-bot'
-          git config user.email 'actions@users.noreply.github.com'
-          git add experiments/sv-cost-program/five-lane-results/results
-          git diff --cached --quiet && exit 0
-          git commit -m 'Record normalized five-lane reconstructable governance cost results'
-          for attempt in 1 2 3; do
-            git fetch origin main
-            git rebase origin/main && git push origin HEAD:main && exit 0
-            git rebase --abort || true
-            sleep $((attempt * 3))
-          done
+          set -euo pipefail
+          echo "::error::Five-lane result workflow is contained because it directly consumed provider API secrets, committed outputs under GitHub Actions authority, and treated locally produced admissibility/publication fields as a release gate."
+          echo "Provider execution requires canonical TVC capability evidence. Any admissibility/publication claim requires independently bound governance evidence; durable publication requires separate mutation authority."
           exit 1
-      - name: Validate publication gate
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          d=json.loads(Path('experiments/sv-cost-program/five-lane-results/results/five_lane_results.json').read_text())
-          assert len(d['rows']) == 5
-          assert d['all_five_successful_equivalent_admissible'] is True
-          assert d['publication_status'] == 'RESULTS_READY_FOR_BOUNDED_PUBLICATION'
-          assert all(row['admissible'] for row in d['rows'])
-          assert all(row['cost_per_successful_equivalent_admissible_outcome_usd'] is not None for row in d['rows'])
-          assert len(d['provider_pairs']) == 2
-          assert len(d['replacement_comparisons']) == 4
-          print('SV_COST_FIVE_LANE_RESULTS_VALIDATION_PASS')
-          PY
