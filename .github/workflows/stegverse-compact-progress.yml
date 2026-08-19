@@ -1,98 +1,24 @@
-name: StegVerse Compact-Context Capability Benchmark
-# rerun-request: 2026-08-03T02:37:00-05:00
+name: StegVerse Compact-Context Capability Benchmark [CONTAINED — TVC PROVIDER CAPABILITY REQUIRED]
 
 on:
-  workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'experiments/stegverse-compact-progress/protocol.json'
-      - 'experiments/stegverse-compact-progress/run.py'
-      - 'experiments/stegverse-compact-progress/run_semantic.py'
-      - 'experiments/stegverse-compact-progress/semantic_validator.py'
-      - 'experiments/stegverse-compact-progress/adjudicate_existing.py'
-      - 'experiments/stegverse-compact-progress/economic_report.py'
-      - 'experiments/staged-math-progress/stage_contract.json'
-      - '.github/workflows/stegverse-compact-progress.yml'
+  workflow_dispatch: {}
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: stegverse-compact-progress
+  group: stegverse-compact-progress-contained
   cancel-in-progress: false
 
 jobs:
-  evaluate:
+  contained:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
-    env:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      OPENAI_MODEL: gpt-5.6
-      ANTHROPIC_MODEL: claude-sonnet-4-6
-      MAX_STAGE_OUTPUT: '900'
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install canonical tokenizer
-        run: pip install tiktoken==0.12.0
-
-      - name: Offline adjudicate retained artifacts
-        run: python experiments/stegverse-compact-progress/adjudicate_existing.py
-
-      - name: Run four-lane benchmark with semantic validator
-        run: python experiments/stegverse-compact-progress/run_semantic.py
-
-      - name: Re-adjudicate completed rerun
-        run: python experiments/stegverse-compact-progress/adjudicate_existing.py
-
-      - name: Calculate workload plus execution-route economics
-        run: python experiments/stegverse-compact-progress/economic_report.py
-
-      - name: Upload evidence
-        uses: actions/upload-artifact@v4
-        with:
-          name: stegverse-compact-progress-results
-          path: experiments/stegverse-compact-progress/results/
-
-      - name: Commit results safely
+      - name: Block direct provider credential path
         shell: bash
         run: |
           set -euo pipefail
-          RESULTS='experiments/stegverse-compact-progress/results'
-          SNAPSHOT="$(mktemp -d)"
-          cp -a "$RESULTS" "$SNAPSHOT/results"
-
-          git config user.name 'stegverse-compact-progress-bot'
-          git config user.email 'actions@users.noreply.github.com'
-
-          for attempt in 1 2 3; do
-            git fetch origin main
-            git reset --hard origin/main
-            rm -rf "$RESULTS"
-            mkdir -p "$(dirname "$RESULTS")"
-            cp -a "$SNAPSHOT/results" "$RESULTS"
-            git add "$RESULTS"
-
-            if git diff --cached --quiet; then
-              echo 'No result changes to commit.'
-              exit 0
-            fi
-
-            git commit -m 'Record semantically adjudicated StegVerse compact benchmark'
-            if git push origin HEAD:main; then
-              exit 0
-            fi
-
-            sleep $((attempt * 3))
-          done
-
-          echo 'Unable to publish results after three fresh-base attempts.' >&2
+          echo "::error::Compact-context capability benchmark is contained because the prior workflow directly consumed provider API secrets and pushed benchmark results under GitHub Actions authority."
+          echo "Provider execution must be performed through canonical TVC capability evidence without credential export; result publication requires separate admitted mutation authority."
           exit 1
