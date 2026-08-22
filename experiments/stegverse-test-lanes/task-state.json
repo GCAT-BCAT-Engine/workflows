@@ -1,7 +1,7 @@
 {
   "schema": "stegverse.task-state/v1",
   "task_id": "STEGVERSE-TEST-LANES-001",
-  "state": "SOURCE_IMPLEMENTED_AUTOLAUNCH_INTEGRATED_REQUIRED_LIVE_EXECUTION_PENDING",
+  "state": "SOURCE_IMPLEMENTED_DIRECT_EXECUTION_PATH_INSTALLED_REQUIRED_LIVE_EXECUTION_PENDING",
   "canonical_handoff": "experiments/stegverse-test-lanes/TEST_LANES_MIRROR_HANDOFF.md",
   "credential_authority": "TV/TVC",
   "consumer_credential_authority": "NONE",
@@ -21,15 +21,10 @@
     "experiments/stegverse-test-lanes/tests/test_run_stegverse_primary_candidate.py",
     "experiments/stegverse-test-lanes/tests/test_build_lane_evidence.py",
     "experiments/stegverse-test-lanes/tests/test_compare_test_lanes.py",
-    ".github/workflows/stegverse-test-lanes-validation.yml"
+    ".github/workflows/stegverse-test-lanes-validation.yml",
+    "StegVerse-Labs/.github:scripts/run_test_lanes_direct.py",
+    "StegVerse-Labs/TVC:config/test_lanes_model_selection.sv-cost-nine-lane.v1.json"
   ],
-  "latest_source_commits": {
-    "primary_candidate_runner": "462b829abb1f09516dadef4e41a41c494aa62a4f",
-    "primary_candidate_tests": "d57d43c29f7657b77d3a5a8c061c3e90d6e6d1d5",
-    "lane_evidence_builder": "83fad5f1fa0e560ea42090bbfcb2ca4fdab4f2b2",
-    "lane_evidence_builder_tests": "aa94e8d443a4768f4bf0ce1b28a43c5617454a29",
-    "validation_workflow": "a1739fe5940a1597e2114a6c63da46f040b74fef"
-  },
   "reference_manifest": {
     "test_id": "SV-COST-NINE-LANE-v1",
     "lane_count": 9,
@@ -42,6 +37,13 @@
     "raw_governed_pairs_reuse_same_candidate": true,
     "manifest_contains_credentials": false
   },
+  "canonical_models": {
+    "source": "StegVerse-Labs/TVC:config/test_lanes_model_selection.sv-cost-nine-lane.v1.json",
+    "openai": "gpt-5.6-sol",
+    "anthropic": "claude-opus-5",
+    "deepseek": "deepseek-v4-pro",
+    "kimi": "kimi-k3"
+  },
   "provider_capsule_runtime_binding": {
     "authority": "StegVerse-Labs/TVC/tasks/TVC-PROVIDER-CAPSULE-012.json",
     "live_vault_readiness_required": true,
@@ -50,47 +52,58 @@
     "portable_consumer_receives_credential_material": false
   },
   "sovereign_primary_execution": {
-    "runtime_owner": "StegVerse-002/micro-node-runtime -> StegVerse-Labs/.github#60/G18 -> TVC -> LLM-adapter -> Master Records",
+    "runtime_requirement": "ALREADY_LIVE_STEGVERSE_LOOPBACK_ENDPOINT",
     "test_lane_adapter": "experiments/stegverse-test-lanes/run_stegverse_primary_candidate.py",
     "endpoint_must_be_loopback": true,
+    "model": "stegverse-reference-lm-v1",
     "credential_requirement": "NONE",
     "third_party_inference_required": false,
     "role": "PRIMARY_REFERENCE",
+    "heartbeat_required": false,
+    "g18_required": false,
+    "worker_coordinator_required": false,
     "source_installed": true,
     "live_evidence_observed": false
   },
-  "evidence_contract": {
-    "candidate_execution_count": 5,
-    "lane_evidence_count_required": 9,
-    "raw_governed_pairs_reuse_identical_candidate_output": true,
-    "governed_lane_adds_output_boundary_governance_evidence": true,
-    "deterministic_comparator_installed": true,
-    "comparison_pass_required": true,
-    "credential_material_allowed": false
+  "direct_execution": {
+    "runner": "StegVerse-Labs/.github:scripts/run_test_lanes_direct.py",
+    "heartbeat_required": false,
+    "g18_required": false,
+    "worker_coordinator_required": false,
+    "required_inputs": [
+      "materialized GCAT-BCAT-Engine/workflows source tree",
+      "materialized StegVerse-Labs/TVC source tree",
+      "live TVC vault-agent Unix socket",
+      "live TVC vault-broker Unix socket",
+      "live StegVerse loopback endpoint",
+      "canonical non-secret model-selection file"
+    ],
+    "pipeline": [
+      "live TVC capsule materialization/readiness",
+      "exact READY re-plan",
+      "one StegVerse PRIMARY candidate",
+      "four TVC external candidates",
+      "exactly nine sanitized lane records",
+      "deterministic comparison PASS"
+    ],
+    "live_run_observed": false
   },
-  "canonical_full_9_of_9_autolaunch": {
+  "optional_heartbeat_autolaunch": {
     "owner": "StegVerse-Labs/.github",
     "task": "STEGVERSE-TEST-LANES-AUTOLAUNCH-001",
-    "handoff": "handoffs/STEGVERSE-TEST-LANES-AUTOLAUNCH-001.json",
-    "matrix": "control/test-lanes-autolaunch-matrix.v1.json",
-    "worker": "workers/test_lanes_autolaunch_entrypoint.py",
-    "heartbeat_is_wake_signal_only": true,
-    "fresh_fenced_execution_claim_required": true,
-    "all_four_external_provider_groups_required_for_named_canonical_run": true,
-    "portable_noncanonical_runs_may_still_skip_optional_external_lanes": true,
-    "external_model_selection_must_be_explicit_nonsecret": true,
-    "live_run_observed": false
+    "role": "OPTIONAL_AUTOMATION_ONLY",
+    "required_for_direct_test_execution": false
   },
   "validation": {
     "stdlib_source_validation_installed": true,
+    "direct_runner_tests_installed": true,
     "hosted_ci_directly_observed_for_latest_source": false,
     "live_vault_readiness_observed": false,
-    "live_vault_derived_capsule_resolution_observed": false,
     "live_external_lane_execution_observed": false,
     "live_stegverse_primary_lane_execution_observed": false,
     "canonical_nine_lane_comparison_pass_observed": false
   },
-  "release_condition": "The heartbeat-owned autolaunch dependency produces direct runtime evidence for the exact canonical 9/9 run: HB30+/WorkerCoordinator state is valid; StegVerse PRIMARY executes locally with credential NONE and no third-party inference; all four external TVC groups are vault-ready and execute under TV/TVC-only credential authority; exactly nine sanitized lane-evidence records are built from five candidates; and compare_test_lanes.py returns PASS under a fresh fenced test-run claim.",
-  "next_action": "Remain open. Consume StegVerse-Labs/.github task STEGVERSE-TEST-LANES-AUTOLAUNCH-001 when the v12 carrier/WorkerCoordinator activates it; do not treat HANDOFF_READY, BLOCKED, assignment, source validation, or machine ownership as completion.",
+  "release_condition": "A StegVerse-controlled runtime executes the heartbeat-independent direct runner with an already-live private StegVerse endpoint and live TVC vault/broker sockets; all four external provider refs resolve READY under TV/TVC; one StegVerse candidate plus four external candidates execute; exactly nine sanitized lane records are produced; and compare_test_lanes.py returns PASS. Heartbeat, G18, WorkerCoordinator, source transfer, HANDOFF_READY or workflow success are not substitutes.",
+  "next_action": "Run StegVerse-Labs/.github:scripts/run_test_lanes_direct.py on the StegVerse-controlled runtime. If blocked, act only on the direct runner's concrete blocker (TVC credential readiness, TVC socket availability, StegVerse endpoint health, or provider execution), not heartbeat/G18.",
   "required_goal_outcome_terminal": false
 }
