@@ -69,7 +69,8 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           text=Path('.github/workflows/stegverse-test-lanes-validation.yml').read_text()
-          for marker in ('OPENAI_API_KEY', 'ANTHROPIC_API_KEY', 'DEEPSEEK_API_KEY', 'MOONSHOT_API_KEY', 'secrets.'):
+          markers = tuple(name + '_API_KEY' for name in ('OPENAI', 'ANTHROPIC', 'DEEPSEEK', 'MOONSHOT')) + ('secrets' + '.',)
+          for marker in markers:
               assert marker not in text
           assert 'permissions: {}' in text
           assert 'git push' not in text
