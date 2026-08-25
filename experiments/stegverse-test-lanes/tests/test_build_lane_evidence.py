@@ -37,6 +37,7 @@ OUTPUT = json.dumps(REQUIRED, sort_keys=True, separators=(",", ":"))
 
 def lane(lane_id, provider, role, mode, governance_profile=None, model=None):
     return {
+        "test_id": "SV-COST-NINE-LANE-v1",
         "lane_id": lane_id,
         "state": "READY_LOCAL_PRIMARY" if provider == "stegverse_local" else "READY_FOR_TVC_EXECUTION",
         "provider": provider,
