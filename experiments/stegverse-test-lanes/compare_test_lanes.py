@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -56,6 +57,21 @@ def canonical_hash(value: Any) -> str:
     return "sha256:" + hashlib.sha256(encoded).hexdigest()
 
 
+def validate_request_bound_cost(value: Any, lane_id: str) -> dict[str, Any]:
+    _require(isinstance(value, Mapping), f"request-bound cost missing: {lane_id}")
+    _require(value.get("schema") == "stegverse.test-lanes-request-bound-cost.v1", f"request-bound cost schema mismatch: {lane_id}")
+    _require(value.get("status") in {"REQUEST_BOUND_COST", "MEASURED_LOCAL_COST"}, f"request-bound cost status invalid: {lane_id}")
+    amount = value.get("calculated_request_cost_usd")
+    _require(isinstance(amount, str) and amount, f"request-bound cost amount missing: {lane_id}")
+    try:
+        parsed = Decimal(amount)
+    except (InvalidOperation, ValueError) as exc:
+        raise TestLaneEvidenceError(f"request-bound cost amount invalid: {lane_id}") from exc
+    _require(parsed >= 0 and parsed.is_finite(), f"request-bound cost amount invalid: {lane_id}")
+    _require(isinstance(value.get("cost_basis"), str) and value.get("cost_basis"), f"request-bound cost basis missing: {lane_id}")
+    return dict(value)
+
+
 def validate_lane_evidence(request: Mapping[str, Any], evidence: Mapping[str, Any]) -> dict[str, Any]:
     _reject_secret_fields(evidence)
     _require(evidence.get("schema") == "stegverse.test-lane-evidence.v1", "lane evidence schema mismatch")
@@ -83,6 +99,11 @@ def compare(plan: Mapping[str, Any], evidence_bundle: Mapping[str, Any]) -> dict
     _require(plan.get("credential_material_present") is False, "credential-bearing plan prohibited")
     _require(plan.get("primary_provider") == "stegverse_local", "StegVerse local must remain primary")
     _require(plan.get("state") == "READY", "comparison requires fully resolved READY plan")
+    comparison_contract = plan.get("comparison")
+    _require(isinstance(comparison_contract, Mapping), "comparison contract required")
+    metrics = comparison_contract.get("metrics")
+    _require(isinstance(metrics, list) and metrics, "comparison metrics required")
+    requires_request_bound_cost = "request_bound_cost" in metrics
 
     _reject_secret_fields(evidence_bundle)
     _require(evidence_bundle.get("schema") == "stegverse.test-lanes-evidence-bundle.v1", "evidence bundle schema mismatch")
@@ -112,6 +133,7 @@ def compare(plan: Mapping[str, Any], evidence_bundle: Mapping[str, Any]) -> dict
                 blockers.append(f"MISSING_READY_LANE_EVIDENCE:{lane_id}")
                 continue
             validated = validate_lane_evidence(request, item)
+            validated_cost = validate_request_bound_cost(validated.get("cost"), str(lane_id)) if requires_request_bound_cost else validated.get("cost")
             results.append({
                 "lane_id": lane_id,
                 "provider": validated["provider"],
@@ -121,7 +143,7 @@ def compare(plan: Mapping[str, Any], evidence_bundle: Mapping[str, Any]) -> dict
                 "output_hash": validated["output_hash"],
                 "latency_ms": validated["latency_ms"],
                 "usage": validated.get("usage"),
-                "cost": validated.get("cost"),
+                "cost": validated_cost,
                 "governance_outcome": (validated.get("governance") or {}).get("outcome") if isinstance(validated.get("governance"), Mapping) else None,
             })
         elif state in SKIP_STATES:
@@ -158,6 +180,8 @@ def compare(plan: Mapping[str, Any], evidence_bundle: Mapping[str, Any]) -> dict
         "lane_count_planned": len(plan.get("lanes") or []),
         "lane_evidence_count": len(evidence_items),
         "blockers": blockers,
+        "comparison_metrics": list(metrics),
+        "request_bound_cost_complete": requires_request_bound_cost and all(isinstance(item.get("cost"), Mapping) for item in results if "output_hash" in item),
         "results": results,
     }
     summary["comparison_hash"] = canonical_hash(summary)
