@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -98,6 +99,26 @@ def governance_for(request: Mapping[str, Any], candidate_text: str, task: Mappin
     }
 
 
+def request_bound_cost(plan: Mapping[str, Any], candidate: Mapping[str, Any], label: str) -> Mapping[str, Any] | None:
+    comparison = plan.get("comparison")
+    metrics = comparison.get("metrics") if isinstance(comparison, Mapping) else []
+    if "request_bound_cost" not in metrics:
+        return None
+    cost = candidate.get("request_bound_cost")
+    require(isinstance(cost, Mapping), f"request-bound cost missing: {label}")
+    require(cost.get("schema") == "stegverse.test-lanes-request-bound-cost.v1", f"request-bound cost schema mismatch: {label}")
+    require(cost.get("status") in {"REQUEST_BOUND_COST", "MEASURED_LOCAL_COST"}, f"request-bound cost status invalid: {label}")
+    amount = cost.get("calculated_request_cost_usd")
+    require(isinstance(amount, str) and amount, f"request-bound cost amount missing: {label}")
+    try:
+        parsed = Decimal(amount)
+    except (InvalidOperation, ValueError) as exc:
+        raise LaneEvidenceBuildError(f"request-bound cost amount invalid: {label}") from exc
+    require(parsed >= 0 and parsed.is_finite(), f"request-bound cost amount invalid: {label}")
+    require(isinstance(cost.get("cost_basis"), str) and cost.get("cost_basis"), f"request-bound cost basis missing: {label}")
+    return dict(cost)
+
+
 def external_latency_ms(candidate: Mapping[str, Any]) -> float:
     receipt = candidate.get("use_receipt")
     if isinstance(receipt, Mapping):
@@ -161,6 +182,7 @@ def build_bundle(
             output = str(candidate.get("candidate_output") or "")
             latency_ms = float(candidate.get("latency_ms") or 0.0)
             usage = dict(candidate.get("provider_usage") or {})
+            cost = request_bound_cost(plan, candidate, "stegverse_local")
             provider_evidence = {
                 "model_hash": candidate.get("model_hash"),
                 "credential_requirement": "NONE",
@@ -174,6 +196,7 @@ def build_bundle(
             output = str(candidate.get("candidate_output") or "")
             latency_ms = external_latency_ms(candidate)
             usage = dict(candidate.get("provider_usage") or {})
+            cost = request_bound_cost(plan, candidate, provider)
             provider_evidence = {
                 "provider_response_id": candidate.get("provider_response_id"),
                 "lease_receipt_sha256": candidate.get("lease_receipt_sha256"),
@@ -195,7 +218,7 @@ def build_bundle(
             "output_hash": digest_text(output),
             "latency_ms": latency_ms,
             "usage": usage,
-            "cost": None,
+            "cost": dict(cost) if cost is not None else None,
             "governance": dict(governance) if governance is not None else None,
             "provider_evidence": provider_evidence,
             "credential_material_present": False,

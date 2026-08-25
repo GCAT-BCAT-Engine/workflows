@@ -136,6 +136,15 @@ def validate_manifest(manifest: Mapping[str, Any]) -> dict[str, Any]:
         normalized.append(deepcopy(lane))
 
     _require(primary_lanes == 1, "exactly one StegVerse-local primary/reference lane required")
+
+    comparison = manifest.get("comparison")
+    _require(isinstance(comparison, Mapping), "comparison contract required")
+    metrics = comparison.get("metrics")
+    _require(isinstance(metrics, list) and metrics, "comparison metrics required")
+    _require(len(metrics) == len(set(metrics)), "comparison metrics must be unique")
+    supported_metrics = {"output_hash", "latency", "actual_usage", "request_bound_cost", "governance_outcome"}
+    _require(set(metrics).issubset(supported_metrics), "unsupported comparison metric")
+    _require("request_bound_cost" in metrics, "canonical cost comparison requires request_bound_cost")
     return {
         "schema": "stegverse.test-lanes-validation.v1",
         "state": "VALID",
@@ -146,6 +155,7 @@ def validate_manifest(manifest: Mapping[str, Any]) -> dict[str, Any]:
         "credential_authority": "TV/TVC",
         "manifest_contains_credentials": False,
         "lanes": normalized,
+        "comparison": deepcopy(comparison),
     }
 
 
@@ -311,6 +321,7 @@ def plan_manifest(
         "lane_count": len(planned),
         "execution_group_count": len(groups),
         "blockers": blockers,
+        "comparison": deepcopy(validated["comparison"]),
         "lanes": planned,
         "execution_groups": groups,
     }

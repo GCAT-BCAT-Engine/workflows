@@ -1,0 +1,102 @@
+{
+  "schema": "stegverse.session.change_record.v1",
+  "change_id": "SV-CONT-20260825-NINE-LANE-COST-015",
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "base_commit": "19d5c43555792b2e60c803e1e4b976c57698285c",
+  "actor": {
+    "class": "agent",
+    "instance": "codex-work-mode"
+  },
+  "governing_handoff": {
+    "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md",
+    "hash_algorithm": "git-blob-sha1",
+    "hash": "b3b23575433f964db67fb52705145476c15199ff"
+  },
+  "changed_paths": [
+    {
+      "path": ".continuity/config.json",
+      "change_type": "modified",
+      "hash_algorithm": "git-blob-sha1",
+      "hash": "b7560b5a8f5245ce72b2d2d84b126a0ac78e7400"
+    },
+    {
+      "path": ".github/workflows/stegverse-test-lanes-validation.yml",
+      "change_type": "modified",
+      "hash_algorithm": "git-blob-sha1",
+      "hash": "5cf826735e85fbf014a9257d82ff4ecc325d10e5"
+    },
+    {
+      "path": ".handoff/current.json",
+      "change_type": "modified",
+      "hash_algorithm": "git-blob-sha1",
+      "hash": "722554c4c9e4f1d749926c7b562f1491323116c6"
+    },
+    {
+      "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md",
+      "change_type": "modified",
+      "hash_algorithm": "git-blob-sha1",
+      "hash": "b3b23575433f964db67fb52705145476c15199ff"
+    },
+    {
+      "path": "experiments/stegverse-test-lanes/TEST_LANES_MIRROR_HANDOFF.md",
+      "change_type": "modified",
+      "hash_algorithm": "git-blob-sha1",
+      "hash": "d1b67c592e10bc1a429e36f095282898a79e135d"
+    },
+    {
+      "path": "experiments/stegverse-test-lanes/build_lane_evidence.py",
+      "change_type": "modified",
+      "hash_algorithm": "git-blob-sha1",
+      "hash": "43a8749d9420beddec484646c5a9ac775aa4286d"
+    },
+    {
+      "path": "experiments/stegverse-test-lanes/compare_test_lanes.py",
+      "change_type": "modified",
+      "hash_algorithm": "git-blob-sha1",
+      "hash": "2b86aac97d86690361f3f66a7d0da68f367edc0e"
+    },
+    {
+      "path": "experiments/stegverse-test-lanes/plan_test_lanes.py",
+      "change_type": "modified",
+      "hash_algorithm": "git-blob-sha1",
+      "hash": "880a56c7eeff7b288f55eaee41660c8dba42ee96"
+    },
+    {
+      "path": "experiments/stegverse-test-lanes/tests/test_build_lane_evidence.py",
+      "change_type": "modified",
+      "hash_algorithm": "git-blob-sha1",
+      "hash": "70e74d2afca6bed064a7151d4c2b45dec5fc51fc"
+    },
+    {
+      "path": "experiments/stegverse-test-lanes/tests/test_compare_test_lanes.py",
+      "change_type": "modified",
+      "hash_algorithm": "git-blob-sha1",
+      "hash": "09b6b88f53f7c711a644d8ee47dc0c59942dd51a"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "canonical comparison contract retained in plan",
+      "state": "IMPLEMENTED"
+    },
+    {
+      "claim": "missing or malformed request-bound cost fails closed",
+      "state": "IMPLEMENTED"
+    },
+    {
+      "claim": "focused Test Lanes unit suites",
+      "state": "HOSTED_PASS"
+    },
+    {
+      "claim": "live five-candidate nine-lane cost result",
+      "state": "NOT_OBSERVED"
+    }
+  ],
+  "unresolved_tasks": [
+    "Bind exact external usage to official model-matched rate cards in TVC candidate production.",
+    "Bind measured StegVerse-local resource usage to an observed unit-cost profile.",
+    "Execute the admitted live 5-candidate/9-lane run and retain terminal evidence."
+  ],
+  "created_at": "2026-08-25T23:50:00Z",
+  "record_hash": "fb9da0abdfa4d7dbcad3d6414924c1f29a0c02966021713166726198f264938f"
+}

@@ -58,7 +58,12 @@ def evidence_for(request, output="reference-output", *, model=None, governance_o
         "output_hash": COMPARE.output_hash(output),
         "latency_ms": 12.5,
         "usage": {"total_tokens": 10},
-        "cost": None,
+        "cost": {
+            "schema": "stegverse.test-lanes-request-bound-cost.v1",
+            "status": "MEASURED_LOCAL_COST" if request["provider"] == "stegverse_local" else "REQUEST_BOUND_COST",
+            "calculated_request_cost_usd": "0.000001000000",
+            "cost_basis": "MEASURED_LOCAL_RESOURCE_USAGE_X_OBSERVED_UNIT_COST" if request["provider"] == "stegverse_local" else "EXACT_PROVIDER_USAGE_X_OFFICIAL_MODEL_RATE_CARD",
+        },
         "governance": governance,
         "provider_evidence": None,
         "credential_material_present": False,
@@ -110,6 +115,21 @@ class TestLaneComparison(unittest.TestCase):
         self.assertEqual(len(deepseek), 2)
         self.assertTrue(any(item["matches_primary_output"] for item in deepseek))
         self.assertTrue(any(not item["matches_primary_output"] for item in deepseek))
+
+    def test_missing_declared_request_bound_cost_fails_closed(self):
+        plan = PLAN.plan_manifest(manifest(), capsule_resolutions=all_external_unbound())
+        local = next(item for item in plan["lanes"] if item["state"] == "READY_LOCAL_PRIMARY")
+        item = evidence_for(local)
+        item["cost"] = None
+        bundle = {
+            "schema": "stegverse.test-lanes-evidence-bundle.v1",
+            "test_id": plan["test_id"],
+            "plan_hash": plan["plan_hash"],
+            "credential_material_present": False,
+            "lanes": [item],
+        }
+        with self.assertRaisesRegex(COMPARE.TestLaneEvidenceError, "request-bound cost missing"):
+            COMPARE.compare(plan, bundle)
 
     def test_missing_ready_lane_evidence_blocks(self):
         plan = PLAN.plan_manifest(manifest(), capsule_resolutions=all_external_unbound())
