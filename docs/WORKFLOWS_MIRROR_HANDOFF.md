@@ -71,6 +71,13 @@ data/continuity-provenance-adoption.json
 data/handoff-semantic-adoption.json
 data/session-consolidation/handoff-orchestration-session-20260804.json
 docs/WORKFLOWS_MIRROR_HANDOFF.md
+experiments/stegverse-test-lanes/plan_test_lanes.py
+experiments/stegverse-test-lanes/build_lane_evidence.py
+experiments/stegverse-test-lanes/compare_test_lanes.py
+experiments/stegverse-test-lanes/TEST_LANES_MIRROR_HANDOFF.md
+experiments/stegverse-test-lanes/tests/test_build_lane_evidence.py
+experiments/stegverse-test-lanes/tests/test_compare_test_lanes.py
+.github/workflows/stegverse-test-lanes-validation.yml
 ```
 
 ## Current working path
@@ -159,8 +166,7 @@ archive state: READY
 
 ## Remaining work
 
-No unique implementation, validation, integration, custody, propagation,
-reconciliation, or observation work remains for the originating session.
+No unique work remains for the originating handoff-orchestration session. The adjacent canonical nine-lane cost protocol is active: request-bound cost integrity is implemented on PR #17, while external official-rate-card binding, measured StegVerse-local cost production, and live 5-candidate/9-lane evidence remain required.
 
 Adjacent project work continues only under these canonical owners:
 
@@ -194,9 +200,7 @@ owning repository's release criteria.
 
 ## Next task
 
-Repository-native owners continue the five adjacent canonical workstreams from
-the exact execution-inventory locations above. No ChatGPT session is required
-to preserve or mediate the originating session state.
+Validate and merge the bounded nine-lane request-bound-cost gate, then integrate exact external provider rate cards and measured StegVerse-local resource cost into the candidate producers before the first live 5-candidate/9-lane run. The originating handoff-orchestration session remains archive-safe; the adjacent cost-analysis lane remains active.
 
 ## Claims and collision state
 
