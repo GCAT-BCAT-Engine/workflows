@@ -1,6 +1,6 @@
 # StegVerse Test Lanes Mirror Handoff
 
-Updated: 2026-08-22T07:03:00-05:00
+Updated: 2026-08-25T18:30:00-05:00
 
 ## Active goal and authority
 
@@ -111,6 +111,18 @@ The direct runner never receives a key. It rejects provider/GitHub secret enviro
 
 `StegVerse-Labs/.github:STEGVERSE-TEST-LANES-AUTOLAUNCH-001` remains installed as **OPTIONAL_AUTOMATION_ONLY**. Its heartbeat-specific matrix is not the canonical direct-run release condition.
 
+## Request-bound cost integrity repair
+
+The canonical manifest declares `request_bound_cost`, but the previous planner dropped the comparison contract and the evidence builder emitted `cost: null`. Consequently, the comparator could return PASS without cost evidence. This branch repairs the protocol boundary:
+
+- manifest validation requires the canonical comparison contract and its request-bound-cost metric;
+- the immutable plan preserves that contract;
+- evidence construction requires a typed non-negative request-bound cost for every executed lane;
+- comparison fails closed when any declared cost is missing, malformed or unbound;
+- tests cover both complete cost evidence and missing-cost rejection.
+
+This does not invent prices. External candidates must provide exact provider usage bound to official model-matched rate cards. The StegVerse PRIMARY must provide measured local resource cost bound to an observed unit-cost profile. Until those producer integrations exist and a live run supplies them, the canonical cost analysis must not report PASS.
+
 ## Current live state
 
 ```text
@@ -122,6 +134,7 @@ hosted exact-head validation directly observed: NO
 live four-provider TVC readiness: NOT DIRECTLY OBSERVED
 live StegVerse PRIMARY candidate: NOT OBSERVED
 live four external candidates: NOT OBSERVED
+typed request-bound cost gate: IMPLEMENTED_PENDING_PR_VALIDATION
 live nine-lane evidence bundle: NOT OBSERVED
 live deterministic comparison PASS: NOT OBSERVED
 ```
