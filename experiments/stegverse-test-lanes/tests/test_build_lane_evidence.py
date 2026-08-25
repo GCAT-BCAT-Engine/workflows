@@ -67,6 +67,7 @@ def plan():
         "primary_provider": "stegverse_local",
         "credential_authority": "TV/TVC",
         "credential_material_present": False,
+        "comparison": {"metrics": ["output_hash", "latency", "actual_usage", "request_bound_cost", "governance_outcome"]},
         "lanes": lanes,
     }
 
@@ -82,6 +83,12 @@ def primary(p):
         "candidate_output": OUTPUT,
         "latency_ms": 2.5,
         "provider_usage": {"total_tokens": 32},
+        "request_bound_cost": {
+            "schema": "stegverse.test-lanes-request-bound-cost.v1",
+            "status": "MEASURED_LOCAL_COST",
+            "calculated_request_cost_usd": "0.000001000000",
+            "cost_basis": "MEASURED_LOCAL_RESOURCE_USAGE_X_OBSERVED_UNIT_COST",
+        },
         "credential_material_present": False,
         "third_party_inference_required": False,
     }
@@ -98,6 +105,12 @@ def external(p, provider):
         "candidate_output": OUTPUT,
         "provider_response_id": provider + "-response",
         "provider_usage": {"input_tokens": 10, "output_tokens": 5, "total_tokens": 15},
+        "request_bound_cost": {
+            "schema": "stegverse.test-lanes-request-bound-cost.v1",
+            "status": "REQUEST_BOUND_COST",
+            "calculated_request_cost_usd": "0.000002000000",
+            "cost_basis": "EXACT_PROVIDER_USAGE_X_OFFICIAL_MODEL_RATE_CARD",
+        },
         "lease_receipt_sha256": BUILDER.digest_text(provider + "-lease"),
         "use_receipt": {"started_ns": 1000, "finished_ns": 2001000},
         "credential_material_present": False,
@@ -126,6 +139,18 @@ class EvidenceBuilderTests(unittest.TestCase):
         self.assertEqual(comparison["state"], "PASS")
         self.assertEqual(comparison["lane_evidence_count"], 9)
         self.assertEqual(comparison["blockers"], [])
+
+    def test_missing_request_bound_cost_fails_closed(self):
+        p = plan()
+        candidate = external(p, "openai")
+        candidate.pop("request_bound_cost")
+        with self.assertRaisesRegex(BUILDER.LaneEvidenceBuildError, "request-bound cost missing: openai"):
+            BUILDER.build_bundle(
+                plan=p,
+                task=TASK,
+                primary_candidate=primary(p),
+                external_candidates=[candidate, external(p, "anthropic"), external(p, "deepseek"), external(p, "kimi")],
+            )
 
     def test_missing_external_candidate_fails_closed(self):
         p = plan()
