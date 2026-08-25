@@ -4,7 +4,7 @@
   "current_handoff": {
     "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md",
     "hash_algorithm": "git-blob-sha1",
-    "hash": "9a6ebc5e5331fe79c2aa7551279ddb285868cf69"
+    "hash": "b3b23575433f964db67fb52705145476c15199ff"
   },
   "document_profile": "format_a_v1",
   "scoped_handoffs": [
@@ -13,7 +13,8 @@
     "docs/GOVERNED_RESEARCH_ENGINE_HANDOFF.md",
     "docs/TVC_PROVIDER_CAPABILITY_CONSUMER_MIRROR_HANDOFF.md",
     "experiments/sv-cost-program/governed-ai-premium/SV_GOVERNED_AI_PREMIUM_MIRROR_HANDOFF.md",
-    "experiments/sv-cost-program/seven-lane-results/SV_COST_SEVEN_LANE_MIRROR_HANDOFF.md"
+    "experiments/sv-cost-program/seven-lane-results/SV_COST_SEVEN_LANE_MIRROR_HANDOFF.md",
+    "experiments/stegverse-test-lanes/TEST_LANES_MIRROR_HANDOFF.md"
   ],
   "archive_policy": {
     "date_suffix_required": true,
