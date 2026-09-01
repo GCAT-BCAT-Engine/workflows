@@ -1,0 +1,27 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://stegverse.org/schemas/sv-cost-eleven-lane-cost-evidence.v1.json",
+  "title":"Eleven-lane cost evidence",
+  "oneOf":[
+    {
+      "type":"object",
+      "required":["lane_id","basis","cost_usd"],
+      "properties":{
+        "lane_id":{"const":"glm-5.3-flash-hosted"},
+        "basis":{"enum":["PROVIDER_REPORTED_REQUEST_COST_USD","EXACT_USAGE_PLUS_BOUND_VERSIONED_RATE_CARD","PROVIDER_UI_SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST"]},
+        "cost_usd":{"type":"number","minimum":0},
+        "evidence_ref":{"type":"string","minLength":1}
+      }
+    },
+    {
+      "type":"object",
+      "required":["lane_id","basis","cost_usd"],
+      "properties":{
+        "lane_id":{"const":"glm-5.3-flash-sovereign"},
+        "basis":{"const":"MEASURED_COMPUTE_ENERGY_AMORTIZATION_RUNTIME_OVERHEAD"},
+        "cost_usd":{"type":"number","minimum":0},
+        "evidence_ref":{"type":"string","minLength":1}
+      }
+    }
+  ]
+}
