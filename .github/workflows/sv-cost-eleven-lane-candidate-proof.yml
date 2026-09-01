@@ -1,0 +1,57 @@
+name: SV Cost Eleven-Lane Credentialless Candidate Proof
+
+on:
+  push:
+    branches:
+      - main
+      - feat/sv-cost-eleven-lane
+    paths:
+      - 'experiments/sv-cost-program/eleven-lane-results/**'
+      - '.github/workflows/sv-cost-eleven-lane-candidate-proof.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sv-cost-eleven-lane-candidate-proof-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate-and-process:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Validate eleven-lane contract
+        run: |
+          python experiments/sv-cost-program/eleven-lane-results/validate_schema.py
+          ! grep -E 'OPENAI_API_KEY|ANTHROPIC_API_KEY|DEEPSEEK_API_KEY|MOONSHOT_API_KEY|KIMI_API_KEY|ZAI_API_KEY' experiments/sv-cost-program/eleven-lane-results/run.py
+
+      - name: Execute eleven-lane harness
+        run: |
+          python experiments/sv-cost-program/eleven-lane-results/run.py
+
+      - name: Validate bounded result
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          p=pathlib.Path('experiments/sv-cost-program/eleven-lane-results/results/generation-3-eleven-lane/eleven_lane_generation_3_results.json')
+          d=json.loads(p.read_text())
+          assert d['lane_count_defined'] == 11
+          assert len(d['rows']) == 11
+          assert [r['lane_id'] for r in d['rows']][-2:] == ['glm-5.3-flash-hosted','glm-5.3-flash-sovereign']
+          assert all(r.get('stegverse_provider_credential_possession') is False for r in d['rows'])
+          assert d['publication_status'] in {'PUBLICATION_BLOCKED','RESULTS_READY_FOR_BOUNDED_PUBLICATION'}
+          if not d['all_eleven_present']:
+              assert d['publication_status'] == 'PUBLICATION_BLOCKED'
+          PY
+
+      - name: Upload Generation-3 evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: sv-cost-eleven-lane-generation-3-${{ github.run_id }}
+          path: experiments/sv-cost-program/eleven-lane-results/results/generation-3-eleven-lane/
+          if-no-files-found: error
+          retention-days: 90
