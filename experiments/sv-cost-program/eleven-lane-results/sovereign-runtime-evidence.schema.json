@@ -1,0 +1,38 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://stegverse.org/schemas/glm-sovereign-runtime-evidence.v1.json",
+  "title":"GLM-5.3-Flash sovereign runtime evidence",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["model","task_id","vendor_api_credential_used","runtime_identity","endpoint_class","candidate_output","metrics"],
+  "properties":{
+    "model":{"const":"GLM-5.3-Flash"},
+    "task_id":{"const":"SV-RECON-001"},
+    "vendor_api_credential_used":{"const":false},
+    "runtime_identity":{"type":"string","minLength":1},
+    "endpoint_class":{"const":"SOVEREIGN_OPENAI_COMPATIBLE"},
+    "candidate_output":{
+      "type":"object",
+      "required":["task_id","final_state","decisions","applied_count","denied_count"],
+      "properties":{
+        "task_id":{"const":"SV-RECON-001"},
+        "final_state":{"type":"object"},
+        "decisions":{"type":"array"},
+        "applied_count":{"type":"integer"},
+        "denied_count":{"type":"integer"},
+        "claim_boundary":{"type":"string"}
+      }
+    },
+    "metrics":{
+      "type":"object",
+      "required":["elapsed_seconds"],
+      "properties":{
+        "elapsed_seconds":{"type":"number","minimum":0},
+        "energy_kwh":{"type":["number","null"],"minimum":0},
+        "hardware_amortization_usd":{"type":["number","null"],"minimum":0},
+        "energy_cost_usd":{"type":["number","null"],"minimum":0},
+        "storage_network_runtime_overhead_usd":{"type":["number","null"],"minimum":0}
+      }
+    }
+  }
+}

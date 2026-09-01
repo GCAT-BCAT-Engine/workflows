@@ -1,0 +1,49 @@
+{
+  "schema": "stegverse.provider-cost-evidence-request/v2",
+  "task_id": "SV-COST-ELEVEN-LANE-COST-EVIDENCE-003",
+  "experiment_id": "SV-COST-ELEVEN-LANE-RESULTS-001",
+  "credential_authority": "TV/TVC",
+  "non_tv_tvc_secret_or_token_allowed": false,
+  "provider_api_key_transfer_allowed": false,
+  "purpose": "Complete bounded eleven-lane dollar-cost comparison without fabricating provider or sovereign-runtime measurements.",
+  "inherited_provider_evidence": {
+    "source": "experiments/sv-cost-program/nine-lane-results/cost-evidence-request.json",
+    "openai": "INCOMPLETE_REQUEST_SPECIFIC_COST",
+    "anthropic": "INCOMPLETE_REQUEST_SPECIFIC_COST",
+    "deepseek": "INCOMPLETE_REQUEST_SPECIFIC_COST",
+    "kimi": "COMPLETE_BOUNDED_SUBSCRIPTION_ALLOCATION"
+  },
+  "glm_hosted": {
+    "owner": "EXTERNAL_PROVIDER_RELATIONSHIP_OR_TV_TVC",
+    "state": "BLOCKED_ON_CANDIDATE_AND_ADMISSIBLE_COST_EVIDENCE",
+    "accepted_modes": [
+      "PROVIDER_REPORTED_REQUEST_COST_USD",
+      "PROVIDER_REPORTED_EXACT_INPUT_OUTPUT_TOKEN_USAGE_PLUS_BOUND_VERSIONED_RATE_CARD",
+      "PROVIDER_UI_SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST"
+    ],
+    "destination": "cost-evidence/glm-hosted.json",
+    "rejected": [
+      "unbound marketing rate represented as request cost",
+      "estimated tokens represented as provider-reported usage",
+      "provider API key or bearer token stored in repository"
+    ]
+  },
+  "glm_sovereign": {
+    "owner": "ELIGIBLE_SOVEREIGN_RUNTIME",
+    "state": "BLOCKED_ON_RUNTIME_EXECUTION_EVIDENCE",
+    "required_metrics": [
+      "elapsed_seconds",
+      "runtime_identity"
+    ],
+    "preferred_cost_metrics": [
+      "energy_kwh",
+      "hardware_amortization_usd",
+      "energy_cost_usd",
+      "storage_network_runtime_overhead_usd"
+    ],
+    "destination": "runtime-evidence/glm-sovereign.json",
+    "rule": "Sovereign cost must be computed from measured/bounded infrastructure cost and must never inherit hosted token pricing."
+  },
+  "release_condition": "All eleven behavioral lanes have evidence, all are admissible, and each cost-bearing comparison lane has admissible bounded cost evidence.",
+  "publication_state": "BLOCKED"
+}

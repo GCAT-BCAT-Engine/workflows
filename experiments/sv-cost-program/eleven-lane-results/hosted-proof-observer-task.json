@@ -1,0 +1,17 @@
+{
+  "schema": "stegverse.validation-task/v1",
+  "task_id": "SV-COST-ELEVEN-LANE-HOSTED-PROOF-002",
+  "owner": "repository-native candidate-proof validation observer",
+  "claim_state": "MACHINE_OWNED_VALIDATION_PENDING_OBSERVATION",
+  "workflow": ".github/workflows/sv-cost-eleven-lane-candidate-proof.yml",
+  "branch": "feat/sv-cost-eleven-lane",
+  "required_checks": [
+    "workflow conclusion success",
+    "eleven rows emitted",
+    "lanes 10 and 11 preserved distinctly",
+    "credential nonpossession invariant",
+    "bounded blocker state when GLM evidence is absent",
+    "artifact uploaded"
+  ],
+  "release_condition": "Observed workflow run succeeds and emitted evidence satisfies required checks. This does not by itself release cost publication."
+}

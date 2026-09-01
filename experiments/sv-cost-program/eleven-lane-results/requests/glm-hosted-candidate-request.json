@@ -1,0 +1,12 @@
+{
+  "schema": "stegverse.external-candidate-request/v1",
+  "experiment_id": "SV-COST-ELEVEN-LANE-RESULTS-001",
+  "task_id": "SV-RECON-001",
+  "lane_id": "glm-5.3-flash-hosted",
+  "provider": "zai",
+  "model": "GLM-5.3-Flash",
+  "mode": "EXTERNAL_CANDIDATE_OUTPUT_PRE_VAULT",
+  "provider_api_key_transferred_to_stegverse": false,
+  "destination": "candidate-inputs/glm-hosted.json",
+  "instruction": "Obtain the model output through an existing provider relationship or TV/TVC-authorized path. Submit only the resulting candidate/output metadata. Do not submit an API key, bearer token, password, or other provider credential."
+}

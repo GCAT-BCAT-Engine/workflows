@@ -1,0 +1,21 @@
+{
+  "schema": "stegverse.sovereign-inference-request/v1",
+  "experiment_id": "SV-COST-ELEVEN-LANE-RESULTS-001",
+  "task_id": "SV-RECON-001",
+  "lane_id": "glm-5.3-flash-sovereign",
+  "model": "GLM-5.3-Flash",
+  "endpoint_class": "SOVEREIGN_OPENAI_COMPATIBLE",
+  "vendor_api_credential_required": false,
+  "destination": "runtime-evidence/glm-sovereign.json",
+  "required_measurements": [
+    "elapsed_seconds",
+    "runtime_identity"
+  ],
+  "optional_cost_measurements": [
+    "energy_kwh",
+    "hardware_amortization_usd",
+    "energy_cost_usd",
+    "storage_network_runtime_overhead_usd"
+  ],
+  "instruction": "Execute only on an eligible sovereign runtime. Preserve runtime identity, exact candidate output, elapsed time, and available measured cost inputs. Do not claim execution until a runtime receipt exists."
+}
