@@ -1,0 +1,156 @@
+{
+  "schema_version": "6.0.0",
+  "experiment_id": "SV-COST-ELEVEN-LANE-RESULTS-001",
+  "generation": "GENERATION_3_CREDENTIALLESS_PLUS_SOVEREIGN_MODEL_BOUNDARY",
+  "supersedes_for_new_runs": "SV-COST-NINE-LANE-RESULTS-001",
+  "preserves_historical_results": [
+    "experiments/sv-cost-program/nine-lane-results/"
+  ],
+  "task_id": "SV-RECON-001",
+  "operation_class": "governed_state_reconstruction",
+  "comparison_unit": "successful equivalent admissible outcome",
+  "credential_invariant": "NO_PROVIDER_API_KEY_POSSESSED_OR_CONSUMED_BY_STEGVERSE_TEST_WORKLOAD_UNLESS_LEASED_BY_TV_TVC_AT_RUNTIME",
+  "candidate_source_contract": {
+    "mode": "EXTERNAL_PROVIDER_CANDIDATE_OUTPUT_OR_SOVEREIGN_RUNTIME_OUTPUT",
+    "provider_relationship_owner": "USER_OR_EXISTING_APPLICATION_OR_TV_TVC",
+    "provider_api_key_transferred_to_stegverse": false,
+    "same_candidate_used_for_existing_raw_and_governed_pairs": true
+  },
+  "lane_schema": [
+    {
+      "lane": 1,
+      "lane_id": "openai-raw",
+      "model_interest": "OpenAI",
+      "stegverse_governed": false,
+      "credential_mode": "EXTERNAL_CANDIDATE_OUTPUT"
+    },
+    {
+      "lane": 2,
+      "lane_id": "openai-governed",
+      "model_interest": "OpenAI/StegVerse",
+      "stegverse_governed": true,
+      "credential_mode": "EXTERNAL_CANDIDATE_OUTPUT"
+    },
+    {
+      "lane": 3,
+      "lane_id": "anthropic-raw",
+      "model_interest": "Anthropic",
+      "stegverse_governed": false,
+      "credential_mode": "EXTERNAL_CANDIDATE_OUTPUT"
+    },
+    {
+      "lane": 4,
+      "lane_id": "anthropic-governed",
+      "model_interest": "Anthropic/StegVerse",
+      "stegverse_governed": true,
+      "credential_mode": "EXTERNAL_CANDIDATE_OUTPUT"
+    },
+    {
+      "lane": 5,
+      "lane_id": "stegverse-only",
+      "model_interest": "StegVerse deterministic reconstruction",
+      "stegverse_governed": true,
+      "credential_mode": "NONE"
+    },
+    {
+      "lane": 6,
+      "lane_id": "deepseek-raw",
+      "model_interest": "DeepSeek",
+      "stegverse_governed": false,
+      "credential_mode": "EXTERNAL_CANDIDATE_OUTPUT"
+    },
+    {
+      "lane": 7,
+      "lane_id": "deepseek-governed",
+      "model_interest": "DeepSeek/StegVerse",
+      "stegverse_governed": true,
+      "credential_mode": "EXTERNAL_CANDIDATE_OUTPUT"
+    },
+    {
+      "lane": 8,
+      "lane_id": "kimi-raw",
+      "model_interest": "Kimi (Moonshot AI)",
+      "stegverse_governed": false,
+      "credential_mode": "EXTERNAL_CANDIDATE_OUTPUT"
+    },
+    {
+      "lane": 9,
+      "lane_id": "kimi-governed",
+      "model_interest": "Kimi (Moonshot AI)/StegVerse",
+      "stegverse_governed": true,
+      "credential_mode": "EXTERNAL_CANDIDATE_OUTPUT"
+    },
+    {
+      "lane": 10,
+      "lane_id": "glm-5.3-flash-hosted",
+      "model_interest": "GLM-5.3-Flash Hosted",
+      "stegverse_governed": true,
+      "credential_mode": "EXTERNAL_CANDIDATE_PRE_VAULT_OR_TV_TVC_RUNTIME_LEASE"
+    },
+    {
+      "lane": 11,
+      "lane_id": "glm-5.3-flash-sovereign",
+      "model_interest": "GLM-5.3-Flash Sovereign",
+      "stegverse_governed": true,
+      "credential_mode": "NO_VENDOR_API_CREDENTIAL"
+    }
+  ],
+  "initial_state": {
+    "balance": 100,
+    "risk_score": 1,
+    "standing": "active"
+  },
+  "policy": {
+    "minimum_balance": 0,
+    "maximum_risk_score": 5,
+    "standing_required_for_debit": "active"
+  },
+  "events": [
+    {
+      "event_id": "E01",
+      "operation": "credit",
+      "amount": 25
+    },
+    {
+      "event_id": "E02",
+      "operation": "debit",
+      "amount": 40
+    },
+    {
+      "event_id": "E03",
+      "operation": "risk_add",
+      "amount": 2
+    },
+    {
+      "event_id": "E04",
+      "operation": "debit",
+      "amount": 100
+    },
+    {
+      "event_id": "E05",
+      "operation": "risk_add",
+      "amount": 3
+    },
+    {
+      "event_id": "E06",
+      "operation": "debit",
+      "amount": 10
+    }
+  ],
+  "required_output_reference": "experiments/sv-cost-program/nine-lane-results/task.json#required_output",
+  "cost_basis": {
+    "hosted_external": "ADMISSIBLE_PROVIDER_EVIDENCE_ONLY",
+    "glm_hosted": "PROVIDER_REQUEST_COST_OR_EXACT_USAGE_PLUS_VERSIONED_RATE_CARD",
+    "glm_sovereign": "MEASURED_COMPUTE_ENERGY_AMORTIZATION_AND_RUNTIME_OVERHEAD"
+  },
+  "proof_requirements": {
+    "governance_receipt": true,
+    "replay_receipt": true,
+    "reconstruction_receipt": true,
+    "candidate_hash_bound": true,
+    "provider_credential_nonpossession_asserted": true,
+    "cost_basis_disclosed": true,
+    "glm_hosted_and_sovereign_cost_bases_must_not_be_conflated": true
+  },
+  "claim_boundary": "Generation-3 eleven-lane source definition. Lanes 1-9 preserve the frozen Generation-2 credentialless candidate-output boundary. Lane 10 adds GLM-5.3-Flash Hosted through external candidate evidence before Vault or TV/TVC runtime credential lease after Vault. Lane 11 adds GLM-5.3-Flash Sovereign with no vendor API credential. Source definition does not claim live execution or complete cost evidence."
+}
