@@ -1,0 +1,18 @@
+{
+  "schema": "stegverse.task-state/v1",
+  "task_id": "SV-COST-ELEVEN-LANE-GEN3-001",
+  "state": "SOURCE_READY_CREDENTIALLESS_HARNESS_PENDING_FIRST_HOSTED_PROOF",
+  "canonical_handoff": "experiments/sv-cost-program/eleven-lane-results/ELEVEN_LANE_MIRROR_HANDOFF.md",
+  "experiment_id": "SV-COST-ELEVEN-LANE-RESULTS-001",
+  "credential_authority": "TV/TVC",
+  "non_tv_tvc_secret_or_token_allowed": false,
+  "behavioral_lanes_defined": 11,
+  "behavioral_lanes_required": 11,
+  "inherited_generation_2_lanes": 9,
+  "new_glm_lanes": 2,
+  "glm_hosted_state": "WAITING_EXTERNAL_CANDIDATE_OR_TV_TVC_VAULT",
+  "glm_sovereign_state": "WAITING_ELIGIBLE_SOVEREIGN_RUNTIME_EVIDENCE",
+  "machine_runner": ".github/workflows/sv-cost-eleven-lane-candidate-proof.yml",
+  "publication_state": "BLOCKED_PENDING_GLM_EVIDENCE_AND_INCOMPLETE_PROVIDER_COST_EVIDENCE",
+  "next_action": "Run the credentialless eleven-lane harness immediately; preserve its bounded blocker state. Then acquire GLM hosted candidate output and sovereign runtime evidence without introducing non-TV/TVC secrets."
+}
