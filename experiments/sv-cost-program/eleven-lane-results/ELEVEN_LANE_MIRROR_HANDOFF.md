@@ -1,46 +1,51 @@
 # SV-COST Eleven-Lane Mirror Handoff
 
-Status: ACTIVE — SOURCE TRANSITION FROM FROZEN NINE-LANE BASELINE
+Status: **SOURCE COMPLETE ON MAIN — CREDENTIALLESS HARNESS READY — GLM EVIDENCE ACQUISITION NEXT**
 
 ## Canonical authority
 
 ```text
 repository: GCAT-BCAT-Engine/workflows
-branch: feat/sv-cost-eleven-lane
+branch: main
 experiment_id: SV-COST-ELEVEN-LANE-RESULTS-001
 generation: GENERATION_3_CREDENTIALLESS_PLUS_SOVEREIGN_MODEL_BOUNDARY
 predecessor: experiments/sv-cost-program/nine-lane-results/SV_COST_NINE_LANE_MIRROR_HANDOFF.md
 credential_authority: TV/TVC
 non-TV/TVC protected secret/token authority: FORBIDDEN
+merge: a66b8dbc6a2d319ecef66834f7babf7b5a586100
+pull_request: 19
 ```
 
-The nine-lane Generation-2 result is historical and must remain unchanged. This directory is the successor surface.
+The Generation-2 nine-lane result remains frozen. Generation 3 is the successor and does not rewrite historical evidence.
 
 ## Goal
 
-Extend the comparison from 9 lanes to 11 lanes by adding exactly:
+Execute an 11-lane comparison whose final two lanes are:
 
-10. GLM-5.3-Flash Hosted
-11. GLM-5.3-Flash Sovereign
+```text
+10 GLM-5.3-Flash Hosted
+11 GLM-5.3-Flash Sovereign
+```
 
-The hosted and sovereign GLM lanes are intentionally distinct because their credential, custody, network, privacy, and cost bases differ.
+Hosted and sovereign GLM remain distinct because credential authority, custody, network exposure, privacy, and cost basis differ.
 
 ## Credential boundary
 
-No provider API key is required to execute the comparison harness itself.
+The harness requires no provider API key.
 
-Existing external-provider lanes continue to consume committed external candidate outputs. StegVerse does not possess or consume provider API keys for those lanes.
+Existing OpenAI, Anthropic, DeepSeek, and Kimi lanes consume the already-committed external candidate outputs from Generation 2.
 
-GLM hosted may operate in either of two states:
+GLM Hosted:
+- before Vault: external candidate output only;
+- after Vault: TV/TVC-authorized runtime credential lease;
+- provider credential in repository/userland: forbidden.
 
-```text
-PRE_VAULT: external candidate output only; no StegVerse-held Z.ai credential
-POST_VAULT: TV/TVC-authorized hosted API execution; no direct repository/userland secret possession
-```
+GLM Sovereign:
+- vendor API credential: not required;
+- eligible sovereign runtime identity: required;
+- execution evidence: required before any live claim.
 
-GLM sovereign requires no vendor API credential. It requires an eligible sovereign inference runtime and StegVerse node/runtime identity/authority.
-
-## Eleven lanes
+## Lane schema
 
 ```text
 1  OpenAI raw
@@ -56,53 +61,93 @@ GLM sovereign requires no vendor API credential. It requires an eligible soverei
 11 GLM-5.3-Flash Sovereign
 ```
 
+## Installed source/control surface
+
+```text
+README.md
+task.json
+task-state.json
+glm-integration-state.json
+candidate-input.schema.json
+sovereign-runtime-evidence.schema.json
+cost-evidence.schema.json
+cost-evidence-request.json
+run.py
+validate_schema.py
+hosted-proof-observer-task.json
+requests/glm-evaluation-prompt.md
+requests/glm-hosted-candidate-request.json
+requests/glm-sovereign-execution-request.json
+.github/workflows/sv-cost-eleven-lane-candidate-proof.yml
+```
+
+The runner:
+- inherits lanes 1-9 from frozen Generation-2 candidate evidence;
+- emits all 11 lane rows;
+- fail-closes lane 10 when `candidate-inputs/glm-hosted.json` is absent;
+- fail-closes lane 11 when `runtime-evidence/glm-sovereign.json` is absent;
+- never substitutes hosted token pricing for sovereign compute economics;
+- preserves missing cost evidence as blockers rather than estimating it.
+
 ## Cost basis classes
 
-External hosted candidate lanes may publish bounded cost only from admissible provider evidence already defined by Generation 2.
+GLM Hosted accepted bases:
+- provider-reported request cost;
+- exact provider-reported input/output usage plus a bound versioned rate card;
+- provider-observed subscription/quota allocation explicitly labeled non-marginal.
 
-GLM hosted cost basis:
-- provider-reported request cost; or
-- provider-reported exact input/output tokens plus a bound versioned official rate card; or
-- provider-observed subscription/quota allocation when explicitly labeled non-marginal.
-
-GLM sovereign cost basis:
+GLM Sovereign accepted basis:
 - measured runtime duration;
 - measured or bounded energy consumption;
 - hardware amortization;
 - storage/network/runtime overhead;
 - successful equivalent outcome denominator.
 
-Do not represent the sovereign lane using hosted token prices.
-
 ## Current execution state
 
 ```text
-lanes 1-9: inherited source/evidence from frozen Generation 2
-lane 10 hosted: SOURCE_DEFINED; live hosted execution blocked until external candidate evidence or TV/TVC Vault authorization
-lane 11 sovereign: SOURCE_DEFINED; live execution blocked until eligible sovereign runtime is available
-provider API key transfer to StegVerse: false
+lanes 1-9: inherited evidence available
+lane 10: WAITING_EXTERNAL_CANDIDATE_OR_TV_TVC_VAULT
+lane 11: WAITING_ELIGIBLE_SOVEREIGN_RUNTIME_EVIDENCE
+credentialless harness: SOURCE READY ON MAIN
+hosted workflow: INSTALLED
+hosted workflow run observation: NOT YET DIRECTLY OBSERVED
+publication: BLOCKED
 ```
+
+Direct workflow-run enumeration returned no run objects for the merge commit or sampled predecessor commits. Do not infer either workflow failure or workflow success from that connector result. The repository-native observer remains the hosted-proof owner.
+
+## Fastest next execution
+
+1. Run the credentialless harness now. It should produce 11 defined rows with lanes 10-11 explicitly blocked until evidence arrives.
+2. Acquire GLM Hosted output using `requests/glm-evaluation-prompt.md` through an existing external relationship; store only output metadata, never a provider credential.
+3. Execute the same exact prompt on an eligible sovereign GLM runtime and capture `runtime-evidence/glm-sovereign.json`.
+4. Re-run the harness and compare behavioral equivalence, governance evidence, and cost basis.
+5. Complete remaining OpenAI/Anthropic/DeepSeek bounded cost evidence before publication.
 
 ## Remaining files/modules to install
 
 Destination: `GCAT-BCAT-Engine/workflows`
 
-- eleven-lane runner derived from Generation-2 runner without mutating frozen nine-lane artifacts
-- eleven-lane schema validator
-- GLM hosted candidate schema/input record
-- GLM sovereign runtime evidence schema/input record
-- GLM hosted cost evidence record
-- GLM sovereign compute-cost evidence record
-- local validation receipt
-- hosted observer task/workflow update for 11-lane cardinality
-- publication integration after evidence gates pass
+```text
+candidate-inputs/glm-hosted.json                  BLOCKED_ON_REAL_GLM_HOSTED_OUTPUT
+runtime-evidence/glm-sovereign.json              BLOCKED_ON_ELIGIBLE_SOVEREIGN_RUNTIME
+cost-evidence/glm-hosted.json                    BLOCKED_ON_PROVIDER_COST/USAGE EVIDENCE
+results/generation-3-eleven-lane/...             GENERATED_BY_RUNNER
+local validation receipt                         PENDING_EXECUTION
+hosted proof observation                         MACHINE_OWNED_PENDING_OBSERVATION
+publication integration                          BLOCKED_ON_EVIDENCE GATES
+```
 
-Downstream publication/propagation, once release-ready, must re-read current handoffs in:
-- StegVerse-Labs/Site
-- GCAT-BCAT-Engine/Publisher
-- StegVerse-Labs/admissibility-wiki
-- StegVerse-Labs/stegguardian-wiki
+## Downstream release propagation
+
+When the eleven-lane result becomes release-ready, re-read current handoffs before applying publication changes to:
+
+- `StegVerse-Labs/Site`
+- `GCAT-BCAT-Engine/Publisher`
+- `StegVerse-Labs/admissibility-wiki`
+- `StegVerse-Labs/stegguardian-wiki`
 
 ## Claim boundary
 
-Source definition of the two new lanes does not claim live Z.ai API execution, sovereign model execution, provider credential availability, cost completion, hosted proof PASS, or publication readiness.
+Source/control implementation is complete and merged. This does not claim live Z.ai execution, sovereign GLM execution, provider credential availability, complete cost evidence, hosted proof PASS, or publication readiness.
