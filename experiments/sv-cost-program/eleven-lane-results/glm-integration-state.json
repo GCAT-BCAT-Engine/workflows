@@ -1,0 +1,26 @@
+{
+  "schema": "stegverse.sv-cost.glm-integration-state/v1",
+  "experiment_id": "SV-COST-ELEVEN-LANE-RESULTS-001",
+  "lanes": {
+    "10": {
+      "lane_id": "glm-5.3-flash-hosted",
+      "display_name": "GLM-5.3-Flash Hosted",
+      "pre_vault_execution_mode": "EXTERNAL_CANDIDATE_OUTPUT",
+      "post_vault_execution_mode": "TV_TVC_AUTHORIZED_PROVIDER_API",
+      "provider_api_key_in_repository": false,
+      "provider_api_key_transferred_to_stegverse": false,
+      "current_live_execution_state": "BLOCKED_PENDING_EXTERNAL_CANDIDATE_OR_TV_TVC_VAULT",
+      "cost_basis": "HOSTED_PROVIDER"
+    },
+    "11": {
+      "lane_id": "glm-5.3-flash-sovereign",
+      "display_name": "GLM-5.3-Flash Sovereign",
+      "execution_mode": "SOVEREIGN_OPENAI_COMPATIBLE_INFERENCE_ENDPOINT",
+      "vendor_api_credential_required": false,
+      "runtime_identity_required": true,
+      "current_live_execution_state": "BLOCKED_PENDING_ELIGIBLE_SOVEREIGN_RUNTIME",
+      "cost_basis": "COMPUTE_ENERGY_AMORTIZATION_RUNTIME_OVERHEAD"
+    }
+  },
+  "invariant": "HOSTED_AND_SOVEREIGN_ARE_SEPARATE_COST_AND_AUTHORITY_LANES"
+}
