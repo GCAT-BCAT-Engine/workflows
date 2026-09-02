@@ -102,5 +102,85 @@ class RequestBoundCostIntakeTests(unittest.TestCase):
         self.assertEqual(cost["cost_usd"],0.0025)
 
 
+    def test_harness_consumes_installed_request_bound_cost(self):
+        candidate_path=ROOT/"candidate-inputs"/"openai.json"
+        cost_path=ROOT/"cost-evidence"/"openai.json"
+        result_path=ROOT/"results"/"generation-3-eleven-lane"/"eleven_lane_generation_3_results.json"
+        old_candidate=candidate_path.read_bytes() if candidate_path.exists() else None
+        old_cost=cost_path.read_bytes() if cost_path.exists() else None
+        try:
+            candidate_path.parent.mkdir(parents=True,exist_ok=True)
+            cost_path.parent.mkdir(parents=True,exist_ok=True)
+            candidate_path.write_text(json.dumps(wrapper("openai","gpt-5.6-sol",{"input_tokens":1000,"output_tokens":200})))
+            cost_path.write_text(json.dumps({
+                "schema":"stegverse.request-bound-provider-cost-evidence/v1",
+                "provider":"openai",
+                "model":"gpt-5.6-sol",
+                "task_id":"SV-RECON-001",
+                "basis":"EXACT_USAGE_PLUS_BOUND_VERSIONED_RATE_CARD",
+                "cost_usd":0.008,
+                "provider_usage":{"input_tokens":1000,"output_tokens":200},
+                "rate_card_ref":{"rate_key":"openai:gpt-5.6-sol"},
+                "candidate_ref":"candidate-inputs/openai.json",
+                "provider_api_key_transferred_to_stegverse":False,
+                "non_tv_tvc_secret_or_token_used":False,
+                "claim_boundary":"REQUEST_BOUND_EFFECTIVE_COST_ONLY",
+            }))
+            cp=subprocess.run([sys.executable,str(ROOT/"run.py")],capture_output=True,text=True)
+            self.assertEqual(cp.returncode,0,cp.stderr)
+            result=json.loads(result_path.read_text())
+            raw=next(row for row in result["rows"] if row["lane_id"]=="openai-raw")
+            governed=next(row for row in result["rows"] if row["lane_id"]=="openai-governed")
+            self.assertEqual(raw["provider_cost_usd"],0.008)
+            self.assertEqual(governed["provider_cost_usd"],0.008)
+            self.assertEqual(raw["cost_evidence_ref"],"cost-evidence/openai.json")
+            self.assertNotIn("MISSING_COST_EVIDENCE:openai-raw",result["cost_blockers"])
+        finally:
+            if old_candidate is None:
+                candidate_path.unlink(missing_ok=True)
+            else:
+                candidate_path.write_bytes(old_candidate)
+            if old_cost is None:
+                cost_path.unlink(missing_ok=True)
+            else:
+                cost_path.write_bytes(old_cost)
+
+    def test_harness_rejects_cost_bound_to_wrong_candidate(self):
+        candidate_path=ROOT/"candidate-inputs"/"openai.json"
+        cost_path=ROOT/"cost-evidence"/"openai.json"
+        old_candidate=candidate_path.read_bytes() if candidate_path.exists() else None
+        old_cost=cost_path.read_bytes() if cost_path.exists() else None
+        try:
+            candidate_path.parent.mkdir(parents=True,exist_ok=True)
+            cost_path.parent.mkdir(parents=True,exist_ok=True)
+            candidate_path.write_text(json.dumps(wrapper("openai","gpt-5.6-sol",{"input_tokens":1000,"output_tokens":200})))
+            cost_path.write_text(json.dumps({
+                "schema":"stegverse.request-bound-provider-cost-evidence/v1",
+                "provider":"openai",
+                "model":"gpt-5.6-sol",
+                "task_id":"SV-RECON-001",
+                "basis":"EXACT_USAGE_PLUS_BOUND_VERSIONED_RATE_CARD",
+                "cost_usd":0.008,
+                "provider_usage":{"input_tokens":1000,"output_tokens":200},
+                "rate_card_ref":{"rate_key":"openai:gpt-5.6-sol"},
+                "candidate_ref":"candidate-inputs/anthropic.json",
+                "provider_api_key_transferred_to_stegverse":False,
+                "non_tv_tvc_secret_or_token_used":False,
+                "claim_boundary":"REQUEST_BOUND_EFFECTIVE_COST_ONLY",
+            }))
+            cp=subprocess.run([sys.executable,str(ROOT/"run.py")],capture_output=True,text=True)
+            self.assertNotEqual(cp.returncode,0)
+            self.assertIn("candidate binding mismatch",cp.stderr+cp.stdout)
+        finally:
+            if old_candidate is None:
+                candidate_path.unlink(missing_ok=True)
+            else:
+                candidate_path.write_bytes(old_candidate)
+            if old_cost is None:
+                cost_path.unlink(missing_ok=True)
+            else:
+                cost_path.write_bytes(old_cost)
+
+
 if __name__=="__main__":
     unittest.main()
