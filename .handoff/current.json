@@ -9,10 +9,15 @@
   "document_profile": "format_a_v1",
   "scoped_handoffs": [
     "SV_COST_MIRROR_HANDOFF.md",
-    "docs/TEN_ADVANCES_COST_ESTIMATION_MIRROR_HANDOFF.md",
     "docs/GOVERNED_RESEARCH_ENGINE_HANDOFF.md",
+    "docs/TEN_ADVANCES_COST_ESTIMATION_MIRROR_HANDOFF.md",
     "docs/TVC_PROVIDER_CAPABILITY_CONSUMER_MIRROR_HANDOFF.md",
+    "docs/WORKFLOWS_SECURITY_MIRROR_HANDOFF.md",
+    "experiments/stegverse-test-lanes/TEST_LANES_MIRROR_HANDOFF.md",
+    "experiments/sv-cost-program/eleven-lane-results/ELEVEN_LANE_MIRROR_HANDOFF.md",
+    "experiments/sv-cost-program/generation-3-control/GENERATION_3_CONTROL_MIRROR_HANDOFF.md",
     "experiments/sv-cost-program/governed-ai-premium/SV_GOVERNED_AI_PREMIUM_MIRROR_HANDOFF.md",
+    "experiments/sv-cost-program/nine-lane-results/SV_COST_NINE_LANE_MIRROR_HANDOFF.md",
     "experiments/sv-cost-program/seven-lane-results/SV_COST_SEVEN_LANE_MIRROR_HANDOFF.md"
   ],
   "archive_policy": {
