@@ -23,11 +23,16 @@ No provider credential belongs in this repository.
 
 ## Completing lane 11 — GLM-5.3-Flash Sovereign
 
-1. Materialize GLM-5.3-Flash behind an eligible sovereign OpenAI-compatible inference endpoint.
-2. Submit the exact same `requests/glm-evaluation-prompt.md`.
-3. Capture the exact output and runtime measurements under `sovereign-runtime-evidence.schema.json`.
-4. Install as `runtime-evidence/glm-sovereign.json`.
-5. Re-run `run.py`.
+The sovereign execution owner is the resident StegVerse WorkerCoordinator lane `SHWP-GLM53-SOVEREIGN-LANE-001`. Do not substitute hosted execution or manually manufacture lane-11 evidence.
+
+When authentic resident evidence exists:
+
+```bash
+python tools/ingest_glm_sovereign_resident_evidence.py /path/to/resident/runtime-evidence.glm-sovereign.json
+python run.py
+```
+
+The intake verifies the exact frozen semantic outcome, sovereign endpoint class, runtime identity, nonnegative runtime metrics, and `vendor_api_credential_used=false`. It rejects credential-like fields and differing overwrite attempts.
 
 Vendor API credential use must remain false.
 
