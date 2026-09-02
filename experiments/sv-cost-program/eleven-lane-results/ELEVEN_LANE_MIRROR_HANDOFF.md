@@ -323,3 +323,28 @@ behavioral evidence: 10 / 11
 ```
 
 This closes the source-side format/installation seam only. It does not satisfy lane 11 without authentic resident evidence.
+
+
+### Resident intake merge and validation evidence
+
+```text
+intake issue: #26 CLOSED
+intake PR: #27
+intake merge: fdc731eedc8823d00e510ffd6f5b283f9f3a209d
+intake validated head: 22e98f2538151c4693dbd7393d92f8022e9676ef
+handoff authority: 33695260783 SUCCESS
+handoff semantics: 33695260777 SUCCESS
+continuity provenance: 33695260773 SUCCESS
+eleven-lane candidate proof: 33695260791 SUCCESS
+
+validation-binding issue: #28 CLOSED
+validation-binding PR: #29
+validation-binding merge: 8196f8670114b2ec81ee7b0f49a816765b49838c
+validation-binding head: 855916385a128a577a1592aa5e0e3534228e417d
+resident intake acquisition tests: 6/6 PASS
+candidate proof: 33695457195 SUCCESS
+continuity provenance: 33695457306 SUCCESS
+handoff semantics: 33695457297 SUCCESS
+```
+
+The repository-side lane-11 intake path is now source-complete and exercised by the existing candidate-proof validation lane. Authentic resident GLM execution remains the only behavioral lane-11 evidence prerequisite.
