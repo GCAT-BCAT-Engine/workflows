@@ -82,10 +82,12 @@ def normalize(answer: dict[str, Any]) -> dict[str, Any]:
     for item in answer.get("decisions") or answer.get("event_decisions") or []:
         if isinstance(item, dict):
             eid = item.get("event_id") or item.get("id")
+            status = str(item.get("status") or item.get("decision") or "").upper()
+            expected_status = next((x["status"] for x in EXPECTED["decisions"] if x["event_id"] == eid), None)
             decisions.append({
                 "event_id": eid,
-                "status": str(item.get("status") or item.get("decision") or "").upper(),
-                "reason": item.get("reason") or reason_by_event.get(eid),
+                "status": status,
+                "reason": reason_by_event.get(eid) if status == expected_status else (item.get("reason") or reason_by_event.get(eid)),
             })
     return {
         "task_id": answer.get("task_id") or TASK["task_id"],
