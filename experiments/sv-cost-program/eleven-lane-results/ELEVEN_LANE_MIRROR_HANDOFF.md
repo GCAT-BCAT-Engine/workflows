@@ -79,7 +79,9 @@ hosted-proof-observer-task.json
 model-sources/glm-5.3-flash.v1.json
 tools/ingest_glm_hosted_candidate.py
 tools/build_glm_sovereign_evidence.py
+tools/ingest_glm_sovereign_resident_evidence.py
 tests/test_glm_acquisition_tools.py
+tests/test_glm_sovereign_resident_intake.py
 requests/glm-evaluation-prompt.md
 requests/glm-hosted-candidate-request.json
 requests/glm-sovereign-execution-request.json
@@ -272,3 +274,52 @@ No Z.ai official request rate card is bound in this registry. GLM Hosted therefo
 Important: a rate card does not create request cost evidence. Existing OpenAI/Anthropic aggregate/plan observations remain insufficient. Existing DeepSeek candidate has unspecified UI model identity and cannot be priced against a current API rate card. The new intake exists so authentic request-bound observations can close those blockers without estimation.
 
 Generation-3 `run.py` now consumes a request-bound provider override from `candidate-inputs/<provider>.json` when present and applies `cost-evidence/<provider>.json`; otherwise it preserves the Generation-2 candidate.
+
+
+## Resident sovereign evidence intake — 2026-09-02
+
+Issue: #26
+
+The source-side handoff from the merged sovereign WorkerCoordinator lane to this Generation-3 experiment is now explicitly bounded.
+
+Resident producer:
+`StegVerse-Labs/.github:SHWP-GLM53-SOVEREIGN-LANE-001`
+
+Resident bridge merge:
+`StegVerse-Labs/.github@be021c2b842ea347f2223a0949ed7562cdd854b1`
+
+Consumer intake:
+`tools/ingest_glm_sovereign_resident_evidence.py`
+
+The intake accepts either:
+- the exact consumer evidence object emitted by the resident worker; or
+- the micro-node producer receipt containing `consumer_evidence`.
+
+It then verifies:
+```text
+model = GLM-5.3-Flash
+task_id = SV-RECON-001
+endpoint_class = SOVEREIGN_OPENAI_COMPATIBLE
+vendor_api_credential_used = false
+final state = balance 75 / risk 3 / active
+decision sequence = ALLOW, ALLOW, ALLOW, DENY, DENY, ALLOW
+applied_count = 4
+denied_count = 2
+claim_boundary = DETERMINISTIC_RECONSTRUCTION_ONLY
+elapsed_seconds >= 0
+all supplied infrastructure metrics >= 0
+```
+
+It fails closed on credential-like material and on semantic mismatch. The destination is first-write-wins for differing evidence and idempotent for exact re-ingestion.
+
+The intake performs no network fetch, provider operation, hosted inference substitution, credential acquisition, runtime activation, publication decision, or release action.
+
+Current boundary remains:
+```text
+resident bridge source: MERGED_VALIDATED
+resident lane-11 execution: NOT YET OBSERVED
+runtime-evidence/glm-sovereign.json: NOT YET INSTALLED
+behavioral evidence: 10 / 11
+```
+
+This closes the source-side format/installation seam only. It does not satisfy lane 11 without authentic resident evidence.
