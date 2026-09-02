@@ -85,5 +85,31 @@ class AcquisitionToolsTest(unittest.TestCase):
         self.assertEqual(candidate["denied_count"],2)
         self.assertEqual(candidate["claim_boundary"],"DETERMINISTIC_RECONSTRUCTION_ONLY")
 
+
+    def test_resident_intake_installs_exact_sovereign_evidence(self):
+        evidence={"model":"GLM-5.3-Flash","task_id":"SV-RECON-001","vendor_api_credential_used":False,"runtime_identity":"resident-glm53","endpoint_class":"SOVEREIGN_OPENAI_COMPATIBLE","candidate_output":CANDIDATE,"metrics":{"elapsed_seconds":1.25,"energy_kwh":None,"hardware_amortization_usd":None,"energy_cost_usd":None,"storage_network_runtime_overhead_usd":None}}
+        with tempfile.TemporaryDirectory() as td:
+            td=pathlib.Path(td); src=td/"resident.json"; src.write_text(json.dumps(evidence))
+            dest=td/"runtime-evidence"/"glm-sovereign.json"; receipt=td/"evidence"/"intake.json"
+            cp=subprocess.run([sys.executable,str(TOOLS/"ingest_glm_sovereign_resident_evidence.py"),str(src),"--dest",str(dest),"--receipt",str(receipt)],capture_output=True,text=True)
+            self.assertEqual(cp.returncode,0,cp.stderr)
+            installed=json.loads(dest.read_text()); result=json.loads(receipt.read_text())
+            self.assertEqual(installed["candidate_output"],CANDIDATE)
+            self.assertFalse(installed["vendor_api_credential_used"])
+            self.assertEqual(result["authority_effect"],"NONE_EVIDENCE_INTAKE_ONLY")
+            self.assertFalse(result["network_fetch_performed"])
+            self.assertFalse(result["provider_operation_performed"])
+
+    def test_resident_intake_rejects_secret_and_semantic_mismatch(self):
+        evidence={"model":"GLM-5.3-Flash","task_id":"SV-RECON-001","vendor_api_credential_used":False,"runtime_identity":"resident-glm53","endpoint_class":"SOVEREIGN_OPENAI_COMPATIBLE","candidate_output":CANDIDATE,"metrics":{"elapsed_seconds":1.0}}
+        with tempfile.TemporaryDirectory() as td:
+            td=pathlib.Path(td); src=td/"resident.json"
+            bad=json.loads(json.dumps(evidence)); bad["candidate_output"]["api_key"]="forbidden"; src.write_text(json.dumps(bad))
+            cp=subprocess.run([sys.executable,str(TOOLS/"ingest_glm_sovereign_resident_evidence.py"),str(src),"--dest",str(td/"out.json"),"--receipt",str(td/"receipt.json")],capture_output=True,text=True)
+            self.assertNotEqual(cp.returncode,0)
+            bad=json.loads(json.dumps(evidence)); bad["candidate_output"]["final_state"]["balance"]=74; src.write_text(json.dumps(bad))
+            cp=subprocess.run([sys.executable,str(TOOLS/"ingest_glm_sovereign_resident_evidence.py"),str(src),"--dest",str(td/"out2.json"),"--receipt",str(td/"receipt2.json")],capture_output=True,text=True)
+            self.assertNotEqual(cp.returncode,0)
+
 if __name__ == "__main__":
     unittest.main()
