@@ -12,8 +12,9 @@ generation: GENERATION_3_CREDENTIALLESS_PLUS_SOVEREIGN_MODEL_BOUNDARY
 predecessor: experiments/sv-cost-program/nine-lane-results/SV_COST_NINE_LANE_MIRROR_HANDOFF.md
 credential_authority: TV/TVC
 non-TV/TVC protected secret/token authority: FORBIDDEN
-merge: a66b8dbc6a2d319ecef66834f7babf7b5a586100
-pull_request: 19
+initial_merge: a66b8dbc6a2d319ecef66834f7babf7b5a586100
+acquisition_tooling_merge: bd0868c38d28e23b4bd37699acf360a2294d7a10
+pull_requests: 19, 21
 ```
 
 The Generation-2 nine-lane result remains frozen. Generation 3 is the successor and does not rewrite historical evidence.
@@ -75,6 +76,10 @@ cost-evidence-request.json
 run.py
 validate_schema.py
 hosted-proof-observer-task.json
+model-sources/glm-5.3-flash.v1.json
+tools/ingest_glm_hosted_candidate.py
+tools/build_glm_sovereign_evidence.py
+tests/test_glm_acquisition_tools.py
 requests/glm-evaluation-prompt.md
 requests/glm-hosted-candidate-request.json
 requests/glm-sovereign-execution-request.json
@@ -107,8 +112,8 @@ GLM Sovereign accepted basis:
 
 ```text
 lanes 1-9: inherited evidence available
-lane 10: WAITING_EXTERNAL_CANDIDATE_OR_TV_TVC_VAULT
-lane 11: WAITING_ELIGIBLE_SOVEREIGN_RUNTIME_EVIDENCE
+lane 10: ACQUISITION_ISSUE_OPEN / GCAT-BCAT-Engine/workflows#20
+lane 11: MACHINE_OWNED_RUNTIME_EVALUATION_REQUEST_OPEN / StegVerse-002/micro-node-runtime#69
 credentialless harness: SOURCE READY ON MAIN
 hosted workflow: INSTALLED
 hosted workflow run observation: NOT YET DIRECTLY OBSERVED
@@ -119,7 +124,7 @@ Direct workflow-run enumeration returned no run objects for the merge commit or 
 
 ## Fastest next execution
 
-1. Run the credentialless harness now. It should produce 11 defined rows with lanes 10-11 explicitly blocked until evidence arrives.
+1. Credentialless harness execution request is committed at `run-requests/2026-09-02T0756-0500-credentialless-eleven-lane.md`; direct workflow-run enumeration remains unavailable through the connected observer surface.
 2. Acquire GLM Hosted output using `requests/glm-evaluation-prompt.md` through an existing external relationship; store only output metadata, never a provider credential.
 3. Execute the same exact prompt on an eligible sovereign GLM runtime and capture `runtime-evidence/glm-sovereign.json`.
 4. Re-run the harness and compare behavioral equivalence, governance evidence, and cost basis.
@@ -130,8 +135,8 @@ Direct workflow-run enumeration returned no run objects for the merge commit or 
 Destination: `GCAT-BCAT-Engine/workflows`
 
 ```text
-candidate-inputs/glm-hosted.json                  BLOCKED_ON_REAL_GLM_HOSTED_OUTPUT
-runtime-evidence/glm-sovereign.json              BLOCKED_ON_ELIGIBLE_SOVEREIGN_RUNTIME
+candidate-inputs/glm-hosted.json                  OWNER workflows#20 / BLOCKED_ON_REAL_GLM_HOSTED_OUTPUT
+runtime-evidence/glm-sovereign.json              OWNER micro-node-runtime#69 / BLOCKED_ON_ELIGIBLE_SOVEREIGN_RUNTIME
 cost-evidence/glm-hosted.json                    BLOCKED_ON_PROVIDER_COST/USAGE EVIDENCE
 results/generation-3-eleven-lane/...             GENERATED_BY_RUNNER
 local validation receipt                         PENDING_EXECUTION
@@ -151,3 +156,28 @@ When the eleven-lane result becomes release-ready, re-read current handoffs befo
 ## Claim boundary
 
 Source/control implementation is complete and merged. This does not claim live Z.ai execution, sovereign GLM execution, provider credential availability, complete cost evidence, hosted proof PASS, or publication readiness.
+
+
+## Candidate-acquisition tooling — 2026-09-02
+
+Merged acquisition tooling: `bd0868c38d28e23b4bd37699acf360a2294d7a10` / PR #21.
+
+Installed helpers:
+
+```text
+tools/ingest_glm_hosted_candidate.py
+tools/build_glm_sovereign_evidence.py
+tests/test_glm_acquisition_tools.py
+model-sources/glm-5.3-flash.v1.json
+```
+
+The hosted ingestion tool rejects credential-like fields and writes only the candidate/output and explicitly supplied provider-observed usage metadata. The sovereign builder writes only exact candidate output, runtime identity, elapsed time, and supplied measured/bounded infrastructure metrics. Neither tool calls a provider or launches a model.
+
+Official source identity is bound to `zai-org/GLM-5.3-Flash` with MIT license and supported local serving profiles including OpenAI-compatible vLLM/SGLang endpoints. Source compatibility does not prove runtime eligibility or execution.
+
+Current acquisition owners:
+
+```text
+GLM Hosted candidate: GCAT-BCAT-Engine/workflows#20
+GLM Sovereign runtime evaluation: StegVerse-002/micro-node-runtime#69
+```
