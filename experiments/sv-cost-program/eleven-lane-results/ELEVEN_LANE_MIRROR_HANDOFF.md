@@ -365,3 +365,12 @@ The harness now:
 - fails closed on mismatched or malformed cost evidence.
 
 This does not create provider cost evidence. It ensures authentic evidence, once installed, actually closes the corresponding harness blocker.
+
+
+### Sanitized TVC measurement bridge
+
+The same issue also installs `tools/ingest_tvc_request_bound_measurement.py`.
+
+That bridge accepts only already-sanitized `stegverse.tvc.provider-measurement-evidence.v1` with `REQUEST_BOUND_COST` and the TVC exact-usage/official-rate-card basis. It supports the currently blocked OpenAI, Anthropic, and DeepSeek cost lanes. It parses and revalidates the exact frozen candidate, maps only actual normalized usage into the Generation-3 candidate/cost schemas, preserves TV/TVC as source authority through rate-card provenance, and rejects protected fields or non-request-bound evidence.
+
+The bridge performs no provider operation, network fetch, credential handling, runtime execution, or publication action.
