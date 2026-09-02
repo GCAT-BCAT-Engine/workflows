@@ -1,0 +1,52 @@
+{
+  "provider": "zai",
+  "model": "GLM-5.3-Flash",
+  "task_id": "SV-RECON-001",
+  "provider_api_key_transferred_to_stegverse": false,
+  "provider_response_id": null,
+  "provider_latency_seconds": null,
+  "provider_usage": {},
+  "candidate_output": {
+    "task_id": "SV-RECON-001",
+    "final_state": {
+      "balance": 75,
+      "risk_score": 3,
+      "standing": "active"
+    },
+    "decisions": [
+      {
+        "event_id": "E01",
+        "status": "ALLOW",
+        "reason": "Credit increases balance from 100 to 125"
+      },
+      {
+        "event_id": "E02",
+        "status": "ALLOW",
+        "reason": "Standing active and resulting balance 85 is not below minimum_balance 0"
+      },
+      {
+        "event_id": "E03",
+        "status": "ALLOW",
+        "reason": "Resulting risk_score 3 is not above maximum_risk_score 5"
+      },
+      {
+        "event_id": "E04",
+        "status": "DENY",
+        "reason": "Resulting balance -15 would fall below minimum_balance 0"
+      },
+      {
+        "event_id": "E05",
+        "status": "DENY",
+        "reason": "Resulting risk_score 6 would exceed maximum_risk_score 5"
+      },
+      {
+        "event_id": "E06",
+        "status": "ALLOW",
+        "reason": "Standing active and resulting balance 75 is not below minimum_balance 0"
+      }
+    ],
+    "applied_count": 4,
+    "denied_count": 2,
+    "claim_boundary": "DETERMINISTIC_RECONSTRUCTION_ONLY"
+  }
+}
