@@ -6,11 +6,13 @@
       "lane_id": "glm-5.3-flash-hosted",
       "display_name": "GLM-5.3-Flash Hosted",
       "pre_vault_execution_mode": "EXTERNAL_CANDIDATE_OUTPUT",
-      "post_vault_execution_mode": "TV_TVC_AUTHORIZED_PROVIDER_API",
+      "post_vault_execution_mode": "TV_TVC_AUTHORIZED_PROVIDER_OPERATION",
       "provider_api_key_in_repository": false,
       "provider_api_key_transferred_to_stegverse": false,
-      "current_live_execution_state": "BLOCKED_PENDING_EXTERNAL_CANDIDATE_OR_TV_TVC_VAULT",
-      "cost_basis": "HOSTED_PROVIDER"
+      "current_live_execution_state": "HOSTED_CANDIDATE_ACQUIRED_PENDING_HARNESS_VALIDATION",
+      "cost_basis": "HOSTED_PROVIDER",
+      "candidate_evidence_ref": "candidate-inputs/glm-hosted.json",
+      "acquisition_evidence_ref": "evidence/glm-hosted-acquisition-2026-09-02.json"
     },
     "11": {
       "lane_id": "glm-5.3-flash-sovereign",

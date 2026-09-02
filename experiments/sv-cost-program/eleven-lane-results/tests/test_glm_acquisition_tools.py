@@ -67,5 +67,23 @@ class AcquisitionToolsTest(unittest.TestCase):
             self.assertFalse(record["vendor_api_credential_used"])
             self.assertEqual(record["runtime_identity"],"test-runtime")
 
+    def test_installed_glm_hosted_candidate_matches_deterministic_semantics(self):
+        path=ROOT/"candidate-inputs"/"glm-hosted.json"
+        self.assertTrue(path.exists())
+        record=json.loads(path.read_text())
+        self.assertEqual(record["provider"],"zai")
+        self.assertEqual(record["model"],"GLM-5.3-Flash")
+        self.assertFalse(record["provider_api_key_transferred_to_stegverse"])
+        candidate=record["candidate_output"]
+        self.assertEqual(candidate["task_id"],"SV-RECON-001")
+        self.assertEqual(candidate["final_state"],{"balance":75,"risk_score":3,"standing":"active"})
+        self.assertEqual(
+            [(x["event_id"],x["status"]) for x in candidate["decisions"]],
+            [("E01","ALLOW"),("E02","ALLOW"),("E03","ALLOW"),("E04","DENY"),("E05","DENY"),("E06","ALLOW")]
+        )
+        self.assertEqual(candidate["applied_count"],4)
+        self.assertEqual(candidate["denied_count"],2)
+        self.assertEqual(candidate["claim_boundary"],"DETERMINISTIC_RECONSTRUCTION_ONLY")
+
 if __name__ == "__main__":
     unittest.main()

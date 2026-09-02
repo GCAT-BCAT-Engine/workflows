@@ -1,0 +1,17 @@
+{
+  "schema": "stegverse.external-candidate-acquisition-evidence/v1",
+  "experiment_id": "SV-COST-ELEVEN-LANE-RESULTS-001",
+  "task_id": "SV-RECON-001",
+  "lane_id": "glm-5.3-flash-hosted",
+  "provider": "zai",
+  "model": "GLM-5.3-Flash",
+  "acquisition_mode": "USER_OBSERVED_PROVIDER_HOSTED_UI",
+  "exact_prompt_ref": "requests/glm-evaluation-prompt.md",
+  "candidate_ref": "candidate-inputs/glm-hosted.json",
+  "provider_api_key_transferred_to_stegverse": false,
+  "provider_usage_observed": false,
+  "provider_cost_observed": false,
+  "repository_provider_runtime_verified": false,
+  "claim_boundary": "EXACT_USER_SUPPLIED_HOSTED_OUTPUT_ONLY_NO_PROVIDER_RUNTIME_OR_COST_INFERENCE",
+  "authority_effect": "NONE"
+}
