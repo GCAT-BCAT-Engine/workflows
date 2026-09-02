@@ -111,6 +111,10 @@ def install(source: Path, *, candidate_dest: Path|None=None, cost_dest: Path|Non
     candidate_dest=candidate_dest or ROOT/"candidate-inputs"/f"{provider}.json"
     cost_dest=cost_dest or ROOT/"cost-evidence"/f"{provider}.json"
     candidate_ref=str(candidate_dest.resolve().relative_to(ROOT.resolve())) if candidate_dest.resolve().is_relative_to(ROOT.resolve()) else str(candidate_dest)
+    candidate_usage={
+        "input_tokens":usage.get("input_tokens",0),
+        "output_tokens":usage.get("output_tokens",0),
+    }
     candidate_record={
         "provider":provider,
         "model":model,
@@ -118,10 +122,8 @@ def install(source: Path, *, candidate_dest: Path|None=None, cost_dest: Path|Non
         "provider_api_key_transferred_to_stegverse":False,
         "provider_response_id":response_id,
         "provider_latency_seconds":None,
-        "provider_usage":usage,
+        "provider_usage":candidate_usage,
         "candidate_output":candidate,
-        "source_authority":"StegVerse-Labs/TVC",
-        "source_evidence_schema":"stegverse.tvc.provider-measurement-evidence.v1",
     }
     cost_record={
         "schema":"stegverse.request-bound-provider-cost-evidence/v1",
