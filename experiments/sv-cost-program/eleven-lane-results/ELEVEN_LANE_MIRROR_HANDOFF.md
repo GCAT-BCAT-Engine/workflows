@@ -348,3 +348,20 @@ handoff semantics: 33695457297 SUCCESS
 ```
 
 The repository-side lane-11 intake path is now source-complete and exercised by the existing candidate-proof validation lane. Authentic resident GLM execution remains the only behavioral lane-11 evidence prerequisite.
+
+
+## Request-bound cost consumption closure — 2026-09-02
+
+Issue: #31
+
+The Generation-3 intake already produced `cost-evidence/<provider>.json`, but the eleven-lane harness did not consume those files. That left a software-side gap between accepted request-bound cost evidence and the experiment's `cost_blockers`.
+
+The harness now:
+- loads `cost-evidence/openai.json`, `anthropic.json`, and `deepseek.json` when a Generation-3 provider candidate is installed;
+- verifies provider/model/task identity, explicit credential nonpossession, claim boundary, nonnegative cost, and candidate binding;
+- applies the same request-bound provider cost to the raw and governed rows derived from that one provider execution;
+- loads `cost-evidence/glm-hosted.json` for the hosted Z.ai row with the same identity/boundary checks;
+- preserves inherited Generation-2 behavior when no Generation-3 cost packet exists;
+- fails closed on mismatched or malformed cost evidence.
+
+This does not create provider cost evidence. It ensures authentic evidence, once installed, actually closes the corresponding harness blocker.
