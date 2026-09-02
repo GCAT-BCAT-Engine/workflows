@@ -236,3 +236,39 @@ publication: BLOCKED
 Lane 10 acquisition issue `#20` is satisfied at the candidate/semantic-validation boundary. Lane 11 remains machine-owned by `StegVerse-002/micro-node-runtime#69`.
 
 This does not claim independent provider-side request telemetry, provider billing evidence, sovereign GLM execution, all-eleven completion, or publication readiness.
+
+
+## Request-bound provider cost intake — 2026-09-02
+
+Issue: #24
+
+Installed source:
+```text
+cost-evidence/provider-rate-cards.2026-09-02.json
+schemas/request-bound-provider-cost-evidence.schema.json
+requests/request-bound-provider-evidence-pack.json
+tools/ingest_request_bound_provider_candidate.py
+tests/test_request_bound_cost_intake.py
+```
+
+The intake allows Generation-3 provider candidates to supersede the frozen Generation-2 candidate only for the new run; Generation 2 remains immutable. A replacement provider run must preserve the exact SV-RECON-001 semantic result and credential nonpossession.
+
+Accepted request-cost bases remain fail-closed:
+```text
+PROVIDER_REPORTED_REQUEST_COST_USD
+EXACT_USAGE_PLUS_BOUND_VERSIONED_RATE_CARD
+PROVIDER_UI_SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST
+```
+
+Current bound rate-card identities:
+```text
+OpenAI   gpt-5.6-sol
+Anthropic claude-opus-5
+DeepSeek deepseek-v4-flash / deepseek-v4-pro with explicit peak/off-peak cache-miss rate key
+```
+
+No Z.ai official request rate card is bound in this registry. GLM Hosted therefore remains cost-blocked unless the provider exposes request cost, an admissible quota allocation, or exact usage plus a later verified official Z.ai rate card.
+
+Important: a rate card does not create request cost evidence. Existing OpenAI/Anthropic aggregate/plan observations remain insufficient. Existing DeepSeek candidate has unspecified UI model identity and cannot be priced against a current API rate card. The new intake exists so authentic request-bound observations can close those blockers without estimation.
+
+Generation-3 `run.py` now consumes a request-bound provider override from `candidate-inputs/<provider>.json` when present and applies `cost-evidence/<provider>.json`; otherwise it preserves the Generation-2 candidate.
