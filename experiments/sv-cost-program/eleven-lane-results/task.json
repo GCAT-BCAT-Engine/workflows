@@ -9,7 +9,7 @@
   "task_id": "SV-RECON-001",
   "operation_class": "governed_state_reconstruction",
   "comparison_unit": "successful equivalent admissible outcome",
-  "credential_invariant": "NO_PROVIDER_API_KEY_POSSESSED_OR_CONSUMED_BY_STEGVERSE_TEST_WORKLOAD_UNLESS_LEASED_BY_TV_TVC_AT_RUNTIME",
+  "credential_invariant": "NO_PROVIDER_API_KEY_POSSESSED_OR_CONSUMED_BY_STEGVERSE_TEST_WORKLOAD; HOSTED_PROVIDER_OPERATION_MAY_BE_EXECUTED_BY_TV_TVC_WITH_PROCESS_LOCAL_NON_EXPORTABLE_CREDENTIAL",
   "candidate_source_contract": {
     "mode": "EXTERNAL_PROVIDER_CANDIDATE_OUTPUT_OR_SOVEREIGN_RUNTIME_OUTPUT",
     "provider_relationship_owner": "USER_OR_EXISTING_APPLICATION_OR_TV_TVC",
@@ -85,7 +85,7 @@
       "lane_id": "glm-5.3-flash-hosted",
       "model_interest": "GLM-5.3-Flash Hosted",
       "stegverse_governed": true,
-      "credential_mode": "EXTERNAL_CANDIDATE_PRE_VAULT_OR_TV_TVC_RUNTIME_LEASE"
+      "credential_mode": "EXTERNAL_CANDIDATE_OR_TV_TVC_AUTHORIZED_PROVIDER_OPERATION"
     },
     {
       "lane": 11,
@@ -152,5 +152,5 @@
     "cost_basis_disclosed": true,
     "glm_hosted_and_sovereign_cost_bases_must_not_be_conflated": true
   },
-  "claim_boundary": "Generation-3 eleven-lane source definition. Lanes 1-9 preserve the frozen Generation-2 credentialless candidate-output boundary. Lane 10 adds GLM-5.3-Flash Hosted through external candidate evidence before Vault or TV/TVC runtime credential lease after Vault. Lane 11 adds GLM-5.3-Flash Sovereign with no vendor API credential. Source definition does not claim live execution or complete cost evidence."
+  "claim_boundary": "Generation-3 eleven-lane source definition. Lanes 1-9 preserve the frozen Generation-2 credentialless candidate-output boundary. Lane 10 adds GLM-5.3-Flash Hosted through exact external candidate evidence or a TV/TVC-authorized hosted provider operation with process-local non-exportable credential handling. Lane 11 adds GLM-5.3-Flash Sovereign with no vendor API credential. Source definition does not claim provider runtime identity beyond supplied acquisition evidence, sovereign execution, or complete cost evidence."
 }
