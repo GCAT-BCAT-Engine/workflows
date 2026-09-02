@@ -1,0 +1,50 @@
+{
+  "schema": "stegverse.sv-cost.model-source/v1",
+  "model_id": "zai-org/GLM-5.3-Flash",
+  "display_name": "GLM-5.3-Flash",
+  "publisher": "Z.ai",
+  "license": "MIT",
+  "source_url": "https://huggingface.co/zai-org/GLM-5.3-Flash",
+  "hosted_api_url": "https://z.ai/model-api",
+  "architecture_observation": {
+    "total_parameters_billion": 320,
+    "active_parameters_billion": 18,
+    "native_multimodal": true
+  },
+  "sovereign_serving_profiles": [
+    {
+      "framework": "vLLM",
+      "launch": "vllm serve \"zai-org/GLM-5.3-Flash\"",
+      "api_compatibility": "OPENAI_COMPATIBLE",
+      "default_example_endpoint": "http://localhost:8000/v1/chat/completions"
+    },
+    {
+      "framework": "SGLang",
+      "launch": "python3 -m sglang.launch_server --model-path \"zai-org/GLM-5.3-Flash\" --host 0.0.0.0 --port 30000",
+      "api_compatibility": "OPENAI_COMPATIBLE",
+      "default_example_endpoint": "http://localhost:30000/v1/chat/completions"
+    },
+    {
+      "framework": "Transformers",
+      "api_compatibility": "DIRECT_LIBRARY_INFERENCE"
+    },
+    {
+      "framework": "KTransformers",
+      "api_compatibility": "SUPPORTED_BY_MODEL_CARD"
+    },
+    {
+      "framework": "Unsloth",
+      "api_compatibility": "SUPPORTED_BY_MODEL_CARD"
+    }
+  ],
+  "evaluation_defaults": {
+    "reasoning_effort": "max",
+    "clear_thinking": true,
+    "note": "Use model-card benchmark-compatible reasoning budget; chat scenarios explicitly clear prior thinking state."
+  },
+  "authority_boundary": {
+    "source_identity_is_execution_proof": false,
+    "source_identity_grants_runtime_authority": false,
+    "vendor_api_credential_required_for_sovereign_lane": false
+  }
+}

@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - feat/sv-cost-eleven-lane
+      - feat/sv-cost-glm-acquisition-tools
     paths:
       - 'experiments/sv-cost-program/eleven-lane-results/**'
       - '.github/workflows/sv-cost-eleven-lane-candidate-proof.yml'
@@ -28,6 +29,10 @@ jobs:
         run: |
           python experiments/sv-cost-program/eleven-lane-results/validate_schema.py
           ! grep -E 'OPENAI_API_KEY|ANTHROPIC_API_KEY|DEEPSEEK_API_KEY|MOONSHOT_API_KEY|KIMI_API_KEY|ZAI_API_KEY' experiments/sv-cost-program/eleven-lane-results/run.py
+
+      - name: Validate GLM acquisition tools
+        run: |
+          python experiments/sv-cost-program/eleven-lane-results/tests/test_glm_acquisition_tools.py -q
 
       - name: Execute eleven-lane harness
         run: |
