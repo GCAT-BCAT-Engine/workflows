@@ -181,3 +181,58 @@ Current acquisition owners:
 GLM Hosted candidate: GCAT-BCAT-Engine/workflows#20
 GLM Sovereign runtime evaluation: StegVerse-002/micro-node-runtime#69
 ```
+
+
+## GLM-5.3-Flash Hosted evidence acquired and validated — 2026-09-02
+
+Hosted lane 10 is no longer blocked on candidate acquisition.
+
+Evidence:
+- exact candidate: `candidate-inputs/glm-hosted.json`
+- acquisition boundary: `evidence/glm-hosted-acquisition-2026-09-02.json`
+- source merge: `36d3802505780c423b56a41918003e7b8612d848`
+- eleven-lane validation run: `33687039059` / run number `19` — SUCCESS
+- acquisition-tool tests: PASS
+- eleven-lane harness: `PASS_HARNESS`
+- lanes with behavioral evidence: `10 / 11`
+
+The exact hosted output reconstructs:
+```text
+final balance: 75
+final risk_score: 3
+standing: active
+applied: 4
+denied: 2
+event status sequence: ALLOW, ALLOW, ALLOW, DENY, DENY, ALLOW
+```
+
+The provider's free-form reason prose is preserved in the raw candidate. Harness semantic comparison normalizes reason wording to the deterministic event reason only when event identity and ALLOW/DENY status match, because the frozen evaluation prompt did not require exact reason strings.
+
+Credential boundary:
+- provider API key transferred to StegVerse: false
+- provider usage observed: false
+- provider cost observed: false
+- hosted source acquisition: user-observed provider hosted UI
+- repository independently verified provider runtime identity: false
+- no provider runtime credential is stored or inferred
+
+Current harness result:
+```text
+lane_count_defined: 11
+lane_count_evidence_present: 10
+candidate blocker:
+  MISSING_SOVEREIGN_RUNTIME_EVIDENCE:runtime-evidence/glm-sovereign.json
+
+cost blockers:
+  openai-raw
+  anthropic-raw
+  deepseek-raw
+  glm-5.3-flash-hosted
+  glm-5.3-flash-sovereign
+
+publication: BLOCKED
+```
+
+Lane 10 acquisition issue `#20` is satisfied at the candidate/semantic-validation boundary. Lane 11 remains machine-owned by `StegVerse-002/micro-node-runtime#69`.
+
+This does not claim independent provider-side request telemetry, provider billing evidence, sovereign GLM execution, all-eleven completion, or publication readiness.
