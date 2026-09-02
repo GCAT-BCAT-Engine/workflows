@@ -23,6 +23,26 @@ GLM_SOVEREIGN = ROOT / "runtime-evidence" / "glm-sovereign.json"
 GLM_HOSTED_COST = ROOT / "cost-evidence" / "glm-hosted.json"
 
 
+def load_request_bound_cost(path: pathlib.Path, *, provider: str, model: str, candidate_ref: str | None = None) -> dict[str, Any] | None:
+    if not path.exists():
+        return None
+    value=json.loads(path.read_text())
+    if value.get("schema")!="stegverse.request-bound-provider-cost-evidence/v1":
+        raise ValueError(f"invalid request-bound cost schema: {path}")
+    if value.get("provider")!=provider or value.get("model")!=model or value.get("task_id")!="SV-RECON-001":
+        raise ValueError(f"request-bound cost identity mismatch: {path}")
+    if value.get("provider_api_key_transferred_to_stegverse") is not False or value.get("non_tv_tvc_secret_or_token_used") is not False:
+        raise ValueError(f"request-bound cost credential boundary violation: {path}")
+    if value.get("claim_boundary")!="REQUEST_BOUND_EFFECTIVE_COST_ONLY":
+        raise ValueError(f"request-bound cost claim boundary mismatch: {path}")
+    cost=value.get("cost_usd")
+    if not isinstance(cost,(int,float)) or isinstance(cost,bool) or cost<0:
+        raise ValueError(f"request-bound cost value invalid: {path}")
+    if candidate_ref is not None and value.get("candidate_ref")!=candidate_ref:
+        raise ValueError(f"request-bound cost candidate binding mismatch: {path}")
+    return value
+
+
 def canon(value: Any) -> str:
     return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
 
@@ -206,16 +226,33 @@ def legacy_pair(provider: str, payload: dict[str, Any]) -> list[dict[str, Any]]:
 
 rows=[]
 candidate_blockers=[]
+cost_evidence_failures=[]
 for provider in PROVIDERS:
     override=ROOT/"candidate-inputs"/f"{provider}.json"
     source=override if override.exists() else PREV/"candidate-inputs"/f"{provider}.json"
     try:
         pair=legacy_pair(provider,json.loads(source.read_text()))
         source_mode="GENERATION_3_REQUEST_BOUND_PROVIDER_CANDIDATE" if override.exists() else "INHERITED_GENERATION_2_PROVIDER_CANDIDATE"
+        candidate_ref=str(source.relative_to(ROOT if override.exists() else PREV))
+        cost_path=ROOT/"cost-evidence"/f"{provider}.json"
+        try:
+            cost_record=load_request_bound_cost(
+                cost_path,
+                provider=provider,
+                model=str(pair[0].get("model") or ""),
+                candidate_ref=(f"candidate-inputs/{provider}.json" if override.exists() else None),
+            )
+        except Exception as exc:
+            cost_evidence_failures.append(f"INVALID_COST_EVIDENCE:{provider}:{exc}")
+            cost_record=None
         for row in pair:
-            row["candidate_source_ref"]=str(source.relative_to(ROOT if override.exists() else PREV))
+            row["candidate_source_ref"]=candidate_ref
             row["candidate_generation"]="GENERATION_3" if override.exists() else "GENERATION_2"
             row["candidate_source_mode"]=source_mode
+            if cost_record is not None:
+                row["provider_cost_usd"]=float(cost_record["cost_usd"])
+                row["cost_basis"]=cost_record["basis"]
+                row["cost_evidence_ref"]=str(cost_path.relative_to(ROOT))
         rows.extend(pair)
     except Exception as exc:
         candidate_blockers.append(f"INVALID_OR_MISSING_INHERITED_CANDIDATE:{provider}:{exc}")
@@ -249,6 +286,20 @@ if GLM_HOSTED.exists():
         usage=payload.get("provider_usage") or {}
         row["provider_usage"]=usage
         row["provider_cost_usd"]=usage.get("reported_cost_usd")
+        try:
+            cost_record=load_request_bound_cost(
+                GLM_HOSTED_COST,
+                provider="zai",
+                model="GLM-5.3-Flash",
+                candidate_ref="candidate-inputs/glm-hosted.json",
+            )
+        except Exception as exc:
+            cost_evidence_failures.append(f"INVALID_COST_EVIDENCE:glm-5.3-flash-hosted:{exc}")
+            cost_record=None
+        if cost_record is not None:
+            row["provider_cost_usd"]=float(cost_record["cost_usd"])
+            row["cost_basis"]=cost_record["basis"]
+            row["cost_evidence_ref"]=str(GLM_HOSTED_COST.relative_to(ROOT))
         rows.append(row)
 else:
     candidate_blockers.append("MISSING_EXTERNAL_CANDIDATE:candidate-inputs/glm-hosted.json")
@@ -328,7 +379,7 @@ for provider in ("openai","anthropic","deepseek"):
             row["cost_basis"]=basis
             row["cost_evidence"]=f"cost-evidence/{provider}.json"
 
-cost_blockers=[]
+cost_blockers=list(cost_evidence_failures)
 for lane_id in ("openai-raw","anthropic-raw","deepseek-raw","kimi-raw","glm-5.3-flash-hosted","glm-5.3-flash-sovereign"):
     row=next(r for r in rows if r["lane_id"]==lane_id)
     if row.get("provider_cost_usd") is None:

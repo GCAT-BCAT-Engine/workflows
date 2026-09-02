@@ -14,7 +14,7 @@
   "glm_sovereign_state": "RESIDENT_BRIDGE_MERGED_INTAKE_SOURCE_READY_AUTHENTIC_EXECUTION_PENDING",
   "machine_runner": ".github/workflows/sv-cost-eleven-lane-candidate-proof.yml",
   "publication_state": "BLOCKED_PENDING_GLM_EVIDENCE_AND_INCOMPLETE_PROVIDER_COST_EVIDENCE",
-  "next_action": "Lane 11 remains machine-owned pending authentic private GLM runtime evidence. When resident evidence exists, install it with tools/ingest_glm_sovereign_resident_evidence.py and re-run the harness. Remaining provider costs still require request-bound evidence; do not estimate.",
+  "next_action": "Validate and merge request-bound cost consumption. Then remaining provider cost blockers depend only on authentic request-bound TV/TVC/provider evidence, while lane 11 remains machine-owned pending authentic private GLM runtime evidence.",
   "merge_commit": "a66b8dbc6a2d319ecef66834f7babf7b5a586100",
   "handoff_update_commit": "e37e87ab72184435ed22d7e3576a699132b62d8c",
   "behavioral_lanes_evidence_ready": 10,
@@ -42,5 +42,9 @@
   "glm_sovereign_resident_intake_state": "MERGED_VALIDATED",
   "glm_sovereign_resident_intake_merge": "fdc731eedc8823d00e510ffd6f5b283f9f3a209d",
   "glm_sovereign_resident_intake_validation_binding_merge": "8196f8670114b2ec81ee7b0f49a816765b49838c",
-  "glm_sovereign_resident_intake_validation_run": 33695457195
+  "glm_sovereign_resident_intake_validation_run": 33695457195,
+  "cost_evidence_harness_consumption_state": "SOURCE_IMPLEMENTED_VALIDATION_PENDING",
+  "cost_evidence_harness_consumption_issue": 31,
+  "tvc_request_bound_measurement_bridge": "tools/ingest_tvc_request_bound_measurement.py",
+  "tvc_request_bound_measurement_bridge_state": "SOURCE_IMPLEMENTED_VALIDATION_PENDING"
 }
