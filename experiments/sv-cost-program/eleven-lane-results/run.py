@@ -226,6 +226,7 @@ def legacy_pair(provider: str, payload: dict[str, Any]) -> list[dict[str, Any]]:
 
 rows=[]
 candidate_blockers=[]
+cost_evidence_failures=[]
 for provider in PROVIDERS:
     override=ROOT/"candidate-inputs"/f"{provider}.json"
     source=override if override.exists() else PREV/"candidate-inputs"/f"{provider}.json"
@@ -234,12 +235,16 @@ for provider in PROVIDERS:
         source_mode="GENERATION_3_REQUEST_BOUND_PROVIDER_CANDIDATE" if override.exists() else "INHERITED_GENERATION_2_PROVIDER_CANDIDATE"
         candidate_ref=str(source.relative_to(ROOT if override.exists() else PREV))
         cost_path=ROOT/"cost-evidence"/f"{provider}.json"
-        cost_record=load_request_bound_cost(
-            cost_path,
-            provider=provider,
-            model=str(pair[0].get("model") or ""),
-            candidate_ref=(f"candidate-inputs/{provider}.json" if override.exists() else None),
-        )
+        try:
+            cost_record=load_request_bound_cost(
+                cost_path,
+                provider=provider,
+                model=str(pair[0].get("model") or ""),
+                candidate_ref=(f"candidate-inputs/{provider}.json" if override.exists() else None),
+            )
+        except Exception as exc:
+            cost_evidence_failures.append(f"INVALID_COST_EVIDENCE:{provider}:{exc}")
+            cost_record=None
         for row in pair:
             row["candidate_source_ref"]=candidate_ref
             row["candidate_generation"]="GENERATION_3" if override.exists() else "GENERATION_2"
@@ -281,12 +286,16 @@ if GLM_HOSTED.exists():
         usage=payload.get("provider_usage") or {}
         row["provider_usage"]=usage
         row["provider_cost_usd"]=usage.get("reported_cost_usd")
-        cost_record=load_request_bound_cost(
-            GLM_HOSTED_COST,
-            provider="zai",
-            model="GLM-5.3-Flash",
-            candidate_ref="candidate-inputs/glm-hosted.json",
-        )
+        try:
+            cost_record=load_request_bound_cost(
+                GLM_HOSTED_COST,
+                provider="zai",
+                model="GLM-5.3-Flash",
+                candidate_ref="candidate-inputs/glm-hosted.json",
+            )
+        except Exception as exc:
+            cost_evidence_failures.append(f"INVALID_COST_EVIDENCE:glm-5.3-flash-hosted:{exc}")
+            cost_record=None
         if cost_record is not None:
             row["provider_cost_usd"]=float(cost_record["cost_usd"])
             row["cost_basis"]=cost_record["basis"]
@@ -370,7 +379,7 @@ for provider in ("openai","anthropic","deepseek"):
             row["cost_basis"]=basis
             row["cost_evidence"]=f"cost-evidence/{provider}.json"
 
-cost_blockers=[]
+cost_blockers=list(cost_evidence_failures)
 for lane_id in ("openai-raw","anthropic-raw","deepseek-raw","kimi-raw","glm-5.3-flash-hosted","glm-5.3-flash-sovereign"):
     row=next(r for r in rows if r["lane_id"]==lane_id)
     if row.get("provider_cost_usd") is None:
