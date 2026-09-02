@@ -19,7 +19,7 @@ if [x.get("lane_id") for x in lanes] != EXPECTED_IDS:
     failures.append("LANE_ORDER_OR_ID_MISMATCH")
 if TASK.get("candidate_source_contract",{}).get("provider_api_key_transferred_to_stegverse") is not False:
     failures.append("CREDENTIAL_TRANSFER_BOUNDARY")
-if lanes and lanes[9].get("credential_mode") != "EXTERNAL_CANDIDATE_PRE_VAULT_OR_TV_TVC_RUNTIME_LEASE":
+if lanes and lanes[9].get("credential_mode") != "EXTERNAL_CANDIDATE_OR_TV_TVC_AUTHORIZED_PROVIDER_OPERATION":
     failures.append("GLM_HOSTED_CREDENTIAL_MODE")
 if lanes and lanes[10].get("credential_mode") != "NO_VENDOR_API_CREDENTIAL":
     failures.append("GLM_SOVEREIGN_CREDENTIAL_MODE")
