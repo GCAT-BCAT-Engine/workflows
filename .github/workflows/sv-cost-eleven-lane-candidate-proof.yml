@@ -32,7 +32,7 @@ jobs:
 
       - name: Validate GLM acquisition tools
         run: |
-          python -m unittest -q experiments/sv-cost-program/eleven-lane-results/tests/test_glm_acquisition_tools.py
+          python experiments/sv-cost-program/eleven-lane-results/tests/test_glm_acquisition_tools.py -q
 
       - name: Execute eleven-lane harness
         run: |
