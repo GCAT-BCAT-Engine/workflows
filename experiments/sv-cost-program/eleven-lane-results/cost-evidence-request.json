@@ -8,14 +8,14 @@
   "purpose": "Complete bounded eleven-lane dollar-cost comparison without fabricating provider or sovereign-runtime measurements.",
   "inherited_provider_evidence": {
     "source": "experiments/sv-cost-program/nine-lane-results/cost-evidence-request.json",
-    "openai": "INCOMPLETE_REQUEST_SPECIFIC_COST",
-    "anthropic": "INCOMPLETE_REQUEST_SPECIFIC_COST",
-    "deepseek": "INCOMPLETE_REQUEST_SPECIFIC_COST",
+    "openai": "REQUEST_BOUND_REACQUISITION_OR_PROVIDER_COST_REQUIRED",
+    "anthropic": "REQUEST_BOUND_REACQUISITION_OR_PROVIDER_COST_REQUIRED",
+    "deepseek": "EXACT_MODEL_IDENTITY_AND_REQUEST_BOUND_COST_REQUIRED",
     "kimi": "COMPLETE_BOUNDED_SUBSCRIPTION_ALLOCATION"
   },
   "glm_hosted": {
     "owner": "EXTERNAL_PROVIDER_RELATIONSHIP_OR_TV_TVC",
-    "state": "BLOCKED_ON_CANDIDATE_AND_ADMISSIBLE_COST_EVIDENCE",
+    "state": "CANDIDATE_COMPLETE_COST_EVIDENCE_PENDING",
     "accepted_modes": [
       "PROVIDER_REPORTED_REQUEST_COST_USD",
       "PROVIDER_REPORTED_EXACT_INPUT_OUTPUT_TOKEN_USAGE_PLUS_BOUND_VERSIONED_RATE_CARD",
@@ -45,5 +45,15 @@
     "rule": "Sovereign cost must be computed from measured/bounded infrastructure cost and must never inherit hosted token pricing."
   },
   "release_condition": "All eleven behavioral lanes have evidence, all are admissible, and each cost-bearing comparison lane has admissible bounded cost evidence.",
-  "publication_state": "BLOCKED"
+  "publication_state": "BLOCKED",
+  "request_bound_intake": {
+    "state": "SOURCE_READY_PENDING_PROVIDER_EVIDENCE",
+    "issue": 24,
+    "tool": "tools/ingest_request_bound_provider_candidate.py",
+    "rate_cards": "cost-evidence/provider-rate-cards.2026-09-02.json",
+    "evidence_pack": "requests/request-bound-provider-evidence-pack.json",
+    "schema": "schemas/request-bound-provider-cost-evidence.schema.json",
+    "rule": "Provider cost blockers close only from request-bound provider evidence. Rate cards alone never create a request cost."
+  },
+  "next_action": "Acquire request-bound OpenAI/Anthropic/DeepSeek/Z.ai cost evidence using requests/request-bound-provider-evidence-pack.json; lane 11 continues through the canonical sovereign runtime machine owner."
 }

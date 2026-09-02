@@ -207,9 +207,16 @@ def legacy_pair(provider: str, payload: dict[str, Any]) -> list[dict[str, Any]]:
 rows=[]
 candidate_blockers=[]
 for provider in PROVIDERS:
-    source=PREV/"candidate-inputs"/f"{provider}.json"
+    override=ROOT/"candidate-inputs"/f"{provider}.json"
+    source=override if override.exists() else PREV/"candidate-inputs"/f"{provider}.json"
     try:
-        rows.extend(legacy_pair(provider,json.loads(source.read_text())))
+        pair=legacy_pair(provider,json.loads(source.read_text()))
+        source_mode="GENERATION_3_REQUEST_BOUND_PROVIDER_CANDIDATE" if override.exists() else "INHERITED_GENERATION_2_PROVIDER_CANDIDATE"
+        for row in pair:
+            row["candidate_source_ref"]=str(source.relative_to(ROOT if override.exists() else PREV))
+            row["candidate_generation"]="GENERATION_3" if override.exists() else "GENERATION_2"
+            row["candidate_source_mode"]=source_mode
+        rows.extend(pair)
     except Exception as exc:
         candidate_blockers.append(f"INVALID_OR_MISSING_INHERITED_CANDIDATE:{provider}:{exc}")
 
@@ -295,6 +302,31 @@ if GLM_HOSTED_COST.exists():
             row["provider_cost_usd"]=e.get("cost_usd")
             row["cost_basis"]=e.get("basis")
             row["cost_evidence"]="cost-evidence/glm-hosted.json"
+
+
+# Apply request-bound Generation-3 provider cost evidence when present.
+for provider in ("openai","anthropic","deepseek"):
+    evidence_path=ROOT/"cost-evidence"/f"{provider}.json"
+    if not evidence_path.exists():
+        continue
+    evidence=json.loads(evidence_path.read_text())
+    if evidence.get("provider")!=provider or evidence.get("task_id")!="SV-RECON-001":
+        candidate_blockers.append(f"INVALID_COST_EVIDENCE_IDENTITY:{provider}")
+        continue
+    cost=evidence.get("cost_usd")
+    basis=evidence.get("basis")
+    if cost is None or basis not in {
+        "PROVIDER_REPORTED_REQUEST_COST_USD",
+        "EXACT_USAGE_PLUS_BOUND_VERSIONED_RATE_CARD",
+        "PROVIDER_UI_SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST",
+    }:
+        candidate_blockers.append(f"INVALID_COST_EVIDENCE_BASIS:{provider}")
+        continue
+    for row in rows:
+        if row.get("provider")==provider:
+            row["provider_cost_usd"]=float(cost)
+            row["cost_basis"]=basis
+            row["cost_evidence"]=f"cost-evidence/{provider}.json"
 
 cost_blockers=[]
 for lane_id in ("openai-raw","anthropic-raw","deepseek-raw","kimi-raw","glm-5.3-flash-hosted","glm-5.3-flash-sovereign"):

@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/request-bound-provider-cost-evidence.v1.json",
+  "title": "Request-bound provider cost evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "provider",
+    "model",
+    "task_id",
+    "basis",
+    "cost_usd",
+    "provider_usage",
+    "rate_card_ref",
+    "candidate_ref",
+    "provider_api_key_transferred_to_stegverse",
+    "non_tv_tvc_secret_or_token_used",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema": {
+      "const": "stegverse.request-bound-provider-cost-evidence/v1"
+    },
+    "provider": {
+      "enum": [
+        "openai",
+        "anthropic",
+        "deepseek",
+        "zai"
+      ]
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1
+    },
+    "task_id": {
+      "const": "SV-RECON-001"
+    },
+    "basis": {
+      "enum": [
+        "PROVIDER_REPORTED_REQUEST_COST_USD",
+        "EXACT_USAGE_PLUS_BOUND_VERSIONED_RATE_CARD",
+        "PROVIDER_UI_SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST"
+      ]
+    },
+    "cost_usd": {
+      "type": "number",
+      "minimum": 0
+    },
+    "provider_usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "input_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "output_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cached_input_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reported_cost_usd": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "rate_card_ref": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "candidate_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provider_api_key_transferred_to_stegverse": {
+      "const": false
+    },
+    "non_tv_tvc_secret_or_token_used": {
+      "const": false
+    },
+    "claim_boundary": {
+      "const": "REQUEST_BOUND_EFFECTIVE_COST_ONLY"
+    }
+  }
+}
