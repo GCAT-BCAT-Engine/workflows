@@ -9,7 +9,17 @@ from typing import Any
 ROOT=Path(__file__).resolve().parents[1]
 RATE_CARDS=ROOT/"cost-evidence"/"provider-rate-cards.2026-09-02.json"
 
-FORBIDDEN=("api_key","apikey","token","bearer","password","secret","authorization","credential","private_key")
+FORBIDDEN_EXACT={
+    "api_key","apikey","bearer","password","secret","authorization",
+    "credential","credentials","private_key","access_token","refresh_token",
+    "id_token","session_token","client_secret",
+}
+SAFE_EVIDENCE_KEYS={
+    "provider_api_key_transferred_to_stegverse",
+    "non_tv_tvc_secret_or_token_used",
+    "input_tokens","output_tokens","cached_input_tokens",
+    "provider_usage",
+}
 
 
 def walk_forbidden(value: Any, path: str="$") -> list[str]:
@@ -17,7 +27,16 @@ def walk_forbidden(value: Any, path: str="$") -> list[str]:
     if isinstance(value,dict):
         for k,v in value.items():
             lk=str(k).lower()
-            if any(x in lk for x in FORBIDDEN):
+            if lk not in SAFE_EVIDENCE_KEYS and (
+                lk in FORBIDDEN_EXACT
+                or lk.endswith("_api_key")
+                or lk.endswith("_password")
+                or lk.endswith("_secret")
+                or lk.endswith("_private_key")
+                or lk.endswith("_access_token")
+                or lk.endswith("_refresh_token")
+                or lk.endswith("_bearer")
+            ):
                 found.append(f"{path}.{k}")
             found.extend(walk_forbidden(v,f"{path}.{k}"))
     elif isinstance(value,list):
@@ -135,7 +154,7 @@ def main() -> int:
         "cost_usd":cost,
         "provider_usage":usage,
         "rate_card_ref":rate_ref,
-        "candidate_ref":str((ns.candidate_dest or (ROOT/"candidate-inputs"/f"{provider}.json")).relative_to(ROOT)) if (ns.candidate_dest or (ROOT/"candidate-inputs"/f"{provider}.json")).is_absolute() is False else str(ns.candidate_dest),
+        "candidate_ref":None,
         "provider_api_key_transferred_to_stegverse":False,
         "non_tv_tvc_secret_or_token_used":False,
         "claim_boundary":"REQUEST_BOUND_EFFECTIVE_COST_ONLY",
@@ -143,6 +162,10 @@ def main() -> int:
 
     candidate_dest=ns.candidate_dest or (ROOT/"candidate-inputs"/f"{provider}.json")
     cost_dest=ns.cost_dest or (ROOT/"cost-evidence"/f"{provider}.json")
+    try:
+        cost_record["candidate_ref"]=str(candidate_dest.resolve().relative_to(ROOT.resolve()))
+    except ValueError:
+        cost_record["candidate_ref"]=str(candidate_dest)
     candidate_dest.parent.mkdir(parents=True,exist_ok=True)
     cost_dest.parent.mkdir(parents=True,exist_ok=True)
     candidate_dest.write_text(json.dumps(record,indent=2)+"\n")
