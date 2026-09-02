@@ -9,6 +9,10 @@ on:
     paths:
       - 'experiments/sv-cost-program/eleven-lane-results/**'
       - '.github/workflows/sv-cost-eleven-lane-candidate-proof.yml'
+  pull_request:
+    paths:
+      - 'experiments/sv-cost-program/eleven-lane-results/**'
+      - '.github/workflows/sv-cost-eleven-lane-candidate-proof.yml'
   workflow_dispatch:
 
 permissions:
