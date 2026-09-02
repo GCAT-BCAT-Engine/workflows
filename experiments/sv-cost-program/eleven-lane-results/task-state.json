@@ -44,5 +44,7 @@
   "glm_sovereign_resident_intake_validation_binding_merge": "8196f8670114b2ec81ee7b0f49a816765b49838c",
   "glm_sovereign_resident_intake_validation_run": 33695457195,
   "cost_evidence_harness_consumption_state": "SOURCE_IMPLEMENTED_VALIDATION_PENDING",
-  "cost_evidence_harness_consumption_issue": 31
+  "cost_evidence_harness_consumption_issue": 31,
+  "tvc_request_bound_measurement_bridge": "tools/ingest_tvc_request_bound_measurement.py",
+  "tvc_request_bound_measurement_bridge_state": "SOURCE_IMPLEMENTED_VALIDATION_PENDING"
 }
