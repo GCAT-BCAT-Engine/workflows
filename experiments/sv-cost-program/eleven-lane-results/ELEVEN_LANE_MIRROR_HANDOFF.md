@@ -374,3 +374,21 @@ The same issue also installs `tools/ingest_tvc_request_bound_measurement.py`.
 That bridge accepts only already-sanitized `stegverse.tvc.provider-measurement-evidence.v1` with `REQUEST_BOUND_COST` and the TVC exact-usage/official-rate-card basis. It supports the currently blocked OpenAI, Anthropic, and DeepSeek cost lanes. It parses and revalidates the exact frozen candidate, maps only actual normalized usage into the Generation-3 candidate/cost schemas, preserves TV/TVC as source authority through rate-card provenance, and rejects protected fields or non-request-bound evidence.
 
 The bridge performs no provider operation, network fetch, credential handling, runtime execution, or publication action.
+
+
+### Cost-consumption merge evidence
+
+```text
+issue: #31 CLOSED
+PR: #32
+merge: ba1c8476e00c4e2746f98edee520d554ba0ff897
+validated head: 2ded4de6423e6e25e708e932c2ea6196e62ff130
+handoff authority: 33696882189 SUCCESS
+handoff semantics: 33696882160 SUCCESS
+continuity provenance: 33696882171 SUCCESS
+eleven-lane candidate proof: 33696882131 SUCCESS
+GLM acquisition tests: 6/6 PASS
+request-bound cost intake/consumption tests: 11/11 PASS
+```
+
+Request-bound cost packets are now active harness inputs rather than inert artifacts. Sanitized TVC measurement evidence can be converted into the exact Generation-3 candidate/cost inputs for OpenAI, Anthropic, and DeepSeek. Actual cost evidence remains absent and is not inferred from this merge.
