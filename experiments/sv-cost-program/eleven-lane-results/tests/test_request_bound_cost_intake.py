@@ -169,8 +169,10 @@ class RequestBoundCostIntakeTests(unittest.TestCase):
                 "claim_boundary":"REQUEST_BOUND_EFFECTIVE_COST_ONLY",
             }))
             cp=subprocess.run([sys.executable,str(ROOT/"run.py")],capture_output=True,text=True)
-            self.assertNotEqual(cp.returncode,0)
-            self.assertIn("candidate binding mismatch",cp.stderr+cp.stdout)
+            self.assertEqual(cp.returncode,0,cp.stderr)
+            result=json.loads((ROOT/"results"/"generation-3-eleven-lane"/"eleven_lane_generation_3_results.json").read_text())
+            self.assertTrue(any("INVALID_COST_EVIDENCE:openai:request-bound cost candidate binding mismatch" in x for x in result["cost_blockers"]))
+            self.assertIn("MISSING_COST_EVIDENCE:openai-raw",result["cost_blockers"])
         finally:
             if old_candidate is None:
                 candidate_path.unlink(missing_ok=True)
