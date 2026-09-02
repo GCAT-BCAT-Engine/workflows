@@ -182,5 +182,66 @@ class RequestBoundCostIntakeTests(unittest.TestCase):
                 cost_path.write_bytes(old_cost)
 
 
+
+    def test_tvc_request_bound_measurement_bridge_installs_candidate_and_cost(self):
+        tool=ROOT/"tools"/"ingest_tvc_request_bound_measurement.py"
+        tvc={
+            "schema":"stegverse.tvc.provider-measurement-evidence.v1",
+            "provider":"openai",
+            "provider_response_id":"resp-tvc",
+            "model":"gpt-5.6-sol",
+            "candidate_output":json.dumps(CANDIDATE,separators=(",",":")),
+            "provider_usage":{"input_tokens":1000,"output_tokens":200},
+            "normalized_usage":{"input_tokens":1000,"cached_input_tokens":100,"output_tokens":200,"reasoning_tokens":0,"total_tokens":1200},
+            "provider_api_key_transferred_to_consumer":False,
+            "secret_material_returned":False,
+            "cost_status":"REQUEST_BOUND_COST",
+            "cost_basis":"EXACT_PROVIDER_USAGE_X_OFFICIAL_MODEL_RATE_CARD",
+            "calculated_request_cost_usd":"0.008000000000",
+            "rate_card":{"provider":"openai","model":"gpt-5.6-sol","source":"https://example.invalid/openai","observed_at":"2026-09-02T18:00:00-05:00"},
+        }
+        with tempfile.TemporaryDirectory() as td:
+            td=pathlib.Path(td); src=td/"tvc.json"; src.write_text(json.dumps(tvc))
+            candidate=td/"candidate.json"; cost=td/"cost.json"
+            cp=subprocess.run([sys.executable,str(tool),str(src),"--candidate-dest",str(candidate),"--cost-dest",str(cost)],capture_output=True,text=True)
+            self.assertEqual(cp.returncode,0,cp.stderr)
+            cdoc=json.loads(candidate.read_text()); kdoc=json.loads(cost.read_text())
+            self.assertEqual(cdoc["candidate_output"],CANDIDATE)
+            self.assertFalse(cdoc["provider_api_key_transferred_to_stegverse"])
+            self.assertEqual(cdoc["provider_usage"],{"input_tokens":1000,"output_tokens":200})
+            self.assertEqual(kdoc["basis"],"EXACT_USAGE_PLUS_BOUND_VERSIONED_RATE_CARD")
+            self.assertEqual(kdoc["cost_usd"],0.008)
+            self.assertEqual(kdoc["provider_usage"]["cached_input_tokens"],100)
+            self.assertEqual(kdoc["rate_card_ref"]["authority"],"StegVerse-Labs/TVC")
+
+    def test_tvc_request_bound_measurement_bridge_rejects_non_cost_and_secret(self):
+        tool=ROOT/"tools"/"ingest_tvc_request_bound_measurement.py"
+        base={
+            "schema":"stegverse.tvc.provider-measurement-evidence.v1",
+            "provider":"deepseek",
+            "provider_response_id":"resp-tvc",
+            "model":"deepseek-v4-flash",
+            "candidate_output":json.dumps(CANDIDATE,separators=(",",":")),
+            "provider_usage":{"prompt_tokens":1000,"completion_tokens":200},
+            "normalized_usage":{"prompt_tokens":1000,"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":1000,"completion_tokens":200,"reasoning_tokens":0,"total_tokens":1200},
+            "provider_api_key_transferred_to_consumer":False,
+            "secret_material_returned":False,
+            "cost_status":"RATE_CARD_BINDING_REQUIRED",
+            "cost_basis":None,
+            "calculated_request_cost_usd":None,
+            "rate_card":None,
+        }
+        with tempfile.TemporaryDirectory() as td:
+            td=pathlib.Path(td); src=td/"tvc.json"
+            src.write_text(json.dumps(base))
+            cp=subprocess.run([sys.executable,str(tool),str(src),"--candidate-dest",str(td/"c.json"),"--cost-dest",str(td/"k.json")],capture_output=True,text=True)
+            self.assertNotEqual(cp.returncode,0)
+            bad=json.loads(json.dumps(base)); bad["cost_status"]="REQUEST_BOUND_COST"; bad["cost_basis"]="EXACT_PROVIDER_USAGE_X_OFFICIAL_MODEL_RATE_CARD"; bad["calculated_request_cost_usd"]="0.001"; bad["rate_card"]={"provider":"deepseek","model":"deepseek-v4-flash","source":"https://example.invalid/deepseek","observed_at":"2026-09-02"}; bad["api_key"]="forbidden"
+            src.write_text(json.dumps(bad))
+            cp=subprocess.run([sys.executable,str(tool),str(src),"--candidate-dest",str(td/"c2.json"),"--cost-dest",str(td/"k2.json")],capture_output=True,text=True)
+            self.assertNotEqual(cp.returncode,0)
+            self.assertIn("protected field prohibited",cp.stderr+cp.stdout)
+
+
 if __name__=="__main__":
     unittest.main()
