@@ -13,7 +13,7 @@ The harness immediately reuses the frozen Generation-2 candidate evidence for la
 
 ## Completing lane 10 — GLM-5.3-Flash Hosted
 
-1. Submit `requests/glm-evaluation-prompt.md` to GLM-5.3-Flash through an existing external provider relationship, or through a future TV/TVC-authorized credential lease.
+1. Submit `requests/glm-evaluation-prompt.md` to GLM-5.3-Flash through an existing external provider relationship, or through a TV/TVC-authorized hosted provider operation whose credential remains process-local and non-exportable.
 2. Preserve the returned task JSON in a record matching `candidate-input.schema.json`.
 3. Set `provider=zai`, `model=GLM-5.3-Flash`, `task_id=SV-RECON-001`, and `provider_api_key_transferred_to_stegverse=false`.
 4. Install as `candidate-inputs/glm-hosted.json`.
@@ -36,3 +36,8 @@ Vendor API credential use must remain false.
 `results/generation-3-eleven-lane/eleven_lane_generation_3_results.json`
 
 Publication remains blocked until all eleven evidence lanes and bounded cost evidence are complete.
+
+
+## Hosted candidate acquired — 2026-09-02
+
+The exact user-supplied GLM-5.3-Flash hosted JSON output is installed at `candidate-inputs/glm-hosted.json` with no provider credential, usage, latency, response ID, or cost inferred. Free-form reason prose is preserved in the raw candidate while semantic validation compares event IDs, ALLOW/DENY outcomes, final state, and counts against the deterministic contract.
