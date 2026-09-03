@@ -10,6 +10,22 @@ import unittest
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 TOOL=ROOT/"tools"/"build_credentialless_ui_cost_evidence.py"
 
+CANDIDATE={
+    "task_id":"SV-RECON-001",
+    "final_state":{"balance":75,"risk_score":3,"standing":"active"},
+    "decisions":[
+        {"event_id":"E01","status":"ALLOW","reason":"x"},
+        {"event_id":"E02","status":"ALLOW","reason":"x"},
+        {"event_id":"E03","status":"ALLOW","reason":"x"},
+        {"event_id":"E04","status":"DENY","reason":"x"},
+        {"event_id":"E05","status":"DENY","reason":"x"},
+        {"event_id":"E06","status":"ALLOW","reason":"x"},
+    ],
+    "applied_count":4,
+    "denied_count":2,
+    "claim_boundary":"DETERMINISTIC_RECONSTRUCTION_ONLY",
+}
+
 
 def base(provider="zai",model="GLM-5.3-Flash",mode="QUOTA_PERCENT"):
     return {
@@ -18,6 +34,7 @@ def base(provider="zai",model="GLM-5.3-Flash",mode="QUOTA_PERCENT"):
         "model":model,
         "task_id":"SV-RECON-001",
         "candidate_ref":f"candidate-inputs/{'glm-hosted' if provider=='zai' else provider}.json",
+        "candidate_output":json.loads(json.dumps(CANDIDATE)),
         "observation_mode":mode,
         "isolated_single_candidate_window":True,
         "before":{},
@@ -78,6 +95,16 @@ class CredentiallessUiCostBuilderTests(unittest.TestCase):
         self.assertEqual(out["basis"],"EXACT_USAGE_PLUS_BOUND_VERSIONED_RATE_CARD")
         self.assertEqual(out["provider_usage"],{"input_tokens":1000,"output_tokens":200,"cached_input_tokens":100})
         self.assertEqual(out["cost_usd"],0.00764)
+
+    def test_semantic_candidate_mismatch_is_rejected(self):
+        x=base()
+        x["before"]={"quota_percent_used":10}
+        x["after"]={"quota_percent_used":10.1}
+        x["subscription_monthly_equivalent_usd"]=20
+        x["candidate_output"]["final_state"]["balance"]=74
+        cp,_=self.run_tool(x)
+        self.assertNotEqual(cp.returncode,0)
+        self.assertIn("candidate_output final_state mismatch",cp.stderr+cp.stdout)
 
     def test_nonisolated_window_is_rejected(self):
         x=base()
