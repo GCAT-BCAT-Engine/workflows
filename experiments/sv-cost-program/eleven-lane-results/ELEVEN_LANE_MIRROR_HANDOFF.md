@@ -530,3 +530,30 @@ INSUFFICIENT_NO_BEFORE_AFTER_USAGE_SURFACE
 ```
 
 No cost is inferred from ChatGPT Plus access, model selection, or the candidate result itself.
+
+
+## Anthropic Opus 5 UI candidate observation — 2026-09-03
+
+Issue: #50
+
+User-supplied Claude iOS evidence now records:
+- model selector displaying `Opus 5 High`;
+- UI warning that Opus consumes usage limits faster than other models;
+- an exact `SV-RECON-001` JSON result with final state `balance=75`, `risk_score=3`, `standing=active`;
+- decision sequence `ALLOW, ALLOW, ALLOW, DENY, DENY, ALLOW`;
+- applied/denied counts `4/2`;
+- `DETERMINISTIC_RECONSTRUCTION_ONLY` claim boundary.
+
+Evidence file:
+`evidence/anthropic-ui-candidate-observation-2026-09-03.json`
+
+Submitted screenshot SHA-256:
+`852f4685fe2d09a7421a5c1f0d68f8556445c3ebd6770e85fa6899062de5d7af`
+
+This is sufficient for model/candidate observation only. The UI warning is qualitative and exposes no numeric before/after usage, token, credit-spend, quota, or dollar-cost counter. Therefore Anthropic request-bound cost remains:
+
+```text
+INSUFFICIENT_NO_NUMERIC_BEFORE_AFTER_USAGE_SURFACE
+```
+
+No dollar cost or quota allocation is inferred from the qualitative warning.
