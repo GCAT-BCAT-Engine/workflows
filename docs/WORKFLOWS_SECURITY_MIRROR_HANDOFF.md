@@ -182,3 +182,27 @@ The audit binds all 17 workflows identified by the 2026-08-19 security containme
 The provider-secret boundary validation workflow now verifies both the absence of active provider-secret consumption and the historical containment/retirement audit.
 
 This audit has authority effect NONE. It records containment/replacement state; it does not execute a provider operation or rewrite historical results.
+
+
+## Historical provider workflow source reconstruction — 2026-09-03
+
+Issue: `#16`
+
+Source audit:
+`security/provider-secret-historical-source-audit.v1.json`
+
+Validation:
+`tools/validate_provider_secret_historical_source_audit.py`
+
+The audit was reconstructed directly from the removed source present in each durable 2026-08-19 containment commit. For all 17 contained workflows it records:
+- providers named in the pre-containment source;
+- provider secret variable names;
+- third-party Action references present in the removed source;
+- whether `contents: write` and `git push` were present;
+- whether local TVC/CGE/publication labels appeared;
+- whether an explicit provider network endpoint was present;
+- retirement actor and timestamp.
+
+Repository source evidence can establish those source properties, but it cannot establish the historical runtime triggering actor/application, token provenance, repository visibility at execution time, or unavailable run-artifact hashes. Those fields are explicitly marked as requiring organization audit-log / retained Actions evidence rather than guessed.
+
+This narrows the remaining #16 boundary to historical runtime/audit evidence that is not derivable from repository source. It does not alter historical results or infer credential possession from source declaration alone.
