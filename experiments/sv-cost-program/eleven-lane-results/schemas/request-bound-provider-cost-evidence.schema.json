@@ -118,6 +118,9 @@
         },
         "credentialless": {
           "const": true
+        },
+        "candidate_output": {
+          "type": "object"
         }
       }
     }
