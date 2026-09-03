@@ -457,3 +457,19 @@ The credentialless before/after observation object now carries the exact provide
 Free-form reason prose remains provider-authentic and is not required to match deterministic wording.
 
 This prevents an otherwise valid cost delta from being bound to a different provider request or task while preserving the credentialless path.
+
+
+### Credentialless UI candidate-binding merge evidence
+
+```text
+issue: #37 CLOSED
+PR: #38
+merge: 444bba037fa0f770a1317be93e64818b15f7dde8
+validated head: 4a2e3935ce7c8c76d402d7851598837fa25fe6dc
+handoff authority: 33699713869 SUCCESS
+handoff semantics: 33699713871 SUCCESS
+continuity provenance: 33699713879 SUCCESS
+eleven-lane candidate proof: 33699713884 SUCCESS
+```
+
+Credentialless cost observations are now bound to the exact provider candidate output as well as the isolated before/after provider UI window.
