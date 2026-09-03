@@ -1,6 +1,6 @@
 # AI Cost Transparency Research Mirror Handoff
 
-Status: **RESEARCH OBJECTIVE ESTABLISHED — MEASUREMENT DESIGN ACTIVE**
+Status: **RESEARCH OBJECTIVE IMPLEMENTED — PROVIDER DISCLOSURE PROTOCOL EXECUTION PENDING**
 
 ## Canonical authority
 
@@ -100,3 +100,33 @@ When research reaches release-ready state, verify propagation applicability to:
 - GCAT-BCAT-Engine/Publisher
 - StegVerse-Labs/admissibility-wiki
 - StegVerse-Labs/stegguardian-wiki
+
+
+## Implemented source — 2026-09-03
+
+Issue: #58
+
+Installed:
+- `research-objective.md`
+- `transparency-observation.schema.json`
+- `research-log.schema.json`
+- `score_disclosure_burden.py`
+- `tests/test_score_disclosure_burden.py`
+- `seed-observations.json`
+- `task-state.json`
+
+The scoring implementation fail-closes incomplete research: omission of cost on an initial UI surface does not automatically receive a final `5 NON_RECONSTRUCTABLE` rating. A final 5 requires completion of the research protocol.
+
+Existing OpenAI, Anthropic, DeepSeek, Z.ai/GLM, and Perplexity observations are seeded only as prior evidence references with `NOT_SCORED_PROTOCOL_INCOMPLETE`. No provider has been assigned a final disclosure-burden score from the current UI observations alone.
+
+### Remaining research execution
+
+For each provider, execute the research protocol and preserve:
+- discovery-step count;
+- elapsed research time;
+- every provider-controlled surface consulted;
+- whether authentication/elevated billing access was necessary;
+- every material cost component discovered;
+- whether literal request-attributable cost became exactly reconstructable.
+
+Only after that evidence is complete should final comparative ratings and the companion paper findings be produced.
