@@ -1,0 +1,12 @@
+{
+  "schema":"stegverse.actual-cost-transparency-seed-set/v1",
+  "research_objective_id":"SV-COST-TRANSPARENCY-001",
+  "claim_boundary":"EXISTING_EVIDENCE_ONLY_NO_FINAL_SCORE",
+  "observations":[
+    {"provider":"openai","model":"gpt-5.6-sol","protocol_complete":false,"rating":null,"state":"NOT_SCORED_PROTOCOL_INCOMPLETE","evidence_ref":"../eleven-lane-results/evidence/openai-ui-candidate-observation-2026-09-03.json"},
+    {"provider":"anthropic","model":"claude-opus-5","protocol_complete":false,"rating":null,"state":"NOT_SCORED_PROTOCOL_INCOMPLETE","evidence_ref":"../eleven-lane-results/evidence/anthropic-ui-candidate-observation-2026-09-03.json"},
+    {"provider":"deepseek","model":null,"protocol_complete":false,"rating":null,"state":"NOT_SCORED_PROTOCOL_INCOMPLETE","evidence_ref":"../eleven-lane-results/evidence/deepseek-ui-candidate-observation-2026-09-03.json"},
+    {"provider":"zai","model":"GLM-5.3-Flash","protocol_complete":false,"rating":null,"state":"NOT_SCORED_PROTOCOL_INCOMPLETE","evidence_ref":"../eleven-lane-results/evidence/glm-hosted-ui-candidate-observation-2026-09-03.json"},
+    {"provider":"perplexity","model":null,"protocol_complete":false,"rating":null,"state":"NOT_SCORED_PROTOCOL_INCOMPLETE","evidence_ref":"../eleven-lane-results/evidence/perplexity-ui-candidate-observation-2026-09-03.json"}
+  ]
+}
