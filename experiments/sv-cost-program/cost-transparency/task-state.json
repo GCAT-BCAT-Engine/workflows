@@ -1,0 +1,14 @@
+{
+  "schema": "stegverse.task-state/v1",
+  "task_id": "SV-COST-TRANSPARENCY-001",
+  "state": "RESEARCH_OBJECTIVE_IMPLEMENTED_OBSERVATION_PROTOCOL_PENDING",
+  "canonical_handoff": "experiments/sv-cost-program/cost-transparency/COST_TRANSPARENCY_MIRROR_HANDOFF.md",
+  "parent_experiment": "SV-COST-ELEVEN-LANE-RESULTS-001",
+  "attribute": "ACTUAL_COST_DISCLOSURE_BURDEN",
+  "scale_min": 0,
+  "scale_max": 5,
+  "lower_is_more_transparent": true,
+  "eleven_lane_mutation": false,
+  "paper_relationship": "APPENDIX_RESEARCH_OBJECTIVE",
+  "next_action": "Execute the disclosure-burden research protocol provider by provider, preserve each discovery step, and assign final ratings only after protocol completion."
+}
