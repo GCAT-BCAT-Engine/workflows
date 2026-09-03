@@ -618,3 +618,27 @@ INSUFFICIENT_NO_NUMERIC_BEFORE_AFTER_USAGE_SURFACE
 ```
 
 No provider billing, usage, runtime identity, credential, sovereign execution, or request-bound dollar cost is inferred from the model header or successful candidate output.
+
+
+## Perplexity supplemental candidate observation — 2026-09-03
+
+Issue: #56
+
+User-supplied Perplexity text output records an exact `SV-RECON-001` result with:
+- final state `balance=75`, `risk_score=3`, `standing=active`;
+- decision sequence `ALLOW, ALLOW, ALLOW, DENY, DENY, ALLOW`;
+- applied/denied counts `4/2`;
+- `DETERMINISTIC_RECONSTRUCTION_ONLY` claim boundary.
+
+Evidence file:
+`evidence/perplexity-ui-candidate-observation-2026-09-03.json`
+
+Semantic comparison: `PASS`.
+
+No Perplexity model/version identity was exposed in the supplied result, so model identity remains:
+
+```text
+UNOBSERVED_IN_SUPPLIED_RESULT
+```
+
+No screenshot, request telemetry, token usage, quota, credit-spend, or request-bound dollar cost was supplied. This record is supplemental exploratory evidence only and does not expand, renumber, or alter the canonical eleven-lane experiment.
