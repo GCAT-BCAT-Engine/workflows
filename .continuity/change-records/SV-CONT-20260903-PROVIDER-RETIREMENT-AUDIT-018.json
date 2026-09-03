@@ -21,32 +21,32 @@
     },
     {
       "change_type": "modified",
-      "hash": "a0e59eb3bf80c7cd25aa7d411e8effef20683846",
+      "hash": "0322969a275e7a88867cbb7ae2b377f9c139509a",
       "hash_algorithm": "git-blob-sha1",
       "path": "docs/WORKFLOWS_SECURITY_MIRROR_HANDOFF.md"
     },
     {
       "change_type": "added",
-      "hash": "e7f3b39d1461eaf19822ba5499f0f5ee22d7c8a5",
+      "hash": "ead7a0549753ae551a75f677e0ae3e5c34ecd152",
       "hash_algorithm": "git-blob-sha1",
       "path": "security/provider-secret-workflow-retirement-audit.v1.json"
     },
     {
       "change_type": "added",
-      "hash": "20036a2adff5b538536a3ae69cb6e3c6af8f811c",
+      "hash": "7c19c042925c6f812edbc6c751c4a3112baea0c8",
       "hash_algorithm": "git-blob-sha1",
       "path": "tests/test_provider_secret_retirement_audit.py"
     },
     {
       "change_type": "added",
-      "hash": "166a1b02e65d6779c505f9b5c4029de4ce2d5b56",
+      "hash": "389e6fb18f2b6f5ec002c4ab00e786b0952f134a",
       "hash_algorithm": "git-blob-sha1",
       "path": "tools/validate_provider_secret_retirement_audit.py"
     }
   ],
   "claims": [
     {
-      "claim": "all 17 provider-secret/authority-substitution workflows identified by issue #16 remain absent from active repository paths",
+      "claim": "all 17 provider-secret/authority-substitution workflows identified by issue #16 remain contained as manual fail-closed placeholders with provider execution disabled",
       "state": "MACHINE_VALIDATED"
     },
     {
