@@ -130,3 +130,31 @@ This security lane is not complete until:
 - historical provenance gaps are reconciled as far as retained audit evidence permits.
 
 Do not restore provider API secrets directly into consumer GitHub Actions as a shortcut.
+
+
+## Provider-secret regression guard — 2026-09-02
+
+Issue: #16
+
+A repository-wide active-workflow guard is now installed:
+
+```text
+tools/verify_no_direct_provider_secrets.py
+tests/test_provider_secret_boundary.py
+.github/workflows/provider-secret-boundary-validation.yml
+```
+
+The guard fails closed on:
+- GitHub secret interpolation such as `${{ secrets.* }}` in active workflows;
+- provider credential assignments/references for OpenAI, Anthropic, DeepSeek, Moonshot/Kimi, or Z.ai.
+
+Negative validation markers that merely scan for forbidden names are not treated as credential use.
+
+The workflow is validation-only:
+- `permissions: {}`;
+- pinned checkout action;
+- no provider execution;
+- no repository mutation;
+- no credential authority.
+
+This converts the "direct provider-secret consumer workflows remain absent from all active paths" completion criterion into a continuously machine-checked invariant.
