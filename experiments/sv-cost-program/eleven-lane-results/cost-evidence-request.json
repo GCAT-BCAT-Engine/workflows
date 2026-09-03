@@ -55,7 +55,7 @@
     "schema": "schemas/request-bound-provider-cost-evidence.schema.json",
     "rule": "Provider cost blockers close only from request-bound provider evidence. Rate cards alone never create a request cost."
   },
-  "next_action": "Credentialless cost evidence must preserve the exact before/after provider observations and exact candidate output so the cost is reconstructable. No API-key registration is required.",
+  "next_action": "Acquire authentic isolated credentialless provider UI observations; emitted evidence is now self-reconstructable. API-key registration is not required.",
   "credentialless_ui_observation_path": {
     "issue": 34,
     "state": "MERGED_VALIDATED",
@@ -69,6 +69,7 @@
     "candidate_binding_state": "MERGED_VALIDATED",
     "candidate_binding_merge": "444bba037fa0f770a1317be93e64818b15f7dde8",
     "reconstructable_provenance_issue": 42,
-    "reconstructable_provenance_state": "SOURCE_IMPLEMENTED_VALIDATION_PENDING"
+    "reconstructable_provenance_state": "MERGED_VALIDATED",
+    "reconstructable_provenance_merge": "95b940bdee5440fe3124d49d6bd4ae3d60219adb"
   }
 }

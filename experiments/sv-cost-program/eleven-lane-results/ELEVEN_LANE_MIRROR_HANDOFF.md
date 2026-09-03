@@ -488,3 +488,17 @@ The emitted request-bound cost packet now preserves the exact `before` and `afte
 This makes the derived dollar cost reconstructable from the emitted evidence packet itself rather than depending on an unstored transient input file.
 
 No cost value is inferred beyond the already-validated observation mode.
+
+
+### Reconstructable UI cost provenance merge evidence
+
+```text
+issue: #42 CLOSED
+PR: #43
+merge: 95b940bdee5440fe3124d49d6bd4ae3d60219adb
+validated head: be6258059a95b1cec0afb6c6be96a8f0c3706328
+handoff authority: 33704619397 SUCCESS
+handoff semantics: 33704619401 SUCCESS
+continuity provenance: 33704619417 SUCCESS
+eleven-lane candidate proof: 33704619393 SUCCESS
+```
