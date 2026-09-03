@@ -440,3 +440,20 @@ credentialless UI cost capture validation step: SUCCESS
 ```
 
 The hosted-provider cost path is now explicitly credentialless. API-key registration is not a prerequisite for this experiment's cost acquisition.
+
+
+## Credentialless UI observation candidate binding — 2026-09-02
+
+Issue: #37
+
+The credentialless before/after observation object now carries the exact provider candidate output from the isolated window. The builder semantically verifies:
+- `task_id=SV-RECON-001`;
+- final state balance 75 / risk 3 / active;
+- ordered decisions ALLOW, ALLOW, ALLOW, DENY, DENY, ALLOW;
+- applied_count 4;
+- denied_count 2;
+- `claim_boundary=DETERMINISTIC_RECONSTRUCTION_ONLY`.
+
+Free-form reason prose remains provider-authentic and is not required to match deterministic wording.
+
+This prevents an otherwise valid cost delta from being bound to a different provider request or task while preserving the credentialless path.
