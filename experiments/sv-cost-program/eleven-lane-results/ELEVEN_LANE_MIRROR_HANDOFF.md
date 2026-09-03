@@ -589,3 +589,32 @@ INSUFFICIENT_NO_NUMERIC_BEFORE_AFTER_USAGE_SURFACE
 ```
 
 No model or cost value is inferred from the app version or candidate semantics.
+
+
+## GLM-5.3-Flash Hosted UI candidate observation — 2026-09-03
+
+Issue: #54
+
+User-supplied Z.ai hosted UI evidence now records:
+- model header displaying `GLM-5.3-Flash`;
+- the `SV-RECON-001` prompt in the hosted chat surface;
+- an exact returned JSON result with final state `balance=75`, `risk_score=3`, `standing=active`;
+- decision sequence `ALLOW, ALLOW, ALLOW, DENY, DENY, ALLOW`;
+- applied/denied counts `4/2`;
+- `DETERMINISTIC_RECONSTRUCTION_ONLY` claim boundary.
+
+Evidence file:
+`evidence/glm-hosted-ui-candidate-observation-2026-09-03.json`
+
+Submitted screenshot SHA-256:
+`fd7639d4a7b0f8ea93ebc1ba49b6a1abd48dbbbe760fd27b27d516cb7241dba2`
+
+The returned candidate is semantically identical to the deterministic baseline and the already-installed hosted GLM candidate. Free-form reason prose differs only in wording and remains semantically valid.
+
+The submitted hosted UI surface exposes no admissible numeric before/after request-cost, token, credit-spend, quota, or usage counter. Therefore hosted GLM request-bound cost remains:
+
+```text
+INSUFFICIENT_NO_NUMERIC_BEFORE_AFTER_USAGE_SURFACE
+```
+
+No provider billing, usage, runtime identity, credential, sovereign execution, or request-bound dollar cost is inferred from the model header or successful candidate output.
