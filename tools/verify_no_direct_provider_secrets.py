@@ -7,8 +7,9 @@ from pathlib import Path
 
 SECRET_EXPR=re.compile(r"\$\{\{\s*secrets\.[A-Za-z0-9_]+\s*\}\}")
 PROVIDER_NAMES=("OPENAI","ANTHROPIC","DEEPSEEK","MOONSHOT","KIMI","ZAI")
-PROVIDER_ENV=re.compile(r"\b("+ "|".join(PROVIDER_NAMES) +r")_(?:API_)?KEY\b")
-SAFE_NEGATION_HINTS=("grep -E", "assert marker not in", "forbidden =", "for marker in forbidden")
+PROVIDER_KEY_NAME=r"(?:"+"|".join(PROVIDER_NAMES)+r")_(?:API_)?KEY"
+PROVIDER_ASSIGN=re.compile(r"^\\s*"+PROVIDER_KEY_NAME+r"\\s*[:=]")
+PROVIDER_SHELL_REF=re.compile(r"\\$(?:\\{)?"+PROVIDER_KEY_NAME+r"(?:\\})?")
 
 
 def violations(root: Path) -> list[str]:
@@ -21,17 +22,11 @@ def violations(root: Path) -> list[str]:
             if SECRET_EXPR.search(line):
                 out.append(f"{rel}:{lineno}:direct GitHub secret interpolation")
                 continue
-            if PROVIDER_ENV.search(line):
-                stripped=line.strip()
-                if any(hint in stripped for hint in SAFE_NEGATION_HINTS):
-                    continue
-                # Marker-only negative validation tuples are allowed when the same line
-                # explicitly asserts absence rather than exporting/reading a value.
-                if "assert" in stripped and "not in" in stripped:
-                    continue
-                if stripped.startswith("#"):
-                    continue
-                out.append(f"{rel}:{lineno}:provider credential name in active workflow")
+            stripped=line.strip()
+            if stripped.startswith("#"):
+                continue
+            if PROVIDER_ASSIGN.search(line) or PROVIDER_SHELL_REF.search(line):
+                out.append(f"{rel}:{lineno}:provider credential reference in active workflow")
     return out
 
 
