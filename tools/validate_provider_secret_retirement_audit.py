@@ -27,12 +27,27 @@ def main()->int:
             failures.append(f"duplicate_or_invalid_path:{path}")
             continue
         seen.add(path)
-        if (ROOT/path).exists():
-            failures.append(f"retired_workflow_still_active:{path}")
+        workflow=ROOT/path
+        if not workflow.is_file():
+            failures.append(f"contained_workflow_missing:{path}")
+        else:
+            text=workflow.read_text(encoding="utf-8")
+            if "workflow_dispatch" not in text:
+                failures.append(f"contained_workflow_not_manual:{path}")
+            if "exit 1" not in text:
+                failures.append(f"contained_workflow_not_fail_closed:{path}")
+            if "permissions:" not in text:
+                failures.append(f"contained_workflow_permissions_missing:{path}")
+            if "timeout-minutes: 5" not in text:
+                failures.append(f"contained_workflow_timeout_unbounded:{path}")
         if not isinstance(commit,str) or not SHA.fullmatch(commit):
             failures.append(f"invalid_retirement_commit:{path}")
-        if entry.get("current_state")!="ABSENT_FROM_ACTIVE_PATHS":
+        if entry.get("current_state")!="CONTAINED_FAIL_CLOSED_PLACEHOLDER":
             failures.append(f"invalid_state:{path}")
+        if entry.get("active_provider_execution_allowed") is not False:
+            failures.append(f"provider_execution_not_disabled:{path}")
+        if entry.get("provider_secret_consumption_allowed") is not False:
+            failures.append(f"provider_secret_consumption_not_disabled:{path}")
         if entry.get("historical_evidence_preserved") is not True:
             failures.append(f"historical_evidence_not_preserved:{path}")
     for replacement in doc.get("canonical_replacements",[]):
@@ -59,7 +74,7 @@ def main()->int:
         return 1
     print("PROVIDER_SECRET_RETIREMENT_AUDIT=PASS")
     print(f"retired_workflows={len(retired)}")
-    print("active_direct_provider_secret_workflows=0")
+    print("active_direct_provider_secret_consumers=0")
     return 0
 
 
