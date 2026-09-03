@@ -158,3 +158,27 @@ The workflow is validation-only:
 - no credential authority.
 
 This converts the "direct provider-secret consumer workflows remain absent from all active paths" completion criterion into a continuously machine-checked invariant.
+
+
+## Provider-secret historical retirement audit — 2026-09-03
+
+Issue: `#16`
+
+Machine-readable audit:
+`security/provider-secret-workflow-retirement-audit.v1.json`
+
+Validation:
+`tools/validate_provider_secret_retirement_audit.py`
+
+The audit binds all 17 workflows identified by the 2026-08-19 security containment to their durable retirement commits and asserts:
+- each retired workflow is absent from active repository paths;
+- historical evidence remains preserved rather than rewritten;
+- canonical TVC/Generation-3/credentialless replacements exist;
+- all ten replacement acceptance criteria from issue #16 are satisfied;
+- provider capability authority remains `StegVerse-Labs/TVC`;
+- consumer policy/GitHub production authority remain false;
+- API-key registration remains unnecessary for the eleven-lane cost-analysis path.
+
+The provider-secret boundary validation workflow now verifies both current active-path absence and the historical retirement audit.
+
+This audit has authority effect NONE. It records containment/replacement state; it does not execute a provider operation or rewrite historical results.
