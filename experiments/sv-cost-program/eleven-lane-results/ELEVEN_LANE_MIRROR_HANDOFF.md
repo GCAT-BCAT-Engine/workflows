@@ -642,3 +642,18 @@ UNOBSERVED_IN_SUPPLIED_RESULT
 ```
 
 No screenshot, request telemetry, token usage, quota, credit-spend, or request-bound dollar cost was supplied. This record is supplemental exploratory evidence only and does not expand, renumber, or alter the canonical eleven-lane experiment.
+
+
+## Companion research objective — literal cost transparency
+
+A second research objective now appends to this cost analysis without modifying the canonical eleven-lane experiment:
+
+`experiments/sv-cost-program/cost-transparency/COST_TRANSPARENCY_MIRROR_HANDOFF.md`
+
+Primary comparative attribute:
+
+`ACTUAL_COST_DISCLOSURE_BURDEN`
+
+It measures the amount of research required to discover or exactly reconstruct the literal request-attributable economic cost of an inference. A public rate card alone is not treated as evidence of actual request cost.
+
+Current UI observations for OpenAI, Anthropic, DeepSeek, hosted GLM, and supplemental Perplexity are seed evidence only. Final disclosure-burden ratings require completion of the separate provider research protocol.
