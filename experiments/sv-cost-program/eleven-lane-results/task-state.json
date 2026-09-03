@@ -14,7 +14,7 @@
   "glm_sovereign_state": "RESIDENT_BRIDGE_MERGED_INTAKE_SOURCE_READY_AUTHENTIC_EXECUTION_PENDING",
   "machine_runner": ".github/workflows/sv-cost-eleven-lane-candidate-proof.yml",
   "publication_state": "BLOCKED_PENDING_GLM_EVIDENCE_AND_INCOMPLETE_PROVIDER_COST_EVIDENCE",
-  "next_action": "Authentic evidence remains: resident private GLM lane-11 execution with real/bounded infrastructure measurements, and request-bound OpenAI/Anthropic/DeepSeek/hosted-GLM cost observations. No additional eleven-lane consumer source work is currently identified.",
+  "next_action": "Validate and merge credentialless UI cost capture. After merge, remaining hosted-provider cost blockers require only authentic isolated before/after provider observations; no API key is required. Lane 11 remains machine-owned pending authentic private GLM runtime evidence.",
   "merge_commit": "a66b8dbc6a2d319ecef66834f7babf7b5a586100",
   "handoff_update_commit": "e37e87ab72184435ed22d7e3576a699132b62d8c",
   "behavioral_lanes_evidence_ready": 10,
@@ -48,5 +48,9 @@
   "tvc_request_bound_measurement_bridge": "tools/ingest_tvc_request_bound_measurement.py",
   "tvc_request_bound_measurement_bridge_state": "MERGED_VALIDATED",
   "cost_evidence_harness_consumption_merge": "ba1c8476e00c4e2746f98edee520d554ba0ff897",
-  "cost_evidence_harness_consumption_validation_run": 33696882131
+  "cost_evidence_harness_consumption_validation_run": 33696882131,
+  "credentialless_ui_cost_capture_issue": 34,
+  "credentialless_ui_cost_capture_state": "SOURCE_IMPLEMENTED_VALIDATION_PENDING",
+  "credentialless_ui_cost_capture_pack": "requests/credentialless-ui-cost-capture-pack.json",
+  "credentialless_ui_cost_builder": "tools/build_credentialless_ui_cost_evidence.py"
 }
