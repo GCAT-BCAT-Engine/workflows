@@ -1,0 +1,75 @@
+{
+  "actor": {
+    "class": "chatgpt",
+    "instance": "GPT-5.6 Sol",
+    "session_ref": "provider-secret-historical-source-audit-2026-09-03"
+  },
+  "base_commit": "5b4bd9fd47160af8cd98e88f938ea666397269b7",
+  "change_id": "SV-CONT-20260903-PROVIDER-HISTORICAL-SOURCE-AUDIT-019",
+  "changed_paths": [
+    {
+      "change_type": "modified",
+      "hash": "4f498f677136a26f039195504b8fb27a247a02d3",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/config.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "966ec3feaa0365b491fc317a3284b8690a1bf680",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".github/workflows/provider-secret-boundary-validation.yml"
+    },
+    {
+      "change_type": "modified",
+      "hash": "04c60db12245d5922b1f4a9af2d35dc9a7658d22",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/WORKFLOWS_SECURITY_MIRROR_HANDOFF.md"
+    },
+    {
+      "change_type": "added",
+      "hash": "dcea08dc02c27d42e6135297577fda7a21bcd0c2",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "security/provider-secret-historical-source-audit.v1.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "960d79a9d626cef06bb5e4bc88a4501cc058c11c",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "tests/test_provider_secret_historical_source_audit.py"
+    },
+    {
+      "change_type": "added",
+      "hash": "b0fda7dad535bb7a971d15f74c2a3d4ec99eaeb1",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "tools/validate_provider_secret_historical_source_audit.py"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "pre-containment source properties for all 17 legacy provider workflows are reconstructed from the removed source in their durable retirement commits",
+      "state": "MACHINE_RECONSTRUCTED"
+    },
+    {
+      "claim": "historical runtime actor, token provenance, repository visibility, and unavailable run-artifact hashes are not inferred from source and remain bounded to organization audit-log/retained Actions evidence",
+      "state": "EXPLICITLY_UNRESOLVED"
+    },
+    {
+      "claim": "provider-secret historical source audit has authority effect NONE and does not rewrite historical results",
+      "state": "PRESERVED"
+    }
+  ],
+  "created_at": "2026-09-03T00:19:00-05:00",
+  "governing_handoff": {
+    "hash": "9a6ebc5e5331fe79c2aa7551279ddb285868cf69",
+    "hash_algorithm": "git-blob-sha1",
+    "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+  },
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "schema": "stegverse.session.change_record.v1",
+  "unresolved_tasks": [
+    "validate and merge historical provider workflow source reconstruction",
+    "remaining issue #16 boundary requires organization audit-log/retained historical run evidence where available",
+    "eleven-lane blockers remain authentic credentialless provider cost observations and authentic sovereign GLM runtime evidence"
+  ],
+  "record_hash": "253bfca0d7ceb1b565585ff7bf439a3383b72514c1d7878b4768c2e56a98abeb"
+}
