@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stegverse.actual-cost-transparency-observation.v1",
+  "title": "Actual Cost Transparency Observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "provider",
+    "task_id",
+    "protocol_complete",
+    "actual_request_cost_directly_exposed",
+    "request_usage_directly_exposed",
+    "all_material_cost_components_disclosed",
+    "research_steps_required",
+    "provider_surfaces_consulted",
+    "external_sources_required",
+    "account_or_privilege_required",
+    "reconstructable_actual_cost",
+    "unresolved_cost_components",
+    "disclosure_burden_rating",
+    "rating_state"
+  ],
+  "properties": {
+    "schema": {
+      "const": "stegverse.actual-cost-transparency-observation/v1"
+    },
+    "provider": {
+      "type": "string",
+      "minLength": 1
+    },
+    "model": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "task_id": {
+      "const": "SV-RECON-001"
+    },
+    "observed_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "advertised_rate_present": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "advertised_rate_surface": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "actual_request_cost_directly_exposed": {
+      "type": "boolean"
+    },
+    "request_usage_directly_exposed": {
+      "type": "boolean"
+    },
+    "all_material_cost_components_disclosed": {
+      "type": "boolean"
+    },
+    "research_steps_required": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "provider_surfaces_consulted": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "external_sources_required": {
+      "type": "boolean"
+    },
+    "account_or_privilege_required": {
+      "type": "boolean"
+    },
+    "time_to_reconstruct_minutes": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "reconstructable_actual_cost": {
+      "type": "boolean"
+    },
+    "unresolved_cost_components": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "protocol_complete": {
+      "type": "boolean"
+    },
+    "disclosure_burden_rating": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 5
+    },
+    "rating_state": {
+      "enum": [
+        "FINAL",
+        "PROVISIONAL_DIRECT_EVIDENCE",
+        "NOT_SCORED_PROTOCOL_INCOMPLETE"
+      ]
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
