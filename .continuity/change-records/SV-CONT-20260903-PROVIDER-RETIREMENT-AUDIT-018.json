@@ -1,0 +1,83 @@
+{
+  "actor": {
+    "class": "chatgpt",
+    "instance": "GPT-5.6 Sol",
+    "session_ref": "provider-secret-retirement-audit-2026-09-03"
+  },
+  "base_commit": "4525e50761d1a57a08bceb2769be4da35cabf192",
+  "change_id": "SV-CONT-20260903-PROVIDER-RETIREMENT-AUDIT-018",
+  "changed_paths": [
+    {
+      "change_type": "modified",
+      "hash": "ed00f1bc6149086af2902e1261dd5040ab86bd85",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/config.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "90e9a3f963b7f58376abfff0a010903d8add26d0",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".github/workflows/provider-secret-boundary-validation.yml"
+    },
+    {
+      "change_type": "modified",
+      "hash": "a0e59eb3bf80c7cd25aa7d411e8effef20683846",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/WORKFLOWS_SECURITY_MIRROR_HANDOFF.md"
+    },
+    {
+      "change_type": "added",
+      "hash": "e7f3b39d1461eaf19822ba5499f0f5ee22d7c8a5",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "security/provider-secret-workflow-retirement-audit.v1.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "20036a2adff5b538536a3ae69cb6e3c6af8f811c",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "tests/test_provider_secret_retirement_audit.py"
+    },
+    {
+      "change_type": "added",
+      "hash": "166a1b02e65d6779c505f9b5c4029de4ce2d5b56",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "tools/validate_provider_secret_retirement_audit.py"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "all 17 provider-secret/authority-substitution workflows identified by issue #16 remain absent from active repository paths",
+      "state": "MACHINE_VALIDATED"
+    },
+    {
+      "claim": "each retired workflow is bound to a durable retirement commit and historical evidence is preserved rather than rewritten",
+      "state": "RECORDED"
+    },
+    {
+      "claim": "all ten issue #16 replacement acceptance criteria are represented as PASS under canonical TVC/credentialless replacement surfaces",
+      "state": "MACHINE_VALIDATED"
+    },
+    {
+      "claim": "API-key registration remains unnecessary for the eleven-lane cost-analysis path",
+      "state": "PRESERVED"
+    },
+    {
+      "claim": "retirement audit and validation have authority effect NONE",
+      "state": "PRESERVED"
+    }
+  ],
+  "created_at": "2026-09-03T00:14:00-05:00",
+  "governing_handoff": {
+    "hash": "9a6ebc5e5331fe79c2aa7551279ddb285868cf69",
+    "hash_algorithm": "git-blob-sha1",
+    "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+  },
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "schema": "stegverse.session.change_record.v1",
+  "unresolved_tasks": [
+    "validate and merge provider-secret historical retirement audit",
+    "close issue #16 only if all completion gates validate on exact head",
+    "remaining eleven-lane work is authentic provider UI cost observations plus authentic sovereign GLM runtime evidence"
+  ],
+  "record_hash": "57d4446ec99027c0e41b40b3e04603175d73f45e23d4fb1a85e8eb2fef09f318"
+}
