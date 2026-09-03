@@ -392,3 +392,34 @@ request-bound cost intake/consumption tests: 11/11 PASS
 ```
 
 Request-bound cost packets are now active harness inputs rather than inert artifacts. Sanitized TVC measurement evidence can be converted into the exact Generation-3 candidate/cost inputs for OpenAI, Anthropic, and DeepSeek. Actual cost evidence remains absent and is not inferred from this merge.
+
+
+## Credentialless before/after provider UI cost capture — 2026-09-02
+
+Issue: #34
+
+The remaining hosted-provider cost blockers now have a machine-validated credentialless observation path.
+
+Installed source:
+```text
+schemas/credentialless-ui-cost-observation.schema.json
+tools/build_credentialless_ui_cost_evidence.py
+tests/test_credentialless_ui_cost_builder.py
+requests/credentialless-ui-cost-capture-pack.json
+```
+
+Supported isolated observation modes:
+```text
+DIRECT_REQUEST_COST_USD
+USAGE_CREDIT_SPENT_USD
+QUOTA_PERCENT
+EXACT_TOKENS
+```
+
+The capture contract requires one exact SV-RECON-001 candidate between a before/after observation pair and rejects non-isolated windows, negative/decreasing counters, credential-like material, unverified rate keys, and model/rate-card mismatch.
+
+The builder emits the existing `stegverse.request-bound-provider-cost-evidence/v1` shape already consumed by the eleven-lane harness.
+
+This preserves the Generation-3 credentialless evidence boundary. It performs no login, API request, provider operation, browser automation, credential handling, runtime execution, or publication action.
+
+No current cost blocker is closed merely by installing this source. Provider-facing before/after evidence must still be authentically observed.
