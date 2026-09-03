@@ -423,3 +423,20 @@ The builder emits the existing `stegverse.request-bound-provider-cost-evidence/v
 This preserves the Generation-3 credentialless evidence boundary. It performs no login, API request, provider operation, browser automation, credential handling, runtime execution, or publication action.
 
 No current cost blocker is closed merely by installing this source. Provider-facing before/after evidence must still be authentically observed.
+
+
+### Credentialless UI capture merge evidence
+
+```text
+issue: #34 CLOSED
+PR: #35
+merge: d6e2a353ff60623fb6d67c17adef91b2307d569f
+validated head: d19e4c6dcea09b6a1e1ca71e432a4945d8ea99b9
+handoff authority: 33699425571 SUCCESS
+handoff semantics: 33699425643 SUCCESS
+continuity provenance: 33699425573 SUCCESS
+eleven-lane candidate proof: 33699425570 SUCCESS
+credentialless UI cost capture validation step: SUCCESS
+```
+
+The hosted-provider cost path is now explicitly credentialless. API-key registration is not a prerequisite for this experiment's cost acquisition.

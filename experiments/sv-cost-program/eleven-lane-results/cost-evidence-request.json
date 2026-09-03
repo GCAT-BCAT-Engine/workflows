@@ -55,13 +55,14 @@
     "schema": "schemas/request-bound-provider-cost-evidence.schema.json",
     "rule": "Provider cost blockers close only from request-bound provider evidence. Rate cards alone never create a request cost."
   },
-  "next_action": "Use credentialless isolated before/after provider UI observations where available; do not promote TVC API execution or API-key registration into a requirement for this cost analysis.",
+  "next_action": "Acquire authentic isolated provider UI observations with the credentialless capture pack. API-key registration is not required for this cost-analysis path.",
   "credentialless_ui_observation_path": {
     "issue": 34,
-    "state": "SOURCE_IMPLEMENTED_VALIDATION_PENDING",
+    "state": "MERGED_VALIDATED",
     "capture_pack": "requests/credentialless-ui-cost-capture-pack.json",
     "observation_schema": "schemas/credentialless-ui-cost-observation.schema.json",
     "builder": "tools/build_credentialless_ui_cost_evidence.py",
-    "rule": "One isolated SV-RECON-001 candidate between before/after provider UI observations; no API key or provider credential required."
+    "rule": "One isolated SV-RECON-001 candidate between before/after provider UI observations; no API key or provider credential required.",
+    "merge": "d6e2a353ff60623fb6d67c17adef91b2307d569f"
   }
 }
