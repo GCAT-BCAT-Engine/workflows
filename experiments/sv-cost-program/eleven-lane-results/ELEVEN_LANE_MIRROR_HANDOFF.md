@@ -1,6 +1,6 @@
 # SV-COST Eleven-Lane Mirror Handoff
 
-Status: **SOURCE COMPLETE ON MAIN — CREDENTIALLESS HARNESS READY — GLM EVIDENCE ACQUISITION NEXT**
+Status: **HOSTED GLM VALIDATED — SOVEREIGN RUNTIME EVIDENCE PENDING — CREDENTIALLESS COST EVIDENCE ACQUISITION ACTIVE**
 
 ## Canonical authority
 
@@ -37,9 +37,10 @@ The harness requires no provider API key.
 Existing OpenAI, Anthropic, DeepSeek, and Kimi lanes consume the already-committed external candidate outputs from Generation 2.
 
 GLM Hosted:
-- before Vault: external candidate output only;
-- after Vault: TV/TVC-authorized runtime credential lease;
-- provider credential in repository/userland: forbidden.
+- credentialless external/provider-UI candidate evidence is sufficient for this experiment;
+- TV/TVC-authorized hosted provider operation is an optional execution path, not a prerequisite for cost acquisition;
+- provider credential in repository/userland: forbidden;
+- API-key registration is not required by the eleven-lane cost-analysis path.
 
 GLM Sovereign:
 - vendor API credential: not required;
@@ -113,38 +114,41 @@ GLM Sovereign accepted basis:
 ## Current execution state
 
 ```text
-lanes 1-9: inherited evidence available
-lane 10: ACQUISITION_ISSUE_OPEN / GCAT-BCAT-Engine/workflows#20
-lane 11: MACHINE_OWNED_RUNTIME_EVALUATION_REQUEST_OPEN / StegVerse-002/micro-node-runtime#69
-credentialless harness: SOURCE READY ON MAIN
-hosted workflow: INSTALLED
-hosted workflow run observation: NOT YET DIRECTLY OBSERVED
-publication: BLOCKED
+lanes 1-9: inherited behavioral evidence available
+lane 10 hosted GLM: EVIDENCE_PRESENT_HARNESS_VALIDATED
+lane 11 sovereign GLM: RESIDENT_BRIDGE_MERGED_INTAKE_READY_AUTHENTIC_EXECUTION_PENDING
+behavioral evidence present: 10 / 11
+credentialless harness: MERGED_VALIDATED
+hosted workflow observation: SUCCESS OBSERVED
+credentialless provider-cost intake/capture: MERGED_VALIDATED
+publication: BLOCKED_ON_LANE_11_AND_COST_EVIDENCE
 ```
 
-Direct workflow-run enumeration returned no run objects for the merge commit or sampled predecessor commits. Do not infer either workflow failure or workflow success from that connector result. The repository-native observer remains the hosted-proof owner.
+Observed validation includes successful eleven-lane candidate-proof runs through the hosted GLM, resident-intake, request-bound-cost, and credentialless UI-capture changes. Source/workflow success remains evidence only and does not substitute for authentic sovereign execution or provider cost observations.
 
 ## Fastest next execution
 
-1. Credentialless harness execution request is committed at `run-requests/2026-09-02T0756-0500-credentialless-eleven-lane.md`; direct workflow-run enumeration remains unavailable through the connected observer surface.
-2. Acquire GLM Hosted output using `requests/glm-evaluation-prompt.md` through an existing external relationship; store only output metadata, never a provider credential.
-3. Execute the same exact prompt on an eligible sovereign GLM runtime and capture `runtime-evidence/glm-sovereign.json`.
-4. Re-run the harness and compare behavioral equivalence, governance evidence, and cost basis.
-5. Complete remaining OpenAI/Anthropic/DeepSeek bounded cost evidence before publication.
+1. Resident WorkerCoordinator executes the already-installed private GLM-5.3-Flash lane-11 task and emits authentic sovereign evidence with available runtime/infrastructure measurements.
+2. Install that exact resident evidence through `tools/ingest_glm_sovereign_resident_evidence.py` and re-run the eleven-lane harness.
+3. For OpenAI, Anthropic, DeepSeek, and hosted GLM cost blockers, use credentialless isolated before/after provider observations from `requests/credentialless-ui-cost-capture-pack.json`, including the exact candidate output from the isolated window.
+4. Build request-bound cost evidence with `tools/build_credentialless_ui_cost_evidence.py`; do not provision an API key merely to satisfy this experiment.
+5. Publish only after all eleven behavioral lanes and required bounded cost evidence pass.
 
-## Remaining files/modules to install
+## Remaining evidence to install
 
 Destination: `GCAT-BCAT-Engine/workflows`
 
 ```text
-candidate-inputs/glm-hosted.json                  OWNER workflows#20 / BLOCKED_ON_REAL_GLM_HOSTED_OUTPUT
-runtime-evidence/glm-sovereign.json              OWNER micro-node-runtime#69 / BLOCKED_ON_ELIGIBLE_SOVEREIGN_RUNTIME
-cost-evidence/glm-hosted.json                    BLOCKED_ON_PROVIDER_COST/USAGE EVIDENCE
-results/generation-3-eleven-lane/...             GENERATED_BY_RUNNER
-local validation receipt                         PENDING_EXECUTION
-hosted proof observation                         MACHINE_OWNED_PENDING_OBSERVATION
+runtime-evidence/glm-sovereign.json              OWNER micro-node-runtime#69 / AUTHENTIC_RESIDENT_EXECUTION_PENDING
+cost-evidence/openai.json                        CREDENTIALLESS_REQUEST_BOUND_OBSERVATION_PENDING
+cost-evidence/anthropic.json                     CREDENTIALLESS_REQUEST_BOUND_OBSERVATION_PENDING
+cost-evidence/deepseek.json                      CREDENTIALLESS_REQUEST_BOUND_OBSERVATION_PENDING
+cost-evidence/glm-hosted.json                    CREDENTIALLESS_REQUEST_BOUND_OBSERVATION_PENDING
+sovereign infrastructure cost fields             AUTHENTIC_RUNTIME_MEASUREMENT_PENDING
 publication integration                          BLOCKED_ON_EVIDENCE GATES
 ```
+
+`candidate-inputs/glm-hosted.json` is already installed and validated. Current validation/hosted proof observations are already available; they are not remaining installation work.
 
 ## Downstream release propagation
 
