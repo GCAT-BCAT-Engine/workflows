@@ -8,8 +8,8 @@ from pathlib import Path
 SECRET_EXPR=re.compile(r"\$\{\{\s*secrets\.[A-Za-z0-9_]+\s*\}\}")
 PROVIDER_NAMES=("OPENAI","ANTHROPIC","DEEPSEEK","MOONSHOT","KIMI","ZAI")
 PROVIDER_KEY_NAME=r"(?:"+"|".join(PROVIDER_NAMES)+r")_(?:API_)?KEY"
-PROVIDER_ASSIGN=re.compile(r"^\\s*"+PROVIDER_KEY_NAME+r"\\s*[:=]")
-PROVIDER_SHELL_REF=re.compile(r"\\$(?:\\{)?"+PROVIDER_KEY_NAME+r"(?:\\})?")
+PROVIDER_ASSIGN=re.compile(r"^\s*"+PROVIDER_KEY_NAME+r"\s*[:=]")
+PROVIDER_SHELL_REF=re.compile(r"\$(?:\{)?"+PROVIDER_KEY_NAME+r"(?:\})?")
 
 
 def violations(root: Path) -> list[str]:
