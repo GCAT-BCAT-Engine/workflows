@@ -55,5 +55,13 @@
     "schema": "schemas/request-bound-provider-cost-evidence.schema.json",
     "rule": "Provider cost blockers close only from request-bound provider evidence. Rate cards alone never create a request cost."
   },
-  "next_action": "Acquire request-bound OpenAI/Anthropic/DeepSeek/Z.ai cost evidence using requests/request-bound-provider-evidence-pack.json; lane 11 continues through the canonical sovereign runtime machine owner."
+  "next_action": "Use credentialless isolated before/after provider UI observations where available; do not promote TVC API execution or API-key registration into a requirement for this cost analysis.",
+  "credentialless_ui_observation_path": {
+    "issue": 34,
+    "state": "SOURCE_IMPLEMENTED_VALIDATION_PENDING",
+    "capture_pack": "requests/credentialless-ui-cost-capture-pack.json",
+    "observation_schema": "schemas/credentialless-ui-cost-observation.schema.json",
+    "builder": "tools/build_credentialless_ui_cost_evidence.py",
+    "rule": "One isolated SV-RECON-001 candidate between before/after provider UI observations; no API key or provider credential required."
+  }
 }

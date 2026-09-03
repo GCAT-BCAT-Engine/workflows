@@ -88,6 +88,38 @@
     },
     "claim_boundary": {
       "const": "REQUEST_BOUND_EFFECTIVE_COST_ONLY"
+    },
+    "observation_provenance": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "source_schema": {
+          "const": "stegverse.credentialless-ui-cost-observation/v1"
+        },
+        "observation_mode": {
+          "enum": [
+            "DIRECT_REQUEST_COST_USD",
+            "USAGE_CREDIT_SPENT_USD",
+            "QUOTA_PERCENT",
+            "EXACT_TOKENS"
+          ]
+        },
+        "isolated_single_candidate_window": {
+          "const": true
+        },
+        "source_observation": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "credentialless": {
+          "const": true
+        }
+      }
     }
   }
 }

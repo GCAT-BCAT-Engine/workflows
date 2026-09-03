@@ -42,6 +42,10 @@ jobs:
         run: |
           python experiments/sv-cost-program/eleven-lane-results/tests/test_request_bound_cost_intake.py -q
 
+      - name: Validate credentialless UI cost capture
+        run: |
+          python experiments/sv-cost-program/eleven-lane-results/tests/test_credentialless_ui_cost_builder.py -q
+
       - name: Execute eleven-lane harness
         run: |
           python experiments/sv-cost-program/eleven-lane-results/run.py
