@@ -2,7 +2,7 @@
   "schema": "stegverse.continuity.config.v1",
   "repository": "GCAT-BCAT-Engine/workflows",
   "enforcement_mode": "ENFORCE",
-  "current_change_record": ".continuity/change-records/SV-CONT-20260902-PROVIDER-SECRET-GUARD-017.json",
+  "current_change_record": ".continuity/change-records/SV-CONT-20260903-PROVIDER-RETIREMENT-AUDIT-018.json",
   "cross_repository_references": ".continuity/cross-repository-references.json",
   "allowed_unrecorded_paths": [
     ".continuity/provenance-verification-receipt.json",
