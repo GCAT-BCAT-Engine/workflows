@@ -14,7 +14,7 @@
   "glm_sovereign_state": "RESIDENT_BRIDGE_MERGED_INTAKE_SOURCE_READY_AUTHENTIC_EXECUTION_PENDING",
   "machine_runner": ".github/workflows/sv-cost-eleven-lane-candidate-proof.yml",
   "publication_state": "BLOCKED_PENDING_GLM_EVIDENCE_AND_INCOMPLETE_PROVIDER_COST_EVIDENCE",
-  "next_action": "OpenAI, Anthropic, and DeepSeek candidate observations are recorded. DeepSeek exact model identity remains unobserved in the supplied UI and its request-bound cost remains pending admissible numeric before/after provider evidence. Hosted GLM observation remains pending. Lane 11 remains machine-owned pending authentic private GLM runtime evidence.",
+  "next_action": "OpenAI, Anthropic, and hosted GLM model/candidate observations are recorded. Their request-bound costs still require admissible numeric before/after provider usage/cost/token/quota observations around exactly one SV-RECON-001 request. DeepSeek cost observation remains pending. Lane 11 remains machine-owned pending authentic private GLM runtime evidence.",
   "merge_commit": "a66b8dbc6a2d319ecef66834f7babf7b5a586100",
   "handoff_update_commit": "e37e87ab72184435ed22d7e3576a699132b62d8c",
   "behavioral_lanes_evidence_ready": 10,
@@ -72,5 +72,8 @@
   "deepseek_ui_candidate_observation_ref": "evidence/deepseek-ui-candidate-observation-2026-09-03.json",
   "deepseek_ui_candidate_observation_state": "APP_AND_CANDIDATE_OBSERVED_MODEL_IDENTITY_UNOBSERVED_COST_INSUFFICIENT",
   "deepseek_model_identity_state": "UNOBSERVED_IN_SUPPLIED_UI",
-  "deepseek_request_bound_cost_state": "PENDING_ADMISSIBLE_NUMERIC_BEFORE_AFTER_USAGE_SURFACE"
+  "deepseek_request_bound_cost_state": "PENDING_ADMISSIBLE_NUMERIC_BEFORE_AFTER_USAGE_SURFACE",
+  "glm_hosted_ui_candidate_observation_ref": "evidence/glm-hosted-ui-candidate-observation-2026-09-03.json",
+  "glm_hosted_ui_candidate_observation_state": "MODEL_AND_CANDIDATE_OBSERVED_COST_INSUFFICIENT",
+  "glm_hosted_request_bound_cost_state": "PENDING_ADMISSIBLE_NUMERIC_BEFORE_AFTER_USAGE_SURFACE"
 }
