@@ -1,0 +1,92 @@
+{
+  "schema": "stegverse.provider-ui-candidate-observation/v1",
+  "experiment_id": "SV-COST-ELEVEN-LANE-RESULTS-001",
+  "task_id": "SV-RECON-001",
+  "provider": "openai",
+  "model_ui_observed": "5.6 Sol",
+  "normalized_model": "gpt-5.6-sol",
+  "observed_at_local": "2026-09-03T07:12:00-05:00",
+  "source": "USER_SUPPLIED_CHATGPT_IOS_SCREENSHOTS_AND_EXACT_TEXT_OUTPUT",
+  "screenshot_evidence": [
+    {
+      "file_label": "IMG_1871.png",
+      "sha256": "4504ae82e253551e5989124d758c4fbe6c3504e7097aea753ee23b2c0940a16d",
+      "observed_surface": "ChatGPT iOS General settings",
+      "observed_facts": [
+        "Model field displays 5.6 Sol"
+      ],
+      "cost_or_usage_surface": false
+    },
+    {
+      "file_label": "IMG_1872.png",
+      "sha256": "88d9463216a5ac652571f731995f3797340c3985983f2691a0aed7910cb21028",
+      "observed_surface": "ChatGPT iOS new chat composer",
+      "observed_facts": [
+        "Fresh chat composer visible"
+      ],
+      "cost_or_usage_surface": false
+    }
+  ],
+  "candidate_output": {
+    "task_id": "SV-RECON-001",
+    "final_state": {
+      "balance": 75,
+      "risk_score": 3,
+      "standing": "active"
+    },
+    "decisions": [
+      {
+        "event_id": "E01",
+        "status": "ALLOW",
+        "reason": "Credit increases balance from 100 to 125."
+      },
+      {
+        "event_id": "E02",
+        "status": "ALLOW",
+        "reason": "Standing is active and resulting balance is 85, not below minimum_balance."
+      },
+      {
+        "event_id": "E03",
+        "status": "ALLOW",
+        "reason": "Resulting risk_score is 3, not above maximum_risk_score."
+      },
+      {
+        "event_id": "E04",
+        "status": "DENY",
+        "reason": "Resulting balance would be -15, below minimum_balance; state not mutated."
+      },
+      {
+        "event_id": "E05",
+        "status": "DENY",
+        "reason": "Resulting risk_score would be 6, above maximum_risk_score; state not mutated."
+      },
+      {
+        "event_id": "E06",
+        "status": "ALLOW",
+        "reason": "Standing is active and resulting balance is 75, not below minimum_balance."
+      }
+    ],
+    "applied_count": 4,
+    "denied_count": 2,
+    "claim_boundary": "DETERMINISTIC_RECONSTRUCTION_ONLY"
+  },
+  "semantic_validation": {
+    "final_state_matches": true,
+    "decision_sequence_matches": true,
+    "counts_match": true,
+    "claim_boundary_matches": true,
+    "candidate_semantics": "PASS"
+  },
+  "cost_evidence": {
+    "state": "INSUFFICIENT_NO_BEFORE_AFTER_USAGE_SURFACE",
+    "request_bound_cost_usd": null,
+    "before_usage_observation": null,
+    "after_usage_observation": null,
+    "reason": "Submitted screenshots establish model/context evidence but do not expose an admissible cost, usage, token, credit-spend, or quota counter before and after the isolated candidate."
+  },
+  "provider_api_key_transferred_to_stegverse": false,
+  "non_tv_tvc_secret_or_token_used": false,
+  "authority_effect": "NONE_EVIDENCE_ONLY",
+  "publication_effect": false,
+  "claim_boundary": "PROVIDER_UI_MODEL_AND_CANDIDATE_OBSERVATION_ONLY"
+}

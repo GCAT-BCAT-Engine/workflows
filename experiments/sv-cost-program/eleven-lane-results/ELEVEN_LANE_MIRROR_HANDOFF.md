@@ -502,3 +502,31 @@ handoff semantics: 33704619401 SUCCESS
 continuity provenance: 33704619417 SUCCESS
 eleven-lane candidate proof: 33704619393 SUCCESS
 ```
+
+
+## OpenAI 5.6 Sol UI candidate observation — 2026-09-03
+
+Issue: #48
+
+User-supplied iOS evidence now records:
+- ChatGPT General settings UI displaying model `5.6 Sol`;
+- a fresh ChatGPT composer surface;
+- an exact `SV-RECON-001` JSON result with final state `balance=75`, `risk_score=3`, `standing=active`;
+- decision sequence `ALLOW, ALLOW, ALLOW, DENY, DENY, ALLOW`;
+- applied/denied counts `4/2`;
+- `DETERMINISTIC_RECONSTRUCTION_ONLY` claim boundary.
+
+Evidence file:
+`evidence/openai-ui-candidate-observation-2026-09-03.json`
+
+The two submitted screenshots are bound by SHA-256:
+- `4504ae82e253551e5989124d758c4fbe6c3504e7097aea753ee23b2c0940a16d`
+- `88d9463216a5ac652571f731995f3797340c3985983f2691a0aed7910cb21028`
+
+This evidence is sufficient for model/candidate observation only. Neither screenshot exposes an admissible before/after usage, dollar-cost, token, credit-spend, or quota counter. Therefore OpenAI request-bound cost remains:
+
+```text
+INSUFFICIENT_NO_BEFORE_AFTER_USAGE_SURFACE
+```
+
+No cost is inferred from ChatGPT Plus access, model selection, or the candidate result itself.
