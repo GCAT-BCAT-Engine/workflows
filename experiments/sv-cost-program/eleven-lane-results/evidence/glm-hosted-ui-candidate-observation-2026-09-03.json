@@ -1,0 +1,84 @@
+{
+  "schema": "stegverse.provider-ui-candidate-observation/v1",
+  "experiment_id": "SV-COST-ELEVEN-LANE-RESULTS-001",
+  "task_id": "SV-RECON-001",
+  "provider": "zai",
+  "model_ui_observed": "GLM-5.3-Flash",
+  "normalized_model": "GLM-5.3-Flash",
+  "observed_at_local": "2026-09-03T07:51:00-05:00",
+  "source": "USER_SUPPLIED_ZAI_MOBILE_WEB_SCREENSHOT_AND_EXACT_TEXT_OUTPUT",
+  "screenshot_evidence": [
+    {
+      "file_label": "IMG_1875.png",
+      "sha256": "fd7639d4a7b0f8ea93ebc1ba49b6a1abd48dbbbe760fd27b27d516cb7241dba2",
+      "observed_surface": "Z.ai mobile web hosted chat",
+      "observed_facts": [
+        "Model header displays GLM-5.3-Flash",
+        "SV-RECON-001 prompt is visible in the hosted chat surface"
+      ],
+      "numeric_cost_or_usage_surface": false
+    }
+  ],
+  "candidate_output": {
+    "task_id": "SV-RECON-001",
+    "final_state": {
+      "balance": 75,
+      "risk_score": 3,
+      "standing": "active"
+    },
+    "decisions": [
+      {
+        "event_id": "E01",
+        "status": "ALLOW",
+        "reason": "Credit increases balance"
+      },
+      {
+        "event_id": "E02",
+        "status": "ALLOW",
+        "reason": "Standing active and resulting balance 85 >= minimum_balance 0"
+      },
+      {
+        "event_id": "E03",
+        "status": "ALLOW",
+        "reason": "Resulting risk_score 3 <= maximum_risk_score 5"
+      },
+      {
+        "event_id": "E04",
+        "status": "DENY",
+        "reason": "Resulting balance -15 below minimum_balance 0"
+      },
+      {
+        "event_id": "E05",
+        "status": "DENY",
+        "reason": "Resulting risk_score 6 above maximum_risk_score 5"
+      },
+      {
+        "event_id": "E06",
+        "status": "ALLOW",
+        "reason": "Standing active and resulting balance 75 >= minimum_balance 0"
+      }
+    ],
+    "applied_count": 4,
+    "denied_count": 2,
+    "claim_boundary": "DETERMINISTIC_RECONSTRUCTION_ONLY"
+  },
+  "semantic_validation": {
+    "final_state_matches": true,
+    "decision_sequence_matches": true,
+    "counts_match": true,
+    "claim_boundary_matches": true,
+    "candidate_semantics": "PASS"
+  },
+  "cost_evidence": {
+    "state": "INSUFFICIENT_NO_NUMERIC_BEFORE_AFTER_USAGE_SURFACE",
+    "request_bound_cost_usd": null,
+    "before_usage_observation": null,
+    "after_usage_observation": null,
+    "reason": "Submitted hosted UI screenshot and exact output establish model/candidate evidence but expose no admissible numeric before/after request-cost, token, credit-spend, quota, or usage counter."
+  },
+  "provider_api_key_transferred_to_stegverse": false,
+  "non_tv_tvc_secret_or_token_used": false,
+  "authority_effect": "NONE_EVIDENCE_ONLY",
+  "publication_effect": false,
+  "claim_boundary": "PROVIDER_UI_MODEL_AND_CANDIDATE_OBSERVATION_ONLY"
+}
