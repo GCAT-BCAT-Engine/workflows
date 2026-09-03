@@ -14,7 +14,7 @@
   "glm_sovereign_state": "RESIDENT_BRIDGE_MERGED_INTAKE_SOURCE_READY_AUTHENTIC_EXECUTION_PENDING",
   "machine_runner": ".github/workflows/sv-cost-eleven-lane-candidate-proof.yml",
   "publication_state": "BLOCKED_PENDING_GLM_EVIDENCE_AND_INCOMPLETE_PROVIDER_COST_EVIDENCE",
-  "next_action": "OpenAI, Anthropic, and hosted GLM model/candidate observations are recorded. Their request-bound costs still require admissible numeric before/after provider usage/cost/token/quota observations around exactly one SV-RECON-001 request. DeepSeek cost observation remains pending. Lane 11 remains machine-owned pending authentic private GLM runtime evidence.",
+  "next_action": "All four canonical hosted/provider UI candidate observations are recorded. Complete the second research objective's actual-cost disclosure-burden protocol for OpenAI, Anthropic, DeepSeek, and hosted GLM while separately obtaining authentic lane-11 sovereign GLM runtime/infrastructure evidence. Request-bound provider costs remain unresolved until exact attributable cost or sufficient reconstructable usage evidence is observed.",
   "merge_commit": "a66b8dbc6a2d319ecef66834f7babf7b5a586100",
   "handoff_update_commit": "e37e87ab72184435ed22d7e3576a699132b62d8c",
   "behavioral_lanes_evidence_ready": 10,
@@ -78,5 +78,7 @@
   "glm_hosted_request_bound_cost_state": "PENDING_ADMISSIBLE_NUMERIC_BEFORE_AFTER_USAGE_SURFACE",
   "perplexity_ui_candidate_observation_ref": "evidence/perplexity-ui-candidate-observation-2026-09-03.json",
   "perplexity_ui_candidate_observation_state": "SUPPLEMENTAL_CANDIDATE_OBSERVED_MODEL_IDENTITY_UNOBSERVED_COST_NOT_OBSERVED",
-  "perplexity_canonical_lane_effect": "NONE_SUPPLEMENTAL_EXPLORATORY_ONLY"
+  "perplexity_canonical_lane_effect": "NONE_SUPPLEMENTAL_EXPLORATORY_ONLY",
+  "cost_transparency_research_objective": "experiments/sv-cost-program/cost-transparency/COST_TRANSPARENCY_MIRROR_HANDOFF.md",
+  "cost_transparency_research_state": "RESEARCH_OBJECTIVE_IMPLEMENTED_PROVIDER_PROTOCOL_PENDING"
 }
