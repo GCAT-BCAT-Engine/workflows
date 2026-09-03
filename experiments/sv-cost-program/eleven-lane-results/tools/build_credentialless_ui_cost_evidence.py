@@ -62,6 +62,35 @@ def exact_usage_cost(rate: Mapping[str,Any], before: Mapping[str,Any], after: Ma
     return round(cost,12),{"input_tokens":di,"output_tokens":do,"cached_input_tokens":dc}
 
 
+EXPECTED_STATE={"balance":75,"risk_score":3,"standing":"active"}
+EXPECTED_SEQUENCE=[
+    ("E01","ALLOW"),("E02","ALLOW"),("E03","ALLOW"),
+    ("E04","DENY"),("E05","DENY"),("E06","ALLOW"),
+]
+
+
+def validate_candidate(candidate: Any) -> None:
+    if not isinstance(candidate,Mapping):
+        raise ValueError("candidate_output must be a JSON object")
+    if candidate.get("task_id")!="SV-RECON-001":
+        raise ValueError("candidate_output task_id mismatch")
+    if candidate.get("final_state")!=EXPECTED_STATE:
+        raise ValueError("candidate_output final_state mismatch")
+    decisions=candidate.get("decisions")
+    if not isinstance(decisions,list):
+        raise ValueError("candidate_output decisions missing")
+    sequence=[
+        (item.get("event_id"),str(item.get("status") or "").upper())
+        for item in decisions if isinstance(item,Mapping)
+    ]
+    if sequence!=EXPECTED_SEQUENCE:
+        raise ValueError("candidate_output decision sequence mismatch")
+    if candidate.get("applied_count")!=4 or candidate.get("denied_count")!=2:
+        raise ValueError("candidate_output counts mismatch")
+    if candidate.get("claim_boundary")!="DETERMINISTIC_RECONSTRUCTION_ONLY":
+        raise ValueError("candidate_output claim boundary mismatch")
+
+
 def build(obs: dict) -> dict:
     reject_protected(obs)
     if obs.get("schema")!="stegverse.credentialless-ui-cost-observation/v1":
@@ -76,6 +105,8 @@ def build(obs: dict) -> dict:
         raise ValueError("task_id must be SV-RECON-001")
     if obs.get("isolated_single_candidate_window") is not True:
         raise ValueError("observation window must isolate exactly one candidate")
+    candidate_output=obs.get("candidate_output")
+    validate_candidate(candidate_output)
     candidate_ref=obs.get("candidate_ref")
     if not isinstance(candidate_ref,str) or not candidate_ref:
         raise ValueError("candidate_ref is required")
@@ -151,6 +182,7 @@ def build(obs: dict) -> dict:
             "observation_mode":mode,
             "isolated_single_candidate_window":True,
             "source_observation":obs.get("source_observation"),
+            "candidate_output":candidate_output,
             "credentialless":True,
         }
     }
