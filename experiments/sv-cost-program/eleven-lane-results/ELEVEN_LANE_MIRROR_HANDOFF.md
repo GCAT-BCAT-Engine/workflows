@@ -557,3 +557,35 @@ INSUFFICIENT_NO_NUMERIC_BEFORE_AFTER_USAGE_SURFACE
 ```
 
 No dollar cost or quota allocation is inferred from the qualitative warning.
+
+
+## DeepSeek iOS candidate observation — 2026-09-03
+
+Issue: #52
+
+User-supplied DeepSeek iOS evidence now records:
+- app Settings surface with version `2.4.4(3)`;
+- an exact `SV-RECON-001` JSON result with final state `balance=75`, `risk_score=3`, `standing=active`;
+- decision sequence `ALLOW, ALLOW, ALLOW, DENY, DENY, ALLOW`;
+- applied/denied counts `4/2`;
+- `DETERMINISTIC_RECONSTRUCTION_ONLY` claim boundary.
+
+Evidence file:
+`evidence/deepseek-ui-candidate-observation-2026-09-03.json`
+
+Submitted screenshot SHA-256:
+`e8ca58c92f3782cdd7261b096987f01564f96dbebdfd971e59e2c5bcfa70f96c`
+
+The supplied Settings screen does not expose exact model identity, so no V4 Flash/Pro model claim is made from this evidence. Exact model identity remains:
+
+```text
+UNOBSERVED_IN_SUPPLIED_UI
+```
+
+The same screen exposes no numeric before/after usage, token, credit-spend, quota, or dollar-cost counter. Therefore DeepSeek request-bound cost remains:
+
+```text
+INSUFFICIENT_NO_NUMERIC_BEFORE_AFTER_USAGE_SURFACE
+```
+
+No model or cost value is inferred from the app version or candidate semantics.
