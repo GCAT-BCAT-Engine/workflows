@@ -182,6 +182,10 @@ def build(obs: dict) -> dict:
             "observation_mode":mode,
             "isolated_single_candidate_window":True,
             "source_observation":obs.get("source_observation"),
+            "before":dict(before),
+            "after":dict(after),
+            "subscription_monthly_equivalent_usd":obs.get("subscription_monthly_equivalent_usd"),
+            "rate_key":obs.get("rate_key"),
             "candidate_output":candidate_output,
             "credentialless":True,
         }

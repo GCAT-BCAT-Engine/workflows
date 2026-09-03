@@ -121,8 +121,36 @@
         },
         "candidate_output": {
           "type": "object"
+        },
+        "before": {
+          "type": "object"
+        },
+        "after": {
+          "type": "object"
+        },
+        "subscription_monthly_equivalent_usd": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "rate_key": {
+          "type": [
+            "string",
+            "null"
+          ]
         }
-      }
+      },
+      "required": [
+        "source_schema",
+        "observation_mode",
+        "isolated_single_candidate_window",
+        "before",
+        "after",
+        "candidate_output",
+        "credentialless"
+      ]
     }
   }
 }

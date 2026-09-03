@@ -14,7 +14,7 @@
   "glm_sovereign_state": "RESIDENT_BRIDGE_MERGED_INTAKE_SOURCE_READY_AUTHENTIC_EXECUTION_PENDING",
   "machine_runner": ".github/workflows/sv-cost-eleven-lane-candidate-proof.yml",
   "publication_state": "BLOCKED_PENDING_GLM_EVIDENCE_AND_INCOMPLETE_PROVIDER_COST_EVIDENCE",
-  "next_action": "Remaining hosted-provider cost blockers require authentic credentialless isolated before/after observations carrying the exact provider candidate output. Lane 11 remains machine-owned pending authentic private GLM runtime evidence.",
+  "next_action": "Validate and merge reconstructable credentialless UI cost provenance. After merge, hosted-provider cost blockers require only authentic isolated before/after observations with exact candidate output; API-key provisioning is not required.",
   "merge_commit": "a66b8dbc6a2d319ecef66834f7babf7b5a586100",
   "handoff_update_commit": "e37e87ab72184435ed22d7e3576a699132b62d8c",
   "behavioral_lanes_evidence_ready": 10,
@@ -58,5 +58,7 @@
   "credentialless_ui_candidate_binding_issue": 37,
   "credentialless_ui_candidate_binding_state": "MERGED_VALIDATED",
   "credentialless_ui_candidate_binding_merge": "444bba037fa0f770a1317be93e64818b15f7dde8",
-  "credentialless_ui_candidate_binding_validation_run": 33699713884
+  "credentialless_ui_candidate_binding_validation_run": 33699713884,
+  "credentialless_ui_reconstructable_provenance_issue": 42,
+  "credentialless_ui_reconstructable_provenance_state": "SOURCE_IMPLEMENTED_VALIDATION_PENDING"
 }

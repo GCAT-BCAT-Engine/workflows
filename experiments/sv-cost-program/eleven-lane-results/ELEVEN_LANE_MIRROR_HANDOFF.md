@@ -477,3 +477,14 @@ eleven-lane candidate proof: 33699713884 SUCCESS
 ```
 
 Credentialless cost observations are now bound to the exact provider candidate output as well as the isolated before/after provider UI window.
+
+
+## Reconstructable credentialless UI cost provenance — 2026-09-02
+
+Issue: #42
+
+The emitted request-bound cost packet now preserves the exact `before` and `after` provider observation objects used for the calculation, plus the applicable subscription monthly-equivalent amount and/or bound rate key. It already preserved the exact provider candidate output and observation mode.
+
+This makes the derived dollar cost reconstructable from the emitted evidence packet itself rather than depending on an unstored transient input file.
+
+No cost value is inferred beyond the already-validated observation mode.

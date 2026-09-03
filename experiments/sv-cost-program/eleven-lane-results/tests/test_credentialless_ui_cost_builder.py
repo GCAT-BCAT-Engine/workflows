@@ -67,6 +67,10 @@ class CredentiallessUiCostBuilderTests(unittest.TestCase):
         self.assertEqual(out["basis"],"PROVIDER_UI_SUBSCRIPTION_QUOTA_ALLOCATED_EFFECTIVE_COST")
         self.assertEqual(out["cost_usd"],0.006249833333)
         self.assertTrue(out["observation_provenance"]["credentialless"])
+        self.assertEqual(out["observation_provenance"]["before"],{"quota_percent_used":10.0})
+        self.assertEqual(out["observation_provenance"]["after"],{"quota_percent_used":10.02})
+        self.assertEqual(out["observation_provenance"]["subscription_monthly_equivalent_usd"],31.249166666667)
+        self.assertIsNone(out["observation_provenance"]["rate_key"])
 
     def test_usage_credit_delta_is_direct_request_cost(self):
         x=base("anthropic","claude-opus-5","USAGE_CREDIT_SPENT_USD")
@@ -95,6 +99,9 @@ class CredentiallessUiCostBuilderTests(unittest.TestCase):
         self.assertEqual(out["basis"],"EXACT_USAGE_PLUS_BOUND_VERSIONED_RATE_CARD")
         self.assertEqual(out["provider_usage"],{"input_tokens":1000,"output_tokens":200,"cached_input_tokens":100})
         self.assertEqual(out["cost_usd"],0.00764)
+        self.assertEqual(out["observation_provenance"]["rate_key"],"openai:gpt-5.6-sol")
+        self.assertEqual(out["observation_provenance"]["before"]["input_tokens"],10000)
+        self.assertEqual(out["observation_provenance"]["after"]["output_tokens"],5200)
 
     def test_semantic_candidate_mismatch_is_rejected(self):
         x=base()
