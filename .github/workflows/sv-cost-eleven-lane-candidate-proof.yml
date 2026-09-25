@@ -8,10 +8,12 @@ on:
       - feat/sv-cost-glm-acquisition-tools
     paths:
       - 'experiments/sv-cost-program/eleven-lane-results/**'
+      - 'experiments/sv-cost-program/held-out-routing/**'
       - '.github/workflows/sv-cost-eleven-lane-candidate-proof.yml'
   pull_request:
     paths:
       - 'experiments/sv-cost-program/eleven-lane-results/**'
+      - 'experiments/sv-cost-program/held-out-routing/**'
       - '.github/workflows/sv-cost-eleven-lane-candidate-proof.yml'
   workflow_dispatch:
 
@@ -45,6 +47,10 @@ jobs:
       - name: Validate credentialless UI cost capture
         run: |
           python experiments/sv-cost-program/eleven-lane-results/tests/test_credentialless_ui_cost_builder.py -q
+
+      - name: Validate held-out routing proposal (source only; no runtime authority)
+        run: |
+          python -m unittest discover -s experiments/sv-cost-program/held-out-routing/tests -p 'test_*.py' -v
 
       - name: Execute eleven-lane harness
         run: |
