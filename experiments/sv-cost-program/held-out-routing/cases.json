@@ -1,0 +1,78 @@
+{
+  "schema": "stegverse.sv-cost-held-out-cases/v1",
+  "claim_boundary": "SOURCE_ONLY_ORACLE_NOT_ROUTER_INPUT",
+  "cases": [
+    {
+      "id": "H01",
+      "family": "RECONSTRUCTABLE",
+      "router_input": {
+        "task_id": "SV-HOLDOUT-001",
+        "manifest_intent": "recover committed successor state",
+        "available_evidence": [
+          "predecessor_hash",
+          "complete_ordered_events",
+          "exact_policy_version"
+        ],
+        "new_facts_required": false
+      },
+      "oracle": {
+        "permitted_route": "RECONSTRUCT",
+        "required_disposition": "ALLOW",
+        "needs_predecessor": true
+      }
+    },
+    {
+      "id": "H02",
+      "family": "FRESH_INFERENCE",
+      "router_input": {
+        "task_id": "SV-HOLDOUT-002",
+        "manifest_intent": "evaluate a previously unobserved source document and form a new evidence-grounded result",
+        "available_evidence": [
+          "unprocessed_external_document_commitment"
+        ],
+        "new_facts_required": true
+      },
+      "oracle": {
+        "permitted_route": "FRESH_INFERENCE",
+        "required_disposition": "ALLOW",
+        "needs_predecessor": false
+      }
+    },
+    {
+      "id": "H03",
+      "family": "INSUFFICIENT_EVIDENCE",
+      "router_input": {
+        "task_id": "SV-HOLDOUT-003",
+        "manifest_intent": "reconstruct a committed state",
+        "available_evidence": [
+          "event_log_without_required_predecessor_receipt"
+        ],
+        "new_facts_required": false
+      },
+      "oracle": {
+        "permitted_route": "NO_EXECUTION",
+        "required_disposition": "DENY",
+        "reason_code": "MISSING_PREDECESSOR_RECEIPT",
+        "needs_predecessor": true
+      }
+    },
+    {
+      "id": "H04",
+      "family": "MIXED",
+      "router_input": {
+        "task_id": "SV-HOLDOUT-004",
+        "manifest_intent": "reconstruct known prefix and evaluate new evidence for unresolved suffix",
+        "available_evidence": [
+          "complete_known_prefix_with_predecessor",
+          "unprocessed_suffix_commitment"
+        ],
+        "new_facts_required": true
+      },
+      "oracle": {
+        "permitted_route": "RECONSTRUCT_THEN_FRESH_INFERENCE",
+        "required_disposition": "ALLOW",
+        "needs_predecessor": true
+      }
+    }
+  ]
+}
