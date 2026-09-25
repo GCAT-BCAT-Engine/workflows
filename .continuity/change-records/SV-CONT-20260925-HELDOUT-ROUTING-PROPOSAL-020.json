@@ -8,6 +8,12 @@
   "change_id": "SV-CONT-20260925-HELDOUT-ROUTING-PROPOSAL-020",
   "changed_paths": [
     {
+      "path": ".continuity/change-records/SV-CONT-20260903-PROVIDER-HISTORICAL-SOURCE-AUDIT-019.json",
+      "change_type": "added",
+      "hash_algorithm": "git-blob-sha1",
+      "hash": "60e66db58cb96df31993bb377556dda570a97a3b"
+    },
+    {
       "change_type": "modified",
       "hash": "e7013948d73bbd6671ddbc076e2eece09f0c78ee",
       "hash_algorithm": "git-blob-sha1",
@@ -72,7 +78,7 @@
     "hash_algorithm": "git-blob-sha1",
     "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
   },
-  "record_hash": "e337a55af0c8ba845d27a925e34df8c8c1a66e25ab6c0a0269dd41e6d0c3f9ac",
+  "record_hash": "1bc18ffdec623f2c3fd02a1af33e6878c0dd0bd1943d2641dab8a6f2b0687b8f",
   "repository": "GCAT-BCAT-Engine/workflows",
   "schema": "stegverse.session.change_record.v1",
   "unresolved_tasks": [
