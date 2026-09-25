@@ -14,6 +14,7 @@
     "docs/TVC_PROVIDER_CAPABILITY_CONSUMER_MIRROR_HANDOFF.md",
     "docs/WORKFLOWS_SECURITY_MIRROR_HANDOFF.md",
     "experiments/stegverse-test-lanes/TEST_LANES_MIRROR_HANDOFF.md",
+    "experiments/sv-cost-program/cost-transparency/COST_TRANSPARENCY_MIRROR_HANDOFF.md",
     "experiments/sv-cost-program/eleven-lane-results/ELEVEN_LANE_MIRROR_HANDOFF.md",
     "experiments/sv-cost-program/generation-3-control/GENERATION_3_CONTROL_MIRROR_HANDOFF.md",
     "experiments/sv-cost-program/governed-ai-premium/SV_GOVERNED_AI_PREMIUM_MIRROR_HANDOFF.md",
