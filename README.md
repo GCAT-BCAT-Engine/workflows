@@ -134,6 +134,10 @@ Navigate to **Actions → Validation Run → Run workflow** and select the probl
 
 ---
 
+## Held-out SV-COST execution-path research (draft, not admitted)
+
+The [held-out routing proposal](experiments/sv-cost-program/held-out-routing/README.md) contains a source-only oracle and offline evaluator for distinguishing deterministic state reconstruction, new inference, evidence-incomplete non-ALLOW, and mixed tasks. Its [proposed handoff](experiments/sv-cost-program/held-out-routing/EXECUTION_PATH_ROUTING_MIRROR_HANDOFF.md) is declared as a scoped handoff, not a second repository authority source. This draft is gated by [canonical Registry admission](https://github.com/StegVerse-Labs/.github/issues/2722); no COSV, production route, authentic runtime proof, request-bound cost or release is claimed. It reuses the frozen nine-/eleven-lane evidence and existing SDK/InTr/StegBrowser/LLM Adapter/sovereign runtime owners rather than expanding production responsibilities of this validation repository.
+
 ## License
 
 See [LICENSE](LICENSE) in the org-level `.github` repository.
