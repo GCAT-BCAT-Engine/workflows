@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
 
 VALID_DISPOSITIONS = {"ALLOW", "DENY", "FAIL_CLOSED", "REVIEW_REQUIRED", "QUARANTINE"}
@@ -17,6 +18,10 @@ def adjudicate(case: dict, observation: dict) -> dict:
     expected = case["oracle"]
     task = case["router_input"]["task_id"]
     errors: list[str] = []
+    # The independent oracle is evaluator-only; it may never be echoed by
+    # the routed system or smuggled into a purported runtime observation.
+    if "oracle" in observation or "expected_final_result" in observation:
+        errors.append("HELD_OUT_ORACLE_LEAKAGE")
     if observation.get("task_id") != task:
         errors.append("TASK_ID_MISMATCH")
     if observation.get("route") != expected["permitted_route"]:
@@ -39,7 +44,7 @@ def adjudicate(case: dict, observation: dict) -> dict:
     if not observation.get("manifest_sha256") or not observation.get("route_decision_receipt_id"):
         errors.append("MISSING_MANIFEST_OR_DECISION_RECEIPT")
     elapsed = observation.get("route_decision_elapsed_seconds")
-    if not isinstance(elapsed, (int, float)) or isinstance(elapsed, bool) or elapsed < 0:
+    if not isinstance(elapsed, (int, float)) or isinstance(elapsed, bool) or not math.isfinite(elapsed) or elapsed < 0:
         errors.append("MISSING_OR_INVALID_ROUTE_DECISION_LATENCY")
     cost = observation.get("full_lifecycle_cost")
     if cost is None:
@@ -48,8 +53,12 @@ def adjudicate(case: dict, observation: dict) -> dict:
         errors.append("INVALID_COST_STATUS")
     elif cost["status"] == "UNKNOWN" and cost.get("total_usd") is not None:
         errors.append("UNKNOWN_COST_MUST_NOT_BE_ZERO_OR_NUMERIC")
+    elif cost["status"] == "PARTIAL" and cost.get("total_usd") is not None:
+        errors.append("PARTIAL_COST_MUST_NOT_CLAIM_FULL_TOTAL")
     elif cost["status"] == "OBSERVED_COMPLETE":
-        if not isinstance(cost.get("total_usd"), (int, float)) or cost["total_usd"] < 0:
+        total = cost.get("total_usd")
+        if (not isinstance(total, (int, float)) or isinstance(total, bool)
+                or not math.isfinite(total) or total < 0):
             errors.append("COMPLETE_COST_REQUIRES_NONNEGATIVE_MEASUREMENT")
         if not cost.get("basis_refs"):
             errors.append("COMPLETE_COST_MISSING_PROVENANCE")
