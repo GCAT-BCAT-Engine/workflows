@@ -1,0 +1,83 @@
+{
+  "actor": {
+    "class": "chatgpt",
+    "instance": "GPT-5.6 Sol",
+    "session_ref": "heldout-routing-proposal-2026-09-25"
+  },
+  "base_commit": "5b4bd9fd47160af8cd98e88f938ea666397269b7",
+  "change_id": "SV-CONT-20260925-HELDOUT-ROUTING-PROPOSAL-020",
+  "changed_paths": [
+    {
+      "change_type": "modified",
+      "hash": "e7013948d73bbd6671ddbc076e2eece09f0c78ee",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/config.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "966ec3feaa0365b491fc317a3284b8690a1bf680",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".github/workflows/provider-secret-boundary-validation.yml"
+    },
+    {
+      "change_type": "modified",
+      "hash": "911c7d22058b9debf498d501b36b3b9d7d23bcbc",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".handoff/current.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "8e5ebf29477fbce0a09dd9be3778fb6203c64916",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "README.md"
+    },
+    {
+      "change_type": "modified",
+      "hash": "04c60db12245d5922b1f4a9af2d35dc9a7658d22",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/WORKFLOWS_SECURITY_MIRROR_HANDOFF.md"
+    },
+    {
+      "change_type": "added",
+      "hash": "dcea08dc02c27d42e6135297577fda7a21bcd0c2",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "security/provider-secret-historical-source-audit.v1.json"
+    },
+    {
+      "change_type": "added",
+      "hash": "960d79a9d626cef06bb5e4bc88a4501cc058c11c",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "tests/test_provider_secret_historical_source_audit.py"
+    },
+    {
+      "change_type": "added",
+      "hash": "b0fda7dad535bb7a971d15f74c2a3d4ec99eaeb1",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "tools/validate_provider_secret_historical_source_audit.py"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "Existing historical provider-secret audit changes and its original change record preserved; proposed held-out research is source-only on unmerged draft PR #61.",
+      "state": "SOURCE_ONLY_DRAFT_NOT_ADMITTED"
+    },
+    {
+      "claim": "Central Registry admission issue StegVerse-Labs/.github#2722 is a proposal and no COSV or authentic live route execution is claimed.",
+      "state": "UNRESOLVED"
+    }
+  ],
+  "created_at": "2026-09-25T12:43:00-05:00",
+  "governing_handoff": {
+    "hash": "9a6ebc5e5331fe79c2aa7551279ddb285868cf69",
+    "hash_algorithm": "git-blob-sha1",
+    "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+  },
+  "record_hash": "e337a55af0c8ba845d27a925e34df8c8c1a66e25ab6c0a0269dd41e6d0c3f9ac",
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "schema": "stegverse.session.change_record.v1",
+  "unresolved_tasks": [
+    "canonical Task Registry collision/gate disposition and COSV for routing experiment",
+    "actual GLM sovereign lane-11 evidence and authentic request-bound provider costs",
+    "exact-head CI and offline fixture test results"
+  ]
+}
