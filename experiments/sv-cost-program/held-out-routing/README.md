@@ -16,3 +16,7 @@ python experiments/sv-cost-program/held-out-routing/evaluate.py --help
 When admitted, the already-owned SDK manifest should declare `processing.capability` and `processing.route_id`, match `extensions.stegverse_route.route_id`, and use existing WorkerCoordinator / InTr / StegBrowser / LLM Adapter paths. Preserve authentic route, timing, custody and cost packets separately. Historical consumer UI surfaces without request-bound billing should remain exhausted, not become mandatory manual collection.
 
 **Publication gate:** source-only adjudication is never actual routing. Authentic samples need exact manifest, routed processor, admissibility disposition, original predecessor-linked receipt, same-execution Master Records reconstruction and comparable request-bound full lifecycle costs. Missing cost stays UNKNOWN.
+
+## Source validation evidence
+
+The source-only evaluator's six focused tests passed on byte-identical checked source locally and in [the existing eleven-lane candidate-proof workflow run](https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/36182218098) at proposal head `942b52b4344e3991c275ea510dc922515554e443`. Four negative-path tests and the four frozen case oracles are covered; tests do not prove that the runtime selected a route. Canonical admission remains [central issue #2722](https://github.com/StegVerse-Labs/.github/issues/2722), pending authenticated AI-session gate and authorized COSV derivation.
