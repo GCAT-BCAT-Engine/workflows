@@ -20,3 +20,7 @@ When admitted, the already-owned SDK manifest should declare `processing.capabil
 ## Source validation evidence
 
 The source-only evaluator's six focused tests passed on byte-identical checked source locally and in [the existing eleven-lane candidate-proof workflow run](https://github.com/GCAT-BCAT-Engine/workflows/actions/runs/36182218098) at proposal head `942b52b4344e3991c275ea510dc922515554e443`. Four negative-path tests and the four frozen case oracles are covered; tests do not prove that the runtime selected a route. Canonical admission remains [central issue #2722](https://github.com/StegVerse-Labs/.github/issues/2722), pending authenticated AI-session gate and authorized COSV derivation.
+
+## Required SDK manifest gate
+
+No `cases.json` row is an SDK test/demo. The four rows are hidden-oracle research designs for the offline adjudicator. **Every actual SDK test or demonstration must start with a validated canonical SDK manifest.** See [the SDK applicability review](SDK_MANIFEST_FIRST_CAPABILITY_REVIEW.md) and native SDK review [#332](https://github.com/StegVerse-org/StegVerse-SDK/issues/332). An installed manifest-bound generic evidence-sensitive reconstruction/new-inference selector is not established in inspected SDK source; this work is a source-only proposal until the existing SDK owner approves an existing composition or general SDK extension and central Registry admission succeeds. Do not route a provider call directly from this harness or classify offline fixture proof as a manifested SDK demonstration.
