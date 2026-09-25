@@ -68,6 +68,41 @@ class SourceOnlyAdjudication(unittest.TestCase):
         obs["retry_authorized"] = True
         self.assertIn("TERMINAL_FAIL_CLOSED_RETRY_FORBIDDEN", MODULE.adjudicate(case, obs)["errors"])
 
+    def test_oracle_must_not_enter_runtime_observation(self):
+        case = CASES[0]
+        obs = observation(case)
+        obs["oracle"] = case["oracle"]
+        self.assertIn("HELD_OUT_ORACLE_LEAKAGE", MODULE.adjudicate(case, obs)["errors"])
+
+    def test_nonfinite_latency_is_rejected(self):
+        case = CASES[0]
+        for invalid in (float("nan"), float("inf"), float("-inf")):
+            with self.subTest(invalid=invalid):
+                obs = observation(case)
+                obs["route_decision_elapsed_seconds"] = invalid
+                self.assertIn("MISSING_OR_INVALID_ROUTE_DECISION_LATENCY",
+                              MODULE.adjudicate(case, obs)["errors"])
+
+    def test_partial_cost_cannot_claim_complete_total(self):
+        case = CASES[0]
+        obs = observation(case)
+        obs["full_lifecycle_cost"] = {"status": "PARTIAL", "total_usd": 0.0}
+        self.assertIn("PARTIAL_COST_MUST_NOT_CLAIM_FULL_TOTAL",
+                      MODULE.adjudicate(case, obs)["errors"])
+
+    def test_complete_cost_requires_finite_measured_provenance(self):
+        case = CASES[0]
+        for invalid in (float("nan"), float("inf"), True):
+            with self.subTest(invalid=invalid):
+                obs = observation(case)
+                obs["full_lifecycle_cost"] = {
+                    "status": "OBSERVED_COMPLETE",
+                    "total_usd": invalid,
+                    "basis_refs": ["fixture-provenance-not-runtime"],
+                }
+                self.assertIn("COMPLETE_COST_REQUIRES_NONNEGATIVE_MEASUREMENT",
+                              MODULE.adjudicate(case, obs)["errors"])
+
 
 if __name__ == "__main__":
     unittest.main()
