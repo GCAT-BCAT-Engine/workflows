@@ -26,6 +26,12 @@
       "path": ".github/workflows/provider-secret-boundary-validation.yml"
     },
     {
+      "path": ".github/workflows/sv-cost-eleven-lane-candidate-proof.yml",
+      "change_type": "modified",
+      "hash_algorithm": "git-blob-sha1",
+      "hash": "4b04d2599bd084842f4f1fdcfd81276a1fe6a250"
+    },
+    {
       "change_type": "modified",
       "hash": "911c7d22058b9debf498d501b36b3b9d7d23bcbc",
       "hash_algorithm": "git-blob-sha1",
@@ -78,12 +84,12 @@
     "hash_algorithm": "git-blob-sha1",
     "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
   },
-  "record_hash": "1bc18ffdec623f2c3fd02a1af33e6878c0dd0bd1943d2641dab8a6f2b0687b8f",
+  "record_hash": "2fc5af7d98233dd5d0f7b51f6a215ed39bf2b0cd092b4c3fafa7a419f89670c1",
   "repository": "GCAT-BCAT-Engine/workflows",
   "schema": "stegverse.session.change_record.v1",
   "unresolved_tasks": [
     "canonical Task Registry collision/gate disposition and COSV for routing experiment",
     "actual GLM sovereign lane-11 evidence and authentic request-bound provider costs",
-    "exact-head CI and offline fixture test results"
+    "focused source tests passed locally on exact Git blob inputs; require exact-head hosted CI"
   ]
 }
