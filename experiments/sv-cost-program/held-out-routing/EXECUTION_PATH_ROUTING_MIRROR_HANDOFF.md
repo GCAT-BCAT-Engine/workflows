@@ -1,0 +1,58 @@
+# Held-out execution-path routing — proposed mirror handoff
+
+**State: SOURCE PROPOSAL ONLY — NOT CANONICALLY REGISTERED; NO LIVE ROUTING OR COST CLAIM.**  
+Proposed goal: `SV-COST-EXECUTION-PATH-ROUTING-001` (candidate only; Registry collision/owner admission required).  
+Proposed source owner: `GCAT-BCAT-Engine/workflows` existing SV-COST lineage/economics program (#12, closed historical umbrella).  
+Canonical coordination authority: `StegVerse-Labs/.github/data/canonical-task-registry.json`, read at generation **243** on 2026-09-25. No matching SV-COST routing task was found among its task records at that observation.  
+Proposed handoff: this file. COSV: **NOT ALLOCATED**. Do not invent one.  
+Required admission: existing anti-collision/exact-generation AI_SESSION_GATE and authorized Task Registry allocation; preserve WorkerCoordinator claims/fences, InTr transitions, TV/TVC secrets, Master Records reconstruction.
+
+## Purpose and precise experimental distinction
+
+Generation 2's frozen nine-lane local behavioral test passed 9/9; three request-bound provider cost bases remain unavailable. Generation 3's eleven-lane successor has 10/11 behavioral evidence; authentic GLM sovereign lane-11 execution and request-bound OpenAI, Anthropic, DeepSeek, hosted-GLM cost evidence remain outstanding. Preserve both experiments byte-for-byte. No downstream cost publication from source readiness.
+
+This **separate held-out experiment** evaluates a *manifest-selected execution-path decision* BEFORE a known reconstruction result or fresh inference result is exposed to the router. It must not confuse deterministic replay/reconstruction with open-ended model generation.
+
+## Existing owners and interfaces (reuse, do not clone)
+
+- SV-COST comparison, immutable evidence and economic calculation: `GCAT-BCAT-Engine/workflows` eleven-lane experiment and `SV-COST-MAJOR-GOAL-001` historical program.
+- Sovereign GLM execution: `StegVerse-002/micro-node-runtime#69`, current sovereign model/runtime handoff; existing `StegVerse-Labs/.github` GLM resident WorkerCoordinator bridge.
+- Request-specific provider telemetry: existing eleven-lane sanitized TVC measurement / credentialless cost-evidence intake and companion literal cost-transparency research. Historical exhausted consumer UI surfaces are not new user prerequisites.
+- Manifest contract and run/request/result lineage: `StegVerse-org/StegVerse-SDK/docs/GENERIC_MANIFEST_PROCESSING_CONTRACT.md`. `processing.capability`, `processing.route_id`, and `extensions.stegverse_route.route_id` must agree; route selection is not authority.
+- Ephemeral external execution: existing retained-node StegBrowser bounded lease and LLM Adapter manifest ingress/provider paths; Interlock/InTr controls consequential ingress and egress; preserve far-side completion.
+- Generic task-native resource-cost linkage: central existing `WORKER-TASK-RESOURCE-COST-LINKAGE-001`, current Registry ACTIVE/UNCLAIMED without allocated COSV at generation 243. Do not duplicate its cost-record semantics.
+- Existing non-ALLOW remediation owners: current StegHealer/LLM Sandbox routing, without changing terminal FAIL_CLOSED.
+
+## Proposed held-out evaluation
+
+Freeze a task-family-stratified set *before* route execution. Distinct classes:
+1. Exact predecessor-linked evidence allows independently verified reconstruction; no provider call required.
+2. Required facts or reasoning absent from custody require fresh inference through an admitted manifest-selected provider.
+3. Evidence is incomplete/conflicting; return a specific actionable non-ALLOW disposition, or REVIEW_REQUIRED when policy admits review. Never synthesize an answer to force a cheap result.
+4. A mixed workload requires a reconstructed prefix plus admitted fresh inference for the unresolved portion. Must not silently conflate two cost classes.
+
+Every sample carries committed input/expected semantic oracle, task identity, policy/routing manifest, evidence completeness, predecessor links, allowed processing routes and an independently adjudicated required outcome. Hold out both route assignment and expected final result from the router. Do not use model/provider identity or prior-result identity to select processing semantics.
+
+The routing evaluator must record: selected route, routing reason, route-decision duration/compute, SDK+InTr admission/egress, ephemeral lease and cleanup when invoked, per-attempt actual execution, missing-evidence disposition, corrective retry, final authenticated outcome, per-component cost class, custody identifiers, predecessor-linked receipt and independent Master Records reconstruction.
+
+## Economic comparison
+
+Primary denominator: **successful equivalent admissible outcome** (including unsuccessful attempts and repair overhead). Separate (a) provider-reported request charge / exact usage plus bound price card; (b) observed provider-UI quota allocation explicitly non-marginal; (c) measured sovereign CPU/memory/energy/storage/network/hardware amortization; (d) governance/routing/receipt/custody/retry and operator burden. Missing values stay UNKNOWN and block numeric totals that require them; do not equate known marginal call cost to full lifecycle cost. Report latency distribution, route confusion matrix, non-ALLOW sensitivity, invalid commits, failure correction rate and independently reconstructable receipts. Keep live and synthetic estimates in different columns. Repeat paired trials with fixed admissible output contract and declared variability.
+
+## First falsifiable acceptance
+
+A. Deterministic source-only tests prove that the frozen held-out fixtures have the declared independent oracle and that an evaluator refuses mismatched task IDs, ambiguous oracle, missing predecessor evidence, non-ALLOW without actionable reason, or absent measured cost as numeric zero. Source-only PASS is not authentic execution.  
+B. With authorized runtime, execute at least one real sample from each class through **existing** SDK → InTr → WorkerCoordinator/ephemeral StegBrowser or native reconstruction → existing custody and applicable far-side return. Read exact original manifest, selected processor, route, successor receipt, immediate predecessor and Master Records readback; preserve terminal FAIL_CLOSED.  
+C. Observe a true fresh-inference operation, not a recycled provider candidate. Compute paired cost/latency only where comparable request-bound measurements exist. An unobserved cost is `COST_EVIDENCE_UNAVAILABLE`, not a terminal task outcome: continue to next actionable non-ALLOW or authenticated ALLOW where permitted.
+
+## Current evidence and boundaries
+
+Historical five-lane published source describes one bounded deterministic reconstruction and declared-rate comparison, not general fresh inference. Nine-lane generation-2 local proof `979f796f394fa0d6e4832b843c0046e11b2f2a95`; eleven-lane hosted proof recorded in existing handoff; lane-11 authentic execution **not observed** in the current source state. This proposal does not modify the historical nine/eleven lane task files, outputs, prices or receipts. No extra runtime, scheduler, credential store, hardware/device, new authority plane, or GitHub-hosted production execution.
+
+## Next authorized transition
+
+Submit proposed goal/ownership/collision scope to the latest canonical Registry through its existing admission path. If it converges onto an existing owner, use that owner's task ID/COSV and update this handoff accordingly before any live dispatch. Independently advance micro-node-runtime#69 and existing eleven-lane telemetry tasks; never make opaque consumer UI billing a manual prerequisite for validating behavior. When admitted, add source-only held-out fixtures/evaluator and focused tests, then perform actual manifested runtime trials and return the **next authentic** ALLOW, DENY, REVIEW_REQUIRED or terminal FAIL_CLOSED with exact custody evidence.
+
+## README completeness
+
+This draft adds a new experiment proposal, so its local README is required. Existing Generation-2 and Generation-3 README/handoffs remain untouched.
