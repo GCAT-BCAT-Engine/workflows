@@ -1,0 +1,55 @@
+{
+  "actor": {
+    "class": "agent",
+    "instance": "Claude Code",
+    "session_ref": "https://claude.ai/code/session_01BhXFzVFQE21vmrBEyPpwoJ"
+  },
+  "base_commit": "ffa7de30eae1916d338bbb261c308da508d5bcea",
+  "change_id": "SV-CONT-20261008-MASTER-RECORDS-BOUNDARY-WORDING-020",
+  "changed_paths": [
+    {
+      "change_type": "modified",
+      "hash": "d4cdf2527d1bad41465944d63598a6d3b17d14c3",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/config.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "a671a97671e91025ff1002fc4e89505ba16fa4aa",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".handoff/current.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "170f359be42f43420ec12c7f0b3764f9bb53aedc",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/HANDOFF_ORCHESTRATION_CONTRACT.md"
+    },
+    {
+      "change_type": "modified",
+      "hash": "04fae92a9ed68ab6f0858f0e22a9d66e2392a10e",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "Master Records wording in the orchestration contract and the current handoff is aligned with the organization-records/reconstruction boundary (MASTER-RECORDS-BULK-SEMANTIC-REMEDIATION-002); .handoff/current.json re-pins the updated current handoff",
+      "state": "PRESERVED"
+    },
+    {
+      "claim": "documentation-only change; no workflow, code, or authority surface is modified",
+      "state": "PRESERVED"
+    }
+  ],
+  "created_at": "2026-10-08T00:00:00-05:00",
+  "governing_handoff": {
+    "hash": "04fae92a9ed68ab6f0858f0e22a9d66e2392a10e",
+    "hash_algorithm": "git-blob-sha1",
+    "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+  },
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "schema": "stegverse.session.change_record.v1",
+  "unresolved_tasks": [],
+  "record_hash": "62892dc7563a06137fd68efcad2baf2c28464cf7a9f1beca4b9baf58753e9c14"
+}
