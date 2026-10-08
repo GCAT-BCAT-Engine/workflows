@@ -190,7 +190,7 @@ release, or propagation.
 
 ## Custody
 
-Per-repository workflow success is execution evidence. Master Records custody
+Per-repository workflow success is execution evidence. Master Records organization record
 is a separate downstream transition and retains source commits, manifest or
 record hashes, workflow runs, boundary declarations, and custody decisions.
 Custody does not grant execution authority.
