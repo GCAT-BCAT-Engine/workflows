@@ -82,7 +82,7 @@ repository event
   -> commit-bound provenance ALLOW
   -> validated adoption registry or execution inventory
   -> hash-pinned cross-repository evidence
-  -> bounded Master Records custody where applicable
+  -> bounded Master Records organization record where applicable
   -> canonical repository-native continuation
 ```
 
@@ -104,7 +104,7 @@ The originating handoff-orchestration session is complete when:
 3. Format A conformance, repository-state delta, and reconciliation remain separate receipts;
 4. repair remains disabled;
 5. all five reviewed Format A repositories are `COMPLETE_READ_ONLY`;
-6. released semantic evidence is accepted through bounded Master Records custody;
+6. released semantic evidence is recorded as a bounded Master Records organization record;
 7. Runtime Orchestrator event intake and direct next-node selection require dual verified-state admission;
 8. every adjacent incomplete goal has an exact canonical owner and location;
 9. no originating-session active or unassigned claim remains; and

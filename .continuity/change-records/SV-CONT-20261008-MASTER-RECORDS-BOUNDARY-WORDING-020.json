@@ -15,14 +15,26 @@
     },
     {
       "change_type": "modified",
+      "hash": "a671a97671e91025ff1002fc4e89505ba16fa4aa",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".handoff/current.json"
+    },
+    {
+      "change_type": "modified",
       "hash": "170f359be42f43420ec12c7f0b3764f9bb53aedc",
       "hash_algorithm": "git-blob-sha1",
       "path": "docs/HANDOFF_ORCHESTRATION_CONTRACT.md"
+    },
+    {
+      "change_type": "modified",
+      "hash": "04fae92a9ed68ab6f0858f0e22a9d66e2392a10e",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
     }
   ],
   "claims": [
     {
-      "claim": "Master Records wording in one documentation line is aligned with the organization-records/reconstruction boundary (MASTER-RECORDS-BULK-SEMANTIC-REMEDIATION-002); the hash-pinned current handoff is left unchanged",
+      "claim": "Master Records wording in the orchestration contract and the current handoff is aligned with the organization-records/reconstruction boundary (MASTER-RECORDS-BULK-SEMANTIC-REMEDIATION-002); .handoff/current.json re-pins the updated current handoff",
       "state": "PRESERVED"
     },
     {
@@ -32,12 +44,12 @@
   ],
   "created_at": "2026-10-08T00:00:00-05:00",
   "governing_handoff": {
-    "hash": "9a6ebc5e5331fe79c2aa7551279ddb285868cf69",
+    "hash": "04fae92a9ed68ab6f0858f0e22a9d66e2392a10e",
     "hash_algorithm": "git-blob-sha1",
     "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
   },
   "repository": "GCAT-BCAT-Engine/workflows",
   "schema": "stegverse.session.change_record.v1",
   "unresolved_tasks": [],
-  "record_hash": "90b6b86e8d8bc560b684b63e9275ac3a1c67928b5a172a64dfbd9a8d4cea77d7"
+  "record_hash": "62892dc7563a06137fd68efcad2baf2c28464cf7a9f1beca4b9baf58753e9c14"
 }
