@@ -1,0 +1,49 @@
+{
+  "actor": {
+    "class": "agent",
+    "instance": "Claude Code",
+    "session_ref": "https://claude.ai/code/session_01BhXFzVFQE21vmrBEyPpwoJ"
+  },
+  "base_commit": "ffa7de30eae1916d338bbb261c308da508d5bcea",
+  "change_id": "SV-CONT-20261008-MASTER-RECORDS-BOUNDARY-WORDING-020",
+  "changed_paths": [
+    {
+      "change_type": "modified",
+      "hash": "d4cdf2527d1bad41465944d63598a6d3b17d14c3",
+      "hash_algorithm": "git-blob-sha1",
+      "path": ".continuity/config.json"
+    },
+    {
+      "change_type": "modified",
+      "hash": "170f359be42f43420ec12c7f0b3764f9bb53aedc",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/HANDOFF_ORCHESTRATION_CONTRACT.md"
+    },
+    {
+      "change_type": "modified",
+      "hash": "1f412995bed0a73e516719f3a9fc200fda5c6b6a",
+      "hash_algorithm": "git-blob-sha1",
+      "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "Master Records wording in two documentation lines is aligned with the organization-records/reconstruction boundary (MASTER-RECORDS-BULK-SEMANTIC-REMEDIATION-002)",
+      "state": "PRESERVED"
+    },
+    {
+      "claim": "documentation-only change; no workflow, code, or authority surface is modified",
+      "state": "PRESERVED"
+    }
+  ],
+  "created_at": "2026-10-08T00:00:00-05:00",
+  "governing_handoff": {
+    "hash": "1f412995bed0a73e516719f3a9fc200fda5c6b6a",
+    "hash_algorithm": "git-blob-sha1",
+    "path": "docs/WORKFLOWS_MIRROR_HANDOFF.md"
+  },
+  "repository": "GCAT-BCAT-Engine/workflows",
+  "schema": "stegverse.session.change_record.v1",
+  "unresolved_tasks": [],
+  "record_hash": "799e0f5e49abc49fec076c1f2d361053f77bc89ad1399ce2e7cfe685d4cc2e65"
+}
